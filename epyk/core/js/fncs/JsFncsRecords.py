@@ -5,8 +5,10 @@ seen on the Python side in the scripting interface). The best way to test those 
 the DEBUG flag.
 """
 
+from abc import ABC, abstractmethod
 
-class JsRecFunc:
+
+class JsRecFunc(ABC):
   """
   This class cannot be used directly to format a record as the mandatory parameters are not defined and are set to None.
 
@@ -52,6 +54,7 @@ class JsRecFunc:
     return originParams
 
   @staticmethod
+  @abstractmethod
   def extendColumns(jsSchema, params):
     """
     Description:
@@ -62,7 +65,7 @@ class JsRecFunc:
     :param jsSchema:
     :param params:
     """
-    raise Exception("Method extendColumns should be overriden")
+    pass
 
 
 class JsRowBuckets(JsRecFunc):

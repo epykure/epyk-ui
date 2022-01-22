@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import json
+from epyk.core.py import primitives
 
 
 class Aria:
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     self.htmlObj = component
 
   def set(self, arias):

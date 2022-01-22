@@ -4,6 +4,9 @@
 import logging
 import os
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptButton
@@ -16,7 +19,7 @@ from epyk.core.js.html import JsHtml
 class Source(Html.Html):
   name = 'Source'
 
-  def __init__(self, report, path, video):
+  def __init__(self, report: primitives.PageModel, path: str, video: str):
     super(Source, self).__init__(report, "")
     self.path = path
     self.video = video
@@ -40,7 +43,8 @@ class Media(Html.Html):
     ".mp4": "video/mp4",
   }
 
-  def __init__(self, report, video, path, width, height, html_code, profile, options):
+  def __init__(self, report: primitives.PageModel, video: str, path: str, width: tuple, height: tuple, html_code: str,
+               profile: Union[bool, dict], options: Optional[dict]):
     if path is None:
       path = Defaults.SERVER_PATH or os.path.split(video)[0]
     super(Media, self).__init__(report, {'path': path, 'video': video}, html_code=html_code, options=options,
@@ -119,7 +123,8 @@ class Audio(Media):
 class Youtube(Html.Html):
   name = 'Youtube Video'
 
-  def __init__(self, report, link, width, height, html_code, profile, options):
+  def __init__(self, report: primitives.PageModel, link: str, width: tuple, height: tuple, html_code: str,
+               profile: Union[bool, dict], options: Optional[dict]):
     super(Youtube, self).__init__(report, link, css_attrs={"width": width, 'height': height}, html_code=html_code,
                                   profile=profile, options=options)
     self.video = report.ui.layouts.iframe(link)
@@ -152,7 +157,8 @@ class Camera(Html.Html):
   name = 'Camera'
   _option_cls = OptButton.OptMedia
 
-  def __init__(self, report, width, height, html_code, profile, options):
+  def __init__(self, report: primitives.PageModel, width: tuple, height: tuple, html_code: str,
+               profile: Union[bool, dict], options: Optional[dict]):
     super(Camera, self).__init__(report, "", html_code=html_code, css_attrs={"width": width, 'height': height},
                                  profile=profile, options=options)
     self.options.controls = True

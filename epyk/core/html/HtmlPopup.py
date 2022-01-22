@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Type, List
+from typing import Optional, List, Union
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptPanel
 
@@ -9,7 +11,8 @@ from epyk.core.html.options import OptPanel
 class Popup(Html.Html):
   name = 'Popup Container'
 
-  def __init__(self, report, components, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, components: List[Html.Html], width: tuple, height: tuple,
+               options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(Popup, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
@@ -39,7 +42,7 @@ class Popup(Html.Html):
     if not self.options.background and self.options.draggable:
       report.body.onReady([self.window.dom.jquery_ui.draggable()])
 
-  def add(self, component: Type[Html.Html]):
+  def add(self, component: Html.Html):
     """
     Description:
     ------------
@@ -48,11 +51,11 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param component: HTML Component | List. The component to be added to the underlying list.
+    :param Html.Html component: The component to be added to the underlying list.
     """
     return self.container.add(component)
 
-  def extend(self, components: List[Type[Html.Html]]):
+  def extend(self, components: List[Html.Html]):
     """
     Description:
     ------------
@@ -60,11 +63,11 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param components: HTML Component | List. The component to be added to the underlying list.
+    :param List[Html.Html] components: The component to be added to the underlying list.
     """
     return self.container.extend(components)
 
-  def insert(self, n: int, component: Type[Html.Html]):
+  def insert(self, n: int, component: Html.Html):
     """
     Description:
     ------------
@@ -72,8 +75,8 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param n: Integer. The position in the popup.
-    :param component: HTML Component | List. The component to be added to the underlying list.
+    :param int n: The position in the popup.
+    :param Html.Html component: The component to be added to the underlying list.
     """
     return self.container.insert(n, component)
 

@@ -1,15 +1,19 @@
+
+from typing import Any, Union
+from epyk.core.py import primitives
+
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
-def packageImport(jsPackage=None, cssPackage=None, if_true=False):
+def packageImport(jsPackage: str = None, cssPackage: str = None, if_true: bool = False):
   """
   Description
   ---------------
   Simple decorator to allow people to declare packages that need to be imported when they are manipulating
   HTML components.
-  The alias for the package needs to be defined in the Import.py module/
+  The alias for the package needs to be defined in the Import.py module.
 
   Usage::
 
@@ -35,14 +39,14 @@ def packageImport(jsPackage=None, cssPackage=None, if_true=False):
   return wrap
 
 
-class JsPackage:
+class JsPackage(primitives.JsDataModel):
   lib_alias, lib_selector, lib_set_var = None, None, True
 
   class __internal:
     # By default it will attach everything to the body
     jqId, jsImports, cssImport = '', set([]), set([])
 
-  def __init__(self, src=None, varName=None, selector=None, data=None, setVar=None, parent=None):
+  def __init__(self, src=None, varName: str = None, selector=None, data=None, setVar: bool = None, parent=None):
     self.src = src if src is not None else self.__internal()
     self.component = parent
     self._selector = selector if selector is not None else self.lib_selector
@@ -65,7 +69,7 @@ class JsPackage:
     """
     return self._selector if self.varName is None else self.varName
 
-  def version(self, ver):
+  def version(self, ver: str):
     """
     Description:
     ------------
@@ -77,23 +81,23 @@ class JsPackage:
 
     Attributes:
     ----------
-    :param ver: String. The package versions example 1.11.0
+    :param str ver: The package versions example 1.11.0.
     """
     self.src._props.setdefault("packages", {})[self.lib_alias] = ver
     return self
 
-  def fnc(self, data, unique=False):
+  def fnc(self, data: str, unique: bool = False):
     """
     Description:
     ------------
     Base function to allow the object chain.
-    THis will add the elements to the current section in the object structure
-    All the items at the same level wil be chained
+    THis will add the elements to the current section in the object structure.
+    All the items at the same level wil be chained.
 
     Attributes:
     ----------
-    :param data: String. THe Javascript fragment to be added
-    :param unique: Boolean. Ensure the function is available one time in the chain. If not the last call we will present
+    :param str data: The Javascript fragment to be added.
+    :param bool unique: Ensure the function is available one time in the chain. If not the last call we will present.
 
     :return: "Self" to allow the chains
     """
@@ -106,14 +110,14 @@ class JsPackage:
     self._js[-1].append(data)
     return self
 
-  def fnc_enum(self, name, data_class):
+  def fnc_enum(self, name: str, data_class):
     """
     Description:
     ------------
     Base function to allow the creation of function with parameters which are list of dataclasses.
-    Basically this will be then transpiled to a list of dictionary
+    Basically this will be then transpiled to a list of dictionary.
 
-    :param name: String. The function Name
+    :param str name: The function Name.
     :param data_class: Class. The Python Data class
     """
     index = len(self._js) - 1
@@ -126,7 +130,7 @@ class JsPackage:
     self._js_enums[index][name].append(data_class(self.src))
     return self._js_enums[index][name][-1]
 
-  def fnc_closure(self, data, checkUndefined=False, unique=False):
+  def fnc_closure(self, data: str, checkUndefined: bool = False, unique: bool = False):
     """
     Description:
     ------------
@@ -138,9 +142,9 @@ class JsPackage:
 
     Attributes:
     ----------
-    :param data: String. The Javascript fragment to be added
-    :param checkUndefined: Boolean. Add a check on the variable definition
-    :param unique: Boolean. Ensure the function is available one time in the chain. If not the last call we will present
+    :param str data: The Javascript fragment to be added
+    :param bool checkUndefined: Add a check on the variable definition
+    :param unique: Ensure the function is available one time in the chain. If not the last call we will present
 
     :return: The "self" to allow the chains
     """
@@ -157,7 +161,7 @@ class JsPackage:
     self._js.append([])
     return self
 
-  def fnc_closure_in_promise(self, data, checkUndefined=False):
+  def fnc_closure_in_promise(self, data: str, checkUndefined: bool = False):
     """
     Description:
     ------------
@@ -168,8 +172,8 @@ class JsPackage:
 
     Attributes:
     ----------
-    :param data: String. The Javascript fragment to be added
-    :param checkUndefined: Boolean. Add a check on the variable definition
+    :param str data: The Javascript fragment to be added
+    :param bool checkUndefined: Add a check on the variable definition
 
     :return: The promise
     """
@@ -188,7 +192,7 @@ class JsPackage:
     """
     return JsString.JsString(self.varId, isPyData=False)
 
-  def set_var(self, flag):
+  def set_var(self, flag: bool):
     """
     Description:
     ------------
@@ -204,7 +208,7 @@ class JsPackage:
     self.setVar = flag
     return self
 
-  def getStr(self, emptyStack=True):
+  def getStr(self, emptyStack: bool = True):
     """
     Description:
     ------------
@@ -226,18 +230,18 @@ class JsPackage:
     Description:
     ------------
     Special function used for some external packages used to fix the problem of function override.
-    Indeed in Datatable row.add is used as a class method compare to the other functions used at object level
+    Indeed in Datatable row.add is used as a class method compare to the other functions used at object level.
 
     Attributes:
     ----------
-    :param strFnc: The function string
-    :param varId: The object reference
+    :param str strFnc: The function string.
+    :param str varId: The object reference.
 
     :return: The converted object reference
     """
     return varId
 
-  def custom(self, func_nam, *argv):
+  def custom(self, func_nam: str, *argv):
     """
     Description:
     ------------
@@ -246,8 +250,8 @@ class JsPackage:
 
     Attributes:
     ----------
-    :param func_nam: String. The function name
-    :param argv: Objects. Optional. The function arguments on the JavasScript side
+    :param str func_nam: The function name.
+    :param argv: Objects. Optional. The function arguments on the JavasScript side.
     """
     js_args = []
     for arg in argv:
@@ -263,7 +267,7 @@ class JsPackage:
     :return: Return the Javascript String
     """
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     obj_content = []
     # TODO find better way to check emtpy js structure
@@ -309,11 +313,11 @@ class JsPackage:
     return "; ".join(obj_content)
 
 
-class DataAttrs:
-  def __init__(self, report, attrs=None, oprions=None):
-    self._report, self.oprions, self._attrs = report, oprions, attrs or {}
+class DataAttrs(primitives.JsDataModel):
+  def __init__(self, report: primitives.PageModel, attrs: dict = None, options: dict = None):
+    self._report, self.options, self._attrs = report, options, attrs or {}
 
-  def custom(self, name, value):
+  def custom(self, name: str, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -324,15 +328,15 @@ class DataAttrs:
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the attributes
-    :param value: String or JString. The value of the defined attributes
+    :param str name: The key to be added to the attributes.
+    :param Union[str, primitives.JsDataModel] value: The value of the defined attributes.
 
     :return: The DataAttrs to allow the chains
     """
     self._attrs[name] = JsUtils.jsConvertData(value, None)
     return self
 
-  def attr(self, name, value):
+  def attr(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -340,23 +344,23 @@ class DataAttrs:
 
     Attributes:
     ----------
-    :param name: String. The attribute name
-    :param value: Object. The attribute value
+    :param str name: The attribute name.
+    :param Any value: The attribute value.
 
     :return: "Self" to allow the chains on the Python side
     """
     self._attrs[name] = value
     return self
 
-  def attrs(self, values):
+  def attrs(self, values: dict):
     """
     Description:
     ------------
-    Set multiple attributes to the underlying data directly from a dictionary
+    Set multiple attributes to the underlying data directly from a dictionary.
 
     Attributes:
     ----------
-    :param values: Dictionary. The data to set
+    :param dict values: The data to set.
 
     :return: "Self" to allow the chains on the Python side
     """

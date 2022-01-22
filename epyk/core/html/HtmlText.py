@@ -4,6 +4,9 @@
 import re
 import os
 
+from typing import Optional, List, Union
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptText
 from epyk.core.html import Defaults as Default_html
@@ -18,8 +21,8 @@ class Label(Html.Html):
   name = 'Label'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, text=None, color=None, align=None, width=None, height=None, html_code=None, tooltip=None,
-               profile=None, options=None):
+  def __init__(self, report: primitives.PageModel, text=None, color=None, align=None, width=None, height=None,
+               html_code=None, tooltip=None, profile=None, options=None):
     text = text or []
     if not isinstance(text, list):
       text = [text]
@@ -77,7 +80,8 @@ class Label(Html.Html):
     """
     return super().options
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -97,10 +101,10 @@ class Label(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+    :param Union[list, str] js_funcs: The Javascript functions
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The component for the chaining.
     """
@@ -108,7 +112,7 @@ class Label(Html.Html):
     self.on("click", js_funcs, profile, source_event=source_event, on_ready=on_ready)
     return self
 
-  def selectable(self, flag=False):
+  def selectable(self, flag: bool = False):
     """
     Description:
     ------------
@@ -118,7 +122,7 @@ class Label(Html.Html):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. Set the text not selectable.
+    :param bool flag: Optional. Set the text not selectable.
 
     :return: self to allow the chains
     """
@@ -161,7 +165,7 @@ class Span(Html.Html):
       self.tooltip(tooltip)
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -194,7 +198,7 @@ class Span(Html.Html):
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -209,7 +213,8 @@ class Span(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -229,10 +234,10 @@ class Span(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The HTML component.
     """
@@ -252,7 +257,7 @@ class Span(Html.Html):
 
 class Position(Span):
 
-  def digits(self, flag):
+  def digits(self, flag: bool = False):
     """
     Description:
     ------------
@@ -260,7 +265,7 @@ class Position(Span):
 
     Attributes:
     ----------
-    :param flag: Boolean (default false)
+    :param bool flag: Boolean (default false)
     """
     self._jsStyles["digits"] = flag
     return self
@@ -325,7 +330,8 @@ class Text(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -334,10 +340,10 @@ class Text(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: The Javascript functions
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = 'pointer'
     if "data-group" in self.attr:
@@ -348,7 +354,8 @@ class Text(Html.Html):
 
     return super(Text, self).click(js_funcs, profile, source_event, on_ready)
 
-  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None, on_ready=False):
+  def goto(self, url: str, js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None,
+           target: str = "_blank", source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -356,12 +363,12 @@ class Text(Html.Html):
 
     Attributes:
     ----------
-    :param url:
-    :param js_funcs: List | String. The Javascript Events triggered before the redirection.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param target: String. Optional.
-    :param source_event: String. Optional. The event source.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param str url: The url link.
+    :param Union[list, str] js_funcs: The Javascript Events triggered before the redirection.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param str target: Optional.
+    :param Optional[str] source_event: Optional. The event source.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -387,7 +394,7 @@ class Text(Html.Html):
     self._vals = val
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -403,7 +410,7 @@ class Text(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -430,7 +437,7 @@ class Text(Html.Html):
                     "onblur": "this.contentEditable=false;this.className=''"})
     return self
 
-  def write(self, timer=50):
+  def write(self, timer: int = 50):
     """
     Description:
     ------------
@@ -442,7 +449,7 @@ class Text(Html.Html):
 
     Attributes:
     ----------
-    :param timer: Integer. Optional. The speed for the typing effect.
+    :param int timer: Optional. The speed for the typing effect.
     """
     value = self.val
     self.val = ""
@@ -517,7 +524,7 @@ class Pre(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
-  def selectable(self, flag=False):
+  def selectable(self, flag: bool = False):
     """
     Description:
     ------------
@@ -527,7 +534,7 @@ class Pre(Html.Html):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. A flag to the set items selectable.
+    :param bool flag: Optional. A flag to the set items selectable.
 
     :return: self to allow the chains.
     """
@@ -536,7 +543,7 @@ class Pre(Html.Html):
     return self
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -592,7 +599,7 @@ class Paragraph(Html.Html):
     self.style.css.margin_bottom = 10
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     -----------
@@ -616,7 +623,7 @@ class Paragraph(Html.Html):
       '''
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -699,7 +706,7 @@ class Title(Html.Html):
       report._content_table.add_title(self, level=level)
 
   @property
-  def style(self):
+  def style(self) -> GrpCls.ClassHtmlEmpty:
     """
     Description:
     ------------
@@ -712,7 +719,7 @@ class Title(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -728,7 +735,7 @@ class Title(Html.Html):
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsTitle:
     """
     Description:
     ------------
@@ -747,7 +754,8 @@ class Title(Html.Html):
         htmlObj.innerHTML = converter.makeHtml(data)} else{htmlObj.innerHTML = data}
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -856,7 +864,7 @@ class Numeric(Html.Html):
     return self
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlNumeric:
     """
     Description:
     ------------
@@ -871,7 +879,7 @@ class Numeric(Html.Html):
       self._dom = JsHtml.JsHtmlNumeric(self, report=self.page)
     return self._dom
 
-  def to(self, number, timer=1):
+  def to(self, number: int, timer: int = 1):
     """
     Description:
     ------------
@@ -879,8 +887,8 @@ class Numeric(Html.Html):
 
     Attributes:
     ----------
-    :param number:
-    :param timer: Integer. the append of the increase in millisecond
+    :param int number:
+    :param int timer: Integer. the append of the increase in millisecond
     """
     self.page.body.onReady([
       self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
@@ -896,7 +904,8 @@ class Numeric(Html.Html):
     ])
     return self
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -904,9 +913,9 @@ class Numeric(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
@@ -914,7 +923,7 @@ class Numeric(Html.Html):
     return super(Numeric, self).click(js_funcs, profile, source_event, on_ready)
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsNumber:
     """
     Description:
     ------------
@@ -968,7 +977,7 @@ class Highlights(Html.Html):
         htmlObj.querySelector('div[name=content]').innerHTML = data} '''
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsHighlights:
     """
     Description:
     ------------
@@ -995,7 +1004,8 @@ class Fieldset(Html.Html):
   name = 'Fieldset'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, legend, width, height, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, legend: str, width: str, height: str, helper: Optional[str],
+               options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.add_helper(helper)
@@ -1006,7 +1016,7 @@ class Fieldset(Html.Html):
       if(typeof options.css !== 'undefined'){Object.keys(options.css).forEach(function(key){htmlObj.firstChild.style[key] = options.css[key]})}'''
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------
@@ -1019,13 +1029,13 @@ class Fieldset(Html.Html):
     """
     return super().options
 
-  def __add__(self, component):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     component.options.managed = False  # Has to be defined here otherwise it is set to late
     self.components[component.htmlCode] = component
     return self
 
-  def __getitem__(self, component_id):
+  def __getitem__(self, component_id: Union[int, str]):
     if isinstance(component_id, int) and component_id not in self.components:
       return list(self.components.items())[component_id][1]
 

@@ -11,6 +11,8 @@ Related Pages:
 """
 
 from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.fncs import JsFncs
 
@@ -62,11 +64,9 @@ class JsArray(JsObject.JsObject):
     -----------
     The some() method checks if any of the elements in an array pass a test (provided as a function).
 
-    Usage::
+    Related Pages:
 
-      Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_some.asp
+    https://www.w3schools.com/jsref/jsref_some.asp
 
     Attributes:
     ----------
@@ -78,12 +78,12 @@ class JsArray(JsObject.JsObject):
 
     return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, js_funcs), isPyData=False)
 
-  def every_(self, js_funcs: Union[list, str], jsValue: Optional[str] = None, profile: Union[dict, bool] = False):
+  def every_(self, js_funcs: Union[list, str], js_value: Optional[str] = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
     The every() method checks if all elements in an array pass a test (provided as a function).
-    Data Structure used in this method is like obj(val, index, arra)
+    Data Structure used in this method is like obj(val, index, array)
 
     Usage::
 
@@ -94,18 +94,16 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A function to be run for each element in the array
-    :param Optional[str] jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param Optional[str] js_value: Optional. A value to be passed to the function to be used as its "this" value.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-
-    :return: None
     """
     jsFncs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    if jsValue is None:
+    if js_value is None:
       return JsFncs.JsFunction("%s.every(function(val, index, arr){%s})" % (self.varId, jsFncs))
 
-    return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, jsFncs, jsValue))
+    return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, jsFncs, js_value))
 
-  def filter_(self, js_funcs: Union[list, str], jsValue: Optional[str] = None, profile: Union[dict, bool] = False):
+  def filter_(self, js_funcs: Union[list, str], js_value: Optional[str] = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -120,16 +118,14 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A function to be run for each element in the array
-    :param Optional[str] jsValue: Optional. A value to be passed to the function to be used as its "this" value.
+    :param Optional[str] js_value: Optional. A value to be passed to the function to be used as its "this" value.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-
-    :return: None
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    if jsValue is None:
+    if js_value is None:
       return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s))" % (self.varId, js_funcs))
 
-    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, js_funcs, jsValue))
+    return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, js_funcs, js_value))
 
   def find(self, js_funcs: Union[list, str]):
     """
@@ -148,7 +144,6 @@ class JsArray(JsObject.JsObject):
     :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
 
     :return: Returns the array element value if any of the elements in the array pass the test, otherwise it
-    returns undefined
     """
     return "%s.find(%s)" % (self.varId, js_funcs)
 
@@ -199,8 +194,6 @@ class JsArray(JsObject.JsObject):
     :param Union[list, str] js_funcs: A function to be run for each element in the array
     :param Optional[str] value: Optional. A value to be passed to the function to be used as its "this" value.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-
-    :return: Void, The Javascript String
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, js_funcs))
@@ -316,7 +309,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsObject.JsObject("%s.shift()" % self.varId, isPyData=False)
 
-  def slice(self, start: int, end: int):
+  def slice(self, start: Union[primitives.JsDataModel, int], end: Union[primitives.JsDataModel, int]):
     """
     Description:
     -----------
@@ -333,8 +326,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int start: The index number in the array
-    :param int end: The index number in the array
+    :param Union[primitives.JsDataModel, int] start: The index number in the array.
+    :param Union[primitives.JsDataModel, int] end: The index number in the array.
 
     :return: A new Array, containing the selected elements
     """
@@ -357,11 +350,12 @@ class JsArray(JsObject.JsObject):
 
       https://www.w3schools.com/js/js_array_methods.asp
 
-    :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a boolean, or any other object types that are allowed in an array.
+    :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array,
+    a boolean, or any other object types that are allowed in an array.
     """
     return JsObject.JsObject("%s.pop()" % self.varId, isPyData=False)
 
-  def delete(self, jsNumber: Union[float, int]):
+  def delete(self, value: Union[float, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -379,14 +373,14 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsNumber: The index of the value in the array to be removed
+    :param Union[float, primitives.JsDataModel] value: The index of the value in the array to be removed.
 
     :return: Void, The Javascript String
     """
-    jsNumber = JsUtils.jsConvertData(jsNumber, None)
-    return JsFncs.JsFunction("delete %s[%s]" % (self.varId, jsNumber))
+    value = JsUtils.jsConvertData(value, None)
+    return JsFncs.JsFunction("delete %s[%s]" % (self.varId, value))
 
-  def join(self, sep: str):
+  def join(self, sep: Union[primitives.JsDataModel, str]):
     """
     Description:
     -----------
@@ -402,15 +396,15 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str sep: Optional. The separator to be used. If omitted, the elements are separated with a comma
-    :return: A String, representing the array values, separated by the specified separator
+    :param Union[primitives.JsDataModel, str] sep: Optional. The separator to be used. If omitted, the elements are separated with a comma.
+    :return: A String, representing the array values, separated by the specified separator.
     """
     from epyk.core.js.primitives import JsString
 
     sep = JsUtils.jsConvertData(sep, None)
     return JsString.JsString("%s.join(%s)" % (self.varId, JsUtils.jsConvertData(sep, None)), isPyData=False)
 
-  def copyWithin(self, start: int = 0, end: Optional[int] = None):
+  def copyWithin(self, start: Union[primitives.JsDataModel, int] = 0, end: Optional[Union[primitives.JsDataModel, int]] = None):
     """
     Description:
     -----------
@@ -426,8 +420,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int start: Optional. The index position to start copying elements from  (default is 0)
-    :param Optional[int] end: Optional. The index position to stop copying elements from (default is array.length)
+    :param Union[primitives.JsDataModel, int] start: Optional. The index position to start copying elements from  (default is 0)
+    :param Optional[Union[primitives.JsDataModel, int]] end: Optional. The index position to stop copying elements from (default is array.length)
 
     :return: An Array, the changed array
     """
@@ -435,7 +429,9 @@ class JsArray(JsObject.JsObject):
       end = self.length
     return JsArray("%s.copyWithin(%s, %s)" % (self.varId, start, end), setVar=True, isPyData=False)
 
-  def fill(self, jsData, start: int = 0, end: Optional[int] = None, jsFnc: Union[list, str] = None, jsObj=None):
+  def fill(self, data: primitives.JsDataModel, start: Union[primitives.JsDataModel, int] = 0,
+           end: Optional[Union[primitives.JsDataModel, int]] = None,
+           jsFnc: Union[list, str] = None, jsObj=None):
     """
     Description:
     -----------
@@ -453,27 +449,28 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsData: Required. The value to fill the array with
-    :param int start: Optional. The index to start filling the array (default is 0)
-    :param Optional[int] end: Optional. The index to stop filling the array (default is array.length)
+    :param primitives.JsDataModel data: The value to fill the array with.
+    :param Union[primitives.JsDataModel, int] start: Optional. The index to start filling the array (default is 0).
+    :param Optional[Union[primitives.JsDataModel, int]] end: Optional. The index to stop filling the array (default is array.length).
     :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param jsObj: Optional, The base Python Javascript object to add the polyfill
+    :param jsObj: Optional, The base Python Javascript object to add the polyfill.
 
     :return: An Array, the changed array
     """
     if jsObj is not None:
       # Add a polyfill to ensure the browser compatibility
       jsObj._addImport("babel-polyfill")
-    jsData = JsUtils.jsConvertData(jsData, jsFnc)
+    data = JsUtils.jsConvertData(data, jsFnc)
     if start is not None:
       start = JsUtils.jsConvertData(start, None)
       if end is not None:
         end = JsUtils.jsConvertData(end, None)
-        return JsArray("%s.fill(%s, %s, %s)" % (self.varId, jsData, start, end), isPyData=False)
-      else:
-        return JsArray("%s.fill(%s, %s)" % (self.varId, jsData, start), isPyData=False)
+        return JsArray("%s.fill(%s, %s, %s)" % (self.varId, data, start, end), isPyData=False)
 
-    return JsArray("%s.fill(%s)" % (self.varId, jsData), isPyData=False)
+      else:
+        return JsArray("%s.fill(%s, %s)" % (self.varId, data, start), isPyData=False)
+
+    return JsArray("%s.fill(%s)" % (self.varId, data), isPyData=False)
 
   def concat(self, *args):
     """
@@ -502,7 +499,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.concat(%s)" % (
       self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), isPyData=False)
 
-  def append(self, jsObj, val):
+  def append(self, jsObj, val: Union[primitives.JsDataModel, str]):
     """
     Description:
     -----------
@@ -520,8 +517,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsObj: The Python Javascript base object
-    :param val: The value to be added
+    :param jsObj: The Python Javascript base object.
+    :param val: The value to be added.
 
     :return: The Python / Javascript Array
     """
@@ -591,7 +588,7 @@ class JsArray(JsObject.JsObject):
     """
     return JsArray("%s.reverse()" % self.varId, isPyData=False)
 
-  def flat(self, depth: int = 1):
+  def flat(self, depth: Union[primitives.JsDataModel, int] = 1):
     """
     Description:
     -----------
@@ -604,7 +601,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int depth: The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
+    :param Union[primitives.JsDataModel, int] depth: The depth level specifying how deep a nested array structure
+    should be flattened. Defaults to 1.
     """
     return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), isPyData=False)
 
@@ -635,7 +633,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, js_funcs), isPyData=False)
 
-  def includes(self, element, start: int = 0):
+  def includes(self, element: Union[primitives.JsDataModel, str], start: int = 0):
     """
     Description:
     -----------
@@ -651,8 +649,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param element: Object. Required. The element to search for
-    :param int start: Optional. Default 0. At which position in the array to start the search
+    :param Union[primitives.JsDataModel, str] element: Object. The element to search for.
+    :param int start: Optional. Default 0. At which position in the array to start the search.
     """
     from epyk.core.js.primitives import JsBoolean
 
@@ -663,7 +661,7 @@ class JsArray(JsObject.JsObject):
     """
     Description:
     -----------
-    The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements
+    The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements.
 
     Usage::
 
@@ -682,7 +680,8 @@ class JsArray(JsObject.JsObject):
     """
     return JsArray("%s.unshift(%s)" % (self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])))
 
-  def splice(self, i: int, j: int, jsData, js_funcs: Optional[Union[list, str]] = None):
+  def splice(self, i: int, j: int, jsData: Union[primitives.JsDataModel, str],
+             js_funcs: Optional[Union[list, str]] = None):
     """
     Description:
     -----------
@@ -697,9 +696,10 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int i: Required. An integer that specifies at what position to add/remove items, Use negative values to specify the position from the end of the array
-    :param int j: Optional. The number of items to be removed. If set to 0, no items will be removed
-    :param jsData: Optional. The new item(s) to be added to the array
+    :param int i: Required. An integer that specifies at what position to add/remove items, Use negative values to.
+    specify the position from the end of the array.
+    :param int j: Optional. The number of items to be removed. If set to 0, no items will be removed.
+    :param Union[primitives.JsDataModel, str] jsData: Optional. The new item(s) to be added to the array.
     :param Optional[Union[list, str]] js_funcs: Optional. The Javascript functions.
 
     :return: A new Array, containing the removed items (if any)
@@ -725,20 +725,20 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").unique()
+      jsObj.objects.array.get("MyArray").unique()
 
     Attributes:
     ----------
-    :param jsObj: The Python Javascript base object
+    :param jsObj: The Python Javascript base object.
 
-    :return: A new Python Javascript Array with unique values
+    :return: A new Python Javascript Array with unique values.
     """
     jsObj.extendProto(self, "unique", '''
       var arrayResult = [];this.forEach(function(item){
       if(arrayResult.indexOf(item) < 0){arrayResult.push(item)}}); return arrayResult''')
     return JsArray("%s.unique()" % self.varId)
 
-  def contains(self, jsObj, data):
+  def contains(self, jsObj, data: primitives.JsDataModel):
     """
     Description:
     -----------
@@ -749,14 +749,14 @@ class JsArray(JsObject.JsObject):
     Usage::
 
       jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").contains(2)
+      jsObj.objects.array.get("MyArray").contains(2)
 
     Attributes:
     ----------
-    :param jsObj: The Python Javascript base object
-    :param data: The object to look for in the array
+    :param jsObj: The Python Javascript base object.
+    :param primitives.JsDataModel data: The object to look for in the array.
 
-    :return: A Python Javascript boolean
+    :return: A Python Javascript boolean.
     """
     from epyk.core.js.primitives import JsBoolean
 
@@ -787,7 +787,7 @@ class JsArray(JsObject.JsObject):
       "(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (
         self.varId, header))
 
-  def sample(self, n: int = None, report=None):
+  def sample(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -803,8 +803,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: An index.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: An index.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -819,7 +819,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.sample(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def first(self, n: int = None, report=None):
+  def first(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -834,8 +834,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: An index.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: An index.
+    :param Optional[primitives.PageModel]: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -850,7 +850,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.first(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def last(self, n: int = None, report=None):
+  def last(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -865,8 +865,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: An index.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: An index.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -881,7 +881,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.last(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def chunk(self, n: int = None, report=None):
+  def chunk(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -896,8 +896,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: The length of the sub lists.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: The length of the sub lists.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -912,7 +912,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.chunk(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def initial(self, n: int = None, report=None):
+  def initial(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -928,8 +928,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: An index.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: An index.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -944,7 +944,7 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.initial(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def rest(self, n: int = None, report=None):
+  def rest(self, n: Union[int, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -959,8 +959,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: An index.
-    :param report: Optional. The report object.
+    :param Optional[int, primitives.JsDataModel] n: An index.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -975,14 +975,12 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.rest(%s)})()" % (self.toStr(), self.varName), report=report)
 
-  def where(self, values: list = None, report=None):
+  def where(self, values: Union[list, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
     Looks through each value in the list, returning an array of all the values that matches the key-value pairs
     listed in properties.
-
-    Usage::
 
     Related Pages:
 
@@ -990,8 +988,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list values: All the values to be removed.
-    :param report: Optional. The report object.
+    :param Optional[list, primitives.JsDataModel] values: All the values to be removed.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     values = JsUtils.jsConvertData(values, None)
     report = report or self._report
@@ -1001,13 +999,11 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.where(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
 
-  def without(self, values: list = None, report=None):
+  def without(self, values: Union[list, primitives.JsDataModel] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
     Returns a copy of the array with all instances of the values removed.
-
-    Usage::
 
     Related Pages:
 
@@ -1015,8 +1011,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list values: All the values to be removed.
-    :param report: Optional. The report object.
+    :param Optional[list, primitives.JsDataModel] values: All the values to be removed.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1025,14 +1021,12 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.without(%s, %s)})()" % (self.toStr, self.varName, values), report=report)
 
-  def union(self, arrays: list = None, report=None):
+  def union(self, arrays: Union[primitives.JsDataModel, list] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
     Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
-
-    Usage::
 
     Related Pages:
 
@@ -1040,8 +1034,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list arrays: The list of lists to sum.
-    :param report: Optional. The report object
+    :param Optional[primitives.JsDataModel, list] arrays: The list of lists to sum.
+    :param report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1051,14 +1045,12 @@ class JsArray(JsObject.JsObject):
 
     return JsArray("(function(){%s; return _.union(%s, ...%s)})()" % (self.toStr, self.varName, arrays), report=report)
 
-  def intersection(self, arrays: list = None, report=None):
+  def intersection(self, arrays: Union[primitives.JsDataModel, list] = None, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
     Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
-
-    Usage::
 
     Related Pages:
 
@@ -1066,8 +1058,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list arrays: The list of lists to process.
-    :param report: Optional. The report object.
+    :param Optional[primitives.JsDataModel, list] arrays: The list of lists to process.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1078,14 +1070,12 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.intersection(%s, ...%s)})()" % (
       self.toStr, self.varName, arrays), report=report)
 
-  def uniq(self, is_sorted: bool = False, report=None):
+  def uniq(self, is_sorted: Union[bool, primitives.JsDataModel] = False, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
     Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
-
-    Usage::
 
     Related Pages:
 
@@ -1093,8 +1083,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param bool is_sorted: Flag to specify if the list is sorted.
-    :param report: Optional. The report object.
+    :param Union[bool, primitives.JsDataModel] is_sorted: Flag to specify if the list is sorted.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1145,7 +1135,7 @@ class JsArray(JsObject.JsObject):
     """
     return JaArrayRejector("filter", self.toStr(), self.varName, self._report)
 
-  def range(self, stop: int, start: int= 0, step: int= 1, report=None):
+  def range(self, stop: int, start: int = 0, step: int = 1, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -1156,8 +1146,6 @@ class JsArray(JsObject.JsObject):
     Note that ranges that stop before they start are considered to be zero-length instead of negative — if you'd like
     a negative range, use a negative step.
 
-    Usage::
-
     Related Pages:
 
       https://underscorejs.org/#arrays
@@ -1167,13 +1155,13 @@ class JsArray(JsObject.JsObject):
     :param int stop: The index of the last value
     :param int start: The index of the first value
     :param int step: The step
-    :param report: Optional. The report object
+    :param Optional[primitives.PageModel] report: Optional. The report object
     """
     report = report or self._report
     report.jsImports.add('underscore')
     return JsArray("_.range(%s, %s, %s)" % (start, stop, step), report=report)
 
-  def object(self, keys: list, report=None):
+  def object(self, keys: list, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -1188,7 +1176,7 @@ class JsArray(JsObject.JsObject):
     Attributes:
     ----------
     :param list keys: The keys for the dictionary.
-    :param report: Optional. The report object.
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -1200,14 +1188,14 @@ class JaArrayRejector:
   def __init__(self, fncName: str, data, varName: str, report):
     self._report, self.varName, self.data, self.fncName = report, varName, data, fncName
 
-  def modulo(self, n: int):
+  def modulo(self, n: Union[int, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param int n:
+    :param Union[int, primitives.JsDataModel] n:
     """
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (
@@ -1216,14 +1204,14 @@ class JaArrayRejector:
     return JsArray("(function(){%s; return _.%s(%s, function(num){ return num %% %s == 0; })})()" % (
       self.data, self.fncName, self.varName, n), report=self._report)
 
-  def equal(self, val):
+  def equal(self, val: Union[primitives.JsDataModel, list]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param val:
+    :param Union[primitives.JsDataModel, list] val:
     """
     val = JsUtils.jsConvertData(val, None)
     if self.varName is None:
@@ -1233,14 +1221,14 @@ class JaArrayRejector:
     return JsArray("(function(){%s; return _.%s(%s, function(num){ return num == %s; })})()" % (
       self.data, self.fncName, self.varName, val), report=self._report)
 
-  def includes(self, values: list):
+  def includes(self, values: Union[primitives.JsDataModel, list]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param list values:
+    :param Union[primitives.JsDataModel, list] values:
     """
     values = JsUtils.jsConvertData(values, None)
     if self.varName is None:
@@ -1268,7 +1256,7 @@ class JaArrayRejector:
 
 class JsRecordSet(JsArray):
 
-  def distinct(self, col_name: str):
+  def distinct(self, col_name: Union[primitives.JsDataModel, str]):
     """
     Description:
     -----------
@@ -1277,12 +1265,12 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param str col_name: The column in the dictionary.
+    :param Union[primitives.JsDataModel, str] col_name: The column in the dictionary.
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (col_name, self.toStr()))
 
-  def to_dict(self, col_name: str, value_name: str):
+  def to_dict(self, col_name: Union[primitives.JsDataModel, str], value_name: Union[primitives.JsDataModel, str]):
     """
     Description:
     -----------
@@ -1290,10 +1278,9 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param str col_name: The column in the dictionary.
-    :param str value_name: The column in the dictionary.
+    :param Union[primitives.JsDataModel, str] col_name: The column in the dictionary.
+    :param Union[primitives.JsDataModel, str] value_name: The column in the dictionary.
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     value_name = JsUtils.jsConvertData(value_name, None)
     return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){if (!(rec[%(col)s] in result)){result[rec[%(col)s]] = 0}; result[rec[%(col)s]] += parseFloat(rec[%(val)s])}); return result })(%(record)s)" % {"col": col_name, "val": value_name, "record": self.toStr()})
-

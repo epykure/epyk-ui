@@ -3,7 +3,9 @@
 
 import time
 import datetime
+
 from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
@@ -19,7 +21,9 @@ class DatePicker(Html.Html):
   name = 'Date Picker'
   _option_cls = OptCalendars.OptionDatePicker
 
-  def __init__(self, report, value, label, icon, width, height, color, html_code, profile, options, helper):
+  def __init__(self, report: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
+               height: tuple, color: Optional[str], html_code: Optional[str],
+               profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str]):
     super(DatePicker, self).__init__(report, value, html_code=html_code, profile=profile)
     # Add all the internal components input, label, icon and helper
     if width[0] is not None and width[1] == 'px':
@@ -73,7 +77,7 @@ class DatePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self.page)
     return self._dom
 
-  def select(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]]  = None):
+  def select(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -176,10 +180,12 @@ class TimePicker(Html.Html):
   requirements = ('timepicker', )
   name = 'Time Picker'
 
-  def __init__(self, report, value, label, icon, color, html_code, profile, options, helper):
+  def __init__(self, report: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
+               color: Optional[str], html_code: Optional[str], profile: Optional[Union[bool, dict]],
+               options: Optional[dict], helper: Optional[str]):
     super(TimePicker, self).__init__(report, None, html_code=html_code, profile=profile)
-    self.input = self.page.ui.inputs.d_time(value, options=options,
-         html_code="%s_input" % html_code if html_code is not None else html_code)
+    self.input = self.page.ui.inputs.d_time(
+      value, options=options, html_code="%s_input" % html_code if html_code is not None else html_code)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
     if html_code is not None:
       self.input.attr["name"] = "%s_input" % html_code
@@ -248,8 +254,8 @@ class TimePicker(Html.Html):
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report, day, month, year, hour, minute, second, label, icon, timestamp, width, height,
-               html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
+               label: Optional[str], icon: Optional[str], timestamp, width, height, html_code, helper, options, profile):
     super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour,
                                                  'minute': minute, 'second': second}, html_code=html_code,
                                         profile=profile, css_attrs={"width": width, "height": height})
@@ -310,7 +316,8 @@ class CountDownDate(Html.Html):
 class LastUpdated(Html.Html):
   name = 'Last Update'
 
-  def __init__(self, report, label, color, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
+               height: tuple, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self._label = label or "Last update: "
     super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
                                       html_code, profile=profile, options=options,
@@ -336,7 +343,7 @@ class LastUpdated(Html.Html):
 
     :return: A Javascript Dom object.
 
-    :rtype: JsHtml.JsHtml
+    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
@@ -367,7 +374,9 @@ class Calendar(Html.Html):
   requirements = ('jquery', )
   _option_cls = OptCalendars.OptionDays
 
-  def __init__(self, report, content, width, height, align, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, content: Optional[str], width: tuple, height: tuple,
+               align: Optional[str], options: Optional[dict], html_code: Optional[str],
+               profile: Optional[Union[bool, dict]]):
     super(Calendar, self).__init__(report,  content, html_code, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
@@ -390,7 +399,8 @@ class Calendar(Html.Html):
     """
     return super().options
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -408,7 +418,8 @@ class Calendar(Html.Html):
     self.__click = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def task(self, name: str, start, capacity: float, end=None, weekend: bool = False, options: Optional[dict] = None):
+  def task(self, name: str, start: str, capacity: float, end: Optional[str] = None, weekend: bool = False,
+           options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -416,12 +427,12 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param name: String. The task name.
-    :param start:
-    :param capacity: Float. A figure in percentage.
-    :param end:
-    :param weekend: Boolean. Optional. Flag to specify if the weekends should be considered.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str name: The task name.
+    :param str start: The task start date format YYYY-MM-DD.
+    :param float capacity: A figure in percentage.
+    :param str end: The task end date format YYYY-MM-DD.
+    :param bool weekend: Optional. Flag to specify if the weekends should be considered.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     if self.options.unit != 100 and options is None:
       options = {'unit': self.options.unit}
@@ -481,7 +492,7 @@ class Calendar(Html.Html):
                   i += 1
                   break
 
-  def weekly(self, name, start, capacity, frequency=1, weekend=False, options=None):
+  def weekly(self, name, start, capacity, frequency: int = 1, weekend: bool = False, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -548,7 +559,9 @@ class Calendar(Html.Html):
 class Timer(Html.Html):
   name = 'Timer'
 
-  def __init__(self, report, minutes, text, width, height, align, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, minutes: int, text: Optional[str], width: tuple, height: tuple,
+               align: Optional[str], options: Optional[dict], html_code: Optional[str],
+               profile: Optional[Union[dict, bool]]):
     super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, html_code, options=options,
                                 css_attrs={"width": width, "height": height}, profile=profile)
     if align is not None:
@@ -591,7 +604,10 @@ class Timer(Html.Html):
 class Elapsed(Html.Html):
   name = 'elapsed'
 
-  def __init__(self, report, day, month, year, label, icon, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, day: int, month: int, year: int, label: Optional[str],
+               icon: Optional[str], width: tuple, height: tuple,
+               html_code: Optional[str], helper: Optional[str], options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(Elapsed, self).__init__(report, {'day': day, 'month': month, 'year': year}, html_code=html_code,
                                   profile=profile, css_attrs={"width": width, "height": height})
     # Add the underlying components

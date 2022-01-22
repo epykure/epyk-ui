@@ -1,5 +1,6 @@
 
-from typing import Any
+from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js.Js import JsConsole
 from epyk.core.js.Js import JsWindow
@@ -16,7 +17,7 @@ from epyk.core.js.objects.JsNodeDom import JsDomsList
 from epyk.core.js.objects.JsEvents import Event
 
 
-def selector(component=None):
+def selector(component: Optional[primitives.HtmlModel] = None):
   """
   Description:
   -----------
@@ -28,7 +29,7 @@ def selector(component=None):
 
   Attributes:
   ----------
-  :param component:
+  :param Optional[primitives.HtmlModel] component:
   """
   return Selector.Selector(component)
 
@@ -44,7 +45,7 @@ window = JsWindow.JsWindow()
 alert = JsWindow.JsWindow().alert
 
 
-def querySelectorAll(selector: str):
+def querySelectorAll(selector: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -57,12 +58,12 @@ def querySelectorAll(selector: str):
 
   Attributes:
   ----------
-  :param str selector: CSS selectors.
+  :param Union[primitives.JsDataModel, str] selector: CSS selectors.
   """
   return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
 
 
-def querySelector(selector: str):
+def querySelector(selector: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -74,7 +75,7 @@ def querySelector(selector: str):
 
   Attributes:
   ----------
-  :param str selector: CSS selectors.
+  :param Union[primitives.JsDataModel, str] selector: CSS selectors.
   """
   return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
 
@@ -109,7 +110,7 @@ def comment(value: str):
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
-def var(name: str, value: Any = None, global_scope: bool = False, depth: bool = False):
+def var(name: str, value: Union[primitives.JsDataModel, str] = None, global_scope: bool = False, depth: bool = False):
   """
   Description:
   ------------
@@ -118,7 +119,7 @@ def var(name: str, value: Any = None, global_scope: bool = False, depth: bool = 
   Attributes:
   ----------
   :param str name: The variable name.
-  :param Any value: Optional. The object.
+  :param Union[primitives.JsDataModel, str] value: Optional. The object.
   :param bool global_scope: Optional. The variable scope.
   :param bool depth: Optional. Set to true of it is a nested object.
   """
@@ -133,7 +134,7 @@ def var(name: str, value: Any = None, global_scope: bool = False, depth: bool = 
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
-def recordset(name: str, value: Any = None, global_scope: bool = False):
+def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, global_scope: bool = False):
   """
   Description:
   ------------
@@ -143,7 +144,7 @@ def recordset(name: str, value: Any = None, global_scope: bool = False):
   Attributes:
   ----------
   :param str name: The variable name.
-  :param Any value: Optional. The object.
+  :param Union[primitives.JsDataModel, str] value: Optional. The object.
   :param bool global_scope: Optional. The variable scope.
   """
   if global_scope:
@@ -157,7 +158,7 @@ def recordset(name: str, value: Any = None, global_scope: bool = False):
   return JsObjects.JsVoid("var %s = %s" % (name, JsUtils.jsConvertData(value, None)))
 
 
-def let(name: str, value: Any, depth: bool = False):
+def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = False):
   """
   Description:
   ------------
@@ -174,13 +175,13 @@ def let(name: str, value: Any, depth: bool = False):
   Attributes:
   ----------
   :param str name: The variable name.
-  :param Any value: Optional. The object.
+  :param Union[primitives.JsDataModel, str] value: Optional. The object.
   :param bool depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("let %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
 
-def const(name: str, value: Any = None, depth: bool = False):
+def const(name: str, value: Union[primitives.JsDataModel, str] = None, depth: bool = False):
   """
   Description:
   ------------
@@ -197,7 +198,7 @@ def const(name: str, value: Any = None, depth: bool = False):
   Attributes:
   ----------
   :param str name: The variable name.
-  :param Any value: Object. Optional. The object.
+  :param Union[primitives.JsDataModel, str] value: Object. Optional. The object.
   :param bool depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("const %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))

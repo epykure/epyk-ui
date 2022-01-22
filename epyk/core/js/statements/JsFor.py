@@ -1,5 +1,6 @@
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
 
@@ -63,7 +64,7 @@ class JsFor:
     return self.options['start']
 
   @start.setter
-  def start(self, value):
+  def start(self, value: Union[int, primitives.JsDataModel]):
     if hasattr(value, 'toStr'):
       self.options['start'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
@@ -79,7 +80,7 @@ class JsFor:
     return self.options['end']
 
   @end.setter
-  def end(self, value):
+  def end(self, value: Union[int, primitives.JsDataModel]):
     if hasattr(value, 'toStr'):
       self.options['end'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
@@ -95,7 +96,7 @@ class JsFor:
     return self.options['step']
 
   @step.setter
-  def step(self, value):
+  def step(self, value: Union[int, primitives.JsDataModel]):
     if hasattr(value, 'toStr'):
       self.options['step'] = PARSE_FLOAT_EXPR.format(JsUtils.jsConvertData(value, None))
     else:
@@ -129,14 +130,15 @@ class JsFor:
 
 class JsIterable:
 
-  def __init__(self, iterable, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
+  def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param iterable:
+    :param Union[primitives.JsDataModel, str] iterable:
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -156,7 +158,7 @@ class JsIterable:
     return self.options['var']
 
   @var.setter
-  def var(self, value):
+  def var(self, value: str):
     """
     Description:
     -----------
@@ -164,7 +166,7 @@ class JsIterable:
 
     Attributes:
     ----------
-    :param value: String. The value reference for the JavaScript variable
+    :param str value: The value reference for the JavaScript variable.
     """
     self.options['var'] = value
 

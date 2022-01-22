@@ -3,16 +3,17 @@
 
 from epyk.core.js import JsUtils
 from typing import Union, Optional
+from epyk.core.py import primitives
 
 
 class JsIf:
 
-  def __init__(self, condition: str, js_funcs: Union[list, str], context: Optional[dict] = None,
+  def __init__(self, condition: str, js_funcs: Union[list, str], context: Optional[primitives.PageModel] = None,
                profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
-    Create a JavaScript If statement
+    Create a JavaScript If statement.
 
     Usage::
 
@@ -22,7 +23,7 @@ class JsIf:
     ----------
     :param str condition: The Javascript condition. Can be a JsBoolean object.
     :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[dict] context: Page. Optional. Meta data concerning the context.
+    :param Optional[primitives.PageModel] context: Optional. Meta data concerning the context.
     :param Optional[Union[dict, bool]] profile: Boolean. Optional. A flag to set the component performance storage.
     """
     self._context = context
@@ -37,8 +38,6 @@ class JsIf:
     Description:
     ------------
     Add a Javascript elif statement to the loop.
-
-    Usage::
 
     Attributes:
     ----------

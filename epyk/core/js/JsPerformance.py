@@ -12,7 +12,8 @@ Related Pages:
 """
 
 
-from typing import Union, Optional, List
+from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.fncs import JsFncs
@@ -151,7 +152,7 @@ class JsPerformance:
     """
     return JsArray.JsArray("window.performance.getEntries()", isPyData=False)
 
-  def getEntriesByName(self, name: str, type: Optional[str] = None):
+  def getEntriesByName(self, name: Union[primitives.JsDataModel, str], type: Optional[str] = None):
     """
     Description:
     ------------
@@ -169,7 +170,7 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param str name: The name of the entry to retrieve.
+    :param Union[primitives.JsDataModel, str] name: The name of the entry to retrieve.
     :param Optional[str] type: Optional. The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified name and type
@@ -207,7 +208,7 @@ class JsPerformance:
     """
     return JsArray.JsArray("window.performance.getEntriesByType('%s')" % type, isPyData=False)
 
-  def mark(self, name: str):
+  def mark(self, name: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -225,7 +226,7 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param str name: A DOMString representing the name of the mark.
+    :param Union[primitives.JsDataModel, str] name: A DOMString representing the name of the mark.
 
     :return: Void, The String for the Javascript side.
     """
@@ -233,7 +234,8 @@ class JsPerformance:
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunction("performance.mark(%s)" % name)
 
-  def measure(self, name: str, startMark: Optional[str] = None, endMark: Optional[str] = None):
+  def measure(self, name: Union[primitives.JsDataModel, str], startMark: Optional[str] = None,
+              endMark: Optional[str] = None):
     """
     Description:
     ------------
@@ -293,7 +295,8 @@ class JsPerformance:
     """
     Description:
     ------------
-    The setResourceTimingBufferSize() method sets the browser's resource timing buffer size to the specified number of "resource" performance entry type objects.
+    The setResourceTimingBufferSize() method sets the browser's resource timing buffer size to the specified number
+    of "resource" performance entry type objects.
 
     Usage::
 

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, List
+from epyk.core.py import primitives
+
 import json
 
 from epyk.core.js import JsUtils
@@ -21,7 +23,7 @@ from epyk.core.js.packages import packageImport
 
 class FmtNumber:
 
-  def __init__(self, report, selector, value):
+  def __init__(self, report: primitives.PageModel, selector: str, value):
     self._report, self._val = report, value
     self.selector = selector
 
@@ -78,7 +80,7 @@ class FmtNumber:
 
 class Formatters:
 
-  def __init__(self, report, selector: str):
+  def __init__(self, report: primitives.PageModel, selector: str):
     self._report = report
     self.selector = selector
 
@@ -96,7 +98,7 @@ class Formatters:
     return FmtNumber(self._report, self.selector, "parseFloat(%s)" % self.selector)
 
   @packageImport("accounting")
-  def toNumber(self, digit: int = 0, thousand_sep: str = "."):
+  def toNumber(self, digit: int = 0, thousand_sep: List[Union[str, primitives.JsDataModel]] = "."):
     """
     Description:
     -----------
@@ -142,7 +144,7 @@ class Formatters:
 
 class ContentFormatters:
 
-  def __init__(self, report, selector):
+  def __init__(self, report: primitives.PageModel, selector: str):
     self._report = report
     self.selector = selector
 

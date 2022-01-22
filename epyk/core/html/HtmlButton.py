@@ -3,6 +3,7 @@
 # TODO Add JS builder to Button Filter
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptButton
@@ -21,8 +22,8 @@ class Button(Html.Html):
   name = 'button'
   _option_cls = OptButton.OptionsButton
 
-  def __init__(self, report, text: str = None, icon: str = None, width: Optional[tuple] = None,
-               height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: str = None,
+  def __init__(self, report: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
+               height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
                profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None):
     text = text or []
     if not isinstance(text, list):
@@ -188,7 +189,8 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, js_press_funcs: Optional[list] = None, js_release_funcs: Optional[list] = None,
+  def press(self, js_press_funcs: Optional[Union[list, str]] = None,
+            js_release_funcs: Optional[Union[list, str]] = None,
             profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
     """
     Description:
@@ -201,9 +203,9 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[list] js_press_funcs: Optional. Javascript functions.
-    :param js_release_funcs: List | String. Optional. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[list, str]] js_press_funcs: Optional. Javascript functions.
+    :param Optional[Union[list, str]] js_release_funcs: Optional. Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     :param on_ready: Boolean. Optional.
     """
     str_fnc = ""
@@ -269,7 +271,9 @@ class Checkbox(Html.Html):
   requirements = ('font-awesome', 'bootstrap', 'jquery')
   _option_cls = OptButton.OptCheckboxes
 
-  def __init__(self, report, records, color, width, height, align, html_code, tooltip, options, profile):
+  def __init__(self, report: primitives.PageModel, records, color: Optional[str], width: Optional[tuple],
+               height: Optional[tuple], align: Optional[str],  html_code: Optional[str],  tooltip: Optional[str],
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     if report.inputs.get(html_code) is not None:
       selected_vals = set(report.inputs[html_code].split(","))
       for rec in records:
@@ -390,7 +394,9 @@ class CheckButton(Html.Html):
   name = 'Check Button'
   _option_cls = OptButton.OptCheck
 
-  def __init__(self, report, flag: bool = False, tooltip: Optional[str] = None, width=None, height=None, icon=None, label=None, html_code=None,
+  def __init__(self, report: primitives.PageModel, flag: bool = False, tooltip: Optional[str] = None,
+               width: Optional[tuple] = None, height: Optional[tuple] = None, icon: Optional[str] = None,
+               label: Optional[str] = None, html_code: Optional[str] = None,
                options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None):
     super(CheckButton, self).__init__(report, 'Y' if flag else 'N', html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile)
@@ -470,8 +476,8 @@ class CheckButton(Html.Html):
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, js_fnc_true: Union[list, str], js_fnc_false: Optional[Union[list, str]] = None, with_colors: bool = True,
-            profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
+  def click(self, js_fnc_true: Union[list, str], js_fnc_false: Optional[Union[list, str]] = None,
+            with_colors: bool = True, profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -517,7 +523,8 @@ class CheckButton(Html.Html):
 class IconEdit(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report, position, icon, text, tooltip, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
+               tooltip: Optional[str], width, height, html_code, options, profile: Optional[Union[bool, dict]]):
     super(IconEdit, self).__init__(report, '', html_code=html_code, profile=profile,
                                    css_attrs={"width": width, 'height': height,
                                               'float': 'left' if position is None else position})
@@ -653,7 +660,8 @@ class IconEdit(Html.Html):
         self.icon.style.add_classes.icon.basic()
     return super(IconEdit, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
-  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
+  def goto(self, url: str, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[bool, dict]] = None,
+           target: str = "_blank", source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -665,11 +673,11 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. The target url.
-    :param js_funcs: List | String. Optional. Javascript functions.
-    :param target: String. Optional. The type of link in the browser (new tab or same one).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The event source reference.
+    :param str url: The target url.
+    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
+    :param str target: Optional. The type of link in the browser (new tab or same one).
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The event source reference.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -684,7 +692,9 @@ class IconEdit(Html.Html):
 class Buttons(Html.Html):
   name = 'Buttons'
 
-  def __init__(self, report, data, color, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
+               html_code: Optional[str], helper: Optional[str], options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(Buttons, self).__init__(report, [], html_code=html_code,
                                   css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
@@ -701,12 +711,12 @@ class Buttons(Html.Html):
 class ButtonMenuItem:
   name = 'Button Menu Item'
 
-  def __init__(self, report, selector, parent):
+  def __init__(self, report: primitives.PageModel, selector: str, parent: Html.Html):
     self._report, self._selector, self.page = report, selector, report
     self._src, self._js, self._events = parent, None, []
 
   @property
-  def js(self):
+  def js(self) -> JsComponents.Menu:
     """
     Description:
     -----------
@@ -763,7 +773,9 @@ class ButtonMenuItem:
 class ButtonMenu(Html.Html):
   name = 'Button Menu'
 
-  def __init__(self, report, record, text, icon, width, height, html_code, tooltip, profile, options):
+  def __init__(self, report: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
+               height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
+               profile: Optional[Union[bool, dict]], options: Optional[dict]):
     super(ButtonMenu, self).__init__(report, record, html_code=html_code, profile=profile,
                                      css_attrs={"width": width, "height": height})
     self.button = report.ui.button(text, icon, width, height, html_code, tooltip, profile, options)
@@ -775,7 +787,7 @@ class ButtonMenu(Html.Html):
     self.container.options.managed = False
     self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     if i not in self.components:
       self.components[i] = ButtonMenuItem(self.page, "document.getElementById('%s').querySelectorAll('a')[%s]" % (
         self.htmlCode, i), self)
@@ -789,7 +801,7 @@ class ButtonMenu(Html.Html):
         panel.appendChild(href)})'''
 
   @property
-  def style(self):
+  def style(self) -> GrpClsButton.ClassButtonMenu:
     """
     Description:
     -----------
@@ -811,14 +823,16 @@ class ButtonMenu(Html.Html):
     for comp in self.components.values():
       events.extend(comp._events)
     self.onReady(events)
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(),
-                                   self.container.html())
+    return '<div %s>%s%s</div>' % (
+      self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.container.html())
 
 
 class ButtonMore(Html.Html):
   name = 'Button More'
 
-  def __init__(self, report, record, text, width, height, html_code, tooltip, profile, options):
+  def __init__(self, report: primitives.PageModel, record, text: Optional[str], width: Optional[tuple],
+               height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
+               profile: Optional[Union[bool, dict]], options: Optional[dict]):
     super(ButtonMore, self).__init__(
       report, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
     self.text = self.page.ui.text(text, width=("auto", ''), profile=profile)
@@ -870,7 +884,8 @@ class ButtonFilter(Html.Html):
   name = 'Button Filter'
   _option_cls = OptButton.OptionsButtonFilter
 
-  def __init__(self, report, text, width, height, html_code, tooltip, profile, options):
+  def __init__(self, report: primitives.PageModel, text: str, width: tuple, height: tuple, html_code: str,
+               tooltip: str, profile: Optional[Union[bool, dict]], options: Optional[dict]):
     super(ButtonFilter, self).__init__(
       report, "", html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.text = self.page.ui.text(text, tooltip=tooltip)
@@ -956,7 +971,7 @@ class ButtonFilter(Html.Html):
       self.menu.dom.invisible()])
 
   @property
-  def options(self):
+  def options(self) -> OptButton.OptionsButtonFilter:
     """
     Description:
     -----------
@@ -972,7 +987,7 @@ class ButtonFilter(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlButtonFilter:
     """
     Description:
     -----------
@@ -984,7 +999,7 @@ class ButtonFilter(Html.Html):
       but = page.ui.button("Click Me")
       page.js.console.log(but.dom.content)
 
-    :rtype: JsHtml.JsHtmlButton
+    :rtype: JsHtml.JsHtmlButtonFilter
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButtonFilter(self, report=self.page)
@@ -1003,8 +1018,9 @@ class ButtonFilter(Html.Html):
 class ButtonData(Button):
   name = 'button data'
 
-  def __init__(self, report, text=None, icon=None, width=None, height=None, html_code=None, tooltip=None, profile=None,
-               options=None):
+  def __init__(self, report: primitives.PageModel, text: Optional[str] = None, icon: Optional[str] = None,
+               width: Optional[tuple] = None, height: Optional[tuple] = None, html_code: Optional[str] = None,
+               tooltip: Optional[str] = None, profile=None, options: Optional[dict] = None):
     super(ButtonData, self).__init__(report, text, icon, width, height, html_code, tooltip, profile, options)
     self.set_attrs(name="data-content", value="")
     self.filename = None

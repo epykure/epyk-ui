@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,8 +12,8 @@ class Menus:
   def __init__(self, ui):
     self.page = ui.page
 
-  def top(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None, options=None,
-          profile=None):
+  def top(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+          helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -98,8 +100,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def bottom(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None,
-             options=None, profile=None):
+  def bottom(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -185,8 +187,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def menu(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
-           options=None, profile=None):
+  def menu(self, data=None, color: str = None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
+           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -251,7 +253,7 @@ class Menus:
         html_div.attr["name"] = "divs_%s" % html_list.htmlCode
         html_div.style.display = None
       menu_divs.append(html_div)
-    if records is None:
+    if records:
       html_list.click_items(
         [self.page.js.getElementById(l.htmlCode).setAttribute("data-select", "false") for l in html_list]
         + [self.page.js.objects.dom("this").setAttribute("data-select", "true")])
@@ -260,8 +262,8 @@ class Menus:
     html.Html.set_component_skin(col)
     return col
 
-  def bar(self, data=None, align="left", position="top", color=None, width=(350, "px"), height=(None, 'px'),
-          options=None, profile=None):
+  def bar(self, data=None, align: str = "left", position: str = "top", color=None, width=(350, "px"),
+          height=(None, 'px'), options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -335,7 +337,8 @@ class Menus:
     html.Html.set_component_skin(row)
     return row
 
-  def icons(self, data, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
+  def icons(self, data, width=(100, '%'), height=(None, 'px'), align: str = "center", options: dict = None,
+            profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -364,8 +367,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def buttons(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
-              options=None, profile=None):
+  def buttons(self, data=None, color: str = None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
+              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -403,7 +406,8 @@ class Menus:
     html.Html.set_component_skin(component)
     return component
 
-  def images(self, data, path=None, width=(100, '%'), height=(None, 'px'), align="center", options=None, profile=False):
+  def images(self, data, path: str = None, width=(100, '%'), height=(None, 'px'), align: str = "center",
+             options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -447,8 +451,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def right(self, data=None, color=None, width=(100, "%"), height=(30, 'px'), html_code=None, helper=None,
-            options=None, profile=None):
+  def right(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -518,7 +522,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def divisor(self, data, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def divisor(self, data, divider: bool = None, width=(100, '%'), height=(None, 'px'), options: dict = None,
+              profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -559,8 +564,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def button(self, value, components, symbol=None, width=("auto", ''), height=(None, 'px'), options=None,
-             profile=False):
+  def button(self, value, components, symbol: str = None, width=("auto", ''), height=(None, 'px'), options: dict = None,
+             profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -603,7 +608,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options=None, profile=False):
+  def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options: dict = None,
+              profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -653,8 +659,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code=None, helper=None, options=None,
-                 profile=None):
+  def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code: str = None,
+                 helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -703,7 +709,8 @@ class Menus:
     html.Html.set_component_skin(html_pr)
     return html_pr
 
-  def contextual(self, record=None, width=(None, '%'), height=(None, 'px'), visible=False, options=None, profile=None):
+  def contextual(self, record=None, width=(None, '%'), height=(None, 'px'), visible: bool = False,
+                 options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -735,7 +742,8 @@ class Menus:
     html.Html.set_component_skin(html_menu)
     return html_menu
 
-  def pills(self, data, width=(100, '%'), height=(50, 'px'), html_code=None, helper=None, options=None, profile=False):
+  def pills(self, data, width=(100, '%'), height=(50, 'px'), html_code: str = None, helper: str = None,
+            options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------

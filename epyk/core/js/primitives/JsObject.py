@@ -6,7 +6,9 @@ Module dedicated to wrap the Javascript Object
 
 """
 
-from typing import Union, Optional
+from typing import Union, Optional, Any, List
+from epyk.core.py import primitives
+
 import json
 
 from epyk.core.js import JsUtils
@@ -25,7 +27,7 @@ class JsKeyword:
     return self.__keyword
 
 
-class JsObject:
+class JsObject(primitives.JsDataModel):
   _jsClass = "Object"
 
   def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = False, report=None):
@@ -57,7 +59,7 @@ class JsObject:
       self.setVar(self.varName)
 
   @classmethod
-  def new(cls, data=None, varName: Optional[str] = None, isPyData: bool = True, report=None):
+  def new(cls, data: Optional[Any] = None, varName: Optional[str] = None, isPyData: bool = True, report=None):
     """
     Description:
     ------------
@@ -86,7 +88,7 @@ class JsObject:
     return cls(data=data, varName=varName, setVar=True, isPyData=isPyData, report=report)
 
   @classmethod
-  def this(cls, report=None):
+  def this(cls, report: primitives.PageModel = None):
     """
     Description:
     ------------
@@ -102,14 +104,14 @@ class JsObject:
 
     Attributes:
     ----------
-    :param report: The internal report object.
+    :param Optional[primitives.PageModel] report: The internal report object.
 
     :return: The python Javascript object
     """
     return cls.get("this", report=report)
 
   @classmethod
-  def get(cls, varName: str, report=None):
+  def get(cls, varName: str, report: Optional[primitives.PageModel] = None):
     """
     Description:
     ------------
@@ -127,7 +129,7 @@ class JsObject:
     Attributes:
     ----------
     :param str varName: The Javascript object reference.
-    :param report: The internal report object.
+    :param Optional[primitives.PageModel] report: The internal report object.
 
     :return: The python Javascript object
     """
@@ -177,7 +179,7 @@ class JsObject:
       self._js.append("%s %s = %s" % (var_type, varName, self.varData))
     return self
 
-  def prototype(self, name: str, value):
+  def prototype(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -189,14 +191,14 @@ class JsObject:
 
     Attributes:
     ----------
-    :param str name: The objects property name
-    :param value: The objects property values
+    :param str name: The object property name.
+    :param value: The object property values.
 
     :return: A reference to the String.prototype object
     """
     return "%s.prototype.%s = %s" % (self.varName, name, value)
 
-  def add(self, n: float):
+  def add(self, n: Union[primitives.JsDataModel, float, str]):
     """
     Description:
     ------------
@@ -209,34 +211,34 @@ class JsObject:
 
     Attributes:
     ----------
-    :param float n: The number value
+    :param Union[primitives.JsDataModel, float] float n: The number value.
 
     :return: A new Python Javascript Number
     """
     jsData = JsUtils.jsConvertData(n, None)
     return JsObject("%s + %s" % (self.varId, jsData), isPyData=False)
 
-  def __add__(self, value):
+  def __add__(self, value: primitives.JsDataModel):
     return JsObject("%s += %s" % (self.varId, value), isPyData=False)
 
-  def __sub__(self, value):
+  def __sub__(self, value: primitives.JsDataModel):
     return JsObject("%s -= %s" % (self.varId, value), isPyData=False)
 
-  def __mul__(self, value):
+  def __mul__(self, value: primitives.JsDataModel):
     return JsObject("%s *= %s" % (self.varId, value), isPyData=False)
 
-  def __truediv__(self, value):
+  def __truediv__(self, value: primitives.JsDataModel):
     return JsObject("%s /= %s" % (self.varId, value), isPyData=False)
 
-  def __mod__(self, value):
+  def __mod__(self, value: primitives.JsDataModel):
     return JsObject("%s %%= %s" % (self.varId, value), isPyData=False)
 
-  def __pow__(self, value):
+  def __pow__(self, value: Union[primitives.JsDataModel, int]):
     from epyk.core.js import JsMaths
 
     return JsObject("%s = %s" % (self.varId, JsMaths.JsMaths.pow(self, value)))
 
-  def __eq__(self, a):
+  def __eq__(self, a: Any):
     """
     Description:
     ------------
@@ -251,7 +253,7 @@ class JsObject:
 
     return "%s == %s" % (self.varId, json.dumps(a))
 
-  def __lt__(self, a):
+  def __lt__(self, a: Any):
     """
     Description:
     ------------
@@ -266,7 +268,7 @@ class JsObject:
 
     return "%s < %s" % (self.varId, json.dumps(a))
 
-  def __le__(self, a):
+  def __le__(self, a: Any):
     """
     Description:
     ------------
@@ -281,7 +283,7 @@ class JsObject:
 
     return "%s <= %s" % (self.varId, json.dumps(a))
 
-  def __ne__(self, a):
+  def __ne__(self, a: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -296,7 +298,7 @@ class JsObject:
 
     return "%s != %s" % (self.varId, json.dumps(a))
 
-  def __gt__(self, a):
+  def __gt__(self, a: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -311,7 +313,7 @@ class JsObject:
 
     return "%s > %s" % (self.varId, json.dumps(a))
 
-  def __ge__(self, a):
+  def __ge__(self, a: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -464,7 +466,7 @@ class JsObject:
 
     return JsObject("Object.seal(%s)" % self.varName)
 
-  def assign(self, target, sources, jsObj=None):
+  def assign(self, target: Union[primitives.JsDataModel, str], sources: List[Union[primitives.JsDataModel, str]], jsObj=None):
     """
     Description:
     ------------
@@ -479,8 +481,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param target: The target object.
-    :param sources: The source object(s).
+    :param Union[primitives.JsDataModel, str] target: The target object.
+    :param List[Union[primitives.JsDataModel, str]] sources: The source object(s).
     :param jsObj: Optional, The base Python Javascript object to add the polyfill
     """
     if jsObj is not None:
@@ -489,8 +491,8 @@ class JsObject:
 
     if not isinstance(sources, list):
       sources = [sources]
-    srcObj = ",".join([JsUtils.jsConvertData(s, None) for s in sources])
-    return JsObject("Object.assign(%s, %s)" % (JsUtils.jsConvertData(target, None), srcObj), isPyData=False)
+    js_obj = ",".join([JsUtils.jsConvertData(s, None) for s in sources])
+    return JsObject("Object.assign(%s, %s)" % (JsUtils.jsConvertData(target, None), js_obj), isPyData=False)
 
   def create(self, proto=None, propertiesObject=None):
     """
@@ -533,7 +535,7 @@ class JsObject:
 
     return JsArray.JsArray("Object.entries(%s)" % self.varId)
 
-  def setattr(self, key: str, value):
+  def setattr(self, key: Union[primitives.JsDataModel, str], value: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -549,8 +551,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param str key: The key to add to the object
-    :param value: The value corresponding to the key. Can be a Python object or a Javascript reference
+    :param Union[primitives.JsDataModel, str] key: The key to add to the object.
+    :param Union[primitives.JsDataModel, str] value: The value corresponding to the key. Can be a Python object or a Javascript reference
 
     :return: The Python Javascript object
     """
@@ -563,7 +565,7 @@ class JsObject:
     return JsObject("%s[%s] = %s" % (
       self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), setVar=False)
 
-  def addItem(self, key, value):
+  def addItem(self, key: Union[primitives.JsDataModel, str], value: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -571,22 +573,22 @@ class JsObject:
     """
     return self.setattr(key, value)
 
-  def addComponent(self, component):
+  def addComponent(self, component: primitives.HtmlModel):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param component:
+    :param primitives.HtmlModel component:
     """
     return self.setattr(component.htmlCode, component.dom.content)
 
-  def __getitem__(self, key):
+  def __getitem__(self, key: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
-    Return the value for a given key defined in the object
+    Return the value for a given key defined in the object.
 
     Usage::
 
@@ -598,7 +600,7 @@ class JsObject:
 
     Attributes:
     ----------
-    :param key: The String used as key
+    :param Union[primitives.JsDataModel, str] key: The String used as key.
 
     :return: The corresponding Javascript object
     """
@@ -755,14 +757,14 @@ class JsObject:
     from epyk.core.js.objects import JsData
     from epyk.core.js.fncs.JsFncs import JsFunctions
 
-    fncs = JsFunctions([
+    funcs = JsFunctions([
       self.toString().split("\\n").setVar("rows"), JsArray.JsArray.set(varName),
       JsArray.JsArray.get("rows").forEach([
         JsArray.JsArray.get(
           JsData.JsData(self._report).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
         JsArray.JsArray.get(varName).push(JsObject.get("row"))])])
     record = JsObject.get(varName)
-    record._js = [fncs.toStr()] + record._js
+    record._js = [funcs.toStr()] + record._js
     return record
 
   @property
@@ -775,7 +777,7 @@ class JsObject:
     """
     return self.toStr()
 
-  def clone(self, report=None):
+  def clone(self, report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -788,7 +790,7 @@ class JsObject:
 
     Attributes:
     ----------
-    :param report: Optional. The report object
+    :param Optional[primitives.PageModel] report: Optional. The report object
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -797,7 +799,7 @@ class JsObject:
 
     return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), isPyData=False)
 
-  def defaults(self, attrs: dict, report=None):
+  def defaults(self, attrs: Union[primitives.JsDataModel, dict], report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -810,8 +812,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param dict attrs:
-    :param report: Optional. The report object.
+    :param Union[primitives.JsDataModel, dict] attrs:
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -822,7 +824,7 @@ class JsObject:
     return JsObject(
       "(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), isPyData=False)
 
-  def pick(self, keys, report=None):
+  def pick(self, keys: Union[primitives.JsDataModel, list], report: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -835,8 +837,8 @@ class JsObject:
 
     Attributes:
     ----------
-    :param keys:
-    :param report: Optional. The report object.
+    :param Union[primitives.JsDataModel, list] keys:
+    :param Optional[primitives.PageModel] report: Optional. The report object.
     """
     report = report or self._report
     report.jsImports.add('underscore')
@@ -876,7 +878,7 @@ class JsObject:
     """
     return JsObject("JSON.stringify(%s)" % self.varName)
 
-  def fileParse(self, delimiter: str):
+  def fileParse(self, delimiter: Union[primitives.JsDataModel, str]):
     """
     Description:
     -----------
@@ -884,22 +886,23 @@ class JsObject:
 
     Attributes:
     ----------
-    :param str delimiter: The line delimiter in the file
+    :param Union[primitives.JsDataModel, str] delimiter: The line delimiter in the file.
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     return JsObject('''(function(){var results = []; 
       %s.split('\\n').forEach(function(rec){ results.push(String(rec).replace(/^\s+|\s+$/g, '').split(%s)); }); 
       return results})()''' % (self.varName, delimiter))
 
-  def fileToDict(self, delimiter: str, columns: Optional[list] = None):
+  def fileToDict(self, delimiter: Union[primitives.JsDataModel, str],
+                 columns: Optional[Union[primitives.JsDataModel, list]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param str delimiter: The line delimiter in the file
-    :param Optional[list] columns:
+    :param Union[primitives.JsDataModel, str] delimiter: The line delimiter in the file.
+    :param Optional[Union[primitives.JsDataModel, list]] columns: The list of columns.
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     columns = JsUtils.jsConvertData(columns, None)

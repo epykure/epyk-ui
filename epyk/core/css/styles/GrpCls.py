@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional
+
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import Properties
@@ -22,7 +24,7 @@ class ClassPage:
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
 
   @property
-  def css(self):
+  def css(self) -> Body:
     """
     Description:
     ------------
@@ -35,7 +37,7 @@ class ClassPage:
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
     Description:
     ------------
@@ -50,7 +52,7 @@ class ClassPage:
     return self._css_class
 
   @property
-  def globals(self):
+  def globals(self) -> Defaults_css.GlobalStyle:
     """
     Description:
     ------------
@@ -68,7 +70,7 @@ class ClassPage:
     return self.__global_styles
 
   @property
-  def scrollbar_webkit(self):
+  def scrollbar_webkit(self) -> CssStyleScrollbar.CssWebkitScrollbar:
     """
     Description:
     ------------
@@ -81,7 +83,7 @@ class ClassPage:
     return self.__webkitscrollbar
 
   @property
-  def scrollbar_webkit_thumb(self):
+  def scrollbar_webkit_thumb(self) -> CssStyleScrollbar.CssWebkitScrollbarThumb:
     """
     Description:
     ------------
@@ -107,7 +109,7 @@ class ClassPage:
     return self.__webkitscrollbar_track
 
   @property
-  def selection(self):
+  def selection(self) -> CssStyleScrollbar.CssWebkitSelection:
     """
     Description:
     ------------
@@ -124,7 +126,7 @@ class ClassPage:
     return self.__selection
 
   @property
-  def moz_selection(self):
+  def moz_selection(self) -> CssStyleScrollbar.CssWebkitMozSelection:
     """
     Description:
     ------------
@@ -140,7 +142,7 @@ class ClassPage:
       self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.component.page)
     return self.__moz_selection
 
-  def contenteditable(self):
+  def contenteditable(self) -> CssStylesPage.CssPageContentEditable:
     """
     Description:
     ------------
@@ -150,7 +152,7 @@ class ClassPage:
 
       https://www.w3schools.com/howto/howto_css_contenteditable_border.asp
 
-    :rtype: CssStylesPage.CssPageContentDditable
+    :rtype: CssStylesPage.CssPageContentEditable
     """
     if not self.__contenteditable:
       self.__contenteditable = CssStylesPage.CssPageContentEditable(self.component.page)
@@ -183,7 +185,7 @@ class ClassPage:
     return Defaults_css
 
   @property
-  def add_classes(self):
+  def add_classes(self) -> Classes.Catalog:
     """
     Description:
     ------------
@@ -196,7 +198,7 @@ class ClassPage:
     return self.__cls_catalog._class_type('main')
 
   @property
-  def define_classes(self):
+  def define_classes(self) -> Classes.Catalog:
     """
     Description:
     ------------
@@ -299,7 +301,7 @@ class ClassHtml:
     return "%s_css" % self.component.htmlCode
 
   @property
-  def css(self):
+  def css(self) -> Commons:
     """
     Description:
     ------------
@@ -312,7 +314,7 @@ class ClassHtml:
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
     Description:
     ------------
@@ -326,7 +328,7 @@ class ClassHtml:
         self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
-  def shadows(self, num):
+  def shadows(self, num: int):
     """
     Description:
     ------------
@@ -338,7 +340,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param num: Integer. The template number.
+    :param int num: The template number.
     """
     shadow_styles = {
       0: {"box-shadow": "rgba(149, 157, 165, 0.2) 0px 8px 24px"},
@@ -385,7 +387,7 @@ class ClassHtml:
     return Defaults_css
 
   @property
-  def effects(self):
+  def effects(self) -> Effects.Effects:
     """
     Description:
     ------------
@@ -398,7 +400,7 @@ class ClassHtml:
     return self.__cls_effects
 
   @property
-  def add_classes(self):
+  def add_classes(self) -> Classes.Catalog:
     """
     Description:
     ------------
@@ -411,7 +413,7 @@ class ClassHtml:
     return self.__cls_catalog._class_type('main')
 
   @property
-  def define_classes(self):
+  def define_classes(self) -> Classes.Catalog:
     """
     Description:
     ------------
@@ -424,7 +426,7 @@ class ClassHtml:
       self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
-  def attr(self, key, name, dflt=None, suffix="temp"):
+  def attr(self, key: str, name: str, dflt: Optional[str] = None, suffix: str = "temp"):
     """
     Description:
     ------------
@@ -449,7 +451,7 @@ class ClassHtml:
     else:
       self.__css_virtual[key_selector].update({key: "attr(%s)" % name})
 
-  def attr_content(self, name):
+  def attr_content(self, name: str):
     """
     Description:
     ------------
@@ -462,11 +464,11 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param name: String. The attribute content name.
+    :param str name: The attribute content name.
     """
     self.attr("content", name, suffix='before')
 
-  def hover(self, attrs):
+  def hover(self, attrs: dict):
     """
     Description:
     ------------
@@ -474,19 +476,19 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param attrs: Dictionary. The CSS attributes for the mouse hover style.
+    :param dict attrs: The CSS attributes for the mouse hover style.
     """
     self.selector("hover", attrs)
 
-  def standard(self, percent=10, width_adj=True):
+  def standard(self, percent: int = 10, width_adj: bool = True):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param percent: Integer. Optional. The percentage of space on the left and right.
-    :param width_adj: Boolean. Optional. Adjust the width of the component considering this space.
+    :param int percent: Optional. The percentage of space on the left and right.
+    :param bool width_adj: Optional. Adjust the width of the component considering this space.
     """
     if width_adj:
       self.css.margins(left=(percent, '%'), right=(percent, '%'))
@@ -494,7 +496,7 @@ class ClassHtml:
       self.css.margin_left = "%s%%" % percent
       self.css.margin_right = "%s%%" % percent
 
-  def selector(self, suffix, attrs):
+  def selector(self, suffix: str, attrs: dict):
     """
     Description:
     ------------
@@ -502,8 +504,8 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param suffix: String. The selector suffix value.
-    :param attrs: Dictionary. The CSS attributes.
+    :param str suffix: The selector suffix value.
+    :param dict attrs: The CSS attributes.
     """
     key_selector = "_%s" % suffix
     if key_selector not in self.__css_virtual:
@@ -601,7 +603,7 @@ class ClassHtml:
     self.css.attrs = self.component.attr['css']
     return self
 
-  def clear(self, no_default=False):
+  def clear(self, no_default: bool = False):
     """
     Description:
     ------------
@@ -625,7 +627,7 @@ class ClassHtml:
     self.component.attr['class'] = self.classList['main']
     return self
 
-  def clear_all(self, no_default=False):
+  def clear_all(self, no_default: bool = False):
     """
     Description:
     ------------
@@ -644,7 +646,7 @@ class ClassHtml:
     self.clear(no_default)
     return self
 
-  def builder(self, name, js_frg):
+  def builder(self, name: str, js_frg: str):
     """
     Description:
     ------------
@@ -653,8 +655,8 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param name: String. The Javascript variable name.
-    :param js_frg: String. The Javascript framework corresponding to the Js builder.
+    :param str name: The Javascript variable name.
+    :param str js_frg: The Javascript framework corresponding to the Js builder.
     """
     self.component.page.properties.css.add_builders("const %s = %s" % (name, js_frg))
     return self
@@ -723,7 +725,7 @@ class ClassHtml:
 class ClassHtmlEmpty(ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> Empty:
     """
     Description:
     ------------

@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+
 from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlEditor, JsHtml
@@ -21,7 +23,8 @@ class Console(Html.Html):
   name = 'Console'
   _option_cls = OptText.OptionsConsole
 
-  def __init__(self, report, data, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, data: list, width: tuple, height: tuple, html_code: Optional[str],
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Console, self).__init__(report, data, html_code=html_code, options=options,
                                   css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self.page.theme.greys[-1],
@@ -210,7 +213,8 @@ class Cell(Html.Html):
   name = 'Python Cell Runner'
   requirements = ('codemirror', )
 
-  def __init__(self, report, vals, language, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, vals: list, language: str, width: tuple, height: tuple,
+               html_code: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Cell, self).__init__(report, vals, html_code=html_code, options=options,
                                css_attrs={"width": width, "height": height}, profile=profile)
     self.textarea = self.page.ui.texts.code(vals, language, height=height, options=options)
@@ -285,7 +289,8 @@ class Code(Html.Html):
   requirements = ('codemirror', )
   _option_cls = OptCodeMirror.OptionsCode
 
-  def __init__(self, report, vals, color, width, height, html_code, options, helper, profile):
+  def __init__(self, report: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
+               html_code: Optional[str], options: Optional[dict], helper: str, profile: Optional[Union[dict, bool]]):
     super(Code, self).__init__(report, vals, html_code=html_code, options=options,
                                css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
@@ -443,7 +448,8 @@ class Code(Html.Html):
 class Tags(Html.Html):
   name = 'Tags'
 
-  def __init__(self, report, vals, title, icon, size, width, height, html_code, profile):
+  def __init__(self, report: primitives.PageModel, vals: list, title: str, icon: str, size: tuple, width: tuple,
+               height: tuple, html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile)
     self.title, self.icon = title, icon
@@ -502,7 +508,8 @@ class MarkdownReader(Html.Html):
   requirements = ('highlight.js', 'showdown')
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, vals, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, vals: list, width: tuple, height: tuple, html_code: Optional[str],
+               options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(MarkdownReader, self).__init__(report, vals, html_code=html_code, profile=profile, options=options,
                                          css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.actions = []

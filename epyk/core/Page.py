@@ -3,7 +3,7 @@ import json
 import collections
 import time
 import inspect
-from typing import Union, Optional, Type
+from typing import Union, Optional
 
 try:
   basestring
@@ -332,7 +332,7 @@ class Report:
     return self._theme
 
   @theme.setter
-  def theme(self, theme: Type[themes.Theme.ThemeDefault]):
+  def theme(self, theme: themes.Theme.ThemeDefault):
     if isinstance(theme, dict):
       self._theme = themes.Theme.ThemeCustom()
       self._theme = theme

@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import Union, Optional, Type, List, Any
+from typing import Union, Optional, Any
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
@@ -27,7 +28,9 @@ class ProgressBar(Html.Html):
   name = 'Progress Bar'
   _option_cls = OptSliders.OptionsProgBar
 
-  def __init__(self, report, number, total, width, height, helper, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, number: int, total, width: tuple,
+               height: tuple, helper: Optional[str], options: Optional[dict], html_code: Optional[str],
+               profile: Optional[Union[dict, bool]]):
     options['max'] = total
     super(ProgressBar, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
@@ -101,7 +104,7 @@ class ProgressBar(Html.Html):
     return self._js
 
   @property
-  def dom(self) -> JsHtml.JsHtmlProgressBar:
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
     """
     Description:
     ------------
@@ -110,7 +113,7 @@ class ProgressBar(Html.Html):
 
     :return: A Javascript Dom object
 
-    :rtype: JsHtml.JsHtmlProgressBar
+    :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
@@ -224,7 +227,8 @@ class Dialog(Html.Html):
   name = 'Menu'
   _option_cls = OptSliders.OptionDialog
 
-  def __init__(self, report, text, width, height, helper, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, text: str, width: tuple, height: tuple, helper: str,
+               options: Optional[dict], html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
                                  profile=profile, options=options)
     self.add_helper(helper)
@@ -313,7 +317,9 @@ class Slider(Html.Html):
   _option_cls = OptSliders.OptionsSlider
   is_range = False
 
-  def __init__(self, report, number, min_val, max_val, width, height, helper, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, number: int, min_val: int, max_val: int,
+               width: tuple, height: tuple, helper: Optional[str], options: Optional[dict],
+               html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     options.update({'max': max_val, 'min': min_val})
     super(Slider, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
@@ -679,7 +685,8 @@ class OptionsBar(Html.Html):
   name = 'Options'
   _option_cls = OptSliders.OptionBar
 
-  def __init__(self, report, records, width, height, color, options, profile):
+  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, color: str,
+               options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height},
                                      profile=profile, options=options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
@@ -725,7 +732,7 @@ class SignIn(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   name = 'SignIn'
 
-  def __init__(self, report, text, size, icon):
+  def __init__(self, report: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str]):
     super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
     self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
     self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
@@ -754,7 +761,7 @@ class Filters(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   _option_cls = OptList.OptionsTagItems
 
-  def __init__(self, report, items, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, items, width, height, html_code, helper, options, profile):
     super(Filters, self).__init__(report, items, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "min-height": height})
     self.input = self.page.ui.input()
@@ -849,7 +856,8 @@ class Filters(Html.Html):
       ["this.parentNode.remove()"] + js_funcs, toStr=True, profile=profile)
     return self
 
-  def append(self, value, category=None, name=None, disabled=False, fixed=False):
+  def append(self, value: Any, category: Optional[str] = None, name: Optional[str] = None,
+             disabled: bool = False, fixed: bool = False):
     """
     Description:
     -----------

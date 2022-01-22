@@ -8,6 +8,8 @@ Related Pages:
 
 		https://www.w3schools.com/Jsref/prop_win_localstorage.asp
 """
+from typing import Union, Optional, Any
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
@@ -21,7 +23,7 @@ from epyk.core.js.primitives import JsObject
 
 class JsUrl:
 
-  def createObjectURL(self, jsData):
+  def createObjectURL(self, data: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -32,15 +34,15 @@ class JsUrl:
 
     Attributes:
     ----------
-    :param jsData:
+    :param Union[primitives.JsDataModel, str] data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObject.JsObject.get("window.URL.createObjectURL(%s)" % jsData)
+    data = JsUtils.jsConvertData(data, None)
+    return JsObject.JsObject.get("window.URL.createObjectURL(%s)" % data)
 
 
 class JsLocalStorage:
 
-  def key(self, i: int):
+  def key(self, i: Union[primitives.JsDataModel, int]):
     """
     Description:
     ------------
@@ -59,7 +61,7 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param int i: A Number representing the index of the key you want to get the name of.
+    :param Union[primitives.JsDataModel, int] i: A Number representing the index of the key you want to get the name of.
 
     :return: A String, representing the name of the specified key
     """
@@ -94,7 +96,7 @@ class JsLocalStorage:
     """
     return self.getItem(item)
 
-  def setItem(self, key: str, data):
+  def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
     """
     Description:
     ------------
@@ -113,8 +115,8 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param str key: A String specifying the name of the key you want to set the value of.
-    :param data: A String specifying the value of the key you want to set the value of.
+    :param Union[primitives.JsDataModel, str] key: A String specifying the name of the key you want to set the value of.
+    :param Aby data: A String specifying the value of the key you want to set the value of.
 
     :return: A String, representing the inserted value.
     """
@@ -122,7 +124,7 @@ class JsLocalStorage:
     data = JsUtils.jsConvertData(data, None)
     return JsObject.JsObject("localStorage.setItem(%s, %s)" % (key, data))
 
-  def getItem(self, key: str):
+  def getItem(self, key: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -141,14 +143,14 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param str key: A String specifying the name of the key you want to get the value of.
+    :param Union[primitives.JsDataModel, str] key: A String specifying the name of the key you want to get the value of.
 
     :return: A String, representing the value of the specified key.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("localStorage.getItem(%s)" % key)
 
-  def removeItem(self, key: str):
+  def removeItem(self, key: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -167,7 +169,7 @@ class JsLocalStorage:
 
     Attributes:
     ----------
-    :param str key: A String specifying the name of the item you want to remove.
+    :param Union[primitives.JsDataModel, str] key: A String specifying the name of the item you want to remove.
 
     :return: Void
     """
@@ -210,7 +212,7 @@ class JsSessionStorage:
     https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
   """
 
-  def key(self, i: int):
+  def key(self, i: Union[primitives.JsDataModel, int]):
     """
     Description:
     ------------
@@ -218,7 +220,7 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param int i: The key number.
+    :param Union[primitives.JsDataModel, int] i: The key number.
     """
     i = JsUtils.jsConvertData(i, None)
     return JsObject.JsObject("sessionStorage.key(%s)" % i)
@@ -251,7 +253,7 @@ class JsSessionStorage:
     """
     return self.getItem(item)
 
-  def setItem(self, key: str, data):
+  def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
     """
     Description:
     ------------
@@ -270,14 +272,14 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param str key: The key used to store the data in the session cache.
-    :param data:
+    :param Union[primitives.JsDataModel, str] key: The key used to store the data in the session cache.
+    :param Any data:
     """
     key = JsUtils.jsConvertData(key, None)
     data = JsUtils.jsConvertData(data, None)
     return JsObject.JsObject("sessionStorage.setItem(%s, %s)" % (key, data))
 
-  def getItem(self, key: str):
+  def getItem(self, key: Union[primitives.JsDataModel, str]):
     """
     Description:
     ------------
@@ -292,7 +294,7 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param str key:
+    :param Union[primitives.JsDataModel, str] key:
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("sessionStorage.getItem(%s)" % key)
@@ -404,7 +406,7 @@ class JsHistory:
     """
     return JsFncs.JsFunction("window.history.forward()")
 
-  def go(self, number: int):
+  def go(self, number: Union[primitives.JsDataModel, int]):
     """
     Description:
     ------------
@@ -416,7 +418,8 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param int number: The parameter can either be a number which goes to the URL within the specific position (-1 goes back one page, 1 goes forward one page), or a string.
+    :param Union[primitives.JsDataModel, int] number: The parameter can either be a number which goes to the URL within
+    the specific position (-1 goes back one page, 1 goes forward one page), or a string.
 
     :return: The Javascript String to be added to the page
     """
@@ -521,14 +524,15 @@ class JsHistory:
 
 class JsWindowEvent:
 
-  def addEventListener(self, eventType, jsFncs, windowId="window", subEvents=None, profile=False):
+  def addEventListener(self, eventType: Union[primitives.JsDataModel, str], jsFncs, windowId="window",
+                       subEvents=None, profile=False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType:
+    :param Union[primitives.JsDataModel, str] eventType:
     :param jsFncs:
     :param windowId:
     :param subEvents: List of names you want your underlying function to have as arguments.
@@ -748,21 +752,22 @@ class JsWindow:
     """
     return JsWindowEvent()
 
-  def addEventListener(self, eventType, jsFncs, windowId="window", profile=False):
+  def addEventListener(self, event_type: Union[primitives.JsDataModel, str], js_funcs: Union[primitives.JsDataModel, str],
+                       window_id: str = "window", profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param eventType:
-    :param jsFncs:
-    :param windowId: String. Optional. The JavaScript window object reference variable.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[primitives.JsDataModel, str] event_type:
+    :param Union[primitives.JsDataModel, str] js_funcs:
+    :param str window_id: Optional. The JavaScript window object reference variable.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    eventType = JsUtils.jsConvertData(eventType, None)
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (windowId, eventType, jsFncs))
+    event_type = JsUtils.jsConvertData(event_type, None)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (window_id, event_type, js_funcs))
 
   def open(self, url, name="_self", specs=None, replace=None, windowId="window"):
     """

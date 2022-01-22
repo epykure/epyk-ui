@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional, Any
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
@@ -12,7 +13,8 @@ class ExternalLink(Html.Html):
   name = 'External link'
   _option_cls = OptText.OptionsLink
 
-  def __init__(self, report, text, url, icon, helper, height, decoration, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, text: str, url: str, icon: str, helper: str, height: tuple,
+               decoration: bool, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(ExternalLink, self).__init__(report, {"text": text, "url": url}, html_code=html_code, options=options,
                                        css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
@@ -66,7 +68,7 @@ class ExternalLink(Html.Html):
         htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
       else {htmlObj.innerHTML = text}; if(typeof data.url !== 'undefined'){htmlObj.href = data.url}'''
 
-  def anchor(self, component: Type[Html.Html]):
+  def anchor(self, component: Html.Html):
     """
     Description:
     ------------
@@ -75,7 +77,7 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: A link to this HTML component.
+    :param Html.Html component: A link to this HTML component.
     """
     self.val["url"] = "#%s" % component.htmlCode
     self.options.url = "#%s" % component.htmlCode
@@ -98,7 +100,7 @@ class ExternalLink(Html.Html):
     self.style.css.color = color
     return self
 
-  def build(self, data=None, options: Optional[dict] = None,
+  def build(self, data: Optional[Union[str, primitives.JsDataModel]] = None, options: Optional[dict] = None,
             profile: Optional[Union[bool, dict]] = False, component_id: Optional[str] = None):
     """
     Description:
@@ -107,7 +109,7 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param data: String | object. The component expected content.
+    :param Optional[Union[str, primitives.JsDataModel]] data: The component expected content.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param Optional[str] component_id: Optional. The component reference (the htmlCode).
@@ -127,7 +129,8 @@ class DataLink(Html.Html):
   name = 'Data link'
   filename = "Download"
 
-  def __init__(self, report, text, value, width, height, fmt, options, profile):
+  def __init__(self, report: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,
+               options: Optional[str], profile: Optional[Union[bool, dict]]):
     super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile, options=options,
                                    css_attrs={"width": width, 'height': height})
     self.format = fmt

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type, List
+from typing import Union, Optional, List
+from epyk.core.py import primitives
+
 from epyk.core.html.options import OptText
 
 from epyk.core.html import Html
@@ -12,7 +14,8 @@ class HtmlGeneric(Html.Html):
   name = 'tag'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, tag, text, width, height, html_code, tooltip, options, profile):
+  def __init__(self, report: primitives.PageModel, tag: str, text: primitives.HtmlModel, width: tuple, height: tuple,
+               html_code: Optional[str], tooltip: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self.tag = tag
     super(HtmlGeneric, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                       options=options, profile=profile)
@@ -39,7 +42,7 @@ class HtmlGeneric(Html.Html):
 
     return self.val[i]
 
-  def __add__(self, components: Union[List[Type[Html.Html]], Type[Html.Html]]):
+  def __add__(self, components: Union[List[Html.Html], Html.Html]):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     if not isinstance(components, list):

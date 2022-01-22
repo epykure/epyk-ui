@@ -9,7 +9,9 @@ Related Pages:
 
 """
 
-from typing import Any, Optional, List
+from typing import Any, Optional, List, Union
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 
 # All the predefined variable types
@@ -45,7 +47,7 @@ class URLSearchParams:
       "(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else { return pmt }})()" % (
         self.queryString, key, default))
 
-  def getAll(self, key: str):
+  def getAll(self, key: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -57,12 +59,12 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param str key: The url parameter.
+    :param Union[str, primitives.JsDataModel] key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.queryString, key))
 
-  def has(self, key: str):
+  def has(self, key: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -74,12 +76,12 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param str key: The url parameter.
+    :param Union[str, primitives.JsDataModel] key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.queryString, key))
 
-  def append(self, key: str, value: Any):
+  def append(self, key: Union[str, primitives.JsDataModel], value: Any):
     """
     Description:
     ------------
@@ -91,7 +93,7 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param str key: The url parameter.
+    :param Union[str, primitives.JsDataModel] key: The url parameter.
     :param Any value: The value to be appended to the URL.
     """
     key = JsUtils.jsConvertData(key, None)
@@ -241,7 +243,7 @@ class JsLocation:
     """
     return JsString.JsString("location.origin", isPyData=False)
 
-  def href(self, href: Optional[str] = None, secured: bool = False):
+  def href(self, href: Union[str, primitives.JsDataModel] = None, secured: bool = False):
     """
     Description:
     ------------
@@ -257,7 +259,7 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param Optional[str] href:Optional. Set the href property.
+    :param Union[str, primitives.JsDataModel] href: Optional. Set the href property.
     :param bool secured: Optional.
 
     :return: A String, representing the entire URL of the page, including the protocol (like http://).
@@ -269,8 +271,8 @@ class JsLocation:
       href = r"http:\\%s" % href if not secured else r"https:\\%s" % href
     return JsObject.JsObject("location.href = %s" % JsUtils.jsConvertData(href, None))
 
-  def open_new_tab(self, url: str, name: str = "_blank", specs: Optional[str] = None, replace=None,
-                   windowId: str = "window", secured: bool = False):
+  def open_new_tab(self, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
+                   specs: Union[str, primitives.JsDataModel] = None, replace: Union[str, primitives.JsDataModel] = None, windowId: str = "window", secured: bool = False):
     """
     Description:
     ------------
@@ -286,10 +288,10 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param str url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
-    :param str name: Optional. Specifies the target attribute or the name of the window. Default _blank.
-    :param Optional[str] specs: Optional. A comma-separated list of items, no whitespaces.
-    :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
+    :param Union[str, primitives.JsDataModel] url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
+    :param Union[str, primitives.JsDataModel] name: Optional. Specifies the target attribute or the name of the window. Default _blank.
+    :param Union[str, primitives.JsDataModel] specs: Optional. A comma-separated list of items, no whitespaces.
+    :param Union[str, primitives.JsDataModel] replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
     :param str windowId: The JavaScript window object
     :param bool secured:
     """
@@ -304,7 +306,7 @@ class JsLocation:
     replace = JsUtils.jsConvertData(replace, None)
     return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (windowId, url, name, specs, replace))
 
-  def download(self, url: str, name: str = 'download'):
+  def download(self, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = 'download'):
     """
     Description:
     ------------
@@ -312,8 +314,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param str url: The url of the image.
-    :param str name: Optional. The name of the file.
+    :param Union[str, primitives.JsDataModel] url: The url of the image.
+    :param Union[str, primitives.JsDataModel] name: Optional. The name of the file.
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
@@ -366,13 +368,11 @@ class JsLocation:
     :param bool forceGet: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
           true - Reloads the current page from the server.
-
-    :return: Void
     """
     forceGet = JsUtils.jsConvertData(forceGet, None)
     return JsFncs.JsFunction("location.reload(%s)" % forceGet)
 
-  def assign(self, url: str):
+  def assign(self, url: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -384,14 +384,12 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param str url: Specifies the URL of the page to navigate to.
-
-    :return: Void
+    :param Union[str, primitives.JsDataModel] url: Specifies the URL of the page to navigate to.
     """
     jsData = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.assign(%s)" % jsData)
 
-  def replace(self, url: str, secured: bool = False):
+  def replace(self, url: Union[str, primitives.JsDataModel], secured: bool = False):
     """
     Description:
     ------------
@@ -407,10 +405,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param str url: Specifies the URL of the page to navigate to.
+    :param Union[str, primitives.JsDataModel] url: Specifies the URL of the page to navigate to.
     :param bool secured: Optional. If the http is missing. This will be used to fix the url.
-
-    :return: Void
     """
     if url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
@@ -442,7 +438,8 @@ class JsLocation:
       var form = document.createElement("form"); form.method = "%s"; form.target = "%s"; form.action = "%s"; %s;
       document.body.appendChild(form); form.submit()''' % (method, target, url, "".join(inputs))
 
-  def getUrlFromData(self, data: dict, options: Optional[dict] = None):
+  def getUrlFromData(self, data: Union[dict, primitives.JsDataModel],
+                     options: Optional[Union[dict, primitives.JsDataModel]] = None):
     """
     Description:
     ------------
@@ -454,8 +451,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param dict data: Input data to be converted.
-    :param options: Dictionary | JsData. Optional. Blob definition properties.
+    :param Union[dict, primitives.JsDataModel] data: Input data to be converted.
+    :param Optional[Union[dict, primitives.JsDataModel]] options: Optional. Blob definition properties.
     """
     data = JsUtils.jsConvertData(data, None)
     if options is not None:
@@ -464,7 +461,8 @@ class JsLocation:
 
     return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s]))" % data)
 
-  def getUrlFromArrays(self, data, options: Optional[dict] = None):
+  def getUrlFromArrays(self, data: Union[list, primitives.JsDataModel],
+                       options: Optional[Union[dict, primitives.JsDataModel]] = None):
     """
     Description:
     ------------
@@ -472,8 +470,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param data: List | JsObject. A JavaScript array.
-    :param options: Dictionary | JsData. Optional. Blob definition properties.
+    :param Union[list, primitives.JsDataModel] data: A JavaScript array.
+    :param Optional[Union[dict, primitives.JsDataModel]] options: Optional. Blob definition properties.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObject.JsObject.get(r'''

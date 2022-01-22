@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 
 from epyk.core import html
 from epyk.interfaces import Arguments

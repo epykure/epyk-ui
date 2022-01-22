@@ -4,7 +4,8 @@
 # TODO PanelSliding: find a way to introduce CSS transform for the panel display
 
 import logging
-from typing import Union, Optional, List, Type
+from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.interfaces import Arguments
 
@@ -25,7 +26,10 @@ from epyk.core.css.styles import GrpClsContainer
 class Panel(Html.Html):
   name = 'Panel'
 
-  def __init__(self, report, components, title, color, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, components: Union[List[Html.Html], Html.Html],
+               title: Optional[str], color: Optional[str], width: Optional[tuple], height: Optional[tuple],
+               html_code: Optional[str], helper: Optional[str], options: Optional[dict],
+               profile: Optional[Union[dict, bool]]):
     if isinstance(components, list) and components:
       for component in components:
         if hasattr(component, 'options'):
@@ -74,7 +78,7 @@ class Panel(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self.page)
     return self._dom
 
-  def extend(self, components: List[Type[Html.Html]]):
+  def extend(self, components: List[Html.Html]):
     """
     Description:
     ------------
@@ -82,7 +86,7 @@ class Panel(Html.Html):
 
     Attributes:
     ----------
-    :param List[Type[Html.Html]] components: The list of components
+    :param List[Html.Html] components: The list of components
     """
     for component in components:
       self.add(component)
@@ -159,7 +163,9 @@ class PanelSplit(Html.Html):
   requirements = ('jqueryui', )
   name = 'Panel Split'
 
-  def __init__(self, report, width, height, left_width, left_obj, right_obj, resizable, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, width: Optional[tuple], height: Optional[tuple],
+               left_width: Optional[tuple], left_obj, right_obj, resizable: bool, helper,
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(PanelSplit, self).__init__(report, None, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
     self.left_width, self.resizable = left_width, resizable
@@ -176,7 +182,7 @@ class PanelSplit(Html.Html):
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
     self.add_helper(helper)
 
-  def left(self, component: Type[Html.Html]):
+  def left(self, component: Html.Html):
     """
     Description:
     ------------
@@ -189,13 +195,13 @@ class PanelSplit(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: An HTML component.
+    :param Html.Html component: An HTML component.
     """
     component.options.managed = False
     self.html_left = component
     return self
 
-  def right(self, component: Type[Html.Html]):
+  def right(self, component: Html.Html):
     """
     Description:
     ------------
@@ -208,7 +214,7 @@ class PanelSplit(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: An HTML component.
+    :param Html.Html component: An HTML component.
     """
     component.options.managed = False
     self.html_right = component
@@ -234,7 +240,10 @@ class PanelSlide(Panel):
   name = 'Slide Panel'
   _option_cls = OptPanel.OptionPanelSliding
 
-  def __init__(self, report, components, title, color, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]],
+               title: Union[Html.Html, str], color: Optional[str], width: Optional[tuple],
+               height: Optional[tuple], html_code: Optional[str], helper,
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     self.requirements = (cssDefaults.ICON_FAMILY, )
     super(PanelSlide, self).__init__(
       report, components, None, color, width, height, html_code, helper, options, profile)
@@ -329,7 +338,7 @@ class PanelSlide(Panel):
       self.options.icon_expanded.split(" ")[-1]) >= 0, js_funcs, profile=profile).toStr()]
     return self
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     self.val[1] += component
     return self
@@ -362,8 +371,10 @@ class Div(Html.Html):
   name = 'Simple Container'
   _option_cls = OptPanel.OptionsDiv
 
-  def __init__(self, report, components, label, color, width, icon, height, editable, align, padding, html_code, tag,
-               helper, options, profile):
+  def __init__(self, report: primitives.PageModel, components: List[Html.Html], label: Optional[str],
+               color: Optional[str], width: Optional[tuple], icon: Optional[str], height: Optional[tuple],
+               editable: bool, align: str, padding: Optional[str], html_code: Optional[str],
+               tag: str, helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Div, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
                               css_attrs={"color": color, "width": width, "height": height})
     if not isinstance(components, list):
@@ -446,7 +457,7 @@ class Div(Html.Html):
       self._dom = JsHtml.JsHtmlRich(self, report=self.page)
     return self._dom
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if isinstance(component, list):
       component = self.page.ui.row(component, position=self.options.get(None, "position"))
@@ -464,7 +475,7 @@ class Div(Html.Html):
       self.components[component.htmlCode] = component
     return self
 
-  def insert(self, n: int, component: Type[Html.Html]):
+  def insert(self, n: int, component: Html.Html):
     """
     Description:
     ------------
@@ -473,7 +484,7 @@ class Div(Html.Html):
     Attributes:
     ----------
     :param int n: The expected position of the component in the list.
-    :param Type[Html.Html] component: The component to be added to the underlying list.
+    :param Html.Html component: The component to be added to the underlying list.
     """
     if isinstance(component, list):
       component = self.page.ui.row(component)
@@ -488,7 +499,7 @@ class Div(Html.Html):
     self.components[component.htmlCode] = component
     return self
 
-  def extend(self, components: Type[Html.Html]):
+  def extend(self, components: List[Html.Html]):
     """
     Description:
     ------------
@@ -496,7 +507,7 @@ class Div(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] components: The list of components.
+    :param List[Html.Html] components: The list of components.
     """
     for component in components:
       self.add(component)
@@ -526,8 +537,8 @@ class Div(Html.Html):
       self._styleObj = GrpClsContainer.ClassDiv(self)
     return self._styleObj
 
-  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
-            component_id: Optional[str] = None):
+  def build(self, data: Optional[Union[str, primitives.JsDataModel]] = None, options: Optional[dict] = None,
+            profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
     """
     Description:
     ------------
@@ -536,7 +547,7 @@ class Div(Html.Html):
 
     Attributes:
     ----------
-    :param data: String. Optional. A String corresponding to a JavaScript object.
+    :param Optional[Union[str, primitives.JsDataModel]] data: Optional. A String corresponding to a JavaScript object.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param Optional[str] component_id: Optional. A DOM component reference in the page.
@@ -572,7 +583,10 @@ class Div(Html.Html):
 class Td(Html.Html):
   name = 'Cell'
 
-  def __init__(self, report, components, header, position, width, height, align, options, profile):
+  def __init__(self, report: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
+               header: bool, position: Optional[str], width: Optional[tuple],
+               height: Optional[tuple], align: Optional[str], options: Optional[dict],
+               profile: Optional[Union[dict, bool]]):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
     super(Td, self).__init__(report, [], profile=profile,
                              css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
@@ -627,7 +641,10 @@ class Td(Html.Html):
 class Tr(Html.Html):
   name = 'Column'
 
-  def __init__(self, report, components, header, position, width, height, align, options, profile):
+  def __init__(self, report: primitives.PageModel,
+               components: Optional[Union[Html.Html, List[Html.Html]]],
+               header, position, width: Optional[tuple], height: Optional[tuple],
+               align: Optional[str], options: Optional[dict], profile):
     self.position, self.header = position, header
     super(Tr, self).__init__(report, [], profile=profile,
                              css_attrs={"width": width, "height": height, 'text-align': align})
@@ -637,7 +654,7 @@ class Tr(Html.Html):
         self.__add__(component)
     self.style.justify_content = self.position
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """
     Description:
     -----------
@@ -645,7 +662,7 @@ class Tr(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: The underlying HTML component to be added this container.
+    :param Html.Html component: The underlying HTML component to be added this container.
     """
     if not isinstance(component, Td):
       if not isinstance(component, list):
@@ -680,7 +697,9 @@ class Caption(Html.Html):
   name = 'Table Caption'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, text, color, align, width, height, html_code, tooltip, options, profile):
+  def __init__(self, report: primitives.PageModel, text: Optional[str], color: Optional[str], align: Optional[str],
+               width: Optional[tuple], height: Optional[tuple], html_code: Optional[str],
+               tooltip: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Caption, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
     if tooltip is not None:
@@ -706,7 +725,8 @@ class TSection(Html.Html):
   name = 'Table Section'
   _option_cls = OptPanel.OptionPanelTable
 
-  def __init__(self, report, type, rows=None, options=None, profile=None):
+  def __init__(self, report: primitives.PageModel, type: str, rows: Optional[list] = None,
+               options:  Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
     super(TSection, self).__init__(report, [], options=options, profile=profile)
     self.__section = type
     if rows is not None:
@@ -750,7 +770,8 @@ class Table(Html.Html):
   name = 'Table'
   _option_cls = OptPanel.OptionPanelTable
 
-  def __init__(self, report, rows, width, height, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, rows, width: Optional[tuple], height: Optional[tuple],
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Table, self).__init__(report, [], css_attrs={
       "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap', 'border-collapse': 'collapse',
       'box-sizing': 'border-box'}, profile=profile, options=options)
@@ -780,7 +801,7 @@ class Table(Html.Html):
     """
     return super().options
 
-  def __add__(self, row_data):
+  def __add__(self, row_data: Union[Tr, str]):
     """ Add items to a container """
     if isinstance(row_data, Tr):
       row = row_data
@@ -833,8 +854,9 @@ class Table(Html.Html):
     self += Tr(self.page, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
     return cell
 
-  def add_caption(self, text, color=None, align=None, width=(100, "%"), height=(100, "%"),
-                  html_code=None, tooltip=None, options=None, profile=None):
+  def add_caption(self, text: str, color: Optional[str] = None, align: Optional[str] = None, width: tuple = (100, "%"),
+                  height: tuple = (100, "%"), html_code: Optional[str] = None, tooltip: Optional[str] = None,
+                  options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -904,7 +926,7 @@ class Table(Html.Html):
     for c in cells:
       yield c
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Optional[Tr]:
     """
     Description:
     ------------
@@ -912,12 +934,10 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param int i: Integer. The internal row based on the index.
-
-    :rtype: Tr
+    :param int i: The internal row based on the index.
     """
     if not self.body.val:
-      return []
+      return None
 
     return self.body.val[i]
 
@@ -969,7 +989,7 @@ class Col(Html.Html):
     """
     return super().options
 
-  def add(self, component: Type[Html.Html]):
+  def add(self, component: Html.Html):
     """
     Description:
     ------------
@@ -977,7 +997,7 @@ class Col(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component:
+    :param Html.Html component:
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)
@@ -1660,13 +1680,13 @@ class Form(Html.Html):
     for i, component in enumerate(components):
       self.__add__(component)
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     component.css({'text-align': 'left'})
     super(Form, self).__add__(component)
     return self
 
-  def extend(self, components: List[Type[Html.Html]]):
+  def extend(self, components: List[Html.Html]):
     """
     Description:
     ------------
@@ -1674,7 +1694,7 @@ class Form(Html.Html):
 
     Attributes:
     ----------
-    :param List[Type[Html.Html]] components: The list of components.
+    :param List[Html.Html] components: The list of components.
     """
     for component in components:
       self.add(component)
@@ -1808,7 +1828,7 @@ class Modal(Html.Html):
     self.page.js.onReady(self.page.js.window.events.addClickListener(
       self.page.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), subEvents=['event']))
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     # Has to be defined here otherwise it is set too late
     component.options.managed = False
@@ -2033,7 +2053,7 @@ class Header(Html.Html):
     """
     return super().options
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
@@ -2070,7 +2090,7 @@ class Section(Html.Html):
     """
     return super().options
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if self.options.inline:
       component.style.css.display = 'inline-block'

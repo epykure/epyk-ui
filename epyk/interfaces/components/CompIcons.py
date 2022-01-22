@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, List
+
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.interfaces import Arguments
@@ -17,8 +19,9 @@ class Icons:
   def get(self):
     return JsFontAwesome
 
-  def awesome(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'),
-              html_code=None, options=None, profile=None):
+  def awesome(self, icon: str, text: str = None, tooltip: str = None, position: str = None, width: tuple = (25, 'px'),
+              height: tuple = (25, 'px'), html_code: str = None, options: dict = None,
+              profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -63,8 +66,9 @@ class Icons:
     html.Html.set_component_skin(html_edit)
     return html_edit
 
-  def fluent(self, icon, text=None, tooltip=None, position=None, width=(25, 'px'), height=(25, 'px'), html_code=None,
-             options=None, profile=None):
+  def fluent(self, icon: str, text: str = None, tooltip: str = None, position: str = None, width: tuple = (25, 'px'),
+             height: tuple = (25, 'px'), html_code: str = None, options: dict = None,
+             profile: Union[dict, bool] = None):
     """
     Description:
     ------------

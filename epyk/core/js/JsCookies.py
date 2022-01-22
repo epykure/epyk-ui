@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
@@ -10,7 +12,7 @@ class JsCookies:
   class __internal:
     _context = {}
 
-  def __init__(self, src=None):
+  def __init__(self, src: Optional[primitives.PageModel] = None):
     self.src = src if src is not None else self.__internal()
 
   def set(self, jsKey, jsData, jsDataKey=None, isPyData=True, jsFnc=None):

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 import json
 
 from epyk.core.html import Html
@@ -22,7 +23,8 @@ class Option(Html.Html):
   name = 'Select Option'
   builder_name = False
 
-  def __init__(self, report, value, text, icon, selected, options=None):
+  def __init__(self, report: primitives.PageModel, value, text: str, icon: Optional[str], selected: bool,
+               options: Optional[dict] = None):
     super(Option, self).__init__(report, text)
     self.set_attrs(name="value", value=value)
     if selected:
@@ -41,7 +43,7 @@ class Optgroup(Html.Html):
   name = 'Select Option'
   builder_name = False
 
-  def __init__(self, report, data, label):
+  def __init__(self, report: primitives.PageModel, data: list, label: str):
     super(Optgroup, self).__init__(report, data)
     self.set_attrs(name="label", value=label)
 
@@ -56,7 +58,8 @@ class Select(Html.Html):
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
-  def __init__(self, report, records, html_code, width, height, profile, multiple, options):
+  def __init__(self, report: primitives.PageModel, records: list, html_code: str, width: tuple, height: tuple,
+               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict]):
     super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
     self._vals, self.button_css = records, None
@@ -276,7 +279,8 @@ class Select(Html.Html):
 class Lookup(Select):
   requirements = ('bootstrap-select', )
 
-  def __init__(self, report, records, html_code, width, height, profile, multiple, options):
+  def __init__(self, report: primitives.PageModel, records: list, html_code: Optional[str], width: tuple, height: tuple,
+               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict]):
     super(Lookup, self).__init__(report, records, html_code, width, height, profile, multiple, options)
     self._jsStyles['lookups'] = records
 

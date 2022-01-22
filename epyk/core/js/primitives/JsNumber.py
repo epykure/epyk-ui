@@ -20,6 +20,8 @@ More examples can be found in the tests folder if needed.
 If necessary the tests folder can be updated in order to catch some specific regressions
 """
 
+from typing import Union, Optional, Any, List
+from epyk.core.py import primitives
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsMaths
@@ -122,7 +124,7 @@ class JsNumber(JsObject.JsObject):
     from epyk.core.js.primitives import JsBoolean
     return JsBoolean.JsBoolean("Number.isNaN(%s)" % self.varId, isPyData=False)
 
-  def add(self, n: float):
+  def add(self, n: Union[primitives.JsDataModel, float]):
     """
     Description:
     ------------
@@ -135,27 +137,25 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param float n: The number value.
+    :param Union[primitives.JsDataModel, float] n: The number value.
 
     :return: A new Python Javascript Number
     """
     return JsNumber("%s + %s" % (self.varId, n), isPyData=False)
 
-  def min(self, value: float):
+  def min(self, value: Union[primitives.JsDataModel, float]):
     """
     Description:
     ------------
     Add a cap to the value using the min function.
 
-    Usage::
-
     Attributes:
     ----------
-    :param float value: The maximum value for this object.
+    :param Union[primitives.JsDataModel, float] value: The maximum value for this object.
     """
     return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
-  def max(self, value: float):
+  def max(self, value: Union[primitives.JsDataModel, float]):
     """
     Description:
     ------------
@@ -165,11 +165,11 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param float value: The minimum value for this object.
+    :param Union[primitives.JsDataModel, float] value: The minimum value for this object.
     """
     return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
 
-  def sub(self, n: float):
+  def sub(self, n: Union[primitives.JsDataModel, float]):
     """
     Description:
     ------------
@@ -182,7 +182,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param float n: The number value.
+    :param Union[primitives.JsDataModel, float] n: The number value.
 
     :return: A new Python Javascript Number.
     """
@@ -206,7 +206,7 @@ class JsNumber(JsObject.JsObject):
     """
     return JsNumber("%s.toExponential()" % self.varId, isPyData=False)
 
-  def toFixed(self, digits: int = 2):
+  def toFixed(self, digits: Union[primitives.JsDataModel, int] = 2):
     """
     Description:
     ------------
@@ -222,7 +222,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
+    :param Union[primitives.JsDataModel, int] digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
 
     :return: A Javascript Number
     """
@@ -248,7 +248,7 @@ class JsNumber(JsObject.JsObject):
 
     return JsBoolean.JsBoolean("Number.isFinite(%s)" % self.varId, isPyData=False)
 
-  def toPrecision(self, n: int):
+  def toPrecision(self, n: Union[primitives.JsDataModel, int]):
     """
     Description:
     ------------
@@ -264,38 +264,38 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
+    :param Union[primitives.JsDataModel, int] n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
 
     :return: A Javascript Number
     """
     return JsNumber("%s.toPrecision(%s)" % (self.varId, n), isPyData=False)
 
-  def __add__(self, value: float):
+  def __add__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s + %s" % (self.varId, value), isPyData=False)
 
-  def __sub__(self, value: float):
+  def __sub__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s - %s" % (self.varId, value), isPyData=False)
 
-  def __iadd__(self, value: float):
+  def __iadd__(self, value: Union[primitives.JsDataModel, float]):
     # TODO: Fix this
     self.varData = "%s += %s" % (self.varData, value)
     return self
 
-  def __isub__(self, value: float):
+  def __isub__(self, value: Union[primitives.JsDataModel, float]):
     # TODO: Fix this
     self.varData = "%s -= %s" % (self.varData, value)
     return self
 
-  def __mul__(self, value: float):
+  def __mul__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s * %s" % (self.varId, value), isPyData=False)
 
-  def __truediv__(self, value: float):
+  def __truediv__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s / %s" % (self.varId, value), isPyData=False)
 
-  def __mod__(self, value: float):
+  def __mod__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s %%= %s" % (self.varId, value), isPyData=False)
 
-  def __pow__(self, value: float):
+  def __pow__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s = %s" % (self.varId, JsMaths.JsMaths.pow(self, value)))
 
   @classmethod
@@ -318,13 +318,11 @@ class JsNumber(JsObject.JsObject):
           return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
           ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
 
-  def formatMoney(self, jsObj, decPlaces: int = 0, countryCode: str = 'UK'):
+  def formatMoney(self, jsObj, decPlaces: Union[int, primitives.JsDataModel] = 0, countryCode: str = 'UK'):
     """
     Description:
     ------------
     Wrapper function.
-
-    Usage::
 
     Related Pages:
 

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
@@ -12,8 +14,9 @@ class Inputs:
   def __init__(self, ui):
     self.page = ui.page
 
-  def d_text(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
-             options=None, attrs=None, profile=None):
+  def d_text(self, text: str = "", placeholder: str = '',
+             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"),
+             html_code: str = None, options=None, attrs=None, profile=None):
     """
     Description:
     ------------
@@ -47,8 +50,9 @@ class Inputs:
     html.Html.set_component_skin(html_input)
     return html_input
 
-  def d_radio(self, flag=False, group_name=None, placeholder='', width=(100, "%"), height=(None, "px"), html_code=None,
-              options=None, attrs=None, profile=None):
+  def d_radio(self, flag: bool = False, group_name: str = None, placeholder: str = '',
+              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
+              options: dict = None, attrs: dict = None, profile: Union[bool, dict] =None):
     """
     Description:
     ------------

@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
 
 class KeyCode:
 
-  def __init__(self, component=None, source_event: Optional[str] = None, page=None):
+  def __init__(self, component: Optional[primitives.HtmlModel] = None, source_event: Optional[str] = None, page=None):
     self.__events_per_source, self._component, self.source_event = {}, component, source_event or component.dom.varId
     self._page = page or self._component.page
 

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
@@ -12,8 +14,8 @@ class Links:
   def __init__(self, ui):
     self.page = ui.page
 
-  def external(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False,
-               html_code=None, options=None, profile=None):
+  def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
+               height=(None, 'px'), decoration=False, html_code: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -59,8 +61,8 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def button(self, text="", url="", icon=None, helper=None, height=(None, 'px'), decoration=False, html_code=None,
-             options=None, profile=None):
+  def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None, height=(None, 'px'),
+             decoration: bool = False, html_code: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -100,8 +102,9 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'),
-           decoration=False, html_code=None, options=None, profile=None):
+  def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
+           helper: str = None, height=(None, 'px'), decoration: bool = False, html_code: str = None,
+           options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -145,7 +148,8 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def data(self, text, value, width=(None, '%'), height=(None, 'px'), fmt='txt', options=None, profile=None):
+  def data(self, text: str, value, width=(None, '%'), height=(None, 'px'), fmt: str = 'txt', options: dict = None,
+           profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -180,8 +184,9 @@ class Links:
     html.Html.set_component_skin(html_data)
     return html_data
 
-  def colored(self, text="", url="", icon=None, helper=None, color=None, height=(None, 'px'), decoration=False,
-              html_code=None, options=None, profile=None):
+  def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
+              height=(None, 'px'), decoration: bool = False, html_code: str = None, options: dict = None,
+              profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -223,8 +228,9 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def upload(self, url="#", text="", icon="upload", helper=None, height=(None, 'px'), decoration=False,
-             align="left", html_code=None, options=None, profile=None):
+  def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None, height=(None, 'px'),
+             decoration: bool = False, align: str = "left", html_code: str = None, options: dict = None,
+             profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -270,8 +276,9 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def download(self, url="#", text="", icon="download", helper=None, height=(None, 'px'), decoration=False,
-               align="left", html_code=None, options=None, profile=None):
+  def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
+               height=(None, 'px'), decoration: bool = False, align: str = "left", html_code: str = None,
+               options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------

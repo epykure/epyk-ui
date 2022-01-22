@@ -1,4 +1,7 @@
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 
 from epyk.core.js.packages import JsPackage
@@ -74,7 +77,7 @@ class ReadableStream(JsPackage):
     """
     return ReadableStream("%s.getReader()" % self.varId)
 
-  def pipeThrough(self, transformStream, options=None):
+  def pipeThrough(self, transformStream, options: dict = None):
     """
     Description:
     ------------
@@ -95,9 +98,9 @@ class ReadableStream(JsPackage):
     if options is None:
       return TransformStream("%s.pipeThrough(%s)" % (self.varId, transformStream))
 
-    return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId,transformStream, options))
+    return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId, transformStream, options))
 
-  def pipeTo(self, destination, options=None):
+  def pipeTo(self, destination, options: dict = None):
     """
     Description:
     ------------
@@ -177,7 +180,7 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     return JsObjects.JsPromise("%s.ready" % self.varId)
 
-  def abort(self, reason=None):
+  def abort(self, reason: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -220,7 +223,7 @@ class WritableStreamDefaultWriter(JsPackage):
     """
     return self.fnc_closure("%s.releaseLock()" % self.varId)
 
-  def write(self, chunk):
+  def write(self, chunk: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -254,7 +257,7 @@ class WritableStream(JsPackage):
     """
     return "%s.locked" % self.varId
 
-  def abort(self, reason=None):
+  def abort(self, reason: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------

@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional, Union, List, Any
+from epyk.core.py import primitives
+
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsBoolean
@@ -38,7 +41,8 @@ class DataReduce:
   val   :
   index :
   """
-  rVal, val, index = JsObject.JsObject("r"), JsNumber.JsNumber("o", isPyData=False), JsNumber.JsNumber("i", isPyData=False)
+  rVal, val = JsObject.JsObject("r"), JsNumber.JsNumber("o", isPyData=False)
+  index = JsNumber.JsNumber("i", isPyData=False)
 
 
 class DataSort:
@@ -72,8 +76,9 @@ class DataAll:
 
 
 class ContainerData:
-  def __init__(self, report, schema):
-    self._report, self._schema = report, schema
+
+  def __init__(self, report: primitives.PageModel, schema):
+    self.page, self._schema = report, schema
 
   @property
   def fnc(self):
@@ -82,7 +87,7 @@ class ContainerData:
     -----------
     All the predefined transformation functions.
     """
-    return JsFncs.FncOnRecords(self._report._props, self._schema)
+    return JsFncs.FncOnRecords(self.page._props, self._schema)
 
   @property
   def to(self):
@@ -91,7 +96,7 @@ class ContainerData:
     -----------
     All the possible object transformation to deal with external packages
     """
-    return JsFncs.FncToObject(self._report._props, self._schema)
+    return JsFncs.FncToObject(self.page._props, self._schema)
 
   @property
   def filter(self):
@@ -100,32 +105,37 @@ class ContainerData:
     -----------
 
     """
-    return JsFncs.FncFiltere(self, self._report._props, self._schema)
+    return JsFncs.FncFiltere(self, self.page._props, self._schema)
 
 
-class RawData:
+class RawData(primitives.JsDataModel):
 
-  def __init__(self, report, records=None, profile=False):
-    self._report, self._data_id = report, id(records)
-    if "data" not in self._report._props:
-      self._report._props["data"] = {"sources": {}, "schema": {}}
-    self._report._props["data"]["sources"][self._data_id] = records
-    self._report._props["data"]["schema"][self._data_id] = {'fncs': [], "profile": profile}
-    self._data = self._report._props["data"]["sources"][self._data_id]
-    self._schema = self._report._props["data"]["schema"][self._data_id]
+  def __init__(self, report: primitives.PageModel, records=None, profile: bool = False):
+    self.page, self._data_id = report, id(records)
+    if "data" not in self.page._props:
+      self.page._props["data"] = {"sources": {}, "schema": {}}
+    self.page._props["data"]["sources"][self._data_id] = records
+    self.page._props["data"]["schema"][self._data_id] = {'fncs': [], "profile": profile}
+    self._data = self.page._props["data"]["sources"][self._data_id]
+    self._schema = self.page._props["data"]["schema"][self._data_id]
 
   @classmethod
-  def get(cls, report, varName):
+  def get(cls, report: primitives.PageModel, varName: str):
     """
     Description:
     -----------
-    Return the internal RawData object
+    Return the internal RawData object.
+
+    Attributes:
+    ----------
+    :param primitives.PageModel report: The main page object.
+    :param str varName: The JavaScript variable name.
 
     :return: A internal data object
     """
     return RawData(report, None)
 
-  def setId(self, jqId):
+  def setId(self, jq_id: str = None):
     """
     Description:
     -----------
@@ -133,14 +143,14 @@ class RawData:
 
     Attributes:
     ----------
-    :param jqId:
+    :param str jq_id: The JQuery Identifier.
 
     :return: The Python object
     """
-    self.jqId = jqId if jqId is not None else self._jqId
+    self.jqId = jq_id if jq_id is not None else self._jqId
     return self
 
-  def attach(self, html_obj, profile=False):
+  def attach(self, html_obj: primitives.HtmlModel, profile: Optional[Union[bool, dict]] = False):
     """
     Description:
     -----------
@@ -151,29 +161,29 @@ class RawData:
 
     Attributes:
     ----------
-    :param html_obj:
-    :param profile:
+    :param primitives.HtmlModel html_obj:
+    :param Optional[Union[bool, dict]] profile: Optional.
     """
     self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {
       'fncs': [], 'outs': None, "profile": profile}
-    return ContainerData(self._report, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
+    return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
 
-  def toTsv(self, colNames=None, profile=False):
+  def toTsv(self, col_names: list = None, profile: Optional[Union[bool, dict]] = False):
     """
     Description:
     -----------
 
     :return: A String with the Javascript function to be used
     """
-    colNames = colNames or list(self._schema['keys'] | self._schema['values'])
-    jsFncs = self._report._props.setdefault('js', {}).setdefault('functions', {})
-    if "ToTsv" in jsFncs:
-      jsFncs["ToTsv"] = {'content': '''var result = []; var tmp = []; var row = [];
+    col_names = col_names or list(self._schema['keys'] | self._schema['values'])
+    js_funcs = self.page._props.setdefault('js', {}).setdefault('functions', {})
+    if "ToTsv" in js_funcs:
+      js_funcs["ToTsv"] = {'content': '''var result = []; var tmp = []; var row = [];
                 colNames.forEach(function(col){row.push(col)}); tmp.push(row.join('\t'));
                 data.forEach(function(rec){
                   row = []; colNames.forEach(function(col){row.push(rec[col])});
-                  tmp.push(row.join('\t'))}); result = tmp.join('\\n'); return result''', 'pmt': colNames}
-    return "ToTsv(%s, %s)" % (self.jqId, colNames)
+                  tmp.push(row.join('\t'))}); result = tmp.join('\\n'); return result''', 'pmt': col_names}
+    return "ToTsv(%s, %s)" % (self.jqId, col_names)
 
   @property
   def fnc(self):
@@ -182,7 +192,7 @@ class RawData:
     -----------
 
     """
-    return JsFncs.FncOnRecords(self, self._report._props, self._schema)
+    return JsFncs.FncOnRecords(self, self.page._props, self._schema)
 
   @property
   def filter(self):
@@ -191,7 +201,7 @@ class RawData:
     -----------
 
     """
-    return JsFncs.FncFiltere(self, self._report._props, self._schema)
+    return JsFncs.FncFiltere(self, self.page._props, self._schema)
 
   @property
   def to(self):
@@ -200,7 +210,7 @@ class RawData:
     -----------
 
     """
-    return JsFncs.FncToObject(self, self._report._props, self._schema)
+    return JsFncs.FncToObject(self, self.page._props, self._schema)
 
   def toStr(self):
     data = "data_%s" % self._data_id
@@ -216,9 +226,9 @@ class RawData:
     return data
 
 
-class Datamap:
+class Datamap(primitives.JsDataModel):
 
-  def __init__(self, components=None, attrs=None):
+  def __init__(self, components: List[primitives.HtmlModel] = None, attrs: dict = None):
     self._data = []
     if components is not None:
       for c in components:
@@ -230,7 +240,7 @@ class Datamap:
       for k, v in attrs.items():
         self.attr(k, v)
 
-  def add(self, component, htmlCode=None):
+  def add(self, component: primitives.HtmlModel, htmlCode: str = None):
     """
     Description:
     -----------
@@ -239,13 +249,13 @@ class Datamap:
 
     Attributes:
     ----------
-    :param component: HTML. The HTML component.
-    :param htmlCode: String. Optional. The Html code.
+    :param primitives.HtmlModel component: The HTML component.
+    :param str htmlCode: Optional. The Html code.
     """
     self._data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     return self
 
-  def attr(self, k, v):
+  def attr(self, k: Union[str, primitives.JsDataModel], v: Any):
     """
     Description:
     -----------
@@ -258,7 +268,7 @@ class Datamap:
     self._data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     return self
 
-  def attrs(self, data):
+  def attrs(self, data: dict):
     """
     Description:
     -----------
@@ -274,11 +284,11 @@ class Datamap:
   def toStr(self):
     return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self._data])
 
-  def get(self, value, dflt=None):
+  def get(self, value: Union[str, primitives.JsDataModel], dfl=None):
     return JsObject.JsObject.get(
       "{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
 
-  def update(self, attrs):
+  def update(self, attrs: dict):
     self.attrs(attrs)
     return self
 
@@ -286,10 +296,10 @@ class Datamap:
     return self.toStr()
 
 
-class FormData:
+class FormData(primitives.JsDataModel):
   alias = None
 
-  def new(self, varName, varType="let"):
+  def new(self, varName: str, varType: str = "let"):
     """
     Description:
     ------------
@@ -302,7 +312,7 @@ class FormData:
     self.alias = varName
     return "%s %s = new FormData()" % (varType, varName)
 
-  def get(self, varName):
+  def get(self, varName: str):
     """
     Description:
     ------------
@@ -314,7 +324,7 @@ class FormData:
     self.alias = varName
     return self
 
-  def append(self, name, value):
+  def append(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -326,7 +336,7 @@ class FormData:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
-  def add(self, component, htmlCode=None):
+  def add(self, component: primitives.HtmlModel, htmlCode: str = None):
     """
     Description:
     ------------
@@ -335,19 +345,21 @@ class FormData:
 
     Attributes:
     ----------
-    :param component: HTML. The HTML component.
-    :param htmlCode: String. Optional. The Html code.
+    :param primitives.HtmlModel component: The HTML component.
+    :param str htmlCode: Optional. The Html code.
     """
-    return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(htmlCode or component.htmlCode, None), JsUtils.jsConvertData(component.dom.content, None))
+    return "%s.append(%s, %s)" % (
+      self.alias, JsUtils.jsConvertData(htmlCode or component.htmlCode, None),
+      JsUtils.jsConvertData(component.dom.content, None))
 
-  def update(self, attrs):
+  def update(self, attrs: Union[Datamap, dict]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param attrs:
+    :param Union[Datamap, dict] attrs:
     """
     appends = []
     if isinstance(attrs, Datamap):
@@ -383,7 +395,7 @@ class JsData:
   def all(self):
     return DataAll()
 
-  def crossfilter(self, data=None, var_name=None, crossDimension=None):
+  def crossfilter(self, data=None, var_name: str = None, crossDimension=None):
     """
     Description:
     -----------
@@ -419,7 +431,7 @@ class JsData:
     """
     return FormData()
 
-  def datamap(self, components=None, attrs=None):
+  def datamap(self, components: List[primitives.HtmlModel] = None, attrs: dict = None):
     """
     Description:
     -----------
@@ -427,7 +439,7 @@ class JsData:
     """
     return Datamap(components, attrs)
 
-  def dataset(self, data, var_name=None, options=None):
+  def dataset(self, data: Any, var_name: str = None, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -450,12 +462,12 @@ class JsData:
       vis_obj.setOptions(options)
     return vis_obj
 
-  def dataview(self, dataset, var_name=None, options=None):
+  def dataview(self, dataset, var_name: str = None, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     -----------
     A DataView offers a filtered and/or formatted view on a DataSet.
-    One can subscribe to changes in a DataView, and easily get filtered or formatted data without having to specify
+    One can subscribe to change in a DataView, and easily get filtered or formatted data without having to specify
     filters and field types all the time.
 
     Viz.Js module
@@ -475,7 +487,7 @@ class JsData:
       vis_obj.setOptions(options)
     return vis_obj
 
-  def records(self, data):
+  def records(self, data: Any):
     """
     Description:
     -----------
@@ -498,7 +510,7 @@ class JsData:
 
 class JsDataTransfer:
 
-  def __init__(self, varName):
+  def __init__(self, varName: str):
     self.varId = varName
 
   @property
@@ -527,7 +539,7 @@ class JsDataTransfer:
     return JsArray.JsArray.get("%s.files" % self.varId)
 
   @property
-  def dropEffect(self, flag=False):
+  def dropEffect(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     -----------
@@ -540,13 +552,13 @@ class JsDataTransfer:
       return JsBoolean.JsBoolean("%s.dropEffect" % self.varId)
 
     if flag not in [None, 'move', 'link', 'copy']:
-      raise Exception("")
+      raise ValueError("")
 
     flag = JsUtils.jsConvertData(flag, None)
     return JsFncs.JsFunction("%s.dropEffect = %s" % (self.varId, flag))
 
   @property
-  def effectAllowed(self, flag=False):
+  def effectAllowed(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     -----------
@@ -559,12 +571,12 @@ class JsDataTransfer:
       return JsBoolean.JsBoolean("%s.effectAllowed" % self.varId)
 
     if flag not in [None, 'move', 'link', 'copy']:
-      raise Exception("")
+      raise ValueError("")
 
     flag = JsUtils.jsConvertData(flag, None)
     return JsFncs.JsFunction("%s.effectAllowed = %s" % (self.varId, flag))
 
-  def clearData(self, format=None):
+  def clearData(self, format: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -590,7 +602,7 @@ class JsDataTransfer:
 
     """
 
-  def setData(self, data, format='text'):
+  def setData(self, data: Any, format: Union[str, primitives.JsDataModel] = 'text'):
     """
     Description:
     -----------
@@ -602,7 +614,7 @@ class JsDataTransfer:
     data = JsUtils.jsConvertData(data, None)
     return JsFncs.JsFunction("%s.setData(%s, %s)" % (self.varId, format, data))
 
-  def getData(self, format="text"):
+  def getData(self, format: str = "text"):
     """
     Description:
     -----------
@@ -614,10 +626,10 @@ class JsDataTransfer:
 
 class JsClipboardData:
 
-  def __init__(self, varName):
+  def __init__(self, varName: str):
     self.varId = varName
 
-  def src(self, name):
+  def src(self, name: str):
     """
     Description:
     ------------
@@ -673,7 +685,7 @@ class JsClipboardData:
     """
     return JsString.JsString("%s.getData('text/uri-list')" % self.varId, isPyData=False)
 
-  def getData(self, format):
+  def getData(self, format: str):
     """
     Description:
     ------------
@@ -688,6 +700,6 @@ class JsClipboardData:
 
     Attributes:
     ----------
-    :param format: String. The data format
+    :param format: The data format
     """
     return JsString.JsString("%s.getData('%s')" % (self.varId, format), isPyData=False)

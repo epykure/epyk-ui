@@ -2,6 +2,10 @@
 
 class MediaRecorder:
 
+  def __init__(self, src=None):
+    self.src = src
+    self._js = []
+
   def ondataavailable(self, jsFncs):
     pass
 

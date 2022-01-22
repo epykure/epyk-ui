@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -24,7 +25,9 @@ class UpDown(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, 'accounting')
   _option_cls = OptText.OptionsNumberMoves
 
-  def __init__(self, report, record, components, color, label, width, height, options, helper, profile):
+  def __init__(self, report: primitives.PageModel, record: list, components: List[Html.Html], color: Optional[str],
+               label: Optional[str], width: tuple, height: tuple, options: Optional[dict], helper: Optional[str],
+               profile: Optional[Union[bool, dict]]):
     if record is None:
       record = {'value': 0, 'previous': 0}
     if label is not None:
@@ -102,7 +105,7 @@ class UpDown(Html.Html):
     Object.keys(options.css).forEach(function(attr){htmlObj.style[attr] = options.css[attr]})
     '''
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
@@ -139,7 +142,8 @@ class BlockText(Html.Html):
   name = 'Block text'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, record, color, border, width, height, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
+               height: tuple, helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(BlockText, self).__init__(report, record, profile=profile, options=options,
                                     css_attrs={'color': color, "width": width, "height": height})
     self.add_helper(helper)
@@ -186,7 +190,8 @@ class TextWithBorder(Html.Html):
   name = 'Text with Border and Icon'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, record, width, height, align, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(TextWithBorder, self).__init__(
       report, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
@@ -235,7 +240,7 @@ class TextWithBorder(Html.Html):
 class Number(Html.Html):
   name = 'Number'
 
-  def __init__(self, report, number, components, label, width, height, profile, options, helper):
+  def __init__(self, report: primitives.PageModel, number, components, label, width, height, profile, options, helper):
     super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
     if options.get('url', None) is not None:
       self.add_link(number, url=options['url'], css={
@@ -271,7 +276,7 @@ class Number(Html.Html):
             profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
     return self.span.build(data, options, profile, self.span.htmlCode)
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
@@ -313,7 +318,7 @@ class Delta(Html.Html):
       for component in components:
         self.add(component)
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
@@ -684,7 +689,7 @@ class ContentsTable(Html.Html):
     """
     return self.page.components[html_code_content].anchor(text, level or 4, None, options=options)
 
-  def add_title(self, component: Type[Html.Html], level: Optional[int] = None, css: Optional[dict] = None,
+  def add_title(self, component: Html.Html, level: Optional[int] = None, css: Optional[dict] = None,
                 position: str = "before", options: Optional[dict] = None, html_code_content: str = "content"):
     """
     Description:
@@ -693,7 +698,7 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: An HTML component.
+    :param Html.Html component: An HTML component.
     :param Optional[int] level: Optional. The depth for the title in the document.
     :param Optional[dict] css: Optional. The CSS style for the link.
     :param str position: Optional. The position in the content table (append or prepend).
@@ -714,7 +719,7 @@ class ContentsTable(Html.Html):
         ["color", "font-size"], [self.page.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
     return link
 
-  def add_url(self, component: Type[Html.Html], url: str, level: Optional[int] = None,
+  def add_url(self, component: Html.Html, url: str, level: Optional[int] = None,
               options: Optional[dict] = None, html_code_content: str = "content"):
     """
     Description:
@@ -724,7 +729,7 @@ class ContentsTable(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: An HTML component.
+    :param Html.Html component: An HTML component.
     :param str url: The url link with component clicked.
     :param Optional[int] level: Optional. The depth for the title in the document.
     :param Optional[dict] options: Optional. The options for the title component.
@@ -889,7 +894,7 @@ class Composite(Html.Html):
   def __getitem__(self, i):
     return self.val.val[i]
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     # Has to be defined here otherwise it is set to late
     component.options.managed = False
@@ -934,7 +939,7 @@ class Composite(Html.Html):
       'hr': comp_ui.layouts.hr,
     }
 
-  def _set_comp(self, comp: Optional[Type[Html.Html]], schema_child, builders, ref_map):
+  def _set_comp(self, comp: Html.Html, schema_child, builders, ref_map):
     """
     Description:
     ------------

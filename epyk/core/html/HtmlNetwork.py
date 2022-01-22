@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet

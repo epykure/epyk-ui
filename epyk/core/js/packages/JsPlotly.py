@@ -4,7 +4,6 @@ from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js.packages import JsPackage
-from epyk.core.js.packages import DataAttrs
 
 
 class JsPlotly(JsPackage):

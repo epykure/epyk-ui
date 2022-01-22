@@ -2,7 +2,9 @@ import os
 import sys
 import time
 import json
+
 from typing import Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.js import Imports
 from epyk.core.js import Js
@@ -126,7 +128,7 @@ class OutBrowsers:
 
 
 class PyOuts:
-  def __init__(self, report=None, options: Optional[dict] = None):
+  def __init__(self, report: Optional[primitives.PageModel] = None, options: Optional[dict] = None):
     self._report, self._options = report, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
     self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False

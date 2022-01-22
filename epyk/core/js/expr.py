@@ -1,5 +1,7 @@
 
 from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
@@ -11,7 +13,7 @@ from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsWhile
 
 
-def if_(condition: Union[list, str], js_funcs: Union[list, str]):
+def if_(condition: Union[list[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]):
   """
   Description:
   ------------
@@ -23,7 +25,7 @@ def if_(condition: Union[list, str], js_funcs: Union[list, str]):
 
   Attributes:
   ----------
-  :param Union[list, str] condition: The JavaScript conditions.
+  :param Union[list[Union[str, primitives.JsDataModel]], str] condition: The JavaScript conditions.
   :param Union[list, str] js_funcs: The Javascript functions.
   """
   if isinstance(condition, list):
@@ -31,7 +33,7 @@ def if_(condition: Union[list, str], js_funcs: Union[list, str]):
   return JsIf.JsIf(condition, js_funcs)
 
 
-def switch(variable):
+def switch(variable: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -43,7 +45,7 @@ def switch(variable):
 
   Attributes:
   ----------
-  :param variable:
+  :param Union[primitives.JsDataModel, str] variable:
   """
   if hasattr(variable, 'dom'):
     variable = variable.dom.content
@@ -172,7 +174,7 @@ def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Option
   return js_for
 
 
-def typeof(jsData, type: str = None):
+def typeof(jsData: Union[primitives.JsDataModel, str], type: Optional[Union[primitives.JsDataModel, str]] = None):
   """
   Description:
   ------------
@@ -184,8 +186,8 @@ def typeof(jsData, type: str = None):
 
   Attributes:
   ----------
-  :param jsData: String. A String corresponding to a JavaScript object.
-  :param type: String. The type of object.
+  :param Union[primitives.JsDataModel, str] jsData: A String corresponding to a JavaScript object.
+  :param Optional[Union[primitives.JsDataModel, str]] type: The type of object.
   """
   if type is None:
     return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(jsData, None))
@@ -193,7 +195,7 @@ def typeof(jsData, type: str = None):
   return JsObjects.JsVoid("typeof %s === %s" % (JsUtils.jsConvertData(jsData, None), JsUtils.jsConvertData(type, None)))
 
 
-def not_(condition: str):
+def not_(condition: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -201,7 +203,7 @@ def not_(condition: str):
 
   Attributes:
   ----------
-  :param str condition: The JavaScript expression.
+  :param Union[primitives.JsDataModel, str] condition: The JavaScript expression.
   """
   return "!(%s)" % JsUtils.jsConvertData(condition, None)
 
@@ -239,7 +241,7 @@ def and_(*args):
   return "(%s)" % ") && (".join([JsUtils.jsConvertData(x, None) for x in args])
 
 
-def throw(value: str):
+def throw(value: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -253,7 +255,7 @@ def throw(value: str):
 
   Attributes:
   ----------
-  :param str value: The message displayed with the exception.
+  :param Union[primitives.JsDataModel, str] value: The message displayed with the exception.
   """
   return JsObjects.JsObject.JsObject.get("throw %s" % JsUtils.jsConvertData(value, None))
 

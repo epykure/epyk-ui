@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional
+from epyk.core.py import primitives
 
 
 def indent(level: int = 0, spaces: Optional[int] = None):
@@ -106,7 +107,7 @@ def builder(cls, minify: Optional[bool] = None, toStr: bool = True, spaces: Opti
     "function %s(htmlObj, data, options){%s}" % (builder_name, cls._js__builder__), minify, toStr, spaces=spaces)
 
 
-def events(component, minify: Optional[bool] = None, toStr: bool = True, spaces: Optional[int] = None) -> str:
+def events(component: primitives.HtmlModel, minify: Optional[bool] = None, toStr: bool = True, spaces: Optional[int] = None) -> str:
   """
   Description:
   ------------
@@ -122,7 +123,7 @@ def events(component, minify: Optional[bool] = None, toStr: bool = True, spaces:
 
   Attributes:
   ----------
-  :param component: HTML Component. An internal component in the framework.
+  :param primitives.HtmlModel component: An internal component in the framework.
   :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
   :param bool toStr: Optional. Specify the type of data returned by this function (string or list).
   :param Optional[int] spaces: Optional. The number of spaces. (Default 2).

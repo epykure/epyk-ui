@@ -1,19 +1,25 @@
 
 import sys
 
+from typing import Union, Any
+from epyk.core.py import primitives
+
 from epyk.core.css import Properties
 from epyk.core.css.styles.classes.CssStyle import Style
 
 
+IMPORTANT_EXPR = "{} !IMPORTANT"
+
+
 class Attrs(Properties.CssMixin):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     self.attrs = {}
     self.component = component
     self._report = component.page
     self.page = component.page
 
-  def css(self, attrs, value=None, important=False):
+  def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
     """
     Description:
     ------------
@@ -21,25 +27,25 @@ class Attrs(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param attrs: Dictionary | String. optional. The attributes to be added.
-    :param value: String. Optional. The value for a given item.
-    :param important: Boolean. Optional. Flag the attribute to be important.
+    :param Union[dict, str] attrs: optional. The attributes to be added.
+    :param str value: Optional. The value for a given item.
+    :param bool important: Optional. Flag the attribute to be important.
     """
     if not isinstance(attrs, dict):
       if value is None:
         return self.attrs.get(attrs)
 
       if important:
-        value = "%s !IMPORTANT" % value
+        value = IMPORTANT_EXPR.format(value)
       self.attrs[attrs] = value
 
     for k, v in attrs.items():
       if important:
-        v = "%s !IMPORTANT" % v
+        v = IMPORTANT_EXPR.format(v)
       self.attrs[k] = v
     return self.attrs
 
-  def remove(self, attr=None, set_none=False):
+  def remove(self, attr: str = None, set_none: bool = False):
     """
     Description:
     ------------
@@ -50,8 +56,8 @@ class Attrs(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param attr: String. Optional. The attribute to be removed.
-    :param set_none: Boolean. Optional. Set the CSS attribute value to None on the CSS.
+    :param attr: Optional. The attribute to be removed.
+    :param set_none: Optional. Set the CSS attribute value to None on the CSS.
     """
     key = attr or sys._getframe().f_back.f_code.co_name.replace("_", "-")
     if set_none:
@@ -73,7 +79,7 @@ class Attrs(Properties.CssMixin):
 
 class Commons(Attrs):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Commons, self).__init__(component)
     self.font_size = 'inherit'
     self.font_family = 'inherit'
@@ -82,13 +88,13 @@ class Commons(Attrs):
 
 class Empty(Attrs):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Empty, self).__init__(component)
 
 
 class Body(Attrs):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Body, self).__init__(component)
     self.font_size = component.style.globals.font.normal()
     self.font_family = component.style.globals.font.family
@@ -97,7 +103,7 @@ class Body(Attrs):
 
 class CssInline(Attrs):
 
-  def __init__(self, component=None):
+  def __init__(self, component: primitives.HtmlModel = None):
     self.attrs = {}
     self.component = component
     if component is not None:
@@ -136,7 +142,7 @@ class CssInline(Attrs):
   def fill_opacity(self, num):
     self.css({"fill-opacity": num})
 
-  def to_dict(self, copy=False):
+  def to_dict(self, copy: bool = False):
     """
     Description:
     ------------
@@ -145,14 +151,14 @@ class CssInline(Attrs):
 
     Attributes:
     ----------
-    :param copy: Boolean. Optional. Specify if a copy must be returned.
+    :param bool copy: Optional. Specify if a copy must be returned.
     """
     if copy:
       return dict(self.attrs)
 
     return self.attrs
 
-  def important(self, attrs=None):
+  def important(self, attrs: list = None):
     """
     Description:
     ------------
@@ -161,7 +167,7 @@ class CssInline(Attrs):
 
     Attributes:
     ----------
-    :param attrs: Dictionary. The Css Python property to be changed.
+    :param list attrs: The Css Python property to be changed.
     """
     if attrs is None:
       for k in self.attrs.items():
@@ -170,17 +176,17 @@ class CssInline(Attrs):
       for k in attrs:
         setattr(self, k, "%s !IMPORTANT" % getattr(self, k))
 
-  def to_class(self, classname):
+  def to_class(self, class_name: str):
     """
     Description:
     ------------
     The CSS class object.
 
-    :param classname: String. The class name.
+    :param str class_name: The class name.
     """
-    v_cls = type(classname, (Style, ), {"_attrs": self.attrs})
+    v_cls = type(class_name, (Style, ), {"_attrs": self.attrs})
     return v_cls(None)
 
-  def define_class(self, classname, page):
-    v_cls = page.body.style.custom_class({"_attrs": self.attrs}, classname)
+  def define_class(self, class_name: str, page):
+    v_cls = page.body.style.custom_class({"_attrs": self.attrs}, class_name)
     return v_cls

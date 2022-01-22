@@ -6,6 +6,7 @@ Related Pages:
       https://www.rapidtables.com/web/color/RGB_Color.html
 """
 
+from typing import List
 import random
 import math
 import re
@@ -153,7 +154,7 @@ defined = {
 }
 
 
-def getHexToRgb(hexColor):
+def getHexToRgb(hexColor: str):
   """
   Description:
   ------------
@@ -181,7 +182,7 @@ def getHexToRgb(hexColor):
 
   Attributes:
   ----------
-  :param hexColor: String. A hexadecimal code color.
+  :param str hexColor: A hexadecimal code color.
 
   :return: The list with the rgb code color
   """
@@ -190,15 +191,15 @@ def getHexToRgb(hexColor):
     return [res.group(1), res.group(2), res.group(3)]
 
   if not hexColor.startswith("#"):
-    raise Exception("Hexadecimal color should start with #")
+    raise ValueError("Hexadecimal color should start with #")
 
   if not len(hexColor) == 7:
-    raise Exception("Color should have a length of 7")
+    raise ValueError("Color should have a length of 7")
 
   return [int(hexColor[1:3], 16), int(hexColor[3:5], 16), int(hexColor[5:7], 16)]
 
 
-def rgba(red, green, blue, alpha):
+def rgba(red: int, green: int, blue: int, alpha: int):
   """
   Description:
   -----------
@@ -216,15 +217,15 @@ def rgba(red, green, blue, alpha):
 
   Attributes:
   ----------
-  :param red: Integer. The red RGB color number.
-  :param green: Integer. The green RGB color number.
-  :param blue: Integer. The blue RGB color number.
-  :param alpha: Integer. The alpha number.
+  :param int red: The red RGB color number.
+  :param int green: The green RGB color number.
+  :param int blue: The blue RGB color number.
+  :param int alpha: The alpha number.
   """
   return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
 
-def getRgbToHex(rgbColor):
+def getRgbToHex(rgbColor: List[int]):
   """
   Description:
   ------------
@@ -237,7 +238,7 @@ def getRgbToHex(rgbColor):
 
   Attributes:
   ----------
-  :param rgbColor: List. A list corresponding to the RGB color code.
+  :param List[int] rgbColor: A list corresponding to the RGB color code.
 
   :return: String object defining the hexadecimal color code.
   """
@@ -251,7 +252,7 @@ def getRgbToHex(rgbColor):
   return "#%s" % "".join(color)
 
 
-def randColor(seedNo=None):
+def randColor(seedNo: int = None):
   """
   Description:
   ------------
@@ -264,7 +265,7 @@ def randColor(seedNo=None):
 
   Attributes:
   ----------
-  :param seedNo: Integer. Optional. The seed number used to generate random numbers.
+  :param int seedNo: Optional. The seed number used to generate random numbers.
 
   :return: String with Hexadecimal color code
   """
@@ -280,7 +281,7 @@ def randColor(seedNo=None):
   return "".join(color)
 
 
-def gradient(start, end, factor):
+def gradient(start: str, end: str, factor: float):
   """
   Description:
   ------------
@@ -293,21 +294,21 @@ def gradient(start, end, factor):
 
   Attributes:
   ----------
-  :param start: String. The start hexadecimal color code.
-  :param end: String. The end hexadecimal color code.
-  :param factor: Float. A factor in the range [0, 1].
+  :param str start: The start hexadecimal color code.
+  :param str end: The end hexadecimal color code.
+  :param float factor: A factor in the range [0, 1].
 
   :return: The hexadecimal color code
   """
   if factor > 1:
-    raise Exception("Gradient factor must be <= 1")
+    raise ValueError("Gradient factor must be <= 1")
 
   rgb_end = getHexToRgb(end)
   rgb_diff = [(rgb_end[i] - val) * factor + val for i, val in enumerate(getHexToRgb(start))]
   return getRgbToHex(rgb_diff)
 
 
-def colors(start, end, steps):
+def colors(start: str, end: str, steps: int):
   """
   Description:
   ------------
@@ -320,9 +321,9 @@ def colors(start, end, steps):
 
   Attributes:
   ----------
-  :param start: String. The start hexadecimal color code.
-  :param end: String. The end hexadecimal color code.
-  :param steps: Float. The number of colors in the array.
+  :param str start: The start hexadecimal color code.
+  :param str end: The end hexadecimal color code.
+  :param int steps: The number of colors in the array.
 
   :return: A list of hexadecimal color codes.
   """

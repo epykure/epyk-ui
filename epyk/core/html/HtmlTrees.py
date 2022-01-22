@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
@@ -18,7 +20,8 @@ class Tree(Html.Html):
   name = 'List Expandable'
   _option_cls = OptTrees.OptionsTree
 
-  def __init__(self, report, records, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     options['is_root'] = True
     icon_details = cssDefaults.get_icon("folder_open")
     options['icon_open'] = icon_details["icon"]
@@ -157,7 +160,7 @@ class Tree(Html.Html):
 
 class TreeInput(Tree):
 
-  def set(self, ul, data):
+  def set(self, ul, data: list):
     """
     Description:
     -----------
@@ -165,7 +168,7 @@ class TreeInput(Tree):
     Attributes:
     ----------
     :param ul:
-    :param data:
+    :param list data:
     """
     for l in data:
       if l.get('items') is not None:
@@ -192,7 +195,8 @@ class DropDown(Html.Html):
   name = 'DropDown Select'
   _option_cls = OptTrees.OptDropDown
 
-  def __init__(self, page, data, text, width, height, html_code, helper, options, profile):
+  def __init__(self, page: primitives.PageModel, data: list, text: Optional[str], width: tuple, height: tuple,
+               html_code: Optional[str], helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
     options.update({"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT,
                           'padding': '0 10px', "min-width": '%spx' % options.get("width")},
                     "ul": {"left": "%spx" % options.get("width")}})

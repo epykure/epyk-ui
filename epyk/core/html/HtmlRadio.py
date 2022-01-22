@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional, List
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
@@ -14,14 +16,16 @@ from epyk.core.css import Defaults as cssDefaults
 class Radio(Html.Html):
   name = 'Radio Buttons'
 
-  def __init__(self, report, vals, html_code, group_name, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, vals: List[dict], html_code: Optional[str],
+               group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(Radio, self).__init__(report, [], html_code=html_code,
-                                css_attrs={"width": width, "height": height}, profile=profile)
+                                css_attrs={"width": width, "height": height}, profile=profile, options=options)
     self.group_name = group_name or self.htmlCode
     for v in vals:
       self.add(v['value'], v.get('checked', False))
 
-  def add(self, val: Union[Type[Html.Html], str], checked: bool = False):
+  def add(self, val: Union[Html.Html, str], checked: bool = False):
     """
     Description:
     ------------
@@ -29,7 +33,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Type[Html.Html], str] val: The item to be added.
+    :param Union[Html.Html, str] val: The item to be added.
     :param checked:  Optional. Check the item.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
@@ -91,7 +95,9 @@ class Tick(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Tick'
 
-  def __init__(self, report, position, icon, text, tooltip, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
+               width: tuple, height: tuple, html_code: str, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     self._options = options
     super(Tick, self).__init__(report, '', html_code=html_code, profile=profile,
                                css_attrs={"width": width, 'height': height,
@@ -135,7 +141,8 @@ class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, report, records, color, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, records: list, color: str, width: tuple, height: tuple,
+               html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self.width, self.jsChange = width[0], ''
     super(Switch, self).__init__(report, records, html_code=html_code, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})

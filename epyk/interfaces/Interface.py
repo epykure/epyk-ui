@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core import html
 
 from epyk.core.css import Defaults_css
@@ -865,7 +865,8 @@ class Components:
     html.Html.set_component_skin(html_breadcrumb)
     return html_breadcrumb
 
-  def form(self, components=None, helper: Optional[str] = None, method: str = "POST", action: str = "#", label: str = "Submit"):
+  def form(self, components: List[html.Html.Html] = None, helper: Optional[str] = None, method: str = "POST",
+           action: str = "#", label: str = "Submit"):
     """
     Description:
     ------------
@@ -920,8 +921,9 @@ class Components:
     html.Html.set_component_skin(container)
     return container
 
-  def slideshow(self, components=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = ('auto', ""),
-                options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
+  def slideshow(self, components: List[html.Html.Html] = None, width: Union[tuple, int] = (100, "%"),
+                height: Union[tuple, int] = ('auto', ""), options: Optional[Union[dict, bool]] = None,
+                profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -1005,7 +1007,7 @@ class Components:
     html.Html.set_component_skin(captcha)
     return captcha
 
-  def postit(self, components=None, anchor=None,
+  def postit(self, components: List[html.Html.Html] = None, anchor: html.Html.Html = None,
              options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
@@ -1063,9 +1065,9 @@ class Components:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
 
-  def asterix(self, tooltip, family=None, width: Union[tuple, int] = (None, 'px'), html_code=None,
-              height: Union[tuple, int] = (None, "px"), color=None,
-              align: str = "left", options=None, profile=None):
+  def asterix(self, tooltip: str, family=None, width: Union[tuple, int] = (None, 'px'), html_code: str = None,
+              height: Union[tuple, int] = (None, "px"), color: str = None,
+              align: str = "left", options: str = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -1090,9 +1092,11 @@ class Components:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, component, copy="fas fa-copy", editable=("fas fa-user-edit", "fas fa-user-lock"),
-           refresh="fas fa-redo-alt", visible=('fas fa-eye-slash', "fas fa-eye"), post=None,
-           height=(18, 'px'), save_funcs=None, update_funcs=None, menu_items=None, options=None, profile=None):
+  def menu(self, component: html.Html.Html, copy: str ="fas fa-copy",
+           editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"), refresh: str = "fas fa-redo-alt",
+           visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
+           height: tuple = (18, 'px'), save_funcs: list = None, update_funcs: list = None,
+           menu_items=None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------

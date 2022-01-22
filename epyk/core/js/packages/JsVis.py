@@ -1,4 +1,7 @@
 
+from typing import Union, Any
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage, DataAttrs
@@ -7,7 +10,7 @@ from epyk.core.js.packages import JsPackage, DataAttrs
 class VisDataSet(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
-  def __init__(self, src, varName, data, setVar=True):
+  def __init__(self, src, varName, data, setVar: bool = True):
     super(VisDataSet, self).__init__(src=src, varName=varName, selector="new vis.DataSet(%s)" % data, setVar=setVar)
 
   @property
@@ -19,7 +22,7 @@ class VisDataSet(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.length" % self.getStr())
 
-  def add(self, jsData):
+  def add(self, data: Union[str, list, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -31,18 +34,18 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: data can be a single item or an array with items.
+    :param Union[str, list, primitives.JsDataModel] data: data can be a single item or an array with items.
 
     :return: The function returns an array with the ids of the added items. See section Data Manipulation.
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsArray.JsArray("%s.add(%s)" % (self.varId, data))
 
-  def clear(self, senderId=None):
+  def clear(self, sender_id: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
-    Clear all data from the DataSet
+    Clear all data from the DataSet.
 
     Related Pages:
 
@@ -50,17 +53,17 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param senderId: The record ID to be removed
+    :param Union[str, primitives.JsDataModel] sender_id: The record ID to be removed.
 
     :return: The function returns an array with the ids of the removed items.
     """
-    if senderId is None:
-      return JsObjects.JsArray.JsArray("%s.clear()" % (self.varId))
+    if sender_id is None:
+      return JsObjects.JsArray.JsArray("%s.clear()" % self.varId)
 
-    senderId = JsUtils.jsConvertData(senderId, None)
-    return JsObjects.JsArray.JsArray("%s.clear(%s)" % (self.varId, senderId))
+    sender_id = JsUtils.jsConvertData(sender_id, None)
+    return JsObjects.JsArray.JsArray("%s.clear(%s)" % (self.varId, sender_id))
 
-  def distinct(self, field):
+  def distinct(self, field: Union[list, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -72,9 +75,10 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param field:
+    :param Union[list, primitives.JsDataModel] field:
 
-    :return: Returns an unordered array containing all distinct values. If data items do not contain the specified field are ignored.
+    :return: Returns an unordered array containing all distinct values. If data items do not contain the
+    specified field are ignored.
     """
     return JsObjects.JsArray.JsArray("%s.distinct(%s)" % (self.varId, JsUtils.jsConvertData(field, None)))
 
@@ -108,7 +112,7 @@ class VisDataSet(JsPackage):
   def map(self, callback):
     pass
 
-  def max(self, field):
+  def max(self, field: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -120,13 +124,13 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param field:
+    :param Union[str, primitives.JsDataModel] field:
 
     :return: Returns null if no item is found.
     """
     return JsObjects.JsObject.JsObject("%s.max(%s)" % (self.varId, JsUtils.jsConvertData(field, None)))
 
-  def min(self, field):
+  def min(self, field: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -138,7 +142,7 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param field:
+    :param Union[str, primitives.JsDataModel] field:
 
     :return: Returns null if no item is found.
     """
@@ -153,7 +157,7 @@ class VisDataSet(JsPackage):
   def off(self, event, callback):
     pass
 
-  def remove(self, ids, senderId=None):
+  def remove(self, ids: Union[list, primitives.JsDataModel], sender_id=None):
     """
     Description:
     -----------
@@ -166,14 +170,14 @@ class VisDataSet(JsPackage):
     Attributes:
     ----------
     :param ids:
-    :param senderId:
+    :param sender_id:
 
     :return:
     """
     ids = JsUtils.jsConvertData(ids, None)
     return JsObjects.JsArray.JsArray("%s.remove(%s)" % (self.varId, ids))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -185,14 +189,14 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     return self.fnc_closure("setOptions(%s)" % options)
 
-  def get(self, i):
+  def get(self, i: int):
     return JsObjects.JsObject.JsObject("%s.get(%s)" % (self.varId, i))
 
-  def getIds(self, options=None):
+  def getIds(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -206,7 +210,7 @@ class VisDataSet(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
@@ -225,53 +229,65 @@ class VisDataSet(JsPackage):
 
 class VisDataOptions(DataAttrs):
 
-  def align(self, position):
+  def align(self, position: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Related Pages:
-:param position:
+
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] position:
     """
     return self.attr("align", JsUtils.jsConvertData(position, None))
 
-  def queue_delay(self, n=None):
+  def queue_delay(self, n: Union[int, primitives.JsDataModel] = None):
     """
     Description:
     -----------
     The queue will be flushed automatically after an inactivity of this delay in milliseconds. Default value is null
 
     Related Pages:
-:param n:
+
+    Attributes:
+    ----------
+    :param Union[int, primitives.JsDataModel] n:
     """
     if n is None:
       n = self._report.js.data.null
     return self.attr("delay", JsUtils.jsConvertData(n, None))
 
-  def queue_max(self, n=None):
+  def queue_max(self, n: Union[int, primitives.JsDataModel] = None):
     """
     Description:
     -----------
-    When the queue exceeds the given maximum number of entries, the queue is flushed automatically. Default value is
+    When the queue exceeds the given maximum number of entries, the queue is flushed automatically. Default value is.
 
     Related Pages:
-:param n:
+
+    Attributes:
+    ----------
+    :param Union[int, primitives.JsDataModel] n:
     """
     if n is None:
       n = self._report.js.number.POSITIVE_INFINITY
     return self.attr("max", JsUtils.jsConvertData(n, None))
 
-  def autoResize(self, flag):
+  def autoResize(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Related Pages:
-:param flag:
+
+    Attributes:
+    ----------
+    :param Union[bool, primitives.JsDataModel] flag:
     """
     return self.attr("autoResize", JsUtils.jsConvertData(flag, None))
 
-  def clickToUse(self, flag):
+  def clickToUse(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -280,28 +296,31 @@ class VisDataOptions(DataAttrs):
 
       https://visjs.github.io/vis-timeline/examples/timeline/interaction/clickToUse.html
 
-    Related Pages:
-:param flag:
+    Attributes:
+    ----------
+    :param Union[bool, primitives.JsDataModel] flag:
     """
     return self.attr("clickToUse", JsUtils.jsConvertData(flag, None))
 
-  def configure(self, flag):
+  def configure(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param flag:
+    Attributes:
+    ----------
+    :param Union[bool, primitives.JsDataModel] flag:
     """
     return self.attr("configure", JsUtils.jsConvertData(flag, None))
 
-  def dataAttributes(self, strings):
+  def dataAttributes(self, strings: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param strings:
+    Attributes:
+    ----------
+    :param strings:
     """
     return self.attr("dataAttributes", JsUtils.jsConvertData(strings, None))
 
@@ -309,23 +328,25 @@ class VisDataOptions(DataAttrs):
   def editable(self):
     pass
 
-  def end(self, object):
+  def end(self, object: Union[Any, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param object:
+    Attributes:
+    ----------
+    :param object:
     """
     return self.attr("end", JsUtils.jsConvertData(object, None))
 
-  def format(self, object):
+  def format(self, object: Union[Any, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param object:
+    Attributes:
+    ----------
+    :param object:
     """
     return self.attr("format", JsUtils.jsConvertData(object, None))
 
@@ -333,23 +354,25 @@ class VisDataOptions(DataAttrs):
   def groupEditable(self):
     pass
 
-  def groupHeightMode(self, text):
+  def groupHeightMode(self, text: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param text:
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] text:
     """
     return self.attr("groupHeightMode", JsUtils.jsConvertData(text, None))
 
-  def groupOrder(self, text):
+  def groupOrder(self, text: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param text:
+    Attributes:
+    ----------
+    :param text:
     """
     return self.attr("groupOrder", JsUtils.jsConvertData(text, None))
 
@@ -358,8 +381,9 @@ class VisDataOptions(DataAttrs):
     Description:
     -----------
 
-    Related Pages:
-:param fnc:
+    Attributes:
+    ----------
+    :param fnc:
     """
 
   def groupTemplate(self, fnc):
@@ -367,17 +391,19 @@ class VisDataOptions(DataAttrs):
     Description:
     -----------
 
-    Related Pages:
-:param fnc:
+    Attributes:
+    ----------
+    :param fnc:
     """
 
-  def height(self, n):
+  def height(self, n: Union[int, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param n:
+    Attributes:
+    ----------
+    :param Union[int, primitives.JsDataModel] n:
     """
     return self.attr("height", JsUtils.jsConvertData(n, None))
 
@@ -386,17 +412,19 @@ class VisDataOptions(DataAttrs):
     Description:
     -----------
 
-    Related Pages:
-:param object:
+    Attributes:
+    ----------
+    :param object:
     """
 
-  def horizontalScroll(self, flag):
+  def horizontalScroll(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     -----------
 
-    Related Pages:
-:param flag:
+    Attributes:
+    ----------
+    :param Union[bool, primitives.JsDataModel] flag:
     """
     return self.attr("horizontalScroll", JsUtils.jsConvertData(flag, None))
 
@@ -404,7 +432,7 @@ class VisDataOptions(DataAttrs):
 class VisDataView(JsPackage):
   lib_alias = {'css': 'vis', 'js': 'vis'}
 
-  def __init__(self, src, varName, data, setVar=True):
+  def __init__(self, src, varName, data, setVar: bool = True):
     super(VisDataView, self).__init__(src=src, varName=varName, selector="new vis.DataView(%s)" % data, setVar=setVar)
 
   @property
@@ -416,7 +444,7 @@ class VisDataView(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.length" % self.varId)
 
-  def get(self, options=None, data=None):
+  def get(self, options: Union[dict, primitives.JsDataModel] = None, data: Any = None):
     """
     Description:
     -----------
@@ -428,7 +456,7 @@ class VisDataView(JsPackage):
 
 		Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     :param data:
     """
     if data is None:
@@ -442,7 +470,9 @@ class VisDataView(JsPackage):
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObject.JsObject("%s.get(%s, %s)" % (self.varId, options, data))
 
-  def getByIds(self, ids, options=None, data=None):
+  def getByIds(self, ids: Union[list, primitives.JsDataModel],
+               options: Union[dict, primitives.JsDataModel] = None,
+               data: Any = None):
     """
     Description:
     -----------
@@ -454,8 +484,8 @@ class VisDataView(JsPackage):
 
     Attributes:
     ----------
-    :param ids:
-    :param options:
+    :param Union[list, primitives.JsDataModel] ids:
+    :param Union[dict, primitives.JsDataModel] options:
     :param data:
     """
     ids = JsUtils.jsConvertData(ids, None)
@@ -470,7 +500,7 @@ class VisDataView(JsPackage):
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObject.JsObject.get("%s.get(%s, %s, %s)" % (self.varId, ids, options, data))
 
-  def getDataSet(self, vanName):
+  def getDataSet(self, var_name: str):
     """
     Description:
     -----------
@@ -482,16 +512,17 @@ class VisDataView(JsPackage):
 
 		Attributes:
     ----------
-    :param vanName:
+    :param str var_name:
     """
-    return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=vanName)
+    return VisDataSet(src=self.src, data="%s.getDataSet()" % self.varId, varName=var_name)
 
-  def getIds(self, options=None):
+  def getIds(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     -----------
     Get ids of all items or of a filtered set of items.
-    Available options are described in section Data Selection, except that options fields and type are not applicable in case of getIds.
+    Available options are described in section Data Selection, except that options fields and type are not applicable
+    in case of getIds.
 
     Related Pages:
 
@@ -499,7 +530,7 @@ class VisDataView(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     if options is not None:
       options = JsUtils.jsConvertData(options, None)
@@ -516,7 +547,7 @@ class VisDataView(JsPackage):
     Related Pages:
 
       https://visjs.github.io/vis-data/data/dataview.html
-    https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
+      https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
     Attributes:
     ----------
@@ -533,7 +564,7 @@ class VisDataView(JsPackage):
     Related Pages:
 
       https://visjs.github.io/vis-data/data/dataview.html
-    https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
+      https://visjs.github.io/vis-data/data/dataview.html#Subscriptions
 
     Attributes:
     ----------
@@ -553,7 +584,23 @@ class VisDataView(JsPackage):
     """
     return self.fnc_closure("refresh()")
 
-  def setData(self, data):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
+    """
+    Description:
+    -----------
+    Set options for the DataSet.
+
+    Related Pages:
+
+      https://visjs.github.io/vis-data/data/dataset.html
+
+    Attributes:
+    ----------
+    :param Union[dict, primitives.JsDataModel] options:
+    """
+    return self.fnc_closure("setOptions(%s)" % options)
+
+  def setData(self, data: Any):
     """
     Description:
     -----------
@@ -561,7 +608,7 @@ class VisDataView(JsPackage):
 
     Attributes:
     ----------
-    :param data:
+    :param Any data:
     """
     return self.fnc("setData(%s)" % JsUtils.jsConvertData(data, None))
 
@@ -576,11 +623,12 @@ class VisDataView(JsPackage):
 
 class VisDataGroups(DataAttrs):
 
-  def className(self, value):
+  def className(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
-    This field is optional. A className can be used to give groups an individual css style. For example, when a group has className 'red', one can define a css style .red { color: red; } .
+    This field is optional. A className can be used to give groups an individual css style. For example, when a group
+    has className 'red', one can define a css style .red { color: red; } .
 
     Related Pages:
 
@@ -588,7 +636,7 @@ class VisDataGroups(DataAttrs):
 
     Attributes:
     ----------
-    :param value:
+    :param Union[str, primitives.JsDataModel] value:
     """
     return self.attr("className", JsUtils.jsConvertData(value, None))
 
@@ -632,7 +680,8 @@ class VisNetworkNode(JsPackage):
 
 
 class VisNetworkEdge(JsPackage):
-  def getPositions(self, nodeIds):
+
+  def getPositions(self, node_ids):
     """
     Description:
     -----------
@@ -644,34 +693,35 @@ class VisNetworkEdge(JsPackage):
 
     Attributes:
     ----------
-    :param nodeIds:
+    :param node_ids:
     """
 
   def storePositions(self):
     """
     Description:
     -----------
-    When using the vis.DataSet to load your nodes into the network, this method will put the X and Y positions of all nodes into that dataset.
+    When using the vis.DataSet to load your nodes into the network, this method will put the X and Y positions of
+    all nodes into that dataset.
 
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/
     """
 
-  def moveNode(self, nodeId, x, y):
+  def moveNode(self, node_id, x, y):
     """
     Description:
     -----------
-    You can use this to programatically move a node. The supplied x and y positions have to be in canvas space!
+    You can use this to programmatically move a node. The supplied x and y positions have to be in canvas space!
 
     Attributes:
     ----------
-    :param nodeId:
+    :param node_id:
     :param x:
     :param y:
     """
 
-  def getBoundingBox(self, nodeId):
+  def getBoundingBox(self, node_id):
     """
     Description:
     -----------
@@ -680,21 +730,21 @@ class VisNetworkEdge(JsPackage):
 
     Attributes:
     ----------
-    :param nodeId:
+    :param node_id:
     """
 
-  def getConnectedNodes(self, nodeId, direction=None):
+  def getConnectedNodes(self, node_id, direction=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param nodeId:
+    :param node_id:
     :param direction:
     """
 
-  def getConnectedEdges(self, nodeId):
+  def getConnectedEdges(self, node_id):
     """
     Description:
     -----------
@@ -720,7 +770,7 @@ class VisNetwork(JsPackage):
     """
     return JsObjects.JsVoid("%s.destroy()" % self.varId)
 
-  def setData(self, data):
+  def setData(self, data: Any):
     """
     Description:
     -----------
@@ -734,11 +784,11 @@ class VisNetwork(JsPackage):
 
     Attributes:
     ----------
-    :param data:
+    :param Any data:
     """
     return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -751,7 +801,7 @@ class VisNetwork(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, JsUtils.jsConvertData(options, None)))
 
@@ -767,7 +817,7 @@ class VisNetwork(JsPackage):
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
-  def setSize(self, width, height):
+  def setSize(self, width: Union[int, primitives.JsDataModel], height: Union[int, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -779,33 +829,22 @@ class VisNetwork(JsPackage):
 
     Attributes:
     ----------
-    :param width: Integer. The width
-    :param height: Integer. The height
+    :param Union[int, primitives.JsDataModel] width: The width
+    :param Union[int, primitives.JsDataModel] height: The height
     """
     if isinstance(width, int):
       width = "%spx" % width
 
     if isinstance(height, int):
       height = "%spx" % height
-    return JsObjects.JsVoid("%s.setSize(%s, %s)" % (self.varId, JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
+    return JsObjects.JsVoid(
+      "%s.setSize(%s, %s)" % (self.varId, JsUtils.jsConvertData(width, None), JsUtils.jsConvertData(height, None)))
 
 
 class VisTimeline(JsPackage):
   lib_alias = {'css': 'vis-timeline', 'js': 'vis-timeline'}
 
-  def addItem(self, data):
-    """
-    Description:
-    -----------#
-
-    Attributes:
-    ----------
-    :param data:
-    """
-    return JsObjects.JsVoid("%s.itemsData.add(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
-    #return JsObjects.JsVoid("console.log(%s)" % (self.varId))#, JsUtils.jsConvertData(data, None)))
-
-  def addItems(self, data):
+  def addItem(self, data: Any):
     """
     Description:
     -----------
@@ -814,9 +853,22 @@ class VisTimeline(JsPackage):
     ----------
     :param data:
     """
-    return JsObjects.JsVoid("%s.forEach(function(data) {%s.itemsData.add(data)})" % (JsUtils.jsConvertData(data, None), self.varId))
+    return JsObjects.JsVoid("%s.itemsData.add(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+    #return JsObjects.JsVoid("console.log(%s)" % (self.varId))#, JsUtils.jsConvertData(data, None)))
 
-  def setItems(self, data):
+  def addItems(self, data: Any):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.forEach(function(data) {%s.itemsData.add(data)})" % (
+      JsUtils.jsConvertData(data, None), self.varId))
+
+  def setItems(self, data: Any):
     """
     Description:
     -----------
@@ -843,7 +895,7 @@ class VisTimeline(JsPackage):
     """
     return JsObjects.JsVoid("%s.setGroups(%s)" % (self.varId, JsUtils.jsConvertData(groups, None)))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -854,7 +906,7 @@ class VisTimeline(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, JsUtils.jsConvertData(options, None)))
 
@@ -882,14 +934,16 @@ class VisTimeline(JsPackage):
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
-  def setData(self, data):
+  def setData(self, data: Any):
     """
     Description:
     -----------
     Set both groups and items at once. Both properties are optional.
     This is a convenience method for individually calling both setItems(items) and setGroups(groups).
-    Both items and groups can be an Array with Objects, a DataSet (offering 2 way data binding), or a DataView (offering 1 way data binding).
-    For each of the groups, the items of the timeline are filtered on the property group, which must correspond with the id of the group.
+    Both items and groups can be an Array with Objects, a DataSet (offering 2 way data binding), or a DataView
+    (offering 1 way data binding).
+    For each of the groups, the items of the timeline are filtered on the property group, which must correspond
+    with the id of the group.
 
     Related Pages:
 
@@ -913,58 +967,59 @@ class VisTimeline(JsPackage):
     """
     return JsObjects.JsVoid("%s.fit()" % self.varId)
 
-  def addCustomTime(self, dt, code):
+  def addCustomTime(self, dt: Union[str, primitives.JsDataModel], code: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param dt:
-    :param id:
+    :param Union[str, primitives.JsDataModel] dt:
+    :param Union[str, primitives.JsDataModel] id:
     """
     dt = JsUtils.jsConvertData(dt, None)
     code = JsUtils.jsConvertData(code, None)
     return JsObjects.JsVoid("%s.addCustomTime(new Date(%s), %s)" % (self.varId, dt, code))
 
-  def setCustomTimeMarker(self, text, code, flag=False):
+  def setCustomTimeMarker(self, text: Union[str, primitives.JsDataModel], code: Union[str, primitives.JsDataModel],
+                          flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param text:
-    :param code:
-    :param flag:
+    :param Union[str, primitives.JsDataModel] text:
+    :param Union[str, primitives.JsDataModel] code:
+    :param Union[bool, primitives.JsDataModel] flag:
     """
     text = JsUtils.jsConvertData(text, None)
     code = JsUtils.jsConvertData(code, None)
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsVoid("%s.setCustomTimeMarker(%s, %s, %s)" % (self.varId, text, code, flag))
 
-  def setCustomTimeTitle(self, text, code):
+  def setCustomTimeTitle(self, text: Union[str, primitives.JsDataModel], code: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param text:
-    :param code:
+    :param Union[str, primitives.JsDataModel] text:
+    :param Union[str, primitives.JsDataModel] code:
     """
     text = JsUtils.jsConvertData(text, None)
     code = JsUtils.jsConvertData(code, None)
     return JsObjects.JsVoid("%s.setCustomTimeTitle(%s, %s)" % (self.varId, text, code))
 
-  def removeCustomTime(self, code):
+  def removeCustomTime(self, code: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param code:
+    :param Union[str, primitives.JsDataModel] code:
     """
     code = JsUtils.jsConvertData(code, None)
     return JsObjects.JsVoid("%s.removeCustomTime(%s)" % (self.varId, code))
@@ -1003,7 +1058,8 @@ class VisGraph3D(JsPackage):
     """
     Description:
     -----------
-    Returns an object with parameters horizontal, vertical and distance, which each one of them is a number, representing the rotation and position of the camera.
+    Returns an object with parameters horizontal, vertical and distance, which each one of them is a number,
+    representing the rotation and position of the camera.
 
     Related Pages:
 
@@ -1015,7 +1071,8 @@ class VisGraph3D(JsPackage):
     """
     Description:
     -----------
-    Redraw the graph. Useful after the camera position is changed externally, when data is changed, or when the layout of the webpage changed.
+    Redraw the graph. Useful after the camera position is changed externally, when data is changed, or when the
+    layout of the webpage changed.
 
     Related Pages:
 
@@ -1023,7 +1080,7 @@ class VisGraph3D(JsPackage):
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varName)
 
-  def setData(self, data):
+  def setData(self, data: Any):
     """
     Description:
     -----------
@@ -1035,11 +1092,11 @@ class VisGraph3D(JsPackage):
 
     Attributes:
     ----------
-    :param data:
+    :param Any data:
     """
     return self.fnc_closure("setData(%s)" % JsUtils.jsConvertData(data, None))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -1051,15 +1108,16 @@ class VisGraph3D(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     return self.fnc_closure("setOptions(%s)" % JsUtils.jsConvertData(options, None))
 
-  def setSize(self, width, height):
+  def setSize(self, width: Union[float, primitives.JsDataModel], height: Union[float, primitives.JsDataModel]):
     """
     Description:
     -----------
-    Parameters width and height are strings, containing a new size for the graph. Size can be provided in pixels or in percentages.
+    Parameters width and height are strings, containing a new size for the graph. Size can be provided in pixels
+    or in percentages.
 
     Related Pages:
 
@@ -1067,14 +1125,14 @@ class VisGraph3D(JsPackage):
 
     Attributes:
     ----------
-    :param width:
-    :param height:
+    :param Union[float, primitives.JsDataModel] width:
+    :param Union[float, primitives.JsDataModel] height:
     """
     width = JsUtils.jsConvertData(width, None)
     height = JsUtils.jsConvertData(height, None)
     return self.fnc_closure("setSize(%s, %s)" % (width, height))
 
-  def setCameraPosition(self, pos):
+  def setCameraPosition(self, pos: Union[str, primitives.JsDataModel, float, dict, list]):
     """
     Description:
     -----------
@@ -1087,16 +1145,17 @@ class VisGraph3D(JsPackage):
 
     Attributes:
     ----------
-    :param pos:
+    :param Union[str, primitives.JsDataModel, float, dict, list] pos:
     """
-    pos = JsUtils.jsConvertData(pos)
+    pos = JsUtils.jsConvertData(pos, None)
     return self.fnc_closure("setCameraPosition(%s)" % pos)
 
-  def onCameraPositionChange(self, jsFnc):
+  def onCameraPositionChange(self, js_func: Union[list, str]):
     """
     Description:
     -----------
-    The camera position changed. Fired after the user modified the camera position by moving (dragging) the graph, or by zooming (scrolling), but not after a call to setCameraPosition method.
+    The camera position changed. Fired after the user modified the camera position by moving (dragging) the graph,
+    or by zooming (scrolling), but not after a call to setCameraPosition method.
 
     Related Pages:
 
@@ -1104,9 +1163,9 @@ class VisGraph3D(JsPackage):
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param Union[list, str] js_func:
     """
-    return self.fnc_closure("on('cameraPositionChange', %s)" % jsFnc)
+    return self.fnc_closure("on('cameraPositionChange', %s)" % js_func)
 
 
 class VisGraph2D(JsPackage):
@@ -1172,7 +1231,7 @@ class VisGraph2D(JsPackage):
     """
     return JsObjects.JsVoid("%s.redraw()" % self.varId)
 
-  def setItems(self, items):
+  def setItems(self, items: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -1184,12 +1243,12 @@ class VisGraph2D(JsPackage):
 
     Attributes:
     ----------
-    :param items:
+    :param Union[dict, primitives.JsDataModel] items:
     """
     items = JsUtils.jsConvertData(items, None)
     return JsObjects.JsVoid("%s.setItems(%s)" % (self.varId, items))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -1202,7 +1261,7 @@ class VisGraph2D(JsPackage):
 
     Attributes:
     ----------
-    :param options:
+    :param Union[dict, primitives.JsDataModel] options:
     """
     options = JsUtils.jsConvertData(options, None)
     return JsObjects.JsVoid("%s.setOptions(%s)" % (self.varId, options))

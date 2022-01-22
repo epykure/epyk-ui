@@ -12,7 +12,8 @@ information to manipulate them in your report
 
 """
 
-from typing import Union, Optional, Type
+from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js import Imports
 from epyk.core.js import JsUtils
@@ -30,7 +31,7 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
   name = 'Entries'
 
-  def __init__(self, report, text, options=None, html_code=None):
+  def __init__(self, report: primitives.PageModel, text: str, options: dict = None, html_code: str = None):
     super(Li, self).__init__(report, text, html_code=html_code)
     if options is not None:
       self.item_type = options.get("item_type", "li")
@@ -40,7 +41,7 @@ class Li(Html.Html):
       text.options.managed = False
     self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
 
-  def __add__(self, component):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if not hasattr(component, 'options'):
       raise ValueError("This can only be used for HTML components")
@@ -58,7 +59,7 @@ class Li(Html.Html):
     return self
 
   def add_label(self, text: str, css: Optional[dict] = None, position: str = "before",
-                for_: Optional[Type[Html.Html]] = None, html_code: Optional[str] = None, options: Optional[dict] = None):
+                for_: Optional[Html.Html] = None, html_code: Optional[str] = None, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -73,7 +74,7 @@ class Li(Html.Html):
     :param str text: The label content.
     :param Optional[dict] css: Optional. A dictionary with the CSS style to be added to the component.
     :param str position: Optional. The position.
-    :param Optional[Type[Html.Html]] for_: Optional. Specifies which form element a label is bound to
+    :param Optional[Html.Html] for_: Optional. Specifies which form element a label is bound to
     :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
@@ -94,7 +95,7 @@ class Li(Html.Html):
       self.label.css(dfl_css)
     return self
 
-  def set_html_content(self, component: Type[Html.Html]):
+  def set_html_content(self, component: Html.Html):
     """
     Description:
     ------------
@@ -102,7 +103,7 @@ class Li(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: Python HTML object.
+    :param Html.Html component: Python HTML object.
 
     :return: self, the cell object to allow the chaining
     """
@@ -161,7 +162,8 @@ class List(Html.Html):
   name = 'List'
   _option_cls = OptList.OptionsLi
 
-  def __init__(self, report, data, color, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, data: list, color, width: tuple, height: tuple, html_code: str,
+               helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(List, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
@@ -256,7 +258,7 @@ class List(Html.Html):
     self.items.append(component)
     return self
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     """
     Description:
     ------------
@@ -264,7 +266,7 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. Get an element from the Python list.
+    :param int i: Get an element from the Python list.
 
     :rtype: Li
     """
@@ -279,7 +281,7 @@ class List(Html.Html):
   def item(self, n: int):
     return self.items[n]
 
-  def add_item(self, d: Union[Type[Html.Html], str]):
+  def add_item(self, d: Union[Html.Html, str]):
     """
     Description:
     ------------
@@ -287,7 +289,7 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Type[Html.Html], str] d:  The component to be added.
+    :param Union[Html.Html, str] d:  The component to be added.
     """
     self.items = self.items or []
     li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
@@ -368,7 +370,8 @@ class List(Html.Html):
 class Groups(Html.Html):
   name = 'Groups'
 
-  def __init__(self, report, data, categories, size, color, width, height, html_code, helper, options, profile):
+  def __init__(self, report: primitives.PageModel, data: list, categories: list, size: tuple, color: str, width: tuple,
+               height: tuple, html_code: str, helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, options=options,
                                  html_code=html_code, profile=profile)
     self.add_helper(helper)
@@ -379,27 +382,12 @@ class Groups(Html.Html):
     for i, cat in enumerate(categories):
       self.add_list(data[i], cat)
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     return self.val[i]
 
-  def add_list(self, data, category="", color='inherit', width=(None, 'px'), height=(None, 'px'),
-               html_code=None, helper=None, options=None, profile=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param data:
-    :param category:
-    :param color:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
-    """
+  def add_list(self, data, category: str = "", color: str = 'inherit', width: tuple = (None, 'px'),
+               height: tuple = (None, 'px'), html_code: str = None, helper: str = None, options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None):
     self._lists__map[category] = len(self.val)
     html_li = List(self.page, data, color, width, height, html_code, helper, options, profile)
     html_li.options.managed = False
@@ -423,7 +411,8 @@ class Items(Html.Html):
   name = 'Items'
   _option_cls = OptList.OptionsItems
 
-  def __init__(self, report, records, width, height, options, html_code, profile, helper):
+  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
+               html_code: str, profile: Optional[Union[bool, dict]], helper: str):
     super(Items, self).__init__(report, records, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, 'height': height})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
@@ -567,7 +556,7 @@ class Items(Html.Html):
     return self
 
   def add_type(self, name: str, item_def: Optional[str] = None, func_name: Optional[str] = None,
-               dependencies: Optional[List[str]] = None):
+               dependencies: list = None):
     """
     Description:
     ------------
@@ -643,7 +632,8 @@ class ListTournaments(Html.Html):
   requirements = ('jquery-bracket', )
   _option_cls = OptList.OptionsListBrackets
 
-  def __init__(self, report, records, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(ListTournaments, self).__init__(
       report, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})

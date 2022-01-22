@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional, List
+from epyk.core.py import primitives
+
 import collections
 
 from epyk.core.html import Html
@@ -18,7 +20,8 @@ from epyk.core.html.options import OptList
 class HtmlNavBar(Html.Html):
   name = 'Nav Bar'
 
-  def __init__(self, report, components, width, height, options, html_code, profile):
+  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
+               height: tuple, options: Optional[dict], html_code: str, profile: Optional[Union[dict, bool]]):
     super(HtmlNavBar, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                      profile=profile, options=options)
     self.scroll, self.background = None, True
@@ -53,7 +56,7 @@ class HtmlNavBar(Html.Html):
     self.page.body.style.css.padding_top = 0
     return self
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to the footer """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)
@@ -100,7 +103,7 @@ class HtmlNavBar(Html.Html):
     self.style.css.background_color = self.page.theme.colors[0]
     self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
 
-  def add_right(self, component: Type[Html.Html], css: Optional[dict] = None, prepend: bool = False):
+  def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False):
     """
     Description:
     -----------
@@ -108,7 +111,7 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: Internal component to the framework.
+    :param Html.Html component: Internal component to the framework.
     :param Optional[dict] css: Optional. The CSS attributes.
     :param bool prepend: Optional.
     """
@@ -136,7 +139,7 @@ class HtmlNavBar(Html.Html):
     self.buttons.append(component)
     return self
 
-  def add_text(self, text: Union[Type[Html.Html], str]) -> Type[Html.Html]:
+  def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
     """
     Description:
     -----------
@@ -144,7 +147,7 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Type[Html.Html], str] text: The link to be added to the navbar.
+    :param Union[Html.Html, str] text: The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
       text = self.page.ui.text(text)
@@ -167,7 +170,8 @@ class HtmlNavBar(Html.Html):
 class HtmlFooter(Html.Html):
   name = 'footer'
 
-  def __init__(self, report, components, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
+               height: tuple, options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                      options=options, profile=profile)
     self.__col_lst = None
@@ -216,7 +220,7 @@ class HtmlFooter(Html.Html):
       self._styleObj = GrpClsMenu.ClassFooter(self)
     return self._styleObj
 
-  def __add__(self, component: Union[Type[Html.Html], str]):
+  def __add__(self, component: Union[Html.Html, str]):
     """ Add items to the footer """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)
@@ -251,7 +255,8 @@ class ContextMenu(Html.Html):
   source = None
   _option_cls = OptList.OptionsLi
 
-  def __init__(self, report, components, width, height, visible, options, profile):
+  def __init__(self, report: primitives.PageModel, components: List[Html.Html], width: str, height: str,
+               visible: bool, options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height},
                                       profile=profile, options=options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
@@ -294,26 +299,26 @@ class ContextMenu(Html.Html):
     self += {"value": value, 'icon': icon}
     return self
 
-  def add(self, component: Type[Html.Html]) -> Type[Html.Html]:
+  def add(self, component: Html.Html) -> Html.Html:
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: Internal component to the framework.
+    :param Html.Html component: Internal component to the framework.
     """
     self.__add__(component)
     return self.val[-1].val
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Type[Html.Html] component: The new HTML component to be added to the main component.
+    :param Html.Html component: The new HTML component to be added to the main component.
     """
     if not hasattr(component, 'options'):
       if isinstance(component, dict):
@@ -334,7 +339,7 @@ class ContextMenu(Html.Html):
     self.val.append(li_obj)
     return self
 
-  def __getitem__(self, i) -> Type[Html.Html]:
+  def __getitem__(self, i: int) -> Html.Html:
     return self.val[i].val
 
   def __str__(self):
@@ -354,7 +359,8 @@ class ContextMenu(Html.Html):
 class PanelsBar(Html.Html):
   name = 'Panel Bar'
 
-  def __init__(self, report, width, height, options, helper, profile):
+  def __init__(self, report: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
+               helper: str, profile: Optional[Union[dict, bool]]):
     super(PanelsBar, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
     self.add_helper(helper)
     self.menus = report.ui.div(options={'inline': True})
@@ -383,7 +389,7 @@ class PanelsBar(Html.Html):
     self.menus.style.css.color = report.theme.colors[0]
     self.menus.style.css.padding = '5px 0'
 
-  def add_panel(self, text: str, content: Type[Html.Html]):
+  def add_panel(self, text: str, content: Html.Html):
     """
     Description:
     ------------
@@ -392,7 +398,7 @@ class PanelsBar(Html.Html):
     Attributes:
     ----------
     :param str text: The anchor visible linked to a panel.
-    :param content: The panel.
+    :param Html.Html content: The panel.
     """
     content.style.css.padding = "0 5px"
     if not hasattr(text, 'options'):
@@ -431,7 +437,9 @@ class PanelsBar(Html.Html):
 class Shortcut(Html.Html):
   name = 'shortcut'
 
-  def __init__(self, report, components, logo, width, height, html_code, options, profile):
+  def __init__(self, report: primitives.PageModel, components: List[Html.Html],
+               logo: Union[str, Html.Html], width: tuple, height: tuple, html_code: Optional[str],
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Shortcut, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                    profile=profile)
     self.logo = logo
@@ -462,7 +470,7 @@ class Shortcut(Html.Html):
       self._styleObj = GrpClsMenu.ClassShortcut(self)
     return self._styleObj
 
-  def __add__(self, component: Type[Html.Html]):
+  def __add__(self, component: Html.Html):
     """ Add items to a container """
     if not hasattr(component, 'options'):
       component = self.page.ui.icons.awesome(component)
@@ -489,7 +497,7 @@ class Shortcut(Html.Html):
     self.val.append(component)
     return self
 
-  def add_logo(self, icon, path: Optional[str] = None, align: str = "center",
+  def add_logo(self, icon: str, path: Optional[str] = None, align: str = "center",
                width: tuple = (32, 'px'), height: tuple = (32, 'px')):
     """
     Description:

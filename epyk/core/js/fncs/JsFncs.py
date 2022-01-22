@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Any
+from epyk.core.py import primitives
 
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.objects import JsChartD3
@@ -86,8 +88,8 @@ class FncRoAggRec:
 
 class FncOnRecords:
 
-  def __init__(self, data, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema, self._data = js_src, data_schema, data
+  def __init__(self, data, js_src, data_schema=None, profile: Union[bool, dict] = False):
+    self._js_src, self._data_schema, self._data, self.profile = js_src, data_schema, data, profile
 
   @property
   def o(self):
@@ -99,7 +101,7 @@ class FncOnRecords:
     """
     return FncToObject(self._js_src, self._data_schema)
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
+  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -117,7 +119,7 @@ class FncOnRecords:
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
         'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
 
-  def custom(self, fnc_name, fnc_content, fnc_pmts=None, profile=False):
+  def custom(self, fnc_name, fnc_content, fnc_pmts=None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -150,7 +152,7 @@ class FncOnRecords:
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
     return fnc_name
 
-  def count(self, keys, values=None, profile=False):
+  def count(self, keys, values=None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -183,7 +185,7 @@ class FncOnRecords:
       self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self._data
 
-  def count_with_kpi(self, keys, values, profile=False):
+  def count_with_kpi(self, keys, values, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -200,7 +202,7 @@ class FncOnRecords:
     self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self._data
 
-  def count_distinct(self, keys, profile=False):
+  def count_distinct(self, keys, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -220,7 +222,8 @@ class FncOnRecords:
     self._data_schema['fncs'].append("%s(%%s, %s)" % (fnc_name, keys))
     return self._data
 
-  def top(self, column, n=1, order='desc', profile=False):
+  def top(self, column: Union[str, primitives.JsDataModel], n: int = 1, order: str = 'desc',
+          profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -228,24 +231,25 @@ class FncOnRecords:
 
     Attributes:
     ----------
-    :param column:
+    :param Union[str, primitives.JsDataModel] column:
     :param n: Integer. Optional.
     :param order: String. Optional.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
+    column = JsUtils.jsConvertData(column, None)
     fnc_name = JsFncsRecords.JsTop.__name__
     self.__register_records_fnc(
       fnc_name, JsFncsRecords.JsTop.value, fnc_pmts=list(JsFncsRecords.JsTop.params))
-    self._data_schema['fncs'].append("%s(%%s, %s, '%s', '%s')" % (fnc_name, n, column, order))
+    self._data_schema['fncs'].append("%s(%%s, %s, %s, '%s')" % (fnc_name, n, column, order))
     return self
 
 
 class FncFiltere:
 
-  def __init__(self, data, js_src, data_schema=None, profile=False):
-    self._js_src, self._data_schema, self._data = js_src, data_schema, data
+  def __init__(self, data, js_src, data_schema=None, profile: Union[dict, bool] = False):
+    self._js_src, self._data_schema, self._data, self.profile = js_src, data_schema, data, profile
     fnc_name = JsFncsRecords.JsFilter.__name__
     fnc_pmts = ["data"] + (list(JsFncsRecords.JsFilter.pmts) or [])
     if fnc_name not in self._js_src.get('js', {}).get('functions', {}):
@@ -254,7 +258,7 @@ class FncFiltere:
           JsFncsRecords.JsFilter.content), 'pmt': fnc_pmts}
     self._data_schema['filters'] = []
 
-  def custom(self, column, val, compare_type, all_if_empty=True):
+  def custom(self, column: str, val: Any, compare_type: str, all_if_empty: bool = True):
     """
     Description:
     ------------
@@ -268,17 +272,19 @@ class FncFiltere:
     """
     filter_data = JsUtils.jsConvertData({
       "colName": column, "val": val, "op": compare_type, "allIfEmpty": all_if_empty}, None)
-    self._data_schema['filters'].append(filter_data.toStr())
+    self._data_schema['filters'].append(filter_data)
     return self._data
 
-  def not_in_(self):
+  def not_in_(self, column: str, val: Any):
     """
     Description:
     ------------
 
+    #TODO: Think about the implementation
     """
+    raise ValueError("Not implemented")
 
-  def not_range_(self, column, val, compare_type="in", all_if_empty=True):
+  def not_range_(self, column: str, val: Any, compare_type: str = "in", all_if_empty: bool = True):
     """
     Description:
     ------------
@@ -291,7 +297,7 @@ class FncFiltere:
     :param all_if_empty: Boolean. Optional.
     """
 
-  def in_(self, column, val):
+  def in_(self, column: str, val: Any):
     """
     Description:
     ------------
@@ -303,7 +309,7 @@ class FncFiltere:
     """
     return self.custom(column, val, "in", True)
 
-  def range_(self, column, val, strict_left=False, strict_right=False):
+  def range_(self, column: str, val: Any, strict_left: bool = False, strict_right: bool = False):
     """
     Description:
     ------------
@@ -329,7 +335,7 @@ class FncFiltere:
 
     return self.custom(column, val, "=><=", True)
 
-  def eq_(self, column, val):
+  def eq_(self, column: str, val: Any):
     """
     Description:
     ------------
@@ -341,7 +347,7 @@ class FncFiltere:
     """
     return self.custom(column, val, ">", True)
 
-  def sup_(self, column, val, strict=False):
+  def sup_(self, column: str, val: Any, strict: bool = False):
     """
     Description:
     ------------
@@ -358,7 +364,7 @@ class FncFiltere:
 
     return self.custom(column, val, ">=", True)
 
-  def inf_(self, column, val, strict=False):
+  def inf_(self, column: str, val: Any, strict: bool = False):
     """
     Description:
     ------------
@@ -416,7 +422,7 @@ class JsRegisteredFunctions:
       'pmt': ["url", "data"]}
     return "serviceCall"
 
-  def anonymous(self, jsFnc, pmts=None):
+  def anonymous(self, js_funcs: Union[str, list], pmts: dict = None):
     """
     Description:
     ------------
@@ -429,15 +435,15 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
-    :param pmts: Dictionary. Optional. The function parameters.
+    :param Union[str, list] js_funcs: Javascript functions.
+    :param dict pmts: Optional. The function parameters.
     """
     if pmts is None:
-      return JsFunction("(function(){%s})()" % jsFnc)
+      return JsFunction("(function(){%s})()" % js_funcs)
 
-    return JsFunction("(function(%s){%s})()" % (",".join(pmts), jsFnc))
+    return JsFunction("(function(%s){%s})()" % (",".join(pmts), js_funcs))
 
-  def get(self, fnc_name, *args):
+  def get(self, fnc_name: str, *args):
     """
     Description:
     ------------
@@ -445,7 +451,7 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param fnc_name: String. The function name.
+    :param str fnc_name: The function name.
     :param args: Dictionary. The different arguments in the function definition.
 
     :return: The Javascript sting
@@ -453,7 +459,7 @@ class JsRegisteredFunctions:
     pmts = [str(JsUtils.jsConvertData(p, None)) for p in args]
     return "%s(%s)" % (fnc_name, ", ".join(pmts))
 
-  def inline(self, fnc_name, jsFnc, pmts=None):
+  def inline(self, fnc_name: str, js_funcs: Union[str, list], pmts: dict = None):
     """
     Description:
     ------------
@@ -465,14 +471,14 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param fnc_name: String. The function name.
-    :param jsFnc: List | String. Javascript functions.
-    :param pmts: Dictionary. Optional. The function parameters.
+    :param str fnc_name: The function name.
+    :param Union[str, list] js_funcs: Javascript functions.
+    :param dict pmts: Optional. The function parameters.
 
     :return: The function name which can be used in the Javascript
     """
     self._js_src.setdefault('functions', {})[fnc_name] = {
-      'content': JsUtils.jsConvertFncs(jsFnc, toStr=True), 'pmt': pmts}
+      'content': JsUtils.jsConvertFncs(js_funcs, toStr=True), 'pmt': pmts}
     return fnc_name
 
   @property
@@ -486,11 +492,11 @@ class JsRegisteredFunctions:
     return FncOnRecords(self._js_src)
 
 
-class JsFunction:
+class JsFunction(primitives.JsDataModel):
   fncName = "lambda"
 
-  def __init__(self, strFnc):
-    self.__strFnc = strFnc
+  def __init__(self, func: str):
+    self.__strFnc = func
 
   def __str__(self):
     return self.__strFnc
@@ -501,35 +507,35 @@ class JsFunction:
 
 class JsFunctions(list):
 
-  def __init__(self, strFnc):
-    if not isinstance(strFnc, list):
-      strFnc = [strFnc]
-    self.__strFncs = strFnc
+  def __init__(self, funcs: Union[list, str]):
+    if not isinstance(funcs, list):
+      funcs = [funcs]
+    self.__str_funcs = funcs
 
-  def append(self, strFnc):
+  def append(self, func: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param strFnc:
+    :param str func:
     """
-    self.__strFncs.append(strFnc)
+    self.__str_funcs.append(func)
 
-  def extend(self, strFncs):
+  def extend(self, funcs: list):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param strFncs:
+    :param list funcs:
     """
-    self.__strFncs.extend(strFncs)
+    self.__str_funcs.extend(funcs)
 
   def toStr(self):
-    return "; ".join([s.toStr() if hasattr(s, 'toStr') else str(s) for s in self.__strFncs])
+    return "; ".join([s.toStr() if hasattr(s, 'toStr') else str(s) for s in self.__str_funcs])
 
 
 _JSFNCS = 0
@@ -557,7 +563,7 @@ class JsTypeOf:
     return "%s(%s)" % (self.fncName, ", ".join([str(a) for a in self.__jsArgs]))
 
 
-class JsAnonymous:
+class JsAnonymous(primitives.JsDataModel):
 
   def __init__(self, jsFncs):
     self.__strFnc, self.__returnFnc, self.__paramsFnc = jsFncs, "", []

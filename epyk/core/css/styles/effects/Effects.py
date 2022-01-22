@@ -1,10 +1,11 @@
 
+from typing import Optional
 from epyk.core.js import JsUtils
 
 
 class Effects:
 
-  def __init__(self, page, component=None, ovrs_attrs=None):
+  def __init__(self, page, component=None, ovrs_attrs: Optional[dict] = None):
     """
     Description:
     ------------
@@ -13,7 +14,7 @@ class Effects:
     ----------
     :param page:
     :param component:
-    :param ovrs_attrs:
+    :param Optional[dict] ovrs_attrs:
     """
     self._report, self._htmlObj = page, component
     self.component = component
@@ -29,8 +30,8 @@ class Effects:
     """
     return self.attrs
 
-  def glow(self, color, radius=50, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
-           direction="alternate", fill_mode='forwards'):
+  def glow(self, color, radius: int = 50, duration: int = 1, timing_fnc: str = "ease-in-out",
+           delay: int = 0, iteration_count: str = "infinite", direction: str = "alternate", fill_mode: str = 'forwards'):
     """
     Description:
     ------------
@@ -66,7 +67,8 @@ class Effects:
       "from": {"text-shadow": color_effects}, "to": {"text-shadow": color_effects}})
     return name
 
-  def blink(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
+  def blink(self, duration: int = 1, timing_fnc: str = "ease-in-out", delay: int = 0,
+            iteration_count="infinite", direction="alternate",
             fill_mode='forwards'):
     """
     Description:

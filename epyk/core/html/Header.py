@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 import logging
 
 from epyk.core.html import Defaults
 
 
 class Meta:
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self._report = page
     self._metas = {}
     self.__cols = ['charset', 'viewport']
@@ -301,7 +302,8 @@ class Links:
     :param str href: The link path for the stylesheet page.
     :param str file_type: Optional. The type of the href tag.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type=file_type, media=media, rel="preload", cross_origin=cross_origin)
 
@@ -323,7 +325,8 @@ class Links:
     ----------
     :param str href: The link path for the stylesheet page.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type=media, media=media, rel="prefetch", cross_origin=cross_origin)
 
@@ -344,7 +347,8 @@ class Links:
     ----------
     :param str href: The link path for the stylesheet page.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="dns-prefetch", cross_origin=cross_origin)
 
@@ -366,7 +370,8 @@ class Links:
     ----------
     :param str href: The link path for the stylesheet page.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="prerender", cross_origin=cross_origin)
 
@@ -388,7 +393,8 @@ class Links:
     ----------
     :param str href: The link path for the stylesheet page.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="preconnect", cross_origin=cross_origin)
 
@@ -454,7 +460,8 @@ class Links:
     :param str file_type: Optional. The type of the href tag.
     :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
     :param str rel: Optional. This attribute names a relationship of the linked document to the current document.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     if isinstance(href, list):
       self.__header._links.append({"href": href[0], "rel": rel})
@@ -607,7 +614,7 @@ class Header:
     ".svg": "image/svg+xml",
   }
 
-  def __init__(self, report=None):
+  def __init__(self, report: Optional[primitives.PageModel] = None):
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
     self._favicon_url = {}
     self.favicon(Defaults.FAVICON_URL)

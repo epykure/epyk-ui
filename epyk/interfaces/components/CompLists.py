@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
@@ -12,8 +14,8 @@ class Lists:
   def __init__(self, ui):
     self.page = ui.page
 
-  def select(self, records=None, html_code=None, selected=None, width=(100, "%"), height=(None, "%"),
-             profile=None, multiple=False, options=None):
+  def select(self, records=None, html_code: str = None, selected: str = None, width=(100, "%"), height=(None, "%"),
+             profile: Union[bool, dict] = None, multiple: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -81,8 +83,8 @@ class Lists:
     html.Html.set_component_skin(html_select)
     return html_select
 
-  def lookup(self, lookup=None, html_code=None, width=(100, "%"), height=(None, "%"),
-             profile=None, multiple=False, options=None):
+  def lookup(self, lookup=None, html_code: str = None, width=(100, "%"), height=(None, "%"),
+             profile: Union[bool, dict] = None, multiple: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -131,7 +133,7 @@ class Lists:
     html.Html.set_component_skin(html_select)
     return html_select
 
-  def item(self, text=None, tag=None, options=None):
+  def item(self, text: str = None, tag=None, options: dict = None):
     """
     Description:
     ------------
@@ -163,8 +165,8 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def list(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-           options=None, profile=None):
+  def list(self, data=None, color: str = None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
+           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -209,8 +211,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-           options=None, profile=None):
+  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
+           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -238,8 +240,8 @@ class Lists:
     html.Html.set_component_skin(component)
     return component
 
-  def items(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
-            helper=None):
+  def items(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None,
+            html_code: str = None, profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -274,22 +276,22 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def links(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
-            helper=None):
+  def links(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
+            profile: Union[bool, dict] = None, helper: str = None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "link"
     html.Html.set_component_skin(component)
     return component
 
-  def icons(self, records=None, width=(100, "%"), height=("auto", ""), options=None, html_code=None, profile=None,
-            helper=None):
+  def icons(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None,
+            html_code: str = None, profile: Union[bool, dict] = None, helper: str = None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "icon"
     html.Html.set_component_skin(component)
     return component
 
-  def pills(self, records=None, width=(100, "%"), height=(None, "%"), options=None, html_code=None,
-            profile=None, helper=None):
+  def pills(self, records=None, width=(100, "%"), height=(None, "%"), options: dict = None, html_code: str = None,
+            profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -315,8 +317,8 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def box(self, records=None, width=(100, "%"), height=(None, "%"), options=None, html_code=None,
-          profile=None, helper=None):
+  def box(self, records=None, width=(100, "%"), height=(None, "%"), options: dict = None, html_code: str = None,
+          profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -351,8 +353,8 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
-              profile=None, helper=None):
+  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: dict = None,
+              profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -378,8 +380,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
-            profile=None, helper=None):
+  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: dict = None,
+            profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -410,8 +412,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
-            profile=None, helper=None):
+  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: str = None,
+            profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -442,8 +444,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align=None, html_code=None,
-             options=None, profile=None, helper=None):
+  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align: str = None, html_code: str = None,
+             options: dict = None, profile: Union[bool, dict] = None, helper: str = None):
     """
     Description:
     ------------
@@ -482,8 +484,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-           options=None, profile=None):
+  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
+           options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -522,8 +524,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-              options=None, profile=None):
+  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
+              options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -558,8 +560,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'), html_code=None,
-             helper=None, options=None, profile=None):
+  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'),
+             html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -605,8 +607,8 @@ class Lists:
     html.Html.set_component_skin(html_obj)
     return html_obj
 
-  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile=None):
+  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
+           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -635,8 +637,8 @@ class Lists:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-               options=None, profile=None):
+  def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'),
+               html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -677,8 +679,8 @@ class Lists:
     html.Html.set_component_skin(html_d)
     return html_d
 
-  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-             options=None, profile=None):
+  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
+             options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -716,8 +718,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
-             options=None, profile=None):
+  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
+             options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -759,7 +761,7 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, helper=None,
+  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
             options=None, profile=None):
     """
     Description:
@@ -799,8 +801,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def radios(self, data=None, group_name='group', width=('auto', ""), height=(None, "px"), html_code=None,
-             helper=None, options=None, profile=None):
+  def radios(self, data=None, group_name: str = 'group', width=('auto', ""), height=(None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -836,7 +838,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def brackets(self, records=None, width=(100, "%"), height=(550, 'px'), options=None, profile=None):
+  def brackets(self, records=None, width=(100, "%"), height=(550, 'px'), options: dict = None,
+               profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -862,8 +865,8 @@ class Lists:
     html.Html.set_component_skin(component)
     return component
 
-  def chips(self, items=None, category='group', placeholder="", width=(100, "%"), height=(60, "px"), html_code=None,
-            helper=None, options=None, profile=None):
+  def chips(self, items=None, category: str = 'group', placeholder: str = "", width=(100, "%"), height=(60, "px"),
+            html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -920,8 +923,9 @@ class Lists:
     html.Html.set_component_skin(html_f)
     return html_f
 
-  def menu(self, component, add=False, height=(18, 'px'), save_funcs=None, update_funcs=None, editable=False,
-           options=None, profile=None, checks=("fas fa-check-square", "far fa-square")):
+  def menu(self, component, add: bool = False, height=(18, 'px'), save_funcs=None, update_funcs=None,
+           editable: bool = False, options: dict = None, profile: Union[bool, dict] = None,
+           checks: tuple = ("fas fa-check-square", "far fa-square")):
 
     commands = [("Add&nbsp;", "fas fa-plus")] if add else []
     if getattr(component.options, 'items_type', "") in ('check',):
@@ -989,8 +993,8 @@ class Lists:
     html.Html.set_component_skin(container)
     return container
 
-  def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
-              options=None, autocomplete=False, profile=None):
+  def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code: str = None,
+              helper: str = None, options: dict = None, autocomplete: bool = False, profile: Union[bool, dict] = None):
 
     options = options or {}
     container = self.page.ui.div(width=width)

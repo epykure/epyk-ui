@@ -1,5 +1,5 @@
 """
-Module dedicated to wrap the Javascript Date
+Module dedicated to wrap the Javascript Date.
 
 Related Pages:
 
@@ -7,7 +7,8 @@ Related Pages:
 """
 
 
-from typing import Optional
+from typing import Optional, Union
+from epyk.core.py import primitives
 import json
 
 from epyk.core.js.primitives import JsObject
@@ -24,8 +25,6 @@ class JsDate(JsObject.JsObject):
     """
     Description:
     -----------
-
-    Usage::
 
     Related Pages:
 
@@ -269,7 +268,7 @@ class JsDate(JsObject.JsObject):
     from epyk.core.js.primitives import JsNumber
     return JsNumber.JsNumber("(function(x){return %s[x]})(%s.getMonth())" % (MONTHS, self.varId), isPyData=False)
 
-  def setDate(self, day: int):
+  def setDate(self, day: Union[primitives.JsDataModel, int]):
     """
     Description:
     -----------
@@ -286,13 +285,13 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int day: An integer representing the day of a month.
+    :param Union[primitives.JsDataModel, int] day: An integer representing the day of a month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
     return JsDate("%s.setDate(%s)" % (self.varId, day), isPyData=False)
 
-  def setMonth(self, month: int, day: int = None):
+  def setMonth(self, month: Union[primitives.JsDataModel, int], day: Union[primitives.JsDataModel, int] = None):
     """
     Description:
     -----------
@@ -310,8 +309,8 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int month: Required. An integer representing the month.
-    :param int day: Optional. An integer representing the day of month.
+    :param Union[primitives.JsDataModel, int] month: Required. An integer representing the month.
+    :param Union[primitives.JsDataModel, int] day: Optional. An integer representing the day of month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
@@ -425,7 +424,7 @@ class JsDate(JsObject.JsObject):
 
     return JsNumber.JsNumber("%s.getTime()" % self.varId, isPyData=False)
 
-  def add(self, n: int):
+  def add(self, n: Union[primitives.JsDataModel, int]):
     """
     Description:
     -----------
@@ -440,12 +439,12 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int n: the number of days.
+    :param Union[primitives.JsDataModel, int] n: the number of days.
 
     :return: A Python Js object
     """
-    jsData = JsUtils.jsConvertData(n, None)
-    return super(JsDate, self).add(jsData)
+    js_data = JsUtils.jsConvertData(n, None)
+    return super(JsDate, self).add(js_data)
 
   def addDays(self, jsObj, n: int, weekend: bool = False):
     """

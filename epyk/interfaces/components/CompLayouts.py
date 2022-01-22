@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,7 +12,7 @@ class Layouts:
   def __init__(self, ui):
     self.page = ui.page
 
-  def br(self, count=1, profile=None):
+  def br(self, count: int = 1, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -42,7 +44,7 @@ class Layouts:
     html.Html.set_component_skin(html_new_line)
     return html_new_line
 
-  def new_line(self, count=1, profile=None):
+  def new_line(self, count: int = 1, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -79,8 +81,8 @@ class Layouts:
     html.Html.set_component_skin(html_new_line)
     return html_new_line
 
-  def hr(self, count=1, background_color=None, margins=0, width=(100, '%'), height=(None, 'px'), align=None,
-         options=None, profile=None):
+  def hr(self, count: int = 1, background_color: str = None, margins: int = 0, width=(100, '%'), height=(None, 'px'),
+         align=None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -137,7 +139,7 @@ class Layouts:
     html.Html.set_component_skin(hr_html)
     return hr_html
 
-  def underline(self, width=(10, '%'), height=(3, 'px'), align=None, options=None, profile=None):
+  def underline(self, width=(10, '%'), height=(3, 'px'), align: str = None, options=None, profile=None):
     """
     Description:
     ------------
@@ -200,8 +202,8 @@ class Layouts:
     html.Html.set_component_skin(hr)
     return hr
 
-  def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
-          options=None, profile=None):
+  def col(self, components=None, position: str = 'middle', width=(100, '%'), height=(None, 'px'), align: str = None,
+          helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -251,7 +253,7 @@ class Layouts:
     return html_col
 
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
-          options=None, profile=None):
+          options=None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -303,7 +305,8 @@ class Layouts:
     html.Html.set_component_skin(html_col)
     return html_col
 
-  def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper=None, options=None, profile=None):
+  def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper: str = None, options=None,
+            profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -339,7 +342,7 @@ class Layouts:
     return html_row
 
   def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
-           profile=None):
+           profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -380,7 +383,7 @@ class Layouts:
     return html_grid
 
   def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
-            helper=None, options=None, profile=False):
+            helper=None, options=None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -420,7 +423,7 @@ class Layouts:
 
   def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
           height=(None, "px"), editable=False, align='left', padding=None, html_code=None, tag='div', helper=None,
-          options=None, profile=None, position=None):
+          options=None, profile: Union[bool, dict] = None, position: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -478,8 +481,8 @@ class Layouts:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code=None, options=None,
-             profile=None):
+  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code: str = None,
+             options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -508,8 +511,8 @@ class Layouts:
     html.Html.set_component_skin(html_comp)
     return html_comp
 
-  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code=None,
-               options=None, profile=None):
+  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code: str = None,
+               options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -537,7 +540,8 @@ class Layouts:
     html.Html.set_component_skin(html_comp)
     return html_comp
 
-  def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def popup(self, components=None, width=(100, '%'), height=(None, 'px'),
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -578,7 +582,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def iframe(self, url="", width=(100, "%"), height=(100, "%"), helper=None, profile=None):
+  def iframe(self, url: str = "", width=(100, "%"), height=(100, "%"), helper: str = None,
+             profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -611,8 +616,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None,
-              profile=None):
+  def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code: str = None, helper: str = None,
+              options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -648,7 +653,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, profile=None):
+  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), html_code: str = None,
+            helper: str = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -689,7 +695,7 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def form(self, components=None, helper=None):
+  def form(self, components=None, helper: str = None):
     """
     Description:
     ------------
@@ -714,8 +720,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def header(self, components=None, width=(100, "%"),  height=(None, "px"), html_code=None, helper=None, options=None,
-             profile=None):
+  def header(self, components=None, width=(100, "%"),  height=(None, "px"), html_code: str = None, helper: str = None,
+             options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -759,8 +765,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def section(self, components=None, width=(100, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
-              profile=None):
+  def section(self, components=None, width=(100, "%"), height=(None, "px"), html_code: str = None,
+              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -804,8 +810,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
-              profile=None):
+  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align: str = None, position: str = None,
+              options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -850,7 +856,8 @@ class Delimiter:
   def __init__(self, ui):
     self.page = ui.page
 
-  def line(self, count=1, width=(100, '%'), align=None, options=None, profile=None):
+  def line(self, count: int = 1, width=(100, '%'), align: str = None, options: dict = None,
+           profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -877,7 +884,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def double(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
+  def double(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
+             profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -905,7 +913,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def dashed(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
+  def dashed(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
+             profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -935,7 +944,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def dotted(self, count=1, width=(100, '%'), align="center", options=None, profile=None):
+  def dotted(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
+             profile: Union[bool, dict] = None):
     """
     Description:
     ------------

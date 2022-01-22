@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
 
 
 class JsWhile:
 
-  def __init__(self, pivot: str, options: Optional[dict] = None, context=None,
+  def __init__(self, pivot: str, options: Optional[dict] = None, context: Optional[primitives.PageModel] = None,
                profile: Optional[Union[dict, bool]] = None):
     """
     Description:
@@ -19,7 +20,7 @@ class JsWhile:
     ----------
     :param str pivot: The JavaScript expression.
     :param Optional[dict] options:
-    :param context:
+    :param Optional[primitives.PageModel] context:
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     self._context = context
@@ -74,14 +75,15 @@ class JsWhile:
 
 class JsWhileIterable:
 
-  def __init__(self, iterable, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
+  def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param iterable:
+    :param Union[primitives.JsDataModel, str] iterable:
     :param Optional[dict] options: Optional. While options.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """

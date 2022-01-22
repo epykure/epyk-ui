@@ -6,6 +6,8 @@ Related Pages:
       https://www.w3schools.com/jsref/jsref_obj_math.asp
 """
 
+from typing import Union
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
@@ -140,7 +142,7 @@ class JsMaths:
     """
     return JsNumber.JsNumber("Math.PI", isPyData=False)
 
-  def random(self, min_val: int = 0, max_val: int = 1):
+  def random(self, min_val: Union[int, primitives.JsDataModel] = 0, max_val: Union[int, primitives.JsDataModel] = 1):
     """
     Description:
     ------------
@@ -157,8 +159,8 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param int min_val: Optional The minimum value for the random function.
-    :param int max_val: Optional The maximum value for the random function.
+    :param Union[int, primitives.JsDataModel] min_val: Optional The minimum value for the random function.
+    :param Union[int, primitives.JsDataModel] max_val: Optional The maximum value for the random function.
 
     :return: A Number, representing a number from 0 up to but not including 1.
     """
@@ -215,13 +217,13 @@ class JsMaths:
     :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
     if one or more arguments are not numbers
     """
-    jsArgs = [JsUtils.jsConvertData(a, None) for a in args]
-    if len(jsArgs) == 1 and getattr(jsArgs[0], '_jsClass', None) == "Array":
+    js_args = [JsUtils.jsConvertData(a, None) for a in args]
+    if len(js_args) == 1 and getattr(js_args[0], '_jsClass', None) == "Array":
       # ES2015 use of the new spread operator
-      jsArgs[0] = "...%s" % jsArgs[0]
-    return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in jsArgs]), isPyData=False)
+      js_args[0] = "...%s" % js_args[0]
+    return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in js_args]), isPyData=False)
 
-  def floor(self, number: float):
+  def floor(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -237,14 +239,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Required. The number you want to round.
+    :param Union[float, primitives.JsDataModel] number: Required. The number you want to round.
 
     :return: A Number, representing the nearest integer when rounding downwards
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.floor(%s)" % number, isPyData=False)
 
-  def trunc(self, number: float):
+  def trunc(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -260,14 +262,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param number: Number. Required. A number.
+    :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
 
     :return: Returns the integer part of a number (x).
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.trunc(%s)" % number, isPyData=False)
 
-  def abs(self, number: float):
+  def abs(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -279,14 +281,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Required. A number.
+    :param Union[infloatt, primitives.JsDataModel] number: A number.
 
     :return: Returns the absolute value of x.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.abs(%s)" % number, isPyData=False)
 
-  def cos(self, number: float):
+  def cos(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -298,14 +300,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Returns the cosine of x (x is in radians).
+    :param Union[float, primitives.JsDataModel] number: Returns the cosine of x (x is in radians).
 
     :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.cos(%s)" % number, isPyData=False)
 
-  def sin(self, number: float):
+  def sin(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -317,14 +319,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Returns the sinus of x (x is in radians).
+    :param Union[float, primitives.JsDataModel] number: Returns the sinus of x (x is in radians).
 
     :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sin(%s)" % number, isPyData=False)
 
-  def log(self, number: float):
+  def log(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -336,14 +338,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. A number.
+    :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
 
     :return: Returns the natural logarithm (base E) of x.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.log(%s)" % number, isPyData=False)
 
-  def exp(self, number: float):
+  def exp(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -356,14 +358,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. A number,
+    :param Union[float, primitives.JsDataModel] number: Number. Required. A number,
 
     :return: Returns the value of exponential of x,
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.exp(%s)" % number, isPyData=False)
 
-  def round(self, number: float):
+  def round(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -382,14 +384,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. The number to be rounded.
+    :param Union[float, primitives.JsDataModel] number: The number to be rounded.
 
     :return: Rounds x to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.round(%s)" % number, isPyData=False)
 
-  def sqrt(self, number: float):
+  def sqrt(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -406,14 +408,14 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. A number.
+    :param Union[float, primitives.JsDataModel] number: A number.
 
     :return: A Number. If x is a negative number, NaN is returned.
     """
     number = JsUtils.jsConvertData(number, None)
     return JsNumber.JsNumber("Math.sqrt(%s)" % number, isPyData=False)
 
-  def ceil(self, number: float):
+  def ceil(self, number: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -429,7 +431,7 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. The number you want to round.
+    :param Union[float, primitives.JsDataModel] number: The number you want to round.
 
     :return: Returns x, rounded upwards to the nearest integer.
     """
@@ -437,7 +439,7 @@ class JsMaths:
     return JsNumber.JsNumber("Math.ceil(%s)" % number, isPyData=False)
 
   @staticmethod
-  def pow(number: float, power: int):
+  def pow(number: Union[primitives.JsDataModel, float], power: Union[primitives.JsDataModel, int]):
     """
     Description:
     ------------
@@ -454,8 +456,8 @@ class JsMaths:
 
     Attributes:
     ----------
-    :param float number: Number. Required. The base.
-    :param int power: Number. Required. The exponent.
+    :param Union[float, primitives.JsDataModel] number: The base.
+    :param Union[int, primitives.JsDataModel] power: The exponent.
 
     :return: Returns the value of x to the power of y.
     """

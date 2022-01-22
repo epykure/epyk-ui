@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Type
+from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
@@ -26,7 +27,8 @@ from epyk.core import data
 class Hr(Html.Html):
   name = 'Line delimiter'
 
-  def __init__(self, report, background_color, width, height, align, options, profile):
+  def __init__(self, report: primitives.PageModel, background_color: str, width: tuple, height: tuple, align: str,
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Hr, self).__init__(report, "", options=options, profile=profile, css_attrs={"height": height, 'width': width,
                              'border-color': background_color or report.theme.greys[5],
                              'background-color': background_color or report.theme.greys[5]})
@@ -164,7 +166,8 @@ class Stars(Html.Html):
 class Help(Html.Html):
   name = 'Info'
 
-  def __init__(self, report, val, width, profile, options):
+  def __init__(self, report: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
+               options: Optional[dict]):
     icon_details = Defaults.get_icon("info")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
@@ -197,7 +200,8 @@ class Help(Html.Html):
 class Loading(Html.Html):
   name = 'Loading'
 
-  def __init__(self, report, text, color, size, options, profile):
+  def __init__(self, report: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     icon_details = Defaults.get_icon("spin")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
@@ -228,14 +232,14 @@ class Loading(Html.Html):
 
     :return: self to allow the chains.
     """
-    dflt_css = {"position": 'fixed', 'bottom': '5px', 'right': '5px'}
+    dfl_css = {"position": 'fixed', 'bottom': '5px', 'right': '5px'}
     if css is not None:
-      dflt_css.update(css)
-    dflt_css_icon = {"margin-right": '5px', "font-size": 'inherit'}
+      dfl_css.update(css)
+    dfl_css_icon = {"margin-right": '5px', "font-size": 'inherit'}
     if icon_css is not None:
-      dflt_css_icon.update(icon_css)
-    self.icon.css(dflt_css_icon)
-    self.css(dflt_css)
+      dfl_css_icon.update(icon_css)
+    self.icon.css(dfl_css_icon)
+    self.css(dfl_css)
     return self
 
   def __str__(self):
@@ -375,7 +379,7 @@ class Breadcrumb(Html.Html):
             if (i < data.length-1){htmlObj.appendChild(text)}
       })}}'''
 
-  def __add__(self, component: Union[Type[Html.Html], str]):
+  def __add__(self, component: Union[primitives.HtmlModel, str]):
     """ Add items to a container """
     if hasattr(component, 'htmlCode'):
       component.options.managed = False
@@ -392,7 +396,8 @@ class Legend(Html.Html):
   name = 'Legend'
   _option_cls = OptJsonFormatter.OptionsLegend
 
-  def __init__(self, report, record, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[dict, bool]]):
     super(Legend, self).__init__(report, record, options=options,
                                  css_attrs={"width": width, "height": height}, profile=profile)
 
@@ -423,7 +428,8 @@ class Slides(Html.Html):
   name = 'Slides'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, start, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[dict, bool]]):
     icon_details_right = Defaults.get_icon("arrow_right")
     if icon_details_right['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details_right['icon_family'],)
@@ -528,7 +534,7 @@ class Slides(Html.Html):
       self._dom = JsHtmlStars.Slides(self, report=self.page)
     return self._dom
 
-  def add(self, component: Union[Type[Html.Html], str]):
+  def add(self, component: Union[Html.Html, str]):
     """
     Description:
     ------------
@@ -536,7 +542,7 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Type[Html.Html], str] component: The HTML component to be added to this component.
+    :param Union[Html.Html, str] component: The HTML component to be added to this component.
     """
     if isinstance(component, list):
       for c in component:
@@ -557,7 +563,7 @@ class Slides(Html.Html):
     self.val.append(component)
     return self
 
-  def add_slide(self, title: str, component: Union[Type[Html.Html], str], options: Optional[dict] = None):
+  def add_slide(self, title: str, component: Union[Html.Html, str], options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -566,7 +572,7 @@ class Slides(Html.Html):
     Attributes:
     ----------
     :param str title: The title value in the slide.
-    :param Union[Type[Html.Html], str] component: The HTML component.
+    :param Union[Html.Html, str] component: The HTML component.
     :param Optional[dict] options: Optional. The various component options.
     """
     self.add(component)
@@ -611,7 +617,8 @@ class HtmlQRCode(Html.Html):
   requirements = ('qrcodejs', )
   _option_cls = OptQrCode.OptionsQrCode
 
-  def __init__(self, report, record, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(HtmlQRCode, self).__init__(report, record, profile=profile, options=options,
                                      css_attrs={"height": height, "width": width})
     self.options.width = width[0]
@@ -668,7 +675,8 @@ class HtmlCaptcha(Html.Html):
   name = 'Google Catch'
   requirements = ('google-captcha', )
 
-  def __init__(self, report, record, width, height, options, profile):
+  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+               profile: Optional[Union[bool, dict]]):
     super(HtmlCaptcha, self).__init__(report, record, profile=profile, options=options,
                                       css_attrs={"height": height, "width": width})
     self.attr["data-callback"] = "onSubmit"

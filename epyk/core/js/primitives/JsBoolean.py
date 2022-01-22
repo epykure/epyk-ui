@@ -11,6 +11,8 @@ Related Pages:
 """
 
 from typing import Optional
+from epyk.core.py import primitives
+
 import json
 
 from epyk.core.js.primitives import JsObject
@@ -19,7 +21,8 @@ from epyk.core.js.primitives import JsObject
 class JsBoolean(JsObject.JsObject):
   _jsClass = "Boolean"
 
-  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = True, report=None):
+  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = True,
+               report: Optional[primitives.PageModel] = None):
     if not hasattr(data, 'varName') and isPyData:
       isPyData = True
       data = json.dumps(data)

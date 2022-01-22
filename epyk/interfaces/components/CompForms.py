@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core import html
 
 
@@ -11,7 +11,7 @@ class Forms:
   def __init__(self, ui):
     self.page = ui.page
 
-  def new(self, components=None, helper: Optional[str] = None):
+  def new(self, components: List[html.Html.Html] = None, helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -71,7 +71,7 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def dates(self, html_code, profile=None, options=None, helper=None):
+  def dates(self, html_code: str, profile: Union[bool, dict] = None, options: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -109,7 +109,8 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def input(self, html_code, value="", label=None, placeholder="", icon=None, profile=None, options=None, helper=None):
+  def input(self, html_code: str, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
+            profile: Union[bool, dict] = None, options: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -143,7 +144,8 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def inputs(self, record, helper=None, html_code=None, options=None, profile=False):
+  def inputs(self, record: List[dict], helper: str = None, html_code: str = None, options: dict = None,
+             profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -187,8 +189,9 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def subscribe(self, value="", placeholder="Enter email address", button="Subscribe", width=(100, '%'),
-                height=(None, 'px'), options=None, profile=False):
+  def subscribe(self, value: str = "", placeholder: str = "Enter email address", button: str = "Subscribe",
+                width: tuple =(100, '%'), height: tuple = (None, 'px'), options: dict = None,
+                profile: Union[dict, bool] = False):
     """
     Description:
     ------------

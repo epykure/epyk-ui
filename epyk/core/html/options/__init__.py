@@ -10,6 +10,9 @@ TODO: Change the model to get Option as an interface of two sub classes .js and 
 import sys
 import json
 
+from typing import Any, Union
+from epyk.core.py import primitives
+
 from epyk.core.data.DataClass import DataClass
 from epyk.core.js import JsUtils
 
@@ -35,7 +38,7 @@ class Options(DataClass):
         else:
           self.js_tree[k] = v
 
-  def _config_get(self, dflt=None, name=None):
+  def _config_get(self, dflt: Any = None, name: str = None):
     """
     Description:
     ------------
@@ -45,12 +48,12 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param dflt: String. Optional. The default value for this category.
-    :param name: String. Optional. The attribute name (default the function property).
+    :param dflt: Optional. The default value for this category.
+    :param name: Optional. The attribute name (default the function property).
     """
     return self.js_tree.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
-  def _config(self, value, name=None, js_type=False):
+  def _config(self, value: Any, name: str = None, js_type: bool = False):
     """
     Description:
     ------------
@@ -61,15 +64,15 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param value: Object. The value for the name
-    :param name: String. Optional. The attribute name. Default is the property name.
-    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    :param value: The value for the name
+    :param name: Optional. The attribute name. Default is the property name.
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
     """
     self.js_tree[name or sys._getframe().f_back.f_code.co_name] = value
     if js_type:
       self.js_type[name or sys._getframe().f_back.f_code.co_name] = True
 
-  def _config_group_get(self, group, dflt=None, name=None):
+  def _config_group_get(self, group: str, dflt: Any = None, name: str = None):
     """
     Description:
     ------------
@@ -77,13 +80,13 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param group: String. The group attribute name.
-    :param dflt: String. Optional.
-    :param name: String. Optional. The attribute name
+    :param group: The group attribute name.
+    :param dflt: Optional.
+    :param name: Optional. The attribute name.
     """
     return self.js_tree.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
-  def _config_group(self, group, value, name=None):
+  def _config_group(self, group: str, value: Any, name: str = None):
     """
     Description:
     ------------
@@ -91,15 +94,15 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param group: String. The group name.
-    :param value: Object. The value for the name.
-    :param name: String. Optional. The attribute name.
+    :param group: The group name.
+    :param value: The value for the name.
+    :param name: Optional. The attribute name.
     """
     if group not in self.js_tree:
       self.js_tree[group] = {}
     self.js_tree[group][name or sys._getframe().f_back.f_code.co_name] = value
 
-  def _config_sub_data(self, name, clsObj):
+  def _config_sub_data(self, name: str, clsObj):
     """
     Description:
     ------------
@@ -108,7 +111,7 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary.
+    :param str name: The key to be added to the internal data dictionary.
     :param clsObj: Options. The object which will be added to the nested data structure.
     """
     if name in self.js_tree:
@@ -118,14 +121,14 @@ class Options(DataClass):
     self.js_tree[name] = clsObj(self._report, js_tree={})
     return self.js_tree[name]
 
-  def _config_sub_data_enum(self, name, clsObj):
+  def _config_sub_data_enum(self, name: str, clsObj):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary.
+    :param str name: The key to be added to the internal data dictionary.
     :param clsObj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__config_sub__enum_levels.add(name)
@@ -133,7 +136,7 @@ class Options(DataClass):
     self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 
-  def custom_config(self, name, value, js_type=False):
+  def custom_config(self, name: str, value: Any, js_type: bool = False):
     """
     Description:
     ------------
@@ -146,16 +149,16 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the attributes.
+    :param name: The key to be added to the attributes.
     :param value: String or JString. The value of the defined attributes.
-    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
     """
     if js_type:
       self.js_type[name] = True
     self.js_tree[name] = value
     return self
 
-  def isJsContent(self, property_name):
+  def isJsContent(self, property_name: str):
     """
     Description:
     ------------
@@ -188,12 +191,12 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :prop bool: Boolean. Flag to specify if this component is automatically managed by the page
+    :prop bool: Flag to specify if this component is automatically managed by the page
     """
     return self.get(True)
 
   @managed.setter
-  def managed(self, flag):
+  def managed(self, flag: bool):
     self.set(flag)
 
   @property
@@ -216,7 +219,7 @@ class Options(DataClass):
     return self.get(self.component.page.verbose)
 
   @verbose.setter
-  def verbose(self, flag):
+  def verbose(self, flag: bool):
     self.set(flag)
 
   @property
@@ -234,12 +237,12 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :prop flag: Boolean. Flag to display / hide warning logs generated by the framework.
+    :prop flag: Flag to display / hide warning logs generated by the framework.
     """
     return self.get(self.component.page.verbose)
 
   @profile.setter
-  def profile(self, flag):
+  def profile(self, flag: bool):
     self.set(flag)
 
   @property
@@ -258,14 +261,16 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :prop value: String. The JavaScript builder function name.
+    :prop value: The JavaScript builder function name.
     """
     return self._config_get(None)
 
   @builder.setter
-  def builder(self, value):
+  def builder(self, value: Union[str, primitives.JsDataModel]):
     if self.with_builder:
       self.js_type["builder"] = True
+      if hasattr(value, "toStr"):
+        value = value.toStr()
       self._config(value)
 
   @property
@@ -281,12 +286,12 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :prop values: Dictionary. The CSS attributes.
+    :prop values: The CSS attributes.
     """
     return self._config_get({})
 
   @style.setter
-  def style(self, values):
+  def style(self, values: dict):
     self._config(values)
 
   @property
@@ -304,8 +309,8 @@ class Options(DataClass):
     return self.get("")
 
   @config_default.setter
-  def config_default(self, flag):
-    self.set(flag)
+  def config_default(self, values: dict):
+    self.set(values)
 
   def details(self):
     """
@@ -374,7 +379,7 @@ class Options(DataClass):
     result = [v for k, v in props.items() if v["type"] == "optional"]
     return result
 
-  def config_js(self, attrs=None):
+  def config_js(self, attrs: dict = None):
     """
     Description:
     ------------
@@ -386,7 +391,7 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param attrs: Dictionary. Optional. The extra or overridden options.
+    :param attrs: Optional. The extra or overridden options.
     """
     js_attrs, attrs = [], attrs or {}
     if self.__config_sub_levels:
@@ -465,7 +470,7 @@ class Enums:
   delimiter = None
   js_conversion = False
 
-  def __init__(self, options, name):
+  def __init__(self, options: Options, name: str):
     self.__option = options
     self.component = options.component
     self._report = self.component
@@ -489,7 +494,7 @@ class Enums:
     """
     return self.__option
 
-  def _set_value(self, name=None, value=None, js_type=None):
+  def _set_value(self, name: str = None, value: Any = None, js_type: bool = None):
     """
     Description:
     ------------
@@ -498,9 +503,9 @@ class Enums:
 
     Attributes:
     ----------
-    :param name: String. Optional. The key to be added to the attributes.
-    :param value: String. Optional. The value to be added to the attributes.
-    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    :param name: Optional. The key to be added to the attributes.
+    :param value: Optional. The value to be added to the attributes.
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
     """
     self.item._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
     if js_type is not None:
@@ -510,16 +515,16 @@ class Enums:
       self.__option.js_type[name or self.__name] = True
     return self
 
-  def _add_value(self, name=None, value=None, js_type=None):
+  def _add_value(self, name: str = None, value: str = None, js_type: bool = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name: String. Optional. The key to be added to the attributes.
-    :param value: String. Optional. The value to be added to the attributes.
-    :param js_type: Boolean. Optional. Specify if the parameter is a JavaScript fragment.
+    :param name: Optional. The key to be added to the attributes.
+    :param value: Optional. The value to be added to the attributes.
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
     """
     key = name or self.__name
     if key not in self.__option.js_tree:

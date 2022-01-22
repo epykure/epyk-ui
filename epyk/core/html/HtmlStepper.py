@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 from epyk.core.html import Html
 
 from epyk.core.js import Imports
@@ -10,37 +11,12 @@ from epyk.core.js.html import JsHtmlStepper
 from epyk.core.html.options import OptPanel
 
 
-class Step:
-  name = 'Step'
-
-  def __init__(self, src, selector):
-    self._src = src
-    self._selector = selector
-
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
-    """
-    Description:
-    ------------
-    Add a click event to the component.
-
-    Attributes:
-    ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._src.page.properties.js.add_on_ready(
-      "%(src)s.style.cursor = 'pointer'; %(src)s.addEventListener('click', function(event){%(fncs)s})" % {
-        "src": self._selector.varName, "fncs": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
-    return self
-
-
 class Stepper(Html.Html):
   name = 'Stepper'
   _option_cls = OptPanel.OptionsStepper
 
-  def __init__(self, report, records, width, height, color, options, profile):
+  def __init__(self, report: primitives.PageModel, records: list, width: tuple, height: tuple, color: Optional[str],
+               options: Optional[dict], profile: Optional[Union[dict, bool]]):
     dflt_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0] - 20}, 'circle_factor': 2,
                     'text_style': {'display': 'block', 'text-align': 'center'},
                     'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0',
@@ -143,3 +119,29 @@ class Stepper(Html.Html):
     for s in shapes.shapes:
       self.page.properties.js.add_constructor(s, "function %s(htmlObj, options, step){%s}" % (s, getattr(shapes, s)()))
     return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
+
+
+class Step:
+  name = 'Step'
+
+  def __init__(self, src: Stepper, selector: Html.Html):
+    self._src = src
+    self._selector = selector
+
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+    """
+    Description:
+    ------------
+    Add a click event to the component.
+
+    Attributes:
+    ----------
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._src.page.properties.js.add_on_ready(
+      "%(src)s.style.cursor = 'pointer'; %(src)s.addEventListener('click', function(event){%(fncs)s})" % {
+        "src": self._selector.varName, "fncs": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
+    return self

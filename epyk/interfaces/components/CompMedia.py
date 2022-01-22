@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,8 +12,9 @@ class Media:
   def __init__(self, ui):
     self.page = ui.page
 
-  def video(self, value="", align="center", path=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            profile=None, options=None):
+  def video(self, value: str = "", align: str = "center", path: str = None, width=(100, '%'),
+            height: str = (None, 'px'), html_code: str = None,
+            profile: Union[bool, dict] = None, options: dict = None):
     """
     Description:
     -----------
@@ -57,8 +60,8 @@ class Media:
     html.Html.set_component_skin(html_media)
     return html_media
 
-  def audio(self, value="", path=None, width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
-            options=None):
+  def audio(self, value: str = "", path: str = None, width=(100, '%'), height=(None, 'px'),
+            html_code: str = None, profile: Union[bool, dict] = None, options: dict = None):
     """
     Description:
     -----------
@@ -100,8 +103,8 @@ class Media:
     html.Html.set_component_skin(html_audio)
     return html_audio
 
-  def youtube(self, link, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None,
-              options=None):
+  def youtube(self, link: str, align: str = "center", width=(100, '%'), height=(None, 'px'), html_code: str = None,
+              profile: Union[bool, dict] = None, options: dict = None):
     """
     Description:
     -----------
@@ -145,7 +148,8 @@ class Media:
     html.Html.set_component_skin(html_youtube)
     return html_youtube
 
-  def camera(self, align="center", width=(100, '%'), height=(None, 'px'), html_code=None, profile=None, options=None):
+  def camera(self, align: str = "center", width=(100, '%'), height=(None, 'px'), html_code: str = None,
+             profile: Union[bool, dict] = None, options: dict = None):
     """
     Description:
     -----------

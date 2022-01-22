@@ -1,4 +1,7 @@
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 
 from epyk.core.js.primitives import JsArray
@@ -8,12 +11,12 @@ from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsNumber
 
 
-class Event:
+class Event(primitives.JsDataModel):
 
-  def getEvent(self, varName):
+  def getEvent(self, varName: str):
     return JsObject.JsObject.get(varName)
 
-  def createEvent(self, varName, type='Event'):
+  def createEvent(self, varName: str, type: str = 'Event'):
     """
     Description:
     ------------
@@ -24,12 +27,14 @@ class Event:
 
     Attributes:
     ----------
-    :param type:
-    :param varName:
+    :param str type:
+    :param str varName:
     """
     return "var %s = document.createEvent('%s')" % (varName, type)
 
-  def initEvent(self, name, varName=None, bubbles=True, cancelable=True):
+  def initEvent(self, name: Union[str, primitives.JsDataModel], varName: str = None,
+                bubbles: Union[bool, primitives.JsDataModel] = True,
+                cancelable: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -463,8 +468,8 @@ class MouseEvent(UIEvent):
     """
     return JsNumber.JsNumber.get(varName="event.offsetY")
 
-  def getField(self, fieldName):
-    return JsObject.JsObject.get("event.%s" % fieldName)
+  def getField(self, field_name: str):
+    return JsObject.JsObject.get("event.%s" % field_name)
 
   @property
   def metaKey(self):

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsDate
@@ -17,7 +18,7 @@ from epyk.core.js.objects import JsEvents
 from epyk.core.js import JsUtils
 
 
-class JsVoid:
+class JsVoid(primitives.JsDataModel):
   def __init__(self, data):
     self._data = data
 
@@ -394,7 +395,7 @@ class JsObjects:
         ", ".join(params), returns, ", ".join(values)))
 
 
-class JsPromiseRecords:
+class JsPromiseRecords(primitives.JsDataModel):
 
   def __init__(self, promise):
     self.promise = promise

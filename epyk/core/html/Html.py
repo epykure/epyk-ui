@@ -7,7 +7,9 @@ import collections
 import functools
 import logging
 import inspect
-from typing import Union, Optional, Type, List, Any
+
+from typing import Union, Optional, List, Any
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
@@ -94,14 +96,14 @@ def inprogress(func):
   return new_func
 
 
-def set_component_skin(component):
+def set_component_skin(component: primitives.HtmlModel):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param component:
+    :param primitives.HtmlModel component:
 
     :return:
     """
@@ -127,7 +129,7 @@ def set_component_skin(component):
 class Required:
   js, css = None, None
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.js, self.css = {}, {}
     self._page = page
 
@@ -322,7 +324,7 @@ class Components(collections.OrderedDict):
       if hasattr(component, "css"):
         component.css(attrs)
 
-  def add(self, component):
+  def add(self, component: primitives.HtmlModel):
     """
     Description:
     -----------
@@ -330,12 +332,12 @@ class Components(collections.OrderedDict):
 
     Attributes:
     ----------
-    :param component: HTML. HTML component.
+    :param rimitives.HtmlModel component: HTML component.
     """
     self[component.htmlCode] = component
 
 
-class Html:
+class Html(primitives.HtmlModel):
   """
   Description:
   -----------
@@ -347,8 +349,9 @@ class Html:
   builder_name, _js__builder__, async_builder = None, None, False
   _option_cls = Options
 
-  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
-               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
+  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None,
+               options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
+               css_attrs: Optional[dict] = None):
     """ Create an python HTML object """
     # Child component for this component
     self.components = Components()
@@ -428,7 +431,7 @@ class Html:
 
     return profile
 
-  def add(self, component):
+  def add(self, component: primitives.HtmlModel):
     """
     Description:
     -----------
@@ -446,18 +449,18 @@ class Html:
 
     Attributes:
     ----------
-    :param component: HTML. Component added to the val main component.
+    :param primitives.HtmlModel component: Component added to the val main component.
     """
     return self.__add__(component)
 
-  def __add__(self, component):
+  def __add__(self, component: primitives.HtmlModel):
     """ Add items to a container """
     if hasattr(component, 'options'):
       component.options.managed = False
     self.val.append(component)
     return self
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     if not isinstance(i, int) and i in self.components:
       return list(self.components.items())[i][1]
 
@@ -493,7 +496,7 @@ class Html:
     This reference can be used in the Python to get the html object from components in the page but it is also
     used in any web framework by the JavaScript to get the DOM object and apply the necessary transformations.
 
-    There is not setter for this property in order to ensure a consistency in Python and JavaScript.
+    There is no setter for this property in order to ensure a consistency in Python and JavaScript.
 
     Usage::
 
@@ -506,18 +509,18 @@ class Html:
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
-  def page(self):
+  def page(self) -> primitives.PageModel:
     """
     Description:
     -----------
     The unique page on which all the components will be attached to.
 
-    :rtype: Page
+    :rtype: primitives.PageModel
     """
     return self._report
 
   @property
-  def js(self) -> Js.JsBase:
+  def js(self):
     """
     Description:
     -----------
@@ -559,11 +562,11 @@ class Html:
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self, report=self._report)
+      self._dom = JsHtml.JsHtml(self, report=self.page)
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> Options:
     """
     Description:
     -----------
@@ -578,7 +581,7 @@ class Html:
     """
     return self.__options
 
-  def prepend_child(self, component, profile: Optional[Union[dict, bool]] = None):
+  def prepend_child(self, component: primitives.HtmlModel, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -596,7 +599,7 @@ class Html:
 
     Attributes:
     ----------
-    :param component: HTML. The html component.
+    :param component: primitives.HtmlModel component: The html component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
@@ -610,7 +613,7 @@ class Html:
       self.dom.insertBefore(component.dom)], toStr=True, profile=profile))
     return self
 
-  def append_child(self, component, profile: Optional[Union[dict, bool]] = None):
+  def append_child(self, component: primitives.HtmlModel, profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -628,7 +631,7 @@ class Html:
 
     Attributes:
     ----------
-    :param component: HTML. The html component.
+    :param component: primitives.HtmlModel component: The html component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
@@ -641,7 +644,7 @@ class Html:
       self.dom.appendChild(component.dom)], toStr=True, profile=profile))
     return self
 
-  def onReady(self, js_funcs, profile=None):
+  def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
@@ -657,8 +660,8 @@ class Html:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[str, list] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: A flag to set the component performance storage.
     """
     if not profile and self.page.profile:
       profile = {"name": "%s[onReady" % self.htmlCode}
@@ -666,7 +669,7 @@ class Html:
       js_funcs = [js_funcs]
     self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(js_funcs, profile=profile))
 
-  def add_menu(self, context_menu):
+  def add_menu(self, context_menu: primitives.HtmlModel):
     """
     Description:
     -----------
@@ -678,10 +681,11 @@ class Html:
     :param context_menu: ContextMenu. A Python context menu object.
     """
     context_menu.source = self
-    self._report._contextMenu[self.dom.jquery.varName] = context_menu
+    self.page._contextMenu[self.dom.jquery.varName] = context_menu
     return self
 
-  def add_icon(self, text, css: Optional[dict] = None, position="before", family=None, html_code=None):
+  def add_icon(self, text: str, css: Optional[dict] = None, position: str = "before", family: Optional[str] = None,
+               html_code: Optional[str] = None):
     """
     Description:
     ------------
@@ -694,11 +698,11 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The icon reference from font-awesome website.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param family: String. Optional. The icon framework to be used (preferred one is font-awesome).
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param str text: The icon reference from font-awesome website.
+    :param Optional[dict] css: Optional. A dictionary with the CSS style to be added to the component.
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[str] family: Optional. The icon framework to be used (preferred one is font-awesome).
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
 
     :return: The Html object.
     """
@@ -721,7 +725,8 @@ class Html:
         self.icon.css(css)
     return self
 
-  def add_label(self, text, css=None, position="before", for_=None, html_code=None, options=None):
+  def add_label(self, text: str, css: Optional[dict] = None, position: str = "before", for_: str = None,
+                html_code: Optional[str] = None, options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -733,12 +738,12 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The label content.
-    :param css: Dictionary. Optional. A dictionary with the CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param for_: String. Optional. Specifies which form element a label is bound to.
+    :param str text: The label content.
+    :param Optional[dict] css: Optional. A dictionary with the CSS style to be added to the component.
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param str for_: Optional. Specifies which form element a label is bound to.
     """
     self.label = ""
     if text is not None:
@@ -757,7 +762,8 @@ class Html:
         self.label.css(css)
     return self
 
-  def add_span(self, text, css=None, position="before", html_code=None, i=None):
+  def add_span(self, text: str, css: Optional[Union[dict, bool]] = None, position: str = "before", html_code: Optional[str] = None,
+               i: Optional[int] = None):
     """
     Description:
     -----------
@@ -769,11 +775,11 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The Span content.
-    :param css: Dictionary. Optional. The CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param i: Integer. Optional. The index of the span element to be created.
+    :param str text: The Span content.
+    :param Optional[dict] css: Optional. The CSS style to be added to the component.
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Optional[int] i: Optional. The index of the span element to be created.
     """
     key_attr = 'span_%s' % i if i is not None else 'span'
     setattr(self, key_attr, '')
@@ -791,8 +797,9 @@ class Html:
         span.css(css)
     return self
 
-  def add_link(self, text, url=None, script_name=None, report_name=None, name=None, icon=None, css=None,
-               position="before", options=None):
+  def add_link(self, text: str, url: str = None, script_name: Optional[str] = None, report_name: Optional[str] = None,
+               name: Optional[str] = None, icon: Optional[str] = None, css: Optional[dict] = None,
+               position: str = "before", options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -805,15 +812,15 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The value of the link displayed in the page.
-    :param url: String. Optional. The URL path.
-    :param script_name:
-    :param report_name:
-    :param name:
+    :param str text: The value of the link displayed in the page.
+    :param str url: Optional. The URL path.
+    :param Optional[str] script_name:
+    :param Optional[str] report_name:
+    :param Optional[str] name:
     :param icon:
     :param css: Optional. A dictionary with the CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param options:
+    :param str position: String. Optional. The position compared to the main component tag.
+    :param Optional[dict] options:
     """
     self.link = ""
     if url is not None or script_name is not None:
@@ -832,7 +839,8 @@ class Html:
         self.link.css(css)
     return self
 
-  def add_title(self, text, level=None, css=None, position="before", options=None):
+  def add_title(self, text: str, level: Optional[int] = None, css: Optional[dict] = None, position: str = "before",
+                options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -840,11 +848,11 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The title content.
-    :param level: Integer. Optional. The level of title.
-    :param css: Dictionary. Optional. The CSS style to be added to the component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str text: The title content.
+    :param Optional[int] level: Optional. The level of title.
+    :param Optional[dict] css: Dictionary. Optional. The CSS style to be added to the component.
+    :param str position: Optional. The position compared to the main component tag.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
     self.title = ""
     if text is not None:
@@ -862,7 +870,8 @@ class Html:
         self.title.css(css)
     return self
 
-  def add_input(self, text, css=None, attrs=None, position="before", options=None):
+  def add_input(self, text: str, css: Optional[dict] = None, attrs: Optional[dict] = None, position: str = "before",
+                options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -870,11 +879,11 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The title content.
-    :param css: Dictionary. Optional. The CSS style to be added to the component.
-    :param attrs: Dictionary. Optional. The HTML tag attributes.
-    :param position: Dictionary. Optional. Specific Python options available for this component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param str text: The title content.
+    :param Optional[dict] css: Optional. The CSS style to be added to the component.
+    :param Optional[dict] attrs: Optional. The HTML tag attributes.
+    :param str position: Optional. Specific Python options available for this component.
+    :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
     self.input = ""
     if text is not None:
@@ -900,7 +909,7 @@ class Html:
         self.input.set_attrs(attrs=attrs)
     return self
 
-  def add_checkbox(self, flag, css=None, attrs=None, position="before"):
+  def add_checkbox(self, flag: bool, css: Optional[dict] = None, attrs: Optional[dict] = None, position: str = "before"):
     """
     Description:
     -----------
@@ -908,10 +917,10 @@ class Html:
 
     Attributes:
     ----------
-    :param flag: Boolean. The state of the checkbox component.
-    :param css: Dictionary. Optional. The CSS style to be added to the component.
-    :param attrs: Dictionary. Optional. The HTML tag attributes.
-    :param position: Dictionary. Optional. Specific Python options available for this component.
+    :param bool flag: The state of the checkbox component.
+    :param Optional[dict] css: Optional. The CSS style to be added to the component.
+    :param Optional[dict] attrs: Optional. The HTML tag attributes.
+    :param Optional[dict] position: Optional. Specific Python options available for this component.
     """
     self.checkbox = ""
     if flag is not None:
@@ -926,7 +935,7 @@ class Html:
         self.checkbox.set_attrs(attrs=attrs)
     return self
 
-  def add_helper(self, text, css=None):
+  def add_helper(self, text: str, css: Optional[dict] = None):
     """
     Description:
     -----------
@@ -936,10 +945,8 @@ class Html:
 
     Attributes:
     ----------
-    :param text: String. The helper content.
-    :param css: Dictionary. Optional. The CSS style to be added to the component.
-
-    :rtype: self._report.ui.rich.info
+    :param str text: The helper content.
+    :param Optional[dict] css: Optional. The CSS style to be added to the component.
     """
     if text is not None:
       self.helper = self.page.ui.rich.info(text)
@@ -949,7 +956,7 @@ class Html:
     return self
 
   @property
-  def keydown(self):
+  def keydown(self) -> KeyCodes.KeyCode:
     """
     Description:
     -----------
@@ -966,7 +973,7 @@ class Html:
     return self._browser_data['keys']['keydown']
 
   @property
-  def keypress(self):
+  def keypress(self) -> KeyCodes.KeyCode:
     """
     Description:
     -----------
@@ -983,7 +990,7 @@ class Html:
     return self._browser_data['keys']['keypress']
 
   @property
-  def keyup(self):
+  def keyup(self) -> KeyCodes.KeyCode:
     """
     Description:
     -----------
@@ -1049,7 +1056,7 @@ class Html:
     """
     self.page.components.move_to_end(self.htmlCode)
 
-  def css(self, key: Optional[str, dict] = None, value: Optional[str] = None, reset: bool = False):
+  def css(self, key: Union[str, dict] = None, value: Optional[str] = None, reset: bool = False):
     """
     Description:
     -----------
@@ -1097,7 +1104,8 @@ class Html:
       self.attr['css'][key] = value if isinstance(value, str) else json.dumps(value)
     return self
 
-  def add_style(self, css_classes=None, css_attrs: Optional[dict] = None, clear_first: bool = False):
+  def add_style(self, css_classes: Optional[Union[str, list]] = None, css_attrs: Optional[dict] = None,
+                clear_first: bool = False):
     """
     Description:
     ------------
@@ -1105,7 +1113,7 @@ class Html:
 
     Attributes:
     ----------
-    :param css_classes: String | List. Optional. The CSS class reference.
+    :param Optional[Union[str, list]] css_classes: Optional. The CSS class reference.
     :param Optional[dict] css_attrs: Optional. The CSS attributes.
     :param bool clear_first: Optional. Remove all the predefined CSS Inline style and classes for the component.
     """
@@ -1123,7 +1131,7 @@ class Html:
       self.css(css_attrs)
 
   @packages.packageImport('bootstrap', 'bootstrap')
-  def tooltip(self, value, location: str = 'top', options: Optional[dict] = None):
+  def tooltip(self, value: Union[str, primitives.JsDataModel], location: str = 'top', options: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1142,7 +1150,7 @@ class Html:
 
     Attributes:
     ----------
-    :param value: String. The tooltip text.
+    :param Union[str, primitives.JsDataModel] value: The tooltip text.
     :param str location: Optional. The position of the tooltip.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
 
@@ -1227,7 +1235,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self.on("dragstart", js_funcs + [
       'event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
 
-  def sticky(self, anchor, css_attrs: Optional[dict] = None):
+  def sticky(self, anchor: primitives.HtmlModel, css_attrs: Optional[dict] = None):
     """
     Description:
     -----------
@@ -1238,7 +1246,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param anchor: Component. the component which will be used to check the position.
+    :param primitives.HtmlModel anchor: the component which will be used to check the position.
     :param Optional[dict css_attrs: Optional. The CSS attributes of the component once sticky.
     """
     if anchor.htmlCode == self.htmlCode:
@@ -1361,8 +1369,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       if pyClassNames is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
         # and the static python classes defined on demand in the header of your report
-        # self._report.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
-        css_class = self._report.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
+        # self.page.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
+        css_class = self.page.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
         if css_class:
           css_class %= class_data
         else:
@@ -1420,7 +1428,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       JsUtils.jsConvertFncs(js_funcs))
     self._browser_data['mouse'][event][source_event]['profile'] = profile
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger(event)])
+      self.page.body.onReady([self.dom.events.trigger(event)])
     return self
 
   def event_fnc(self, event: str):
@@ -1459,16 +1467,16 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       profile = {"name": "%s[drop]" % self.htmlCode}
     dft_fnc = ""
     if prevent_default:
-      dft_fnc = self._report.js.objects.event.preventDefault()
+      dft_fnc = self.page.js.objects.event.preventDefault()
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     str_funcs = JsUtils.jsConvertFncs(
-      ["var data = %s" % self._report.js.objects.event.dataTransfer.text] + js_funcs, toStr=True, profile=profile)
+      ["var data = %s" % self.page.js.objects.event.dataTransfer.text] + js_funcs, toStr=True, profile=profile)
     # By default change the box shadow of this component
     self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (
       dft_fnc, str_funcs, self.dom.css('box-shadow', 'none').r)
     self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (
-      dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self._report.theme.success[1]).r)
+      dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self.page.theme.success[1]).r)
     self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (
       dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
@@ -1521,7 +1529,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger("click")])
+      self.page.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, source_event)
 
   def focusout(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
@@ -1545,7 +1553,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function in the console.
     :param Optional[str] source_event: Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
@@ -1567,12 +1575,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[dict, bool]] profile. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[dict, bool]] profile. Optional. Set to true to get the profile for the function on the console.
     :param source_event: String. Optional. The source target for the event.
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
-      self._report.body.onReady([self.dom.events.trigger("dblclick")])
+      self.page.body.onReady([self.dom.events.trigger("dblclick")])
     return self.on("dblclick", js_funcs, profile, source_event)
 
   def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
@@ -1630,7 +1638,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event=None, components=None):
+  def paste(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event=None,
+            components=None):
     """
     Description:
     -----------
@@ -1645,7 +1654,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    data_map = self.page.js.data.datamap(components, {"clipboard": self._report.js.objects.event.clipboardData.text})
+    data_map = self.page.js.data.datamap(components, {"clipboard": self.page.js.objects.event.clipboardData.text})
     str_fncs = JsUtils.jsConvertFncs(
       ["var data = %s" % data_map.toStr()] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
@@ -1665,14 +1674,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
-      menu = self._report.ui.menus.contextual(menu)
+      menu = self.page.ui.menus.contextual(menu)
     self.context_menu = menu
     menu.source = self
     new_js_funcs = (js_funcs or []) + [
-      self._report.js.objects.mouseEvent.stopPropagation(),
-      self.context_menu.dom.css({"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
-                                 'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
-      self._report.js.objects.mouseEvent.preventDefault()]
+      self.page.js.objects.mouseEvent.stopPropagation(),
+      self.context_menu.dom.css({"display": 'block', 'left': self.page.js.objects.mouseEvent.clientX + "'px'",
+                                 'top': self.page.js.objects.mouseEvent.clientY + "'px'"}),
+      self.page.js.objects.mouseEvent.preventDefault()]
     self.on("contextmenu", new_js_funcs, profile)
     return menu
 
@@ -1695,7 +1704,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return EventTouch(self)
 
-  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None, component_id=None):
+  def build(self, data: Optional[Union[str, list, primitives.JsDataModel]] = None, options: Optional[dict] = None,
+            profile: Optional[Union[dict, bool]] = None, component_id: Optional[str] = None):
     if not self.builder_name or self._js__builder__ is None:
       raise ValueError("No builder defined for this HTML component %s" % self.__class__.__name__)
 
@@ -1787,11 +1797,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
         self._on_ready_js['sortable'] = JsSortable.Sortable(
-          self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self._report)
-        dflt_options = {"group": self.htmlCode}
-        dflt_options.update(options or {})
-        self._sort_options = dflt_options
-        self._on_ready_js['sortable'].create(self.dom.varId, dflt_options)
+          self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self.page)
+        dfl_options = {"group": self.htmlCode}
+        dfl_options.update(options or {})
+        self._sort_options = dfl_options
+        self._on_ready_js['sortable'].create(self.dom.varId, dfl_options)
       return self._on_ready_js['sortable']
 
   def __str__(self):
@@ -1831,9 +1841,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     # Propagate the external requirements to the page
     for js in self.require.js:
-      self._report.jsImports.add(js)
+      self.page.jsImports.add(js)
     for css in self.require.css:
-      self._report.cssImport.add(css)
+      self.page.cssImport.add(css)
 
     str_result.append(str(self))
     return "".join(str_result)
@@ -1887,11 +1897,12 @@ class Body(Html):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self, report=self._report)
+      self._dom = JsHtml.JsHtml(self, report=self.page)
       self._dom.varName = "document.body"
     return self._dom
 
-  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None, source_event: Optional[str] = None):
+  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+             source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1905,8 +1916,8 @@ class Body(Html):
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._report.js.onReady(
-      self._report.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    self.page.js.onReady(
+      self.page.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
 
   def onReady(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
@@ -1946,8 +1957,9 @@ class Body(Html):
       js_funcs = [js_funcs]
     self.page.properties.js.add_builders(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
-  def fromConfig(self, js_funcs: Optional[Union[list, str]] = None, components=None, lang: str = "eng",
-                 end_point: str = "/static/configs", sync: bool = True):
+  def fromConfig(self, js_funcs: Optional[Union[list, str]] = None,
+                 components: Optional[List[primitives.HtmlModel]] = None,
+                 lang: str = "eng", end_point: str = "/static/configs", sync: bool = True):
     """
     Description:
     -----------
@@ -1966,7 +1978,7 @@ class Body(Html):
     Attributes:
     ----------
     :param Optional[Union[list, str]] js_funcs: Optional. The various transformations to be triggered from the configuration data.
-    :param components: List. Optional. The various HTML Components to be updated from the configuration file.
+    :param Optional[List[primitives.HtmlModel]] components: Optional. The various HTML Components to be updated from the configuration file.
     :param str lang: Optional. The default lang for the configuration.
     :param str end_point: Optional. The url for the configuration files.
     :param bool sync: Optional. Specify if the type of loading event.
@@ -2000,7 +2012,7 @@ class Body(Html):
       'json': self.page.json_config_file,
       'fncs': JsUtils.jsConvertFncs(js_funcs + builders, toStr=True)}
 
-  def set_content(self, page, page_content: str):
+  def set_content(self, page: primitives.PageModel, page_content: str):
     """
     Description:
     ------------
@@ -2009,7 +2021,7 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param page: Report. The main report object.
+    :param primitives.PageModel page: The main report object.
     :param str page_content: The html content of the page.
 
     :return: The Body HTML object
@@ -2036,13 +2048,13 @@ class Body(Html):
     """
     if from_theme or (start_color is None and end_color is None):
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (
-        self._report.theme.colors[-1], self._report.theme.colors[2])
+        self.page.theme.colors[-1], self.page.theme.colors[2])
     elif end_color is not None:
       self.style.css.background = "linear-gradient(%s 0%%, %s 100%%)" % (start_color, end_color)
     else:
       self.style.css.background = start_color
     self.style.css.background_repeat = "no-repeat"
-    self.style.css.background_color = self._report.theme.colors[2]
+    self.style.css.background_color = self.page.theme.colors[2]
 
   def loading(self, status: bool = True, z_index: int = 500):
     """
@@ -2157,8 +2169,9 @@ class Component(Html):
   str_repr = None
   dyn_repr = None
 
-  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
-               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
+  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None,
+               options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
+               css_attrs: Optional[dict] = None):
     super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
     self.style.clear_style()   # Clear all default CSS styles.
     if self.css_classes is not None:
@@ -2187,7 +2200,7 @@ class Component(Html):
     """
     raise ValueError("Needs to be implemented")
 
-  def write_item(self, item):
+  def write_item(self, item: primitives.HtmlModel):
     """
     Description:
     -----------
@@ -2205,7 +2218,7 @@ class Component(Html):
 
     Attributes:
     ----------
-    :param item: Object. The item added to the self.items.
+    :param primitives.HtmlModel item: The item added to the self.items.
     """
     return {"sub_item": item.html()}
 
@@ -2251,23 +2264,23 @@ class StructComponent(Html):
   css_classes = None
   str_repr = None
 
-  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
                profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
     super(StructComponent, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if self.css_classes is not None:
       self.add_style(self.css_classes, clear_first=True)
     self.items = {}
 
-  def add_to(self, group: str, content: Union[Type[Html], str]):
+  def add_to(self, group: str, content: Union[Html, str]):
     """
     Description:
     -----------
-    Add sub component to the main component.
+    Add sub-component to the main component.
 
     Attributes:
     ----------
     :param str group: The category for the component.
-    :param Union[Type[Html], str] content: The HTML component to be added.
+    :param Union[Html, str] content: The HTML component to be added.
     """
     if not hasattr(content, "options"):
       content = self.page.web.std.div(content)

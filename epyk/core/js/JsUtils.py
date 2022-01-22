@@ -5,7 +5,8 @@ import os
 import re
 import json
 import functools
-from typing import Union, Optional
+from typing import Union, Optional, List, Any
+from epyk.core.py import primitives
 
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
@@ -16,7 +17,7 @@ PROFILE_COUNT = 0
 # --------------------------------------------------------------------------------------------------------------
 #                                                       DECORATORS
 #
-def incompatibleBrowser(browsers):
+def incompatibleBrowser(browsers: List[str]):
   """
   Description:
   ------------
@@ -24,7 +25,7 @@ def incompatibleBrowser(browsers):
 
   Attributes:
   ----------
-  :param browsers: List. Incompatible browsers
+  :param List[str] browsers: Incompatible browsers.
   """
   def decorator(func):
     @functools.wraps(func)
@@ -37,7 +38,7 @@ def incompatibleBrowser(browsers):
   return decorator
 
 
-def fromVersion(data):
+def fromVersion(data: dict):
   """
   Description:
   ------------
@@ -50,7 +51,7 @@ def fromVersion(data):
 
   Attributes:
   ----------
-  :param data: Set the minimum version of a package for a specific function
+  :param dict data: Set the minimum version of a package for a specific function.
 
   :return: The decorated function
   """
@@ -109,7 +110,8 @@ def untilVersion(data: str, newFeature: str):
 # --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
-def jsConvertData(jsData, js_funcs: Optional[Union[list, str]], depth: bool = False):
+def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list], js_funcs: Optional[Union[list, str]],
+                  depth: bool = False) -> str:
   """
   Description:
   ------------
@@ -121,42 +123,42 @@ def jsConvertData(jsData, js_funcs: Optional[Union[list, str]], depth: bool = Fa
 
   Attributes:
   ----------
-  :param jsData: The Python Javascript data.
+  :param js_data: The Python Javascript data.
   :param Optional[Union[list, str]] js_funcs: Optional. The conversion function (not used).
   :param bool depth: Optional. Set to true of it is a nested object.
   """
-  if not hasattr(jsData, 'varData') and not hasattr(jsData, 'fncName'):
-    if hasattr(jsData, 'toStr'):
-      return jsData.toStr()
+  if not hasattr(js_data, 'varData') and not hasattr(js_data, 'fncName'):
+    if hasattr(js_data, 'toStr'):
+      return js_data.toStr()
 
     else:
       try:
         if depth:
-          if isinstance(jsData, dict):
+          if isinstance(js_data, dict):
             result = []
-            for k, v in jsData.items():
+            for k, v in js_data.items():
               result.append("%s: %s" % (k, jsConvertData(v, js_funcs, depth=depth)))
             return "{%s}" % ", ".join(result)
 
           else:
-            result = [jsConvertData(v, js_funcs, depth=depth) for v in jsData]
+            result = [jsConvertData(v, js_funcs, depth=depth) for v in js_data]
             return "[%s]" % ", ".join(result)
 
-        return JsObject.JsObject(json.dumps(jsData))
+        return JsObject.JsObject(json.dumps(js_data))
 
       except TypeError as err:
-        return str(jsData)
+        return str(js_data)
 
       except Exception as err:
-        if isinstance(jsData, range):
-          return JsObject.JsObject(json.dumps(list(jsData)))
+        if isinstance(js_data, range):
+          return JsObject.JsObject(json.dumps(list(js_data)))
 
         raise
 
-  return jsData
+  return js_data
 
 
-def jsConvert(jsData, jsDataKey, isPyData: bool, jsFnc: Union[list, str]):
+def jsConvert(jsData: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData: bool, jsFnc: Union[list, str]):
   """
   Description:
   ------------
@@ -172,6 +174,7 @@ def jsConvert(jsData, jsDataKey, isPyData: bool, jsFnc: Union[list, str]):
   if isPyData:
     if hasattr(jsData, 'toStr'):
       return jsData.toStr()
+
     else:
       try:
         return json.dumps(jsData)
@@ -183,13 +186,13 @@ def jsConvert(jsData, jsDataKey, isPyData: bool, jsFnc: Union[list, str]):
         raise
 
   if jsDataKey is not None:
-    jsData = "%s['%s']" % (jsData, jsDataKey)
+    jsData = "%s[%s]" % (jsData, jsConvertData(jsDataKey, None))
   if jsFnc is not None:
     jsData = "%s(%s)" % (jsFnc, jsData)
   return jsData
 
 
-def jsWrap(data):
+def jsWrap(data: Any):
   """
   Description:
   ------------
@@ -198,7 +201,7 @@ def jsWrap(data):
 
   Attributes:
   ----------
-  :param data: Object. A python object.
+  :param Any data: Object. A python object to be serialised.
   """
   return JsObject.JsObject.get(data)
 
@@ -235,18 +238,18 @@ def getJsValid(value: str, fail: bool = True):
   :return: The input variable name or a suggested one.
   """
   regex = re.compile('[^a-zA-Z0-9_]')
-  cleanName = regex.sub('', value.strip())
-  isValid = not value[0].isdigit() and cleanName == value
-  if fail and not isValid:
-    raise ValueError("Javascript Variable name %s, for example you could use js%s instead" % (value, cleanName))
+  clean_name = regex.sub('', value.strip())
+  is_valid = not value[0].isdigit() and clean_name == value
+  if fail and not is_valid:
+    raise ValueError("Javascript Variable name %s, for example you could use js%s instead" % (value, clean_name))
 
-  if cleanName[0].isdigit():
-    cleanName = "js%s" % cleanName
-  return cleanName
+  if clean_name[0].isdigit():
+    clean_name = "js%s" % clean_name
+  return clean_name
 
 
-def jsConvertFncs(js_funcs: Union[list, str], isPyData: bool = False, jsFncVal=None, toStr: bool = False,
-                  profile: Optional[Union[bool, dict]] = False):
+def jsConvertFncs(js_funcs: Union[list[Union[str, primitives.JsDataModel]], str], isPyData: bool = False, jsFncVal=None,
+                  toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
   """
   Description:
   ------------
@@ -254,7 +257,7 @@ def jsConvertFncs(js_funcs: Union[list, str], isPyData: bool = False, jsFncVal=N
 
   Attributes:
   ----------
-  :param Union[list, str] js_funcs: The PyJs functions.
+  :param Union[list[Union[str, primitives.JsDataModel]], str] js_funcs: The PyJs functions.
   :param bool isPyData: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
   :param bool toStr: Optional. A flag to specify if the result should be aggregated.
@@ -307,13 +310,13 @@ def cleanFncs(fnc):
   Try to remove as much as possible all the characters in order to speed up the javascript
   Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
-  Thus pre stored function code can be written to be easier to read.
+  Thus pre-stored function code can be written to be easier to read.
 
   Attributes:
   ----------
   :param fnc: The Javascript String.
 
-  :return: Return a cleaned an minify Javascript String.
+  :return: Return a cleaned a minify Javascript String.
   """
   return "".join([r.strip() for r in fnc.strip().split('\n')])
 
@@ -339,8 +342,8 @@ def isNotDefined(varName: str):
 
 class JsFile:
 
-  def __init__(self, scriptName: Optional[str] = None, path: Optional[str] = None):
-    self.scriptName, self.path = scriptName, path
+  def __init__(self, script_name: Optional[str] = None, path: Optional[str] = None):
+    self.scriptName, self.path = script_name, path
     self.file_path = os.path.join(path, "js") # all the files will be put in a common directory
     if not os.path.exists(self.file_path):
       os.mkdir(self.file_path)

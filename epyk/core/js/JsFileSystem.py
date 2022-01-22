@@ -7,6 +7,9 @@ Documentation:
 
 from epyk.core.js import JsUtils
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 
 class JsFileSystem:
   class __internal:

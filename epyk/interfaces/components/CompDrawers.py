@@ -113,9 +113,9 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def multi(self, component, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
-            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
-            helper: Optional[str] = None):
+  def multi(self, component: html.Html.Html, width: Union[tuple, int] = (100, '%'),
+            height: Union[tuple, int] = (200, 'px'), options: Optional[Union[dict, bool]] = None,
+            profile: Optional[Union[dict, bool]] = None, helper: Optional[str] = None):
     """
     Description:
     ------------
@@ -147,9 +147,9 @@ class Drawers:
     html.Html.set_component_skin(drawer)
     return drawer
 
-  def no_handle(self, component, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
-                options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
-                helper: Optional[str] = None):
+  def no_handle(self, component: html.Html.Html, width: Union[tuple, int] = (100, '%'),
+                height: Union[tuple, int] = (200, 'px'), options: Optional[Union[dict, bool]] = None,
+                profile: Optional[Union[dict, bool]] = None, helper: Optional[str] = None):
     """
     Description:
     ------------
