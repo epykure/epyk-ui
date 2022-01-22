@@ -6,6 +6,29 @@
 
 ### Fixed
 
+## [1.7.1] - 2022-01-22
+
+### Fixed
+- Type annotation issue with python 3.6
+
+
+## [1.7.0] - 2022-01-22
+
+### Added
+- Type annotation in most of the modules.
+- Speech recognition module.
+- new primitive module to allow static typing.
+
+### Changed
+- Remove compatibility with python 2.7
+- [in progress] standardise the use of _ in the function arguments
+
+### Fixed
+- Autocompletion issue with decorator
+- Fix self contained feature for JavaScript modules.
+- Improve documentation 
+
+
 ## [1.6.17] - 2021-12-06
 
 ### Added

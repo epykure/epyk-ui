@@ -1,5 +1,5 @@
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
@@ -13,7 +13,7 @@ from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsWhile
 
 
-def if_(condition: Union[list[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]):
+def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]):
   """
   Description:
   ------------

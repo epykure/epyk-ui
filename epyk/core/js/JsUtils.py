@@ -248,7 +248,7 @@ def getJsValid(value: str, fail: bool = True):
   return clean_name
 
 
-def jsConvertFncs(js_funcs: Union[list[Union[str, primitives.JsDataModel]], str], isPyData: bool = False, jsFncVal=None,
+def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str], isPyData: bool = False, jsFncVal=None,
                   toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
   """
   Description:
@@ -257,7 +257,7 @@ def jsConvertFncs(js_funcs: Union[list[Union[str, primitives.JsDataModel]], str]
 
   Attributes:
   ----------
-  :param Union[list[Union[str, primitives.JsDataModel]], str] js_funcs: The PyJs functions.
+  :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: The PyJs functions.
   :param bool isPyData: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
   :param bool toStr: Optional. A flag to specify if the result should be aggregated.
