@@ -1071,8 +1071,8 @@ class Row(Html.Html):
     super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height},
                               options=options, profile=profile)
     if components is not None:
-      for htmlObj in components:
-        self.add(htmlObj)
+      for component in components:
+        self.add(component)
     self.attr["class"].add('row')
     self.style.css.justify_content = self.position
     if align == 'center':
@@ -1180,10 +1180,10 @@ class Row(Html.Html):
     cols = []
     if self.options.noGutters:
       self.attr["class"].add('no-gutters')
-    for i, htmlObj in enumerate(self.val):
-      if hasattr(htmlObj, 'set_size') and self.options.autoSize:
-        htmlObj.set_size(12.0 / len(self.val))
-      cols.append(htmlObj.html() if hasattr(htmlObj, 'options') else str(htmlObj))
+    for i, component in enumerate(self.val):
+      if hasattr(component, 'set_size') and self.options.autoSize:
+        component.set_size(12.0 / len(self.val))
+      cols.append(component.html() if hasattr(component, 'options') else str(component))
     return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
 
 
@@ -1395,7 +1395,8 @@ class Tabs(Html.Html):
     for tab_obj in self.__panel_objs.values():
       yield tab_obj["tab"]
 
-  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None):
+  def add_panel(self, name: str, div: Html.Html, icon: str = None, selected: bool = False,
+                css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None):
     """
     Description:
     ------------
