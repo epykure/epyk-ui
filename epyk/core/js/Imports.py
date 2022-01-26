@@ -4214,14 +4214,13 @@ class ImportManager:
     ----------
     :param str alias: The package reference in the above list.
     :param str version: The new version to be used globally.
-    :param Optional[dict] js: Optional.
-    :param Optional[dict] css: Optional.
+    :param Optional[dict] js: Optional. The JavaScript packages to be added.
+    :param Optional[dict] css: Optional. The CSS packages to be added.
     """
     self.reqVersion[alias] = version
-    for modType in [CSS_IMPORTS, JS_IMPORTS]:
-      if alias in modType:
-        for mod in modType[alias].get('modules', []):
-          mod['version'] = version
+    for mod_type in [CSS_IMPORTS, JS_IMPORTS]:
+      if alias in mod_type:
+        mod_type[alias]['version'] = version
     if js is not None:
       if not js:
         if alias in JS_IMPORTS:
@@ -4232,10 +4231,9 @@ class ImportManager:
         self.jsImports[alias] = {'main': collections.OrderedDict(), 'dep': [], 'versions': version}
         for k, v in js.items():
           JS_IMPORTS[alias][k] = v
-          if k == k:
-            for module in js["modules"]:
-              module["path"] = module["path"] % {"version": version}
-              self.jsImports[alias]['main']["%(cdnjs)s/%(path)s%(script)s" % module] = version
+          for module in js["modules"]:
+            module["path"] = module["path"] % {"version": version}
+            self.jsImports[alias]['main']["%(cdnjs)s/%(path)s%(script)s" % module] = version
     if css is not None:
       if not css:
         if alias in CSS_IMPORTS:

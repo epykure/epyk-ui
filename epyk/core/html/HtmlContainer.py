@@ -86,7 +86,7 @@ class Panel(Html.Html):
 
     Attributes:
     ----------
-    :param List[Html.Html] components: The list of components
+    :param List[Html.Html] components: The list of components.
     """
     for component in components:
       self.add(component)
@@ -568,16 +568,17 @@ class Div(Html.Html):
 
   def __str__(self):
     rows = []
-    for htmlObj in self.val:
-      if hasattr(htmlObj, 'html'):
+    for component in self.val:
+      if hasattr(component, 'html'):
         if self._sort_propagate:
-          htmlObj.sortable(self._sort_options)
-        rows.append(htmlObj.html())
+          component.sortable(self._sort_options)
+        rows.append(component.html())
       else:
-        rows.append(str(htmlObj))
+        rows.append(str(component))
 
-    return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(helper)s" % {'tag': self.tag or 'div',
-      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), "content": "".join(rows), "helper": self.helper}
+    return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(helper)s" % {
+      'tag': self.tag or 'div', 'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+      "content": "".join(rows), "helper": self.helper}
 
 
 class Td(Html.Html):
@@ -642,7 +643,7 @@ class Tr(Html.Html):
   name = 'Column'
 
   def __init__(self, report: primitives.PageModel,
-               components: Optional[Union[Html.Html, List[Html.Html]]],
+               components: Optional[List[Html.Html]],
                header, position, width: Optional[tuple], height: Optional[tuple],
                align: Optional[str], options: Optional[dict], profile):
     self.position, self.header = position, header
@@ -747,7 +748,7 @@ class TSection(Html.Html):
     """
     return super().options
 
-  def __add__(self, row_data: Union[Tr, str]):
+  def __add__(self, row_data: Union[Tr, List[Html.Html]]):
     """ Add items to a container """
     if not isinstance(row_data, Tr):
       row_data = Tr(self.page, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"), 'center',
@@ -801,7 +802,7 @@ class Table(Html.Html):
     """
     return super().options
 
-  def __add__(self, row_data: Union[Tr, str]):
+  def __add__(self, row_data: Union[Tr, List[Html.Html]]):
     """ Add items to a container """
     if isinstance(row_data, Tr):
       row = row_data
@@ -1019,7 +1020,7 @@ class Col(Html.Html):
     """
     return self.val[0].build(data, options, profile)
 
-  def set_size(self, n: int, breakpoint: str = "lg"):
+  def set_size(self, n: int, break_point: str = "lg"):
     """
     Description:
     ------------
@@ -1034,7 +1035,7 @@ class Col(Html.Html):
     Attributes:
     ----------
     :param int n: The size of the component in the bootstrap row.
-    :param str breakpoint: Optional. Grid system category, with
+    :param str break_point: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
       - md (for small laptops - screens equal to or greater than 992px wide)
@@ -1047,12 +1048,12 @@ class Col(Html.Html):
         return self
 
       if isinstance(n, int) or n.is_integer():
-        self.__set_size = "col-%s-%s" % (breakpoint, int(n))
+        self.__set_size = "col-%s-%s" % (break_point, int(n))
       else:
-        self.__set_size = "col-%s" % breakpoint
+        self.__set_size = "col-%s" % break_point
       self.attr["class"].add(self.__set_size)
-      if self.options.responsive and breakpoint != 'lg':
-        self.attr["class"].add("col-%s-%s" % (breakpoint, min(int(n) * 2, 12)))
+      if self.options.responsive and break_point != 'lg':
+        self.attr["class"].add("col-%s-%s" % (break_point, min(int(n) * 2, 12)))
         self.attr["class"].add("col-12")
     return self
 
@@ -1161,7 +1162,7 @@ class Row(Html.Html):
   def __len__(self):
     return len(self.val)
 
-  def add(self, components):
+  def add(self, components: Union[Html.Html, List[Html.Html]]):
     """ Add items to a container """
     # hack to propagate the height of the row to the underlying columns
     if not isinstance(components, Col):
@@ -1192,7 +1193,7 @@ class Grid(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, report, rows, width, height, align, position, options, profile):
+  def __init__(self, report: primitives.PageModel, rows, width, height, align, position, options, profile):
     super(Grid, self).__init__(
       report, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.position = position
@@ -1225,7 +1226,7 @@ class Grid(Html.Html):
     """
     return super().options
 
-  def __add__(self, row_data):
+  def __add__(self, row_data: Union[Row, tuple]):
     """ Add items to a container """
     if isinstance(row_data, Row):
       row = row_data
@@ -1234,11 +1235,11 @@ class Grid(Html.Html):
       row.style.clear(no_default=True)
       row.style.css.margin = 'auto'
       row.attr["class"].add("row")
-      for htmlObjWithDim in row_data:
-        if isinstance(htmlObjWithDim, tuple):
-          component, dim = htmlObjWithDim
+      for component_with_dim in row_data:
+        if isinstance(component_with_dim, tuple):
+          component, dim = component_with_dim
         else:
-          component, dim = htmlObjWithDim, None
+          component, dim = component_with_dim, None
         row.add(component)
         if dim is not None:
           row[-1].attr["class"].add("col-%s" % dim)
@@ -1600,7 +1601,7 @@ class IconsMenu(Html.Html):
   name = 'Icons Menu'
   requirements = ('font-awesome', )
 
-  def __init__(self, icon_names, report, width, height, html_code, helper, profile):
+  def __init__(self, icon_names, report: primitives.PageModel, width, height, html_code, helper, profile):
     super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, html_code=html_code,
                                     profile=profile)
     self._jsActions, self._definedActions = {}, []
@@ -1672,7 +1673,7 @@ class IconsMenu(Html.Html):
 class Form(Html.Html):
   name = 'Generic Form'
 
-  def __init__(self, report, components, helper):
+  def __init__(self, report: primitives.PageModel, components: List[Html.Html], helper: Optional[str]):
     super(Form, self).__init__(report, [])
     self.style.css.padding = "5px"
     self.method, self.action, self.label = None, None, None
@@ -1888,7 +1889,7 @@ class Indices(Html.Html):
     """
     return super().options
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     return self.items[i]
 
   def click_item(self, i: int, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
