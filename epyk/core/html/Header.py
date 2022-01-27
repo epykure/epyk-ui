@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+import base64
 import logging
 
 from epyk.core.html import Defaults
@@ -665,11 +666,11 @@ class Header:
       self.__meta = Meta(self._report)
     return self.__meta
 
-  def addScripts(self, src: str, attrs: Optional[dict] = None):
+  def add_script(self, src: str, attrs: Optional[dict] = None):
     """
     Description:
     -----------
-    Add a JavaScript tag to th eHTML page.
+    Add a JavaScript tag to the HTML page.
 
     The script will be added in a script tag.
 
@@ -683,6 +684,23 @@ class Header:
       for k, v in attrs.items():
         attr_list.append('%s="%s"' % (k, v))
     self._scripts.append('<script src="%s" %s></script>' % (src, ' '.join(attr_list)))
+
+  def add_code(self, code: str, attrs: Optional[dict] = None):
+    """
+    Description:
+    -----------
+    Add a JavaScript tag to the HTML page.
+
+    The code will be added in a script tag.
+
+    Attributes:
+    ----------
+    :param str code: The JavaScript code to be added to the page.
+    :param Optional[dict] attrs: optional. The various attributes to be added to the script tag.
+    """
+    base64_bytes = base64.b64encode(code.encode('ascii'))
+    base64_message = base64_bytes.decode('ascii')
+    self.add_script("data:text/css;base64,%s" % base64_message, attrs)
 
   def title(self, value: str):
     """

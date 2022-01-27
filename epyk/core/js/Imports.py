@@ -2187,13 +2187,22 @@ def extend_imports(extension: dict):
 class ImportModule:
   overriden = False
 
-  def __init__(self, name, js, css, links: Optional[dict] = None):
+  def __init__(self, name: str, js: dict, css: dict, links: Optional[dict] = None):
     self._name = name
     self._defer, self._async, self.attrs = False, False, {}
     self._js = js[name]
     self._css = css.get(name, {})
     if links is not None:
       links[self._name] = self
+
+  @property
+  def alias(self) -> str:
+    """
+    Description:
+    -----------
+    Get the NPM alias name.
+    """
+    return self._name
 
   @property
   def defer(self) -> bool:
@@ -2379,7 +2388,7 @@ class ImportModule:
 
 
 class ImportPackagesPivotExts:
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
@@ -2436,12 +2445,12 @@ class ImportPackagesPivotExts:
 
 
 class ImportPackagesCodeMirrorExts:
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
 
-  def get(self, name):
+  def get(self, name: str):
     if name in self.__linked:
       return self.__linked[name]
 
@@ -2545,7 +2554,7 @@ class ImportPackagesCodeMirrorExts:
 
 
 class ImportPackagesD3Exts:
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
@@ -2810,7 +2819,7 @@ class ImportPackagesD3Exts:
 
 
 class ImportPackagesDataTableExts:
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
@@ -2823,7 +2832,7 @@ class ImportPackagesDataTableExts:
 
 
 class ImportPackagesChartJsExts:
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.links = links
@@ -2831,7 +2840,7 @@ class ImportPackagesChartJsExts:
 
 class ImportPackagesTabulatorExts:
 
-  def __init__(self, js, css, links: Optional[dict] = None):
+  def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
     self.__linked = links
@@ -2952,7 +2961,7 @@ class ImportPackagesTabulatorExts:
 
 class ImportPackages:
 
-  def __init__(self, js, css):
+  def __init__(self, js: dict, css: dict):
     self._js = js
     self._css = css
     self.__linked = {}
@@ -3833,21 +3842,22 @@ class ImportManager:
       if 'version' in mod:
         if self._report is not None and self._report.verbose:
           logging.warning("Setting %(alias)s to version %(version)s" % mod)
-        self.reqVersion[mod['alias']] = mod['version']
+        if self.reqVersion.get(mod['alias']) is None or mod['version'] < self.reqVersion[mod['alias']]:
+          self.reqVersion[mod['alias']] = mod['version']
         new_main_for_alias, new_main_for_alias_css = collections.OrderedDict(), collections.OrderedDict()
         for path in self.jsImports[mod['alias']]['main']:
           for v in self.jsImports[mod['alias']]['versions']:
-            new_main_for_alias[path.replace(v, mod['version'])] = mod['version']
+            new_main_for_alias[path.replace(v, self.reqVersion[mod['alias']])] = self.reqVersion[mod['alias']]
         if mod['alias'] in self.cssImports:
           for path in self.cssImports[mod['alias']]['main']:
             for v in self.cssImports[mod['alias']]['versions']:
-              new_main_for_alias_css[path.replace(v, mod['version'])] = mod['version']
+              new_main_for_alias_css[path.replace(v, self.reqVersion[mod['alias']])] = self.reqVersion[mod['alias']]
           self.cssImports[mod['alias']]['main'] = new_main_for_alias_css
         # Store the new dictionary with the key and version updated for the module
         self.jsImports[mod['alias']]['main'] = new_main_for_alias
         for i, path in enumerate(self.jsImports[mod['alias']]['dep']):
           for v in self.jsImports[mod['alias']]['versions']:
-            path = path.replace(v, mod['version'])
+            path = path.replace(v, self.reqVersion[mod['alias']])
           self.jsImports[mod['alias']]['dep'][i] = path
       mod = mod['alias']
     modules.append(mod)
@@ -4209,6 +4219,10 @@ class ImportManager:
     Allow the use of different version of a package.
 
     This will change the Import important to the Python env.
+
+    Usage::
+
+      page.imports.setVersion(page.imports.pkgs.popper_js.alias, "1.00.0")
 
     Attributes:
     ----------
