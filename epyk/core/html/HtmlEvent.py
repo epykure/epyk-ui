@@ -227,7 +227,7 @@ class Dialog(Html.Html):
   name = 'Menu'
   _option_cls = OptSliders.OptionDialog
 
-  def __init__(self, report: primitives.PageModel, text: str, width: tuple, height: tuple, helper: str,
+  def __init__(self, report: primitives.PageModel, text: Union[Html.Html, str], width: tuple, height: tuple, helper: str,
                options: Optional[dict], html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
                                  profile=profile, options=options)

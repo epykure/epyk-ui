@@ -120,7 +120,8 @@ class DatePicker(Html.Html):
     ----------
     :param Optional[List[str]] dts: Optional. A list of dates format YYYY-MM-DD.
     :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     return self.input.excluded_dates(dts, js_funcs, profile)
 
@@ -142,7 +143,7 @@ class DatePicker(Html.Html):
     :param Optional[List[str]] dts: Optional. A list of dates format YYYY-MM-DD.
     :param Optional[str] selected: Optional. The selected date from the range. Default max.
     :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile or a function on the console.
     """
     return self.input.included_dates(dts, selected, js_funcs, profile)
 
@@ -387,6 +388,8 @@ class Calendar(Html.Html):
       if align == 'center':
         self.style.css.margin_left = 'auto'
         self.style.css.margin_right = 'auto'
+      else:
+        self.style.css.text_align = align
 
   @property
   def options(self) -> OptCalendars.OptionDays:
@@ -409,7 +412,7 @@ class Calendar(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to profile or a function on the Js console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -418,8 +421,8 @@ class Calendar(Html.Html):
     self.__click = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def task(self, name: str, start: str, capacity: float, end: Optional[str] = None, weekend: bool = False,
-           options: Optional[dict] = None):
+  def task(self, name: str, start: str, capacity: Union[List[float], float], end: Optional[str] = None,
+           weekend: bool = False, options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -429,7 +432,7 @@ class Calendar(Html.Html):
     ----------
     :param str name: The task name.
     :param str start: The task start date format YYYY-MM-DD.
-    :param float capacity: A figure in percentage.
+    :param Union[List[float], float] capacity: A figure in percentage.
     :param str end: The task end date format YYYY-MM-DD.
     :param bool weekend: Optional. Flag to specify if the weekends should be considered.
     :param dict options: Optional. Specific Python options available for this component.
