@@ -10,8 +10,8 @@ class DomTime(JsHtml.JsHtmlRich):
     ------------
     Common function to get the component content.
     """
-    return JsHtml.ContentFormatters(self._report, "%(var)s.getHour()+ ':'+ %(var)s.getMinute()" % {
-      "var": self._src.var})
+    return JsHtml.ContentFormatters(self.page, "%(var)s.getHour()+ ':'+ %(var)s.getMinute()" % {
+      "var": self.component.var})
 
 
 class DomDate(JsHtml.JsHtmlRich):
@@ -23,5 +23,5 @@ class DomDate(JsHtml.JsHtmlRich):
     ------------
     Common function to get the component content.
     """
-    return JsHtml.ContentFormatters(self._report, "%(var)s.getDate().toISOString().split('T')[0]" % {
-      "var": self._src.var})
+    return JsHtml.ContentFormatters(self.page, "%(var)s.getDate().toISOString().split('T')[0]" % {
+      "var": self.component.var})

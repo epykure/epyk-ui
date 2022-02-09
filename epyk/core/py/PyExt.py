@@ -4,6 +4,7 @@
 import sys
 import importlib
 
+from epyk.core.py import primitives
 from epyk.core.py import PyCrypto
 from epyk.core.py import PyHash
 from epyk.core.py import PyRest
@@ -466,21 +467,19 @@ WINDOWS_1252_TO_UTF8 = {
 
 
 class PyExt:
-  class __internal:
-    _props = {}
 
-  def __init__(self, report=None):
-    self._report = report if report is not None else self.__internal()
+  def __init__(self, page: primitives.PageModel):
+    self.page = page
     self.hash = PyHash.SipHash().hashId
     self.today = self.dates.today
     self.now = self.dates.now
     self.cob = self.dates.cob
     self.request = self.requests.request
-    if 'py' not in self._report._props:
-      self._report._props['py'] = {}
+    if 'py' not in self.page._props:
+      self.page._props['py'] = {}
 
   @property
-  def dates(self):
+  def dates(self) -> PyDates.PyDates:
     """
     Description:
     ------------
@@ -496,10 +495,10 @@ class PyExt:
 
     :rtype: PyDates.PyDates
     """
-    return PyDates.PyDates(self._report)
+    return PyDates.PyDates(self.page)
 
   @property
-  def requests(self):
+  def requests(self) -> PyRest.PyRest:
     """
     Description:
     ------------
@@ -511,10 +510,10 @@ class PyExt:
 
     :rtype: PyRest.PyRest
     """
-    return PyRest.PyRest(self._report)
+    return PyRest.PyRest(self.page)
 
   @property
-  def crypto(self):
+  def crypto(self) -> PyCrypto.PyCrypto:
     """
     Description:
     ------------
@@ -530,10 +529,10 @@ class PyExt:
 
     :rtype: PyCrypto.PyCrypto
     """
-    return PyCrypto.PyCrypto(self._report)
+    return PyCrypto.PyCrypto(self.page)
 
   @property
-  def geo(self):
+  def geo(self) -> PyGeo.PyGeo:
     """
     Description:
     ------------
@@ -541,10 +540,10 @@ class PyExt:
 
     :rtype: PyGeo.PyGeo
     """
-    return PyGeo.PyGeo(self._report)
+    return PyGeo.PyGeo(self.page)
 
   @property
-  def markdown(self):
+  def markdown(self) -> PyMarkdown.MarkDown:
     """
     Description:
     ------------
@@ -552,9 +551,9 @@ class PyExt:
 
     :rtype: PyMarkdown.MarkDown
     """
-    return PyMarkdown.MarkDown(self._report)
+    return PyMarkdown.MarkDown(self.page)
 
-  def import_lib(self, lib_name, folder="libs", report_name=None, path=None):
+  def import_lib(self, lib_name: str, folder: str = "libs", report_name: str = None, path: str = None):
     """
     Description:
     ------------
@@ -566,10 +565,10 @@ class PyExt:
 
     Attributes:
     ----------
-    :param lib_name: String. The python module name.
-    :param folder: String. Optional. The internal folder with the libraries to be imported.
-    :param report_name: String. Optional. the report name in which the library is defined. Default current folder.
-    :param path: String. Optional. the path to be added to the classpath.
+    :param str lib_name: The python module name.
+    :param str folder: Optional. The internal folder with the libraries to be imported.
+    :param str report_name: Optional. the report name in which the library is defined. Default current folder.
+    :param str path: Optional. the path to be added to the classpath.
 
     :return: The imported Python module.
     """
@@ -580,17 +579,14 @@ class PyExt:
       return importlib.import_module('%s.%s' % (folder, lib_name))
 
     else:
-      if report_name is None:
-        return importlib.import_module('%s.%s.%s' % (self._report.run.report_name, folder, lib_name))
-
       return importlib.import_module('%s.%s.%s' % (report_name, folder, lib_name))
 
-  def import_package(self, package, sub_module=None):
+  def import_package(self, package: str, sub_module: str = None):
     """
     Description:
     ------------
     Install the external Python package.
-    This can automatically installed it from the Python Index online repository is missing.
+    This can automatically install it from the Python Index online repository is missing.
 
     Usage::
 
@@ -599,52 +595,52 @@ class PyExt:
 
     Attributes:
     ----------
-    :param package: String. The Python Package Name.
-    :param sub_module: String. Optional. The sub module or class within the package.
+    :param str package: The Python Package Name.
+    :param str sub_module: Optional. The sub module or class within the package.
 
     :return: The installed Python module.
     """
     package_alias = "%s_%s" % (package, sub_module) if sub_module is not None else package
-    if package_alias not in self._report._props:
-      self._report._props[package_alias] = requires(
+    if package_alias not in self.page._props:
+      self.page._props[package_alias] = requires(
         package, reason='Missing Package', package=sub_module, install=package)
-    return self._report._props[package_alias]
+    return self.page._props[package_alias]
 
   @staticmethod
-  def encode_html(text, encoding="utf-8"):
+  def encode_html(text: str, encoding: str = "utf-8"):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param text: String. a test to encode with HTML special symbols.
-    :param encoding: String. Optional. teh encoding type.
+    :param str text: a test to encode with HTML special symbols.
+    :param str encoding: Optional. teh encoding type.
     """
     if not isinstance(text, str):
       return text
 
     if encoding.lower() not in ["utf-8", 'cp1252']:
-      raise Exception("Only Windows-1252 and UTF-8 are supported")
+      raise ValueError("Only Windows-1252 and UTF-8 are supported")
 
     text = bytes(text, encoding)
-    endcoding_map = UTF8_TO_HTML if encoding.lower() == "utf-8" else WINDOWS_1252_TO_UTF8
-    for k, v in endcoding_map.items():
+    encoding_map = UTF8_TO_HTML if encoding.lower() == "utf-8" else WINDOWS_1252_TO_UTF8
+    for k, v in encoding_map.items():
       text = text.replace(k, bytes(v, encoding))
     return text.decode(encoding)
 
   @staticmethod
-  def format_number(value, digits=0, thousand_sep=",", decimal_sep="."):
+  def format_number(value: float, digits: int = 0, thousand_sep: str = ",", decimal_sep: str = "."):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param value:
-    :param digits:
-    :param thousand_sep:
-    :param decimal_sep:
+    :param float value:
+    :param int digits:
+    :param str thousand_sep:
+    :param str decimal_sep:
     """
     text = "%.2f" % round(value, digits)
     if decimal_sep in text:
@@ -662,19 +658,20 @@ class PyExt:
     return "%s%s%s" % ("".join(reversed(r)), decimal_sep, d[:digits])
 
   @staticmethod
-  def format_money(text, digits=0, thousand_sep=",", decimal_sep=".", symbol="£", format="%s%v"):
+  def format_money(text: float, digits: int = 0, thousand_sep: str = ",", decimal_sep: str = ".", symbol: str = "£",
+                   format: str = "%s%v"):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param text: String.
-    :param digits: Integer. Optional.
-    :param thousand_sep: String. Optional.
-    :param decimal_sep: String. Optional.
-    :param symbol: String. Optional.
-    :param format: String. Optional.
+    :param float text:
+    :param int digits: Optional.
+    :param str thousand_sep: Optional.
+    :param str decimal_sep: Optional.
+    :param str symbol: Optional.
+    :param str format: Optional.
     """
     text = PyExt.format_number(text, digits, thousand_sep, decimal_sep)
     if symbol not in ["£"]:

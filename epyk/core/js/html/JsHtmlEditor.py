@@ -3,6 +3,9 @@
 
 import json
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 
@@ -11,7 +14,8 @@ from epyk.core.js.primitives import JsObjects
 
 class Console(JsHtml.JsHtmlRich):
 
-  def write(self, data, timestamp=None, stringify=False, skip_data_convert=False, format=None, profile=False):
+  def write(self, data, timestamp=None, stringify: bool = False, skip_data_convert: bool = False, format: str = None,
+            profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -28,19 +32,21 @@ class Console(JsHtml.JsHtmlRich):
     js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
       js_data = "JSON.stringify(%s)" % js_data
-    if self._src.options.showdown is not False:
+    if self.component.options.showdown is not False:
       js_data = '''
         (function(d){ var conv = new showdown.Converter(%s);
             let frag = document.createRange().createContextualFragment(conv.makeHtml(d)); 
             if((frag.firstChild === null) || (typeof frag.firstChild.style == "undefined")){return d}
             else{frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0 ;  
-                 return frag.firstChild.outerHTML}})(%s) ''' % (json.dumps(self._src.options.showdown), js_data)
+                 return frag.firstChild.outerHTML}})(%s) ''' % (json.dumps(self.component.options.showdown), js_data)
     if format is not None:
       js_data = JsUtils.jsConvertData(format, None).toStr().replace("%s", '"+ %s +"') % js_data
-    if timestamp or (self._src.options.timestamp and timestamp != False):
-      return JsObjects.JsObjects.get("%s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (self.varName, js_data))
+    if timestamp or (self.component.options.timestamp and timestamp != False):
+      return JsObjects.JsObjects.get(
+        "%s.innerHTML += ' > '+ new Date().toISOString().replace('T', ' ').slice(0, 19) +', '+ %s +'<br/>'" % (
+          self.varName, js_data))
 
-    return JsObjects.JsObjects.get("%s.innerHTML += ' > '+ %s +'<br/>'" % (self._src.dom.varId, js_data))
+    return JsObjects.JsObjects.get("%s.innerHTML += ' > '+ %s +'<br/>'" % (self.component.dom.varId, js_data))
 
   def clear(self):
     """
@@ -64,10 +70,11 @@ class Editor(JsHtml.JsHtmlRich):
 
 class CodeMirror(JsHtml.JsHtmlRich):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
-    self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % htmlObj.editorId, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
+    self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % component.editorId, "", None
+    self.component, self.page = component, page
     self._js = []
     self._jquery, self._jquery_ui, self._d3 = None, None, None
 
@@ -78,7 +85,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.getValue()" % self._src.editorId)
+    return JsHtml.ContentFormatters(self.page, "%s.getValue()" % self.component.editorId)
 
   def select(self):
     """
@@ -90,7 +97,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
       https://codemirror.net/3/doc/manual.html#keymaps
     """
-    return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self.component.editorId)
 
   def singleSelection(self):
     """
@@ -102,7 +109,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
       https://codemirror.net/3/doc/manual.html#keymaps
     """
-    return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self.component.editorId)
 
   def killLine(self):
     """
@@ -115,7 +122,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
       https://codemirror.net/3/doc/manual.html#keymaps
     """
-    return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self.component.editorId)
 
   def deleteLine(self):
     """
@@ -127,7 +134,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
       https://codemirror.net/3/doc/manual.html#keymaps
     """
-    return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self.component.editorId)
 
   def copy(self):
     """
@@ -135,9 +142,9 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get("%s.execCommand('copy')" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.execCommand('copy')" % self.component.editorId)
 
-  def setValue(self, data):
+  def setValue(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
     """
     Description:
     -----------
@@ -145,24 +152,25 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param data:
+    :param Union[str, primitives.JsDataModel, float, dict, list] data:
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsObjects.get("%s.setValue(%s)" % (self._src.editorId, data))
+    return JsObjects.JsObjects.get("%s.setValue(%s)" % (self.component.editorId, data))
 
-  def setOption(self, name, value):
+  def setOption(self, name: Union[str, primitives.JsDataModel, float, dict, list],
+                value: Union[str, primitives.JsDataModel, float, dict, list]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param name:
-    :param value:
+    :param Union[str, primitives.JsDataModel, float, dict, list] name:
+    :param Union[str, primitives.JsDataModel, float, dict, list] value:
     """
     name = JsUtils.jsConvertData(name, None)
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self._src.editorId, name, value))
+    return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.component.editorId, name, value))
 
   def refresh(self):
     """
@@ -170,7 +178,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get("%s.refresh()" % self._src.editorId)
+    return JsObjects.JsObjects.get("%s.refresh()" % self.component.editorId)
 
   def clear(self):
     """
@@ -178,7 +186,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get('%s.setValue("")' % self._src.editorId)
+    return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
 
   def empty(self):
     """
@@ -186,17 +194,17 @@ class CodeMirror(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get('%s.setValue("")' % self._src.editorId)
+    return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
 
-  def appendText(self, text, from_selection=True):
+  def appendText(self, text: Union[str, primitives.JsDataModel], from_selection: bool = True):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param text: String. Mandatory.
-    :param from_selection: Boolean. Optional.
+    :param Union[str, primitives.JsDataModel] text: The text to append.
+    :param bool from_selection: Optional.
     """
     text = JsUtils.jsConvertData(text, None)
     from_selection = JsUtils.jsConvertData(from_selection, None)
@@ -205,4 +213,4 @@ class CodeMirror(JsHtml.JsHtmlRich):
       var editCursor = editContent.getCursor();
       if (%(toEnd)s){editContent.replaceRange("\n" + %(text)s, {line: editContent.size})}
       else {editContent.replaceRange("\n" + %(text)s, {line: editCursor.line})}
-      ''' % {"editor": self._src.editorId, "text": text, "toEnd": from_selection})
+      ''' % {"editor": self.component.editorId, "text": text, "toEnd": from_selection})

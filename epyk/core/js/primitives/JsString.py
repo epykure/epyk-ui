@@ -34,15 +34,15 @@ from epyk.core.js.primitives import JsObject
 class JsString(JsObject.JsObject):
   _jsClass = "String"
 
-  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = True, report=None):
-    if not hasattr(data, 'varName') and isPyData:
-      isPyData = True
+  def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = True, page=None):
+    if not hasattr(data, 'varName') and is_py_data:
+      is_py_data = True
       data = json.dumps(data)
-    self.isPyData = isPyData
-    super(JsString, self).__init__(data, varName, setVar, isPyData, report=report)
+    self.is_py_data = is_py_data
+    super(JsString, self).__init__(data, js_code, set_var, is_py_data, page=page)
 
   def __add__(self, value: Union[primitives.JsDataModel, str, float]):
-    return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def __getitem__(self, value):
     """
@@ -53,7 +53,7 @@ class JsString(JsObject.JsObject):
     ----------
     :param value:
     """
-    return JsString(None, "%s[%s]" % (self.varId, value), setVar=False)
+    return JsString(None, "%s[%s]" % (self.varId, value), set_var=False)
 
   def startswith(self, val: Union[str, primitives.JsDataModel], position: int = None):
     """
@@ -72,9 +72,9 @@ class JsString(JsObject.JsObject):
 
     val = JsUtils.jsConvertData(val, None)
     if position is None:
-      return JsBoolean.JsBoolean("%s.startswith(%s)" % (self.varId, val), isPyData=False)
+      return JsBoolean.JsBoolean("%s.startswith(%s)" % (self.varId, val), is_py_data=False)
 
-    return JsBoolean.JsBoolean("%s.startswith(%s, %s)" % (self.varId, val, position), isPyData=False)
+    return JsBoolean.JsBoolean("%s.startswith(%s, %s)" % (self.varId, val, position), is_py_data=False)
 
   @property
   def length(self):
@@ -91,7 +91,7 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    new_obj = JsNumber.JsNumber("%s.length" % self.varId, isPyData=False)
+    new_obj = JsNumber.JsNumber("%s.length" % self.varId, is_py_data=False)
     new_obj._js.extend(self._js)
     return new_obj
 
@@ -121,11 +121,12 @@ class JsString(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[int, primitives.JsDataModel] num: The length of the resulting string once the current str has been padded.
+    :param Union[int, primitives.JsDataModel] num: The length of the resulting string once the current str has been
+    padded.
     :param Union[str, primitives.JsDataModel] text: The string to pad the current str with.
     """
     return JsString("%s.padStart(%s, %s)" % (
-      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), isPyData=False)
+      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), is_py_data=False)
 
   def padEnd(self, num: Union[int, primitives.JsDataModel], text: Union[str, primitives.JsDataModel]):
     """
@@ -141,11 +142,12 @@ class JsString(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[int, primitives.JsDataModel] num: The length of the resulting string once the current str has been padded.
+    :param Union[int, primitives.JsDataModel] num: The length of the resulting string once the current str has been
+    padded.
     :param Union[str, primitives.JsDataModel] text: The string to pad the current str with.
     """
     return JsString("%s.padEnd(%s, %s)" % (
-      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), isPyData=False)
+      self.varId, JsUtils.jsConvertData(num, None), JsUtils.jsConvertData(text, None)), is_py_data=False)
 
   def add(self, value: Union[str, primitives.JsDataModel]):
     """
@@ -159,7 +161,7 @@ class JsString(JsObject.JsObject):
 
     :return: return a new JString object
     """
-    return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def indexOf(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0):
     """
@@ -181,7 +183,7 @@ class JsString(JsObject.JsObject):
     from epyk.core.js.primitives import JsNumber
 
     search_value = JsUtils.jsConvertData(search_value, None)
-    return JsNumber.JsNumber("%s.indexOf(%s, %s)" % (self.varId, search_value, start), isPyData=False)
+    return JsNumber.JsNumber("%s.indexOf(%s, %s)" % (self.varId, search_value, start), is_py_data=False)
 
   def lastIndexOf(self, search_value: Union[str, primitives.JsDataModel],
                   start: Union[int, primitives.JsDataModel] = 0):
@@ -197,14 +199,15 @@ class JsString(JsObject.JsObject):
     Attributes:
     ----------
     :param Union[str, primitives.JsDataModel] search_value: The string to search for.
-    :param Union[int, primitives.JsDataModel] start: Integer. Optional. Default 0. At which position to start the search.
+    :param Union[int, primitives.JsDataModel] start: Integer. Optional. Default 0. At which position to start the
+    search.
 
     :rtype: JsNumber.JsNumber
     """
     from epyk.core.js.primitives import JsNumber
 
     search_value = JsUtils.jsConvertData(search_value, None)
-    return JsNumber.JsNumber("%s.lastIndexOf(%s, %s)" % (self.varId, search_value, start), isPyData=False)
+    return JsNumber.JsNumber("%s.lastIndexOf(%s, %s)" % (self.varId, search_value, start), is_py_data=False)
 
   def substring(self, start: Union[int, primitives.JsDataModel] = 0,
                 end: Optional[Union[int, primitives.JsDataModel]] = None):
@@ -220,13 +223,15 @@ class JsString(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[int, primitives.JsDataModel] start: The position where to start the extraction. First character is at index 0.
-    :param Optional[Union[int, primitives.JsDataModel]] end: Optional. The position (up to, but not including) where to end the extraction.
+    :param Union[int, primitives.JsDataModel] start: The position where to start the extraction. First character is at
+    index 0.
+    :param Optional[Union[int, primitives.JsDataModel]] end: Optional. The position (up to, but not including) where to
+    end the extraction.
     If omitted, it extracts the rest of the string
     """
     if end is None:
       end = self.length
-    return JsString("%s.substring(%s, %s)" % (self.varId, start, end), isPyData=False)
+    return JsString("%s.substring(%s, %s)" % (self.varId, start, end), is_py_data=False)
 
   def substr(self, start: Union[int, primitives.JsDataModel] = 0,
              length: Optional[Union[int, primitives.JsDataModel]] = None):
@@ -247,12 +252,12 @@ class JsString(JsObject.JsObject):
     If omitted, it extracts the rest of the string.
     """
     if length is None:
-      return JsString("%s.substr(%s)" % (self.varId, start), isPyData=False)
+      return JsString("%s.substr(%s)" % (self.varId, start), is_py_data=False)
 
-    return JsString("%s.substr(%s, %s)" % (self.varId, start, length), isPyData=False)
+    return JsString("%s.substr(%s, %s)" % (self.varId, start, length), is_py_data=False)
 
   def replace(self, search_value: Union[str, primitives.JsDataModel], new_value: Union[str, primitives.JsDataModel],
-              isPyData: bool = True):
+              is_py_data: bool = True):
     """
     Description:
     ------------
@@ -269,12 +274,12 @@ class JsString(JsObject.JsObject):
     :param Union[str, primitives.JsDataModel] search_value: Required. The value, or regular expression,
     that will be replaced by the new value.
     :param Union[str, primitives.JsDataModel] new_value: Required. The value to replace the search value with.
-    :param bool isPyData: Optional.
+    :param bool is_py_data: Optional.
     """
-    if isPyData:
+    if is_py_data:
       search_value = json.dumps(search_value)
       new_value = json.dumps(new_value)
-    return JsString("%s.replace(%s, %s)" % (self.varId, search_value, new_value), isPyData=False)
+    return JsString("%s.replace(%s, %s)" % (self.varId, search_value, new_value), is_py_data=False)
 
   def slice(self, start: Union[int, primitives.JsDataModel], end: Optional[Union[int, primitives.JsDataModel]]):
     """
@@ -294,9 +299,9 @@ class JsString(JsObject.JsObject):
     The position (up to, but not including) where to end the extraction.
     If omitted, slice() selects all characters from the start-position to the end of the string
     """
-    return JsString("%s.replace(%s, %s)" % (self.varId, start, end), isPyData=False)
+    return JsString("%s.replace(%s, %s)" % (self.varId, start, end), is_py_data=False)
 
-  def search(self, search_value: Union[str, primitives.JsDataModel], isPyData: bool = True):
+  def search(self, search_value: Union[str, primitives.JsDataModel], is_py_data: bool = True):
     """
     Description:
     ------------
@@ -310,15 +315,15 @@ class JsString(JsObject.JsObject):
     ----------
     :param Union[str, primitives.JsDataModel] search_value: A regular expression. A string will automatically be
     converted to a regular expression..
-    :param bool isPyData: Optional.
+    :param bool is_py_data: Optional.
     """
     from epyk.core.js.primitives import JsNumber
 
-    if isPyData:
+    if is_py_data:
       search_value = json.dumps(search_value)
-    return JsNumber.JsNumber("%s.search(%s)" % (self.varId, search_value), isPyData=False)
+    return JsNumber.JsNumber("%s.search(%s)" % (self.varId, search_value), is_py_data=False)
 
-  def concat(self, *args, new_var_name: Optional[str] = None, isPyData: bool = True):
+  def concat(self, *args, new_var_name: Optional[str] = None, is_py_data: bool = True):
     """
     Description:
     ------------
@@ -332,27 +337,27 @@ class JsString(JsObject.JsObject):
     ----------
     :param args: Required. The strings to be joined.
     :param Optional[str] new_var_name: The new Javascript Variable Name.
-    :param bool isPyData: The data input type.
+    :param bool is_py_data: The data input type.
 
     :return: A new String, containing the text of the combined strings
     """
-    vars = []
+    variables = []
     for a in args:
-      if isPyData:
-        vars.append(json.dumps(a))
+      if is_py_data:
+        variables.append(json.dumps(a))
       else:
-        vars.append(a)
+        variables.append(a)
 
     if new_var_name is not None:
-      return "var %s = %s.concat(%s)" % (new_var_name, self.varId, ",".join(vars))
+      return "var %s = %s.concat(%s)" % (new_var_name, self.varId, ",".join(variables))
 
-    return JsString("%s.concat(%s)" % (self.varId, ",".join(vars)), isPyData=False)
+    return JsString("%s.concat(%s)" % (self.varId, ",".join(variables)), is_py_data=False)
 
   def clean(self):
     """
     Description:
     ------------
-    Remove the special characts in a string and only keep the ones necessary to be considered as a valid Javascript
+    Remove the special characters in a string and only keep the ones necessary to be considered as a valid Javascript
     variable name.
     Indeed some rules are defined for the variable names and the HTML codes values must follow those rules.
     Check are on the Python side with an exception raised but it can also be added on the Javascript side
@@ -367,7 +372,7 @@ class JsString(JsObject.JsObject):
 
     :return: The Python Javascript String transformed to be a variable name
     """
-    return JsString("%s.trim().replace(/\W+/g, '')" % self.varId, isPyData=False)
+    return JsString("%s.trim().replace(/\W+/g, '')" % self.varId, is_py_data=False)
 
   def leftTrim(self):
     """
@@ -375,7 +380,7 @@ class JsString(JsObject.JsObject):
     ------------
 
     """
-    return JsString("%s.leftTrim()" % self.varId, isPyData=False)
+    return JsString("%s.leftTrim()" % self.varId, is_py_data=False)
 
   def trim(self):
     """
@@ -389,7 +394,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the string with removed whitespace from both ends
     """
-    return JsString("%s.trim()" % self.varId, isPyData=False)
+    return JsString("%s.trim()" % self.varId, is_py_data=False)
 
   def trimStart(self):
     """
@@ -403,7 +408,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the string with removed from the beginning
     """
-    return JsString("%s.trimStart()" % self.varId, isPyData=False)
+    return JsString("%s.trimStart()" % self.varId, is_py_data=False)
 
   def trimEnd(self):
     """
@@ -417,7 +422,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the string with removed whitespace at the end
     """
-    return JsString("%s.trimEnd()" % self.varId, isPyData=False)
+    return JsString("%s.trimEnd()" % self.varId, is_py_data=False)
 
   def charAt(self, i: Union[int, primitives.JsDataModel]):
     """
@@ -436,7 +441,7 @@ class JsString(JsObject.JsObject):
     :return: A String, representing the character at the specified index, or an empty string if the index number
     is not found
     """
-    return JsString("%s.charAt(%s)" % (self.varId, i), isPyData=False)
+    return JsString("%s.charAt(%s)" % (self.varId, i), is_py_data=False)
 
   def charCodeAt(self, i: Union[int, primitives.JsDataModel]):
     """
@@ -456,7 +461,7 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    return JsNumber.JsNumber("%s.charCodeAt(%s)" % (self.varId, i), isPyData=False)
+    return JsNumber.JsNumber("%s.charCodeAt(%s)" % (self.varId, i), is_py_data=False)
 
   def toLowerCase(self):
     """
@@ -470,7 +475,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the value of a string converted to lowercase according to the host's current locale
     """
-    return JsString("%s.toLowerCase()" % self.varId, isPyData=False)
+    return JsString("%s.toLowerCase()" % self.varId, is_py_data=False)
 
   def toUpperCase(self):
     """
@@ -484,7 +489,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the value of a string converted to uppercase
     """
-    return JsString("%s.toUpperCase()" % self.varId, isPyData=False)
+    return JsString("%s.toUpperCase()" % self.varId, is_py_data=False)
 
   def toLocaleUpperCase(self, locale: Union[str, primitives.JsDataModel]):
     """
@@ -504,7 +509,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, representing the value of a string converted to uppercase
     """
-    return JsString("%s.toLocaleUpperCase(%s)" % (self.varId, JsUtils.jsConvertData(locale, None)), isPyData=False)
+    return JsString("%s.toLocaleUpperCase(%s)" % (self.varId, JsUtils.jsConvertData(locale, None)), is_py_data=False)
 
   def includes(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0,
                js_funcs: Optional[Union[list, str]] = None, jsObj=None):
@@ -533,7 +538,7 @@ class JsString(JsObject.JsObject):
     # Add a polyfill to ensure the browser compatibility
     if jsObj is not None:
       jsObj._addImport("babel-polyfill")
-    return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, search_value, start), isPyData=False)
+    return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, search_value, start), is_py_data=False)
 
   def startsWith(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0,
                  js_funcs: Optional[Union[list, str]] = None, jsObj=None):
@@ -562,7 +567,7 @@ class JsString(JsObject.JsObject):
     if jsObj is not None:
       jsObj._addImport("babel-polyfill")
     search_value = JsUtils.jsConvertData(search_value, js_funcs)
-    return JsBoolean.JsBoolean("%s.startsWith(%s, %s)" % (self.varId, search_value, start), isPyData=False)
+    return JsBoolean.JsBoolean("%s.startsWith(%s, %s)" % (self.varId, search_value, start), is_py_data=False)
 
   def endsWith(self, search_value: Union[str, primitives.JsDataModel],
                length: Optional[Union[int, primitives.JsDataModel]] = None,
@@ -590,9 +595,9 @@ class JsString(JsObject.JsObject):
 
     search_value = JsUtils.jsConvertData(search_value, js_funcs)
     if length is not None:
-      return JsBoolean.JsBoolean("%s.endsWith(%s, %s)" % (self.varId, search_value, length), isPyData=False)
+      return JsBoolean.JsBoolean("%s.endsWith(%s, %s)" % (self.varId, search_value, length), is_py_data=False)
 
-    return JsBoolean.JsBoolean("%s.endsWith(%s)" % (self.varId, search_value), isPyData=False)
+    return JsBoolean.JsBoolean("%s.endsWith(%s)" % (self.varId, search_value), is_py_data=False)
 
   def repeat(self, count: Union[int, primitives.JsDataModel]):
     """
@@ -611,7 +616,7 @@ class JsString(JsObject.JsObject):
 
     :return: A String, a new string containing copies of the original string
     """
-    return JsString("%s.repeat(%s)" % (self.varId, count), isPyData=False)
+    return JsString("%s.repeat(%s)" % (self.varId, count), is_py_data=False)
 
   def split(self, separator: str = "", limit: Optional[int] = None):
     """
@@ -636,9 +641,9 @@ class JsString(JsObject.JsObject):
     from epyk.core.js.primitives.JsArray import JsArray
 
     if limit is not None:
-      return JsArray("%s.split('%s', %s)" % (self.varId, separator, limit), isPyData=False)
+      return JsArray("%s.split('%s', %s)" % (self.varId, separator, limit), is_py_data=False)
 
-    return JsArray("%s.split('%s')" % (self.varId, separator), isPyData=False)
+    return JsArray("%s.split('%s')" % (self.varId, separator), is_py_data=False)
 
   def splitEmptyArray(self, page: primitives.PageModel, separator: str,
                       limit: Optional[Union[int, primitives.JsDataModel]] = None):
@@ -667,9 +672,9 @@ class JsString(JsObject.JsObject):
     page._props.setdefault('js', {}).setdefault('prototypes', {})[
       'String.prototype.splitEmptyArray'] = "function(sep) {var a = this.split(sep); if(a[0] == '' && a.length == 1){ return []}; return a}"
     if limit is not None:
-      return JsArray("%s.splitEmptyArray('%s', %s)" % (self.varId, separator, limit), isPyData=False)
+      return JsArray("%s.splitEmptyArray('%s', %s)" % (self.varId, separator, limit), is_py_data=False)
 
-    return JsArray("%s.splitEmptyArray('%s')" % (self.varId, separator), isPyData=False)
+    return JsArray("%s.splitEmptyArray('%s')" % (self.varId, separator), is_py_data=False)
 
   def formatMoney(self, jsObj, dec_places: Union[int, primitives.JsDataModel],
                   country_code: str = 'UK', profile: Optional[Union[dict, bool]] = None):
@@ -683,7 +688,7 @@ class JsString(JsObject.JsObject):
     :param jsObj:
     :param Union[int, primitives.JsDataModel] dec_places: Optional. The number of decimal.
     :param str country_code: Optional. The country code. Default uk.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     jsObj.extendProto(self, "formatMoney", '''var n = parseFloat(this); n.formatMoney(decPlaces, thouSeparator, decSeparator);
       ''', pmts=["decPlaces", "thouSeparator", "decSeparator"], profile=profile)
@@ -699,7 +704,7 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    return JsNumber.JsNumber("parseFloat(%s)" % self.varId, isPyData=False)
+    return JsNumber.JsNumber("parseFloat(%s)" % self.varId, is_py_data=False)
 
   def parseInt(self):
     """
@@ -711,7 +716,7 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsNumber
 
-    return JsNumber.JsNumber("parseInt(%s)" % self.varId, isPyData=False)
+    return JsNumber.JsNumber("parseInt(%s)" % self.varId, is_py_data=False)
 
   def toDate(self, js_format: str = "YYYY-MM-DD"):
     """
@@ -727,6 +732,6 @@ class JsString(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsDate
 
-    js_date = JsDate.JsDate.new("%s" % self.varId, isPyData=False)
+    js_date = JsDate.JsDate.new("%s" % self.varId, is_py_data=False)
     js_date._js = self._js + js_date._js
     return js_date

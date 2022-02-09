@@ -7,18 +7,18 @@ It will rely on the external package cryptography
 import os
 import base64
 import uuid
-from typing import Union, Optional, List
+from typing import Optional
+
+from epyk.core.py import primitives
 
 # Internal key used for the token generation in the URL (during the sharing)
 KEY = 'bAvGUC_7oazo4cIeNBt8t23bPe3Hvq8livGqQxSV-z0='
 
 
 class PyCrypto:
-  class __internal:
-    _props, _context = {}, {}
 
-  def __init__(self, src=None):
-    self.__src = src if src else self.__internal()
+  def __init__(self, src: primitives.PageModel = None):
+    self.page = src
 
   def encrypt(self, data: str, token: Optional[str] = None, salt: Optional[str] = None):
     """
@@ -54,7 +54,7 @@ class PyCrypto:
       encrypted_key = token
     return Fernet(encrypted_key).encrypt(bytes(data.encode('latin1'))).decode('latin1'), salt.decode('latin1')
 
-  def decrypt(self, encrypted: str, token: Optional[str] = None, salt: Optional[str] = None, label: str =''):
+  def decrypt(self, encrypted: str, token: Optional[str] = None, salt: Optional[str] = None, label: str = ''):
     """
     Description:
     ------------
@@ -79,13 +79,9 @@ class PyCrypto:
     from cryptography.hazmat.primitives import hashes
     from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
-    if token is None:
-      # used for the URL generation
+    if token is None:   # used for the URL generation
       return Fernet(KEY).decrypt(encrypted)
 
-    if hasattr(self.__src, 'log'):
-      # In the admin section the report is not defined
-      self.__src.log("SECURITY|%s|%s|password decoding" % (self.__src.run.current_user, label))
     kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=bytes(salt.encode('latin1')), iterations=100000,
                      backend=default_backend())
     if hasattr(token, 'encode'):

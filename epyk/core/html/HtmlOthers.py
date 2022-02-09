@@ -27,11 +27,11 @@ from epyk.core import data
 class Hr(Html.Html):
   name = 'Line delimiter'
 
-  def __init__(self, report: primitives.PageModel, background_color: str, width: tuple, height: tuple, align: str,
+  def __init__(self, page: primitives.PageModel, background_color: str, width: tuple, height: tuple, align: str,
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Hr, self).__init__(report, "", options=options, profile=profile, css_attrs={"height": height, 'width': width,
-                             'border-color': background_color or report.theme.greys[5],
-                             'background-color': background_color or report.theme.greys[5]})
+    super(Hr, self).__init__(page, "", options=options, profile=profile, css_attrs={"height": height, 'width': width,
+                             'border-color': background_color or page.theme.greys[5],
+                             'background-color': background_color or page.theme.greys[5]})
     if align == "center":
       self.style.css.margin = "auto"
 
@@ -68,7 +68,7 @@ class Hr(Html.Html):
     return self._styleObj
 
   def __str__(self):
-    return '<hr %s>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<hr %s>' % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Newline(Html.Html):
@@ -81,11 +81,11 @@ class Newline(Html.Html):
 class Stars(Html.Html):
   name = 'Stars'
 
-  def __init__(self, report, val, label, color, align, best, html_code, helper, options, profile):
+  def __init__(self, page: primitives.PageModel, val, label, color, align, best, html_code, helper, options, profile):
     icon_details = Defaults.get_icon("star")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Stars, self).__init__(report, val, html_code=html_code, profile=profile, options=options)
+    super(Stars, self).__init__(page, val, html_code=html_code, profile=profile, options=options)
     # Add the HTML components
     self._spans = []
     self._jsStyles = {'color': self.page.theme.success[1] if color is None else color}
@@ -115,7 +115,7 @@ class Stars(Html.Html):
     :rtype: JsHtmlStars.Stars
     """
     if self._dom is None:
-      self._dom = JsHtmlStars.Stars(self, report=self.page)
+      self._dom = JsHtmlStars.Stars(self, page=self.page)
     return self._dom
 
   def click(self, js_funcs: Optional[Union[list, str]] = None,
@@ -160,18 +160,18 @@ class Stars(Html.Html):
         else {span.style.color = ''}})'''
 
   def __str__(self):
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class Help(Html.Html):
   name = 'Info'
 
-  def __init__(self, report: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
+  def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
                options: Optional[dict]):
     icon_details = Defaults.get_icon("info")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Help, self).__init__(report, val, css_attrs={"width": width}, profile=profile)
+    super(Help, self).__init__(page, val, css_attrs={"width": width}, profile=profile)
     self.attr['class'].add(icon_details["icon"])
     self.attr['title'] = val
     self._jsStyles = options
@@ -194,23 +194,23 @@ class Help(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
-    return '<i %s></i>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<i %s></i>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Loading(Html.Html):
   name = 'Loading'
 
-  def __init__(self, report: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
     icon_details = Defaults.get_icon("spin")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Loading, self).__init__(report, text, profile=profile)
+    super(Loading, self).__init__(page, text, profile=profile)
     self.color = self.page.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
-    self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.htmlCode, css={"font-size": "%spx" % (self.size+8)},
-                  family=icon_details["icon_family"])
+    self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.htmlCode,
+                  css={"font-size": "%spx" % (self.size+8)}, family=icon_details["icon_family"])
     if options.get('fixed', False):
       self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
       self.css({"position": 'fixed', 'bottom': '0px', 'right': '5px'})
@@ -243,7 +243,7 @@ class Loading(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class HtmlJson(Html.Html):
@@ -251,8 +251,8 @@ class HtmlJson(Html.Html):
   requirements = ('json-formatter-js', )
   _option_cls = OptJsonFormatter.OptionsJsonFmt
 
-  def __init__(self, report, tree_data, width, height, options, profile):
-    super(HtmlJson, self).__init__(report, tree_data, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, tree_data, width, height, options, profile):
+    super(HtmlJson, self).__init__(page, tree_data, profile=profile, options=options,
                                    css_attrs={"height": height, "width": width})
 
   @property
@@ -266,7 +266,7 @@ class HtmlJson(Html.Html):
     :rtype: JsHtmlJson.JsonFormatter
     """
     if self._dom is None:
-      self._dom = JsHtmlJson.JsonFormatter(self, report=self.page)
+      self._dom = JsHtmlJson.JsonFormatter(self, page=self.page)
     return self._dom
 
   @property
@@ -308,20 +308,20 @@ class HtmlJson(Html.Html):
     :rtype: JsJsonFormatter.Json
     """
     if self._js is None:
-      self._js = JsJsonFormatter.Json(self.page, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsJsonFormatter.Json(self.page, js_code=self.jsonId, set_var=False, parent=self)
     return self._js
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Breadcrumb(Html.Html):
   name = 'Breadcrumb'
   _option_cls = OptText.OptBreadCrumb
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
-    super(Breadcrumb, self).__init__(report, [], profile=profile, options=options, html_code=html_code,
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
+    super(Breadcrumb, self).__init__(page, [], profile=profile, options=options, html_code=html_code,
                                      css_attrs={"height": height, "width": width})
     self.style.css.line_height = height[0]
     self.style.css.vertical_align = 'middle'
@@ -330,16 +330,16 @@ class Breadcrumb(Html.Html):
       for rec in records:
         if not hasattr(rec, 'options'):
           if isinstance(rec, dict):
-            records = report.ui.div(
-              rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else report.ui.link(
+            records = page.ui.div(
+              rec['text'], width=("auto", '')) if options['selected'] == rec['text'] else page.ui.link(
               rec['text'], rec['url'])
             records.style.css.vertical_align = 'middle'
           else:
-            records = report.ui.div(rec, width=("auto", '')) if options['selected'] == rec else report.ui.link(rec)
+            records = page.ui.div(rec, width=("auto", '')) if options['selected'] == rec else page.ui.link(rec)
             records.style.css.vertical_align = 'middle'
           records.style.css.display = 'inline-block'
         self.add(records)
-    self.style.background = report.theme.greys[1]
+    self.style.background = page.theme.greys[1]
 
   @property
   def options(self) -> OptText.OptBreadCrumb:
@@ -388,7 +388,7 @@ class Breadcrumb(Html.Html):
 
   def __str__(self):
     rows = [component.html() if hasattr(component, 'html') else str(component) for component in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()),
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()),
                                  self.options.delimiter.join(rows))
 
 
@@ -396,9 +396,9 @@ class Legend(Html.Html):
   name = 'Legend'
   _option_cls = OptJsonFormatter.OptionsLegend
 
-  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
-    super(Legend, self).__init__(report, record, options=options,
+    super(Legend, self).__init__(page, record, options=options,
                                  css_attrs={"width": width, "height": height}, profile=profile)
 
   @property
@@ -421,36 +421,36 @@ class Legend(Html.Html):
     for val in self.val:
       val["css_inline"] = css_inline
       divs.append("<div><div style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(divs))
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(divs))
 
 
 class Slides(Html.Html):
   name = 'Slides'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
     icon_details_right = Defaults.get_icon("arrow_right")
     if icon_details_right['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details_right['icon_family'],)
     icon_details_left = Defaults.get_icon("arrow_left")
-    super(Slides, self).__init__(report, [], options=options,
+    super(Slides, self).__init__(page, [], options=options,
                                  css_attrs={"width": width, 'height': height}, profile=profile)
     self.attr['data-current_slide'] = start
     self.title = self.page.ui.title("")
-    self.title.style.css.border_bottom = "1px solid %s" % report.theme.colors[7]
-    self.title.style.css.color = report.theme.colors[7]
+    self.title.style.css.border_bottom = "1px solid %s" % page.theme.colors[7]
+    self.title.style.css.color = page.theme.colors[7]
     self.title.style.css.margin = 0
     self.title.options.managed = False
     if 'contents' in options:
-      del report._content_table
+      del page._content_table
 
       self._content_table = options['contents']
       self._content_table.style.css.z_index = 100
     if 'timer' in options:
       self.page.ui.calendars.timer(options['timer']).css(
         {"position": 'fixed', "font-size": '15px', 'top': '8px', "padding": '8px', "right": '15px', 'width': 'none',
-         'color': report.theme.greys[5]})
+         'color': page.theme.greys[5]})
     self.next = self.page.ui.icon(icon_details_right["icon"]).css(
       {"position": 'fixed', "font-size": '35px', 'bottom': '0',  "padding": '8px', "right": '10px', 'width': 'none'})
     self.previous = self.page.ui.icon(icon_details_left["icon"]).css(
@@ -464,45 +464,45 @@ class Slides(Html.Html):
       self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
         data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(1), 'slide_index'),
 
-      self.js.if_(report.js.object('slide_index') <= self.dom.attr('data-last_slide'), [
+      self.js.if_(page.js.object('slide_index') <= self.dom.attr('data-last_slide'), [
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
-        self.dom.attr("data-current_slide", report.js.object('slide_index')),
-        self.page.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+          self.htmlCode)[page.js.object('slide_index')].attr('data-slide_title')),
+        self.dom.attr("data-current_slide", page.js.object('slide_index')),
+        self.page.js.getElementsByName(self.htmlCode)[page.js.object('slide_index')].show(display_value='flex'),
         self.page.js.getElementById(
-          "%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
+          "%s_count" % self.htmlCode).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[report.js.object('slide_index').add(-1)].attr('data-slide_title')),
+          self.htmlCode)[page.js.object('slide_index').add(-1)].attr('data-slide_title')),
         self.page.js.getElementsByName(
-          self.htmlCode)[report.js.object('slide_index').add(-1)].show(display_value='flex')]),
+          self.htmlCode)[page.js.object('slide_index').add(-1)].show(display_value='flex')]),
 
-      self.js.if_(report.js.object('slide_index') > 0, [self.previous.dom.show()]),
-      self.js.if_(report.js.object('slide_index') == self.dom.attr('data-last_slide'), [self.next.dom.hide()])
+      self.js.if_(page.js.object('slide_index') > 0, [self.previous.dom.show()]),
+      self.js.if_(page.js.object('slide_index') == self.dom.attr('data-last_slide'), [self.next.dom.hide()])
     ])
 
     self.previous.click([
       self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
       data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(-1), 'slide_index'),
 
-      self.js.if_(report.js.object('slide_index') >= 0, [
+      self.js.if_(page.js.object('slide_index') >= 0, [
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[report.js.object('slide_index')].attr('data-slide_title')),
-        self.dom.attr("data-current_slide", report.js.object('slide_index')),
-        self.page.js.getElementsByName(self.htmlCode)[report.js.object('slide_index')].show(display_value='flex'),
+          self.htmlCode)[page.js.object('slide_index')].attr('data-slide_title')),
+        self.dom.attr("data-current_slide", page.js.object('slide_index')),
+        self.page.js.getElementsByName(self.htmlCode)[page.js.object('slide_index')].show(display_value='flex'),
         self.page.js.getElementById(
-          "%s_count" % self.htmlCode).innerHTML(report.js.object('slide_index').toString().parseFloat().add(1)),
+          "%s_count" % self.htmlCode).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
         self.title.build(self.page.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
         self.page.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
 
-      self.js.if_(report.js.object('slide_index') == 0, [self.previous.dom.hide()]),
-      self.js.if_(report.js.object('slide_index') < self.dom.attr('data-last_slide'), [self.next.dom.show()])
+      self.js.if_(page.js.object('slide_index') == 0, [self.previous.dom.hide()]),
+      self.js.if_(page.js.object('slide_index') < self.dom.attr('data-last_slide'), [self.next.dom.show()])
     ])
 
     # Add the keyboard shortcut
-    report.body.keydown.right([self.next.dom.events.trigger("click")])
-    report.body.keydown.left([self.previous.dom.events.trigger("click")])
+    page.body.keydown.right([self.next.dom.events.trigger("click")])
+    page.body.keydown.left([self.previous.dom.events.trigger("click")])
 
     self.style.css.padding = "0 20px 20px 20px"
 
@@ -531,7 +531,7 @@ class Slides(Html.Html):
     :rtype: JsHtmlStars.Slides
     """
     if self._dom is None:
-      self._dom = JsHtmlStars.Slides(self, report=self.page)
+      self._dom = JsHtmlStars.Slides(self, page=self.page)
     return self._dom
 
   def add(self, component: Union[Html.Html, str]):
@@ -609,7 +609,7 @@ class Slides(Html.Html):
         s.style.css.display = 'flex'
       comps.append(s.html())
     return '<div %s>%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.title.html(), "".join(comps))
+      self.get_attrs(css_class_names=self.style.get_classes()), self.title.html(), "".join(comps))
 
 
 class HtmlQRCode(Html.Html):
@@ -617,9 +617,9 @@ class HtmlQRCode(Html.Html):
   requirements = ('qrcodejs', )
   _option_cls = OptQrCode.OptionsQrCode
 
-  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    super(HtmlQRCode, self).__init__(report, record, profile=profile, options=options,
+    super(HtmlQRCode, self).__init__(page, record, profile=profile, options=options,
                                      css_attrs={"height": height, "width": width})
     self.options.width = width[0]
     self.options.height = height[0]
@@ -663,25 +663,25 @@ class HtmlQRCode(Html.Html):
     :rtype: JsQrCode.QrCode
     """
     if self._js is None:
-      self._js = JsQrCode.QrCode(self.page, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsQrCode.QrCode(self.page, js_code=self.jsonId, set_var=False, parent=self, page=self.page)
     return self._js
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class HtmlCaptcha(Html.Html):
   name = 'Google Catch'
   requirements = ('google-captcha', )
 
-  def __init__(self, report: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    super(HtmlCaptcha, self).__init__(report, record, profile=profile, options=options,
+    super(HtmlCaptcha, self).__init__(page, record, profile=profile, options=options,
                                       css_attrs={"height": height, "width": width})
     self.attr["data-callback"] = "onSubmit"
     self.attr["data-action"] = "submit"
     self.style.add_classes.external("g-recaptcha")
 
   def __str__(self):
-    return '<button %s>%s</button>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
+    return '<button %s>%s</button>' % (self.get_attrs(css_class_names=self.style.get_classes()), self._vals)

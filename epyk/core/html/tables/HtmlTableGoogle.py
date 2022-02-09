@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
 
@@ -10,9 +10,9 @@ class Table(Html.Html):
   name = 'Google Table'
   requirements = ('google-tables', )
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, records, html_code=html_code, profile=profile,
+    super(Table, self).__init__(page, records, html_code=html_code, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self.__options = options
 
@@ -50,4 +50,4 @@ class Table(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

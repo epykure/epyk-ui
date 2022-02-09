@@ -9,7 +9,7 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedFrappe(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
+  def x_format(self, js_funcs, profile=None):
     pass
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -57,7 +57,7 @@ class OptionsChartSharedFrappe(OptChart.OptionsChartShared):
     """
     pass
 
-  def y_format(self, jsFncs, profile=None):
+  def y_format(self, js_funcs, profile=None):
     pass
 
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -72,9 +72,9 @@ class OptionsChartSharedFrappe(OptChart.OptionsChartShared):
 
 class OptionFormatters(Options):
 
-  def __init__(self, options, name):
+  def __init__(self, options: Options, name: str):
     self.__option = options
-    self._report = options._report
+    self.component = options.component
     self.__name = name
 
   @packageImport("accounting")
@@ -114,10 +114,10 @@ class OptionFormatters(Options):
 
 class FrappeTooltipOptions(Options):
 
-  def formatTooltipX(self, jsFncs, profile=None):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+  def formatTooltipX(self, js_funcs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def formatTooltipY(self, jsFncs, profile=None):
+  def formatTooltipY(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -128,10 +128,10 @@ class FrappeTooltipOptions(Options):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def x_formatters(self):
@@ -435,9 +435,9 @@ class BarOptions(Options):
     return self._config_get()
 
   @spaceRatio.setter
-  def spaceRatio(self, num):
+  def spaceRatio(self, num: float):
     if num < 0 or num > 1:
-      raise Exception("Ratio must be between 0 and 1")
+      raise ValueError("Ratio must be between 0 and 1")
 
     self._config(num)
 

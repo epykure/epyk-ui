@@ -2,14 +2,18 @@
 Module dedicated to perform the data transformation for the D3 charts
 """
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 
 
 class JsChartD3Links:
-  def __init__(self, data, js_src, data_schema=None, profile=False):
+  def __init__(self, data, js_src, data_schema=None, profile: Optional[Union[bool, dict]]= False):
     self._js_src, self._data_schema, self.profile, self._data = js_src, data_schema, profile, data
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
+  def __register_records_fnc(self, func_name: str, func_def: Union[str, primitives.JsDataModel],
+                             func_pmts: list = None, profile: Optional[Union[bool, dict]] = False):
     """
     Description:
     ------------
@@ -17,18 +21,18 @@ class JsChartD3Links:
 
     Attributes:
     ----------
-    :param fnc_name: A String with the Javascript function name to be defined
-    :param fnc_def: A String with the Javascript function content
-    :param fnc_pmts: A list of parameters
-    :param profile: A boolean flag to activate the framework profiling
+    :param str func_name: A String with the Javascript function name to be defined.
+    :param Union[str, primitives.JsDataModel] func_def: A String with the Javascript function content.
+    :param list func_pmts: A list of parameters.
+    :param Optional[Union[bool, dict]] profile: A boolean flag to activate the framework profiling.
     """
-    fnc_pmts = ["data"] + (fnc_pmts or [])
-    if not fnc_name in self._js_src.get('js', {}).get('functions', {}):
+    fnc_pmts = ["data"] + (func_pmts or [])
+    if func_name not in self._js_src.get('js', {}).get('functions', {}):
       if profile:
-        content = "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def)
+        content = "var result = []; %s;return result" % JsUtils.cleanFncs(func_def)
       else:
-        content = "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def)
-      self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {'content': content, 'pmt': fnc_pmts}
+        content = "var result = []; %s;return result" % JsUtils.cleanFncs(func_def)
+      self._js_src.setdefault('js', {}).setdefault('functions', {})[func_name] = {'content': content, 'pmt': fnc_pmts}
 
   def line(self):
     pass

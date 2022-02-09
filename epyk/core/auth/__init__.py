@@ -2,8 +2,8 @@ from epyk.core.js.packages import packageImport
 
 class Auth(object):
 
-  def __init__(self, report):
-    self._report = report
+  def __init__(self, page):
+    self.page = page
 
   @packageImport('google-platform')
   def google_sign_in(self, client_id, scopes=['profile', 'email'], insert_button=True, debug=False):
@@ -22,22 +22,22 @@ class Auth(object):
     :return: Epyk Obj
     """
 
-    headers = self._report.headers
+    headers = self.page.headers
     headers.meta.custom('google-signin-scope', ' '.join(scopes))
     headers.meta.custom('google-signin-client_id', client_id)
-    g_button = self._report.ui.div()
+    g_button = self.page.ui.div()
     g_button.style.no_class()
     g_button.style.clear_style()
     g_button.style.add_classes.external('g-signin2')
     g_button.attr.update({'data-onsuccess': 'onSignIn'})
 
-    fnc_list = [self._report.js.object('profile', '''profile = googleUser.getBasicProfile()'''),
-                self._report.js.object('id_token', '''id_token = googleUser.getAuthResponse().id_token''')]
+    fnc_list = [self.page.js.object('profile', '''profile = googleUser.getBasicProfile()'''),
+                self.page.js.object('id_token', '''id_token = googleUser.getAuthResponse().id_token''')]
     if debug:
-        fnc_list.append(self._report.js.console.log(self._report.js.getVar('id_token', 'object'), skip_data_convert=True))
-    fnc_list.append(self._report.js.return_(self._report.js.getVar('id_token', 'object')))
+        fnc_list.append(self.page.js.console.log(self.page.js.getVar('id_token', 'object'), skip_data_convert=True))
+    fnc_list.append(self.page.js.return_(self.page.js.getVar('id_token', 'object')))
     g_button.options.managed = insert_button
-    self._report.js.registerFunction('onSignIn', fnc_list, ['googleUser'])
+    self.page.js.registerFunction('onSignIn', fnc_list, ['googleUser'])
     return g_button
 
   def facebook_sign_in(self, client_id, scopes=['public_profile', 'email'], insert_button=True, graphVersion='v7.0', type='login_with', debug=False):
@@ -53,7 +53,7 @@ class Auth(object):
     accepted_types = ('login_with', 'continue_with')
 
     if type not in accepted_types:
-      raise Exception('Specified type: %s not in accepted values. Accepted values are as follows: %s' % (type, ', '.join(accepted_types)))
+      raise ValueError('Specified type: %s not in accepted values. Accepted values are as follows: %s' % (type, ', '.join(accepted_types)))
 
     getFbSdk = '''(function(d, s, id) {
                         var js, fjs = d.getElementsByTagName(s)[0];
@@ -84,8 +84,8 @@ class Auth(object):
                     });
                 };''' % (client_id, graphVersion)
 
-    self._report.js.onReady([getFbSdk, returnFbResponse, jsCheckLogin, jsInitFnc])
-    fb_button = self._report.ui.div()
+    self.page.js.onReady([getFbSdk, returnFbResponse, jsCheckLogin, jsInitFnc])
+    fb_button = self.page.ui.div()
     fb_button.style.no_class()
     fb_button.style.clear_style()
     fb_button.style.add_classes.external('fb-login-button')

@@ -8,7 +8,7 @@ class OptionsPanelPoints(Options):
 
   @property
   def background_color(self):
-    return self.get(self.component.page.theme.success[1])
+    return self.get(self.page.theme.success[1])
 
   @background_color.setter
   def background_color(self, val):
@@ -44,7 +44,7 @@ class OptionPanelSliding(Options):
     return self.get(True)
 
   @expanded.setter
-  def expanded(self, flag):
+  def expanded(self, flag: bool):
     self.set(flag)
 
   @property
@@ -63,7 +63,7 @@ class OptionPanelSliding(Options):
     return self.get("fas fa-caret-down")
 
   @icon_expanded.setter
-  def icon_expanded(self, icon):
+  def icon_expanded(self, icon: str):
     self.set(icon)
 
   @property
@@ -82,7 +82,7 @@ class OptionPanelSliding(Options):
     return self.get("fas fa-caret-up")
 
   @icon_closed.setter
-  def icon_closed(self, icon):
+  def icon_closed(self, icon: str):
     self.set(icon)
 
   @property
@@ -95,7 +95,7 @@ class OptionPanelSliding(Options):
     return self.get("left")
 
   @icon_position.setter
-  def icon_position(self, value):
+  def icon_position(self, value: str):
     self.set(value)
 
   @property
@@ -103,7 +103,7 @@ class OptionPanelSliding(Options):
     return self.get("title")
 
   @click_type.setter
-  def click_type(self, value):
+  def click_type(self, value: str):
     self.set(value)
 
 
@@ -117,10 +117,10 @@ class OptionPanelTabs(Options):
     Set the with in pixel for the tabs.
     This will be applied to all the tabs in the container. It is possible to override the values for each tab.
     """
-    return self.get(dflt=100)
+    return self.get(dfl=100)
 
   @width.setter
-  def width(self, value):
+  def width(self, value: int):
     self.set(value)
 
   @property
@@ -131,12 +131,12 @@ class OptionPanelTabs(Options):
     The default CSS style for the tabs.
     This must be changed before adding components
     """
-    dflt = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-            "border-bottom": "2px solid %s" % self.component.page.theme.greys[0]}
-    return self.get(dflt)
+    dfl = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
+           "border-bottom": "2px solid %s" % self.component.page.theme.greys[0]}
+    return self.get(dfl)
 
   @css_tab.setter
-  def css_tab(self, attrs):
+  def css_tab(self, attrs: dict):
     self.set(attrs)
 
   @property
@@ -150,7 +150,7 @@ class OptionPanelTabs(Options):
     return self.get({"border-bottom": "2px solid %s" % self.component.page.theme.colors[-1]})
 
   @css_tab_clicked.setter
-  def css_tab_clicked(self, attrs):
+  def css_tab_clicked(self, attrs: dict):
     self.set(attrs)
 
   def tab_style(self, name, css_style=None):
@@ -245,7 +245,7 @@ class OptionsDiv(Options):
     return self.get(False)
 
   @inline.setter
-  def inline(self, flag):
+  def inline(self, flag: bool):
     self.set(flag)
 
 
@@ -260,7 +260,7 @@ class OptionDrawer(Options):
     return self.get("left")
 
   @side.setter
-  def side(self, value):
+  def side(self, value: str):
     self.set(value)
 
   @property
@@ -272,10 +272,10 @@ class OptionDrawer(Options):
     return self.get("200px")
 
   @width.setter
-  def width(self, integer):
-    if isinstance(integer, int):
-      integer = "%spx" % integer
-    self.set(integer)
+  def width(self, num: int):
+    if isinstance(num, int):
+      num = "%spx" % num
+    self.set(num)
 
 
 class OptionsStepper(Options):
@@ -371,8 +371,8 @@ class OptionsStepper(Options):
     return self._config_get(False)
 
   @circle_factor.setter
-  def circle_factor(self, bool):
-    self._config(bool)
+  def circle_factor(self, flag: bool):
+    self._config(flag)
 
   @property
   def width(self):
@@ -509,7 +509,7 @@ class OptionGrid(Options):
     return self.get(True)
 
   @autoSize.setter
-  def autoSize(self, flag):
+  def autoSize(self, flag: bool):
     self.set(flag)
 
   @property
@@ -521,7 +521,7 @@ class OptionGrid(Options):
     return self.get(True)
 
   @responsive.setter
-  def responsive(self, flag):
+  def responsive(self, flag: bool):
     self.set(flag)
 
   @property
@@ -547,7 +547,7 @@ class OptionGrid(Options):
     return self.get(False)
 
   @noGutters.setter
-  def noGutters(self, flag):
+  def noGutters(self, flag: bool):
     self.set(flag)
 
 
@@ -565,7 +565,7 @@ class OptionPopup(Options):
     return self.get(True)
 
   @background.setter
-  def background(self, flag):
+  def background(self, flag: bool):
     self.set(flag)
 
   @property
@@ -579,7 +579,7 @@ class OptionPopup(Options):
     return self.get(False)
 
   @draggable.setter
-  def draggable(self, flag):
+  def draggable(self, flag: bool):
     if flag:
       self.background = False
     self.set(flag)
@@ -593,9 +593,9 @@ class OptionPopup(Options):
     return self.get(False)
 
   @closure.setter
-  def closure(self, icon):
+  def closure(self, icon: str):
     if icon:
-      self._report.close = self.component.page.ui.icon(icon)
+      self.component.close = self.page.ui.icon(icon)
     self.set(icon)
 
   @property
@@ -607,7 +607,7 @@ class OptionPopup(Options):
     return self.get(100)
 
   @top.setter
-  def top(self, value):
+  def top(self, value: int):
     self.set(value)
 
   @property
@@ -619,9 +619,9 @@ class OptionPopup(Options):
     return self.get(True)
 
   @escape.setter
-  def escape(self, flag):
+  def escape(self, flag: bool):
     if flag:
-      self._report.keyup.escape(self._report.dom.hide().r, source_event="document")
+      self.component.keyup.escape(self.component.dom.hide().r, source_event="document")
     self.set(flag)
 
   @property
@@ -649,5 +649,5 @@ class OptionPopup(Options):
     return self.get(800)
 
   @z_index.setter
-  def z_index(self, value):
+  def z_index(self, value: int):
     self.set(value)

@@ -16,11 +16,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("all", False)
+    return self.component.attr.get("all", False)
 
   @all.setter
-  def all(self, flag):
-    self._report.attr["all"] = flag
+  def all(self, flag: bool):
+    self.component.attr["all"] = flag
 
   @property
   def empty(self):
@@ -33,11 +33,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("empty", False)
+    return self.component.attr.get("empty", False)
 
   @empty.setter
-  def empty(self, flag):
-    self._report.attr["empty"] = flag
+  def empty(self, flag: bool):
+    self.component.attr["empty"] = flag
 
   @property
   def disabled(self):
@@ -49,11 +49,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("disabled", False)
+    return self.component.attr.get("disabled", False)
 
   @disabled.setter
-  def disabled(self, flag):
-    self._report.attr["disabled"] = flag
+  def disabled(self, flag: bool):
+    self.component.attr["disabled"] = flag
 
   @property
   def drop_up(self):
@@ -68,11 +68,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-dropup-auto", False)
+    return self.component.attr.get("data-dropup-auto", False)
 
   @drop_up.setter
-  def drop_up(self, flag):
-    self._report.attr["data-dropup-auto"] = flag
+  def drop_up(self, flag: bool):
+    self.component.attr["data-dropup-auto"] = flag
 
   @property
   def header(self):
@@ -85,11 +85,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-header")
+    return self.component.attr.get("data-header")
 
   @header.setter
   def header(self, num):
-    self._report.attr["data-header"] = num
+    self.component.attr["data-header"] = num
 
   @property
   def live_search(self):
@@ -102,11 +102,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-live-search", False)
+    return self.component.attr.get("data-live-search", False)
 
   @live_search.setter
-  def live_search(self, flag):
-    self._report.attr["data-live-search"] = flag
+  def live_search(self, flag: bool):
+    self.component.attr["data-live-search"] = flag
 
   @property
   def max_options(self):
@@ -120,11 +120,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-max-options", 1)
+    return self.component.attr.get("data-max-options", 1)
 
   @max_options.setter
-  def max_options(self, num):
-    self._report.attr["data-max-options"] = num
+  def max_options(self, num: int):
+    self.component.attr["data-max-options"] = num
 
   @property
   def placeholder(self):
@@ -138,11 +138,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("title", "")
+    return self.component.attr.get("title", "")
 
   @placeholder.setter
-  def placeholder(self, value):
-    self._report.attr["title"] = value
+  def placeholder(self, value: str):
+    self.component.attr["title"] = value
 
   @property
   def selected(self):
@@ -168,11 +168,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-actions-box", False)
+    return self.component.attr.get("data-actions-box", False)
 
   @select_all.setter
-  def select_all(self, flag):
-    self._report.attr["data-actions-box"] = flag
+  def select_all(self, flag: bool):
+    self.component.attr["data-actions-box"] = flag
 
   @property
   def selected_text_format(self):
@@ -185,11 +185,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("ata-selected-text-format", "")
+    return self.component.attr.get("ata-selected-text-format", "")
 
   @selected_text_format.setter
-  def selected_text_format(self, value):
-    self._report.attr["ata-selected-text-format"] = value
+  def selected_text_format(self, value: str):
+    self.component.attr["ata-selected-text-format"] = value
 
   @property
   def show_tick(self):
@@ -202,11 +202,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("show-tick", True)
+    return self.component.attr.get("show-tick", True)
 
   @show_tick.setter
-  def show_tick(self, flag):
-    self._report.attr["show-tick"] = flag
+  def show_tick(self, flag: bool):
+    self.component.attr["show-tick"] = flag
 
   @property
   def size(self):
@@ -219,11 +219,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-size")
+    return self.component.attr.get("data-size")
 
   @size.setter
-  def size(self, num):
-    self._report.attr["data-size"] = num
+  def size(self, num: int):
+    self.component.attr["data-size"] = num
 
   @property
   def style(self):
@@ -235,11 +235,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("style", "")
+    return self.component.attr.get("style", "")
 
   @style.setter
   def style(self, value):
-    self._report.attr["style"] = value
+    self.component.attr["style"] = value
 
   @property
   def title(self):
@@ -253,11 +253,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("title", "")
+    return self.component.attr.get("title", "")
 
   @title.setter
-  def title(self, value):
-    self._report.attr["title"] = value
+  def title(self, value: str):
+    self.component.attr["title"] = value
 
   @property
   def width(self):
@@ -269,11 +269,11 @@ class OptionsSelect(Options):
 
       https://developer.snapappointments.com/bootstrap-select/examples/
     """
-    return self._report.attr.get("data-width")
+    return self.component.attr.get("data-width")
 
   @width.setter
-  def width(self, value):
-    self._report.attr["data-width"] = value
+  def width(self, value: int):
+    self.component.attr["data-width"] = value
 
 
 class OptionsSelectJs(OptionsSelect):
@@ -294,7 +294,7 @@ class OptionsSelectJs(OptionsSelect):
     return self.get([])
 
   @config_default.setter
-  def config_default(self, flag):
+  def config_default(self, flag: bool):
     self.set(flag)
 
   @property
@@ -311,7 +311,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @actionsBox.setter
-  def actionsBox(self, flag):
+  def actionsBox(self, flag: bool):
     self._config(flag)
 
   @property
@@ -325,7 +325,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(0)
 
   @auto_select.setter
-  def auto_select(self, index):
+  def auto_select(self, index: int):
     self._config(index)
 
   @property
@@ -377,7 +377,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @dropdownAlignRight.setter
-  def dropdownAlignRight(self, flag):
+  def dropdownAlignRight(self, flag: bool):
     self._config(flag)
 
   @property
@@ -396,7 +396,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @dropupAuto.setter
-  def dropupAuto(self, flag):
+  def dropupAuto(self, flag: bool):
     self._config(flag)
 
   @property
@@ -413,7 +413,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @header.setter
-  def header(self, flag):
+  def header(self, flag: bool):
     self._config(flag)
 
   @property
@@ -430,7 +430,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @hideDisabled.setter
-  def hideDisabled(self, flag):
+  def hideDisabled(self, flag: bool):
     self._config(flag)
 
   @property
@@ -449,7 +449,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @iconBase.setter
-  def iconBase(self, flag):
+  def iconBase(self, flag: bool):
     self._config(flag)
 
   @property
@@ -466,7 +466,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @liveSearch.setter
-  def liveSearch(self, flag):
+  def liveSearch(self, flag: bool):
     self._config(flag)
 
   @property
@@ -555,8 +555,8 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @mobile.setter
-  def mobile(self, bool):
-    self._config(bool)
+  def mobile(self, flag: bool):
+    self._config(flag)
 
   @property
   def noneSelectedText(self):
@@ -642,7 +642,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @selectOnTab.setter
-  def selectOnTab(self, flag):
+  def selectOnTab(self, flag: bool):
     self._config(flag)
 
   @property
@@ -660,7 +660,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showContent.setter
-  def showContent(self, flag):
+  def showContent(self, flag: bool):
     self._config(flag)
 
   @property
@@ -677,7 +677,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showIcon.setter
-  def showIcon(self, flag):
+  def showIcon(self, flag: bool):
     self._config(flag)
 
   @property
@@ -694,7 +694,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showSubtext.setter
-  def showSubtext(self, flag):
+  def showSubtext(self, flag: bool):
     self._config(flag)
 
   @property
@@ -711,7 +711,7 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @showTick.setter
-  def showTick(self, flag):
+  def showTick(self, flag: bool):
     self._config(flag)
 
   @property
@@ -870,5 +870,5 @@ class OptionsSelectJs(OptionsSelect):
     return self._config_get(False)
 
   @sanitize.setter
-  def sanitize(self, flag):
+  def sanitize(self, flag: bool):
     self._config(flag)

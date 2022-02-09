@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
@@ -8,8 +11,8 @@ from epyk.core.js import JsUtils
 
 class JsFileData:
 
-  def __init__(self, varName):
-    self.varName = varName
+  def __init__(self, js_code: str):
+    self.varName = js_code
 
   @property
   def raw(self):
@@ -21,7 +24,7 @@ class JsFileData:
     return JsObjects.JsObjects.get(self.varName)
 
   @property
-  def headers(self):
+  def headers(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -30,7 +33,7 @@ class JsFileData:
     return JsObjects.JsArray.JsArray.get(self.varName)[0].keys()
 
   @property
-  def records(self):
+  def records(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -38,14 +41,14 @@ class JsFileData:
     """
     return JsObjects.JsArray.JsArray.get(self.varName)
 
-  def vector(self, name):
+  def vector(self, name: str) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name:
+    :param str name:
     """
     name = JsUtils.jsConvertData(name, None)
     return JsObjects.JsArray.JsArray.get('''
@@ -55,14 +58,15 @@ class JsFileData:
       })(%s, %s)
       ''' % (self.varName, name))
 
-  def values(self, name, with_count=False):
+  def values(self, name: Union[str, primitives.JsDataModel], with_count: bool = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name:
+    :param Union[str, primitives.JsDataModel] name:
+    :param bool with_count:
     """
     name = JsUtils.jsConvertData(name, None)
     with_count = JsUtils.jsConvertData(with_count, None)
@@ -76,14 +80,14 @@ class JsFileData:
       })(%s, %s)
       ''' % (with_count, self.varName, name))
 
-  def series(self, names):
+  def series(self, names: Union[str, primitives.JsDataModel]) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param names:
+    :param Union[str, primitives.JsDataModel] names:
     """
     names = JsUtils.jsConvertData(names, None)
     return JsObjects.JsArray.JsArray.get('''
@@ -98,7 +102,7 @@ class JsFileData:
 class JsHtmlDropFiles(JsHtml.JsHtml):
 
   @property
-  def content(self):
+  def content(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -106,44 +110,46 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     """
     return JsObjects.JsArray.JsArray.get("(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {"htmlCode": self._src.htmlCode})
 
-  def store(self, delimiter=None, format=None, varName=None):
+  def store(self, delimiter: str = None, data_type: str = None, js_code: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param delimiter: String. Optional. The file delimiter.
-    :param format: String. Optional.
-    :param varName: String. Optional.
+    :param str delimiter: Optional. The file delimiter.
+    :param str data_type: Optional. The data type like json for example.
+    :param Union[str, primitives.JsDataModel] js_code: Optional.
     """
     from epyk.core.data import events
 
-    delimiter = delimiter or self._src.options.delimiter
-    format = format or self._src.options.format
-    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
-    if format.endswith("json"):
+    delimiter = delimiter or self.component.options.delimiter
+    data_type = data_type or self.component.options.format
+    js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+    if data_type.endswith("json"):
       value = events.data.jsonParse()
     else:
       value = events.data.fileToDict(delimiter)
-    return JsObjects.JsVoid("window[%s] = %s" % (varName, JsUtils.jsConvertData(value, None)))
+    return JsObjects.JsVoid("window[%s] = %s" % (js_code, JsUtils.jsConvertData(value, None)))
 
-  def load(self, jsData, varName=None):
-    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
-    return JsObjects.JsVoid("window[%s] = %s" % (varName, JsUtils.jsConvertData(jsData, None)))
+  def load(self, data: Union[str, primitives.JsDataModel], js_code: Union[str, primitives.JsDataModel] = None):
+    js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+    return JsObjects.JsVoid("window[%s] = %s" % (js_code, JsUtils.jsConvertData(data, None)))
 
-  def get_data(self, varName=None):
-    varName = JsUtils.jsConvertData(varName or '%s_data' % self._src.htmlCode, None)
-    return JsObjects.JsObjects.get("window[%s]" % varName)
+  def get_data(self, js_code: Union[str, primitives.JsDataModel] = None):
+    js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+    return JsObjects.JsObjects.get("window[%s]" % js_code)
 
   @property
   def code(self):
     """
+    Description:
+    ------------
     The default data reference.
     """
-    return "%s_data" % self._src.htmlCode
+    return "%s_data" % self.component.htmlCode
 
   @property
   def data(self):
-    return JsFileData("window['%s_data']" % self._src.htmlCode)
+    return JsFileData("window['%s_data']" % self.component.htmlCode)
 

@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 
 from epyk.core.js.primitives import JsObjects
@@ -26,7 +29,7 @@ class Radio(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.input.dom.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.checked" % self.component.input.dom.varName)
 
   @property
   def selected(self):
@@ -35,7 +38,7 @@ class Radio(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self._src.input.dom.getAttribute('name'))
+    return JsHtml.ContentFormatters(self.page, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self._src.input.dom.getAttribute('name'))
 
 
 class Check(JsHtml.JsHtmlRich):
@@ -47,8 +50,8 @@ class Check(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s}}
-        ''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name')))
+    return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), 
+name: %s}}''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name')))
 
   @property
   def content(self):
@@ -57,16 +60,16 @@ class Check(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.checked" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.checked" % self.varName)
 
 
 class InputText:
 
-  def __init__(self, component, page):
-    self._component = component
-    self._page = page
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel):
+    self.component = component
+    self.page = page
 
-  def isEmpty(self, jsFncs):
+  def isEmpty(self, js_funcs: Union[str, list]):
     """
     Description:
     ------------
@@ -74,13 +77,13 @@ class InputText:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param Union[str, list] js_funcs: Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return JsIf.JsIf('%s === ""' % self._component.dom.content.toStr(), jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf('%s === ""' % self.component.dom.content.toStr(), js_funcs)
 
-  def hasLength(self, n, jsFncs):
+  def hasLength(self, n: int, js_funcs: Union[str, list]):
     """
     Description:
     ------------
@@ -88,14 +91,14 @@ class InputText:
 
     Attributes:
     ----------
-    :param n: Integer. The minimum length of the input content.
-    :param jsFncs: List | String. Javascript functions.
+    :param int n: The minimum length of the input content.
+    :param Union[str, list] js_funcs: Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return JsIf.JsIf('%s.length >= %s' % (self._component.dom.content.toStr(), n), jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf('%s.length >= %s' % (self.component.dom.content.toStr(), n), js_funcs)
 
-  def if_(self, jsRule, jsFncs):
+  def if_(self, rule: str, js_funcs: Union[str, list]):
     """
     Description:
     ------------
@@ -103,12 +106,12 @@ class InputText:
 
     Attributes:
     ----------
-    :param jsRule: String.
-    :param jsFncs: List | String. Javascript functions.
+    :param str rule:
+    :param Union[str, list] js_funcs: Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return JsIf.JsIf(jsRule, jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf(rule, js_funcs)
 
 
 class JsHtmlFields(JsHtml.JsHtmlRich):
@@ -120,7 +123,7 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return self._src.input.dom.val
+    return self.component.input.dom.val
 
   @property
   def content(self):
@@ -129,7 +132,7 @@ class JsHtmlFields(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return self._src.input.dom.content
+    return self.component.input.dom.content
 
   def empty(self):
     """
@@ -149,4 +152,4 @@ class Textarea(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.value" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)

@@ -9,8 +9,8 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
-    self.component.options.xAxes.ticks.callback(jsFncs, profile)
+  def x_format(self, js_funcs, profile=None):
+    self.component.options.xAxes.ticks.callback(js_funcs, profile)
     return self
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -42,8 +42,8 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     self.component.options.scales.xAxes.ticks.maxTicksLimit = num
     return self
 
-  def y_format(self, jsFncs, profile=None):
-    self.component.options.yAxes.ticks.callback(jsFncs, profile)
+  def y_format(self, js_funcs, profile=None):
+    self.component.options.yAxes.ticks.callback(js_funcs, profile)
     return self
 
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -301,7 +301,7 @@ class OptionAxesTicks(Options):
       digit, thousand_sep), name="callback", js_type=True)
     return self
 
-  def callback(self, jsFncs, profile=None):
+  def callback(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -317,7 +317,7 @@ class OptionAxesTicks(Options):
     self._config("function(val, index) {return (function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().split('T')[0]}", js_type=True)
     return self
 
-  def userCallback(self, jsFncs, profile=None):
+  def userCallback(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -1021,18 +1021,18 @@ class OptionScaleGeo(Options):
   def projectionScale(self, num):
     self._config(num)
 
-  def set_projection(self, jsFncs, profile=None):
+  def set_projection(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
     self._config(
-      "function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile),
+      "function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
       name="projection", js_type=True)
 
 

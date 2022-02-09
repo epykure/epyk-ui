@@ -56,11 +56,13 @@ class JsProperties:
     """
     self._context["text"].append(text)
 
-  def add_builders(self, builder_def: str):
+  def add_builders(self, builder_def: str, func_dsc: str = None):
     """
     Description:
     ------------
     This will use add or extend according to the builder_def type.
+
+    #TODO implement func_dsc
 
     Attributes:
     ----------
@@ -86,10 +88,11 @@ class JsProperties:
     """
     self._context['onReady'].add(builder_def)
 
-  def add_constructor(self, name: str, content: str):
+  def add_constructor(self, name: str, content: str) -> str:
     """
     Description:
     ------------
+    Register the constructor function and return its reference.
 
     Attributes:
     ----------
@@ -97,6 +100,7 @@ class JsProperties:
     :param str content:
     """
     self._context['constructors'][name] = content
+    return name
 
   def has_constructor(self, name: str):
     """
@@ -108,6 +112,9 @@ class JsProperties:
     :param str name:
     """
     return name in self._context['constructors']
+
+  def add_function(self, name: str, js_funcs: Union[list, str], pmts: list):
+    self._context['functions'][name] = {'content': js_funcs, 'pmt': pmts}
 
 
 class CssProperties:
@@ -188,7 +195,7 @@ class Properties:
     self._context = context
 
   @property
-  def js(self):
+  def js(self) -> JsProperties:
     """
     Description:
     ------------
@@ -198,7 +205,7 @@ class Properties:
     return JsProperties(self._context['js'])
 
   @property
-  def css(self):
+  def css(self) -> CssProperties:
     """
     Description:
     ------------
@@ -208,6 +215,21 @@ class Properties:
     CSS Properties will work on both the CSS and JS section of the underlying prop dictionary.
     """
     return CssProperties(self._context)
+
+  @property
+  def data(self) -> data.DataProperties:
+    """
+    Description:
+    ------------
+
+    :return:
+    """
+    if "data" in self._context:
+      self._context["data"] = {"sources": {}, "schema": {}}
+    return data.DataProperties(self._context["data"])
+
+  def to_json(self):
+    return self._context
 
 
 class Report:
@@ -391,7 +413,7 @@ class Report:
     :rtype: Imports.ImportManager
     """
     if self.__import_manage is None:
-      self.__import_manage = Imports.ImportManager(report=self)
+      self.__import_manage = Imports.ImportManager(page=self)
     return self.__import_manage
 
   @property

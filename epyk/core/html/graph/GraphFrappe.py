@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js import JsUtils
@@ -14,14 +15,14 @@ class Frappe(Html.Html):
   _chart__type = 'axis-mixed'
   _option_cls = OptChartFrappe.FrappeLine
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
     super(Frappe, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.chartId = "%s_obj" % self.htmlCode
     self.options.type = self._chart__type
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartFrappe.OptionsChartSharedFrappe:
     """
     Description:
     -----------
@@ -36,7 +37,7 @@ class Frappe(Html.Html):
     return OptChartFrappe.OptionsChartSharedFrappe(self)
 
   @property
-  def js(self):
+  def js(self) -> JsFrappe.FrappeCharts:
     """
     Description:
     -----------
@@ -54,11 +55,11 @@ class Frappe(Html.Html):
     :rtype: JsFrappe.FrappeCharts
     """
     if self._js is None:
-      self._js = JsFrappe.FrappeCharts(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsFrappe.FrappeCharts(selector="window['%s']" % self.chartId, component=self)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptChartFrappe.FrappeLine:
     """
     Description:
     -----------
@@ -68,7 +69,7 @@ class Frappe(Html.Html):
     """
     return super().options
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """
     Description:
     -----------
@@ -81,7 +82,7 @@ class Frappe(Html.Html):
 
     Attributes:
     ----------
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param list hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -97,14 +98,14 @@ class Frappe(Html.Html):
         bg_colors.append(h[0])
     self.options.colors = line_colors
 
-  def labels(self, values):
+  def labels(self, values: list):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param values: List. The different values for the x axis.
+    :param list values: The different values for the x axis.
     """
     self.options.data.labels = values
 
@@ -162,7 +163,7 @@ class Frappe(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class FrappeLine(Frappe):

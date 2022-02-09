@@ -21,7 +21,8 @@ class EnumStyleOptions(Enums):
     """
     Description:
     -----------
-    Only a single item can be selected, any other selected items will be automatically deselected when a new item is selected
+    Only a single item can be selected, any other selected items will be automatically deselected when a new item
+    is selected
 
     Related Pages:
 
@@ -45,7 +46,9 @@ class EnumStyleOptions(Enums):
     """
     Description:
     -----------
-    Operating System (OS) style selection. This is the most comprehensive option and provides complex behaviours such as ctrl/cmd clicking to select / deselect individual items, shift clicking to select ranges and an unmodified click to select a single item.
+    Operating System (OS) style selection. This is the most comprehensive option and provides complex behaviours
+    such as ctrl/cmd clicking to select / deselect individual items, shift clicking to select ranges and an unmodified
+    click to select a single item.
 
     Related Pages:
 
@@ -57,7 +60,8 @@ class EnumStyleOptions(Enums):
     """
     Description:
     -----------
-    a hybrid between the os style and multi, allowing easy multi-row selection without immediate de-selection when clicking on a row.
+    a hybrid between the os style and multi, allowing easy multi-row selection without immediate de-selection when
+    clicking on a row.
 
     Related Pages:
 

@@ -5,18 +5,14 @@ Documentation:
     - https://blog.teamtreehouse.com/building-an-html5-text-editor-with-the-filesystem-apis
 """
 
-from epyk.core.js import JsUtils
-
-from typing import Union, Optional
+from typing import Optional
 from epyk.core.py import primitives
 
 
 class JsFileSystem:
-  class __internal:
-    _context = {}
 
-  def __init__(self, src=None):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, src: Optional[primitives.PageModel] = None):
+    self.page = src
     self._js = []
 
   def toStr(self):

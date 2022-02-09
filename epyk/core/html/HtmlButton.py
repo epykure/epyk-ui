@@ -22,7 +22,7 @@ class Button(Html.Html):
   name = 'button'
   _option_cls = OptButton.OptionsButton
 
-  def __init__(self, report: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
+  def __init__(self, page: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
                height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
                profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None):
     text = text or []
@@ -32,7 +32,7 @@ class Button(Html.Html):
       if hasattr(obj, 'options'):
         obj.options.managed = False
     super(Button, self).__init__(
-      report, text, html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
+      page, text, html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.add_icon(icon, html_code=self.htmlCode)
     if icon is not None and not text:
       self.icon.style.css.margin_right = None
@@ -73,7 +73,7 @@ class Button(Html.Html):
     :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButton(self, report=self.page)
+      self._dom = JsHtml.JsHtmlButton(self, page=self.page)
     return self._dom
 
   _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
@@ -262,8 +262,8 @@ class Button(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return '<button {attrs}>{content}</button>'.format(attrs=self.get_attrs(pyClassNames=self.style.get_classes()),
-                                                       content=str_div)
+    return '<button {attrs}>{content}</button>'.format(
+      attrs=self.get_attrs(css_class_names=self.style.get_classes()), content=str_div)
 
 
 class Checkbox(Html.Html):
@@ -271,15 +271,15 @@ class Checkbox(Html.Html):
   requirements = ('font-awesome', 'bootstrap', 'jquery')
   _option_cls = OptButton.OptCheckboxes
 
-  def __init__(self, report: primitives.PageModel, records, color: Optional[str], width: Optional[tuple],
+  def __init__(self, page: primitives.PageModel, records, color: Optional[str], width: Optional[tuple],
                height: Optional[tuple], align: Optional[str],  html_code: Optional[str],  tooltip: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    if report.inputs.get(html_code) is not None:
-      selected_vals = set(report.inputs[html_code].split(","))
+    if page.inputs.get(html_code) is not None:
+      selected_vals = set(page.inputs[html_code].split(","))
       for rec in records:
         if rec["value"] in selected_vals:
           rec["checked"] = True
-    super(Checkbox, self).__init__(report, records, html_code=html_code, options=options,
+    super(Checkbox, self).__init__(page, records, html_code=html_code, options=options,
                                    css_attrs={"width": width, "height": height}, profile=profile)
     self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
     if tooltip:
@@ -307,7 +307,7 @@ class Checkbox(Html.Html):
     :rtype: JsHtml.JsHtmlButtonChecks
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonChecks(self, report=self.page)
+      self._dom = JsHtml.JsHtmlButtonChecks(self, page=self.page)
     return self._dom
 
   def tooltip(self, value: str, location: str = 'top', options: Optional[dict] = None):
@@ -387,7 +387,7 @@ class Checkbox(Html.Html):
       self.page.body.onReady([self.dom.check(True)])
     self.page.properties.js.add_builders(self.refresh())
     return '<div %(strAttr)s><div name="checks"></div></div>' % {
-      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class CheckButton(Html.Html):
@@ -431,7 +431,7 @@ class CheckButton(Html.Html):
     :rtype: JsHtml.JsHtmlButtonMenu
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonMenu(self, report=self.page)
+      self._dom = JsHtml.JsHtmlButtonMenu(self, page=self.page)
     return self._dom
 
   @property
@@ -447,7 +447,7 @@ class CheckButton(Html.Html):
     :rtype: JsComponents.CheckButton
     """
     if self._js is None:
-      self._js = JsComponents.CheckButton(self, report=self.page)
+      self._js = JsComponents.CheckButton(self, page=self.page)
     return self._js
 
   _js__builder__ = ''' htmlObj.innerHTML = '';
@@ -491,7 +491,8 @@ class CheckButton(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_fnc_true: Js function or a list of JsFunction to be triggered when checked
-    :param Optional[Union[list, str]] js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when unchecked
+    :param Optional[Union[list, str]] js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when
+    unchecked
     :param bool with_colors: Optional. Add default colors to the icons.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
@@ -517,15 +518,15 @@ class CheckButton(Html.Html):
     return super(CheckButton, self).click(js_fncs, profile, on_ready=on_ready)
 
   def __str__(self):
-    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.input.html())
+    return '''<div %s>%s</div>''' % (self.get_attrs(css_class_names=self.style.get_classes()), self.input.html())
 
 
 class IconEdit(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
+  def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
                tooltip: Optional[str], width, height, html_code, options, profile: Optional[Union[bool, dict]]):
-    super(IconEdit, self).__init__(report, '', html_code=html_code, profile=profile,
+    super(IconEdit, self).__init__(page, '', html_code=html_code, profile=profile,
                                    css_attrs={"width": width, 'height': height,
                                               'float': 'left' if position is None else position})
     if tooltip is not None:
@@ -686,7 +687,7 @@ class IconEdit(Html.Html):
     return self.click(js_funcs, profile, source_event)
 
   def __str__(self):
-    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<span %s></span>" % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Buttons(Html.Html):
@@ -705,15 +706,15 @@ class Buttons(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
 
 class ButtonMenuItem:
   name = 'Button Menu Item'
 
-  def __init__(self, report: primitives.PageModel, selector: str, parent: Html.Html):
-    self._report, self._selector, self.page = report, selector, report
-    self._src, self._js, self._events = parent, None, []
+  def __init__(self, page: primitives.PageModel, component: Html.Html, container: Html.Html):
+    self.component, self.page = component, page
+    self.container, self._js, self._events = container, None, []
 
   @property
   def js(self) -> JsComponents.Menu:
@@ -727,7 +728,7 @@ class ButtonMenuItem:
     :rtype: JsComponents.Menu
     """
     if self._js is None:
-      self._js = JsComponents.Menu(self._src, varName=self._selector, report=self.page)
+      self._js = JsComponents.Menu(self.container, js_code=self.component, page=self.page)
     return self._js
 
   def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -748,10 +749,10 @@ class ButtonMenuItem:
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._events.append("%s.addEventListener('%s', function (event) {%s})" % (
-      source_event or self._selector, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      source_event or self.component, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     if on_ready:
-      self.page.body.onReady([self._selector.dom.events.trigger(event)])
-    return self._src
+      self.page.body.onReady([self.component.dom.events.trigger(event)])
+    return self.container
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
@@ -773,17 +774,17 @@ class ButtonMenuItem:
 class ButtonMenu(Html.Html):
   name = 'Button Menu'
 
-  def __init__(self, report: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
+  def __init__(self, page: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
                height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
                profile: Optional[Union[bool, dict]], options: Optional[dict]):
-    super(ButtonMenu, self).__init__(report, record, html_code=html_code, profile=profile,
+    super(ButtonMenu, self).__init__(page, record, html_code=html_code, profile=profile,
                                      css_attrs={"width": width, "height": height})
-    self.button = report.ui.button(text, icon, width, height, html_code, tooltip, profile, options)
+    self.button = page.ui.button(text, icon, width, height, html_code, tooltip, profile, options)
     self.button.options.managed = False
     self.set_attrs(name="data-count", value=0)
     self.style.css.position = "relative"
     self.style.css.display = "inline-block"
-    self.container = report.ui.div()
+    self.container = page.ui.div()
     self.container.options.managed = False
     self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
 
@@ -824,17 +825,17 @@ class ButtonMenu(Html.Html):
       events.extend(comp._events)
     self.onReady(events)
     return '<div %s>%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.container.html())
+      self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(), self.container.html())
 
 
 class ButtonMore(Html.Html):
   name = 'Button More'
 
-  def __init__(self, report: primitives.PageModel, record, text: Optional[str], width: Optional[tuple],
+  def __init__(self, page: primitives.PageModel, record, text: Optional[str], width: Optional[tuple],
                height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
                profile: Optional[Union[bool, dict]], options: Optional[dict]):
     super(ButtonMore, self).__init__(
-      report, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
+      page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
     self.text = self.page.ui.text(text, width=("auto", ''), profile=profile)
     self.text.style.css.font_factor(-4)
     self.text.style.css.italic()
@@ -877,17 +878,17 @@ class ButtonMore(Html.Html):
 
   def __str__(self):
     return '<div %s>%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.button.html(), self.menu.html())
+      self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(), self.menu.html())
 
 
 class ButtonFilter(Html.Html):
   name = 'Button Filter'
   _option_cls = OptButton.OptionsButtonFilter
 
-  def __init__(self, report: primitives.PageModel, text: str, width: tuple, height: tuple, html_code: str,
+  def __init__(self, page: primitives.PageModel, text: str, width: tuple, height: tuple, html_code: str,
                tooltip: str, profile: Optional[Union[bool, dict]], options: Optional[dict]):
     super(ButtonFilter, self).__init__(
-      report, "", html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, "", html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.text = self.page.ui.text(text, tooltip=tooltip)
     self.text.draggable()
     self.text.style.css.margin_right = 5
@@ -1002,7 +1003,7 @@ class ButtonFilter(Html.Html):
     :rtype: JsHtml.JsHtmlButtonFilter
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButtonFilter(self, report=self.page)
+      self._dom = JsHtml.JsHtmlButtonFilter(self, page=self.page)
     return self._dom
 
   def __str__(self):
@@ -1011,7 +1012,7 @@ class ButtonFilter(Html.Html):
       events.extend(comp._events)
     self.onReady(events)
     return '<div %s>%s%s%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
+      self.get_attrs(css_class_names=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
       self.menu.html())
 
 
@@ -1026,10 +1027,10 @@ class ButtonData(Button):
     self.filename = None
 
   _js__builder__ = '''
-    htmlObj.setAttribute("data-content", JSON.stringify(data));
-    htmlObj.setAttribute("title", ""+ data.length + " row loaded: " + (new Date()).toISOString().slice(0, 19).replace("T", " "));
-    if(data.length > 0){htmlObj.style.visibility = "visible"}
-    '''
+htmlObj.setAttribute("data-content", JSON.stringify(data));
+htmlObj.setAttribute("title", ""+ data.length + " row loaded: " + (new Date()).toISOString().slice(0, 19).replace("T", " "));
+if(data.length > 0){htmlObj.style.visibility = "visible"}
+'''
 
   def download(self):
     return self.click([self.page.js.location.download(self.page.js.location.getUrlFromArrays(

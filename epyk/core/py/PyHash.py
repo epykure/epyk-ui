@@ -11,13 +11,13 @@ class SipHash:
       https://pypi.org/project/siphash/
     """
 
-    def __init__(self, c=2, d=4):
+    def __init__(self, c: float = 2, d: float = 4):
       assert c >= 0
       assert d >= 0
       self.__c = c
       self.__d = d
 
-    def __process_message(self, message):
+    def __process_message(self, message: str):
       self.__message = []
 
       length = len(message)
@@ -58,7 +58,7 @@ class SipHash:
       self.__v2 = ((self.__v2 & 0xffffffff) << 32) \
           | ((self.__v2 >> 32) & 0xffffffff)
 
-    def auth(self, key, message):
+    def auth(self, key: int, message: str):
       assert 0 <= key and key < 1 << 128
       k0 = key & 0xffffffffffffffff
       k1 = key >> 64
@@ -84,7 +84,7 @@ class SipHash:
           self.__SipRound()
       return self.__v0 ^ self.__v1 ^ self.__v2 ^ self.__v3
 
-    def hashId(self, text):
+    def hashId(self, text: str):
       """
       Description:
       ------------

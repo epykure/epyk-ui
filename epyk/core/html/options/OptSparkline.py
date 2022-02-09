@@ -22,7 +22,7 @@ class OptionsSpark(OptChart.OptionsChart):
     return self._config_get("100%")
 
   @width.setter
-  def width(self, value):
+  def width(self, value: str):
     self._config(value)
 
   @property
@@ -39,7 +39,7 @@ class OptionsSpark(OptChart.OptionsChart):
     return self._config_get("100%")
 
   @height.setter
-  def height(self, value):
+  def height(self, value: str):
     self._config(value)
 
   @property
@@ -90,7 +90,7 @@ class OptionsSpark(OptChart.OptionsChart):
     return self._config_get(False)
 
   @composite.setter
-  def composite(self, flag):
+  def composite(self, flag: bool):
     self._config(flag)
 
   @property
@@ -106,7 +106,7 @@ class OptionsSpark(OptChart.OptionsChart):
     return self._config_get(1)
 
   @lineWidth.setter
-  def lineWidth(self, value):
+  def lineWidth(self, value: float):
     self._config(value)
 
   @property
@@ -123,7 +123,7 @@ class OptionsSpark(OptChart.OptionsChart):
     return self._config_get("")
 
   @lineColor.setter
-  def lineColor(self, value):
+  def lineColor(self, value: str):
     self._config(value)
 
   @property
@@ -172,7 +172,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.component.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @tagOptionPrefix.setter
   def tagOptionPrefix(self, color):
@@ -189,7 +189,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.component.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @tagValuesAttribute.setter
   def tagValuesAttribute(self, color):
@@ -206,7 +206,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.component.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @disableHiddenCheck.setter
   def disableHiddenCheck(self, color):
@@ -261,7 +261,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @maxSpotColor.setter
-  def maxSpotColor(self, color):
+  def maxSpotColor(self, color: str):
     self._config(color)
 
   @property
@@ -277,7 +277,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @highlightSpotColor.setter
-  def highlightSpotColor(self, color):
+  def highlightSpotColor(self, color: str):
     self._config(color)
 
   @property
@@ -293,7 +293,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @highlightLineColor.setter
-  def highlightLineColor(self, color):
+  def highlightLineColor(self, color: str):
     self._config(color)
 
   @property
@@ -309,7 +309,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get(1)
 
   @lineWidth.setter
-  def lineWidth(self, color):
+  def lineWidth(self, color: str):
     self._config(color)
 
   @property
@@ -325,7 +325,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @normalRangeMin.setter
-  def normalRangeMin(self, color):
+  def normalRangeMin(self, color: str):
     self._config(color)
 
   @property
@@ -341,7 +341,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @normalRangeMax.setter
-  def normalRangeMax(self, color):
+  def normalRangeMax(self, color: str):
     self._config(color)
 
   @property
@@ -357,7 +357,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get(1.5)
 
   @spotRadius.setter
-  def spotRadius(self, num):
+  def spotRadius(self, num: float):
     self._config(num)
 
   @property
@@ -373,7 +373,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get("")
 
   @spotColor.setter
-  def spotColor(self, color):
+  def spotColor(self, color: str):
     self._config(color)
 
   @property
@@ -389,7 +389,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get({})
 
   @valueSpots.setter
-  def valueSpots(self, color):
+  def valueSpots(self, color: str):
     self._config(color)
 
   @property
@@ -405,7 +405,7 @@ class OptionsSparkLine(OptionsSpark):
     return self._config_get(False)
 
   @drawNormalOnTop.setter
-  def drawNormalOnTop(self, flag):
+  def drawNormalOnTop(self, flag: bool):
     self._config(flag)
 
   @property
@@ -555,10 +555,10 @@ class OptionsSparkLineBar(OptionsSpark):
 
       https://omnipotent.net/jquery.sparkline/#s-about
     """
-    return self._config_get(self.component.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @negBarColor.setter
-  def negBarColor(self, color):
+  def negBarColor(self, color: str):
     self._config(color)
 
   @property
@@ -609,7 +609,7 @@ class OptionsSparkLineBar(OptionsSpark):
     return self._config_get(None)
 
   @stackedBarColor.setter
-  def stackedBarColor(self, colors):
+  def stackedBarColor(self, colors: list):
     self._config(colors)
 
 
@@ -620,7 +620,7 @@ class OptionsSparkLineBoxPlot(OptionsSpark):
     """
     Description:
     ------------
-    If set to false (default) then the values supplied are used to caculate the box data points for you.
+    If set to false (default) then the values supplied are used to calculate the box data points for you.
 
     Related Pages:
 

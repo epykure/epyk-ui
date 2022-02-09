@@ -6,16 +6,15 @@ TODO: Check Neo4J
 
 import os
 
+from epyk.core.py import primitives
 from epyk.core.js.Imports import requires
 from epyk.core.py import PySql
 
 
 class NoSql:
-  class __internal:
-    _props = {}
 
-  def __init__(self, report=None):
-    self._report = report if report is not None else self.__internal()
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
 
   def mongo(self, host="localhost", port=5000, is_secured=False):
     """
@@ -33,9 +32,9 @@ class NoSql:
     :param port: Integer. Optional. Database port. Default 5000
     :param is_secured: Boolean. Optional.
     """
-    pyMongo = requires(
+    py_mongo = requires(
       "pyMongo", reason='Missing Package', install="pyMongo", source_script=__file__, raise_sxcept=True)
-    return pyMongo.MongoClient("mongodb://%s:%s/" % (host, port))
+    return py_mongo.MongoClient("mongodb://%s:%s/" % (host, port))
 
   def neo4j(self, host="localhost", port=5000, is_secured=False):
     """
@@ -61,14 +60,12 @@ class NoSql:
 
 
 class DataDb:
-  class __internal:
-    _props = {}
 
-  def __init__(self, report=None):
-    self._report = report if report is not None else self.__internal()
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
     self._db_bindings, self.pkgs = {}, {}
-    self.no_sql = NoSql(report)
-    self.table_names = None # create the unique set of tables to be loaded
+    self.no_sql = NoSql(page)
+    self.table_names = None   # create the unique set of tables to be loaded
 
   def __settings(self):
     """
@@ -81,7 +78,7 @@ class DataDb:
 
     :return: The database settings
     """
-    db_settings = {"family": 'sqlite'} if self._report._dbSettings is None else dict(self._report._dbSettings)
+    db_settings = {"family": 'sqlite'} if self.page._dbSettings is None else dict(self.page._dbSettings)
     if not "family" in db_settings:
       db_settings["family"] = 'sqlite'
     if 'names' in db_settings:
@@ -90,7 +87,7 @@ class DataDb:
         db_settings['private'] = db_settings['names']['private']['name']
       else:
         db_settings['private'] = "%s_%s" % (
-          db_settings['names']['private']['name'], self._report.py.hash(self._report.run.current_user))
+          db_settings['names']['private']['name'], self.page.py.hash(self.page.run.current_user))
     elif 'name' in db_settings:
       # In this context there is no unique database per user and all the users will use a different
       # DB when they are in a private mode
@@ -100,12 +97,12 @@ class DataDb:
 
     else:
       if 'path' not in db_settings:
-        db_settings['path'] = self._report.run.local_path
+        db_settings['path'] = self.page.run.local_path
       db_settings['private'] = '%s_%s' % (
-        self._report.run.report_name, self._report.py.hash(self._report.run.current_user))
-      db_settings['public'] = self._report.run.report_name
+        self.page.run.report_name, self.page.py.hash(self.page.run.current_user))
+      db_settings['public'] = self.page.run.report_name
     if 'model_path' not in db_settings:
-      db_settings['model_path'] = os.path.join(self._report.run.local_path, 'model', 'tables')
+      db_settings['model_path'] = os.path.join(self.page.run.local_path, 'model', 'tables')
     return db_settings
 
   @property
@@ -148,7 +145,7 @@ class DataDb:
     settings = self.__settings()
     database = "%(path)s/%(private)s" % settings if settings.get("path") is not None else settings['private']
     if database not in self._db_bindings:
-      model_path = os.path.join(self._report.run.local_path, 'model', 'tables')
+      model_path = os.path.join(self.page.run.local_path, 'model', 'tables')
       if settings["family"] == "sqlite":
         db = self.sqlite(settings["private"], settings.get("path"), model_path, tables_scope=self.table_names)
       elif settings["family"] == "mssql":
@@ -197,7 +194,7 @@ class DataDb:
     settings = self.__settings()
     database = "%(path)s/%(public)s" % settings if settings.get("path") is not None else settings['public']
     if database not in self._db_bindings:
-      model_path = os.path.join(self._report.run.local_path, 'model', 'tables')
+      model_path = os.path.join(self.page.run.local_path, 'model', 'tables')
       if settings["family"] == "sqlite":
         db = self.sqlite(settings["public"], settings.get("path"), model_path)
       elif settings["family"] == "mssql":
@@ -260,14 +257,14 @@ class DataDb:
     :return: The SQL object
     """
     if db_path is None:
-      db_path = self._report.run.local_path
+      db_path = self.page.run.local_path
     database = "%s/%s.db" % (db_path, name)
-    dataSettings = {"loadModel": model_path is not None, 'model_path': model_path or False}
+    data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False}
     if db_settings is not None:
-      dataSettings.update(db_settings)
+      data_settings.update(db_settings)
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
-        'sqlite', database=database, tables_scope=tables_scope, **dataSettings)
+        'sqlite', database=database, tables_scope=tables_scope, **data_settings)
     return self._db_bindings[database]
 
   def oracle(self, name, host, port, model_path=None, is_secured=False, tables_scope=None):
@@ -296,7 +293,8 @@ class DataDb:
       self._db_bindings[database] = PySql.SqlConn('oracle', database=database, tables_scope=tables_scope, **db_settings)
     return self._db_bindings[database]
 
-  def mssql(self, name, host="localhost", driverName="{ODBC Driver 17 for SQL Server}", model_path=None, tables_scope=None):
+  def mssql(self, name, host="localhost", driverName="{ODBC Driver 17 for SQL Server}",
+            model_path=None, tables_scope=None):
     """
     Description:
     -----------
@@ -317,11 +315,11 @@ class DataDb:
       self.pkgs[name] = requires(
         name, reason='Missing Package', install="pyodbc", source_script=__file__, raise_except=True)
     database = name
-    dataSettings = {"loadModel": model_path is not None, 'model_path': model_path or False,
+    data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "driver": 'mssql+pyodbc', "driverName": driverName, 'host': host}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
-        'mssql+pyodbc', database=database, tables_scope=tables_scope, **dataSettings)
+        'mssql+pyodbc', database=database, tables_scope=tables_scope, **data_settings)
     return self._db_bindings[database]
 
   def mdb(self, name, db_path, model_path=None):
@@ -341,10 +339,10 @@ class DataDb:
     if 'pyodbc' not in self.pkgs:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
     database = "%s/%s.mdb" % (db_path, name)
-    dataSettings = {"loadModel": model_path is not None, 'model_path': model_path or False,
+    data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **dataSettings)
+      self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **data_settings)
     return self._db_bindings[database]
 
   def accdb(self, name, db_path, model_path=None):
@@ -368,10 +366,10 @@ class DataDb:
     if 'pyodbc' not in self.pkgs:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
     database = "%s/%s.accdb" % (db_path, name)
-    dataSettings = {"loadModel": model_path is not None, 'model_path': model_path or False,
+    data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
                     "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
     if database not in self._db_bindings:
-      self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **dataSettings)
+      self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **data_settings)
     return self._db_bindings[database]
 
   def postgres(self, name, host="localhost", port=5432, model_path=None, is_secured=False, tables_scope=None):

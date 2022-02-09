@@ -1,4 +1,6 @@
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
 import abc
@@ -18,7 +20,7 @@ class OptionsChart(Options):
       "function(component){return component.clientWidth - (parseFloat(component.style.paddingLeft) + parseFloat(component.style.paddingRight)) }"))
 
   @get_width.setter
-  def get_width(self, num):
+  def get_width(self, num: int):
     self._config(num)
 
   @property
@@ -32,7 +34,7 @@ class OptionsChart(Options):
       "function(component){return component.clientHeight - (parseFloat(component.style.paddingTop) + parseFloat(component.style.paddingBottom))}"))
 
   @get_height.setter
-  def get_height(self, num):
+  def get_height(self, num: int):
     self._config(num)
 
   @property
@@ -40,7 +42,7 @@ class OptionsChart(Options):
     return self._config_get(None)
 
   @height.setter
-  def height(self, num):
+  def height(self, num: int):
     self._config(num)
 
   @property
@@ -55,7 +57,7 @@ class OptionsChart(Options):
     return self._config_get(0.5)
 
   @opacity.setter
-  def opacity(self, num):
+  def opacity(self, num: float):
     self._config(num)
 
   @property
@@ -64,13 +66,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get(None)
 
   @type.setter
-  def type(self, value):
+  def type(self, value: str):
     self._config(value)
 
   @property
@@ -79,13 +79,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get(None)
 
   @colors.setter
-  def colors(self, colors):
+  def colors(self, colors: list):
     self._config(colors)
 
   @property
@@ -94,13 +92,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get(None)
 
   @background_colors.setter
-  def background_colors(self, colors):
+  def background_colors(self, colors: list):
     self._config(colors)
 
   @property
@@ -109,13 +105,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get(None)
 
   @y_columns.setter
-  def y_columns(self, cols):
+  def y_columns(self, cols: list):
     self._config(cols)
 
   @property
@@ -124,13 +118,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get(None)
 
   @x_axis.setter
-  def x_axis(self, col):
+  def x_axis(self, col: str):
     self._config(col)
 
   @property
@@ -139,13 +131,11 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get({})
 
   @props.setter
-  def props(self, values):
+  def props(self, values: dict):
     self._config(values)
 
   @property
@@ -154,30 +144,30 @@ class OptionsChart(Options):
     Description:
     ------------
 
-    Usage::
-
     """
     return self._config_get({})
 
   @commons.setter
-  def commons(self, values):
+  def commons(self, values: dict):
     self._config(values)
 
 
 class OptionsChartShared(abc.ABC):
 
-  def __init__(self, component):
-    self.component = component
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    self.component, self.page = component, page
+    if page is None:
+      self.page = component.page
 
   @abc.abstractmethod
-  def x_format(self, jsFncs, profile=None):
+  def x_format(self, js_funcs, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
 
@@ -236,14 +226,14 @@ class OptionsChartShared(abc.ABC):
     """
 
   @abc.abstractmethod
-  def y_format(self, jsFncs, profile=None):
+  def y_format(self, js_funcs, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
 

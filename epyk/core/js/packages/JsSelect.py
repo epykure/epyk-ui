@@ -32,7 +32,7 @@ class JsSelectItem:
     """
     return JsObjects.JsObjects.get("%s.css(%s)" % (self._selector, attrs))
 
-  def prop(self, name, jsData):
+  def prop(self, name, data):
     """
     Description:
     ------------
@@ -41,10 +41,10 @@ class JsSelectItem:
     Attributes:
     ----------
     :param name: String. optional. The option name of the new DOM component. Default the value.
-    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param data: String or Js Object. The value of the item to be removed from the list.
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._selector, name, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._selector, name, data))
 
 
 class JSelect(JsPackage):
@@ -52,13 +52,13 @@ class JSelect(JsPackage):
   lib_selector = 'jQuery("body")'
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
-  def val(self, jsData=None):
+  def val(self, data=None):
     """
     Description:
     ------------
@@ -70,15 +70,15 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: String | Js Object. The value of the item to be removed from the list.
+    :param data: String | Js Object. The value of the item to be removed from the list.
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get("%s.val()" % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get("%s.val()" % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get("%s.val(%s).selectpicker('refresh')" % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get("%s.val(%s).selectpicker('refresh')" % (self.component.dom.jquery.varId, data))
 
-  def prop(self, name, jsData):
+  def prop(self, name, data):
     """
     Description:
     ------------
@@ -87,10 +87,10 @@ class JSelect(JsPackage):
     Attributes:
     ----------
     :param name: String. optional. The option name of the new DOM component. Default the value.
-    :param jsData: String | Js Object. The value of the item to be removed from the list.
+    :param data: String | Js Object. The value of the item to be removed from the list.
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self._src.dom.jquery.varId, name, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.prop("%s", %s)' % (self.component.dom.jquery.varId, name, data))
 
   def empty(self):
     """
@@ -103,12 +103,12 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    if 'multiple' in self._src.attr:
-      return JsObjects.JsObjects.get("%s.val([]).selectpicker('refresh')" % (self._src.dom.jquery.varId))
+    if 'multiple' in self.component.attr:
+      return JsObjects.JsObjects.get("%s.val([]).selectpicker('refresh')" % self.component.dom.jquery.varId)
 
-    return JsObjects.JsObjects.get("%s.val('').selectpicker('refresh')" % (self._src.dom.jquery.varId))
+    return JsObjects.JsObjects.get("%s.val('').selectpicker('refresh')" % self.component.dom.jquery.varId)
 
-  def remove(self, jsData, refresh=True):
+  def remove(self, data, refresh=True):
     """
     Description:
     ------------
@@ -120,15 +120,16 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: String or Js Object. The value of the item to be removed from the list.
+    :param data: String or Js Object. The value of the item to be removed from the list.
     :param refresh: Boolean. Optional. Refresh the list after the item removal. (default true).
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     if refresh:
       return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove(); %s' % (
-        self._src.dom.jquery.varId, jsData, self.refresh()))
+        self.component.dom.jquery.varId, data, self.refresh()))
 
-    return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove()' % (self._src.dom.jquery.varId, jsData))
+    return JsObjects.JsObjects.get('%s.find("option[value="+ %s +"]").remove()' % (
+      self.component.dom.jquery.varId, data))
 
   def mobile(self):
     """
@@ -141,7 +142,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('mobile')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('mobile')" % self.component.dom.jquery.varId)
 
   def add(self, value, name=None, refresh=True, selected=False):
     """
@@ -168,10 +169,10 @@ class JSelect(JsPackage):
     selection = self.val(value) if selected else ""
     if refresh:
       return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s; %s" % (
-        self._src.dom.jquery.varId, value, name, self.refresh(), selection))
+        self.component.dom.jquery.varId, value, name, self.refresh(), selection))
 
     return JsObjects.JsObjects.get("%s.append('<option value='+ %s +'>'+ %s +'</option>'); %s" % (
-      self._src.dom.jquery.varId, value, name, selection))
+      self.component.dom.jquery.varId, value, name, selection))
 
   def item(self, value):
     """
@@ -184,7 +185,7 @@ class JSelect(JsPackage):
     :param value: String. The value of the options.
     """
     value = JsUtils.jsConvertData(value, None)
-    return JsSelectItem("%s.find('option[value='+ %s +']')" % (self._src.dom.jquery.varId, value))
+    return JsSelectItem("%s.find('option[value='+ %s +']')" % (self.component.dom.jquery.varId, value))
 
   def deselectAll(self):
     """
@@ -196,7 +197,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('deselectAll')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('deselectAll')" % self.component.dom.jquery.varId)
 
   def selectAll(self):
     """
@@ -208,9 +209,9 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('selectAll')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('selectAll')" % self.component.dom.jquery.varId)
 
-  def selectIndex(self, i):
+  def selectIndex(self, i: int):
     """
     Description:
     ------------
@@ -221,7 +222,7 @@ class JSelect(JsPackage):
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
     return JsObjects.JsObjects.get("%(jqid)s.find('option')[%(index)s].setAttribute('selected', 'selected')" % {
-      'jqid': self._src.dom.jquery.varId, 'index': i})
+      'jqid': self.component.dom.jquery.varId, 'index': i})
 
   def render(self):
     """
@@ -234,7 +235,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('render')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('render')" % self.component.dom.jquery.varId)
 
   def refresh(self):
     """
@@ -246,7 +247,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('refresh')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('refresh')" % self.component.dom.jquery.varId)
 
   def toggle(self):
     """
@@ -258,7 +259,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('toggle')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('toggle')" % self.component.dom.jquery.varId)
 
   def hide(self):
     """
@@ -271,7 +272,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self.component.dom.jquery.varId)
 
   def show(self):
     """
@@ -284,7 +285,7 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
     """
-    return JsObjects.JsObjects.get("%s.selectpicker('show')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.selectpicker('show')" % self.component.dom.jquery.varId)
 
   def setStyle(self, class_name, event=None):
     """
@@ -304,10 +305,10 @@ class JSelect(JsPackage):
     """
     if event is None:
       return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s')" % (
-        self._src.dom.jquery.varId, class_name))
+        self.component.dom.jquery.varId, class_name))
 
     return JsObjects.JsObjects.get("%s.selectpicker('setStyle', '%s', '%s')" % (
-      self._src.dom.jquery.varId, class_name, event))
+      self.component.dom.jquery.varId, class_name, event))
 
   def disable(self, flag):
     """
@@ -324,7 +325,7 @@ class JSelect(JsPackage):
     :param flag: Boolean. A flag to specify the status of the component.
     """
     flag = JsUtils.jsConvertData(flag, None)
-    return JsObjects.JsObjects.get("%s.prop('disabled', %s)" % (self._src.dom.jquery.varId, flag))
+    return JsObjects.JsObjects.get("%s.prop('disabled', %s)" % (self.component.dom.jquery.varId, flag))
 
   @property
   def search(self):
@@ -346,7 +347,7 @@ class JSelect(JsPackage):
     ------------
 
     """
-    return JsNodeDom.JsDomEvents(self._src)
+    return JsNodeDom.JsDomEvents(component=self.component)
 
   @property
   def jquery(self):
@@ -365,7 +366,8 @@ class JSelect(JsPackage):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
+      self._jquery = JsQuery.JQuery(
+        component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode))
     return self._jquery
 
   def ajaxSelectPicker(self, options):
@@ -390,8 +392,8 @@ class JSelect(JsPackage):
     ----------
     :param options:
     """
-    self._src.cssImport.add('ajax-bootstrap-select')
-    self._src.jsImports.add('ajax-bootstrap-select')
+    self.component.cssImport.add('ajax-bootstrap-select')
+    self.component.jsImports.add('ajax-bootstrap-select')
     opts = []
     for k, v in options.items():
       if not isinstance(v, (dict, int)) and v.startswith("function"):
@@ -408,7 +410,7 @@ class JSelect(JsPackage):
         opts.append("%s: %s" % (k, json.dumps(v)))
     return "%s.selectpicker().ajaxSelectPicker({%s})" % (self.jquery.varId, ", ".join(opts))
 
-  def if_(self, jsRule, jsFncs):
+  def if_(self, rule, js_funcs):
     """
     Description:
     ------------
@@ -416,12 +418,12 @@ class JSelect(JsPackage):
 
     Attributes:
     ----------
-    :param jsRule: String.
-    :param jsFncs: List | String. Javascript functions.
+    :param rule: String.
+    :param js_funcs: List | String. Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return JsIf.JsIf(jsRule, jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf(rule, js_funcs)
 
   def __str__(self):
     """

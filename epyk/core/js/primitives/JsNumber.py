@@ -17,7 +17,7 @@ They should be used in Js specific functions (expecting jsFncs or jsData) in ord
 Each function will have it is specific documentation and a simple example.
 
 More examples can be found in the tests folder if needed.
-If necessary the tests folder can be updated in order to catch some specific regressions
+If necessary the test folders can be updated in order to catch some specific regressions
 """
 
 from typing import Union, Optional, Any, List
@@ -50,7 +50,7 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("Number.NEGATIVE_INFINITY")
 
   @classmethod
-  def POSITIVE_INFINITY(self):
+  def POSITIVE_INFINITY(cls):
     """
     Description:
     ------------
@@ -68,7 +68,7 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("Number.POSITIVE_INFINITY")
 
   @classmethod
-  def MAX_VALUE(self):
+  def MAX_VALUE(cls):
     """
     Description:
     ------------
@@ -122,7 +122,7 @@ class JsNumber(JsObject.JsObject):
     :return: A Javascript boolean
     """
     from epyk.core.js.primitives import JsBoolean
-    return JsBoolean.JsBoolean("Number.isNaN(%s)" % self.varId, isPyData=False)
+    return JsBoolean.JsBoolean("Number.isNaN(%s)" % self.varId, is_py_data=False)
 
   def add(self, n: Union[primitives.JsDataModel, float]):
     """
@@ -141,7 +141,7 @@ class JsNumber(JsObject.JsObject):
 
     :return: A new Python Javascript Number
     """
-    return JsNumber("%s + %s" % (self.varId, n), isPyData=False)
+    return JsNumber("%s + %s" % (self.varId, n), is_py_data=False)
 
   def min(self, value: Union[primitives.JsDataModel, float]):
     """
@@ -153,7 +153,7 @@ class JsNumber(JsObject.JsObject):
     ----------
     :param Union[primitives.JsDataModel, float] value: The maximum value for this object.
     """
-    return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def max(self, value: Union[primitives.JsDataModel, float]):
     """
@@ -167,7 +167,7 @@ class JsNumber(JsObject.JsObject):
     ----------
     :param Union[primitives.JsDataModel, float] value: The minimum value for this object.
     """
-    return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), isPyData=False)
+    return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def sub(self, n: Union[primitives.JsDataModel, float]):
     """
@@ -186,7 +186,7 @@ class JsNumber(JsObject.JsObject):
 
     :return: A new Python Javascript Number.
     """
-    return JsNumber("%s - %s" % (self.varId, n), isPyData=False)
+    return JsNumber("%s - %s" % (self.varId, n), is_py_data=False)
 
   def toExponential(self):
     """
@@ -204,7 +204,7 @@ class JsNumber(JsObject.JsObject):
 
     :return: A Javascript Number
     """
-    return JsNumber("%s.toExponential()" % self.varId, isPyData=False)
+    return JsNumber("%s.toExponential()" % self.varId, is_py_data=False)
 
   def toFixed(self, digits: Union[primitives.JsDataModel, int] = 2):
     """
@@ -222,11 +222,12 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] digits: Optional. The number of digits after the decimal point. Default is 2 (2 digits after the decimal point)
+    :param Union[primitives.JsDataModel, int] digits: Optional. The number of digits after the decimal point.
+    Default is 2 (2 digits after the decimal point)
 
     :return: A Javascript Number
     """
-    return JsNumber("%s.toFixed(%s)" % (self.varId, digits), isPyData=False)
+    return JsNumber("%s.toFixed(%s)" % (self.varId, digits), is_py_data=False)
 
   def isFinite(self):
     """
@@ -246,7 +247,7 @@ class JsNumber(JsObject.JsObject):
     """
     from epyk.core.js.primitives import JsBoolean
 
-    return JsBoolean.JsBoolean("Number.isFinite(%s)" % self.varId, isPyData=False)
+    return JsBoolean.JsBoolean("Number.isFinite(%s)" % self.varId, is_py_data=False)
 
   def toPrecision(self, n: Union[primitives.JsDataModel, int]):
     """
@@ -264,17 +265,18 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
+    :param Union[primitives.JsDataModel, int] n: Optional. The number of digits. If omitted, it returns the entire
+    number (without any formatting).
 
     :return: A Javascript Number
     """
-    return JsNumber("%s.toPrecision(%s)" % (self.varId, n), isPyData=False)
+    return JsNumber("%s.toPrecision(%s)" % (self.varId, n), is_py_data=False)
 
   def __add__(self, value: Union[primitives.JsDataModel, float]):
-    return JsNumber("%s + %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s + %s" % (self.varId, value), is_py_data=False)
 
   def __sub__(self, value: Union[primitives.JsDataModel, float]):
-    return JsNumber("%s - %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s - %s" % (self.varId, value), is_py_data=False)
 
   def __iadd__(self, value: Union[primitives.JsDataModel, float]):
     # TODO: Fix this
@@ -287,19 +289,19 @@ class JsNumber(JsObject.JsObject):
     return self
 
   def __mul__(self, value: Union[primitives.JsDataModel, float]):
-    return JsNumber("%s * %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s * %s" % (self.varId, value), is_py_data=False)
 
   def __truediv__(self, value: Union[primitives.JsDataModel, float]):
-    return JsNumber("%s / %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s / %s" % (self.varId, value), is_py_data=False)
 
   def __mod__(self, value: Union[primitives.JsDataModel, float]):
-    return JsNumber("%s %%= %s" % (self.varId, value), isPyData=False)
+    return JsNumber("%s %%= %s" % (self.varId, value), is_py_data=False)
 
   def __pow__(self, value: Union[primitives.JsDataModel, float]):
     return JsNumber("%s = %s" % (self.varId, JsMaths.JsMaths.pow(self, value)))
 
   @classmethod
-  def proto(cls, jsObj, fncName):
+  def proto(cls, jsObj, func_name):
     """
     Description:
     ------------
@@ -309,16 +311,16 @@ class JsNumber(JsObject.JsObject):
     Attributes:
     ----------
     :param jsObj:
-    :param fncName: String. The function name.
+    :param func_name: String. The function name.
     """
     jsObj.extendProto(cls, "formatMoney", '''
-          var n = this, decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces, decSeparator = decSeparator == undefined ? "." : decSeparator,
-          thouSeparator = thouSeparator == undefined ? "," : thouSeparator, sign = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
-          j = (j = i.length) > 3 ? j % 3 : 0;
-          return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
-          ''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
+var n = this, decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces, decSeparator = decSeparator == undefined ? "." : decSeparator,
+thouSeparator = thouSeparator == undefined ? "," : thouSeparator, sign = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
+j = (j = i.length) > 3 ? j % 3 : 0;
+return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thouSeparator) + (decPlaces ? decSeparator + Math.abs(n - i).toFixed(decPlaces).slice(2) : "");
+''', pmts=["decPlaces", "thouSeparator", "decSeparator"])
 
-  def formatMoney(self, jsObj, decPlaces: Union[int, primitives.JsDataModel] = 0, countryCode: str = 'UK'):
+  def formatMoney(self, js_obj, dec_places: Union[int, primitives.JsDataModel] = 0, country_code: str = 'UK'):
     """
     Description:
     ------------
@@ -331,12 +333,12 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsObj: The base Javascript Python object
-    :param int decPlaces: Optional. The number of decimal.
-    :param str countryCode: Optional. The country code. Default uk.
+    :param js_obj: The base Javascript Python object
+    :param int dec_places: Optional. The number of decimal.
+    :param str country_code: Optional. The country code. Default uk.
     """
-    thouSeparator, decSeparator = (",", ".") if countryCode.upper() in ["UK", 'US'] else (" ", ".")
-    jsObj.extendProto(self, "formatMoney", '''
+    thou_separator, dec_separator = (",", ".") if country_code.upper() in ["UK", 'US'] else (" ", ".")
+    js_obj.extendProto(self, "formatMoney", '''
       var n = this, decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces, decSeparator = decSeparator == undefined ? "." : decSeparator,
       thouSeparator = thouSeparator == undefined ? "," : thouSeparator, sign = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
       j = (j = i.length) > 3 ? j % 3 : 0;
@@ -345,4 +347,4 @@ class JsNumber(JsObject.JsObject):
     from epyk.core.js.primitives import JsString
 
     return JsString.JsString("%s.formatMoney(%s, '%s', '%s')" % (
-      self.varId, decPlaces, thouSeparator, decSeparator), isPyData=False)
+      self.varId, dec_places, thou_separator, dec_separator), is_py_data=False)

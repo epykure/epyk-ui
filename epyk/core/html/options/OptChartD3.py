@@ -73,8 +73,8 @@ class D3GgeographyConfig(Options):
   def highlightBorderColor(self, color):
     self._config(color)
 
-  def highlightFillColor(self, jsFNcs, profile=None):
-    pass
+  def highlightFillColor(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
   @property
   def borderColor(self):
@@ -128,8 +128,8 @@ class D3GgeographyConfig(Options):
   def dataUrl(self, url):
     self._config(url)
 
-  def popupTemplate(self, jsFNcs, profile=None):
-    pass
+  def popupTemplate(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
 
 class D3GgeographyBubbleConfig(D3GgeographyConfig):
@@ -267,8 +267,8 @@ class D3ArcConfig(Options):
   def popupOnHover(self, flag):
     self._config(flag)
 
-  def popupTemplate(self, jsFNcs, profile=None):
-    pass
+  def popupTemplate(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
 
 class ChartGeo(OptChart.OptionsChart):
@@ -339,11 +339,11 @@ class ChartGeo(OptChart.OptionsChart):
     self._config(value)
 
   @property
-  def geographyConfig(self):
+  def geographyConfig(self) -> D3GgeographyConfig:
     return self._config_sub_data("geographyConfig", D3GgeographyConfig)
 
   @property
-  def bubblesConfig(self):
+  def bubblesConfig(self) -> D3GgeographyBubbleConfig:
     return self._config_sub_data("bubblesConfig", D3GgeographyBubbleConfig)
 
   @property
@@ -359,8 +359,8 @@ class ChartGeo(OptChart.OptionsChart):
   def projection(self, value):
     self._config(value)
 
-  def setProjection(self, jsFncs, profile=None):
-    pass
+  def setProjection(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
-  def done(self, jsFncs, profile=None):
-    pass
+  def done(self, js_funcs, profile=None):
+    raise NotImplementedError()

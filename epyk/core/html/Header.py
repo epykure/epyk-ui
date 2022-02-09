@@ -11,7 +11,7 @@ from epyk.core.html import Defaults
 
 class Meta:
   def __init__(self, page: primitives.PageModel):
-    self._report = page
+    self.page = page
     self._metas = {}
     self.__cols = ['charset', 'viewport']
     self.viewport().charset()
@@ -37,11 +37,11 @@ class Meta:
     ----------
     :param Optional[dict] attrs: Optional. The view port attributes.
     """
-    dflt_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
+    dfl_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
     if attrs is not None:
-      dflt_attrs.update(attrs)
+      dfl_attrs.update(attrs)
     self._metas["viewport"] = '<meta name="viewport" content="%s">' % ", ".join(
-      ["%s=%s" % (k, v) for k, v in dflt_attrs.items()])
+      ["%s=%s" % (k, v) for k, v in dfl_attrs.items()])
     return self
 
   def charset(self, value: str = "utf-8"):
@@ -64,7 +64,7 @@ class Meta:
     :param str value: Optional. The charset encoding.
     """
     common_vals = ("UTF-8", "ISO-8859-1")
-    if self._report.verbose and value.upper() not in common_vals:
+    if self.page.verbose and value.upper() not in common_vals:
       logging.warning("Charset value %s not in common ones %s" % (value, common_vals))
 
     self._metas["charset"] = '<meta charset="%s">' % value
@@ -265,7 +265,8 @@ class Links:
     Attributes:
     ----------
     :param str href: The link path for the stylesheet page.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different website.
+    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    different website.
     """
     self.stylesheet(href=href, file_type="", media=None, rel="pingback", cross_origin=cross_origin)
 
@@ -320,7 +321,6 @@ class Links:
 
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/prefetch
-
 
     Attributes:
     ----------
@@ -619,9 +619,9 @@ class Header:
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
     self._favicon_url = {}
     self.favicon(Defaults.FAVICON_URL)
-    self._report = report
+    self.page = report
     if report is not None:
-      self._report._props["header"] = self._headers
+      self.page._props["header"] = self._headers
 
   def dev(self, icon: Optional[str] = None):
     """
@@ -663,7 +663,7 @@ class Header:
     :rtype: Meta
     """
     if self.__meta is None:
-      self.__meta = Meta(self._report)
+      self.__meta = Meta(self.page)
     return self.__meta
 
   def add_script(self, src: str, attrs: Optional[dict] = None):
@@ -771,8 +771,8 @@ class Header:
     extension = url.split(".")[-1].lower()
     if ".%s" % extension in self.mime_mapping:
       img_type = self.mime_mapping[".%s" % extension]
-    elif self._report is not None:
-      if self._report.verbose:
+    elif self.page is not None:
+      if self.page.verbose:
         logging.warning("Favicon - Missing extension %s - No default used" % extension)
     else:
       logging.warning("Favicon - Missing extension %s - No default used" % extension)

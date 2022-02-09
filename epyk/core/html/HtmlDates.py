@@ -21,10 +21,10 @@ class DatePicker(Html.Html):
   name = 'Date Picker'
   _option_cls = OptCalendars.OptionDatePicker
 
-  def __init__(self, report: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
+  def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
                height: tuple, color: Optional[str], html_code: Optional[str],
                profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str]):
-    super(DatePicker, self).__init__(report, value, html_code=html_code, profile=profile)
+    super(DatePicker, self).__init__(page, value, html_code=html_code, profile=profile)
     # Add all the internal components input, label, icon and helper
     if width[0] is not None and width[1] == 'px':
       width = (width[0] - 30, width[1])
@@ -74,7 +74,7 @@ class DatePicker(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
     return self._dom
 
   def select(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
@@ -93,7 +93,8 @@ class DatePicker(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: The Javascript events when the DatePicker selection changes.
-    :param Optional[Union[bool, dict]]  profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]]  profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -174,17 +175,17 @@ class DatePicker(Html.Html):
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {
-      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+      'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper}
 
 
 class TimePicker(Html.Html):
   requirements = ('timepicker', )
   name = 'Time Picker'
 
-  def __init__(self, report: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
+  def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
                color: Optional[str], html_code: Optional[str], profile: Optional[Union[bool, dict]],
                options: Optional[dict], helper: Optional[str]):
-    super(TimePicker, self).__init__(report, None, html_code=html_code, profile=profile)
+    super(TimePicker, self).__init__(page, None, html_code=html_code, profile=profile)
     self.input = self.page.ui.inputs.d_time(
       value, options=options, html_code="%s_input" % html_code if html_code is not None else html_code)
     self.input.set_attrs(name="class", value='time').css({"padding": 0})
@@ -216,7 +217,7 @@ class TimePicker(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
     return self._dom
 
   def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
@@ -249,16 +250,16 @@ class TimePicker(Html.Html):
 
   def __str__(self):
     return '<div %(attr)s>%(helper)s</div>' % {
-      'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+      'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper}
 
 
 class CountDownDate(Html.Html):
   name = 'Countdown'
 
-  def __init__(self, report: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
+  def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
                label: Optional[str], icon: Optional[str], timestamp, width, height, html_code, helper, options, profile):
-    super(CountDownDate, self).__init__(report, {'day': day, 'month': month, 'year': year, 'hour': hour,
-                                                 'minute': minute, 'second': second}, html_code=html_code,
+    super(CountDownDate, self).__init__(page, {'day': day, 'month': month, 'year': year, 'hour': hour,
+                                               'minute': minute, 'second': second}, html_code=html_code,
                                         profile=profile, css_attrs={"width": width, "height": height})
     self._jsStyles = {"delete": True, 'reload': False}
     # timestamp in milliseconds
@@ -311,16 +312,17 @@ class CountDownDate(Html.Html):
     self.page.properties.js.add_builders(
       '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
           ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
-    return '<div %s><span name="dt_time"></span>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<div %s><span name="dt_time"></span>%s</div>' % (
+      self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class LastUpdated(Html.Html):
   name = 'Last Update'
 
-  def __init__(self, report: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
+  def __init__(self, page: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
                height: tuple, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self._label = label or "Last update: "
-    super(LastUpdated, self).__init__(report, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
+    super(LastUpdated, self).__init__(page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
                                       html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, "color": color})
 
@@ -347,7 +349,7 @@ class LastUpdated(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def refresh(self):
@@ -367,7 +369,7 @@ class LastUpdated(Html.Html):
 
   def __str__(self):
     return '<div %(strAttr)s>%(content)s</div>' % {
-      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'content': self.val}
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'content': self.val}
 
 
 class Calendar(Html.Html):
@@ -375,10 +377,10 @@ class Calendar(Html.Html):
   requirements = ('jquery', )
   _option_cls = OptCalendars.OptionDays
 
-  def __init__(self, report: primitives.PageModel, content: Optional[str], width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, content: Optional[str], width: tuple, height: tuple,
                align: Optional[str], options: Optional[dict], html_code: Optional[str],
                profile: Optional[Union[bool, dict]]):
-    super(Calendar, self).__init__(report,  content, html_code, css_attrs={"width": width, "height": height},
+    super(Calendar, self).__init__(page,  content, html_code, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     self.tasks, self.caption = {}, ""
@@ -562,10 +564,10 @@ class Calendar(Html.Html):
 class Timer(Html.Html):
   name = 'Timer'
 
-  def __init__(self, report: primitives.PageModel, minutes: int, text: Optional[str], width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, minutes: int, text: Optional[str], width: tuple, height: tuple,
                align: Optional[str], options: Optional[dict], html_code: Optional[str],
                profile: Optional[Union[dict, bool]]):
-    super(Timer, self).__init__(report, {"minutes": minutes, 'text': text}, html_code, options=options,
+    super(Timer, self).__init__(page, {"minutes": minutes, 'text': text}, html_code, options=options,
                                 css_attrs={"width": width, "height": height}, profile=profile)
     if align is not None:
       if align == 'center':
@@ -592,7 +594,8 @@ class Timer(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -601,17 +604,17 @@ class Timer(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Elapsed(Html.Html):
   name = 'elapsed'
 
-  def __init__(self, report: primitives.PageModel, day: int, month: int, year: int, label: Optional[str],
+  def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, label: Optional[str],
                icon: Optional[str], width: tuple, height: tuple,
                html_code: Optional[str], helper: Optional[str], options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    super(Elapsed, self).__init__(report, {'day': day, 'month': month, 'year': year}, html_code=html_code,
+    super(Elapsed, self).__init__(page, {'day': day, 'month': month, 'year': year}, html_code=html_code,
                                   profile=profile, css_attrs={"width": width, "height": height})
     # Add the underlying components
     self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
@@ -629,4 +632,4 @@ class Elapsed(Html.Html):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return '<div %s><span name="clock"></span>%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), self.helper)

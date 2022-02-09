@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html.options import OptTableDatatable
 from epyk.core.js.packages import JsDatatable
@@ -23,15 +24,15 @@ class Table(Html.Html):
   name = 'Table'
   _option_cls = OptTableDatatable.TableConfig
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Table, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     if records is not None:
       self.options.data = records
 
   @property
-  def style(self):
+  def style(self) -> GrpClsTable.Datatable:
     """
     Description:
     -----------
@@ -46,7 +47,7 @@ class Table(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptTableDatatable.TableConfig:
     """
     Description:
     ------------
@@ -67,23 +68,24 @@ class Table(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def get_column(self, by_title):
+  def get_column(self, by_title: str):
     """
     Description:
     -----------
+    Get the column object from it is title.
 
     Usage::
 
     Attributes:
     ----------
-    :param by_title:
+    :param str by_title:
     """
     for c in self.options.columns:
       if c.title == by_title:
         return c
 
   @property
-  def js(self):
+  def js(self) -> JsDatatable.DatatableAPI:
     """
     Description:
     -----------
@@ -96,7 +98,7 @@ class Table(Html.Html):
     :rtype: JsDatatable.DatatableAPI
     """
     if self._js is None:
-      self._js = JsDatatable.DatatableAPI(self._report, selector=self.tableId, setVar=False, parent=self)
+      self._js = JsDatatable.DatatableAPI(self.page, selector=self.tableId, set_var=False, parent=self)
     return self._js
 
   def build(self, data=None, options=None, profile=None, component_id=None):
@@ -121,4 +123,4 @@ class Table(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<table %s></table>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<table %s></table>" % (self.get_attrs(css_class_names=self.style.get_classes()))

@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
@@ -23,8 +26,8 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
         page.js.console.log(mode_switch.input.dom.val)
       ])
     """
-    values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
-    values.append("'%s_values': %s" % (self._src.htmlCode, self._src._vals))
+    values = ["'%s': %s" % (k, self.page.components[k].dom.content.toStr()) for k in self.component._internal_components]
+    values.append("'%s_values': %s" % (self.component.htmlCode, self.component._vals))
     return JsObjects.JsObjects.get(
       "{%s, offset: new Date().getTimezoneOffset()}" % ", ".join(values))
 
@@ -34,7 +37,7 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     Description:
     ------------
     """
-    return JsHtml.ContentFormatters(self._report, "%s.checked" % self._src.checkbox.dom.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.checked" % self.component.checkbox.dom.varName)
 
   @property
   def label(self):
@@ -50,9 +53,9 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
         icon.dom.visible(mode_switch.input.dom.content)
       ])
     """
-    return JsHtml.ContentFormatters(self._report, self._src.switch_text.dom.innerText())
+    return JsHtml.ContentFormatters(self.page, self.component.switch_text.dom.innerText())
 
-  def set_text(self, value, is_on_val=True):
+  def set_text(self, value: Union[str, primitives.JsDataModel], is_on_val: bool = True):
     """
     Description:
     ------------
@@ -66,14 +69,15 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value: String. The new value.
-    :param is_on_val: Boolean. Optional. Change either the on or the off value displayed.
+    :param Union[str, primitives.JsDataModel] value: The new value.
+    :param bool is_on_val: Optional. Change either the on or the off value displayed.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get('''if(%(text)s == %(htmlCode)s_data.%(switch_type)s){%(htmlObj)s};
        %(htmlCode)s_data.%(switch_type)s = %(value)s
-       ''' % {'htmlCode': self._src.htmlCode, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
-              'text': self._src.switch_text.dom.content.toStr(), 'htmlObj': self._src.switch_text.build(value)})
+       ''' % {'htmlCode': self.component.htmlCode, 'switch_type': 'on' if is_on_val else 'off', 'value': value,
+              'text': self.component.switch_text.dom.content.toStr(),
+              'htmlObj': self.component.switch_text.build(value)})
 
 
 class Tick(JsHtml.JsHtmlRich):
@@ -87,7 +91,7 @@ class Tick(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, label: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self.content.toStr(), self._src.span.dom.content.toStr()))
+        self.htmlCode, self.content.toStr(), self.component.span.dom.content.toStr()))
 
   @property
   def content(self):
@@ -97,8 +101,8 @@ class Tick(JsHtml.JsHtmlRich):
     Get the selected content from the Select component.
     """
     # the option variable is coming from the Tick class to get the icon details
-    return JsHtml.ContentFormatters(self._report, "%s.classList.contains('%s')" % (
-      self._src.icon.dom.varName, self.options['true'].split(" ")[-1]))
+    return JsHtml.ContentFormatters(self.page, "%s.classList.contains('%s')" % (
+      self.component.icon.dom.varName, self.options['true'].split(" ")[-1]))
 
 
 class SelectOption(JsHtml.JsHtmlRich):
@@ -113,7 +117,7 @@ class SelectOption(JsHtml.JsHtmlRich):
     """
     return self.value()
 
-  def text(self, value=None):
+  def text(self, value: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -123,7 +127,7 @@ class SelectOption(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value: String. Optional. The value to be set to the option text.
+    :param Union[str, primitives.JsDataModel] value: Optional. The value to be set to the option text.
     """
     if value is None:
       return JsObjects.JsVoid("%(varId)s.innerText" % {"varId": self.varId})
@@ -131,7 +135,7 @@ class SelectOption(JsHtml.JsHtmlRich):
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid("%(varId)s.innerText = %(value)s" % {"varId": self.varId, "value": value})
 
-  def value(self, value=None):
+  def value(self, value: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -140,7 +144,7 @@ class SelectOption(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value: String. Optional. The value to be added to the tag.
+    :param Union[str, primitives.JsDataModel] value: Optional. The value to be added to the tag.
     """
     if value is None:
       return JsObjects.JsVoid("%(varId)s.getAttribute()" % {"varId": self.varId})
@@ -178,7 +182,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     ------------
     Get the selected content from the Select component.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.val()" % self.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, "%s.val()" % self.jquery.varId)
 
   @property
   def text(self):
@@ -238,11 +242,11 @@ class DomSelect(JsHtml.JsHtmlRich):
     ------------
     Get the selected option DOM.
     """
-    select_opt = SelectOption(self._src, report=self._report, setVar=False)
+    select_opt = SelectOption(self.component, page=self.page, set_var=False)
     select_opt.varName = "%s.querySelector('option:checked')" % self.varId
     return select_opt
 
-  def option(self, i):
+  def option(self, i: int):
     """
     Description:
     ------------
@@ -250,9 +254,9 @@ class DomSelect(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param i: Integer. The index of the option in the select component.
+    :param int i: The index of the option in the select component.
     """
-    select_opt = SelectOption(self._src, report=self._report, setVar=False)
+    select_opt = SelectOption(self.component, page=self.page, set_var=False)
     select_opt.varName = "%s.querySelectorAll('option')[%s]" % (self.varId, i)
     return select_opt
 
@@ -267,7 +271,7 @@ class Radio(JsHtml.JsHtmlRich):
     Get the selected content from the Select component.
     """
     # the option variable is coming from the Tick class to get the icon details
-    return JsHtml.ContentFormatters(self._report, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self._src.dom.varName)
+    return JsHtml.ContentFormatters(self.page, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self._src.dom.varName)
 
   @property
   def checked(self):
@@ -277,9 +281,9 @@ class Radio(JsHtml.JsHtmlRich):
     returns the checked DOM object.
     """
     return JsNodeDom.JsDoms.get(
-      "%s.querySelector('input:checked').parentNode" % self._src.dom.varName, report=self._report)
+      "%s.querySelector('input:checked').parentNode" % self.component.dom.varName, page=self.page)
 
-  def select(self, value):
+  def select(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -292,4 +296,4 @@ class Radio(JsHtml.JsHtmlRich):
     return JsObjects.JsVoid('''
       %s.querySelectorAll('input').forEach(function(dom){
         if(dom.getAttribute('data-content') == %s){dom.checked = true}
-      })''' % (self._src.dom.varName, value))
+      })''' % (self.component.dom.varName, value))

@@ -21,12 +21,13 @@ class Options(DataClass):
   component_properties = ()
   with_builder = True
 
-  def __init__(self, report, attrs=None, options=None, js_tree=None):
-    super(Options, self).__init__(report, attrs, options)
+  def __init__(self, component: primitives.HtmlModel, attrs: dict = None, options: dict = None, js_tree: bool = None,
+               page: primitives.PageModel = None):
+    super(Options, self).__init__(component, attrs, options, page=page)
     self.js_type, self.__config_sub_levels, self.__config_sub__enum_levels = {}, set(), set()
     self.value_enums = {}
-    # By default it is the component dictionary
-    self.js_tree = self._report._jsStyles if js_tree is None else js_tree
+    # By default, it is the component dictionary
+    self.js_tree = self.component._jsStyles if js_tree is None else js_tree
     self.js = None
     # Set the default options for a component
     for c in self.component_properties:
@@ -64,9 +65,9 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param value: The value for the name
-    :param name: Optional. The attribute name. Default is the property name.
-    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
+    :param Any value: The value for the name
+    :param str name: Optional. The attribute name. Default is the property name.
+    :param bool js_type: Optional. Specify if the parameter is a JavaScript fragment.
     """
     self.js_tree[name or sys._getframe().f_back.f_code.co_name] = value
     if js_type:
@@ -80,9 +81,9 @@ class Options(DataClass):
 
     Attributes:
     ----------
-    :param group: The group attribute name.
-    :param dflt: Optional.
-    :param name: Optional. The attribute name.
+    :param str group: The group attribute name.
+    :param Any dflt: Optional.
+    :param str name: Optional. The attribute name.
     """
     return self.js_tree.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
@@ -118,10 +119,10 @@ class Options(DataClass):
       return self.js_tree[name]
 
     self.__config_sub_levels.add(name)
-    self.js_tree[name] = clsObj(self._report, js_tree={})
+    self.js_tree[name] = clsObj(self.component, js_tree={})
     return self.js_tree[name]
 
-  def _config_sub_data_enum(self, name: str, clsObj):
+  def _config_sub_data_enum(self, name: str, cls_obj):
     """
     Description:
     ------------
@@ -129,10 +130,10 @@ class Options(DataClass):
     Attributes:
     ----------
     :param str name: The key to be added to the internal data dictionary.
-    :param clsObj: Class. Object. The object which will be added to the nested data structure.
+    :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__config_sub__enum_levels.add(name)
-    enum_data = clsObj(self.component, js_tree={})
+    enum_data = cls_obj(self.component, js_tree={})
     self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 

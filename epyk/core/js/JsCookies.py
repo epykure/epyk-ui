@@ -9,13 +9,11 @@ from epyk.core.js import JsUtils
 
 
 class JsCookies:
-  class __internal:
-    _context = {}
 
-  def __init__(self, src: Optional[primitives.PageModel] = None):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, src: Optional[primitives.PageModel]):
+    self.page = src
 
-  def set(self, jsKey, jsData, jsDataKey=None, isPyData=True, jsFnc=None):
+  def set(self, key: str, data, data_key: str = None, python_data=True, js_funcs: Optional[Union[list, str]] = None):
     """
     Description:
     ------------
@@ -26,32 +24,33 @@ class JsCookies:
 
     Attributes:
     ----------
-    :param jsKey:
-    :param jsData:
-    :param jsDataKey:
-    :param isPyData:
-    :param jsFnc:
+    :param key:
+    :param data:
+    :param data_key:
+    :param python_data:
+    :param Optional[Union[list, str]] js_funcs: The Javascript functions.
     """
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
-    if self.src._context.get('cookies') is None:
-      self.src._context['cookies'] = True
-      return "document.cookies = {'%s': %s}" % (jsKey, jsData)
+    data = JsUtils.jsConvert(data, data_key, python_data, js_funcs)
+    if self.page._context.get('cookies') is None:
+      self.page._context['cookies'] = True
+      return "document.cookies = {'%s': %s}" % (key, data)
 
-    return "document.cookies['%s'] = %s" % (jsKey, jsData)
+    return "document.cookies['%s'] = %s" % (key, data)
 
-  def get(self, jsData=None, jsConvFnc=True, jsResultFnc=None):
+  def get(self, data: Union[str, primitives.JsDataModel] = None, js_conv_func: Optional[Union[str, list]] = True,
+          js_result_func: Optional[str] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsData: String. Optional. A String corresponding to a JavaScript object.
-    :param jsConvFnc: String. Optional. A specific JavaScript data conversion function.
-    :param jsResultFnc: Optional. A function used to transform the result.
+    :param Union[str, primitives.JsDataModel] data: Optional. A String corresponding to a JavaScript object.
+    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param Optional[str] js_result_func: Optional. A function used to transform the result.
     """
-    if jsData is None:
-      return Js.JsJson().parse("decodeURIComponent(document.cookies)", jsResultFnc=jsResultFnc)
+    if data is None:
+      return Js.JsJson().parse("decodeURIComponent(document.cookies)", js_result_func=js_result_func)
 
-    jsData = JsUtils.jsConvertData(jsData, jsConvFnc)
-    return Js.JsJson().parse("decodeURIComponent(document.cookies)['%s']" % jsData, jsResultFnc=jsResultFnc)
+    data = JsUtils.jsConvertData(data, js_conv_func)
+    return Js.JsJson().parse("decodeURIComponent(document.cookies)['%s']" % data, js_result_func=js_result_func)

@@ -26,10 +26,10 @@ class OptionsImage(Options):
     Description:
     ------------
     """
-    return self._config_get(self.component.page.theme.colors[-1])
+    return self._config_get(self.page.theme.colors[-1])
 
   @color.setter
-  def color(self, color):
+  def color(self, color: str):
     self._config(color)
 
 
@@ -47,10 +47,10 @@ class OptionsTinySlider(Options):
 
       https://github.com/ganlanyuan/tiny-slider
     """
-    return self._config_get("#%s" % self._report.htmlCode)
+    return self._config_get("#%s" % self.component.htmlCode)
 
   @container.setter
-  def container(self, value):
+  def container(self, value: str):
     self._config(value)
 
   @property
@@ -58,8 +58,10 @@ class OptionsTinySlider(Options):
     """
     Description:
     ------------
-    Controls the display and functionalities of controls components (prev/next buttons). If true, display the controls and add all functionalities.
-    For better accessibility, when a prev/next button is focused, user will be able to control the slider using left/right arrow keys.
+    Controls the display and functionalities of controls components (prev/next buttons). If true, display the controls
+    and add all functionalities.
+    For better accessibility, when a prev/next button is focused, user will be able to control the slider
+    using left/right arrow keys.
 
     Related Pages:
 
@@ -68,7 +70,7 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @controls.setter
-  def controls(self, flag):
+  def controls(self, flag: bool):
     self._config(flag)
 
   @property
@@ -85,7 +87,7 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @mouseDrag.setter
-  def mouseDrag(self, flag):
+  def mouseDrag(self, flag: bool):
     if flag:
       self.component.style.css.cursor = "pointer"
     self._config(flag)
@@ -104,7 +106,7 @@ class OptionsTinySlider(Options):
     return self._config_get("top")
 
   @controlsPosition.setter
-  def controlsPosition(self, flag):
+  def controlsPosition(self, flag: bool):
     self._config(flag)
 
   @property
@@ -121,7 +123,7 @@ class OptionsTinySlider(Options):
     return self._config_get(["prev", "next"])
 
   @controlsText.setter
-  def controlsText(self, flag):
+  def controlsText(self, flag: bool):
     self._config(flag)
 
   @property
@@ -139,7 +141,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @controlsContainer.setter
-  def controlsContainer(self, flag):
+  def controlsContainer(self, flag: bool):
     self._config(flag)
 
   @property
@@ -158,9 +160,9 @@ class OptionsTinySlider(Options):
     return self._config_get("carousel")
 
   @mode.setter
-  def mode(self, value):
+  def mode(self, value: str):
     if value not in ["carousel", "gallery"]:
-      raise Exception("Value not recognised for tiny carousel mode: %s" % value)
+      raise ValueError("Value not recognised for tiny carousel mode: %s" % value)
 
     self._config(value)
 
@@ -178,9 +180,9 @@ class OptionsTinySlider(Options):
     return self._config_get("horizontal")
 
   @axis.setter
-  def axis(self, value):
+  def axis(self, value: str):
     if value not in ["horizontal", "vertical"]:
-      raise Exception("Value not recognised for tiny carousel axis: %s" % value)
+      raise ValueError("Value not recognised for tiny carousel axis: %s" % value)
 
     self._config(value)
 
@@ -199,7 +201,7 @@ class OptionsTinySlider(Options):
     return self._config_get(1)
 
   @items.setter
-  def items(self, num):
+  def items(self, num: int):
     self._config(num)
 
   @property
@@ -216,7 +218,7 @@ class OptionsTinySlider(Options):
     return self._config_get(0)
 
   @gutter.setter
-  def gutter(self, num):
+  def gutter(self, num: int):
     self._config(num)
 
   @property
@@ -233,7 +235,7 @@ class OptionsTinySlider(Options):
     return self._config_get(0)
 
   @edgePadding.setter
-  def edgePadding(self, num):
+  def edgePadding(self, num: int):
     self._config(num)
 
   @property
@@ -250,7 +252,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @fixedWidth.setter
-  def fixedWidth(self, value):
+  def fixedWidth(self, value: int):
     self._config(value)
 
   @property
@@ -267,8 +269,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @autoWidth.setter
-  def autoWidth(self, bool):
-    self._config(bool)
+  def autoWidth(self, flag: bool):
+    self._config(flag)
 
   @property
   def slideBy(self):
@@ -284,7 +286,7 @@ class OptionsTinySlider(Options):
     return self._config_get(1)
 
   @slideBy.setter
-  def slideBy(self, value):
+  def slideBy(self, value: int):
     self._config(value)
 
   @property
@@ -301,7 +303,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @viewportMax.setter
-  def viewportMax(self, value):
+  def viewportMax(self, value: int):
     self._config(value)
 
   @property
@@ -318,7 +320,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @center.setter
-  def center(self, value):
+  def center(self, value: bool):
     self._config(value)
 
   @property
@@ -336,7 +338,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @prevButton.setter
-  def prevButton(self, value):
+  def prevButton(self, value: bool):
     self._config(value)
 
   @property
@@ -354,7 +356,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @nextButton.setter
-  def nextButton(self, value):
+  def nextButton(self, value: bool):
     self._config(value)
 
   @property
@@ -372,7 +374,7 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @nav.setter
-  def nav(self, value):
+  def nav(self, value: bool):
     self._config(value)
 
   @property
@@ -389,7 +391,7 @@ class OptionsTinySlider(Options):
     return self._config_get('top')
 
   @navPosition.setter
-  def navPosition(self, value):
+  def navPosition(self, value: str):
     self._config(value)
 
   @property
@@ -407,7 +409,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @navContainer.setter
-  def navContainer(self, value):
+  def navContainer(self, value: bool):
     self._config(value)
 
   @property
@@ -425,7 +427,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @navAsThumbnails.setter
-  def navAsThumbnails(self, value):
+  def navAsThumbnails(self, value: bool):
     self._config(value)
 
   @property
@@ -442,7 +444,7 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @arrowKeys.setter
-  def arrowKeys(self, value):
+  def arrowKeys(self, value: bool):
     self._config(value)
 
   @property
@@ -459,7 +461,7 @@ class OptionsTinySlider(Options):
     return self._config_get(300)
 
   @speed.setter
-  def speed(self, num):
+  def speed(self, num: int):
     self._config(num)
 
   @property
@@ -476,8 +478,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @autoplay.setter
-  def autoplay(self, num):
-    self._config(num)
+  def autoplay(self, flag: bool):
+    self._config(flag)
 
   @property
   def autoplayPosition(self):
@@ -493,8 +495,8 @@ class OptionsTinySlider(Options):
     return self._config_get('top')
 
   @autoplayPosition.setter
-  def autoplayPosition(self, num):
-    self._config(num)
+  def autoplayPosition(self, text: str):
+    self._config(text)
 
   @property
   def autoplayTimeout(self):
@@ -510,7 +512,7 @@ class OptionsTinySlider(Options):
     return self._config_get(5000)
 
   @autoplayTimeout.setter
-  def autoplayTimeout(self, num):
+  def autoplayTimeout(self, num: int):
     self._config(num)
 
   @property
@@ -527,8 +529,8 @@ class OptionsTinySlider(Options):
     return self._config_get('forward')
 
   @autoplayDirection.setter
-  def autoplayDirection(self, num):
-    self._config(num)
+  def autoplayDirection(self, text: str):
+    self._config(text)
 
   @property
   def autoplayText(self):
@@ -544,8 +546,8 @@ class OptionsTinySlider(Options):
     return self._config_get(["start", "stop"])
 
   @autoplayText.setter
-  def autoplayText(self, num):
-    self._config(num)
+  def autoplayText(self, text: str):
+    self._config(text)
 
   @property
   def autoplayHoverPause(self):
@@ -561,8 +563,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @autoplayHoverPause.setter
-  def autoplayHoverPause(self, num):
-    self._config(num)
+  def autoplayHoverPause(self, flag: bool):
+    self._config(flag)
 
   @property
   def autoplayButton(self):
@@ -578,8 +580,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @autoplayButton.setter
-  def autoplayButton(self, num):
-    self._config(num)
+  def autoplayButton(self, flag: bool):
+    self._config(flag)
 
   @property
   def autoplayButtonOutput(self):
@@ -595,8 +597,8 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @autoplayButtonOutput.setter
-  def autoplayButtonOutput(self, bool):
-    self._config(bool)
+  def autoplayButtonOutput(self, flag: bool):
+    self._config(flag)
 
   @property
   def autoplayResetOnVisibility(self):
@@ -612,8 +614,8 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @autoplayResetOnVisibility.setter
-  def autoplayResetOnVisibility(self, bool):
-    self._config(bool)
+  def autoplayResetOnVisibility(self, flag: bool):
+    self._config(flag)
 
   @property
   def animateIn(self):
@@ -629,7 +631,7 @@ class OptionsTinySlider(Options):
     return self._config_get("tns-fadeIn")
 
   @animateIn.setter
-  def animateIn(self, value):
+  def animateIn(self, value: str):
     self._config(value)
 
   @property
@@ -646,7 +648,7 @@ class OptionsTinySlider(Options):
     return self._config_get("tns-fadeOut")
 
   @animateOut.setter
-  def animateOut(self, value):
+  def animateOut(self, value: str):
     self._config(value)
 
   @property
@@ -663,7 +665,7 @@ class OptionsTinySlider(Options):
     return self._config_get("tns-normal")
 
   @animateNormal.setter
-  def animateNormal(self, value):
+  def animateNormal(self, value: str):
     self._config(value)
 
   @property
@@ -680,8 +682,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @animateDelay.setter
-  def animateDelay(self, value):
-    self._config(value)
+  def animateDelay(self, flag: bool):
+    self._config(flag)
 
   @property
   def loop(self):
@@ -697,8 +699,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @loop.setter
-  def loop(self, value):
-    self._config(value)
+  def loop(self, flag: bool):
+    self._config(flag)
 
   @property
   def rewind(self):
@@ -714,8 +716,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @rewind.setter
-  def rewind(self, value):
-    self._config(value)
+  def rewind(self, flag: bool):
+    self._config(flag)
 
   @property
   def autoHeight(self):
@@ -731,8 +733,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @autoHeight.setter
-  def autoHeight(self, value):
-    self._config(value)
+  def autoHeight(self, flag: bool):
+    self._config(flag)
 
   @property
   def responsive(self):
@@ -748,8 +750,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @responsive.setter
-  def responsive(self, value):
-    self._config(value)
+  def responsive(self, flag: bool):
+    self._config(flag)
 
   @property
   def lazyload(self):
@@ -765,11 +767,11 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @lazyload.setter
-  def lazyload(self, value):
-    self._config(value)
+  def lazyload(self, flag: bool):
+    self._config(flag)
 
   @property
-  def preventScrollOnTouch (self):
+  def preventScrollOnTouch(self):
     """
     Description:
     ------------
@@ -782,8 +784,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @preventScrollOnTouch .setter
-  def preventScrollOnTouch (self, value):
-    self._config(value)
+  def preventScrollOnTouch(self, flag: bool):
+    self._config(flag)
 
   @property
   def nested(self):
@@ -800,15 +802,16 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @nested.setter
-  def nested(self, value):
-    self._config(value)
+  def nested(self, flag: bool):
+    self._config(flag)
 
   @property
   def freezable(self):
     """
     Description:
     ------------
-    Indicate whether the slider will be frozen (controls, nav, autoplay and other functions will stop work) when all slides can be displayed in one page.
+    Indicate whether the slider will be frozen (controls, nav, autoplay and other functions will stop work) when all
+    slides can be displayed in one page.
 
     Related Pages:
 
@@ -817,8 +820,8 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @freezable.setter
-  def freezable(self, value):
-    self._config(value)
+  def freezable(self, flag: bool):
+    self._config(flag)
 
   @property
   def disable(self):
@@ -834,8 +837,8 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @disable.setter
-  def disable(self, value):
-    self._config(value)
+  def disable(self, flag: bool):
+    self._config(flag)
 
   @property
   def startIndex(self):
@@ -851,7 +854,7 @@ class OptionsTinySlider(Options):
     return self._config_get(0)
 
   @startIndex.setter
-  def startIndex(self, num):
+  def startIndex(self, num: int):
     self._config(num)
 
   @property
@@ -868,15 +871,16 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @onInit.setter
-  def onInit(self, value):
-    self._config(value)
+  def onInit(self, flag: bool):
+    self._config(flag)
 
   @property
   def useLocalStorage(self):
     """
     Description:
     ------------
-    Save browser capability variables to localStorage and without detecting them everytime the slider runs if set to true.
+    Save browser capability variables to localStorage and without detecting them everytime the slider runs if
+    set to true.
 
     Related Pages:
 
@@ -885,15 +889,16 @@ class OptionsTinySlider(Options):
     return self._config_get(True)
 
   @useLocalStorage.setter
-  def useLocalStorage(self, value):
-    self._config(value)
+  def useLocalStorage(self, flag: bool):
+    self._config(flag)
 
   @property
   def nonce(self):
     """
     Description:
     ------------
-    Optional Nonce attribute for inline style tag to allow slider usage without `unsafe-inline Content Security Policy source.
+    Optional Nonce attribute for inline style tag to allow slider usage without `unsafe-inline Content Security
+    Policy source.
 
     Related Pages:
 
@@ -902,5 +907,5 @@ class OptionsTinySlider(Options):
     return self._config_get(False)
 
   @nonce.setter
-  def nonce(self, value):
-    self._config(value)
+  def nonce(self, flag: bool):
+    self._config(flag)

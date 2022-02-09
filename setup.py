@@ -34,7 +34,7 @@ setuptools.setup(
         "Code": "https://github.com/epykure/epyk-ui",
         "Issue tracker": "https://github.com/epykure/epyk-ui/issues"
     },
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires=install_required(),
     package_data={
       'epyk': [

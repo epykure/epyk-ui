@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 
@@ -21,7 +22,7 @@ class OptionsText(Options):
     return self.component.attr.get("contenteditable", False)
 
   @editable.setter
-  def editable(self, flag):
+  def editable(self, flag: bool):
     self.component.page.body.style.contenteditable()
     self.component.attr["contenteditable"] = flag
     if flag:
@@ -41,7 +42,7 @@ class OptionsText(Options):
     return self.component.attr.get("spellcheck", False)
 
   @spellcheck.setter
-  def spellcheck(self, flag):
+  def spellcheck(self, flag: bool):
     self.component.page.body.style.contenteditable()
     self.component.attr["spellcheck"] = flag
 
@@ -56,7 +57,7 @@ class OptionsText(Options):
     return self._config_get(False)
 
   @reset.setter
-  def reset(self, flag):
+  def reset(self, flag: bool):
     self._config(flag)
 
   @property
@@ -75,7 +76,7 @@ class OptionsText(Options):
 
   @markdown.setter
   @packageImport("showdown", if_true=True)
-  def markdown(self, values):
+  def markdown(self, values: Union[bool, dict]):
     if isinstance(values, bool):
       self._config(values)
       self._config({} if values is True else values, 'showdown')
@@ -99,7 +100,7 @@ class OptionsText(Options):
 
   @showdown.setter
   @packageImport("showdown")
-  def showdown(self, values):
+  def showdown(self, values: dict):
     self._config(True, 'markdown')
     self._config(values)
 
@@ -115,7 +116,7 @@ class OptionsText(Options):
     return self._config_get(None, 'limit_char')
 
   @limit_char.setter
-  def limit_char(self, value):
+  def limit_char(self, value: int):
     self._config(value, "maxlength")
 
   @property
@@ -127,7 +128,7 @@ class OptionsText(Options):
     Related Pages:
 
     """
-    return self._config_get(self._report.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @red.setter
   def red(self, value):
@@ -142,7 +143,7 @@ class OptionsText(Options):
     Related Pages:
 
     """
-    return self._config_get(self.component.page.theme.success[1])
+    return self._config_get(self.page.theme.success[1])
 
   @green.setter
   def green(self, value):
@@ -157,7 +158,7 @@ class OptionsText(Options):
     Related Pages:
 
     """
-    return self._config_get(self.component.page.theme.warning[1])
+    return self._config_get(self.page.theme.warning[1])
 
   @orange.setter
   def orange(self, value):
@@ -184,12 +185,12 @@ class OptionsText(Options):
 
   @status.setter
   def status(self, value):
-    if hasattr(self.component.page.theme, str(value)):
-      color = getattr(self.component.page.theme, str(value))[1]
+    if hasattr(self.page.theme, str(value)):
+      color = getattr(self.page.theme, str(value))[1]
     else:
       color = self.component.page.theme.colors[-1]
-    self._report.style.css.border_left = '5px solid %s' % color
-    self._report.style.css.padding_left = 5
+    self.component.style.css.border_left = '5px solid %s' % color
+    self.component.style.css.padding_left = 5
     self._config(value)
 
   @property
@@ -220,7 +221,7 @@ class OptionsTitle(OptionsText):
     return self._config_get(True)
 
   @content_table.setter
-  def content_table(self, flag):
+  def content_table(self, flag: bool):
     self._config(flag)
 
 
@@ -257,7 +258,7 @@ class OptionsNumber(OptionsText):
     return self._config_get(0)
 
   @digits.setter
-  def digits(self, num):
+  def digits(self, num: int):
     self._config(num)
 
   @property
@@ -274,7 +275,7 @@ class OptionsNumber(OptionsText):
     return self._config_get("%s%v")
 
   @format.setter
-  def format(self, num):
+  def format(self, num: str):
     self._config(num)
 
   @property
@@ -309,7 +310,7 @@ class OptionsNumber(OptionsText):
     return self._config_get(",")
 
   @thousand_sep.setter
-  def thousand_sep(self, value):
+  def thousand_sep(self, value: str):
     self._config(value)
 
   @property
@@ -326,7 +327,7 @@ class OptionsNumber(OptionsText):
     return self._config_get(".")
 
   @decimal_sep.setter
-  def decimal_sep(self, value):
+  def decimal_sep(self, value: str):
     self._config(value)
 
 
@@ -345,10 +346,10 @@ class OptionsNumberMoves(OptionsNumber):
     :prop attrs: Dictionary. The CSS attributes.
     """
     return self._config_get({"text-align": "center", "margin-top": "5px",
-                             "font-size": self.component.page.body.style.globals.font.normal(10)})
+                             "font-size": self.page.body.style.globals.font.normal(10)})
 
   @css.setter
-  def css(self, attrs):
+  def css(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -364,7 +365,7 @@ class OptionsNumberMoves(OptionsNumber):
     return self._config_get(40)
 
   @rotate.setter
-  def rotate(self, value):
+  def rotate(self, value: int):
     self._config(value)
 
   @property
@@ -378,10 +379,10 @@ class OptionsNumberMoves(OptionsNumber):
 
       https://www.w3schools.com/cssref/css3_pr_transform.asp
     """
-    return self._config_get(self.component.page.body.style.globals.font.normal(2))
+    return self._config_get(self.page.body.style.globals.font.normal(2))
 
   @font_size.setter
-  def font_size(self, value):
+  def font_size(self, value: int):
     self._config(value)
 
   @property
@@ -389,7 +390,7 @@ class OptionsNumberMoves(OptionsNumber):
     return self._config_get({})
 
   @css_stats.setter
-  def css_stats(self, attrs):
+  def css_stats(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -397,7 +398,7 @@ class OptionsNumberMoves(OptionsNumber):
     return self._config_get("fas fa-arrow-up")
 
   @icon_up.setter
-  def icon_up(self, attrs):
+  def icon_up(self, attrs: str):
     self._config(attrs)
 
   @property
@@ -405,7 +406,7 @@ class OptionsNumberMoves(OptionsNumber):
     return self._config_get("")
 
   @icon_down.setter
-  def icon_down(self, attrs):
+  def icon_down(self, attrs: str):
     self._config(attrs)
 
   @property
@@ -413,7 +414,7 @@ class OptionsNumberMoves(OptionsNumber):
     return self._config_get(2)
 
   @digits_percent.setter
-  def digits_percent(self, num):
+  def digits_percent(self, num: int):
     self._config(num)
 
 
@@ -430,7 +431,7 @@ class OptionsNumberDelta(OptionsNumber):
     return self._config_get(100)
 
   @threshold1.setter
-  def threshold1(self, value):
+  def threshold1(self, value: int):
     self._config(value)
 
   @property
@@ -443,7 +444,7 @@ class OptionsNumberDelta(OptionsNumber):
     return self._config_get(50)
 
   @threshold2.setter
-  def threshold2(self, value):
+  def threshold2(self, value: int):
     self._config(value)
 
   @property
@@ -456,7 +457,7 @@ class OptionsNumberDelta(OptionsNumber):
     return self._config_get("Previous number: ")
 
   @previous_label.setter
-  def previous_label(self, value):
+  def previous_label(self, value: str):
     self._config(value)
 
 
@@ -473,11 +474,11 @@ class OptionsLink(OptionsText):
 
       https://www.w3schools.com/tags/att_a_href.asp
     """
-    return self._report.attr.get("href", '#')
+    return self.component.attr.get("href", '#')
 
   @url.setter
-  def url(self, value):
-    self._report.attr['href'] = value
+  def url(self, value: str):
+    self.component.attr['href'] = value
 
   @property
   def href(self):
@@ -490,11 +491,11 @@ class OptionsLink(OptionsText):
 
       https://www.w3schools.com/tags/att_a_href.asp
     """
-    return self._report.attr.get("href", '#')
+    return self.component.attr.get("href", '#')
 
   @href.setter
-  def href(self, value):
-    self._report.attr['href'] = value
+  def href(self, value: str):
+    self.component.attr['href'] = value
 
   @property
   def target(self):
@@ -507,11 +508,11 @@ class OptionsLink(OptionsText):
 
       https://www.w3schools.com/tags/att_a_target.asp
     """
-    return self._report.attr.get("target", '_self')
+    return self.component.attr.get("target", '_self')
 
   @target.setter
-  def target(self, value):
-    self._report.attr['target'] = value
+  def target(self, value: str):
+    self.component.attr['target'] = value
 
 
 class OptionsConsole(OptionsText):
@@ -525,7 +526,7 @@ class OptionsConsole(OptionsText):
     return self.get(False)
 
   @timestamp.setter
-  def timestamp(self, flag):
+  def timestamp(self, flag: bool):
     self.set(flag)
 
 
@@ -540,7 +541,7 @@ class OptionsComposite(Options):
     return self.get(False)
 
   @reset_class.setter
-  def reset_class(self, flag):
+  def reset_class(self, flag: bool):
     self.set(flag)
 
 
@@ -555,7 +556,7 @@ class OptionsStatus(Options):
     return self.get(False)
 
   @states.setter
-  def states(self, flag):
+  def states(self, flag: bool):
     self.set(flag)
 
   @property
@@ -567,7 +568,7 @@ class OptionsStatus(Options):
     return self.get('white')
 
   @color.setter
-  def color(self, color):
+  def color(self, color: str):
     self.set(color)
 
   @property
@@ -579,7 +580,7 @@ class OptionsStatus(Options):
     return self.get('grey')
 
   @background.setter
-  def background(self, color):
+  def background(self, color: str):
     self.set(color)
 
 
@@ -595,14 +596,14 @@ class OptContents(Options):
     return self.get("manual", False)
 
   @manual.setter
-  def manual(self, flag):
+  def manual(self, flag: bool):
     self.set(flag)
 
 
 class OptBreadCrumb(Options):
   component_properties = ("delimiter", "style_selected")
 
-  def set_style(self, name):
+  def set_style(self, name: str):
     """
     Description:
     ------------
@@ -616,10 +617,10 @@ class OptBreadCrumb(Options):
     defined_styles = {
       'pills': {
         "delimiter": '',
-        "style": {"border-radius": "10px", "border": "1px solid %s" % self.component.page.theme.greys[4],
-                  "background": self.component.page.theme.greys[0],
+        "style": {"border-radius": "10px", "border": "1px solid %s" % self.page.theme.greys[4],
+                  "background": self.page.theme.greys[0],
                   "margin": "0 2px", "width": '80px', "display": 'inline-block', "text-align": "center"},
-        'selected': {"color": self.component.page.theme.greys[0], "background": self.component.page.theme.colors[-1]}},
+        'selected': {"color": self.page.theme.greys[0], "background": self.page.theme.colors[-1]}},
       'tabs': {
         "delimiter": '',
         "style": {
@@ -628,8 +629,8 @@ class OptBreadCrumb(Options):
           "display": 'inline-block',
           "text-align": "center"},
         'selected': {
-          "color": self.component.page.theme.success[1],
-          "border-bottom": "5px solid %s" % self.component.page.theme.success[1]}},
+          "color": self.page.theme.success[1],
+          "border-bottom": "5px solid %s" % self.page.theme.success[1]}},
 
     }
     self.style = defined_styles[name]["style"]
@@ -650,7 +651,7 @@ class OptBreadCrumb(Options):
     return self._config_get(' / ')
 
   @delimiter.setter
-  def delimiter(self, value):
+  def delimiter(self, value: str):
     self._config(value)
 
   @property
@@ -667,7 +668,7 @@ class OptBreadCrumb(Options):
     return self._config_get(0)
 
   @height.setter
-  def height(self, number):
+  def height(self, number: int):
     self._config(number)
 
   @property
@@ -689,7 +690,7 @@ class OptBreadCrumb(Options):
     return self._config_get({})
 
   @style_selected.setter
-  def style_selected(self, values):
+  def style_selected(self, values: dict):
     self._config(values)
 
 
@@ -707,7 +708,7 @@ class OptionsHighlights(Options):
     return self._config_get(True)
 
   @close.setter
-  def close(self, flag):
+  def close(self, flag: bool):
     self._config(flag)
 
   @property
@@ -721,7 +722,7 @@ class OptionsHighlights(Options):
     return self._config_get(False)
 
   @reset.setter
-  def reset(self, flag):
+  def reset(self, flag: bool):
     self._config(flag)
 
   @property
@@ -781,11 +782,11 @@ class OptSearchResult(Options):
     Related Pages:
     """
     return self._config_get({
-      'color': self.component.page.theme.colors[-1], "font-weight": 900,
+      'color': self.page.theme.colors[-1], "font-weight": 900,
       'font-size': '18px'})
 
   @title.setter
-  def title(self, attrs):
+  def title(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -797,7 +798,7 @@ class OptSearchResult(Options):
     Related Pages:
     """
     return self._config_get(
-      {'color': self.component.page.theme.greys[6], "padding-bottom": "10px"})
+      {'color': self.page.theme.greys[6], "padding-bottom": "10px"})
 
   @dsc.setter
   def dsc(self, attrs):
@@ -812,10 +813,10 @@ class OptSearchResult(Options):
     Related Pages:
     """
     return self._config_get(
-      {"font-style": 'italic', 'color': self.component.page.theme.notch(), 'font-size': '14px'})
+      {"font-style": 'italic', 'color': self.page.theme.notch(), 'font-size': '14px'})
 
   @url.setter
-  def url(self, attrs):
+  def url(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -826,10 +827,10 @@ class OptSearchResult(Options):
 
     Related Pages:
     """
-    return self._config_get({'color': self.component.page.theme.greys[5]})
+    return self._config_get({'color': self.page.theme.greys[5]})
 
   @visited.setter
-  def visited(self, attrs):
+  def visited(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -840,10 +841,10 @@ class OptSearchResult(Options):
 
     Related Pages:
     """
-    return self._config_get({'color': self.component.page.theme.colors[7], 'cursor': 'pointer'})
+    return self._config_get({'color': self.page.theme.colors[7], 'cursor': 'pointer'})
 
   @link.setter
-  def link(self, attrs):
+  def link(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -857,7 +858,7 @@ class OptSearchResult(Options):
     return self._config_get(0)
 
   @pageNumber.setter
-  def pageNumber(self, num):
+  def pageNumber(self, num: int):
     self._config(num)
 
   @property
@@ -871,7 +872,7 @@ class OptSearchResult(Options):
     return self._config_get(0)
 
   @currPage.setter
-  def currPage(self, num):
+  def currPage(self, num: int):
     self._config(num)
 
   @property
@@ -882,10 +883,10 @@ class OptSearchResult(Options):
 
     Related Pages:
     """
-    return self._config_get(self.component.page.theme.colors[9])
+    return self._config_get(self.page.theme.colors[9])
 
   @grey.setter
-  def grey(self, color):
+  def grey(self, color: str):
     self._config(color)
 
   @property
@@ -896,8 +897,8 @@ class OptSearchResult(Options):
 
     Related Pages:
     """
-    return self._config_get(self.component.page.theme.colors[0])
+    return self._config_get(self.page.theme.colors[0])
 
   @white.setter
-  def white(self, color):
+  def white(self, color: str):
     self._config(color)

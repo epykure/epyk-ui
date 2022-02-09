@@ -13,7 +13,7 @@ class OptionsSkin(Options):
     Specify if the all item should be added to the items.
 
     """
-    return self._config_get(self.component.page.theme.notch())
+    return self._config_get(self.page.theme.notch())
 
   @color.setter
   def color(self, value):
@@ -29,5 +29,5 @@ class OptionsSkin(Options):
     return self._config_get(10)
 
   @font_size.setter
-  def font_size(self, flag):
-    self._config(flag)
+  def font_size(self, num: int):
+    self._config(num)

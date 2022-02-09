@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 
 from epyk.core.js.packages import JsDc
@@ -10,8 +11,8 @@ class Chart(Html.Html):
   name = 'DC Chart'
   requirements = ('dc', 'crossfilter')
 
-  def __init__(self,  report, width, height, title, options, html_code, profile):
-    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile,
+  def __init__(self,  page: primitives.PageModel, width, height, title, options, html_code, profile):
+    super(Chart, self).__init__(page, [], html_code=html_code, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self.style.css.margin = "10px 0"
 
@@ -59,13 +60,13 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class ChartLine(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Line:
     """
     Description:
     -----------
@@ -81,17 +82,17 @@ class ChartLine(Chart):
 
       https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
 
-    :rtype: JsDc.JsLine
+    :rtype: JsDc.Line
     """
     if self._dom is None:
-      self._dom = JsDc.Line(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Line(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartBar(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Bar:
     """
     Description:
     -----------
@@ -109,14 +110,14 @@ class ChartBar(Chart):
     :rtype: JsDc.Bar
     """
     if self._dom is None:
-      self._dom = JsDc.Bar(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Bar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartRow(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Row:
     """
     Description:
     -----------
@@ -126,14 +127,14 @@ class ChartRow(Chart):
     :rtype: JsDc.Row
     """
     if self._dom is None:
-      self._dom = JsDc.Row(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Row(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartScatter(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Scatter:
     """
     Description:
     -----------
@@ -151,14 +152,14 @@ class ChartScatter(Chart):
     :rtype: JsDc.Scatter
     """
     if self._dom is None:
-      self._dom = JsDc.Scatter(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Scatter(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartBubble(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Bubble:
     """
     Description:
     -----------
@@ -176,14 +177,14 @@ class ChartBubble(Chart):
     :rtype: JsDc.Bubble
     """
     if self._dom is None:
-      self._dom = JsDc.Bubble(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Bubble(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartPie(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Pie:
     """
     Description:
     -----------
@@ -198,14 +199,14 @@ class ChartPie(Chart):
     :rtype: JsDc.Pie
     """
     if self._dom is None:
-      self._dom = JsDc.Pie(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Pie(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartSunburst(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Sunburst:
     """
     Description:
     -----------
@@ -215,14 +216,14 @@ class ChartSunburst(Chart):
     :rtype: JsDc.Sunburst
     """
     if self._dom is None:
-      self._dom = JsDc.Sunburst(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Sunburst(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartSeries(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.Series:
     """
     Description:
     -----------
@@ -237,5 +238,5 @@ class ChartSeries(Chart):
     :rtype: JsDc.Series
     """
     if self._dom is None:
-      self._dom = JsDc.Series(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.Series(page=self.page, js_code=self.chartId, component=self)
     return self._dom

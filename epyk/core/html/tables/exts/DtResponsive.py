@@ -60,7 +60,9 @@ class DataDetails(Options):
     """
     Description:
     -----------
-    Responsive provides the ability to show information about the columns it has hidden using DataTables child rows feature (row().child()), but you may wish to display the data in a different manner (potentially so you can use the child rows for other actions such as editing) - this parameter provides that ability.
+    Responsive provides the ability to show information about the columns it has hidden using DataTables child rows
+    feature (row().child()), but you may wish to display the data in a different manner (potentially so you can use
+    the child rows for other actions such as editing) - this parameter provides that ability.
 
     Related Pages:
 
@@ -113,11 +115,13 @@ class Responsive(Options):
     return self
 
   @property
-  def details(self):
+  def details(self) -> DataDetails:
     """
     Description:
     -----------
-    Responsive has the ability to use DataTables' child rows feature to show information about any columns which have been removed from the display as a child row, which can be particularly useful for displaying complex information on small screen devices. Please see the Responsive manual on the details rows for further information.
+    Responsive has the ability to use DataTables' child rows feature to show information about any columns which have
+    been removed from the display as a child row, which can be particularly useful for displaying complex information
+    on small screen devices. Please see the Responsive manual on the details rows for further information.
 
     Related Pages:
 
@@ -128,12 +132,14 @@ class Responsive(Options):
     return self._config_sub_data("details", DataDetails)
 
   @property
-  def breakpoints(self):
+  def breakpoints(self) -> DataBreakPoints:
     """
     Description:
     -----------
-    The visibility of columns in a DataTable with Responsive enabled can be controlled by breakpoints and class names matching those breakpoints (and other logical operations) .
-    This provides the ability to exactly control which columns in a table will be visible for each device type. See the Responsive manual for more information.
+    The visibility of columns in a DataTable with Responsive enabled can be controlled by breakpoints and class names
+    matching those breakpoints (and other logical operations) .
+    This provides the ability to exactly control which columns in a table will be visible for each device type.
+    See the Responsive manual for more information.
 
     Related Pages:
 

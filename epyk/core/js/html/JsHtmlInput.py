@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -8,7 +11,7 @@ from epyk.core.js.primitives import JsObjects
 
 class Inputs(JsHtml.JsHtml):
 
-  def autocomplete(self, jsData=None):
+  def autocomplete(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -20,15 +23,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.autocomplete" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.autocomplete" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.autocomplete = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.autocomplete = %s" % (self.component.dom.varName, data))
 
-  def autofocus(self, jsData=None):
+  def autofocus(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -40,15 +43,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.autofocus" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.autofocus" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.autofocus = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.autofocus = %s" % (self.component.dom.varName, data))
 
-  def defaultValue(self, jsData=None):
+  def defaultValue(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -60,15 +63,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.defaultValue" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.defaultValue" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.defaultValue = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.defaultValue = %s" % (self.component.dom.varName, data))
 
-  def disabled(self, jsData=None):
+  def disabled(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -80,15 +83,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.disabled" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.disabled" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.disabled = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.disabled = %s" % (self.component.dom.varName, data))
 
-  def maxLength(self, jsData=None):
+  def maxLength(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -100,15 +103,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.maxLength" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.maxLength" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.maxLength = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.maxLength = %s" % (self.component.dom.varName, data))
 
-  def pattern(self, jsData=None):
+  def pattern(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -120,15 +123,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.pattern" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.pattern" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.pattern = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.pattern = %s" % (self.component.dom.varName, data))
 
-  def placeholder(self, jsData=None):
+  def placeholder(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -140,15 +143,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.placeholder" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.placeholder" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.placeholder = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.placeholder = %s" % (self.component.dom.varName, data))
 
-  def readOnly(self, jsData=None):
+  def readOnly(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -160,15 +163,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.readOnly" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.readOnly" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.readOnly = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.readOnly = %s" % (self.component.dom.varName, data))
 
-  def required(self, jsData=None):
+  def required(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -180,15 +183,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.required" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.required" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.required = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.required = %s" % (self.component.dom.varName, data))
 
-  def size(self, jsData=None):
+  def size(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -200,15 +203,15 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.size" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.size" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.size = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.size = %s" % (self.component.dom.varName, data))
 
-  def name(self, jsData=None):
+  def name(self, data: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -220,10 +223,10 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     """
-    if jsData is None:
-      return JsObjects.JsString.JsString.get("%s.name" % self._src.dom.varName)
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.name" % self.component.dom.varName)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsUtils.jsWrap("%s.name = %s" % (self._src.dom.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.name = %s" % (self.component.dom.varName, data))

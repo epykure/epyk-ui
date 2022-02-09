@@ -18,12 +18,12 @@ def getAggFnc():
   global factory
 
   if factory is None:
-    tmpFactory = {}
+    tmp_factory = {}
     for name, obj in inspect.getmembers(sys.modules[__name__], inspect.isclass):
       if getattr(obj, 'name', None) not in [None, '__main__'] and issubclass(obj, JsPivotAggFnc):
-        tmpFactory[obj.name] = obj()
+        tmp_factory[obj.name] = obj()
     # Atomic function to avoid asynchronous clashes on the server
-    factory = tmpFactory
+    factory = tmp_factory
   return factory
 
 
@@ -40,32 +40,36 @@ class JsPivotAggFnc:
   name = None
   __slots__ = ['keyAgg', 'key2Agg', 'numInputs', 'push', 'value', 'format']
 
-  def toJs(self, options):
+  def toJs(self, options: dict):
     """
     Description:
     -----------
     Convert the aggregator object to a Javascript dictionary usable in the Pivot Table javascript library.
     All the parameters will be standard to the Js module and this will convert the Python object to the
     corresponding Javascript ones.
+
+    Attributes:
+    ----------
+    :param dict options:
     """
-    jsPivot = ["tmpVal: 0"]
-    jsMapFncs = {'push': "function(record) {%s}", 'value': "function() {%s}", 'format': 'function(x) {%s}'}
+    js_pivot = ["tmpVal: 0"]
+    map_funcs = {'push': "function(record) {%s}", 'value': "function() {%s}", 'format': 'function(x) {%s}'}
     _opts = dict(getattr(self, '_dflts', {}))
     _opts.update(options)
     self.numInputs = 2 if getattr(self, "key2Agg", None) is not None else 1
     for slot in self.__slots__:
-      slotVal = getattr(self, slot) % _opts if slot in ['push', 'value', 'format'] else getattr(self, slot)
-      if slotVal is None:
+      slot_val = getattr(self, slot) % _opts if slot in ['push', 'value', 'format'] else getattr(self, slot)
+      if slot_val is None:
         continue
 
-      if slot in jsMapFncs:
-        if slot in ['value', 'format'] and not 'return ' in slotVal:
-          raise Exception("value and format should return a value")
+      if slot in map_funcs:
+        if slot in ['value', 'format'] and 'return ' not in slot_val:
+          raise ValueError("value and format should return a value")
 
-        jsPivot.append("%s: %s" % (slot, jsMapFncs[slot] % slotVal))
+        js_pivot.append("%s: %s" % (slot, map_funcs[slot] % slot_val))
       else:
-        jsPivot.append("%s: %s" % (slot, slotVal))
-    return "{%s}" % ", ".join(jsPivot)
+        js_pivot.append("%s: %s" % (slot, slot_val))
+    return "{%s}" % ", ".join(js_pivot)
 
 
 # -------------------------------------------------------------------------------------------------------------------

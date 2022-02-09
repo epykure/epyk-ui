@@ -2,8 +2,8 @@
 
 class BsStyles:
 
-  def __init__(self, rptObj):
-    self._report = rptObj
+  def __init__(self, page):
+    self.page = page
 
   def remove(self, style):
     """
@@ -31,7 +31,7 @@ class BsStyles:
     :param style: String the css style to be replaced
     :param new_style: String. The new CSS Style to be added (multiple should be a string with spaces)
     """
-    for v in self._report.components.values():
+    for v in self.page.components.values():
       if style in v.attr['class']:
         if new_style is None:
           v.attr['class'].discard(style)

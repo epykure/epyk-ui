@@ -1,12 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-
-Related Pages:
-
-		https://naver.github.io/billboard.js/release/latest/doc/Chart.html#data%25E2%2580%25A4colors
-"""
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -15,10 +10,10 @@ from epyk.core.js.packages import JsPackage
 
 class C3Legend:
 
-  def __init__(self, varName):
-    self.varName = varName
+  def __init__(self, js_code: str):
+    self.varName = js_code
 
-  def show(self, targetIds=None):
+  def show(self, target_ids=None):
     """
     Description:
     -----------
@@ -28,15 +23,15 @@ class C3Legend:
 
       https://c3js.org/reference.html#api-legend-show
 
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.show()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.show(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.show(%s)" % (self.varName, target_ids)
 
-  def hide(self, targetIds=None):
+  def hide(self, target_ids=None):
     """
     Description:
     -----------
@@ -48,20 +43,20 @@ class C3Legend:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.hide()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.hide(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.hide(%s)" % (self.varName, target_ids)
 
 
 class C3Data:
-  def __init__(self, varName):
-    self.varName = varName
+  def __init__(self, js_code: str):
+    self.varName = js_code
 
-  def axes(self, targetIds=None):
+  def axes(self, target_ids=None):
     """
     Description:
     -----------
@@ -73,15 +68,15 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.axes()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.axes(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.axes(%s)" % (self.varName, target_ids)
 
-  def values(self, targetIds=None):
+  def values(self, target_ids=None):
     """
     Description:
     -----------
@@ -93,15 +88,15 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.values()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.values(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.values(%s)" % (self.varName, target_ids)
 
-  def colors(self, targetIds=None):
+  def colors(self, target_ids=None):
     """
     Description:
     -----------
@@ -113,15 +108,15 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.colors()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.colors(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.colors(%s)" % (self.varName, target_ids)
 
-  def names(self, targetIds=None):
+  def names(self, target_ids=None):
     """
     Description:
     -----------
@@ -133,15 +128,15 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.names()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.names(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.names(%s)" % (self.varName, target_ids)
 
-  def show(self, targetIds=None):
+  def show(self, target_ids=None):
     """
     Description:
     -----------
@@ -153,15 +148,15 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.show()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.show(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.show(%s)" % (self.varName, target_ids)
 
-  def hide(self, targetIds=None):
+  def hide(self, target_ids=None):
     """
     Description:
     -----------
@@ -173,30 +168,30 @@ class C3Data:
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     """
-    if targetIds is None:
+    if target_ids is None:
       return "%s.hide()" % self.varName
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return "%s.hide(%s)" % (self.varName, targetIds)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return "%s.hide(%s)" % (self.varName, target_ids)
 
 
 class C3(JsPackage):
   lib_alias = {'js': "c3", 'css': 'c3'}
 
-  def __init__(self, src, varName, setVar=False, report=None):
-    super(C3, self).__init__(src=src, varName=varName, selector=varName, setVar=setVar)
-    self._report = report
+  def __init__(self, component: primitives.HtmlModel, js_code: str, set_var: bool = False,
+               page: primitives.PageModel = None):
+    super(C3, self).__init__(component=component, js_code=js_code, selector=js_code, set_var=set_var, page=page)
 
   @property
   def legend(self):
-    return C3Legend("%s.legend" % self.src.htmlCode)
+    return C3Legend("%s.legend" % self.component.htmlCode)
 
   @property
   def value(self):
     return JsObjects.JsObjects.get(
-      "{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.src.htmlCode)
+      "{'%s': arguments[0], timestamp: Date.now(), offset: new Date().getTimezoneOffset()}" % self.component.htmlCode)
 
   @property
   def content(self):
@@ -204,7 +199,7 @@ class C3(JsPackage):
 
   @property
   def label(self):
-    return JsObjects.JsString.JsString("arguments[0].name", isPyData=False)
+    return JsObjects.JsString.JsString("arguments[0].name", is_py_data=False)
 
   def load(self):
     """
@@ -212,7 +207,7 @@ class C3(JsPackage):
     :return:
     """
 
-  def show(self, targetIds=None, options=None):
+  def show(self, target_ids=None, options=None):
     """
     Description:
     -----------
@@ -227,17 +222,17 @@ class C3(JsPackage):
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     :param options:
     """
-    if targetIds is None and options is None:
+    if target_ids is None and options is None:
       return JsObjects.JsVoid("%s.show()" % self._selector)
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
     options = JsUtils.jsConvertData(options, None)
-    return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, targetIds, options))
+    return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
-  def toggle(self, targetIds=None, options=None):
+  def toggle(self, target_ids=None, options=None):
     """
     Description:
     -----------
@@ -252,15 +247,15 @@ class C3(JsPackage):
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     :param options:
     """
-    if targetIds is None and options is None:
+    if target_ids is None and options is None:
       return JsObjects.JsVoid("%s.toggle()" % self._selector)
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
     options = JsUtils.jsConvertData(options, None)
-    return JsObjects.JsVoid("%s.toggle(%s, %s)" % (self._selector, targetIds, options))
+    return JsObjects.JsVoid("%s.toggle(%s, %s)" % (self._selector, target_ids, options))
 
   @property
   def data(self):
@@ -273,9 +268,9 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-data
     """
-    return
+    raise NotImplementedError()
 
-  def hide(self, targetIds=None, options=None):
+  def hide(self, target_ids=None, options=None):
     """
     Description:
     -----------
@@ -290,15 +285,15 @@ class C3(JsPackage):
 
     Attributes:
     ----------
-    :param targetIds:
+    :param target_ids:
     :param options:
     """
-    if targetIds is None and options is None:
+    if target_ids is None and options is None:
       return JsObjects.JsVoid("%s.show()" % self._selector)
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
+    target_ids = JsUtils.jsConvertData(target_ids, None)
     options = JsUtils.jsConvertData(options, None)
-    return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, targetIds, options))
+    return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
   def flow(self, args):
     """
@@ -319,7 +314,7 @@ class C3(JsPackage):
     args = JsUtils.jsConvertData(args, None)
     return JsObjects.JsVoid("%s.flow(%s)" % (self._selector, args))
 
-  def transform(self, type, targetIds=None):
+  def transform(self, chart_type, target_ids=None):
     """
     Description:
     -----------
@@ -331,15 +326,15 @@ class C3(JsPackage):
 
     Attributes:
     ----------
-    :param type:
-    :param targetIds:
+    :param chart_type:
+    :param target_ids:
     """
-    if targetIds is None:
-      type = JsUtils.jsConvertData(type, None)
-      return JsObjects.JsVoid("%s.transform(%s)" % (self._selector, type))
+    if target_ids is None:
+      chart_type = JsUtils.jsConvertData(chart_type, None)
+      return JsObjects.JsVoid("%s.transform(%s)" % (self._selector, chart_type))
 
-    targetIds = JsUtils.jsConvertData(targetIds, None)
-    return JsObjects.JsVoid("%s.transform(%s, %s)" % (self._selector, type, targetIds))
+    target_ids = JsUtils.jsConvertData(target_ids, None)
+    return JsObjects.JsVoid("%s.transform(%s, %s)" % (self._selector, chart_type, target_ids))
 
   def load(self, args):
     """
@@ -442,7 +437,7 @@ class C3(JsPackage):
     grids = JsUtils.jsConvertData(grids, None)
     return JsObjects.JsVoid("%s.xgrids(%s)" % (self._selector, grids))
 
-  def select(self, ids, indices, resetOthers):
+  def select(self, ids, indices, reset_others):
     """
     Description:
     -----------
@@ -458,12 +453,12 @@ class C3(JsPackage):
     ----------
     :param ids:
     :param indices:
-    :param resetOthers:
+    :param reset_others:
     """
     ids = JsUtils.jsConvertData(ids, None)
     indices = JsUtils.jsConvertData(indices, None)
-    resetOthers = JsUtils.jsConvertData(resetOthers, None)
-    return JsObjects.JsVoid("%s.select(%s, %s, %s)" % (self._selector, ids, indices, resetOthers))
+    reset_others = JsUtils.jsConvertData(reset_others, None)
+    return JsObjects.JsVoid("%s.select(%s, %s, %s)" % (self._selector, ids, indices, reset_others))
 
   def unselected(self, ids, indices):
     """

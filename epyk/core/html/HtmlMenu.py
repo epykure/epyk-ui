@@ -20,9 +20,9 @@ from epyk.core.html.options import OptList
 class HtmlNavBar(Html.Html):
   name = 'Nav Bar'
 
-  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
+  def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
                height: tuple, options: Optional[dict], html_code: str, profile: Optional[Union[dict, bool]]):
-    super(HtmlNavBar, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+    super(HtmlNavBar, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                      profile=profile, options=options)
     self.scroll, self.background = None, True
     if components is not None:
@@ -102,6 +102,7 @@ class HtmlNavBar(Html.Html):
     """
     self.style.css.background_color = self.page.theme.colors[0]
     self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
+    return self
 
   def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False):
     """
@@ -164,27 +165,27 @@ class HtmlNavBar(Html.Html):
     str_h = "".join([h.html() for h in self.val])
     if self.style.css.position != 'fixed':
       self.page.body.style.css.padding_top = 0
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_h)
 
 
 class HtmlFooter(Html.Html):
   name = 'footer'
 
-  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple,
                height: tuple, options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(HtmlFooter, self).__init__(report, [], css_attrs={"width": width, "height": height},
+    super(HtmlFooter, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                      options=options, profile=profile)
     self.__col_lst = None
     if components is not None:
       if not isinstance(components, list):
         components = [components]
-      for c in components:
-        self.__add__(c)
+      for component in components:
+        self.__add__(component)
 
     # Set the colors
-    self.style.css.background_color = report.theme.greys[0]
-    self.style.css.border_top = "1px solid %s" % report.theme.greys[4]
-    self.style.css.color = report.theme.greys[6]
+    self.style.css.background_color = page.theme.greys[0]
+    self.style.css.border_top = "1px solid %s" % page.theme.greys[4]
+    self.style.css.color = page.theme.greys[6]
 
   @property
   def sections(self):
@@ -229,7 +230,7 @@ class HtmlFooter(Html.Html):
     self.val.append(component)
     return self
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Html.Html:
     """
     Description:
     -----------
@@ -246,7 +247,7 @@ class HtmlFooter(Html.Html):
 
   def __str__(self):
     str_h = "".join([val.html() for val in self.val])
-    return "<footer %s>%s</footer>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_h)
+    return "<footer %s>%s</footer>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_h)
 
 
 class ContextMenu(Html.Html):
@@ -255,9 +256,9 @@ class ContextMenu(Html.Html):
   source = None
   _option_cls = OptList.OptionsLi
 
-  def __init__(self, report: primitives.PageModel, components: List[Html.Html], width: str, height: str,
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: str, height: str,
                visible: bool, options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(ContextMenu, self).__init__(report, [], css_attrs={"width": width, "height": height},
+    super(ContextMenu, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                       profile=profile, options=options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
               'padding': 0, 'margin': 0, 'background-color': self.page.theme.greys[0],
@@ -353,19 +354,19 @@ class ContextMenu(Html.Html):
     return '''
       <nav %(attr)s name='context_menus'>
         <ul style='list-style:none;padding:0px;margin:0'>%(val)s</ul>
-      </nav>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': str_vals}
+      </nav>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': str_vals}
 
 
 class PanelsBar(Html.Html):
   name = 'Panel Bar'
 
-  def __init__(self, report: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
                helper: str, profile: Optional[Union[dict, bool]]):
-    super(PanelsBar, self).__init__(report, None, profile=profile, css_attrs={"width": width, "height": height})
+    super(PanelsBar, self).__init__(page, None, profile=profile, css_attrs={"width": width, "height": height})
     self.add_helper(helper)
-    self.menus = report.ui.div(options={'inline': True})
+    self.menus = page.ui.div(options={'inline': True})
     self.menus.options.managed = False
-    self.panels = report.ui.div()
+    self.panels = page.ui.div()
     self.panels.options.managed = False
     self.menu_mapping = collections.OrderedDict()
     #
@@ -377,16 +378,16 @@ class PanelsBar(Html.Html):
     if options.get('position', 'top') == 'top':
       self.panels.style.css.padding_bottom = 10
       self.menus.style.css.top = 0
-      self.panels.style.css.border_bottom = '1px solid %s' % report.theme.colors[-1]
+      self.panels.style.css.border_bottom = '1px solid %s' % page.theme.colors[-1]
     else:
       self.style.css.position = 'relative'
-      self.panels.style.css.border_top = '1px solid %s' % report.theme.colors[-1]
+      self.panels.style.css.border_top = '1px solid %s' % page.theme.colors[-1]
       self.panels.style.css.bottom = 0
       self.menus.style.css.bottom = 0
 
     self.menus.style.css.position = 'absolute'
-    self.menus.style.css.background = report.theme.colors[-1]
-    self.menus.style.css.color = report.theme.colors[0]
+    self.menus.style.css.background = page.theme.colors[-1]
+    self.menus.style.css.color = page.theme.colors[0]
     self.menus.style.css.padding = '5px 0'
 
   def add_panel(self, text: str, content: Html.Html):
@@ -431,16 +432,16 @@ class PanelsBar(Html.Html):
       ])
 
     return "<div %s>%s%s</div>%s" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.menus.html(), self.panels.html(), self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), self.menus.html(), self.panels.html(), self.helper)
 
 
 class Shortcut(Html.Html):
   name = 'shortcut'
 
-  def __init__(self, report: primitives.PageModel, components: List[Html.Html],
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html],
                logo: Union[str, Html.Html], width: tuple, height: tuple, html_code: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Shortcut, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+    super(Shortcut, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                    profile=profile)
     self.logo = logo
     if hasattr(self.logo, 'options'):
@@ -448,7 +449,7 @@ class Shortcut(Html.Html):
     self.__options = options
     for component in components:
       self.__add__(component)
-    self.css({"background": report.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
+    self.css({"background": page.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
     self.style.css.padding = 0
     if options['position'] in ['left', 'right']:
       self.css({'text-align': 'center'})
@@ -531,4 +532,4 @@ class Shortcut(Html.Html):
     self.logo.style.css.margin_bottom = 40
     self.page.body.style.css.padding_left = "%spx" % (int(self.css("width")[:-2]) + 5)
     str_div = "".join([self.logo.html()] + [v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div)
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div)

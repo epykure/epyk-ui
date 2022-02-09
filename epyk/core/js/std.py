@@ -45,7 +45,7 @@ window = JsWindow.JsWindow()
 alert = JsWindow.JsWindow().alert
 
 
-def querySelectorAll(selector: Union[primitives.JsDataModel, str]):
+def querySelectorAll(reference: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -58,12 +58,12 @@ def querySelectorAll(selector: Union[primitives.JsDataModel, str]):
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] selector: CSS selectors.
+  :param Union[primitives.JsDataModel, str] reference: CSS selectors.
   """
-  return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, None), isPyData=False)
+  return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(reference, None), is_py_data=False)
 
 
-def querySelector(selector: Union[primitives.JsDataModel, str]):
+def querySelector(reference: Union[primitives.JsDataModel, str]):
   """
   Description:
   ------------
@@ -75,9 +75,9 @@ def querySelector(selector: Union[primitives.JsDataModel, str]):
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] selector: CSS selectors.
+  :param Union[primitives.JsDataModel, str] reference: CSS selectors.
   """
-  return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, None))
+  return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(reference, None))
 
 
 getElementById = JsBase.getElementById

@@ -15,20 +15,20 @@ class Stepper(Html.Html):
   name = 'Stepper'
   _option_cls = OptPanel.OptionsStepper
 
-  def __init__(self, report: primitives.PageModel, records: list, width: tuple, height: tuple, color: Optional[str],
+  def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, color: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    dflt_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0] - 20}, 'circle_factor': 2,
-                    'text_style': {'display': 'block', 'text-align': 'center'},
-                    'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0',
+    dfl_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0] - 20}, 'circle_factor': 2,
+                   'text_style': {'display': 'block', 'text-align': 'center'},
+                   'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0',
                                     'pending': '#FF9200'},
-                    'success': ["#C9EDE4", "#63CBB2", "#37A78C"],
-                    'error': ["#F8CBAD", "#FF5757", "#FF0000"],
-                    'pending': ["#FFDEB3", "#FFB047", "#FF9200"],
-                    'waiting': ["#BEBEBE", "#B5B5B5", "#A0A0A0"],
-                    'shape': 'circle', 'text_color': 'white'}
-    dflt_options.update(options)
+                   'success': ["#C9EDE4", "#63CBB2", "#37A78C"],
+                   'error': ["#F8CBAD", "#FF5757", "#FF0000"],
+                   'pending': ["#FFDEB3", "#FFB047", "#FF9200"],
+                   'waiting': ["#BEBEBE", "#B5B5B5", "#A0A0A0"],
+                   'shape': 'circle', 'text_color': 'white'}
+    dfl_options.update(options)
     super(Stepper, self).__init__(
-      report, records, options=dflt_options, profile=profile, css_attrs={"list-style-type": 'none', "width": width})
+      page, records, options=dfl_options, profile=profile, css_attrs={"list-style-type": 'none', "width": width})
     self.color = self.page.theme.greys[-1] if color is None else color
     self.css({'color': self.color, "margin": 0, 'display': 'inline-block', 'padding': 0})
 
@@ -46,7 +46,7 @@ class Stepper(Html.Html):
     :rtype: JsHtmlStepper.Stepper
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Stepper(self, report=self.page)
+      self._dom = JsHtmlStepper.Stepper(self, page=self.page)
     return self._dom
 
   @property
@@ -118,14 +118,14 @@ class Stepper(Html.Html):
     shapes = JsHtmlStepper.JsShapes()
     for s in shapes.shapes:
       self.page.properties.js.add_constructor(s, "function %s(htmlObj, options, step){%s}" % (s, getattr(shapes, s)()))
-    return '<ul %s></ul>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<ul %s></ul>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Step:
   name = 'Step'
 
-  def __init__(self, src: Stepper, selector: Html.Html):
-    self._src = src
+  def __init__(self, component: Stepper, selector: Html.Html):
+    self.component = component
     self._selector = selector
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
@@ -141,7 +141,7 @@ class Step:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.page.properties.js.add_on_ready(
+    self.component.page.properties.js.add_on_ready(
       "%(src)s.style.cursor = 'pointer'; %(src)s.addEventListener('click', function(event){%(fncs)s})" % {
         "src": self._selector.varName, "fncs": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
     return self

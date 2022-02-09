@@ -25,7 +25,7 @@ class DataHeader(GraphPlotly.DataChart):
     self._attrs["values"] = val
 
   @property
-  def line(self):
+  def line(self) -> GraphPlotly.DataMarkersLine:
     """
     Description:
     ------------
@@ -37,7 +37,7 @@ class DataHeader(GraphPlotly.DataChart):
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
   @property
-  def font(self):
+  def font(self) -> GraphPlotly.DataFont:
     """
     Description:
     ------------
@@ -49,7 +49,7 @@ class DataHeader(GraphPlotly.DataChart):
     return self.sub_data("font", GraphPlotly.DataFont)
 
   @property
-  def fill(self):
+  def fill(self) -> GraphPlotly.DataFill:
     """
     Description:
     ------------
@@ -80,7 +80,7 @@ class DataCells(GraphPlotly.DataChart):
     self._attrs["values"] = val
 
   @property
-  def line(self):
+  def line(self) -> GraphPlotly.DataMarkersLine:
     """
     Description:
     ------------
@@ -92,7 +92,7 @@ class DataCells(GraphPlotly.DataChart):
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
   @property
-  def font(self):
+  def font(self) -> GraphPlotly.DataFont:
     """
 
     https://plot.ly/javascript/bubble-maps/
@@ -102,7 +102,7 @@ class DataCells(GraphPlotly.DataChart):
     return self.sub_data("font", GraphPlotly.DataFont)
 
   @property
-  def fill(self):
+  def fill(self) -> GraphPlotly.DataFill:
     """
 
     https://plot.ly/javascript/bubble-maps/
@@ -134,7 +134,7 @@ class DataDomain(GraphPlotly.DataChart):
 class DataTable(GraphPlotly.DataChart):
 
   @property
-  def domain(self):
+  def domain(self) -> DataDomain:
     """
 
     :rtype: DataDomain
@@ -162,7 +162,7 @@ class DataTable(GraphPlotly.DataChart):
     self._attrs["columnwidth"] = val
 
   @property
-  def header(self):
+  def header(self) -> DataHeader:
     """
 
     https://plot.ly/javascript/bubble-maps/
@@ -172,7 +172,7 @@ class DataTable(GraphPlotly.DataChart):
     return self.sub_data("header", DataHeader)
 
   @property
-  def cells(self):
+  def cells(self) -> DataCells:
     """
 
     https://plot.ly/javascript/bubble-maps/
@@ -189,7 +189,7 @@ class Table(GraphPlotly.Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -197,11 +197,11 @@ class Table(GraphPlotly.Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> GraphPlotly.Layout:
     """
     Description:
     ------------
@@ -209,7 +209,7 @@ class Table(GraphPlotly.Chart):
     :rtype: GraphPlotly.Layout
     """
     if self._layout is None:
-      self._layout = GraphPlotly.Layout(self._report)
+      self._layout = GraphPlotly.Layout(self, page=self.page)
     return self._layout
 
   @property
@@ -273,14 +273,14 @@ class Table(GraphPlotly.Chart):
         c_data['type'] = type
       if mode is not None:
         c_data['mode'] = mode
-      trace = GraphPlotly.DataChart(self._report, attrs=c_data)
+      trace = GraphPlotly.DataChart(self, page=self.page, attrs=c_data)
     else:
       c_data = {}
       if type is not None:
         c_data['type'] = type
       if mode is not None:
         c_data['mode'] = mode
-      trace = DataTable(self._report, attrs=c_data)
+      trace = DataTable(self, page=self.page, attrs=c_data)
       trace.cells.values = data
     self._traces.append(trace)
     return self

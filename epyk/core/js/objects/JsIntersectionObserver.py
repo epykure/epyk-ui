@@ -12,7 +12,7 @@ from epyk.core.js.fncs import JsFncs
 from epyk.core.js import JsUtils
 
 
-class IntersectionObserverEntry:
+class IntersectionObserverEntry(JsObject.JsObject):
 
   @property
   def boundingClientRect(self):
@@ -26,6 +26,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/boundingClientRect
     """
+    raise NotImplementedError()
 
   @property
   def intersectionRatio(self):
@@ -39,6 +40,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRatio
     """
+    raise NotImplementedError()
 
   @property
   def intersectionRect(self):
@@ -53,6 +55,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRect
     """
+    raise NotImplementedError()
 
   @property
   def isIntersecting(self):
@@ -66,6 +69,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/isIntersecting
     """
+    raise NotImplementedError()
 
   @property
   def rootBounds(self):
@@ -79,6 +83,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/rootBounds
     """
+    raise NotImplementedError()
 
   @property
   def target(self):
@@ -92,6 +97,7 @@ class IntersectionObserverEntry:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/target
     """
+    raise NotImplementedError()
 
   @property
   def time(self):
@@ -108,7 +114,7 @@ class IntersectionObserverEntry:
     return JsNumber.JsNumber("%s.time")
 
 
-class IntersectionObserver:
+class IntersectionObserver(JsObject.JsObject):
 
   def __init__(self):
     pass
@@ -126,7 +132,7 @@ class IntersectionObserver:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root
     """
-    return JsObject.JsObject("%s.root", isPyData=False)
+    return JsObject.JsObject("%s.root", is_py_data=False)
 
   @property
   def rootMargin(self):
@@ -140,7 +146,7 @@ class IntersectionObserver:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin
     """
-    return JsString.JsString("%s.rootMargin", isPyData=False)
+    return JsString.JsString("%s.rootMargin", is_py_data=False)
 
   @property
   def thresholds(self):
@@ -156,9 +162,9 @@ class IntersectionObserver:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds
     """
-    return JsArray.JsArray("%s.thresholds", isPyData=False)
+    return JsArray.JsArray("%s.thresholds", is_py_data=False)
 
-  def observe(self, targetElement):
+  def observe(self, target_element):
     """
     Description:
     ------------
@@ -171,11 +177,12 @@ class IntersectionObserver:
 
     Attributes:
     ----------
-    :param targetElement: An element whose visibility within the root is to be monitored.
-                          This element must be a descendant of the root element (or contained wtihin the current document, if the root is the document's viewport).
+    :param target_element: An element whose visibility within the root is to be monitored.
+                          This element must be a descendant of the root element (or contained wtihin the current
+                          document, if the root is the document's viewport).
     :return:
     """
-    return
+    raise NotImplementedError()
 
   def disconnect(self):
     """
@@ -204,7 +211,7 @@ class IntersectionObserver:
     """
     return JsFncs.JsFunction("%s.takeRecords()")
 
-  def unobserve(self, targetElement):
+  def unobserve(self, target_element):
     """
     Description:
     ------------
@@ -217,6 +224,7 @@ class IntersectionObserver:
 
     Attributes:
     ----------
-    :param targetElement: The Element to cease observing. If the specified element isn't being observed, this method does nothing and no exception is thrown.
+    :param target_element: The Element to cease observing.
+    If the specified element isn't being observed, this method does nothing and no exception is thrown.
     """
     return JsFncs.JsFunction("%s.unobserve()")

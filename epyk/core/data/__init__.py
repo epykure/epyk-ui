@@ -51,12 +51,12 @@ components = DataPy.HtmlComponents()
 list_items = DataPy.ListItems()
 
 
-class Sent(object):
+class Sent:
 
   def __init__(self, data):
     self.__data = data
 
-  def get(self, name=None):
+  def get(self, name: str = None):
     """
     Description:
     ------------
@@ -64,12 +64,12 @@ class Sent(object):
 
     Attributes:
     ----------
-    :param name: String. The attribute name
+    :param str name: The attribute name.
     """
     return self.__data[name or sys._getframe().f_back.f_code.co_name]
 
 
-class Received(object):
+class Received:
 
   data_sent = None
 
@@ -117,7 +117,7 @@ class Received(object):
     :return:
     """
     if self.data_sent is None:
-      raise Exception("data_sent must be defined")
+      raise ValueError("data_sent must be defined")
 
     return self.data_sent(self.__data)
 
@@ -133,3 +133,47 @@ class Received(object):
     for t in list(self.__response_tags):
       data[t] = self.__data[t]
     return json.dumps(data)
+
+
+class DataSchemaProperties:
+
+  def __init__(self, context: dict):
+    self._context = context
+
+  @property
+  def keys(self):
+    return self._context['keys']
+
+  @property
+  def values(self):
+    return self._context['values']
+
+  @property
+  def columns(self):
+    return list(self.keys | self.values)
+
+  @property
+  def funcs(self):
+    return self._context['fncs']
+
+  @property
+  def containers(self):
+    return self._context['containers']
+
+
+class DataProperties:
+
+  def __init__(self, context: dict):
+    self._context = context
+
+  def add(self, records, js_funcs: list = None, profile=None):
+    data_id = len(self._context["sources"])
+    self._context["sources"][data_id] = records
+    self._context["schema"][data_id] = {"containers": {}, 'fncs': js_funcs or [], "profile": profile}
+    return data_id
+
+  def get_schema(self, data_id: int):
+    return self._context["schema"][data_id]
+
+  def get_records(self, data_id: int):
+    return self._context["sources"][data_id]

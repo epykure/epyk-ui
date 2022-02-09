@@ -21,7 +21,8 @@ class FixedColumns(Options):
     """
     Description:
     -----------
-    FixedColumns operates by cloning the cells from the original table and then inserting them into the document, positioned visually above the DataTable - thus allowing them to appear fixed.
+    FixedColumns operates by cloning the cells from the original table and then inserting them into the document,
+    positioned visually above the DataTable - thus allowing them to appear fixed.
 
     Related Pages:
 

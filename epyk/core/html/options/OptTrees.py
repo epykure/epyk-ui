@@ -19,7 +19,7 @@ class OptionsTree(Options):
     return self._config_get(True)
 
   @is_root.setter
-  def is_root(self, flag):
+  def is_root(self, flag: bool):
     self._config(flag)
 
   @property
@@ -36,7 +36,7 @@ class OptionsTree(Options):
     return self._config_get("fas fa-folder-open")
 
   @icon_open.setter
-  def icon_open(self, icon):
+  def icon_open(self, icon: str):
     self._config(icon)
 
   @property
@@ -53,7 +53,7 @@ class OptionsTree(Options):
     return self._config_get("fas fa-folder")
 
   @icon_close.setter
-  def icon_close(self, icon):
+  def icon_close(self, icon: str):
     self._config(icon)
 
   @property
@@ -70,7 +70,7 @@ class OptionsTree(Options):
     return self._config_get(True)
 
   @expanded.setter
-  def expanded(self, flag):
+  def expanded(self, flag: bool):
     self._config(flag)
 
   @property
@@ -87,7 +87,7 @@ class OptionsTree(Options):
     return self._config_get({})
 
   @style.setter
-  def style(self, css):
+  def style(self, css: dict):
     self._config(css)
 
   @property
@@ -104,7 +104,7 @@ class OptionsTree(Options):
     return self._config_get(False)
 
   @with_badge.setter
-  def with_badge(self, flag):
+  def with_badge(self, flag: bool):
     self._config(flag)
 
 
@@ -141,7 +141,7 @@ class OptDropDown(Options):
     return self._config_get({})
 
   @a.setter
-  def a(self, css):
+  def a(self, css: dict):
     self._config(css)
 
   @property
@@ -154,7 +154,7 @@ class OptDropDown(Options):
     return self._config_get({})
 
   @ul.setter
-  def ul(self, css):
+  def ul(self, css: dict):
     self._config(css)
 
   def onClick(self, js_funcs, profile=None):

@@ -57,7 +57,8 @@ function startSnow() { var mX = -100; var mY = -100;
     if (flake.x >= canvas.width || flake.x <= 0) {resetSnow(flake)}
     ctx.beginPath(); ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2); ctx.fill()}
   requestAnimationFrame(startSnow)}''' % self.htmlCode)
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+      self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Rains(GraphCanvas.Canvas):
@@ -127,4 +128,4 @@ class Rains(GraphCanvas.Canvas):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()))
+      self.get_attrs(css_class_names=self.style.get_classes()))

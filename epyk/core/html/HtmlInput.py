@@ -4,6 +4,7 @@
 import datetime
 import json
 from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
@@ -29,15 +30,15 @@ class Output(Html.Html):
 
   def __str__(self):
     return '<output %(strAttr)s>%(val)s</output>' % {
-      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val}
 
 
 class Input(Html.Html):
   name = 'Input'
   _option_cls = OptInputs.OptionsInput
 
-  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
-    super(Input, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code, options, attrs, profile):
+    super(Input, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     value = text['value'] if isinstance(text, dict) else self._vals
     self.set_attrs(attrs={"type": "text", "value": value, "spellcheck": False})
@@ -49,7 +50,7 @@ class Input(Html.Html):
     self.style.css.padding = 0
     self.__focus = False
     if self.options.background:
-      self.style.css.background_color = report.theme.colors[0]
+      self.style.css.background_color = page.theme.colors[0]
     if width[0] is None:
       self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
 
@@ -74,7 +75,7 @@ class Input(Html.Html):
     :rtype: JsHtmlField.InputText
     """
     if self._js is None:
-      self._js = JsHtmlField.InputText(self, self.page)
+      self._js = JsHtmlField.InputText(self, page=self.page)
     return self._js
 
   @property
@@ -95,7 +96,7 @@ class Input(Html.Html):
     :rtype: JsHtmlInput.Inputs
     """
     if self._dom is None:
-      self._dom = JsHtmlInput.Inputs(self, report=self.page)
+      self._dom = JsHtmlInput.Inputs(self, page=self.page)
     return self._dom
 
   @property
@@ -179,7 +180,8 @@ class Input(Html.Html):
     self.style.add_classes.input.is_valid()
     return self
 
-  def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: str = None,
+            on_ready: bool = False):
     """
     Description:
     ------------
@@ -191,10 +193,10 @@ class Input(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param str source_event: Optional. The source target for the event.
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
 
     :return: The python object itself.
     """
@@ -288,14 +290,15 @@ class Input(Html.Html):
       self.style.add_classes.input.basic_noborder()
       self.options.borders = None
 
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class InputRadio(Input):
   name = 'Input'
 
-  def __init__(self, report, flag, group_name, placeholder, width, height, html_code, options, attrs, profile):
-    super(InputRadio, self).__init__(report, "", placeholder, width, height, html_code, options, attrs, profile)
+  def __init__(self, page: primitives.PageModel, flag: bool, group_name: str, placeholder: str, width: tuple,
+               height, html_code, options, attrs, profile):
+    super(InputRadio, self).__init__(page, "", placeholder, width, height, html_code, options, attrs, profile)
     self.set_attrs({"type": 'radio'})
     if flag:
       self.set_attrs({"checked": json.dumps(flag)})
@@ -308,10 +311,10 @@ class AutoComplete(Input):
   requirements = ('jqueryui', )
   _option_cls = OptInputs.OptionAutoComplete
 
-  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
+  def __init__(self, page, text, placeholder, width, height, html_code, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    super(AutoComplete, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
+    super(AutoComplete, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
     self.__focus = False
     if self.options.borders == "bottom":
       self.style.clear_class("CssInput")
@@ -396,14 +399,14 @@ class AutoComplete(Input):
     :rtype: JsQueryUi.Autocomplete
     """
     if self._js is None:
-      self._js = JsQueryUi.Autocomplete(self, report=self.page)
+      self._js = JsQueryUi.Autocomplete(self, page=self.page)
     return self._js
 
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
       self.focus()
     self.page.properties.js.add_builders(self.refresh())
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class InputTime(Input):
@@ -411,11 +414,12 @@ class InputTime(Input):
   requirements = ('timepicker', )
   _option_cls = OptInputs.OptionsTimePicker
 
-  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
+  def __init__(self, page: primitives.PageModel, text, placeholder, width, height,
+               html_code, options, attrs, profile):
     if text is None:
       text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
-    super(InputTime, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
-    self.style.css.background_color = report.theme.colors[0]
+    super(InputTime, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
+    self.style.css.background_color = page.theme.colors[0]
     self.style.css.line_height = Defaults.LINE_HEIGHT
     self.style.css.text_align = "center"
 
@@ -457,7 +461,7 @@ class InputTime(Input):
     :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, page=self.page)
     return self._dom
 
   @property
@@ -471,7 +475,7 @@ class InputTime(Input):
     :rtype: JsTimepicker.Timepicker
     """
     if self._js is None:
-      self._js = JsTimepicker.Timepicker(self, report=self.page)
+      self._js = JsTimepicker.Timepicker(self, page=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -504,7 +508,7 @@ class InputTime(Input):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class InputDate(Input):
@@ -512,13 +516,14 @@ class InputDate(Input):
   name = 'Input Time'
   _option_cls = OptInputs.OptionsDatePicker
 
-  def __init__(self, report, records, placeholder, width, height, html_code, options, attrs, profile):
-    super(InputDate, self).__init__(report, records, placeholder, width, height, html_code, options, attrs, profile)
+  def __init__(self, page: primitives.PageModel, records, placeholder, width, height,
+               html_code, options, attrs, profile):
+    super(InputDate, self).__init__(page, records, placeholder, width, height, html_code, options, attrs, profile)
     if options.get("date_from_js", None) is not None:
       self.options.dateJsOvr(options["date_from_js"])
 
   @property
-  def options(self):
+  def options(self) -> OptInputs.OptionsDatePicker:
     """
     Description:
     ------------
@@ -533,7 +538,7 @@ class InputDate(Input):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsQueryUi.Datepicker:
     """
     Description:
     -----------
@@ -543,7 +548,7 @@ class InputDate(Input):
     :rtype: JsQueryUi.Datepicker
     """
     if self._js is None:
-      self._js = JsQueryUi.Datepicker(self, report=self.page)
+      self._js = JsQueryUi.Datepicker(self, page=self.page)
     return self._js
 
   @property
@@ -569,7 +574,7 @@ class InputDate(Input):
     :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, page=self.page)
     return self._dom
 
   def excluded_dates(self, dts: List[str] = None, js_funcs: Optional[Union[list, str]] = None,
@@ -583,7 +588,8 @@ class InputDate(Input):
     ----------
     :param List[str] dts: Optional. Dates excluded format YYYY-MM-DD.
     :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     self.options.beforeShowDay([''' var utc = value.getTime() - value.getTimezoneOffset()*60000; 
       var newDate = new Date(utc); const dts = %(dts)s; %(jsFnc)s; 
@@ -604,7 +610,8 @@ class InputDate(Input):
     :param List[str] dts: Optional. Dates included format YYYY-MM-DD.
     :param str selected: Optional. The selected date from the range. Default max.
     :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     self._vals = selected or sorted(dts)[-1]
     self.options.beforeShowDay(['''
@@ -628,7 +635,8 @@ class InputDate(Input):
     :param List[str] dts: Optional. A list of dates format YYYY-MM-DD.
     :param Optional[dict] css: Optional. The CSS Attributes for the CSS class.
     :param str tooltip: Optional. The tooltip when the mouse is hover.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     dts = dts or []
     if css is not None:
@@ -647,17 +655,18 @@ class InputDate(Input):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     if self.options.inline:
-      return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+      return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
-    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class InputInteger(Input):
   name = 'Input Number'
   _option_cls = OptInputs.OptionsInputInteger
 
-  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
-    super(InputInteger, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
+  def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code,
+               options, attrs, profile):
+    super(InputInteger, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
 
   @property
   def options(self) -> OptInputs.OptionsInputInteger:
@@ -688,11 +697,11 @@ class InputRange(Input):
   name = 'Input Range'
   _option_cls = OptInputs.OptionsInputRange
 
-  def __init__(self, report, text, min_val, max_val, step, placeholder, width, height, html_code, options, attrs,
-               profile):
-    super(InputRange, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
-    self.input = report.ui.inputs.input(text, width=(None, "px"),
-                                        placeholder=placeholder).css({"vertical-align": 'middle'})
+  def __init__(self, page: primitives.PageModel, text, min_val, max_val, step, placeholder, width,
+               height, html_code, options, attrs, profile):
+    super(InputRange, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
+    self.input = page.ui.inputs.input(
+      text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
     self.append_child(self.input)
     self.input.set_attrs(attrs={"type": "range", "min": min_val, "max": max_val, "step": step})
     if self.options.output:
@@ -731,14 +740,15 @@ class InputRange(Input):
   def __str__(self):
     if hasattr(self, 'output'):
       self.output.css({"display": 'inline-block'})
-    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<div %(strAttr)s></div>' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Field(Html.Html):
   name = 'Field'
 
-  def __init__(self, report, html_input, label, icon, width, height, html_code, helper, options, profile):
-    super(Field, self).__init__(report, "", html_code=html_code, profile=profile,
+  def __init__(self, page: primitives.PageModel, html_input, label, icon, width, height, html_code,
+               helper, options, profile):
+    super(Field, self).__init__(page, "", html_code=html_code, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._vals = ""
     # Add the component predefined elements
@@ -773,32 +783,33 @@ class Field(Html.Html):
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
-      self._dom = JsHtmlField.JsHtmlFields(self, report=self.page)
+      self._dom = JsHtmlField.JsHtmlFields(self, page=self.page)
     return self._dom
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    return "<div %s>%s%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
 
 class FieldInput(Field):
   name = 'Field Input'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.input(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
-                                        html_code="%s_input" % html_code if html_code is not None else html_code,
-                                        options=options)
-    super(FieldInput, self).__init__(
-      report, html_input, label, icon, width, height, html_code, helper, options, profile)
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.input(page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+                                      html_code="%s_input" % html_code if html_code is not None else html_code,
+                                      options=options)
+    super(FieldInput, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldAutocomplete(Field):
   name = 'Field Autocomplete'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.autocomplete(report.inputs.get(html_code, value), width=(None, "%"),
-                                               placeholder=placeholder, options=options)
-    super(FieldAutocomplete, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.autocomplete(page.inputs.get(html_code, value), width=(None, "%"),
+                                             placeholder=placeholder, options=options)
+    super(FieldAutocomplete, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options,
                                             profile)
 
   def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
@@ -939,13 +950,11 @@ class FieldAutocomplete(Field):
 class FieldRange(Field):
   name = 'Field Range'
 
-  def __init__(self, report, value, min_val, max_val, step, label, placeholder, icon, width, height, html_code, helper,
-               options, profile):
-    html_input = report.ui.inputs.d_range(report.inputs.get(html_code, value),
-                                          min_val=min_val, max_val=max_val, step=step,
-                                          width=(None, "%"), placeholder=placeholder, options=options)
-    super(FieldRange, self).__init__(
-      report, html_input, label, icon, width, height, html_code, helper, options, profile)
+  def __init__(self, page: primitives.PageModel, value, min_val, max_val, step, label, placeholder, icon, width,
+               height, html_code, helper, options, profile):
+    html_input = page.ui.inputs.d_range(page.inputs.get(html_code, value), min_val=min_val, max_val=max_val, step=step,
+                                        width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldRange, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options, profile)
     if icon is not None and html_input.options.output:
       html_input.output.style.css.margin_left = 25
     if html_input.options.output:
@@ -955,10 +964,11 @@ class FieldRange(Field):
 class FieldCheckBox(Field):
   name = 'Field Checkbox'
 
-  def __init__(self, report, value, label, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.checkbox(report.inputs.get(html_code, value), width=(None, "%"), options=options)
-    super(FieldCheckBox, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
-                                        profile)
+  def __init__(self, page: primitives.PageModel, value, label, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.checkbox(page.inputs.get(html_code, value), width=(None, "%"), options=options)
+    super(FieldCheckBox, self).__init__(
+      page, html_input, label, icon, width, height, html_code, helper, options, profile)
     if label is not None and options.get('position') == 'after':
       self.label.style.css.float = None
       self.label.style.css.width = 'auto'
@@ -970,57 +980,61 @@ class FieldCheckBox(Field):
 class FieldInteger(Field):
   name = 'Field Integer'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.d_int(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
-                                        options=options)
-    super(FieldInteger, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
-                                       options, profile)
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height,
+               html_code, helper, options, profile):
+    html_input = page.ui.inputs.d_int(
+      page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldInteger, self).__init__(
+      page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldFile(Field):
   name = 'Field Integer'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.file(report.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
-                                       options=options)
-    super(FieldFile, self).__init__(report, html_input, label, icon, width, height, html_code, helper, options,
-                                    profile)
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.file(
+      page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldFile, self).__init__(
+      page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldPassword(Field):
   name = 'Field Password'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.password(report.inputs.get(html_code, value), width=(None, "%"),
-                                           placeholder=placeholder, options=options)
-    super(FieldPassword, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
-                                        options, profile)
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.password(
+      page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder, options=options)
+    super(FieldPassword, self).__init__(
+      page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldTextArea(Field):
   name = 'Field Textarea'
 
-  def __init__(self, report, value, label, placeholder, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.inputs.textarea(report.inputs.get(html_code, value), width=(100, "%"),
-                                           placeholder=placeholder, options=options)
-    super(FieldTextArea, self).__init__(report, html_input, label, icon, width, height, html_code, helper,
-                                        options, profile)
+  def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
+               helper, options, profile):
+    html_input = page.ui.inputs.textarea(
+      page.inputs.get(html_code, value), width=(100, "%"), placeholder=placeholder, options=options)
+    super(FieldTextArea, self).__init__(
+      page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class FieldSelect(Field):
   name = 'Field Select'
 
-  def __init__(self, report, value, label, icon, width, height, html_code, helper, options, profile):
-    html_input = report.ui.select(report.inputs.get(html_code, value),
-                                  "%s_input" % html_code if html_code is not None else html_code,
-                                  width=(100, "%"), options=options)
+  def __init__(self, page: primitives.PageModel, value, label, icon, width, height, html_code, helper,
+               options, profile):
+    html_input = page.ui.select(
+      page.inputs.get(html_code, value), "%s_input" % html_code if html_code is not None else html_code,
+      width=(100, "%"), options=options)
     html_input.options.iconBase = "iconBase"
     icon_details = Defaults_css.get_icon("check")
     html_input.options.tickIcon = icon_details["icon"]
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(FieldSelect, self).__init__(
-      report, html_input, label, icon, width, height, html_code, helper, options, profile)
+    super(FieldSelect, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options, profile)
     if label is not None:
       self.label.style.css.line_height = None
 
@@ -1028,8 +1042,9 @@ class FieldSelect(Field):
 class Checkbox(Html.Html):
   name = 'Checkbox'
 
-  def __init__(self, report, flag, label, group_name, width, height, html_code, options, attrs, profile):
-    super(Checkbox, self).__init__(report, {"value": flag}, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, flag, label, group_name, width, height, html_code, options,
+               attrs, profile):
+    super(Checkbox, self).__init__(page, {"value": flag}, html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height})
     self.set_attrs(attrs={"type": "checkbox"})
     if group_name is not None:
@@ -1051,7 +1066,7 @@ class Checkbox(Html.Html):
     :rtype: JsHtmlField.Check
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Check(self, report=self.page)
+      self._dom = JsHtmlField.Check(self, page=self.page)
     return self._dom
 
   @property
@@ -1065,7 +1080,7 @@ class Checkbox(Html.Html):
     :rtype: JsComponents.Radio
     """
     if self._js is None:
-      self._js = JsComponents.Radio(self, report=self.page)
+      self._js = JsComponents.Radio(self, page=self.page)
     return self._js
 
   _js__builder__ = '''htmlObj.checked = data.value; 
@@ -1075,14 +1090,15 @@ class Checkbox(Html.Html):
 
   def __str__(self):
     return '<input %(strAttr)s>%(label)s' % {
-      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'label': self._label}
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'label': self._label}
 
 
 class Radio(Html.Html):
   name = 'Radio'
 
-  def __init__(self, report, flag, label, group_name, icon, width, height, html_code, helper, options, profile):
-    super(Radio, self).__init__(report, {"value": flag, 'text': label}, html_code=html_code,
+  def __init__(self, page: primitives.PageModel, flag, label, group_name, icon, width, height, html_code, helper,
+               options, profile):
+    super(Radio, self).__init__(page, {"value": flag, 'text': label}, html_code=html_code,
                                 css_attrs={"width": width, 'height': height}, profile=profile)
     self.add_input("", position="before", css={"width": 'none', "vertical-align": 'middle'})
     self.add_label(label, html_code=self.htmlCode, position="after",
@@ -1113,7 +1129,7 @@ class Radio(Html.Html):
     :rtype: JsHtmlField.Radio
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Radio(self, report=self.page)
+      self._dom = JsHtmlField.Radio(self, page=self.page)
     return self._dom
 
   @property
@@ -1127,7 +1143,7 @@ class Radio(Html.Html):
     :rtype: JsComponents.Radio
     """
     if self._js is None:
-      self._js = JsComponents.Radio(self, report=self.page)
+      self._js = JsComponents.Radio(self, page=self.page)
     return self._js
 
   _js__builder__ = '''htmlObj.checked = data.value; 
@@ -1137,14 +1153,15 @@ class Radio(Html.Html):
 
   def __str__(self):
     return '<div %(strAttr)s>%(helper)s</div>' % {
-      'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'helper': self.helper}
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper}
 
 
 class TextArea(Html.Html):
   name = 'Text Area'
 
-  def __init__(self, report, text, width, rows, placeholder, background_color, html_code, options, profile):
-    super(TextArea, self).__init__(report, text, html_code=html_code, profile=profile,
+  def __init__(self, page: primitives.PageModel, text, width, rows, placeholder, background_color,
+               html_code, options, profile):
+    super(TextArea, self).__init__(page, text, html_code=html_code, profile=profile,
                                    css_attrs={"width": width, 'box-sizing': 'border-box'})
     self.rows, self.backgroundColor = rows, background_color
     self.style.add_classes.input.textarea()
@@ -1195,7 +1212,7 @@ class TextArea(Html.Html):
     :rtype: JsHtmlField.Textarea
     """
     if self._dom is None:
-      self._dom = JsHtmlField.Textarea(self, report=self.page)
+      self._dom = JsHtmlField.Textarea(self, page=self.page)
     return self._dom
 
   def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -1224,16 +1241,17 @@ class TextArea(Html.Html):
 
   def __str__(self):
     return '<textarea %(strAttr)s>%(val)s</textarea>' % {
-      "strAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val}
+      "strAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val}
 
 
 class Search(Html.Html):
   name = 'Search'
 
-  def __init__(self, report, text, placeholder, color, width, height, html_code, tooltip, extensible, options, profile):
+  def __init__(self, page: primitives.PageModel, text, placeholder, color, width, height, html_code, tooltip,
+               extensible, options, profile):
     if options.get('icon_family') is not None and options['icon_family'] != 'bootstrap-icons':
       self.requirements = (options['icon_family'],)
-    super(Search, self).__init__(report, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
+    super(Search, self).__init__(page, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
     self.color = 'inherit' if color is None else color
     self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
     if not extensible:
@@ -1243,7 +1261,7 @@ class Search(Html.Html):
       self.style.add_classes.layout.search_extension(max_width=width)
     self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
     if options["icon"]:
-      self.add_icon(options["icon"], css={"color": report.theme.colors[4]}, html_code=self.htmlCode,
+      self.add_icon(options["icon"], css={"color": page.theme.colors[4]}, html_code=self.htmlCode,
                     family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
       self.icon.style.css.z_index = 10
       self.dom.trigger = self.icon.dom.trigger
@@ -1293,7 +1311,7 @@ class Search(Html.Html):
     :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
-      self._dom = JsHtmlField.JsHtmlFields(self, report=self.page)
+      self._dom = JsHtmlField.JsHtmlFields(self, page=self.page)
     return self._dom
 
   _js__builder__ = '''htmlObj.find('input').val(data)'''
@@ -1343,4 +1361,4 @@ class Search(Html.Html):
           js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
 
   def __str__(self):
-    return '<div %(attr)s></div>' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '<div %(attr)s></div>' % {"attr": self.get_attrs(css_class_names=self.style.get_classes())}

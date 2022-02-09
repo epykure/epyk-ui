@@ -31,7 +31,7 @@ class JsIf:
     if hasattr(condition, "toStr"):
       condition = condition.toStr()
     self._js = [(condition, js_funcs)]
-    self.__jsElse = None
+    self.__js_else = None
 
   def elif_(self, condition: str, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
@@ -68,15 +68,15 @@ class JsIf:
 
     :return: The If object to allow the chaining.
     """
-    self.__jsElse = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    self.__js_else = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
   def toStr(self):
     str_data = ["if(%s){%s}" % (self._js[0][0], ";".join(map(lambda x: str(x),  self._js[0][1])))]
     for condition, funcs in self._js[1:]:
       str_data.append("else if(%s){%s}" % (condition, ";".join(funcs)))
-    if self.__jsElse is not None:
-      str_data.append("else {%s}" % self.__jsElse)
+    if self.__js_else is not None:
+      str_data.append("else {%s}" % self.__js_else)
     # empty the stack
-    self._js, self.__jsElse = [], None
+    self._js, self.__js_else = [], None
     return "".join(str_data)

@@ -1,11 +1,12 @@
 
 from epyk.core.css.styles.attributes import Attrs
+from epyk.core.py import primitives
 
 
 class NavBar(Attrs):
 
-  def __init__(self, component):
-    super(NavBar, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(NavBar, self).__init__(component, page=page)
     self.font_size = component.page.body.style.globals.font.normal(4)
     self.display = 'block'
     self.margin = 0
@@ -22,6 +23,8 @@ class NavBar(Attrs):
 
 class Footer(Attrs):
   """
+  Description:
+  ------------
   CSS pre defined properties for the Footer.
 
   CSS Properties:
@@ -35,8 +38,8 @@ class Footer(Attrs):
     z-index: 10
   """
 
-  def __init__(self, component):
-    super(Footer, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(Footer, self).__init__(component, page=page)
     self.display = 'block'
     self.margin = 0
     self.vertical_align = 'bottom'

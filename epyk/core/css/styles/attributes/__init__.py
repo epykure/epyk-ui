@@ -13,11 +13,10 @@ IMPORTANT_EXPR = "{} !IMPORTANT"
 
 class Attrs(Properties.CssMixin):
 
-  def __init__(self, component: primitives.HtmlModel):
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
     self.attrs = {}
     self.component = component
-    self._report = component.page
-    self.page = component.page
+    self.page = page or component.page
 
   def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
     """
@@ -56,8 +55,8 @@ class Attrs(Properties.CssMixin):
 
     Attributes:
     ----------
-    :param attr: Optional. The attribute to be removed.
-    :param set_none: Optional. Set the CSS attribute value to None on the CSS.
+    :param str attr: Optional. The attribute to be removed.
+    :param bool set_none: Optional. Set the CSS attribute value to None on the CSS.
     """
     key = attr or sys._getframe().f_back.f_code.co_name.replace("_", "-")
     if set_none:
@@ -79,8 +78,8 @@ class Attrs(Properties.CssMixin):
 
 class Commons(Attrs):
 
-  def __init__(self, component: primitives.HtmlModel):
-    super(Commons, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(Commons, self).__init__(component, page=page)
     self.font_size = 'inherit'
     self.font_family = 'inherit'
     self.box_sizing = 'border-box'
@@ -88,14 +87,14 @@ class Commons(Attrs):
 
 class Empty(Attrs):
 
-  def __init__(self, component: primitives.HtmlModel):
-    super(Empty, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(Empty, self).__init__(component, page=page)
 
 
 class Body(Attrs):
 
-  def __init__(self, component: primitives.HtmlModel):
-    super(Body, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(Body, self).__init__(component, page=page)
     self.font_size = component.style.globals.font.normal()
     self.font_family = component.style.globals.font.family
     self.margin = 0
@@ -103,12 +102,8 @@ class Body(Attrs):
 
 class CssInline(Attrs):
 
-  def __init__(self, component: primitives.HtmlModel = None):
-    self.attrs = {}
-    self.component = component
-    if component is not None:
-      self._report = component.page
-      self.page = component.page
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None):
+    super(CssInline, self).__init__(component, page=page)
 
   @property
   def stroke_dasharray(self):

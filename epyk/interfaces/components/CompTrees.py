@@ -140,10 +140,10 @@ class Trees:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"width": 70}
-    dflt_options.update(options or {})
+    dfl_options = {"width": 70}
+    dfl_options.update(options or {})
     html_d = html.HtmlTrees.DropDown(
-      self.page, record, text, width, height, html_code, helper, dflt_options, profile)
+      self.page, record, text, width, height, html_code, helper, dfl_options, profile)
     html.Html.set_component_skin(html_d)
     return html_d
 

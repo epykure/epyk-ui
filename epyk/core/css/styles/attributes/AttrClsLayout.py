@@ -1,9 +1,12 @@
 
 from epyk.core.css.styles.attributes import Attrs
+from epyk.core.py import primitives
 
 
 class AttrHelp(Attrs):
   """
+  Description:
+  ------------
   CSS pre defined properties for the Helper.
 
   CSS Properties:
@@ -14,8 +17,8 @@ class AttrHelp(Attrs):
     margin: 1px 4px
   """
 
-  def __init__(self, component):
-    super(AttrHelp, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(AttrHelp, self).__init__(component, page=page)
     self.font_size = component.page.body.style.globals.font.normal()
     self.cursor = "pointer"
     self.float = "right"

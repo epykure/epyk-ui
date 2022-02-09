@@ -413,7 +413,7 @@ class Inputs:
     html_input.style.css.padding_left = 5
     # Take into account the padding left in the width size.
     # TODO: Think about a more flexible way to do this.
-    #html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
+    # html_input.style.css.width = Defaults.INPUTS_MIN_WIDTH - 5
     html.Html.set_component_skin(html_input)
     return html_input
 

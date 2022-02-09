@@ -47,7 +47,7 @@ class OptionsButton(Options):
     return self.get(False)
 
   @multiple.setter
-  def multiple(self, flag):
+  def multiple(self, flag: bool):
     self.set(flag)
 
   @property
@@ -66,11 +66,11 @@ class OptionsButton(Options):
     ----------
     :prop val: String. The group name for several buttons.
     """
-    return self._report.attr.get('name')
+    return self.component.attr.get('name')
 
   @group.setter
   def group(self, val):
-    self._report.set_attrs(name='name', value=val)
+    self.component.set_attrs(name='name', value=val)
 
 
 class OptionsBadge(Options):
@@ -90,12 +90,12 @@ class OptionsBadge(Options):
     return self.get()
 
   @badge_css.setter
-  def badge_css(self, css):
-    if hasattr(self, '_report') and hasattr(self._report, 'link'):
-      self._report.link.css(css)
-    cssOpts = self.get({})
-    cssOpts.update(css)
-    self.set(cssOpts)
+  def badge_css(self, css: dict):
+    if hasattr(self, 'page') and hasattr(self.page, 'link'):
+      self.page.link.css(css)
+    css_opts = self.get({})
+    css_opts.update(css)
+    self.set(css_opts)
 
   @property
   def badge_position(self):
@@ -112,7 +112,7 @@ class OptionsBadge(Options):
     return self.get()
 
   @badge_position.setter
-  def badge_position(self, position):
+  def badge_position(self, position: str):
     if position == 'left':
       self.set({"position": 'relative'}, name='badge_css')
     else:
@@ -143,7 +143,7 @@ class OptMedia(Options):
     return self.get(True)
 
   @controls.setter
-  def controls(self, flag):
+  def controls(self, flag: bool):
     self.set(flag)
 
   @property
@@ -167,7 +167,7 @@ class OptMedia(Options):
     return self.get(False)
 
   @loop.setter
-  def loop(self, flag):
+  def loop(self, flag: bool):
     self.set(flag)
 
   @property
@@ -186,12 +186,13 @@ class OptMedia(Options):
 
     Attributes:
     ----------
-    :prop value: String. Optional. The preload attribute specifies if and how the author thinks that the video should be loaded when the page loads.
+    :prop value: String. Optional. The preload attribute specifies if and how the author thinks that the video
+    should be loaded when the page loads.
     """
     return self.get('none')
 
   @preload.setter
-  def preload(self, value="auto"):
+  def preload(self, value: str = "auto"):
     value = value or "none"
     if self.options.verbose and value not in ("none", "auto", "metadata"):
       logging.warning("Not defined preload value %s" % value)
@@ -222,7 +223,7 @@ class OptMedia(Options):
     return self.get(False)
 
   @muted.setter
-  def muted(self, flag):
+  def muted(self, flag: bool):
     self.set(flag)
 
   @property
@@ -234,8 +235,6 @@ class OptMedia(Options):
 
     The poster attribute specifies an image to be shown while the video is downloading,
     or until the user hits the play button.
-
-    Usage::
 
     Related Pages:
 
@@ -249,7 +248,7 @@ class OptMedia(Options):
     return self.get()
 
   @poster.setter
-  def poster(self, url):
+  def poster(self, url: str):
     self.set(url)
 
   @property
@@ -270,7 +269,7 @@ class OptMedia(Options):
     return self.get(True)
 
   @autoplay.setter
-  def autoplay(self, flag):
+  def autoplay(self, flag: bool):
     self.set(flag)
 
 
@@ -300,7 +299,7 @@ class OptCheckboxes(Options):
     return self._config_get(False)
 
   @all_selected.setter
-  def all_selected(self, flag):
+  def all_selected(self, flag: bool):
     self._config(flag)
 
   @property
@@ -327,7 +326,7 @@ class OptCheck(Options):
     return self._config_get("fas fa-check")
 
   @icon_check.setter
-  def icon_check(self, icon):
+  def icon_check(self, icon: str):
     self._config(icon)
 
   @property
@@ -338,7 +337,7 @@ class OptCheck(Options):
     return self._config_get("fas fa-times")
 
   @icon_not_check.setter
-  def icon_not_check(self, icon):
+  def icon_not_check(self, icon: str):
     self._config(icon)
 
   @property
@@ -349,7 +348,7 @@ class OptCheck(Options):
     return self._config_get(False)
 
   @disable.setter
-  def disable(self, flag):
+  def disable(self, flag: bool):
     self._config(flag)
 
   @property
@@ -357,7 +356,7 @@ class OptCheck(Options):
     """
 
     """
-    return self._config_get(self._report._report.theme.success[1])
+    return self._config_get(self.page.theme.success[1])
 
   @green.setter
   def green(self, values):
@@ -368,7 +367,7 @@ class OptCheck(Options):
     """
 
     """
-    return self._config_get(self._report._report.theme.danger[1])
+    return self._config_get(self.page.theme.danger[1])
 
   @red.setter
   def red(self, values):
@@ -383,7 +382,7 @@ class OptionsButtonFilter(Options):
     return self.get(False)
 
   @is_number.setter
-  def is_number(self, flag):
+  def is_number(self, flag: bool):
     self.set(flag)
 
   @property
@@ -391,7 +390,7 @@ class OptionsButtonFilter(Options):
     return self.get("fas fa-align-center")
 
   @icon.setter
-  def icon(self, value):
+  def icon(self, value: str):
     self.set(value)
 
   @property
@@ -399,5 +398,5 @@ class OptionsButtonFilter(Options):
     return self.get("fas fa-filter")
 
   @icon_filer.setter
-  def icon_filer(self, value):
+  def icon_filer(self, value: str):
     self.set(value)

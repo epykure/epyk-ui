@@ -5,11 +5,11 @@ from epyk.core.js.primitives import JsObject
 
 class JsDOMRect:
 
-  def __init__(self, varId):
-    self.varId = varId
+  def __init__(self, js_code: str):
+    self.varId = js_code
 
-  def setVar(self, varName, varType="var"):
-    return JsObject.JsObject("%s %s = %s" % (varType, varName, self.varId))
+  def setVar(self, js_code: str, var_type: str = "var"):
+    return JsObject.JsObject("%s %s = %s" % (var_type, js_code, self.varId))
 
   @property
   def x(self):

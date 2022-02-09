@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
@@ -75,32 +76,34 @@ class _Export:
 class ApexChart(JsPackage):
   lib_alias = {'js': "apexcharts", 'css': 'apexcharts'}
 
-  def __init__(self, htmlCode=None, config=None, src=None, varName=None, selector=None, setVar=False):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, html_code=None, config=None, page: primitives.PageModel = None, js_code=None,
+               selector: str = None, set_var=False, component: primitives.HtmlModel = None):
+    self.page, self.component = page, component
     if selector is None:
-      self._selector = self.new(htmlCode, config, varName).toStr()
+      self._selector = self.new(html_code, config, js_code).toStr()
     else:
       self._selector = selector
-    self.varName, self.setVar = varName or self._selector, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
-    self.src.cssImport.add(self.lib_alias['css'])
+    self.varName, self.setVar = js_code or self._selector, set_var
+    self.page.jsImports.add(self.lib_alias['js'])
+    self.page.cssImport.add(self.lib_alias['css'])
     self._js = []
 
-  def new(self, htmlCode, options, varName):
+  def new(self, html_code, options, js_code: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options:
+    :param js_code:
     """
     options = JsUtils.jsConvertData(options, None)
-    if varName is not None:
-      return JsObjects.JsVoid('%s = new ApexCharts(%s, %s)' % (varName, htmlCode, options))
+    if js_code is not None:
+      return JsObjects.JsVoid('%s = new ApexCharts(%s, %s)' % (js_code, html_code, options))
 
-    return JsObjects.JsVoid('new ApexCharts(%s, %s)' % (htmlCode, options))
+    return JsObjects.JsVoid('new ApexCharts(%s, %s)' % (html_code, options))
 
   def render(self):
     """
@@ -115,12 +118,14 @@ class ApexChart(JsPackage):
     """
     return JsObjects.JsVoid("%s.render()" % self.varName)
 
-  def exec(self, htmlCode, methodName, options=None):
+  def exec(self, html_code, method_name, options=None):
     """
     Description:
     -----------
-    If you want to call chart methods without referencing the instance of the chart, you can call the exec() method directly.
-    The exec() method takes chartID as the first parameter and finds the chart instance based on that ID to execute method on that chart instance.
+    If you want to call chart methods without referencing the instance of the chart,
+    you can call the exec() method directly.
+    The exec() method takes chartID as the first parameter and finds the chart instance based on that ID to execute
+    method on that chart instance.
 
     Related Pages:
 
@@ -128,16 +133,18 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
-    :param methodName: String. Any function which can directly be called on chart instance can be named in method parameter.
-    :param options: Dictionary. The parameters which are accepted in the original method will be passed here in the same order.
+    :param html_code: String. An identifier for this component (on both Python and Javascript side).
+    :param method_name: String. Any function which can directly be called on chart instance can be named in method
+    parameter.
+    :param options: Dictionary. The parameters which are accepted in the original method will be passed here in the
+    same order.
     """
-    htmlCode = JsUtils.jsConvertData(htmlCode, None)
-    methodName = JsUtils.jsConvertData(methodName, None)
+    html_code = JsUtils.jsConvertData(html_code, None)
+    method_name = JsUtils.jsConvertData(method_name, None)
     options = JsUtils.jsConvertData(options or {}, None, depth=True)
-    return JsObjects.JsVoid("ApexCharts.exec(%s, %s, %s)" % (htmlCode, methodName, options))
+    return JsObjects.JsVoid("ApexCharts.exec(%s, %s, %s)" % (html_code, method_name, options))
 
-  def updateOptions(self, newOptions, redrawPaths=False, animate=True, updateSyncedCharts=True):
+  def updateOptions(self, new_options, redraw_paths=False, animate=True, update_synced_charts=True):
     """
     Description:
     -----------
@@ -150,18 +157,21 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param newOptions: Dictionary. The configuration object to merge on the existing one.
-    :param redrawPaths: Boolean. Optional. When the chart is re-rendered, should it draw from the existing paths or completely redraw the chart paths from the beginning. By default, the chart is re-rendered from the existing paths
+    :param new_options: Dictionary. The configuration object to merge on the existing one.
+    :param redraw_paths: Boolean. Optional. When the chart is re-rendered, should it draw from the existing paths or
+    completely redraw the chart paths from the beginning. By default, the chart is re-rendered from the existing paths
     :param animate: Boolean. Optional. Should the chart animate on re-rendering.
-    :param updateSyncedCharts: Boolean. Optional. All the charts in a group should also update when one chart in a group is updated.
+    :param update_synced_charts: Boolean. Optional. All the charts in a group should also update when one chart in a
+    group is updated.
     """
-    newOptions = JsUtils.jsConvertData(newOptions, None, depth=True)
-    redrawPaths = JsUtils.jsConvertData(redrawPaths, None)
+    new_options = JsUtils.jsConvertData(new_options, None, depth=True)
+    redraw_paths = JsUtils.jsConvertData(redraw_paths, None)
     animate = JsUtils.jsConvertData(animate, None)
-    updateSyncedCharts = JsUtils.jsConvertData(updateSyncedCharts, None)
-    return JsObjects.JsVoid("%s.updateOptions(%s, %s, %s, %s)" % (self.varName, newOptions, redrawPaths, animate, updateSyncedCharts))
+    update_synced_charts = JsUtils.jsConvertData(update_synced_charts, None)
+    return JsObjects.JsVoid("%s.updateOptions(%s, %s, %s, %s)" % (
+      self.varName, new_options, redraw_paths, animate, update_synced_charts))
 
-  def updateSeries(self, newSeries, animate=True):
+  def updateSeries(self, new_series, animate=True):
     """
     Description:
     -----------
@@ -174,14 +184,14 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param newSeries: List. The series array to override the existing one.
+    :param new_series: List. The series array to override the existing one.
     :param animate: Boolean. Optional. Should the chart animate on re-rendering.
     """
-    newSeries = JsUtils.jsConvertData(newSeries, None)
+    new_series = JsUtils.jsConvertData(new_series, None)
     animate = JsUtils.jsConvertData(animate, None)
-    return JsObjects.JsVoid("%s.updateSeries(%s, %s)" % (self.varName, newSeries, animate))
+    return JsObjects.JsVoid("%s.updateSeries(%s, %s)" % (self.varName, new_series, animate))
 
-  def appendSeries(self, newSeries, animate=True):
+  def appendSeries(self, new_series, animate=True):
     """
     Description:
     -----------
@@ -193,14 +203,14 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param newSeries: Dictionary. The series to be added.
+    :param new_series: Dictionary. The series to be added.
     :param animate: Boolean. Optional. Should the chart animate on re-rendering.
     """
-    newSeries = JsUtils.jsConvertData(newSeries, None)
+    new_series = JsUtils.jsConvertData(new_series, None)
     animate = JsUtils.jsConvertData(animate, None)
-    return JsObjects.JsVoid("%s.appendSeries(%s, %s)" % (self.varName, newSeries, animate))
+    return JsObjects.JsVoid("%s.appendSeries(%s, %s)" % (self.varName, new_series, animate))
 
-  def toggleSeries(self, seriesName):
+  def toggleSeries(self, series_name):
     """
     Description:
     -----------
@@ -212,12 +222,12 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param seriesName: String. The series name which you want to toggle visibility for.
+    :param series_name: String. The series name which you want to toggle visibility for.
     """
-    seriesName = JsUtils.jsConvertData(seriesName, None)
-    return JsObjects.JsVoid("%s.toggleSeries(%s)" % (self.varName, seriesName))
+    series_name = JsUtils.jsConvertData(series_name, None)
+    return JsObjects.JsVoid("%s.toggleSeries(%s)" % (self.varName, series_name))
 
-  def showSeries(self, seriesName):
+  def showSeries(self, series_name):
     """
     Description:
     -----------
@@ -230,12 +240,12 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param seriesName: String. The series name which you want to hide
+    :param series_name: String. The series name which you want to hide
     """
-    seriesName = JsUtils.jsConvertData(seriesName, None)
-    return JsObjects.JsVoid("%s.showSeries(%s)" % (self.varName, seriesName))
+    series_name = JsUtils.jsConvertData(series_name, None)
+    return JsObjects.JsVoid("%s.showSeries(%s)" % (self.varName, series_name))
 
-  def hideSeries(self, seriesName):
+  def hideSeries(self, series_name):
     """
     Description:
     -----------
@@ -248,10 +258,10 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param seriesName: String. The series name which you want to hide.
+    :param series_name: String. The series name which you want to hide.
     """
-    seriesName = JsUtils.jsConvertData(seriesName, None)
-    return JsObjects.JsVoid("%s.hideSeries(%s)" % (self.varName, seriesName))
+    series_name = JsUtils.jsConvertData(series_name, None)
+    return JsObjects.JsVoid("%s.hideSeries(%s)" % (self.varName, series_name))
 
   def zoomX(self, start, end):
     """
@@ -270,7 +280,7 @@ class ApexChart(JsPackage):
     """
     return JsObjects.JsVoid("%s.zoomX(%s, %s)" % (self.varName, start, end))
 
-  def resetSeries(self, shouldUpdateChart=True, shouldResetZoom=True):
+  def resetSeries(self, should_update_chart=True, should_reset_zoom=True):
     """
     Description:
     -----------
@@ -282,14 +292,16 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param shouldUpdateChart: Boolean. Optional. After resetting the series, the chart data should update and return to it’s original series.
-    :param shouldResetZoom: Boolean. Optional. If the user has zoomed in when this method is called, the zoom level should also reset.
+    :param should_update_chart: Boolean. Optional. After resetting the series, the chart data should update and return
+    to it’s original series.
+    :param should_reset_zoom: Boolean. Optional. If the user has zoomed in when this method is called, the zoom level
+    should also reset.
     """
-    shouldUpdateChart = JsUtils.jsConvertData(shouldUpdateChart, None)
-    shouldResetZoom = JsUtils.jsConvertData(shouldResetZoom, None)
-    return JsObjects.JsVoid("%s.resetSeries(%s, %s)" % (self.varName, shouldUpdateChart, shouldResetZoom))
+    should_update_chart = JsUtils.jsConvertData(should_update_chart, None)
+    should_reset_zoom = JsUtils.jsConvertData(should_reset_zoom, None)
+    return JsObjects.JsVoid("%s.resetSeries(%s, %s)" % (self.varName, should_update_chart, should_reset_zoom))
 
-  def appendData(self, newData):
+  def appendData(self, new_data):
     """
     Description:
     -----------
@@ -302,12 +314,12 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param newData: List. The data array to append the existing series datasets.
+    :param new_data: List. The data array to append the existing series datasets.
     """
-    newData = JsUtils.jsConvertData(newData, None)
-    return JsObjects.JsVoid("%s.appendData(%s)" % (self.varName, newData))
+    new_data = JsUtils.jsConvertData(new_data, None)
+    return JsObjects.JsVoid("%s.appendData(%s)" % (self.varName, new_data))
 
-  def toggleDataPointSelection(self, seriesIndex, dataPointIndex):
+  def toggleDataPointSelection(self, series_index, data_point_index):
     """
     Description:
     -----------
@@ -319,14 +331,14 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param seriesIndex: Integer. Index of the series array
-    :param dataPointIndex: Integer. Index of the data-point in the series selected in previous argument.
+    :param series_index: Integer. Index of the series array
+    :param data_point_index: Integer. Index of the data-point in the series selected in previous argument.
     """
-    seriesIndex = JsUtils.jsConvertData(seriesIndex, None)
-    dataPointIndex = JsUtils.jsConvertData(dataPointIndex, None)
-    return JsObjects.JsVoid("%s.toggleDataPointSelection(%s, %s)" % (self.varName, seriesIndex, dataPointIndex))
+    series_index = JsUtils.jsConvertData(series_index, None)
+    data_point_index = JsUtils.jsConvertData(data_point_index, None)
+    return JsObjects.JsVoid("%s.toggleDataPointSelection(%s, %s)" % (self.varName, series_index, data_point_index))
 
-  def addXaxisAnnotation(self, options, pushToMemory=True):
+  def addXaxisAnnotation(self, options, push_to_memory=True):
     """
     Description:
     -----------
@@ -339,13 +351,14 @@ class ApexChart(JsPackage):
     Attributes:
     ----------
     :param options: Dictionary. This function accepts the same parameters as it accepts in the point annotations config.
-    :param pushToMemory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates. If you don’t want it to be saved for the next updates, turn off this option
+    :param push_to_memory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates.
+    If you don’t want it to be saved for the next updates, turn off this option
     """
     options = JsUtils.jsConvertData(options, None, depth=True)
-    pushToMemory = JsUtils.jsConvertData(pushToMemory, None)
-    return JsObjects.JsVoid("%s.addXaxisAnnotation(%s, %s)" % (self.varName, options, pushToMemory))
+    push_to_memory = JsUtils.jsConvertData(push_to_memory, None)
+    return JsObjects.JsVoid("%s.addXaxisAnnotation(%s, %s)" % (self.varName, options, push_to_memory))
 
-  def addYaxisAnnotation(self, options, pushToMemory=True):
+  def addYaxisAnnotation(self, options, push_to_memory=True):
     """
     Description:
     -----------
@@ -358,13 +371,14 @@ class ApexChart(JsPackage):
     Attributes:
     ----------
     :param options: Dictionary. This function accepts the same parameters as it accepts in the point annotations config.
-    :param pushToMemory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates. If you don’t want it to be saved for the next updates, turn off this option
+    :param push_to_memory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates.
+    If you don’t want it to be saved for the next updates, turn off this option
     """
     options = JsUtils.jsConvertData(options, None, depth=True)
-    pushToMemory = JsUtils.jsConvertData(pushToMemory, None)
-    return JsObjects.JsVoid("%s.addYaxisAnnotation(%s, %s)" % (self.varName, options, pushToMemory))
+    push_to_memory = JsUtils.jsConvertData(push_to_memory, None)
+    return JsObjects.JsVoid("%s.addYaxisAnnotation(%s, %s)" % (self.varName, options, push_to_memory))
 
-  def addPointAnnotation(self, options, pushToMemory=True):
+  def addPointAnnotation(self, options, push_to_memory=True):
     """
     Description:
     -----------
@@ -377,18 +391,20 @@ class ApexChart(JsPackage):
     Attributes:
     ----------
     :param options: Dictionary. This function accepts the same parameters as it accepts in the point annotations config.
-    :param pushToMemory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates. If you don’t want it to be saved for the next updates, turn off this option
+    :param push_to_memory: Boolean. Optional. When enabled, it preserves the annotations in subsequent chart updates.
+    If you don’t want it to be saved for the next updates, turn off this option
     """
     options = JsUtils.jsConvertData(options, None, depth=True)
-    pushToMemory = JsUtils.jsConvertData(pushToMemory, None)
-    return JsObjects.JsVoid("%s.addPointAnnotation(%s, %s)" % (self.varName, options, pushToMemory))
+    push_to_memory = JsUtils.jsConvertData(push_to_memory, None)
+    return JsObjects.JsVoid("%s.addPointAnnotation(%s, %s)" % (self.varName, options, push_to_memory))
 
-  def removeAnnotation(self, annotationId):
+  def removeAnnotation(self, annotation_id):
     """
     Description:
     -----------
     The removeAnnotation() method can be used to delete any previously added annotations.
-    Only annotations which are added by external methods (addPointAnnotation, addXaxisAnnotation, addYaxisAnnotation) are affected.
+    Only annotations which are added by external methods (addPointAnnotation, addXaxisAnnotation, addYaxisAnnotation)
+    are affected.
     Annotations defined in the options/config object are not affected.
 
     Related Pages:
@@ -397,16 +413,18 @@ class ApexChart(JsPackage):
 
     Attributes:
     ----------
-    :param annotationId: String. The unqiue identifier of the annotation which was created using the addPointAnnotation, addXaxisAnnotation or addYaxisAnnotation methods.
+    :param annotation_id: String. The unique identifier of the annotation which was created using the
+    addPointAnnotation, addXaxisAnnotation or addYaxisAnnotation methods.
     """
-    annotationId = JsUtils.jsConvertData(annotationId, None)
-    return JsObjects.JsVoid("%s.removeAnnotation(%s)" % (self.varName, annotationId))
+    annotation_id = JsUtils.jsConvertData(annotation_id, None)
+    return JsObjects.JsVoid("%s.removeAnnotation(%s)" % (self.varName, annotation_id))
 
   def clearAnnotations(self):
     """
     Description:
     -----------
-    The clearAnnotations() method is used to delete all annotation elements which are added dynamically using the three methods stated above.
+    The clearAnnotations() method is used to delete all annotation elements which are added dynamically using the
+    three methods stated above.
 
     Related Pages:
 

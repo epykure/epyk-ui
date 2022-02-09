@@ -9,10 +9,13 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObject
 
 
+CSS_PADDING = "5px 10px"
+
+
 class Msg:
 
   def __init__(self, page: Optional[primitives.PageModel] = None):
-    self._src = page
+    self.page = page
 
   def status(self, timer: int = 3000, css_attrs: Optional[dict] = None):
     """
@@ -30,8 +33,8 @@ class Msg:
     :param int timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
-    dfl_attrs = {"position": "fixed", "padding": "5px 10px", 'border-radius': "5px",
-                  "bottom": "10px", 'right': "10px"}
+    dfl_attrs = {"position": "fixed", "padding": CSS_PADDING, 'border-radius': "5px",
+                 "bottom": "10px", 'right': "10px"}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
       if 'top' in css_attrs:
@@ -69,7 +72,7 @@ class Msg:
     :param int timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
-    dfl_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
+    dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
                  "top": JsObject.JsObject.get('event.clientY + "px"'),
                  'left': JsObject.JsObject.get('event.clientX + "px"')}
     if css_attrs is not None:
@@ -104,8 +107,8 @@ class Msg:
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
-    dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "5px 10px",
-                  'border-radius': "5px", "bottom": "10px", 'right': "10px"}
+    dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": CSS_PADDING,
+                 'border-radius': "5px", "bottom": "10px", 'right': "10px"}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
       if 'top' in css_attrs:
@@ -114,7 +117,7 @@ class Msg:
         del dfl_attrs["right"]
     options = options or {}
     if options.get("markdown", False) or options.get("showdown", False):
-      self._src.jsImports.add("showdown")
+      self.page.jsImports.add("showdown")
       options["showdown"] = {}
     return '''
       (function(event, content, options){
@@ -138,7 +141,7 @@ class Msg:
     :param Optional[str] content: Optional. The content of the popup.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
-    dfl_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
+    dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
                  "bottom": "40px", 'right': "10px"}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
@@ -188,7 +191,7 @@ class Msg:
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
     dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px",
-                  'border-radius': "5px", "bottom": "10px", 'right': "10px"}
+                 'border-radius': "5px", "bottom": "10px", 'right': "10px"}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
       if 'top' in css_attrs:
@@ -223,7 +226,7 @@ class Msg:
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
     dfl_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
-                  "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
+                 "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
       if 'top' in css_attrs:

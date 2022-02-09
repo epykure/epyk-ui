@@ -12,9 +12,9 @@ class JqueryVectorMap(Html.Html):
   requirements = ('jqvmap', )
   _option_cls = OptJqvM.OptionsJqVM
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self,  page, width, height, html_code, options, profile):
     self.height = height[0]
-    super(JqueryVectorMap, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(JqueryVectorMap, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                           css_attrs={"width": width, "height": height})
     self.chartId = "%s_obj" % self.htmlCode
     self.style.css.display = "inline-block"
@@ -63,7 +63,7 @@ class JqueryVectorMap(Html.Html):
     return self
 
   @property
-  def js(self):
+  def js(self) -> JsQueryVectorMap.JQVMap:
     """
     Description:
     -----------
@@ -76,11 +76,11 @@ class JqueryVectorMap(Html.Html):
     """
     if self._js is None:
       self._js = JsQueryVectorMap.JQVMap(
-        self, varName=JsQuery.decorate_var(self.htmlCode, convert_var=False), report=self.page)
+        self, js_code=JsQuery.decorate_var(self.htmlCode, convert_var=False), report=self.page)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptJqvM.OptionsJqVM:
     """
     Description:
     -----------
@@ -97,4 +97,4 @@ class JqueryVectorMap(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

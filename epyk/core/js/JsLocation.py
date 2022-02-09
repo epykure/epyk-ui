@@ -23,8 +23,8 @@ from epyk.core.js.primitives import JsString
 
 class URLSearchParams:
 
-  def __init__(self, queryString: str):
-    self.queryString = queryString
+  def __init__(self, query: str):
+    self.query = query
 
   def get(self, key: str, default: Any = None):
     """
@@ -45,7 +45,7 @@ class URLSearchParams:
     default = JsUtils.jsConvertData(default, None)
     return JsString.JsString.get(
       "(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else { return pmt }})()" % (
-        self.queryString, key, default))
+        self.query, key, default))
 
   def getAll(self, key: Union[str, primitives.JsDataModel]):
     """
@@ -62,7 +62,7 @@ class URLSearchParams:
     :param Union[str, primitives.JsDataModel] key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
-    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.queryString, key))
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.query, key))
 
   def has(self, key: Union[str, primitives.JsDataModel]):
     """
@@ -79,7 +79,7 @@ class URLSearchParams:
     :param Union[str, primitives.JsDataModel] key: The url parameter.
     """
     key = JsUtils.jsConvertData(key, None)
-    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.queryString, key))
+    return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.query, key))
 
   def append(self, key: Union[str, primitives.JsDataModel], value: Any):
     """
@@ -99,7 +99,7 @@ class URLSearchParams:
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
     return JsObject.JsObject.get(
-      "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.queryString, key, value))
+      "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.query, key, value))
 
 
 class JsLocation:
@@ -121,7 +121,7 @@ class JsLocation:
 
     :return: Return the hostname property.
     """
-    return JsString.JsString("location.hostname", isPyData=False)
+    return JsString.JsString("location.hostname", is_py_data=False)
 
   @property
   def pathname(self):
@@ -140,7 +140,7 @@ class JsLocation:
 
     :return: Return the pathname property.
     """
-    return JsString.JsString("location.pathname", isPyData=False)
+    return JsString.JsString("location.pathname", is_py_data=False)
 
   @property
   def host(self):
@@ -159,7 +159,7 @@ class JsLocation:
 
     :return: Return the hostname and port of the current URL.
     """
-    return JsString.JsString("location.host", isPyData=False)
+    return JsString.JsString("location.host", is_py_data=False)
 
   @property
   def hash(self):
@@ -178,7 +178,7 @@ class JsLocation:
 
     :return: A String, representing the anchor part of the URL, including the hash sign (#).
     """
-    return JsObject.JsObject("location.hash", isPyData=False)
+    return JsObject.JsObject("location.hash", is_py_data=False)
 
   @property
   def search(self):
@@ -193,7 +193,7 @@ class JsLocation:
 
     :return: A String, representing the querystring part of a URL, including the question mark (?).
     """
-    return JsString.JsString("location.search", isPyData=False)
+    return JsString.JsString("location.search", is_py_data=False)
 
   @property
   def urlSearchParams(self):
@@ -221,7 +221,7 @@ class JsLocation:
 
     :return: A String, representing the port number of a URL.
     """
-    return JsString.JsString("location.port", isPyData=False)
+    return JsString.JsString("location.port", is_py_data=False)
 
   @property
   def origin(self):
@@ -238,10 +238,11 @@ class JsLocation:
 
       https//www.w3schools.com/jsref/prop_loc_origin.asp
 
-    :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number (including the colon sign (:) of the URL.
-             For URL's using the "file:" protocol, the return value differs between browser
+    :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number
+    (including the colon sign (:) of the URL. For URL's using the "file:" protocol, the return value differs
+    between browser
     """
-    return JsString.JsString("location.origin", isPyData=False)
+    return JsString.JsString("location.origin", is_py_data=False)
 
   def href(self, href: Union[str, primitives.JsDataModel] = None, secured: bool = False):
     """
@@ -265,14 +266,15 @@ class JsLocation:
     :return: A String, representing the entire URL of the page, including the protocol (like http://).
     """
     if href is None:
-      return JsString.JsString("location.href", isPyData=False)
+      return JsString.JsString("location.href", is_py_data=False)
 
     if not hasattr(href, 'toStr') and href.startswith("www."):
       href = r"http:\\%s" % href if not secured else r"https:\\%s" % href
     return JsObject.JsObject("location.href = %s" % JsUtils.jsConvertData(href, None))
 
   def open_new_tab(self, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
-                   specs: Union[str, primitives.JsDataModel] = None, replace: Union[str, primitives.JsDataModel] = None, windowId: str = "window", secured: bool = False):
+                   specs: Union[str, primitives.JsDataModel] = None, replace: Union[str, primitives.JsDataModel] = None,
+                   window_id: str = "window", secured: bool = False):
     """
     Description:
     ------------
@@ -288,11 +290,14 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
-    :param Union[str, primitives.JsDataModel] name: Optional. Specifies the target attribute or the name of the window. Default _blank.
+    :param Union[str, primitives.JsDataModel] url: Optional. Specifies the URL of the page to open. If no URL is
+    specified, a new window/tab with about:blank is opened
+    :param Union[str, primitives.JsDataModel] name: Optional. Specifies the target attribute or the name of the window.
+    Default _blank.
     :param Union[str, primitives.JsDataModel] specs: Optional. A comma-separated list of items, no whitespaces.
-    :param Union[str, primitives.JsDataModel] replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
-    :param str windowId: The JavaScript window object
+    :param Union[str, primitives.JsDataModel] replace: Optional. Specifies whether the URL creates a new entry or
+    replaces the current entry in the history list
+    :param str window_id: The JavaScript window object
     :param bool secured:
     """
     if not hasattr(url, 'toStr') and url.startswith("www."):
@@ -300,11 +305,11 @@ class JsLocation:
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
     if specs is None:
-      return JsFncs.JsFunction("%s.open(%s, %s)" % (windowId, url, name))
+      return JsFncs.JsFunction("%s.open(%s, %s)" % (window_id, url, name))
 
     specs = JsUtils.jsConvertData(specs, None)
     replace = JsUtils.jsConvertData(replace, None)
-    return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (windowId, url, name, specs, replace))
+    return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (window_id, url, name, specs, replace))
 
   def download(self, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = 'download'):
     """
@@ -349,9 +354,9 @@ class JsLocation:
     if isinstance(mails, list):
       mails = ";".join(mails)
     return self.href(JsString.JsString(
-      "'mailto:%s?subject=%s&body='+ encodeURIComponent('%s')" % (mails, subject, body), isPyData=False))
+      "'mailto:%s?subject=%s&body='+ encodeURIComponent('%s')" % (mails, subject, body), is_py_data=False))
 
-  def reload(self, forceGet: bool = False):
+  def reload(self, force_get: bool = False):
     """
     Description:
     ------------
@@ -365,12 +370,12 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param bool forceGet: Optional. Specifies the type of reloading:
+    :param bool force_get: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache.
           true - Reloads the current page from the server.
     """
-    forceGet = JsUtils.jsConvertData(forceGet, None)
-    return JsFncs.JsFunction("location.reload(%s)" % forceGet)
+    force_get = JsUtils.jsConvertData(force_get, None)
+    return JsFncs.JsFunction("location.reload(%s)" % force_get)
 
   def assign(self, url: Union[str, primitives.JsDataModel]):
     """
@@ -386,8 +391,8 @@ class JsLocation:
     ----------
     :param Union[str, primitives.JsDataModel] url: Specifies the URL of the page to navigate to.
     """
-    jsData = JsUtils.jsConvertData(url, None)
-    return JsFncs.JsFunction("location.assign(%s)" % jsData)
+    data = JsUtils.jsConvertData(url, None)
+    return JsFncs.JsFunction("location.assign(%s)" % data)
 
   def replace(self, url: Union[str, primitives.JsDataModel], secured: bool = False):
     """

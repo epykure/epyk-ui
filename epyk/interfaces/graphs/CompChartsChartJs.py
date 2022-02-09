@@ -214,11 +214,11 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
-    dflt_options = {'cutoutPercentage': 50, 'y_columns': y_columns or [], 'x_axis': x_axis,
+    dfl_options = {'cutoutPercentage': 50, 'y_columns': y_columns or [], 'x_axis': x_axis,
                     'commons': {"opacity": self.opacity}}
     if options is not None:
-      dflt_options.update()
-    pie_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, dflt_options, profile)
+      dfl_options.update()
+    pie_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, dfl_options, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart._attrs["type"] = "doughnut"
     pie_chart.labels(data['labels'])
@@ -404,7 +404,7 @@ class ChartJs:
         folder = 'build'
         if not os.path.exists('%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)):
           text = "Missing module %s/%s/dist or build in the package - use web npm to install package to your app"
-          raise Exception(text % (options['npm_path'].replace("\\", "/"), options['npm']))
+          raise ValueError(text % (options['npm_path'].replace("\\", "/"), options['npm']))
 
       chartjs_defined_package[options['npm']] = {
         'req': [{'alias': 'chart.js'}], 'version': 'N/A',

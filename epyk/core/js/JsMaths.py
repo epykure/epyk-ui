@@ -32,7 +32,7 @@ class JsMaths:
 
     :return: Returns Euler's number (approx. 2.718)
     """
-    return JsNumber.JsNumber("Math.E", isPyData=False)
+    return JsNumber.JsNumber("Math.E", is_py_data=False)
 
   @property
   def LN2(self):
@@ -51,7 +51,7 @@ class JsMaths:
 
     :return: Returns the natural logarithm of 2 (approx. 0.693)
     """
-    return JsNumber.JsNumber("Math.LN2", isPyData=False)
+    return JsNumber.JsNumber("Math.LN2", is_py_data=False)
 
   @property
   def LN10(self):
@@ -70,7 +70,7 @@ class JsMaths:
 
     :return: Returns the natural logarithm of 10 (approx. 2.302)
     """
-    return JsNumber.JsNumber("Math.LN10", isPyData=False)
+    return JsNumber.JsNumber("Math.LN10", is_py_data=False)
 
   @property
   def LOG2E(self):
@@ -89,7 +89,7 @@ class JsMaths:
 
     :return: Returns the base-2 logarithm of E (approx. 1.442)
     """
-    return JsNumber.JsNumber("Math.LOG2E", isPyData=False)
+    return JsNumber.JsNumber("Math.LOG2E", is_py_data=False)
 
   @property
   def SQRT1_2(self):
@@ -108,7 +108,7 @@ class JsMaths:
 
     :return: Returns the square root of 1/2 (approx. 0.707)
     """
-    return JsNumber.JsNumber("Math.SQRT1_2", isPyData=False)
+    return JsNumber.JsNumber("Math.SQRT1_2", is_py_data=False)
 
   @property
   def SQRT2(self) -> JsNumber:
@@ -127,7 +127,7 @@ class JsMaths:
 
     :return: Returns the square root of 2 (approx. 1.414)
     """
-    return JsNumber.JsNumber("Math.SQRT2", isPyData=False)
+    return JsNumber.JsNumber("Math.SQRT2", is_py_data=False)
 
   @property
   def PI(self):
@@ -140,7 +140,7 @@ class JsMaths:
 
       https://www.w3schools.com/jsref/jsref_pi.asp
     """
-    return JsNumber.JsNumber("Math.PI", isPyData=False)
+    return JsNumber.JsNumber("Math.PI", is_py_data=False)
 
   def random(self, min_val: Union[int, primitives.JsDataModel] = 0, max_val: Union[int, primitives.JsDataModel] = 1):
     """
@@ -165,7 +165,7 @@ class JsMaths:
     :return: A Number, representing a number from 0 up to but not including 1.
     """
     if min_val == 0 and max_val == 1:
-      return JsNumber.JsNumber("Math.random()", isPyData=False)
+      return JsNumber.JsNumber("Math.random()", is_py_data=False)
 
     min_val = JsUtils.jsConvertData(min_val, None)
     max_val = JsUtils.jsConvertData(max_val, None)
@@ -192,8 +192,8 @@ class JsMaths:
     :return: A Number, representing the lowest number of the arguments, or Infinity
     if no arguments are given, or NaN if one or more arguments are not numbers
     """
-    jsArgs = [JsUtils.jsConvertData(a, None) for a in args]
-    return JsNumber.JsNumber("Math.min(%s)" % ",".join([str(jsa) for jsa in jsArgs]), isPyData=False)
+    js_args = [JsUtils.jsConvertData(a, None) for a in args]
+    return JsNumber.JsNumber("Math.min(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
 
   def max(self, *args):
     """
@@ -221,7 +221,7 @@ class JsMaths:
     if len(js_args) == 1 and getattr(js_args[0], '_jsClass', None) == "Array":
       # ES2015 use of the new spread operator
       js_args[0] = "...%s" % js_args[0]
-    return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in js_args]), isPyData=False)
+    return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
 
   def floor(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -244,7 +244,7 @@ class JsMaths:
     :return: A Number, representing the nearest integer when rounding downwards
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.floor(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.floor(%s)" % number, is_py_data=False)
 
   def trunc(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -267,7 +267,7 @@ class JsMaths:
     :return: Returns the integer part of a number (x).
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.trunc(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.trunc(%s)" % number, is_py_data=False)
 
   def abs(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -286,7 +286,7 @@ class JsMaths:
     :return: Returns the absolute value of x.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.abs(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.abs(%s)" % number, is_py_data=False)
 
   def cos(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -305,7 +305,7 @@ class JsMaths:
     :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.cos(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.cos(%s)" % number, is_py_data=False)
 
   def sin(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -324,7 +324,7 @@ class JsMaths:
     :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.sin(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.sin(%s)" % number, is_py_data=False)
 
   def log(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -343,7 +343,7 @@ class JsMaths:
     :return: Returns the natural logarithm (base E) of x.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.log(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.log(%s)" % number, is_py_data=False)
 
   def exp(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -363,7 +363,7 @@ class JsMaths:
     :return: Returns the value of exponential of x,
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.exp(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.exp(%s)" % number, is_py_data=False)
 
   def round(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -389,7 +389,7 @@ class JsMaths:
     :return: Rounds x to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.round(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.round(%s)" % number, is_py_data=False)
 
   def sqrt(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -413,7 +413,7 @@ class JsMaths:
     :return: A Number. If x is a negative number, NaN is returned.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.sqrt(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.sqrt(%s)" % number, is_py_data=False)
 
   def ceil(self, number: Union[float, primitives.JsDataModel]):
     """
@@ -436,7 +436,7 @@ class JsMaths:
     :return: Returns x, rounded upwards to the nearest integer.
     """
     number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.ceil(%s)" % number, isPyData=False)
+    return JsNumber.JsNumber("Math.ceil(%s)" % number, is_py_data=False)
 
   @staticmethod
   def pow(number: Union[primitives.JsDataModel, float], power: Union[primitives.JsDataModel, int]):
@@ -463,4 +463,4 @@ class JsMaths:
     """
     number = JsUtils.jsConvertData(number, None)
     power = JsUtils.jsConvertData(power, None)
-    return JsNumber.JsNumber("Math.pow(%s, %s)" % (number, power), isPyData=False)
+    return JsNumber.JsNumber("Math.pow(%s, %s)" % (number, power), is_py_data=False)

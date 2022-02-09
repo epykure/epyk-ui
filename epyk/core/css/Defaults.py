@@ -1,12 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Optional
+from epyk.core.py import primitives
+
 
 class Font:
   _size, header_size, unit = 14, 16, "px"
   family = "Roboto"
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
 
   @property
@@ -14,12 +17,12 @@ class Font:
     return self._size
 
   @size.setter
-  def size(self, value):
+  def size(self, value: int):
     self.page.body.style.css.font_size = value
     self.header_size = value + 2
     self._size = value
 
-  def normal(self, step=0, unit=None):
+  def normal(self, step: int = 0, unit: str = None):
     """
     Description:
     ------------
@@ -27,12 +30,12 @@ class Font:
 
     Attributes:
     ----------
-    :param step: Integer. Optional. The value to be added to the default font size.
-    :param unit: String. Optional. The unit code. default px.
+    :param int step: Optional. The value to be added to the default font size.
+    :param str unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self._size + step, unit or self.unit)
 
-  def header(self, step=0, unit=None):
+  def header(self, step: int = 0, unit: str = None):
     """
     Description:
     ------------
@@ -40,8 +43,8 @@ class Font:
 
     Attributes:
     ----------
-    :param step: Integer. Optional. The value to be added to the default font size.
-    :param unit: String. Optional. The unit code. default px.
+    :param int step: Optional. The value to be added to the default font size.
+    :param str unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.header_size + step, unit or self.unit)
 
@@ -49,7 +52,7 @@ class Font:
 class Icon:
   small, normal, big, unit = 10, 15, 25, 'px'
 
-  def small_size(self, step=0, unit=None):
+  def small_size(self, step: int = 0, unit: str = None):
     """
     Description:
     ------------
@@ -57,12 +60,12 @@ class Icon:
 
     Attributes:
     ----------
-    :param step: Integer. Optional. The value to be added to the default font size.
-    :param unit: String. Optional. The unit code. default px.
+    :param int step: Optional. The value to be added to the default font size.
+    :param str unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.small+step, unit or self.unit)
 
-  def normal_size(self, step=0, unit=None):
+  def normal_size(self, step: int = 0, unit: str = None):
     """
     Description:
     ------------
@@ -70,12 +73,12 @@ class Icon:
 
     Attributes:
     ----------
-    :param step: Integer. Optional. The value to be added to the default font size.
-    :param unit: String. Optional. The unit code. default px.
+    :param int step: Optional. The value to be added to the default font size.
+    :param str unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.normal+step, unit or self.unit)
 
-  def big_size(self, step=0, unit=None):
+  def big_size(self, step: int = 0, unit: str = None):
     """
     Description:
     ------------
@@ -83,27 +86,26 @@ class Icon:
 
     Attributes:
     ----------
-    :param step: Integer. Optional. The value to be added to the default font size.
-    :param unit: String. Optional. The unit code. default px.
+    :param int step: Optional. The value to be added to the default font size.
+    :param str unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.big+step, unit or self.unit)
 
 
-def header(step=0):
+def header(step: int = 0):
   """
   Description:
   ------------
 
-  Usage::
 
   Attributes:
   ----------
-  :param step: Integer. Optional. The value to be added to the default font size.
+  :param int step: Optional. The value to be added to the default font size.
   """
   return "%s%s" % (Font.header_size+step, Font.unit)
 
 
-def inline(css_attrs, important=False):
+def inline(css_attrs: dict, important: bool = False):
   """
   Description:
   ------------
@@ -120,8 +122,8 @@ def inline(css_attrs, important=False):
 
   Attributes:
   ----------
-  :param css_attrs: Dictionary. The CSS Attributes.
-  :param important: Boolean. Optional. Set the attributes to important. Default False
+  :param dict css_attrs: The CSS Attributes.
+  :param bool important: Optional. Set the attributes to important. Default False.
   """
   if important:
     return ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in css_attrs.items()])
@@ -129,7 +131,7 @@ def inline(css_attrs, important=False):
   return ";".join(["%s: %s" % (k, v) for k, v in css_attrs.items()])
 
 
-def px_to_em(value, with_unit=True):
+def px_to_em(value: float, with_unit: bool = True):
   """
   Description:
   ------------
@@ -142,8 +144,8 @@ def px_to_em(value, with_unit=True):
 
   Attributes:
   ----------
-  :param value: Float. A pixel value.
-  :param with_unit: Boolean. Optional. To define the return format.
+  :param float value: A pixel value.
+  :param bool with_unit: Optional. To define the return format.
   """
   em_value = value / 16
   if with_unit:
@@ -152,11 +154,11 @@ def px_to_em(value, with_unit=True):
   return em_value
 
 
-def em_to_px(value, with_unit=True):
+def em_to_px(value: float, with_unit: bool = True):
   """
   Description:
   ------------
-  Convert a em value in pixel.
+  Convert an em value in pixel.
 
   Related Pages:
   --------------
@@ -165,8 +167,8 @@ def em_to_px(value, with_unit=True):
 
   Attributes:
   ----------
-  :param value: Float. The em value.
-  :param with_unit: Boolean. Optional. To define the return format.
+  :param float value: The em value.
+  :param bool with_unit: Optional. To define the return format.
   """
   px_value = value * 16
   if with_unit:
@@ -249,15 +251,15 @@ ICON_MAPPINGS = {
 }
 
 
-def get_icon(alias, family=None):
+def get_icon(alias: Optional[str], family: str = None):
   """
   Return the icon from an alias.
   This will allow the integration of multiple icon libraries.
 
   Attributes:
   ----------
-  :param alias: String. The icon reference in the components.
-  :param family: String. Optional. The defined family (if different from the page icon family).
+  :param str alias: The icon reference in the components.
+  :param str family: Optional. The defined family (if different from the page icon family).
   """
   icon = ICON_MAPPINGS[family or ICON_FAMILY].get(alias, alias)
   if icon is None:
@@ -280,31 +282,29 @@ CSS_EXCEPTIONS_FORMAT = "CSS - %s - invalid %s"
 
 class GlobalStyle:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
     self._font = None
     self._icon = None
     self._table = None
 
   @property
-  def font(self):
+  def font(self) -> Font:
     """
     Description:
     ------------
-
+    Set the page font.
     """
     if self._font is None:
       self._font = Font(self.page)
     return self._font
 
   @property
-  def icon(self):
+  def icon(self) -> Icon:
     """
     Description:
     ------------
 
-    Usage:
-    -----
     """
     if self._icon is None:
       self._icon = Icon()
@@ -316,8 +316,6 @@ class GlobalStyle:
     Description:
     ------------
 
-    Usage:
-    -----
     """
     if self._table is None:
       class GlobalTable:

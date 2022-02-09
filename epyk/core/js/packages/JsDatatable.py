@@ -1,12 +1,8 @@
-"""
-Javascript Interface to the Datatable Module
-
-Related Pages:
-
-		https://datatables.net/reference/api/
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
+from epyk.core.py import primitives
 
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.objects import JsNodeDom
@@ -15,9 +11,6 @@ from epyk.core.js.packages import JsPackage
 
 
 class SelectAPI(JsPackage):
-  """
-
-  """
 
   def blurable(self):
     """
@@ -31,7 +24,7 @@ class SelectAPI(JsPackage):
     """
     return JsObjects.JsBoolean.JsBoolean("%s.blurable()" % self._selector)
 
-  def info(self, jsFlag=None):
+  def info(self, flag=None):
     """
     Description:
     -----------
@@ -43,12 +36,12 @@ class SelectAPI(JsPackage):
 
     Attributes:
     ----------
-    :param jsFlag: Value to set for the information summary display state - true to enable, false to disable.
+    :param flag: Value to set for the information summary display state - true to enable, false to disable.
     """
-    if jsFlag is None:
+    if flag is None:
       return JsObjects.JsBoolean.JsBoolean("%s.info()" % self._selector)
 
-    return JsObjects.JsObject.JsObject("%s.info(%s)" % (self._selector, JsUtils.jsConvertData(jsFlag, None)))
+    return JsObjects.JsObject.JsObject("%s.info(%s)" % (self._selector, JsUtils.jsConvertData(flag, None)))
 
   def items(self):
     """
@@ -370,7 +363,7 @@ class ColumnAPI(JsPackage):
     """
     self.nodes()
     self._js.append("to$()")
-    return JsQuery.JQuery(jqId=self.toStr())
+    return JsQuery.JQuery(js_code=self.toStr())
 
   def order(self):
     """
@@ -383,7 +376,7 @@ class ColumnAPI(JsPackage):
       https://datatables.net/reference/api/column().order()
     """
 
-  def search(self, jsData):
+  def search(self, data):
     """
     Description:
     -----------
@@ -393,7 +386,7 @@ class ColumnAPI(JsPackage):
 
       https://datatables.net/reference/api/column().search()
     """
-    return self.fnc("search(%s)" % JsUtils.jsConvertData(jsData, None))
+    return self.fnc("search(%s)" % JsUtils.jsConvertData(data, None))
 
   def visible(self):
     """
@@ -458,7 +451,7 @@ class RowAPI(JsPackage):
   lib_selector = 'row'
   lib_set_var = False
 
-  def _mapVarId(self, strFnc, varId):
+  def _mapVarId(self, func, js_code):
     """
     Description:
     -----------
@@ -471,15 +464,15 @@ class RowAPI(JsPackage):
 
       https://datatables.net/reference/api/
 
-    :param strFnc: The function string
-    :param varId: The object reference for the Javascript side
+    :param func: The function string
+    :param js_code: The object reference for the Javascript side
 
     :return: The object reference on the Javascript side
     """
-    if strFnc.startswith("add("):
-      return varId[:-2]
+    if func.startswith("add("):
+      return js_code[:-2]
 
-    return varId
+    return js_code
 
   def deselect(self):
     """
@@ -541,7 +534,7 @@ class RowAPI(JsPackage):
     :return: DataTables API instance for chaining
     """
     if dtype not in ("search", "order"):
-      raise Exception("dtype %s not recognised" % dtype)
+      raise ValueError("dtype %s not recognised" % dtype)
 
     dtype = JsUtils.jsConvertData(dtype, None)
     return self.fnc("scrollTo(%s)" % dtype)
@@ -628,7 +621,7 @@ class RowAPI(JsPackage):
     """
     self.node()
     self._js.append("to$()")
-    return JsQuery.JQuery(src=self.src, selector=self.toStr(), setVar=False)
+    return JsQuery.JQuery(component=self.component, selector=self.toStr(), set_var=False)
 
   def remove(self, update=False):
     """
@@ -648,7 +641,7 @@ class RowAPI(JsPackage):
 
     return self.fnc("remove()")
 
-  def add(self, jsData, toArray=False, update=False):
+  def add(self, data, to_array=False, update=False):
     """
     Description:
     -----------
@@ -658,20 +651,20 @@ class RowAPI(JsPackage):
 
       https://datatables.net/reference/api/row.add()
 
-    :param jsData: The input data
-    :param toArray: Boolean. Convert a python dictionary to a list
+    :param data: The input data
+    :param to_array: Boolean. Convert a python dictionary to a list
     :param update:
     """
-    if toArray:
-      if isinstance(jsData, list):
+    if to_array:
+      if isinstance(data, list):
         rows = []
-        for r in jsData:
+        for r in data:
           rows.append([r.get(h["title"], '') for h in self._parent.vals['columns']])
-        jsData = rows
+        data = rows
       else:
-        jsData = [jsData.get(h["title"], '') for h in self._parent.vals['columns']]
-    jsData = JsUtils.jsConvertData(jsData, None)
-    self.fnc("add(%s)" % jsData)
+        data = [data.get(h["title"], '') for h in self._parent.vals['columns']]
+    data = JsUtils.jsConvertData(data, None)
+    self.fnc("add(%s)" % data)
     if update:
       self.draw()
       self._js.append([])
@@ -709,12 +702,21 @@ class RowAPI(JsPackage):
     :param namespace: Boolean to set the level of this method, selected rows or namespace
     """
     if namespace:
-      return RowChildAPI(self.src, selector="%s.child" % self.getStr(), setVar=False, parent=self._parent)
+      return RowChildAPI(
+        component=self.component, selector="%s.child" % self.getStr(), set_var=False, parent=self._parent)
 
-    return RowChildAPI(self.src, selector="%s.child()" % self.getStr(), setVar=False, parent=self._parent)
+    return RowChildAPI(
+      component=self.component, selector="%s.child()" % self.getStr(), set_var=False, parent=self._parent)
 
 
 class DatatableAPI(JsPackage):
+  """
+  Javascript Interface to the Datatable Module.
+
+  Related Pages:
+
+      https://datatables.net/reference/api/
+  """
   lib_alias = {'js': "datatables", 'css': 'datatables'}
   lib_selector = 'datatable'
 
@@ -730,7 +732,7 @@ class DatatableAPI(JsPackage):
 
     :return:
     """
-    return
+    raise NotImplementedError()
 
   @property
   def row(self):
@@ -743,7 +745,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/row()
     """
-    return RowAPI(self.src, selector="%s.row()" % self.varId, setVar=False, parent=self._parent)
+    return RowAPI(self.component, selector="%s.row()" % self.varId, set_var=False, parent=self._parent)
 
   @property
   def rows(self):
@@ -756,7 +758,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/rows()
     """
-    return RowAPI(self.src, selector="%s.rows()" % self.varId, setVar=False, parent=self._parent)
+    return RowAPI(self.component, selector="%s.rows()" % self.varId, set_var=False, parent=self._parent)
 
   def adjust(self):
     """
@@ -781,7 +783,7 @@ class DatatableAPI(JsPackage):
       https://datatables.net/reference/api/table().container()
     """
     return JsQuery.JQuery(
-      self.src, selector="jQuery(%s.table().container())" % self.varId, setVar=False, parent=self._parent)
+      component=self.component, selector="jQuery(%s.table().container())" % self.varId, set_var=False)
 
   def container_dom(self):
     """
@@ -793,7 +795,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/table().container()
     """
-    return JsNodeDom.JsDoms(None, report=self.src, varName="%s.table().container()" % self.varId, setVar=False)
+    return JsNodeDom.JsDoms(component=self.component, js_code="%s.table().container()" % self.varId, set_var=False)
 
   def footer(self):
     """
@@ -839,7 +841,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/column().nodes()
     """
-    return JsQuery.JQuery(selector="%s.nodes().to$()" % self.varId, setVar=False)
+    return JsQuery.JQuery(component=self.component, selector="%s.nodes().to$()" % self.varId, set_var=False)
 
   def clear(self, update=False):
     """
@@ -871,21 +873,22 @@ class DatatableAPI(JsPackage):
     """
     return JsObjects.JsArray.JsArray.get("%s.data()" % self.varId)
 
-  def destroy(self, remove=False, checkUndefined=False):
+  def destroy(self, remove=False, check_undefined=False):
     """
     Description:
     -----------
-    Restore the tables in the current context to its original state in the DOM by removing all of DataTables enhancements,
-    alterations to the DOM structure of the table and event listeners.
+    Restore the tables in the current context to its original state in the DOM by removing all of DataTables
+    enhancements, alterations to the DOM structure of the table and event listeners.
 
     Related Pages:
 
       https://datatables.net/reference/api/destroy()
 
-    :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original plain un-enhanced HTML state (default, false).
-    :param checkUndefined: Boolean
+    :param remove: Boolean, Completely remove the table from the DOM (true) or leave it in the DOM in its original
+    plain un-enhanced HTML state (default, false).
+    :param check_undefined: Boolean
     """
-    return self.fnc_closure("destroy(%s)" % JsUtils.jsConvertData(remove, None), checkUndefined=checkUndefined)
+    return self.fnc_closure("destroy(%s)" % JsUtils.jsConvertData(remove, None), check_undefined=check_undefined)
 
   def draw(self, target=None):
     """
@@ -917,7 +920,7 @@ class DatatableAPI(JsPackage):
 
     return self.fnc("order()")
 
-  def page(self, action):
+  def page(self, action: str):
     """
     Description:
     -----------
@@ -929,11 +932,11 @@ class DatatableAPI(JsPackage):
     :return:
     """
     if action not in ("first", "next", "previous", "last"):
-      raise Exception("Action not defined")
+      raise ValueError("Action not defined")
 
     return self
 
-  def search(self, jsData):
+  def search(self, data):
     """
     Description:
     -----------
@@ -1027,4 +1030,4 @@ class DatatableAPI(JsPackage):
 
     TODO add the select true
     """
-    return SelectAPI(selector="%s.select()", setVar=False)
+    return SelectAPI(selector="%s.select()", set_var=False)

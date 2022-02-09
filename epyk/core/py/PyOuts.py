@@ -3,7 +3,7 @@ import sys
 import time
 import json
 
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from epyk.core.py import primitives
 
 from epyk.core.js import Imports
@@ -51,10 +51,10 @@ class OutBrowsers:
       '<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
     css_external = re.findall(
       '<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
-    jsObj = Js.JsBase()
+    js_obj = Js.JsBase()
     result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external),
               "html": results['content'], "css": results["cssStyle"]}
-    data = jsObj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    data = js_obj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
     if path is None:
       path = os.path.join(os.getcwd(), "outs")
     else:
@@ -87,7 +87,7 @@ class OutBrowsers:
     Attributes:
     ----------
     :param Optional[str] path: Optional. Output path in which the static files will be generated.
-    :param str target: Optional. Load the data in a new tab in the browser.
+    :param str target: Optional. Not used. Load the data in a new tab in the browser.
     :param bool open_browser: Optional. Flag to open the browser automatically.
     """
     import webbrowser
@@ -128,12 +128,12 @@ class OutBrowsers:
 
 
 class PyOuts:
-  def __init__(self, report: Optional[primitives.PageModel] = None, options: Optional[dict] = None):
-    self._report, self._options = report, options
+  def __init__(self, page: Optional[primitives.PageModel] = None, options: Optional[dict] = None):
+    self.page, self._options = page, options
     self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
     self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False
 
-  def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[List[str]] = None,
+  def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[Dict[str, Any]] = None,
                    split_js: bool = False):
     """
     Description:
@@ -148,11 +148,11 @@ class PyOuts:
 
     :return: A python dictionary with the HTML results
     """
-    order_components = list(self._report.components.keys())
+    order_components = list(self.page.components.keys())
     if htmlParts is None:
       htmlParts, cssParts = [], {}
       for component_id in order_components:
-        component = self._report.components[component_id]
+        component = self.page.components[component_id]
         if component.name == 'Body':
           cssParts.update(component.style.get_classes_css())
           continue
@@ -164,86 +164,88 @@ class PyOuts:
             component.options.managed = False
         #
         cssParts.update(component.style.get_classes_css())
-    onloadParts, onloadPartsCommon = list(self._report.properties.js.frgs), {}
-    for data_id, data in self._report._props.get("data", {}).get('sources', {}).items():
+    onloadParts, onloadPartsCommon = list(self.page.properties.js.frgs), {}
+    for data_id, data in self.page._props.get("data", {}).get('sources', {}).items():
       onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
-    for k, v in self._report._props.get('js', {}).get('functions', {}).items():
-      sPmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
-      onloadParts.append("function %s%s{%s}" % (k, sPmt, v["content"].strip()))
+    for k, v in self.page._props.get('js', {}).get('functions', {}).items():
+      pmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
+      onloadParts.append("function %s%s{%s}" % (k, pmt, v["content"].strip()))
 
     if split_js:
-      onloadPartsCommon = self._report._props.get('js', {}).get("constructors", {})
+      onloadPartsCommon = self.page._props.get('js', {}).get("constructors", {})
     else:
-      for c, d in self._report._props.get('js', {}).get("constructors", {}).items():
+      for c, d in self.page._props.get('js', {}).get("constructors", {}).items():
         onloadParts.append(d)
-    for c, d in self._report._props.get('js', {}).get("configs", {}).items():
+    for c, d in self.page._props.get('js', {}).get("configs", {}).items():
       onloadParts.append(str(d))
 
-    for c, d in self._report._props.get('js', {}).get("datasets", {}).items():
+    for c, d in self.page._props.get('js', {}).get("datasets", {}).items():
       onloadParts.append(d)
 
-    for b in self._report._props.get('js', {}).get("builders", []):
+    for b in self.page._props.get('js', {}).get("builders", []):
       onloadParts.append(b)
 
-    for b in self._report._props.get('js', {}).get("builders_css", []):
+    for b in self.page._props.get('js', {}).get("builders_css", []):
       onloadParts.append(b)
 
     # Add the component on ready functions
     for component_id in order_components:
-      component = self._report.components[component_id]
+      component = self.page.components[component_id]
       if component.name == 'Body':
-        for event, source_fncs in component._browser_data['keys'].items():
-          for source, event_fncs in source_fncs.get_event().items():
-            str_fncs = JsUtils.jsConvertFncs(
-              event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
-            onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+        for event, source_funcs in component._browser_data['keys'].items():
+          for source, event_funcs in source_funcs.get_event().items():
+            str_funcs = JsUtils.jsConvertFncs(
+              event_funcs['content'], toStr=True, profile=event_funcs.get("profile", False))
+            onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_funcs))
         continue
 
       onloadParts.extend(component._browser_data['component_ready'])
 
-      for event, source_fncs in component._browser_data['mouse'].items():
-        for source, event_fncs in source_fncs.items():
-          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
-          if 'sub_items' in event_fncs:
+      for event, source_funcs in component._browser_data['mouse'].items():
+        for source, event_funcs in source_funcs.items():
+          str_funcs = JsUtils.jsConvertFncs(
+            event_funcs['content'], toStr=True, profile=event_funcs.get("profile", False))
+          if 'sub_items' in event_funcs:
             # This is using jquery
             # TODO: Find a way to replace Jquery
             onloadParts.append(
-              "%s.on('%s', '%s', function(event){%s})" % (source, event, event_fncs['sub_items'], str_fncs))
+              "%s.on('%s', '%s', function(event){%s})" % (source, event, event_funcs['sub_items'], str_funcs))
           else:
             onloadParts.append("%s.%s('%s', function(event){%s})" % (
-              source, event_fncs.get("fncType", "addEventListener"), event, str_fncs))
+              source, event_funcs.get("fncType", "addEventListener"), event, str_funcs))
 
-      for event, source_fncs in component._browser_data['keys'].items():
-        for source, event_fncs in source_fncs.get_event().items():
-          str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True, profile=event_fncs.get("profile", False))
-          onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+      for event, source_funcs in component._browser_data['keys'].items():
+        for source, event_funcs in source_funcs.get_event().items():
+          str_funcs = JsUtils.jsConvertFncs(
+            event_funcs['content'], toStr=True, profile=event_funcs.get("profile", False))
+          onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_funcs))
 
     # Add the page on document ready functions
-    for on_ready_frg in self._report._props.get('js', {}).get('onReady', []):
+    for on_ready_frg in self.page._props.get('js', {}).get('onReady', []):
       onloadParts.append(on_ready_frg)
     # Add the document events functions
-    for event, source_fncs in self._report._props.get('js', {}).get('events', []).items():
-      for source, event_fncs in source_fncs.get_event().items():
-        str_fncs = JsUtils.jsConvertFncs(event_fncs['content'], toStr=True)
-        onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_fncs))
+    for event, source_funcs in self.page._props.get('js', {}).get('events', []).items():
+      for source, event_funcs in source_funcs.get_event().items():
+        str_funcs = JsUtils.jsConvertFncs(event_funcs['content'], toStr=True)
+        onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_funcs))
 
-    if self._report is not None:
-      importMng = self._report.imports
+    if self.page is not None:
+      import_mng = self.page.imports
     else:
-      importMng = Imports.ImportManager(report=self._report)
+      import_mng = Imports.ImportManager(page=self.page)
     results = {
-      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self._report.properties.css.text),
+      'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self.page.properties.css.text),
       'cssContainer': ";".join(
-        ["%s:%s" % (k, v) for k, v in self._report._props.get('css', {}).get('container', {}).items()]),
+        ["%s:%s" % (k, v) for k, v in self.page._props.get('css', {}).get('container', {}).items()]),
       'content': "\n".join(htmlParts),
       # This is only used in some specific web frameworks and it is better to keep the data as list
       'jsFrgsCommon': onloadPartsCommon,
       'jsFrgs': ";".join(onloadParts),
-      'cssImports': importMng.cssResolve(
-        self._report.cssImport, self._report.cssLocalImports, excluded=self.excluded_packages),
-      'jsImports': importMng.jsResolve(
-        self._report.jsImports, self._report.jsLocalImports, excluded=self.excluded_packages)
+      'cssImports': import_mng.cssResolve(
+        self.page.cssImport, self.page.cssLocalImports, excluded=self.excluded_packages),
+      'jsImports': import_mng.jsResolve(
+        self.page.jsImports, self.page.jsLocalImports, excluded=self.excluded_packages)
     }
     return results
 
@@ -259,16 +261,16 @@ class PyOuts:
       results = self.__requireJs
     else:
       results = self._to_html_obj()
-      if self._report is not None:
-        importMng = self._report.imports
+      if self.page is not None:
+        importMng = self.page.imports
       else:
-        importMng = Imports.ImportManager(report=self._report)
+        importMng = Imports.ImportManager(page=self.page)
       require_js = importMng.to_requireJs(results, self.excluded_packages)
       results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
       results['jsFrgs_in_req'] = require_js['jsFrgs']
     if self.__requireJs_attrs:
       results.update(self.__requireJs_attrs)
-    results["pageId"] = id(self._report)
+    results["pageId"] = id(self.page)
     return self.html_tmpl.strip() % results
 
   def jupyterlab(self):
@@ -322,7 +324,7 @@ class PyOuts:
     :return: The output object with the function _repr_html_
     """
     if closure:
-      self._report._props['js']['onReady'].append('''
+      self.page._props['js']['onReady'].append('''
 var outputCell = document.getElementById("result_cell_%(pageId)s").parentNode.parentNode.parentNode.parentNode.getElementsByClassName("output_prompt")[0];
 document.getElementById("result_cell_%(pageId)s").parentNode.parentNode.parentNode.parentNode.getElementsByClassName("out_prompt_overlay")[0].display = "none";
 var icon = outputCell.getElementsByTagName("div")[0];
@@ -347,7 +349,7 @@ if (typeof icon === "undefined"){
   });
   outputCell.appendChild(iconRunCell); outputCell.appendChild(iconCell); iconCell.dispatchEvent(new Event('click'));
 };  
-''' % {"pageId": id(self._report)})
+''' % {"pageId": id(self.page)})
     self.html_tmpl = HtmlTmplBase.JUPYTER
     self.__requireJs, self.__jupyter_cell = requireJs, True
     if requirejs_path is not None:
@@ -439,7 +441,7 @@ if (typeof icon === "undefined"){
     ------------
     Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
 
-    The output is always in a sub directory jsfiddle.
+    The output is always in a sub-directory jsfiddle.
 
     Usage::
 
@@ -469,18 +471,13 @@ if (typeof icon === "undefined"){
       if name is None:
         name = int(time.time())
       results = self._to_html_obj()
-      # For the JavaScript builders
-      with open(os.path.join(path, "%s.js" % name), "w") as f:
+      with open(os.path.join(path, "%s.js" % name), "w") as f:   # For the JavaScript builders
         f.write(results["jsFrgs"])
-
-      # For all the doms and imports
-      with open(os.path.join(path, "%s.html" % name), "w") as f:
+      with open(os.path.join(path, "%s.html" % name), "w") as f:   # For all the DOMs and imports
         f.write("%s\n" % results["cssImports"])
         f.write("%s\n" % results["jsImports"])
         f.write(results["content"])
-
-      # For the CSS styles
-      with open(os.path.join(path, "%s.css" % name), "w") as f:
+      with open(os.path.join(path, "%s.css" % name), "w") as f:   # For the CSS styles
         f.write(results["cssStyle"])
     return path
 
@@ -518,28 +515,28 @@ if (typeof icon === "undefined"){
       os.makedirs(path)
     if name is None:
       if configs.keys:
-        name = self._report.json_config_file
+        name = self.page.json_config_file
       else:
         name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], int(time.time()))
 
     name = name if not name.endswith(".html") else name[:-5]
     html_file_path = os.path.join(path, "%s.html" % name)
     htmlParts = []
-    cssParts = dict(self._report.body.style.get_classes_css())
-    order_components = list(self._report.components.keys())
+    cssParts = dict(self.page.body.style.get_classes_css())
+    order_components = list(self.page.components.keys())
     for component_id in order_components:
-      component = self._report.components[component_id]
+      component = self.page.components[component_id]
       if component.name == 'Body':
         continue
 
       if component.options.managed:
         htmlParts.append(component.html())
       cssParts.update(component.style.get_classes_css())
-    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
+    body = str(self.page.body.set_content(self.page, "\n".join(htmlParts)))
     results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False) in (True, 'js'))
     if options.get("split", False):
       static_path = path
-      static_url = self._report.imports.static_url or "."
+      static_url = self.page.imports.static_url or "."
       if options["split"] is True or options["split"] == "css":
         css_filename = "%s.min" % name if options.get("minify", False) else name
         results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
@@ -561,17 +558,15 @@ if (typeof icon === "undefined"){
         if not os.path.exists(os.path.join(static_path, 'js')):
           os.makedirs(os.path.join(static_path, 'js'))
         with open(os.path.join(static_path, 'js', "%s.js" % js_filename), "w") as f:
-          fncs = []
-          for v in results['jsFrgsCommon'].values():
-            fncs.append(JsLinter.parse(v, minify=options.get("minify", False)))
-          f.write("\n\n".join(fncs))
+          funcs = [JsLinter.parse(v, minify=options.get("minify", False)) for v in results['jsFrgsCommon'].values()]
+          f.write("\n\n".join(funcs))
 
     # Add the worker sections when no server available
-    for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
+    for js_id, wk_content in self.page._props.get('js', {}).get("workers", {}).items():
       body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
     with open(html_file_path, "w") as f:
       results['body'] = body
-      results['header'] = self._report.headers
+      results['header'] = self.page.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
 
     if configs.keys:
@@ -586,19 +581,19 @@ if (typeof icon === "undefined"){
     Return the complete page structure to allow the various web framework to split the code accordingly.
     Fragments will then be used by the various framework to create the corresponding pages.
     """
-    htmlParts = []
-    cssParts = dict(self._report.body.style.get_classes_css())
-    order_components = list(self._report.components.keys())
+    html_parts = []
+    css_parts = dict(self.page.body.style.get_classes_css())
+    order_components = list(self.page.components.keys())
     for component_id in order_components:
-      component = self._report.components[component_id]
+      component = self.page.components[component_id]
       if component.name == 'Body':
         continue
 
       if component.options.managed:
-        htmlParts.append(component.html())
-      cssParts.update(component.style.get_classes_css())
-    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
-    results = self._to_html_obj(htmlParts, cssParts, split_js=True)
+        html_parts.append(component.html())
+      css_parts.update(component.style.get_classes_css())
+    body = str(self.page.body.set_content(self.page, "\n".join(html_parts)))
+    results = self._to_html_obj(html_parts, css_parts, split_js=True)
     results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
     return results
 
@@ -631,26 +626,26 @@ if (typeof icon === "undefined"){
     component = module or selector.capitalize()
     if server.upper() == 'NODE':
       app = node.Node(app_path=app_path, name=name or 'node')
-      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      app.page(report=self.page, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
         app.launcher(component, target_folder)
     elif server.upper() == 'DENO':
       app = deno.Deno(app_path=app_path, name=name or 'deno')
-      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      app.page(report=self.page, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
         app.launcher(component, target_folder)
     elif server.upper() == 'ANGULAR':
       app = angular.Angular(app_path=app_path, name=name or 'angular')
-      app.page(report=self._report, selector=selector, name=component, target_folder=target_folder)
+      app.page(report=self.page, selector=selector, name=component, target_folder=target_folder)
       if auto_route:
         app.route().add(component, selector, target_folder)
     elif server.upper() == 'VUE':
       app = vue.VueJs(app_path=app_path, name=name or 'vue')
-      app.page(report=self._report, selector=selector, name=component, auto_route=auto_route,
+      app.page(report=self.page, selector=selector, name=component, auto_route=auto_route,
                target_folder=target_folder)
     elif server.upper() == 'REACT':
       app = react.React(app_path=app_path, name=name or 'react')
-      app.page(report=self._report, selector=selector or 'app-root', name=module, auto_route=auto_route,
+      app.page(report=self.page, selector=selector or 'app-root', name=module, auto_route=auto_route,
                target_folder=target_folder)
     app.publish()
     return app
@@ -679,9 +674,9 @@ if (typeof icon === "undefined"){
         name = "md_%s.amd" % int(time.time())
       file_path = os.path.join(path, name)
       with open(file_path, "w") as f:
-        order_components = list(self._report.components.keys())
+        order_components = list(self.page.components.keys())
         for component_id in order_components:
-          component = self._report.components[component_id]
+          component = self.page.components[component_id]
           if component.name == 'Body':
             continue
 
@@ -704,30 +699,30 @@ if (typeof icon === "undefined"){
     """
     self.html_tmpl = HtmlTmplBase.STATIC_PAGE
     results = self._to_html_obj()
-    if self._report is not None:
-      importMng = self._report.imports
+    if self.page is not None:
+      import_mng = self.page.imports
     else:
-      importMng = Imports.ImportManager(report=self._report)
-    require_js = importMng.to_requireJs(results, self.excluded_packages)
+      import_mng = Imports.ImportManager(page=self.page)
+    require_js = import_mng.to_requireJs(results, self.excluded_packages)
     results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
     results['jsFrgs_in_req'] = require_js['jsFrgs']
-    htmlParts = []
-    cssParts = dict(self._report.body.style.get_classes_css())
-    results["cssStyle"] += "\n".join(list(cssParts.values()))
-    order_components = list(self._report.components.keys())
+    html_parts = []
+    css_parts = dict(self.page.body.style.get_classes_css())
+    results["cssStyle"] += "\n".join(list(css_parts.values()))
+    order_components = list(self.page.components.keys())
     for component_id in order_components:
-      component = self._report.components[component_id]
+      component = self.page.components[component_id]
       if component.name == 'Body':
         continue
 
       if component.options.managed:
-        htmlParts.append(component.html())
-      cssParts.update(component.style.get_classes_css())
-    body = str(self._report.body.set_content(self._report, "\n".join(htmlParts)))
-    for js_id, wk_content in self._report._props.get('js', {}).get("workers", {}).items():
+        html_parts.append(component.html())
+      css_parts.update(component.style.get_classes_css())
+    body = str(self.page.body.set_content(self.page, "\n".join(html_parts)))
+    for js_id, wk_content in self.page._props.get('js', {}).get("workers", {}).items():
       body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
     results['body'] = body
-    results['header'] = self._report.headers
+    results['header'] = self.page.headers
     return self.html_tmpl.strip() % results
 
   @property

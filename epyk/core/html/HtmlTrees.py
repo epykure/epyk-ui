@@ -20,7 +20,7 @@ class Tree(Html.Html):
   name = 'List Expandable'
   _option_cls = OptTrees.OptionsTree
 
-  def __init__(self, report: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
+  def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     options['is_root'] = True
     icon_details = cssDefaults.get_icon("folder_open")
@@ -28,7 +28,7 @@ class Tree(Html.Html):
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     options['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
-    super(Tree, self).__init__(report, records, profile=profile, options=options,
+    super(Tree, self).__init__(page, records, profile=profile, options=options,
                                css_attrs={"width": width, 'height': height})
     self.add_helper(helper)
     self.css(options['style'])
@@ -47,7 +47,7 @@ class Tree(Html.Html):
     :rtype: JsHtmlTree.JsHtmlTree
     """
     if self._dom is None:
-      self._dom = JsHtmlTree.JsHtmlTree(self, report=self.page)
+      self._dom = JsHtmlTree.JsHtmlTree(self, page=self.page)
     return self._dom
 
   @property
@@ -155,7 +155,7 @@ class Tree(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<ul %s></ul>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class TreeInput(Tree):
@@ -244,7 +244,8 @@ class DropDown(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -280,4 +281,4 @@ class DropDown(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<ul %s></ul>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return "<ul %s></ul>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)

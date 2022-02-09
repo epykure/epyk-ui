@@ -8,9 +8,9 @@ from epyk.core.js import JsUtils
 
 class Calendar(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def changeView(self, newViewName, force):
@@ -30,7 +30,7 @@ class Calendar(JsPackage):
     """
     newViewName = JsUtils.jsConvertData(newViewName, None)
     force = JsUtils.jsConvertData(force, None)
-    return JsUtils.jsWrap("%s.changeView(%s, %s)" % (self._src.var, newViewName, force))
+    return JsUtils.jsWrap("%s.changeView(%s, %s)" % (self.component.var, newViewName, force))
 
   def clear(self, immediately=False):
     """
@@ -48,7 +48,7 @@ class Calendar(JsPackage):
     :param immediately: Boolean. Optional. Render it immediately.
     """
     immediately = JsUtils.jsConvertData(immediately, None)
-    return JsUtils.jsWrap("%s.clear(%s)" % (self._src.var, immediately))
+    return JsUtils.jsWrap("%s.clear(%s)" % (self.component.var, immediately))
 
   def createSchedules(self, schedules, silent=False):
     """
@@ -67,7 +67,7 @@ class Calendar(JsPackage):
     """
     schedules = JsUtils.jsConvertData(schedules, None)
     silent = JsUtils.jsConvertData(silent, None)
-    return JsUtils.jsWrap("%s.createSchedules(%s, %s)" % (self._src.var, schedules, silent))
+    return JsUtils.jsWrap("%s.createSchedules(%s, %s)" % (self.component.var, schedules, silent))
 
   def deleteSchedule(self, scheduleId, calendarId, silent=False):
     """
@@ -88,7 +88,7 @@ class Calendar(JsPackage):
     scheduleId = JsUtils.jsConvertData(scheduleId, None)
     calendarId = JsUtils.jsConvertData(calendarId, None)
     silent = JsUtils.jsConvertData(silent, None)
-    return JsUtils.jsWrap("%s.deleteSchedule(%s, %s, %s)" % (self._src.var, scheduleId, calendarId, silent))
+    return JsUtils.jsWrap("%s.deleteSchedule(%s, %s, %s)" % (self.component.var, scheduleId, calendarId, silent))
 
   def destroy(self):
     """
@@ -100,7 +100,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#destroy
     """
-    return JsUtils.jsWrap("%s.destroy()" % self._src.var)
+    return JsUtils.jsWrap("%s.destroy()" % self.component.var)
 
   def getDate(self):
     """
@@ -112,7 +112,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getDate
     """
-    return JsUtils.jsWrap("%s.getDate()" % self._src.var)
+    return JsUtils.jsWrap("%s.getDate()" % self.component.var)
 
   def getDateRangeEnd(self):
     """
@@ -124,7 +124,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getDateRangeEnd
     """
-    return JsUtils.jsWrap("%s.getDateRangeEnd()" % self._src.var)
+    return JsUtils.jsWrap("%s.getDateRangeEnd()" % self.component.var)
 
   def getDateRangeStart(self):
     """
@@ -136,7 +136,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getDateRangeStart
     """
-    return JsUtils.jsWrap("%s.getDateRangeStart()" % self._src.var)
+    return JsUtils.jsWrap("%s.getDateRangeStart()" % self.component.var)
 
   def getElement(self, scheduleId, calendarId):
     """
@@ -154,7 +154,7 @@ class Calendar(JsPackage):
     """
     scheduleId = JsUtils.jsConvertData(scheduleId, None)
     calendarId = JsUtils.jsConvertData(calendarId, None)
-    return JsUtils.jsWrap("%s.getElement(%s, %s)" % (self._src.var, scheduleId, calendarId))
+    return JsUtils.jsWrap("%s.getElement(%s, %s)" % (self.component.var, scheduleId, calendarId))
 
   def getOptions(self):
     """
@@ -166,7 +166,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getOptions
     """
-    return JsUtils.jsWrap("%s.getOptions()" % self._src.var)
+    return JsUtils.jsWrap("%s.getOptions()" % self.component.var)
 
   def getSchedule(self, scheduleId, calendarI):
     """
@@ -185,7 +185,7 @@ class Calendar(JsPackage):
     """
     scheduleId = JsUtils.jsConvertData(scheduleId, None)
     calendarI = JsUtils.jsConvertData(calendarI, None)
-    return JsUtils.jsWrap("%s.getSchedule(%s, %s)" % (self._src.var, scheduleId, calendarI))
+    return JsUtils.jsWrap("%s.getSchedule(%s, %s)" % (self.component.var, scheduleId, calendarI))
 
   def getViewName(self):
     """
@@ -197,7 +197,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getViewName
     """
-    return JsObjects.JsString.JsString.get("%s.getViewName()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getViewName()" % self.component.var)
 
   def hideMoreView(self):
     """
@@ -209,7 +209,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#hideMoreView
     """
-    return JsUtils.jsWrap("%s.hideMoreView()" % self._src.var)
+    return JsUtils.jsWrap("%s.hideMoreView()" % self.component.var)
 
   def next(self):
     """
@@ -221,7 +221,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#next
     """
-    return JsUtils.jsWrap("%s.next()" % self._src.var)
+    return JsUtils.jsWrap("%s.next()" % self.component.var)
 
   def openCreationPopup(self, schedule):
     """
@@ -238,7 +238,7 @@ class Calendar(JsPackage):
     :param schedule: Schedule. The preset Schedule data.
     """
     schedule = JsUtils.jsConvertData(schedule, None)
-    return JsUtils.jsWrap("%s.openCreationPopup(%s)" % (self._src.var, schedule))
+    return JsUtils.jsWrap("%s.openCreationPopup(%s)" % (self.component.var, schedule))
 
   def prev(self):
     """
@@ -250,7 +250,7 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#prev
     """
-    return JsUtils.jsWrap("%s.prev()" % self._src.var)
+    return JsUtils.jsWrap("%s.prev()" % self.component.var)
 
   def render(self, immediately=False):
     """
@@ -268,7 +268,7 @@ class Calendar(JsPackage):
     :param immediately: Boolean. Optional. Render it immediately.
     """
     immediately = JsUtils.jsConvertData(immediately, None)
-    return JsUtils.jsWrap("%s.render(%s)" % (self._src.var, immediately))
+    return JsUtils.jsWrap("%s.render(%s)" % (self.component.var, immediately))
 
   def scrollToNow(self):
     """
@@ -280,4 +280,4 @@ class Calendar(JsPackage):
 
       https://nhn.github.io/tui.calendar/latest/Calendar#scrollToNow
     """
-    return JsUtils.jsWrap("%s.scrollToNow()" % self._src.var)
+    return JsUtils.jsWrap("%s.scrollToNow()" % self.component.var)

@@ -1,5 +1,5 @@
 
-
+from typing import Union
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 
@@ -16,9 +16,9 @@ class OptionsNews(Options):
     return self._config_get(True)
 
   @dated.setter
-  def dated(self, flag):
+  def dated(self, flag: bool):
     if flag:
-      self._report.jsImports.add('moment')
+      self.component.jsImports.add('moment')
     self._config(flag)
 
   @property
@@ -31,7 +31,7 @@ class OptionsNews(Options):
     return self._config_get([])
 
   @classes.setter
-  def classes(self, class_names):
+  def classes(self, class_names: list):
     self._config(class_names)
 
   @property
@@ -77,7 +77,7 @@ class OptionsAlert(Options):
     return self._config_get(1000)
 
   @time.setter
-  def time(self, num):
+  def time(self, num: int):
     self._config(num)
 
   @property
@@ -100,7 +100,7 @@ class OptionsAlert(Options):
     return self._config_get(1000)
 
   @delay.setter
-  def delay(self, attrs):
+  def delay(self, attrs: Union[dict, int]):
     self._config(attrs)
 
   @property
@@ -112,11 +112,11 @@ class OptionsAlert(Options):
     return self._config_get(True)
 
   @close.setter
-  def close(self, bool):
-    if bool:
-      self._report.jsImports.add("font-awesome")
-      self._report.cssImport.add("font-awesome")
-    self._config(bool)
+  def close(self, flag: bool):
+    if flag:
+      self.component.jsImports.add("font-awesome")
+      self.component.cssImport.add("font-awesome")
+    self._config(flag)
 
   @property
   def type(self):
@@ -163,10 +163,10 @@ class OptionsChat(Options):
     return self._config_get(True)
 
   @dated.setter
-  def dated(self, bool):
-    if bool:
-      self._report.jsImports.add('moment')
-    self._config(bool)
+  def dated(self, flag: bool):
+    if flag:
+      self.component.jsImports.add('moment')
+    self._config(flag)
 
   @property
   def readonly(self):
@@ -178,8 +178,8 @@ class OptionsChat(Options):
     return self._config_get(True)
 
   @readonly.setter
-  def readonly(self, bool):
-    self._config(bool)
+  def readonly(self, flag: bool):
+    self._config(flag)
 
   @property
   def markdown(self):
@@ -215,8 +215,8 @@ class OptionFiles(Options):
     return self._config_get(True)
 
   @text.setter
-  def text(self, bool):
-    self._config(bool)
+  def text(self, flag: bool):
+    self._config(flag)
 
   @property
   def extensions(self):

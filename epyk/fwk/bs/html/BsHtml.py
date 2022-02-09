@@ -27,7 +27,7 @@ class BsComposite(html.HtmlTextComp.Composite):
     if self.extended_map is None:
       self.extended_map = dict(super(BsComposite, self)._get_comp_map)
       self.extended_map.update({
-        'close': self._report.web.bs.buttons.close,
+        'close': self.page.web.bs.buttons.close,
       })
     return self.extended_map
 
@@ -82,7 +82,7 @@ class Section(html.Html.Html):
   def __str__(self):
     cols = "".join([htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for i, htmlObj in enumerate(self.val)])
     return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {'section': self.__section, 'cols': cols,
-                  'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
+                  'attr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class BsToasts(html.Html.Html):
@@ -147,7 +147,7 @@ class BsToasts(html.Html.Html):
     -----
     """
     if self.__header is None:
-      self.__header = Section(self._report, 'div')
+      self.__header = Section(self.page, 'div')
       self.__header.style.clear_all()
       self.__header.attr['class'].add('toast-header')
     return self.__header
@@ -162,13 +162,13 @@ class BsToasts(html.Html.Html):
     -----
     """
     if self.__body is None:
-      self.__body = Section(self._report, 'div')
+      self.__body = Section(self.page, 'div')
       self.__body.style.clear_all()
       self.__body.attr['class'].add('toast-body')
     return self.__body
 
   def __str__(self):
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.header.html(), self.body.html())
+    return '<div %s>%s%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.header.html(), self.body.html())
 
 
 class BsCards(html.Html.Html):
@@ -245,7 +245,7 @@ class BsCards(html.Html.Html):
 
     """
     if self.__header is None:
-      self.__header = Section(self._report, 'div')
+      self.__header = Section(self.page, 'div')
       self.__header.style.clear_all()
       self.__header.attr['class'].add('card-header')
     return self.__header
@@ -261,13 +261,14 @@ class BsCards(html.Html.Html):
 
     """
     if self.__body is None:
-      self.__body = Section(self._report, 'div')
+      self.__body = Section(self.page, 'div')
       self.__body.style.clear_all()
       self.__body.attr['class'].add('card-body')
     return self.__body
 
   def __str__(self):
-    return '<div %s>%s%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.header.html(), self.body.html())
+    return '<div %s>%s%s</div>' % (
+      self.get_attrs(css_class_names=self.style.get_classes()), self.header.html(), self.body.html())
 
 
 class BsModals(html.Html.Html):
@@ -281,19 +282,19 @@ class BsModals(html.Html.Html):
     self.attr['tabindex'] = -1
     self.aria.hidden = True
     self.aria.labelledby = ""
-    self.dialog = Section(self._report, 'div')
+    self.dialog = Section(self.page, 'div')
     self.dialog.attr["class"].add('modal-dialog')
     self.dialog.attr["role"] = 'document'
     if options.get("vertical-align") == 'middle':
       self.dialog.attr["class"].add('modal-dialog-centered')
-    self.dialog += Section(self._report, 'div')
+    self.dialog += Section(self.page, 'div')
     self._content = self.dialog[0]
     self._content.attr["class"].add('modal-content')
-    header = Section(self._report, 'div')
+    header = Section(self.page, 'div')
     header.attr['class'].add('modal-header')
-    body = Section(self._report, 'div')
+    body = Section(self.page, 'div')
     body.attr['class'].add('modal-body')
-    footer = Section(self._report, 'div')
+    footer = Section(self.page, 'div')
     footer.attr['class'].add('modal-footer')
     self._content += header
     self._content += body
@@ -357,7 +358,7 @@ class BsModals(html.Html.Html):
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
-      self._dom = BsDom.Modal(self, report=self._report)
+      self._dom = BsDom.Modal(self, page=self.page)
     return self._dom
 
   @property
@@ -373,4 +374,4 @@ class BsModals(html.Html.Html):
     return self._content[2]
 
   def __str__(self):
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.dialog.html())
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.dialog.html())

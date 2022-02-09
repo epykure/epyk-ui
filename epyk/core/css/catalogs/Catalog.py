@@ -1,16 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
+from epyk.core.py import OrderedSet
+
 
 class CatalogGroup:
 
-  def __init__(self, report, class_list_type, html_id=None):
-    self.page, self.__class_list_type, self._html_id = report, class_list_type, html_id
+  def __init__(self, page: primitives.PageModel, class_list_type: OrderedSet, html_id: str = None):
+    self.page, self.__class_list_type, self._html_id = page, class_list_type, html_id
 
-  def _add_class(self, cssObj):
-    self.__class_list_type.add(cssObj)
-    return cssObj
+  def _add_class(self, css_obj: primitives.CssClsModel) -> primitives.CssClsModel:
+    self.__class_list_type.add(css_obj)
+    return css_obj
 
-  def _set_class(self, classObj):
-    cssObj = classObj(self.page, html_id=self._html_id)
-    return self._add_class(cssObj)
+  def _set_class(self, css_cls):
+    css_obj = css_cls(self.page, html_id=self._html_id)
+    return self._add_class(css_obj)

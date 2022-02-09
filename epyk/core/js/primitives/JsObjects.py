@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, Any
 from epyk.core.py import primitives
 
 from epyk.core.js.primitives import JsArray
@@ -19,7 +19,7 @@ from epyk.core.js import JsUtils
 
 
 class JsVoid(primitives.JsDataModel):
-  def __init__(self, data):
+  def __init__(self, data: Any):
     self._data = data
 
   def toStr(self):
@@ -27,8 +27,8 @@ class JsVoid(primitives.JsDataModel):
 
 
 class JsObjects:
-  def __init__(self, jsObj=None):
-    self._jsObj = jsObj
+  def __init__(self, page: primitives.PageModel = None, component: primitives.HtmlModel = None):
+    self.page, self.component = page, component
 
   @property
   def this(self):
@@ -83,7 +83,7 @@ class JsObjects:
     -----------
     Interface to the Javascript Object primitive.
 
-    :return: The Javascript value in a event
+    :return: The Javascript value in an event
     """
     return JsObject.JsObject.get("value")
 
@@ -123,10 +123,10 @@ class JsObjects:
     :return: The Javascript "this" object
     """
     from epyk.core.js.packages import JsQuery
-    return JsQuery.JQuery(self._jsObj._src, selector="jQuery(this)", setVar=False)
+    return JsQuery.JQuery(component=self.component, page=self.page, selector="jQuery(this)", set_var=False)
 
   @classmethod
-  def get(cls, varName: str):
+  def get(cls, js_code: str):
     """
     Description:
     -----------
@@ -134,14 +134,15 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param varName: String. The variable name.
+    :param str js_code: The variable name.
 
     :return: The requested Python JsObject primitive
     """
-    return JsObject.JsObject.get(varName)
+    return JsObject.JsObject.get(js_code)
 
   @classmethod
-  def new(cls, data=None, varName: Optional[str] = None, isPyData: bool = False, report=None):
+  def new(cls, data=None, js_code: Optional[str] = None, is_py_data: bool = False,
+          page: primitives.PageModel = None):
     """
     Description:
     -----------
@@ -150,15 +151,15 @@ class JsObjects:
     Attributes:
     ----------
     :param data: Object. Optional. The value.
-    :param Optional[str] varName: Optional. The variable name.
-    :param bool isPyData: Optional. The data type.
-    :param report: Page. Optional. The underlying page object (the context).
+    :param Optional[str] js_code: Optional. The variable name.
+    :param bool is_py_data: Optional. The data type.
+    :param primitives.PageModel page: Optional. The underlying page object (the context).
 
     :return: A Python generic JsObject primitive.
     """
-    return JsObject.JsObject.new(data, varName, isPyData, report=report)
+    return JsObject.JsObject.new(data, js_code, is_py_data, page=page)
 
-  def time(self, varName: str, report=None):
+  def time(self, js_code: str, page: primitives.PageModel = None):
     """
     Description:
     -----------
@@ -166,10 +167,10 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param str varName: The variable name.
-    :param report: Report. Optional. The report object.
+    :param str js_code: The variable name.
+    :param primitives.PageModel page: Report. Optional. The report object.
     """
-    return JsObject.JsObject.new("performance.now()", varName, False, report=report)
+    return JsObject.JsObject.new("performance.now()", js_code, False, page=page)
 
   @property
   def number(self):
@@ -300,7 +301,7 @@ class JsObjects:
 
     :return: A Python Js undefined object.
     """
-    return JsObject.JsObject("undefined", isPyData=False)
+    return JsObject.JsObject("undefined", is_py_data=False)
 
   @property
   def NaN(self):
@@ -348,7 +349,7 @@ class JsObjects:
     """
     return JsBoolean.JsBoolean.get('false')
 
-  def record(self, varName: str):
+  def record(self, js_code: str):
     """
     Description:
     -----------
@@ -356,9 +357,9 @@ class JsObjects:
 
     Attributes:
     ----------
-    :param str varName: A string with of the existing variable name.
+    :param str js_code: A string with of the existing variable name.
     """
-    return JsData.RawData.get(self._jsObj, varName)
+    return JsData.RawData.get(page=self.page, js_code=js_code)
 
   def incr(self, incr: str):
     """
@@ -456,15 +457,17 @@ class JsPromiseRecords(primitives.JsDataModel):
       "function(data){let result = []; data.forEach(function(row){%s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
     return self
 
-  def filterCol(self, column, value, operator: str = "==", keep: bool = True):
+  def filterCol(self, column: Union[str, primitives.JsDataModel],
+                value: Union[str, primitives.JsDataModel, float, dict, list],
+                operator: str = "==", keep: bool = True):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param column:
-    :param value:
+    :param Union[str, primitives.JsDataModel column:
+    :param Union[str, primitives.JsDataModel, float, dict, list] value:
     :param str operator:
     :param bool keep:
     """
@@ -487,15 +490,16 @@ class JsPromiseRecords(primitives.JsDataModel):
 
 class JsPromise:
 
-  def __init__(self, jsObj, profile: Optional[Union[dict, bool]] = False, async_await: bool = False):
-    self._jsObj, self.profile, self.async_await = jsObj, profile, async_await
+  def __init__(self, data: Union[str, primitives.JsDataModel], profile: Optional[Union[dict, bool]] = False,
+               async_await: bool = False):
+    self.data, self.profile, self.async_await = data, profile, async_await
     self.__thens, self.__catch = [], []
 
   def then(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
-    Add a new post processing step to a then statement.
+    Add a new post-processing step to a then statement.
 
     Attributes:
     ----------
@@ -563,7 +567,7 @@ class JsPromise:
     return self.toStr()
 
   def toStr(self):
-    result = [str(self._jsObj)]
+    result = [str(self.data)]
     if self.__thens:
       for then_step in self.__thens:
         result.append("then(%s)" % then_step)
@@ -578,9 +582,9 @@ class JsPromise:
 
 class XMLHttpRequestErrors:
 
-  def __init__(self, onerrors, report, http_request):
+  def __init__(self, onerrors: list, page: primitives.PageModel, http_request):
     self.__onerrors = onerrors
-    self._src = report
+    self.page = page
     self._http = http_request
     self.profile = None
 
@@ -589,6 +593,10 @@ class XMLHttpRequestErrors:
     """
     Description:
     ------------
+    404 Not Found
+
+    The HTTP 404 Not Found response status code indicates that the server cannot find the requested resource.
+    Links that lead to a 404 page are often called broken or dead links and can be subject to link rot.
 
     Attributes:
     ----------
@@ -598,9 +606,9 @@ class XMLHttpRequestErrors:
     """
     js_funcs = list(js_funcs or [])
     if default:
-      js_funcs.append(self._src.js.msg.text(
+      js_funcs.append(self.page.js.msg.text(
         "Service [%s] not found" % self._http.url,
-        cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+        cssAttrs={"background": self.page.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 404){%s}" % (
       self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
@@ -610,6 +618,10 @@ class XMLHttpRequestErrors:
     """
     Description:
     ------------
+    405 Method Not Allowed
+
+    The HyperText Transfer Protocol (HTTP) 405 Method Not Allowed response status code indicates that the server knows
+    the request method, but the target resource doesn't support this method.
 
     Attributes:
     ----------
@@ -620,8 +632,8 @@ class XMLHttpRequestErrors:
     js_funcs = list(js_funcs or [])
     if default:
       js_funcs.append(
-        self._src.js.msg.text("Service [%s] failed to return response" % self._http.url,
-                              cssAttrs={"background": self._src.theme.danger[1], 'color': 'white'}))
+        self.page.js.msg.text("Service [%s] failed to return response" % self._http.url,
+                              cssAttrs={"background": self.page.theme.danger[1], 'color': 'white'}))
     self.__onerrors.append("if(%s == 405){%s}" % (
       self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
@@ -641,8 +653,8 @@ class XMLHttpRequestErrors:
     js_funcs = list(js_funcs or [])
     if default:
       js_funcs.append(
-        self._src.js.msg.text("Service [%s] completed successfully" % self._http.url,
-                              cssAttrs={"background": self._src.theme.success[1], 'color': 'white'}))
+        self.page.js.msg.text("Service [%s] completed successfully" % self._http.url,
+                              cssAttrs={"background": self.page.theme.success[1], 'color': 'white'}))
     self.__onerrors.append(
       "if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
@@ -667,20 +679,20 @@ class XMLHttpRequestErrors:
 
 class XMLHttpRequest:
 
-  def __init__(self, report, varName: str, method_type: Optional[str], url: Optional[str], data=None,
-               asynchronous: bool = False):
+  def __init__(self, page: Optional[primitives.PageModel], js_code: str, method_type: Optional[str],
+               url: Optional[str], data: JsData.Datamap = None, asynchronous: bool = False):
     self.data = JsData.Datamap() if data is None else data
-    self._src, self.__headers, self.url = report, {}, url
+    self.page, self.__headers, self.url = page, {}, url
     self.__mod_name, self.__mod_path, self.method = None, None, method_type
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
-    self.varId, self.profile, self.timeout, self.asynchronous = varName, False, None, asynchronous
+    self.varId, self.profile, self.timeout, self.asynchronous = js_code, False, None, asynchronous
     if url is not None:
       self.open(method_type, url)
 
   @classmethod
-  def get(cls, varName: str):
+  def get(cls, js_code: str):
     """
     Description:
     ------------
@@ -688,11 +700,11 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param str varName: The variable name on tje JavaScript side.
+    :param str js_code: The variable name on tje JavaScript side.
 
     :return: The requested Python JsObject primitive.
     """
-    return XMLHttpRequest(None, varName, None, None)
+    return XMLHttpRequest(None, js_code, None, None)
 
   @property
   def readyState(self):
@@ -741,7 +753,7 @@ class XMLHttpRequest:
       self.__responseType = value
       return self
 
-    return JsString.JsString("%s.responseType" % self.varId, isPyData=False)
+    return JsString.JsString("%s.responseType" % self.varId, is_py_data=False)
 
   @property
   def responseText(self):
@@ -755,7 +767,7 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseText
     """
-    return JsString.JsString("%s.responseText" % self.varId, isPyData=False)
+    return JsString.JsString("%s.responseText" % self.varId, is_py_data=False)
 
   def abort(self):
     """
@@ -769,7 +781,7 @@ class XMLHttpRequest:
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
-  def addEventListener(self, event: str, jsFncs: Union[list, str], options: Optional[dict] = None):
+  def addEventListener(self, event: str, js_funcs: Union[list, str], options: Optional[dict] = None):
     """
     Description:
     ------------
@@ -786,7 +798,7 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param str event: A case-sensitive string representing the event type to listen for.
-    :param Union[list, str] jsFncs: Optional. The Javascript functions.
+    :param Union[list, str] js_funcs: Optional. The Javascript functions.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
 
@@ -869,8 +881,10 @@ class XMLHttpRequest:
       js_funcs = [js_funcs]
     self.__req_success = js_funcs
     if self.profile is not None and self.profile:
-      self.__req_success.insert(0, "console.log('Start[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
-      self.__req_success.append("console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
+      self.__req_success.insert(
+        0, "console.log('Start[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
+      self.__req_success.append(
+        "console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
     return self
 
   def onerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
@@ -893,7 +907,7 @@ class XMLHttpRequest:
       self.profile = profile
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    if self.__on.get("onerror") is None:
+    if self.__on.get("onerror", None) is None:
       self.__on["onerror"] = js_funcs
     else:
       self.__on["onerror"] = js_funcs
@@ -933,7 +947,7 @@ class XMLHttpRequest:
     """
     if self.__on.get("onloadend") is None:
       self.__on["onloadend"] = []
-    return XMLHttpRequestErrors(self.__on["onloadend"], self._src, self)
+    return XMLHttpRequestErrors(self.__on["onloadend"], self.page, self)
 
   def ontimeout(self, js_funcs: Union[list, str], timeout: int = 2000, profile: Optional[Union[dict, bool]] = None):
     """
@@ -1014,7 +1028,8 @@ class XMLHttpRequest:
     :param bool flag: Flag to specify the use of credentials.
     """
 
-  def send(self, jsonData=None, encodeURIData=None, stringify: bool = True):
+  def send(self, json_data: Union[list, dict, primitives.JsDataModel] = None, encode_uri_data: dict = None,
+           stringify: bool = True):
     """
     Description:
     ------------
@@ -1029,14 +1044,14 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param jsonData:
-    :param encodeURIData:
+    :param json_data:
+    :param dict encode_uri_data:
     :param bool stringify:
     """
     #Initialize jsonData with potential initial data passed in the constructor
-    if jsonData:
-      if isinstance(jsonData, list):
-        for obj in jsonData:
+    if json_data:
+      if isinstance(json_data, list):
+        for obj in json_data:
           if hasattr(obj, 'options'):
             self.data.add(obj)
           elif isinstance(obj, tuple):
@@ -1044,21 +1059,20 @@ class XMLHttpRequest:
           else:
             self.data.attrs(obj)
 
-      elif isinstance(jsonData, dict):
-        self.data.update(jsonData)
+      elif isinstance(json_data, dict):
+        self.data.update(json_data)
 
-      else:
-        # formdata
-        self.data = jsonData
+      else:   # formdata
+        self.data = json_data
 
-    if jsonData:
+    if json_data:
       if stringify:
         self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
       else:
         # For data form when dealing with files
         self.__req_send = "%s.send(%s)" % (self.varId, JsUtils.jsConvertData(self.data, None))
-    elif encodeURIData is not None:
-      self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encodeURIData.items()])
+    elif encode_uri_data is not None:
+      self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encode_uri_data.items()])
       self.__req_send = "%s.send()" % self.varId
     else:
       self.__req_send = "%s.send()" % self.varId

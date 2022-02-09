@@ -127,7 +127,7 @@ def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dic
   return js_for
 
 
-def forIn(jsObj, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
           profile: Optional[Union[dict, bool]] = None):
   """
   Description:
@@ -136,14 +136,14 @@ def forIn(jsObj, js_funcs: Optional[Union[list, str]] = None, options: Optional[
 
   Attributes:
   ----------
-  :param jsObj:
+  :param js_obj:
   :param Optional[Union[list, str]] js_funcs: The Javascript functions.
   :param Optional[dict] options: Optional. Specific Python options available for this component.
   :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
-  if hasattr(jsObj, 'dom'):
-    jsObj = jsObj.dom.content
-  js_for = JsFor.JsIterable(jsObj, options=options, profile=profile)
+  if hasattr(js_obj, 'dom'):
+    js_obj = js_obj.dom.content
+  js_for = JsFor.JsIterable(js_obj, options=options, profile=profile)
   if js_funcs is not None:
     js_for.fncs(js_funcs)
   return js_for
@@ -174,7 +174,7 @@ def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Option
   return js_for
 
 
-def typeof(jsData: Union[primitives.JsDataModel, str], type: Optional[Union[primitives.JsDataModel, str]] = None):
+def typeof(data: Union[primitives.JsDataModel, str], type: Optional[Union[primitives.JsDataModel, str]] = None):
   """
   Description:
   ------------
@@ -186,13 +186,13 @@ def typeof(jsData: Union[primitives.JsDataModel, str], type: Optional[Union[prim
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] jsData: A String corresponding to a JavaScript object.
+  :param Union[primitives.JsDataModel, str] data: A String corresponding to a JavaScript object.
   :param Optional[Union[primitives.JsDataModel, str]] type: The type of object.
   """
   if type is None:
-    return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(jsData, None))
+    return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(data, None))
 
-  return JsObjects.JsVoid("typeof %s === %s" % (JsUtils.jsConvertData(jsData, None), JsUtils.jsConvertData(type, None)))
+  return JsObjects.JsVoid("typeof %s === %s" % (JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(type, None)))
 
 
 def not_(condition: Union[primitives.JsDataModel, str]):

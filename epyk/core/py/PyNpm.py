@@ -12,6 +12,7 @@ except ImportError:
     from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
 
 
+from epyk.core.py import primitives
 from epyk.core.js import Imports
 
 import subprocess
@@ -106,7 +107,7 @@ class NpmRegistery:
   __HTTP_GITHUB = "https://api.github.com"
   __HTTP_NPM_REGISTERY = 'https://registry.npmjs.org'
 
-  def __init__(self, package, alias):
+  def __init__(self, package: dict, alias: str):
     self._meta = package
     self._alias = alias
     self._info, self._tree = None, None
@@ -264,7 +265,7 @@ class NpmRegistery:
     """
     return self._meta['package']['name']
 
-  def is_latest(self, verbose=True):
+  def is_latest(self, verbose: bool = True):
     """
     Description:
     -----------
@@ -277,7 +278,7 @@ class NpmRegistery:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Display version details (default True).
+    :param bool verbose: Optional. Display version details (default True).
     """
     result = self.version_no == self.release
     if not result and verbose:
@@ -290,7 +291,7 @@ class NpmRegistery:
         self._alias, self.release, self.version_no, is_valid))
     return result
 
-  def has_cdnjs(self, version=None):
+  def has_cdnjs(self, version: str = None):
     """
     Description:
     -----------
@@ -303,7 +304,7 @@ class NpmRegistery:
 
     Attributes:
     ----------
-    :param version: String. Optional. The package version number (default the current release number from NPM).
+    :param str version: Optional. The package version number (default the current release number from NPM).
     """
     version = version or self.version_no
     results = []
@@ -571,7 +572,7 @@ class Npm:
   def __init__(self):
     pass
 
-  def check(self, name, verbose=True):
+  def check(self, name: str, verbose: bool = True):
     """
     Description:
     -----------
@@ -585,8 +586,8 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
-    :param verbose: Boolean. Optional. Display warning message. Default True.
+    :param str name: The package alias name in NPM.
+    :param bool verbose: Optional. Display warning message. Default True.
     """
     pkg = self.package(name)
     if pkg is not None:
@@ -595,7 +596,7 @@ class Npm:
     elif verbose:
       logging.warning("{} - Missing reference".format(name))
 
-  def meta(self, name, indent=4):
+  def meta(self, name: str, indent: int = 4):
     """
     Description:
     -----------
@@ -604,15 +605,15 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
-    :param indent: Integer. optional. The indent lenght.
+    :param str name: The package alias name in NPM.
+    :param int indent: optional. The indent length.
     """
     pkg = self.package(name)
     meta = pkg._meta
     meta['info'] = pkg._info
     return json.dumps(meta, indent=indent)
 
-  def version(self, name):
+  def version(self, name: str):
     """
     Description:
     -----------
@@ -624,13 +625,13 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
+    :param str name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request("%s/-/package/%s/dist-tags" % (self.__HTTP_NPM_REGISTRY, name), method="GET", headers=headers)
     return json.loads(urlopen(request).read())['latest']
 
-  def all(self, verbose=True):
+  def all(self, verbose: bool = True):
     """
     Description:
     -----------
@@ -638,11 +639,11 @@ class Npm:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Display warning message. Default True.
+    :param verbose: Optional. Display warning message. Default True.
     """
     return {js: self.check(js, verbose) for js, js_details in Imports.JS_IMPORTS.items()}
 
-  def search_url(self, name):
+  def search_url(self, name: str):
     """
     Description:
     -----------
@@ -650,11 +651,11 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
+    :param str name: The package alias name in NPM.
     """
     return "%s/-/v1/search?text=%s" % (self.__HTTP_NPM_REGISTRY, name)
 
-  def package(self, name):
+  def package(self, name: str):
     """
     Description:
     -----------
@@ -668,7 +669,7 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
+    :param str name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request(self.search_url(name), method="GET", headers=headers)
@@ -677,7 +678,7 @@ class Npm:
       if pkg['package']["name"] == mapped_package_alias.get(name, name):
         return NpmRegistery(pkg, name)
 
-  def search(self, name):
+  def search(self, name: str):
     """
     Description:
     -----------
@@ -694,7 +695,7 @@ class Npm:
 
     Attributes:
     ----------
-    :param name: String. The package alias name in NPM.
+    :param str name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request(self.search_url(name), method="GET", headers=headers)
@@ -707,7 +708,7 @@ class Npm:
 class Packages:
 
   @classmethod
-  def descriptions(cls, verbose=True):
+  def descriptions(cls, verbose: bool = True):
     """
     Description:
     -----------
@@ -715,7 +716,7 @@ class Packages:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Display version details (default True).
+    :param bool verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -728,7 +729,7 @@ class Packages:
     return results
 
   @classmethod
-  def versions(cls, verbose=True):
+  def versions(cls, verbose: bool = True):
     """
     Description:
     -----------
@@ -739,7 +740,7 @@ class Packages:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Display version details (default True).
+    :param bool verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -753,7 +754,7 @@ class Packages:
     return results
 
   @classmethod
-  def repositories(cls, verbose=True):
+  def repositories(cls, verbose: bool = True):
     """
     Description:
     -----------
@@ -769,7 +770,7 @@ class Packages:
 
     Attributes:
     ----------
-    :param verbose: Boolean. Optional. Display version details (default True).
+    :param bool verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -785,18 +786,19 @@ class Packages:
     return results
 
 
-def download(modules_path, update=False, verbose=True, packages=None, page=None):
+def download(modules_path: str, update: bool = False, verbose: bool = True, packages: list = None,
+             page: primitives.PageModel = None):
   """
   Description:
   -----------
 
   Attributes:
   ----------
-  :param modules_path: String. The output path for the modules.
-  :param update: Boolean, Optional. Flag to specify if the files need to be uploaded again.
-  :param verbose: Boolean. Optional. Display version details (default True).
-  :param packages: List. Optional. A list of packages to download.
-  :param page: Page. optional. Allow to filter on the required modules.
+  :param str modules_path: The output path for the modules.
+  :param bool update: Optional. Flag to specify if the files need to be uploaded again.
+  :param bool verbose: Optional. Display version details (default True).
+  :param list packages: Optional. A list of packages to download.
+  :param primitives.PageModel page: optional. Allow filtering on the required modules.
   """
   npm = Npm()
   results = {}
@@ -807,7 +809,7 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   for pkg_alias in packages:
     try:
       pkg = npm.package(pkg_alias)
-    except:
+    except Exception as err:
       if verbose:
         print("Error with %s" % pkg_alias)
       continue
@@ -819,7 +821,8 @@ def download(modules_path, update=False, verbose=True, packages=None, page=None)
   return results
 
 
-def install(path, packages=None, node_server=False, update=False, verbose=True, page=None):
+def install(path: str, packages: list = None, node_server: bool = False, update: bool = False, verbose: bool = True,
+            page: primitives.PageModel = None):
   """
   Description:
   ------------
@@ -832,16 +835,16 @@ def install(path, packages=None, node_server=False, update=False, verbose=True, 
 
   Attributes:
   ----------
-  :param packages: List. All the packages to be added to the install
-  :param path: String. Optional. The install path (if node server, the folder root for /node_modules
-  :param node_server: Boolean. Optional. Specify if npm from NodeJs must be used to install the package
-  :param update: Boolean. Optional. Specify is the version of the package needs to be updated
-  :param verbose: Boolean. Optional. Display version details (default True).
-  :param page: Page. Optional. The Page / Report object on which the list of packages will be defined.
+  :param list packages: All the packages to be added to the install
+  :param str path: Optional. The install path (if node server, the folder root for /node_modules
+  :param bool node_server: Boolean. Optional. Specify if npm from NodeJs must be used to install the package
+  :param bool update: Optional. Specify is the version of the package needs to be updated
+  :param bool verbose: Optional. Display version details (default True).
+  :param primitives.PageModel page: Optional. The Page / Report object on which the list of packages will be defined.
   """
   if packages is None:
     if page is None:
-      raise Exception("Package or page must be defined")
+      raise ValueError("Package or page must be defined")
 
     packages = page.imports.requirements
 
@@ -863,9 +866,8 @@ def install(path, packages=None, node_server=False, update=False, verbose=True, 
       elif verbose:
         logging.warning(" PYK_NPM >> packages already installed")
   else:
-    if verbose:
-      if not path.endswith("node_modules"):
-        logging.warning("NodeJs is using a node_modules folder.")
+    if verbose and not path.endswith("node_modules"):
+      logging.warning("NodeJs is using a node_modules folder.")
 
     for p in packages:
       if not os.path.exists(os.path.join(path, p)) or update:

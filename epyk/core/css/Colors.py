@@ -154,7 +154,7 @@ defined = {
 }
 
 
-def getHexToRgb(hexColor: str):
+def getHexToRgb(hex_color: str):
   """
   Description:
   ------------
@@ -182,21 +182,21 @@ def getHexToRgb(hexColor: str):
 
   Attributes:
   ----------
-  :param str hexColor: A hexadecimal code color.
+  :param str hex_color: A hexadecimal code color.
 
   :return: The list with the rgb code color
   """
-  res = re.search('rgba\(([0-9]*), ([0-9]*), ([0-9]*)', hexColor)
+  res = re.search('rgba\(([0-9]*), ([0-9]*), ([0-9]*)', hex_color)
   if res is not None:
     return [res.group(1), res.group(2), res.group(3)]
 
-  if not hexColor.startswith("#"):
+  if not hex_color.startswith("#"):
     raise ValueError("Hexadecimal color should start with #")
 
-  if not len(hexColor) == 7:
+  if not len(hex_color) == 7:
     raise ValueError("Color should have a length of 7")
 
-  return [int(hexColor[1:3], 16), int(hexColor[3:5], 16), int(hexColor[5:7], 16)]
+  return [int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)]
 
 
 def rgba(red: int, green: int, blue: int, alpha: int):
@@ -225,7 +225,7 @@ def rgba(red: int, green: int, blue: int, alpha: int):
   return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
 
-def getRgbToHex(rgbColor: List[int]):
+def getRgbToHex(rgb_color: List[int]):
   """
   Description:
   ------------
@@ -238,12 +238,12 @@ def getRgbToHex(rgbColor: List[int]):
 
   Attributes:
   ----------
-  :param List[int] rgbColor: A list corresponding to the RGB color code.
+  :param List[int] rgb_color: A list corresponding to the RGB color code.
 
   :return: String object defining the hexadecimal color code.
   """
   color = []
-  for val in rgbColor:
+  for val in rgb_color:
     val = hex(int(val)).lstrip('0x')
     if len(val) != 2:
       leading_zeros = ["0"] * (2 - len(val))
@@ -252,7 +252,7 @@ def getRgbToHex(rgbColor: List[int]):
   return "#%s" % "".join(color)
 
 
-def randColor(seedNo: int = None):
+def randColor(seed_no: int = None):
   """
   Description:
   ------------
@@ -265,17 +265,17 @@ def randColor(seedNo: int = None):
 
   Attributes:
   ----------
-  :param int seedNo: Optional. The seed number used to generate random numbers.
+  :param int seed_no: Optional. The seed number used to generate random numbers.
 
   :return: String with Hexadecimal color code
   """
   letters = '0123456789ABCDEF'
   color = ['#']
-  if seedNo is not None:
-    random.seed(seedNo)
+  if seed_no is not None:
+    random.seed(seed_no)
   for i in range(6):
     color.append(letters[math.floor(random.random() * 16)])
-  if seedNo is not None:
+  if seed_no is not None:
     # Resent the seed to None
     random.seed(None)
   return "".join(color)

@@ -5,7 +5,7 @@ from epyk.core.css import FontFamily
 from epyk.interfaces import Arguments
 
 
-def autoPrefixer(prop):
+def autoPrefixer(prop: str):
   """
   Description:
   ------------
@@ -18,8 +18,9 @@ def autoPrefixer(prop):
   --------------
   https://www.w3schools.com/cssref/css3_browsersupport.asp
 
-  :param prop: String. The CSS Attribute key
-  :return: A generator function with the different keys to be added to the style
+  :param str prop: The CSS Attribute key.
+
+  :return: A generator function with the different keys to be added to the style.
   """
   map = {
     'animation': ['-webkit-', '-moz-', '-o-'],
@@ -362,8 +363,8 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"background-image": val})
 
-  def background_url(self, val: str, size: str = "contain", repeat: str = "no-repeat", position="relative", margin="auto",
-                     background_position: str = "center"):
+  def background_url(self, val: str, size: str = "contain", repeat: str = "no-repeat", position="relative",
+                     margin: Union[str, int] = "auto", background_position: str = "center"):
     """
     Description:
     ------------
@@ -2593,7 +2594,7 @@ class CssMixin:
         val = "%spx" % val
       self.css({"width": val})
 
-  def width_calc(self, width_in_px: int, container_width: int = 100):
+  def width_calc(self, width_in_px: int, container_width: Optional[int] = 100):
     """
     Description:
     ------------
@@ -2695,7 +2696,8 @@ class CssMixin:
       self.line_height = line_height
     return self
 
-  def sticky(self, top: int = 0, bottom: Optional[int] = None, left: Optional[int] = None, right: Optional[int]= None, z_index: int = 400):
+  def sticky(self, top: int = 0, bottom: Optional[int] = None, left: Optional[int] = None, right: Optional[int] = None,
+             z_index: int = 400):
     """
     Description:
     ------------
@@ -2914,7 +2916,8 @@ class CssMixin:
     self.position = "absolute"
     return self
 
-  def fixed(self, top: Optional[tuple] = None, left: Optional[tuple] = None, bottom: Optional[tuple] = None, right: Optional[tuple] = None, transform: bool = True):
+  def fixed(self, top: Optional[tuple] = None, left: Optional[tuple] = None, bottom: Optional[tuple] = None,
+            right: Optional[tuple] = None, transform: bool = True):
     """
     Description:
     ------------
@@ -2957,7 +2960,8 @@ class CssMixin:
     self.font_size = self.component.page.body.style.globals.font.normal(factor)
     return self.component
 
-  def margins(self, top: Optional[tuple] = None, right: Optional[tuple] = None, bottom: Optional[tuple] = None, left: Optional[tuple] = None):
+  def margins(self, top: Optional[tuple] = None, right: Optional[tuple] = None, bottom: Optional[tuple] = None,
+              left: Optional[tuple] = None):
     """
     Description:
     ------------

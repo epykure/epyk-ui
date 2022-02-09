@@ -1,4 +1,6 @@
 
+from typing import Any, Union
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
 from epyk.core.js.packages import JsPackage
@@ -8,12 +10,12 @@ from epyk.core.js.packages import packageImport
 
 class JsNvd3Axis:
 
-  def __init__(self, id, src=None):
-    self._selector = id
+  def __init__(self, js_code: str, page: primitives.PageModel = None, component: primitives.HtmlModel = None):
+    self._selector = js_code
     self._js = []
-    self._report = src
+    self.page, self.component = page, component
 
-  def axisLabel(self, text):
+  def axisLabel(self, text: str):
     """
     Description:
     ------------
@@ -31,7 +33,7 @@ class JsNvd3Axis:
     self._js.append("axisLabel(%s)" % text)
     return self
 
-  def tickFormat(self, jsFnc, profile=None):
+  def tickFormat(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -43,12 +45,13 @@ class JsNvd3Axis:
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param js_funcs:
     """
-    self._js.append("tickFormat(tickFormat(function(d,i){ %s })" % jsFnc)
+    self._js.append("tickFormat(tickFormat(function(d,i){ %s })" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile))
     return self
 
-  def tickNumberFormat(self, digit=1):
+  def tickNumberFormat(self, digit: int = 1):
     """
     Description:
     ------------
@@ -69,6 +72,7 @@ class JsNvd3Axis:
     ----------
     :param currency:
     """
+    currency = JsUtils.jsConvertData(currency, None)
     self._js.append("tickFormat(function(d,i){ return '%s' + d3.format(',.1f')(d); })" % currency)
     return self
 
@@ -158,19 +162,19 @@ class JsNvd3Axis:
     :return: Return the Javascript String
     """
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     if len(self._js) == 0:
       return self._selector
 
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
+    data = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return strData
+    return data
 
 
 class JsNvd3Utils:
 
-  def windowResize(self, jsFnc):
+  def windowResize(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -178,45 +182,28 @@ class JsNvd3Utils:
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param js_funcs:
     """
-    return "nv.utils.windowResize(%s)" % jsFnc
+    return "nv.utils.windowResize(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
 
 class JsNvd3(JsPackage):
   lib_alias = {'js': 'nvd3', 'css': 'nvd3'}
+  lib_selector = 'd3.select("body")'
 
-  class __internal(object):
-    # By default it will attach eveything to the body
-    jqId, jsImports, cssImport = 'd3.select("body")', set([]), set([])
-
-  def __init__(self, src=None, varName=None, setVar=True):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None, js_code: str = None,
+               selector: str = None, data: Any = None, set_var: bool = None):
+    self.component, self.page = component, page
+    if page is None and component is not None:
+      self.page = component.page
     self._selector = "nv.models.%s()" % self.chartFnc
-    self.varName, self.setVar = varName, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
-    self.src.cssImport.add(self.lib_alias['css'])
+    self.varName, self.setVar = js_code, set_var
+    self.component.jsImports.add(self.lib_alias['js'])
+    self.component.cssImport.add(self.lib_alias['css'])
     self._js, self._xaxis, self._yaxis, self._u = [[]], None, None, {}
     self._js_enums = {}
 
-  def version(self, ver):
-    """
-    Description:
-    ------------
-    Change the package version number.
-
-    Usage::
-
-      bar.chart.version("1.11.0")
-
-    Attributes:
-    ----------
-    :param ver: String. The package versions example 1.11.0
-    """
-    self.src._props.setdefault("packages", {})[self.lib_alias] = ver
-    return self
-
-  def set_var(self, flag):
+  def set_var(self, flag: bool):
     self.setVar = flag
     return self
 
@@ -232,7 +219,7 @@ class JsNvd3(JsPackage):
     return self._selector if self.varName is None else self.varName
 
   def options(self, opts):
-    pass
+    raise NotImplementedError()
 
   def width(self, value):
     """
@@ -251,7 +238,7 @@ class JsNvd3(JsPackage):
     """
     return self.fnc("width(%s)" % value)
 
-  def height(self, value):
+  def height(self, value: float):
     """
     Description:
     ------------
@@ -264,11 +251,11 @@ class JsNvd3(JsPackage):
 
     Attributes:
     ----------
-    :param value:
+    :param float value:
     """
     return self.fnc("height(%s)" % value)
 
-  def margin(self, options):
+  def margin(self, options: dict):
     """
     Description:
     ------------
@@ -282,13 +269,13 @@ class JsNvd3(JsPackage):
 
     Attributes:
     ----------
-    :param options: A python dictionary with the options.
+    :param dict options: A python dictionary with the options.
     """
     options = JsUtils.jsConvertData(options, None)
     self._js.append("margin(%s)" % options)
     return self
 
-  def useInteractiveGuideline(self, flag):
+  def useInteractiveGuideline(self, flag: bool):
     """
     Description:
     ------------
@@ -313,7 +300,7 @@ class JsNvd3(JsPackage):
     time = JsUtils.jsConvertData(time, None)
     return self.fnc("transitionDuration(%s)" % time)
 
-  def showLegend(self, flag):
+  def showLegend(self, flag: bool):
     """
     Description:
     ------------
@@ -326,7 +313,7 @@ class JsNvd3(JsPackage):
     return self.fnc("showLegend(%s)" % flag)
 
   @property
-  def xAxis(self):
+  def xAxis(self) -> JsNvd3Axis:
     """
     Description:
     ------------
@@ -334,11 +321,11 @@ class JsNvd3(JsPackage):
     :rtype: JsNvd3Axis
     """
     if self._xaxis is None:
-      self._xaxis = JsNvd3Axis("%s.xAxis" % self.varName, self.src)
+      self._xaxis = JsNvd3Axis("%s.xAxis" % self.varName, page=self.page, component=self.component)
     return self._xaxis
 
   @property
-  def yAxis(self):
+  def yAxis(self) -> JsNvd3Axis:
     """
     Description:
     ------------
@@ -346,29 +333,29 @@ class JsNvd3(JsPackage):
     :rtype: JsNvd3Axis
     """
     if self._yaxis is None:
-      self._yaxis = JsNvd3Axis("%s.yAxis" % self.varName, self.src)
+      self._yaxis = JsNvd3Axis("%s.yAxis" % self.varName, page=self.page, component=self.component)
     return self._yaxis
 
-  def showYAxis(self, flag):
+  def showYAxis(self, flag: bool):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("showYAxis(%s)" % flag)
 
-  def showXAxis(self, flag):
+  def showXAxis(self, flag: bool):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("showXAxis(%s)" % flag)
@@ -376,7 +363,7 @@ class JsNvd3(JsPackage):
   def update(self):
     pass
 
-  def showControls(self, flag):
+  def showControls(self, flag: bool):
     """
     Description:
     ------------
@@ -384,22 +371,22 @@ class JsNvd3(JsPackage):
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("showControls(%s)" % flag)
 
   def noData(self):
-    pass
+    raise NotImplementedError()
 
   def color(self, colors):
-    pass
+    raise NotImplementedError()
 
 
 class JsNvd3Area(JsNvd3):
   chartFnc = "stackedAreaChart"
 
-  def x(self, column=None, jsFnc=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -407,19 +394,19 @@ class JsNvd3Area(JsNvd3):
     Attributes:
     ----------
     :param column: String.
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       return self.fnc("x(function(d){return d.%s})" % column)
 
-    elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-      return self.fnc("x(%s)" % jsFnc)
+    elif js_funcs is not None:
+      js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+      return self.fnc("x(%s)" % js_funcs)
 
     return self
 
-  def y(self, column=None, jsFnc=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -427,15 +414,15 @@ class JsNvd3Area(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       return self.fnc("y(function(d){return d.%s})" % column)
 
-    elif jsFnc is not None:
-      jsFnc = JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile)
-      return self.fnc("y(%s)" % jsFnc)
+    elif js_funcs is not None:
+      js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+      return self.fnc("y(%s)" % js_funcs)
 
     return self
 
@@ -445,7 +432,7 @@ class JsNvd3Area(JsNvd3):
   def reduceXTicks(self, flag):
     pass
 
-  def rightAlignYAxis(self, flag):
+  def rightAlignYAxis(self, flag: bool):
     """
     Description:
     ------------
@@ -458,7 +445,7 @@ class JsNvd3Area(JsNvd3):
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("rightAlignYAxis(%s)" % flag)
 
-  def clipEdge(self, flag):
+  def clipEdge(self, flag: bool):
     """
     Description:
     ------------
@@ -470,7 +457,7 @@ class JsNvd3Area(JsNvd3):
     flag = JsUtils.jsConvertData(flag, None)
     return self.fnc("clipEdge(%s)" % flag)
 
-  def controlLabels(self, attrs):
+  def controlLabels(self, attrs: dict):
     """
     Description:
     ------------
@@ -485,7 +472,7 @@ class JsNvd3Area(JsNvd3):
 
     Attributes:
     ----------
-    :param attrs:
+    :param dict attrs:
     """
     self.fnc("controlLabels(%s)" % JsUtils.jsConvertData(attrs, None))
     return self
@@ -494,7 +481,7 @@ class JsNvd3Area(JsNvd3):
 class JsNvd3ParallelCoordinates(JsNvd3):
   chartFnc = "parallelCoordinates"
 
-  def dimensionNames(self, categories):
+  def dimensionNames(self, categories: list):
     """
     Description:
     ------------
@@ -505,7 +492,7 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 
     Attributes:
     ----------
-    :param categories:
+    :param list categories:
     """
     self.fnc("dimensionNames(%s)" % JsUtils.jsConvertData(categories, None))
     return self
@@ -563,7 +550,7 @@ class JsNvd3CandlestickBar(JsNvd3):
       self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -571,20 +558,20 @@ class JsNvd3CandlestickBar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
-    elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
 
 class JsNvd3OhlcBar(JsNvd3):
   chartFnc = "ohlcBarChart"
 
-  def x(self, column=None, jsFnc=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -592,16 +579,16 @@ class JsNvd3OhlcBar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
-    elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -609,13 +596,13 @@ class JsNvd3OhlcBar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
-    elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
 
@@ -626,7 +613,7 @@ class JsNvd3Sunburst(JsNvd3):
 class JsNvd3BoxPlot(JsNvd3):
   chartFnc = "boxPlotChart"
 
-  def x(self, column=None, jsFnc=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -634,13 +621,13 @@ class JsNvd3BoxPlot(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
-    elif jsFnc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
   def staggerLabels(self, flag):
@@ -692,7 +679,7 @@ class JsNvd3BoxPlot(JsNvd3):
     self.fnc("maxBoxWidth(%s)" % JsUtils.jsConvertData(value, None))
     return self
 
-  def itemColor(self, seriesColor):
+  def itemColor(self, series_color):
     """
     Description:
     ------------
@@ -703,9 +690,9 @@ class JsNvd3BoxPlot(JsNvd3):
 
     Attributes:
     ----------
-    :param seriesColor:
+    :param series_color:
     """
-    self.fnc("itemColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(seriesColor, None))
+    self.fnc("itemColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(series_color, None))
     return self
 
   def outliers(self, outlData):
@@ -740,7 +727,7 @@ class JsNvd3BoxPlot(JsNvd3):
     self.fnc("outlierValue(function (d) { return d[%s] })" % JsUtils.jsConvertData(data, None))
     return self
 
-  def outlierColor(self, color):
+  def outlierColor(self, color: str):
     """
     Description:
     ------------
@@ -843,7 +830,7 @@ class JsNvd3BoxPlot(JsNvd3):
 class JsNvd3Bar(JsNvd3):
   chartFnc = "discreteBarChart"
 
-  def x(self, column=None, jsFncs=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -851,16 +838,16 @@ class JsNvd3Bar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
-    elif jsFncs is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFncs=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -868,16 +855,16 @@ class JsNvd3Bar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
-    elif jsFncs is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def color(self, colors):
+  def color(self, colors: list):
     """
     Description:
     ------------
@@ -910,7 +897,7 @@ class JsNvd3Bar(JsNvd3):
     self.fnc("rotateLabels(%s)" % value)
     return self
 
-  def reduceXTicks(self, flag):
+  def reduceXTicks(self, flag: bool):
     """
     Description:
     ------------
@@ -920,7 +907,7 @@ class JsNvd3Bar(JsNvd3):
     :param flag:
     """
 
-  def staggerLabels(self, flag):
+  def staggerLabels(self, flag: bool):
     """
     Description:
     ------------
@@ -930,7 +917,7 @@ class JsNvd3Bar(JsNvd3):
     :param flag:
     """
 
-  def tooltips(self, flag):
+  def tooltips(self, flag: bool):
     """
     Description:
     ------------
@@ -940,7 +927,7 @@ class JsNvd3Bar(JsNvd3):
     :param flag:
     """
 
-  def showValues(self, flag):
+  def showValues(self, flag: bool):
     """
     Description:
     ------------
@@ -951,19 +938,19 @@ class JsNvd3Bar(JsNvd3):
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     self.fnc("showValues(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
   def groupSpacing(self, value):
-    pass
+    raise NotImplementedError()
 
 
 class JsNvd3MultiBar(JsNvd3):
   chartFnc = "multiBarChart"
 
-  def x(self, column=None, jsFnsc=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -971,16 +958,16 @@ class JsNvd3MultiBar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
-    elif jsFnsc is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFnsc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFnc=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -988,16 +975,16 @@ class JsNvd3MultiBar(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFnc: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
-    elif jsFnc is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def barColor(self, colors):
+  def barColor(self, colors: list):
     """
     Description:
     ------------
@@ -1008,12 +995,12 @@ class JsNvd3MultiBar(JsNvd3):
 
     Attributes:
     ----------
-    :param colors:
+    :param list colors:
     """
     self.fnc("barColor(%s)" % JsUtils.jsConvertData(colors, None))
     return self
 
-  def stacked(self, flag):
+  def stacked(self, flag: bool):
     """
     Description:
     ------------
@@ -1024,7 +1011,7 @@ class JsNvd3MultiBar(JsNvd3):
 
     Attributes:
     ----------
-    :param flag: Boolean. Stack the series in the chart.
+    :param bool flag: Stack the series in the chart.
     """
     self.fnc("stacked(%s)" % JsUtils.jsConvertData(flag, None))
     return self
@@ -1041,11 +1028,10 @@ class JsNvd3MultiBarHorizontal(JsNvd3Bar):
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
-
     """
-    pass
+    raise NotImplementedError()
 
-  def barColor(self, colors):
+  def barColor(self, colors: list):
     """
     Description:
     ------------
@@ -1073,7 +1059,7 @@ class JsNvd3Line(JsNvd3Bar):
 class JsNvd3Scatter(JsNvd3Bar):
   chartFnc = "scatterChart"
 
-  def showDistX(self, flag):
+  def showDistX(self, flag: bool):
     """
     Description:
     ------------
@@ -1089,7 +1075,7 @@ class JsNvd3Scatter(JsNvd3Bar):
     self.fnc("showDistX(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
-  def showDistY(self, flag):
+  def showDistY(self, flag: bool):
     """
     Description:
     ------------
@@ -1105,7 +1091,7 @@ class JsNvd3Scatter(JsNvd3Bar):
     self.fnc("showDistY(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
-  def useVoronoi(self, flag):
+  def useVoronoi(self, flag: bool):
     """
     Description:
     ------------
@@ -1125,7 +1111,7 @@ class JsNvd3Scatter(JsNvd3Bar):
 class JsNvd3LineWithFocus(JsNvd3Line):
   chartFnc = "lineWithFocusChart"
 
-  def brushExtent(self, values):
+  def brushExtent(self, values: list):
     """
     Description:
     ------------
@@ -1145,7 +1131,7 @@ class JsNvd3LineWithFocus(JsNvd3Line):
 class JsNvd3CumulativeLine(JsNvd3Line):
   chartFnc = "cumulativeLineChart"
 
-  def average(self, mean):
+  def average(self, mean: str):
     """
     Description:
     ------------
@@ -1156,12 +1142,12 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
     Attributes:
     ----------
-    :param mean: String. The column name corresponding to the mean value
+    :param str mean: The column name corresponding to the mean value
     """
     self.fnc("average(function(d) { return d.[%s] / 100; })" % JsUtils.jsConvertData(mean, None))
     return self
 
-  def clipVoronoi(self, flag):
+  def clipVoronoi(self, flag: bool):
     """
     Description:
     ------------
@@ -1172,7 +1158,7 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :param bool flag:
     """
     self.fnc("clipVoronoi(%s)" % JsUtils.jsConvertData(flag, None))
     return self
@@ -1181,7 +1167,7 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 class JsNvd3LinePlusBar(JsNvd3Bar):
   chartFnc = "linePlusBarChart"
 
-  def legendRightAxisHint(self, text):
+  def legendRightAxisHint(self, text: str):
     """
     Description:
     ------------
@@ -1213,7 +1199,7 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
     self.fnc("forceY(%s)" % JsUtils.jsConvertData(indices, None))
     return self
 
-  def padData(self, flag):
+  def padData(self, flag: bool):
     """
     Description:
     ------------
@@ -1224,7 +1210,7 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :param bool flag:
     """
     self.fnc("padData(%s)" % JsUtils.jsConvertData(flag, None))
     return self
@@ -1233,7 +1219,7 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 class JsNvd3HistoricalBar(JsNvd3Bar):
   chartFnc = "historicalBarChart"
 
-  def xScale(self, d3fnc):
+  def xScale(self, d3_func):
     """
     Description:
     ------------
@@ -1249,12 +1235,12 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
     Attributes:
     ----------
-    :param d3fnc:
+    :param d3_func:
     """
-    self.fnc("xScale(%s)" % JsUtils.jsConvertData(d3fnc, None))
+    self.fnc("xScale(%s)" % JsUtils.jsConvertData(d3_func, None))
     return self
 
-  def forceX(self, values):
+  def forceX(self, values: list):
     """
     Description:
     ------------
@@ -1321,7 +1307,7 @@ class JsNvd3Pie(JsNvd3):
 
     return self.fnc_enum('arcsRadius', JsDataArcRadius)
 
-  def x(self, column=None, jsFncs=None, profile=False):
+  def x(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -1329,16 +1315,16 @@ class JsNvd3Pie(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("x(function(d){return d.%s})" % column)
-    elif jsFncs is not None:
-      self.fnc("x(%s)" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("x(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def y(self, column=None, jsFncs=None, profile=False):
+  def y(self, column=None, js_funcs=None, profile=False):
     """
     Description:
     ------------
@@ -1346,16 +1332,16 @@ class JsNvd3Pie(JsNvd3):
     Attributes:
     ----------
     :param column:
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if column is not None:
       self.fnc("y(function(d){return d.%s})" % column)
-    elif jsFncs is not None:
-      self.fnc("y(%s)" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    elif js_funcs is not None:
+      self.fnc("y(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def showLabels(self, flag):
+  def showLabels(self, flag: bool):
     """
     Description:
     ------------
@@ -1367,7 +1353,7 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :param bool flag:
     """
     self.fnc("showLabels(%s)" % JsUtils.jsConvertData(flag, None))
     return self
@@ -1389,7 +1375,7 @@ class JsNvd3Pie(JsNvd3):
     self.fnc("labelThreshold(%s)" % JsUtils.jsConvertData(value, None))
     return self
 
-  def labelSunbeamLayout(self, flag):
+  def labelSunbeamLayout(self, flag: bool):
     """
     Description:
     ------------
@@ -1401,27 +1387,27 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     self.fnc("labelSunbeamLayout(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
   def labelType(self, text):
-    pass
+    raise NotImplementedError()
 
-  def donutLabelsOutside(self, flag):
+  def donutLabelsOutside(self, flag: bool):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     self.fnc("donutLabelsOutside(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
-  def color(self, colors):
+  def color(self, colors: list):
     """
     Description:
     ------------
@@ -1432,12 +1418,12 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param colors: List.
+    :param list colors:
     """
     self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
     return self
 
-  def donut(self, flag):
+  def donut(self, flag: bool):
     """
     Description:
     ------------
@@ -1449,17 +1435,21 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :param bool flag:
     """
     value = "donut(%s)" % JsUtils.jsConvertData(flag, None)
     if value not in self._js[-1]:
       self.fnc(value)
     return self
 
-  def startAngle(self, angle):
+  def startAngle(self, angle: str):
     """
     Description:
     -----------
+
+    Usage::
+
+      startAngle("d.startAngle/2 -Math.PI/2")
 
     Related Pages:
 
@@ -1467,12 +1457,12 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param angle:
+    :param str angle: The javaScript expression.
     """
-    self.fnc("startAngle(function(d) { return d.startAngle/2 -Math.PI/2; } )")
+    self.fnc("startAngle(function(d) { return %s; } )" % angle)
     return self
 
-  def endAngle(self, angle):
+  def endAngle(self, angle: str):
     """
     Description:
     -----------
@@ -1483,9 +1473,9 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param angle:
+    :param str angle:
     """
-    self.fnc("endAngle(function(d) { return d.startAngle/2 -Math.PI/2 })")
+    self.fnc("endAngle(function(d) { return %s })" % angle)
     return self
 
   def half(self):
@@ -1509,7 +1499,7 @@ class JsNvd3Pie(JsNvd3):
     self.fnc("donutRatio(%s)" % JsUtils.jsConvertData(value, None))
     return self
 
-  def padAngle(self, val):
+  def padAngle(self, val: float):
     """
     Description:
     ------------
@@ -1521,12 +1511,12 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param val: Float. The padding value.
+    :param float val: The padding value.
     """
     self.fnc("padAngle(%s)" % JsUtils.jsConvertData(val, None))
     return self
 
-  def cornerRadius(self, val):
+  def cornerRadius(self, val: float):
     """
     Description:
     ------------
@@ -1538,12 +1528,12 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param val: Float. The rounding to be set to the angles
+    :param float val: The rounding to be set to the angles
     """
     self.fnc("cornerRadius(%s)" % JsUtils.jsConvertData(val, None))
     return self
 
-  def id(self, classname):
+  def id(self, class_name):
     """
     Description:
     ------------
@@ -1555,27 +1545,27 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param classname:
+    :param class_name:
     """
-    self.fnc("id(%s)" % JsUtils.jsConvertData(classname, None))
+    self.fnc("id(%s)" % JsUtils.jsConvertData(class_name, None))
     return self
 
-  def growOnHover(self, flag):
+  def growOnHover(self, flag: bool):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param flag:
+    :param bool flag:
     """
     self.fnc("growOnHover(%s)" % JsUtils.jsConvertData(flag, None))
     return self
 
-  def reduceXTicks(self, flag):
+  def reduceXTicks(self, flag: bool):
     pass
 
-  def staggerLabels(self, flag):
+  def staggerLabels(self, flag: bool):
     pass
 
   def tooltips(self, flag):
@@ -1587,7 +1577,7 @@ class JsNvd3Pie(JsNvd3):
   def groupSpacing(self, value):
     pass
 
-  def title(self, text):
+  def title(self, text: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -1599,7 +1589,7 @@ class JsNvd3Pie(JsNvd3):
 
     Attributes:
     ----------
-    :param text:
+    :param Union[str, primitives.JsDataModel] text:
     """
     self.fnc("title(%s)" % JsUtils.jsConvertData(JsUtils.jsConvertData(text, None), None))
     return self
@@ -1611,7 +1601,7 @@ class JsNvd3Pie(JsNvd3):
 class JsNvd3ForceDirectedGraph(JsNvd3Bar):
   chartFnc = "forceDirectedGraph"
 
-  def color(self, column):
+  def color(self, column: str):
     """
     Description:
     -----------
@@ -1623,7 +1613,7 @@ class JsNvd3ForceDirectedGraph(JsNvd3Bar):
     self.fnc("color(function(d) { return d.%s })" % column)
     return self
 
-  def nodeExtras(self, text):
+  def nodeExtras(self, text: str):
     """
     Description:
     -----------

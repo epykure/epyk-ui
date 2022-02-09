@@ -4,8 +4,8 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedNVD3(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
-    self.component.dom.xAxis.tickFormat(jsFncs, profile)
+  def x_format(self, js_funcs, profile=None):
+    self.component.dom.xAxis.tickFormat(js_funcs, profile)
     return self
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -35,8 +35,8 @@ class OptionsChartSharedNVD3(OptChart.OptionsChartShared):
   def x_tick_count(self, num):
     return self
 
-  def y_format(self, jsFncs, profile=None):
-    self.component.dom.yAxis.tickFormat(jsFncs, profile)
+  def y_format(self, js_funcs, profile=None):
+    self.component.dom.yAxis.tickFormat(js_funcs, profile)
     return self
 
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):

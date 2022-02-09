@@ -10,8 +10,8 @@ from epyk.core.js.primitives import JsObjects
 
 class TeedStreams:
 
-  def __init__(self, varId):
-    self.varId = varId
+  def __init__(self, js_code: str):
+    self.varId = js_code
 
   @property
   def stream_0(self):
@@ -77,7 +77,7 @@ class ReadableStream(JsPackage):
     """
     return ReadableStream("%s.getReader()" % self.varId)
 
-  def pipeThrough(self, transformStream, options: dict = None):
+  def pipeThrough(self, transform_stream, options: dict = None):
     """
     Description:
     ------------
@@ -88,7 +88,7 @@ class ReadableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeThrough
 
-    :param transformStream: A TransformStream (or an object with the structure {writable, readable}) consisting of a readable stream and a writable stream working together to transform some data from one form to another.
+    :param transform_stream: A TransformStream (or an object with the structure {writable, readable}) consisting of a readable stream and a writable stream working together to transform some data from one form to another.
     :param options: The options that should be used when piping to the writable stream. Available options are
                       - preventClose
                       - preventAbort
@@ -96,9 +96,9 @@ class ReadableStream(JsPackage):
                       - signal
     """
     if options is None:
-      return TransformStream("%s.pipeThrough(%s)" % (self.varId, transformStream))
+      return TransformStream("%s.pipeThrough(%s)" % (self.varId, transform_stream))
 
-    return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId, transformStream, options))
+    return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId, transform_stream, options))
 
   def pipeTo(self, destination, options: dict = None):
     """

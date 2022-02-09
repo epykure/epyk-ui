@@ -440,7 +440,7 @@ class Calendar:
       date = date - datetime.timedelta(days=7 * int(text[:-1]))
       value = date.isoformat()
     elif value is None and text.endswith("M"):
-      for i in range(int(text[:-1])):
+      for _ in range(int(text[:-1])):
         date = date - datetime.timedelta(days=date.day)
       value = date.isoformat()
     elif value is None and text.endswith("Y"):

@@ -1,4 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -26,7 +30,7 @@ class QrCode(JsPackage):
     """
     return JsObjects.JsObjects.get('%s.clear()' % self.varName)
 
-  def makeCode(self, jsData):
+  def makeCode(self, data: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -45,7 +49,7 @@ class QrCode(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: String. The text to be used to build to code.
+    :param Union[str, primitives.JsDataModel] data: The text to be used to build to code.
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.makeCode(%s)' % (self.varName, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.makeCode(%s)' % (self.varName, data))

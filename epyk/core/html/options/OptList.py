@@ -336,12 +336,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get(False)
 
   @visible.setter
-  def visible(self, attrs):
+  def visible(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -353,12 +353,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param attrs: Dictionary or False. The deleted icon properties
+    :prop attrs: Dictionary or False. The deleted icon properties
     """
     return self._config_get('this.parentNode.remove()')
 
   @delete.setter
-  def delete(self, attrs):
+  def delete(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -369,12 +369,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
 
   @category_css.setter
-  def category_css(self, attrs):
+  def category_css(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -385,12 +385,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
 
   @value_css.setter
-  def value_css(self, attrs):
+  def value_css(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -401,12 +401,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
 
   @item_css.setter
-  def item_css(self, attrs):
+  def item_css(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -417,12 +417,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
 
   @category.setter
-  def category(self, attrs):
+  def category(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -433,12 +433,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
 
   @icon_css.setter
-  def icon_css(self, attrs):
+  def icon_css(self, attrs: dict):
     self._config(attrs)
 
   @property
@@ -451,12 +451,12 @@ class OptionsTagItems(Options):
 
     Attributes:
     ----------
-    :param css: Dictionary. All the CSS attributes to add the any items
+    :prop int css: All the CSS attributes to add the any items
     """
     return self._config_get(0)
 
   @max_height.setter
-  def max_height(self, num):
+  def max_height(self, num: int):
     self._config(num)
 
   @property
@@ -537,12 +537,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :prop flag: Boolean.
     """
     return self._config_get(False)
 
   @centerConnectors.setter
-  def centerConnectors(self, flag):
+  def centerConnectors(self, flag: bool):
     self._config(flag)
 
   @property
@@ -557,12 +557,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :prop flag: Boolean.
     """
     return self._config_get(False)
 
   @disableHighlight.setter
-  def disableHighlight(self, flag):
+  def disableHighlight(self, flag: bool):
     self._config(flag)
 
   @property
@@ -577,12 +577,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :prop flag: Boolean.
     """
     return self._config_get(False)
 
   @skipSecondaryFinal.setter
-  def skipSecondaryFinal(self, flag):
+  def skipSecondaryFinal(self, flag: bool):
     self._config(flag)
 
   @property
@@ -597,12 +597,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :prop flag: Boolean.
     """
     return self._config_get(False)
 
   @skipConsolationRound.setter
-  def skipConsolationRound(self, flag):
+  def skipConsolationRound(self, flag: bool):
     self._config(flag)
 
   @property
@@ -617,12 +617,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param flag: Boolean.
+    :prop flag: Boolean.
     """
     return self._config_get(False)
 
   @skipGrandFinalComeback.setter
-  def skipGrandFinalComeback(self, flag):
+  def skipGrandFinalComeback(self, flag: bool):
     self._config(flag)
 
   @property
@@ -637,12 +637,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param value: String.
+    :prop value: String.
     """
     return self._config_get("rl")
 
   @dir.setter
-  def dir(self, value):
+  def dir(self, value: str):
     self._config(value)
 
   @property
@@ -657,12 +657,12 @@ class OptionsListBrackets(Options):
 
     Attributes:
     ----------
-    :param value: String.
+    :prop value: String.
     """
     return self._config_get("")
 
   @userData.setter
-  def userData(self, value):
+  def userData(self, value: str):
     self._config(value)
 
   @property
@@ -702,7 +702,7 @@ class OptionsListBrackets(Options):
     return self._config_get("")
 
   @scoreWidth.setter
-  def scoreWidth(self, num):
+  def scoreWidth(self, num: int):
     self._config(num)
 
   @property
@@ -722,7 +722,7 @@ class OptionsListBrackets(Options):
     return self._config_get("")
 
   @matchMargin.setter
-  def matchMargin(self, num):
+  def matchMargin(self, num: str):
     self._config(num)
 
   @property

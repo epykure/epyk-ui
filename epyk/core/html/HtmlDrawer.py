@@ -19,26 +19,26 @@ class Drawer(Html.Html):
   name = 'Drawer'
   _option_cls = OptPanel.OptionDrawer
 
-  def __init__(self, report: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
                helper: Optional[str], profile: Optional[Union[dict, bool]]):
-    super(Drawer, self).__init__(report, None, profile=profile, options=options,
+    super(Drawer, self).__init__(page, None, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.style.css.position = 'relative'
 
-    self.panels = report.ui.div()
+    self.panels = page.ui.div()
     self.panels.options.managed = False
     self.panels.style.css.padding_right = 10
     self.panels.attr['name'] = 'drawer_panels'
 
-    self.handle = report.ui.div()
+    self.handle = page.ui.div()
     self.handle.style.clear_all()
     self.handle.style.css.cursor = 'pointer'
 
     self.handle.options.managed = False
     self.handle.attr['name'] = 'drawer_handle'
 
-    self.drawers = report.ui.div()
+    self.drawers = page.ui.div()
     self.drawers.style.clear_all()
     self.drawers.style.css.overflow_y = 'auto'
     self.drawers.options.managed = False
@@ -54,7 +54,7 @@ class Drawer(Html.Html):
     :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Drawer(self, report=self.page)
+      self._dom = JsHtmlStepper.Drawer(self, page=self.page)
     return self._dom
 
   @property
@@ -139,7 +139,7 @@ class Drawer(Html.Html):
           %(helper)s
           %(handle)s%(drawer)s
         </div>
-      </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
                    'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
                    'side': position[self.options.side], 'helper': self.helper}
 
@@ -148,9 +148,9 @@ class DrawerMulti(Html.Html):
   name = 'Multi Drawers'
   _option_cls = OptPanel.OptionDrawer
 
-  def __init__(self, report: primitives.PageModel, component: Html.Html, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, component: Html.Html, width: tuple, height: tuple,
                options: Optional[dict], helper: Optional[str], profile: Optional[Union[bool, dict]]):
-    super(DrawerMulti, self).__init__(report, None, options=options, css_attrs={"width": width, "height": height},
+    super(DrawerMulti, self).__init__(page, None, options=options, css_attrs={"width": width, "height": height},
                                       profile=profile)
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.style.css.position = 'relative'
@@ -161,7 +161,7 @@ class DrawerMulti(Html.Html):
     self.panels.style.css.width = "auto"
     self.panels.style.css.padding_right = 10
 
-    self.handle = report.ui.div()
+    self.handle = page.ui.div()
     self.handle.style.clear_all()
     self.handle.style.css.z_index = 10
     self.handle.style.css.position = 'relative'
@@ -169,7 +169,7 @@ class DrawerMulti(Html.Html):
     self.handle.options.managed = False
     self.handle.attr['name'] = 'drawer_handle'
 
-    self.drawers = report.ui.div()
+    self.drawers = page.ui.div()
     self.drawers.style.clear_all()
     self.drawers.style.css.overflow_y = 'auto'
     self.drawers.options.managed = False
@@ -185,7 +185,7 @@ class DrawerMulti(Html.Html):
     :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
-      self._dom = JsHtmlStepper.Drawer(self, report=self.page)
+      self._dom = JsHtmlStepper.Drawer(self, page=self.page)
     return self._dom
 
   @property
@@ -242,6 +242,7 @@ class DrawerMulti(Html.Html):
         container.dom.css({'display': 'block'})
       ])
     ])
+    return self
 
   @property
   def style(self) -> GrpClsContainer.ClassDrawer:
@@ -271,6 +272,6 @@ class DrawerMulti(Html.Html):
           %(drawer)s
         </div>
         %(handle)s
-      </div>''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
                    'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
                    'side': self.options.side}

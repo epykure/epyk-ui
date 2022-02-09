@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
+from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
@@ -19,17 +20,17 @@ class Comments(Html.Html):
   name = 'Comment'
   _option_cls = OptNet.OptionsChat
 
-  def __init__(self, report, record, width, height, html_code, options, profile):
-    super(Comments, self).__init__(report, record, css_attrs={"width": width, 'height': height}, html_code=html_code,
+  def __init__(self, page: primitives.PageModel, record, width, height, html_code, options, profile):
+    super(Comments, self).__init__(page, record, css_attrs={"width": width, 'height': height}, html_code=html_code,
                                    profile=profile, options=options)
     self.css({'padding': '5px'})
     self.input = None
-    self.counter = report.ui.texts.span("0", width=(None, 'px'))
+    self.counter = page.ui.texts.span("0", width=(None, 'px'))
     self.counter.options.managed = False
     self.counter.attr["name"] = "count"
     self.counter.css({"display": "inline-block", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
-      self.input = report.ui.input(html_code="%s_input" % self.htmlCode)
+      self.input = page.ui.input(html_code="%s_input" % self.htmlCode)
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
       if "background" in options:
@@ -62,7 +63,7 @@ class Comments(Html.Html):
     :rtype: JsComponents.Chat
     """
     if self._js is None:
-      self._js = JsComponents.Chat(self, report=self.page)
+      self._js = JsComponents.Chat(self, page=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -187,7 +188,7 @@ class Comments(Html.Html):
           <div name="comms"></div>
         </div>
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), "counter": self.counter.html(),
+      ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
              'height': int(self.css("height")[:-2]) - 70,
              'inputTag': '' if self.input is None else self.input.html()}
 
@@ -203,8 +204,8 @@ class Bot(Html.Html):
   """
   name = 'Bot'
 
-  def __init__(self, report, width, height, html_code, options, profile):
-    super(Bot, self).__init__(report, [], css_attrs={"width": width}, html_code=html_code, profile=profile)
+  def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
+    super(Bot, self).__init__(page, [], css_attrs={"width": width}, html_code=html_code, profile=profile)
     self.css({"text-align": 'right', "position": 'fixed', "bottom": 0, 'margin': '10px', "height": "80px",
               "padding": "5px",  "z-index": 200})
 
@@ -236,13 +237,13 @@ class Bot(Html.Html):
 class Assistant(Html.Html):
   name = 'Assistant'
 
-  def __init__(self, component, title, report, html_code, options, profile):
-    super(Assistant, self).__init__(report, component, html_code=html_code, profile=profile)
+  def __init__(self, component: Html.Html, title, page: primitives.PageModel, html_code, options, profile):
+    super(Assistant, self).__init__(page, component, html_code=html_code, profile=profile)
     self.css({'margin': '0 10px', "padding": "0 5px", 'text-align': 'center'})
-    self.name = report.ui.text(title, align="center")
+    self.name = page.ui.text(title, align="center")
     self.name.options.managed = False
     self.name.style.css.bold()
-    self.mail = report.ui.icon("fas fa-at")
+    self.mail = page.ui.icon("fas fa-at")
     self.mail.options.managed = False
     self.mail.style.add_classes.div.color_hover()
     self.mail.style.css.margin_right = 2
@@ -250,7 +251,7 @@ class Assistant(Html.Html):
     self.mail.style.css.padding = "2px 2px"
     self.mail.style.css.border_radius = 20
     self.mail.style.css.margin_top = -20
-    self.chat = report.ui.icon("far fa-comments")
+    self.chat = page.ui.icon("far fa-comments")
     self.chat.options.managed = False
     self.chat.style.add_classes.div.color_hover()
     self.chat.style.css.margin_left = 2
@@ -269,17 +270,17 @@ class Chat(Html.Html):
   name = 'Chat'
   _option_cls = OptNet.OptionsChat
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
-    super(Chat, self).__init__(report, records, css_attrs={"width": width, 'height': height},
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
+    super(Chat, self).__init__(page, records, css_attrs={"width": width, 'height': height},
                                html_code=html_code, profile=profile, options=options)
     self.css({'padding': '5px'})
     self.input = None
-    self.counter = report.ui.texts.span("0", width=(None, 'px'))
+    self.counter = page.ui.texts.span("0", width=(None, 'px'))
     self.counter.options.managed = False
     self.counter.attr["name"] = "count"
     self.counter.css({"display": "none", "margin": 0, "padding": 0, "cursor": "pointer"})
     if not self.options.readonly:
-      self.input = report.ui.input()
+      self.input = page.ui.input()
       self.input.options.managed = False
       self.input.style.css.text_align = 'left'
 
@@ -308,7 +309,7 @@ class Chat(Html.Html):
     :rtype: JsComponents.Chat
     """
     if self._js is None:
-      self._js = JsComponents.Chat(self, report=self.page)
+      self._js = JsComponents.Chat(self, page=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -399,7 +400,7 @@ class Chat(Html.Html):
         <div style="margin:0;padding:5px 0;height:%(height)spx;overflow:auto"></div>
         %(counter)s
       </div>
-      ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
              'height': int(self.css("height")[:-2]) - 70,
              'inputTag': '' if self.input is None else self.input.html(), "counter": self.counter.html()}
 
@@ -409,8 +410,8 @@ class Alert(Html.Html):
   name = 'Alert'
   _option_cls = OptNet.OptionsAlert
 
-  def __init__(self, report, value, width, height, html_code, options, profile):
-    super(Alert, self).__init__(report, value, css_attrs={"width": width, 'height': height},
+  def __init__(self, page: primitives.PageModel, value, width, height, html_code, options, profile):
+    super(Alert, self).__init__(page, value, css_attrs={"width": width, 'height': height},
                                 html_code=html_code, profile=profile, options=options)
     self.css({"padding": '5px', 'position': 'fixed', 'top': '20px', 'right': '20px'})
 
@@ -452,15 +453,15 @@ class Alert(Html.Html):
       '''
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<div %s></div>" % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class News(Html.Html):
   name = 'News'
   _option_cls = OptNet.OptionsNews
 
-  def __init__(self, report, value, width, height, html_code, options, profile):
-    super(News, self).__init__(report, value, css_attrs={"width": width, 'height': height},
+  def __init__(self, page: primitives.PageModel, value, width, height, html_code, options, profile):
+    super(News, self).__init__(page, value, css_attrs={"width": width, 'height': height},
                                html_code=html_code, profile=profile, options=options)
     self.page.jsImports.add('moment')
 
@@ -492,7 +493,7 @@ class News(Html.Html):
     :rtype: JsComponents.News
     """
     if self._js is None:
-      self._js = JsComponents.News(self, report=self.page)
+      self._js = JsComponents.News(self, page=self.page)
     return self._js
 
   @property
@@ -510,15 +511,15 @@ class News(Html.Html):
     return super().options
 
   def __str__(self):
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<div %s></div>" % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Room(Html.Html):
   name = 'room'
   _option_cls = OptNet.OptionsNews
 
-  def __init__(self, report, img, width, height, html_code, options, profile):
-    super(Room, self).__init__(report, "", css_attrs={"width": width, 'height': height},
+  def __init__(self, page: primitives.PageModel, img, width, height, html_code, options, profile):
+    super(Room, self).__init__(page, "", css_attrs={"width": width, 'height': height},
                                html_code=html_code, profile=profile, options=options)
     color = 'green'
     self.css({"padding": '5px', 'position': 'fixed', 'bottom': '10px', 'right': '20px', 'border-radius': '30px',
@@ -539,9 +540,9 @@ class Room(Html.Html):
     self.dots.style.css.animation = "%s 1s infinite" % keyframe_name
     attrs = {"0%, 20%": {"color": "rgba(0,0,0,0)", "text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
              "40%": {"text-shadow": ".25em 0 0 rgba(0,0,0,0),.5em 0 0 rgba(0,0,0,0)"},
-             "60%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 rgba(0,0,0,0)" % report.theme.greys[-1]},
+             "60%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 rgba(0,0,0,0)" % page.theme.greys[-1]},
              "80%, 100%": {"text-shadow": ".25em 0 0 %s,.5em 0 0 %s" % (
-               report.theme.greys[-1], report.theme.greys[-1])}}
+               page.theme.greys[-1], page.theme.greys[-1])}}
     self.dots.style.css_class.keyframes(keyframe_name, attrs)
 
   @property
@@ -555,11 +556,11 @@ class Room(Html.Html):
     :rtype: JsComponents.Room
     """
     if self._js is None:
-      self._js = JsComponents.Room(self, report=self.page)
+      self._js = JsComponents.Room(self, page=self.page)
     return self._js
 
   def __str__(self):
-    return "<div %s>%s%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.dots.html(),
+    return "<div %s>%s%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.dots.html(),
                                    self.status.html())
 
 
@@ -568,18 +569,18 @@ class DropFile(Html.Html):
   name, inputType = 'Drop File Area', "file"
   _option_cls = OptNet.OptionFiles
 
-  def __init__(self, report, vals, delimiter, tooltip, width, height, html_code, options, profile):
-    super(DropFile, self).__init__(report, vals, profile=profile, html_code=html_code, options=options,
+  def __init__(self, page: primitives.PageModel, vals, delimiter, tooltip, width, height, html_code, options, profile):
+    super(DropFile, self).__init__(page, vals, profile=profile, html_code=html_code, options=options,
                                    css_attrs={"width": width, "height": height})
     self.tooltip(tooltip, location='bottom')
     self.container = self.page.ui.div()
     self.container.css({"display": "inline-block", 'text-align': 'center', "color": self.page.theme.success[0],
-                        'border': "1px dashed %s" % report.theme.colors[-1]})
+                        'border': "1px dashed %s" % page.theme.colors[-1]})
     self.container.style.css.bold()
     self.container.style.css.margin = "0 5px"
     self.container.style.css.width = "calc(100% - 10px)"
-    self.container.style.css.background = report.theme.greys[0]
-    self.container.add(self.page.ui.icon("fas fa-cloud-upload-alt", color=report.theme.colors[-1]))
+    self.container.style.css.background = page.theme.greys[0]
+    self.container.add(self.page.ui.icon("fas fa-cloud-upload-alt", color=page.theme.colors[-1]))
     self.container.options.managed = False
     self.text = self.page.ui.text()
     self.text.style.css.italic()
@@ -594,7 +595,7 @@ class DropFile(Html.Html):
     self.delimiter.style.css.bold()
     self.delimiter.style.css.display = 'inline-block'
     self.delimiter.style.css.text_align = 'center'
-    self.delimiter.style.css.border = "1px solid %s" % report.theme.colors[3]
+    self.delimiter.style.css.border = "1px solid %s" % page.theme.colors[3]
     self.delimiter.style.css.margin_top = 5
     self.delimiter.style.css.margin_left = 5
     self.delimiter.style.css.margin_right = 5
@@ -609,7 +610,7 @@ class DropFile(Html.Html):
     #self.delimiter.click(["document.execCommand('selectAll',false,null)"])
     #self.delimiter.keypress.enter(["event.preventDefault(); event.target.blur(); return"])
     self.options.delimiter = self.delimiter.dom.content
-    self.style.css.border = "1px solid %s" % report.theme.colors[-1]
+    self.style.css.border = "1px solid %s" % page.theme.colors[-1]
     self.style.css.position = "relative"
     if self.options.format != 'json':
       self.icon = self.page.ui.icon("fas fa-paste")
@@ -635,7 +636,7 @@ class DropFile(Html.Html):
     :rtype: JsHtmlNetwork.JsHtmlDropFiles
     """
     if self._dom is None:
-      self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, report=self.page)
+      self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, page=self.page)
     return self._dom
 
   @property
@@ -798,7 +799,7 @@ class DropFile(Html.Html):
           %(delete)s
           <input id="%(htmlCode)s_report" style="display:none;"/>
         </div>
-        ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
+        ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(css_class_names=self.style.get_classes()),
                'container': self.container.html(), 'text': self.text.html(), 'delete': self.delete.html()}
 
     return '''
@@ -809,6 +810,7 @@ class DropFile(Html.Html):
         %(delete)s
         <input id="%(htmlCode)s_report" style="display:none;"/>
       </div>
-      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()),
+      ''' % {'htmlCode': self.htmlCode, 'strAttr': self.get_attrs(css_class_names=self.style.get_classes()),
              'paste': self.icon.html(), 'sync': self.sync.html() if self.sync is not None else "",
-             'container': self.container.html(), 'text': self.text.html(), 'delete': self.delete.html(), 'delimiter': self.delimiter.html()}
+             'container': self.container.html(), 'text': self.text.html(), 'delete': self.delete.html(),
+             'delimiter': self.delimiter.html()}

@@ -201,7 +201,7 @@ class MomentDate(JsPackage):
 
     return JsUtils.jsWrap("%s.quarter(%s)" % (self.varId, number))
 
-  def add(self, unit, value, varName=None):
+  def add(self, unit, value, js_code=None):
     """
     Description:
     ------------
@@ -215,16 +215,16 @@ class MomentDate(JsPackage):
     ----------
     :param unit: Integer.
     :param value: String.
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
-    if varName is not None:
-      return MomentDate(selector="%s.add(%s, %s)" % (self.varId, unit, value), varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="%s.add(%s, %s)" % (self.varId, unit, value), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="%s.add(%s, %s)" % (self.varId, unit, value), setVar=False)
+    return MomentDate(selector="%s.add(%s, %s)" % (self.varId, unit, value), set_var=False)
 
-  def subtract(self, unit, value, varName=None):
+  def subtract(self, unit, value, js_code=None):
     """
     Description:
     ------------
@@ -238,14 +238,14 @@ class MomentDate(JsPackage):
     ----------
     :param unit: Integer.
     :param value: String.
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
-    if varName is not None:
-      return MomentDate(selector="%s.subtract(%s, %s)" % (self.varId, unit, value), varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="%s.subtract(%s, %s)" % (self.varId, unit, value), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="%s.subtract(%s, %s)" % (self.varId, unit, value), setVar=False)
+    return MomentDate(selector="%s.subtract(%s, %s)" % (self.varId, unit, value), set_var=False)
 
   def year(self, number=None):
     """
@@ -266,7 +266,7 @@ class MomentDate(JsPackage):
 
     return JsUtils.jsWrap("%s.year(%s)" % (self.varId, number))
 
-  def clone(self, varName=None):
+  def clone(self, js_code=None):
     """
     Description:
     ------------
@@ -278,12 +278,12 @@ class MomentDate(JsPackage):
 
     Attributes:
     ----------
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
-    if varName is not None:
-      return MomentDate(selector="%s.clone()" % self.varId, varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="%s.clone()" % self.varId, js_code=js_code, set_var=True)
 
-    return MomentDate(selector="%s.clone()" % self.varId, setVar=False)
+    return MomentDate(selector="%s.clone()" % self.varId, set_var=False)
 
   def date(self, number=None):
     """
@@ -563,7 +563,7 @@ class MomentDate(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.utcOffset(%s, %s)" % (self.varId, number, flag))
 
   def invalidAt(self):
-    pass
+    raise NotImplementedError()
 
   def creationData(self):
     """
@@ -787,7 +787,7 @@ class MomentDate(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber.get("%s.toJSON()" % self.varId)
 
-  def toISOString(self, keepOffset=None):
+  def toISOString(self, keep_offset=None):
     """
     Description:
     ------------
@@ -799,13 +799,13 @@ class MomentDate(JsPackage):
 
     Attributes:
     ----------
-    :param keepOffset: Boolean. Optional.
+    :param keep_offset: Boolean. Optional.
     """
-    if keepOffset is None:
+    if keep_offset is None:
       return JsObjects.JsNumber.JsNumber.get("%s.toISOString()" % self.varId)
 
-    keepOffset = JsUtils.jsConvertData(keepOffset, None)
-    return JsObjects.JsNumber.JsNumber.get("%s.toISOString(%s)" % (self.varId, keepOffset))
+    keep_offset = JsUtils.jsConvertData(keep_offset, None)
+    return JsObjects.JsNumber.JsNumber.get("%s.toISOString(%s)" % (self.varId, keep_offset))
 
   def inspect(self):
     """
@@ -993,7 +993,7 @@ class Moment(JsPackage):
   lib_alias = {"js": 'moment'}
   lib_selector = 'moment'
 
-  def now(self, varName=None):
+  def now(self, js_code=None):
     """
     Description:
     ------------
@@ -1005,14 +1005,14 @@ class Moment(JsPackage):
 
     Attributes:
     ----------
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
-    if varName is not None:
-      return MomentDate(selector="moment()", varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="moment()", js_code=js_code, set_var=True)
 
-    return MomentDate(selector="moment()", setVar=False)
+    return MomentDate(selector="moment()", set_var=False)
 
-  def time(self, hour, minute, second, varName=None):
+  def time(self, hour, minute, second, js_code=None):
     """
     Description:
     ------------
@@ -1027,15 +1027,15 @@ class Moment(JsPackage):
     :param hour: Integer. Optional. The hours' value
     :param minute: Integer. Optional. The minutes' value.
     :param second: Integer. Optional. The seconds' value.
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
-    if varName is not None:
+    if js_code is not None:
       return MomentDate(
-        selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), varName=varName, setVar=True)
+        selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), setVar=False)
+    return MomentDate(selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), set_var=False)
 
-  def var(self, varName):
+  def var(self, js_code):
     """
     Description:
     ------------
@@ -1047,11 +1047,11 @@ class Moment(JsPackage):
 
     Attributes:
     ----------
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
-    return MomentDate(selector=varName, setVar=False)
+    return MomentDate(selector=js_code, set_var=False)
 
-  def new(self, date=None, format=None, varName=None):
+  def new(self, date=None, format=None, js_code=None):
     """
     Description:
     ------------
@@ -1065,25 +1065,25 @@ class Moment(JsPackage):
     ----------
     :param date:
     :param format:
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
     if date is None:
       return self.now()
 
     date = JsUtils.jsConvertData(date, None)
     if format is None:
-      if varName is not None:
-        return MomentDate(selector="moment(%s)" % date, varName=varName, setVar=True)
+      if js_code is not None:
+        return MomentDate(selector="moment(%s)" % date, js_code=js_code, set_var=True)
 
-      return MomentDate(selector="moment(%s)" % date, setVar=False)
+      return MomentDate(selector="moment(%s)" % date, set_var=False)
 
-    format = JsUtils.jsConvertData(format, None)
-    if varName is not None:
-      return MomentDate(selector="moment(%s, %s)" % (date, format), varName=varName, setVar=True)
+    fmt = JsUtils.jsConvertData(format, None)
+    if js_code is not None:
+      return MomentDate(selector="moment(%s, %s)" % (date, fmt), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="moment(%s, %s)" % (date, format), setVar=False)
+    return MomentDate(selector="moment(%s, %s)" % (date, fmt), set_var=False)
 
-  def parseZone(self, date=None, format=None, varName=None):
+  def parseZone(self, date=None, format=None, js_code=None):
     """
     Description:
     ------------
@@ -1096,26 +1096,26 @@ class Moment(JsPackage):
     ----------
     :param date:
     :param format:
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
     if date is None:
-      if varName is not None:
-        return MomentDate(selector="%s.parseZone()" % self.varId, varName=varName, setVar=True)
+      if js_code is not None:
+        return MomentDate(selector="%s.parseZone()" % self.varId, js_code=js_code, set_var=True)
 
-      return MomentDate(selector="%s.parseZone()" % self.varId, setVar=False)
+      return MomentDate(selector="%s.parseZone()" % self.varId, set_var=False)
 
     date = JsUtils.jsConvertData(date, None)
     if format is None:
-      if varName is not None:
-        return MomentDate(selector="%s.parseZone(%s)" % (self.varId, date), varName=varName, setVar=True)
+      if js_code is not None:
+        return MomentDate(selector="%s.parseZone(%s)" % (self.varId, date), js_code=js_code, set_var=True)
 
-      return MomentDate(selector="%s.parseZone(%s)" % (self.varId, date), setVar=False)
+      return MomentDate(selector="%s.parseZone(%s)" % (self.varId, date), set_var=False)
 
     format = JsUtils.jsConvertData(format, None)
-    if varName is not None:
-      return MomentDate(selector="%s.parseZone(%s, %s)" % (self.varId, date, format), varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="%s.parseZone(%s, %s)" % (self.varId, date, format), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="%s.parseZone(%s, %s)" % (self.varId, date, format), setVar=False)
+    return MomentDate(selector="%s.parseZone(%s, %s)" % (self.varId, date, format), set_var=False)
 
   def isMoment(self):
     """
@@ -1216,7 +1216,7 @@ class Moment(JsPackage):
     values = JsUtils.jsConvertData(values, None)
     return JsUtils.jsWrap("%s.updateLocale(%s, %s)" % (self.varId, category, values))
 
-  def utc(self, value=None, varName=None):
+  def utc(self, value=None, js_code=None):
     """
     Description:
     ------------
@@ -1231,19 +1231,19 @@ class Moment(JsPackage):
     Attributes:
     ----------
     :param value:
-    :param varName: String. Optional. The variable name created in the Javascript.
+    :param js_code: String. Optional. The variable name created in the Javascript.
     """
     if value is None:
-      if varName is not None:
-        return MomentDate(selector="%s.utc()" % self.varId, varName=varName, setVar=True)
+      if js_code is not None:
+        return MomentDate(selector="%s.utc()" % self.varId, js_code=js_code, set_var=True)
 
-      return MomentDate(selector="%s.utc()" % self.varId, setVar=False)
+      return MomentDate(selector="%s.utc()" % self.varId, set_var=False)
 
     value = JsUtils.jsConvertData(value, None)
-    if varName is not None:
-      return MomentDate(selector="%s.utc(%s)" % (self.varId, value), varName=varName, setVar=True)
+    if js_code is not None:
+      return MomentDate(selector="%s.utc(%s)" % (self.varId, value), js_code=js_code, set_var=True)
 
-    return MomentDate(selector="%s.utc(%s)" % (self.varId, value), setVar=False)
+    return MomentDate(selector="%s.utc(%s)" % (self.varId, value), set_var=False)
 
   def months(self):
     """

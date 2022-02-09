@@ -7,7 +7,7 @@ from epyk.core.js import JsUtils
 
 class OptionsInput(Options):
 
-  def css(self, attrs):
+  def css(self, attrs: dict):
     """
     Description:
     -----------
@@ -29,7 +29,7 @@ class OptionsInput(Options):
     return self._config_get("all")
 
   @borders.setter
-  def borders(self, value):
+  def borders(self, value: str):
     self._config(value)
 
   @property
@@ -43,15 +43,15 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_rows.asp
     """
-    return self._report.attr.get('disabled', False)
+    return self.component.attr.get('disabled', False)
 
   @disabled.setter
   def disabled(self, value):
-    if not value and "disabled" in self._report.attr:
-      del self._report.attr["disabled"]
+    if not value and "disabled" in self.component.attr:
+      del self.component.attr["disabled"]
 
     else:
-      self._report.set_attrs({"disabled": value})
+      self.component.set_attrs({"disabled": value})
 
   @packageImport("accounting")
   def formatMoney(self, symbol="", digits=0, thousand_sep=".", decimal_sep=","):
@@ -125,7 +125,7 @@ class OptionsInput(Options):
     return self.get(True)
 
   @background.setter
-  def background(self, flag):
+  def background(self, flag: bool):
     self.set(flag)
 
   @property
@@ -139,11 +139,11 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_textarea_maxlength.asp
     """
-    return self._report.attr.get('maxlength')
+    return self.component.attr.get('maxlength')
 
   @maxlength.setter
-  def maxlength(self, num):
-    self._report.set_attrs({"maxlength": num})
+  def maxlength(self, num: int):
+    self.component.set_attrs({"maxlength": num})
 
   @property
   def name(self):
@@ -156,11 +156,11 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_textarea_name.asp
     """
-    return self._report.attr.get('name')
+    return self.component.attr.get('name')
 
   @name.setter
   def name(self, num):
-    self._report.set_attrs({"name": num})
+    self.component.set_attrs({"name": num})
 
   @property
   def placeholder(self):
@@ -174,11 +174,11 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_input_placeholder.asp
     """
-    return self._report.attr.get('placeholder', "")
+    return self.component.attr.get('placeholder', "")
 
   @placeholder.setter
   def placeholder(self, value):
-    self._report.set_attrs({"placeholder": value})
+    self.component.set_attrs({"placeholder": value})
 
   @property
   def required(self):
@@ -191,15 +191,15 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_textarea_required.asp
     """
-    return self._report.attr.get('required')
+    return self.component.attr.get('required')
 
   @required.setter
   def required(self, value):
-    if not value and "required" in self._report.attr:
-      del self._report.attr["required"]
+    if not value and "required" in self.component.attr:
+      del self.component.attr["required"]
 
     else:
-      self._report.set_attrs({"required": value})
+      self.component.set_attrs({"required": value})
 
   @property
   def wrap(self):
@@ -212,11 +212,11 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_textarea_wrap.asp
     """
-    return self._report.attr.get('wrap', "")
+    return self.component.attr.get('wrap', "")
 
   @wrap.setter
   def wrap(self, value):
-    self._report.set_attrs({"wrap": value})
+    self.component.set_attrs({"wrap": value})
 
   @property
   def spellcheck(self):
@@ -229,11 +229,11 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_global_spellcheck.asp
     """
-    return self._report.attr.get('spellcheck', False)
+    return self.component.attr.get('spellcheck', False)
 
   @spellcheck.setter
-  def spellcheck(self, value):
-    self._report.set_attrs({"spellcheck": value})
+  def spellcheck(self, value: bool):
+    self.component.set_attrs({"spellcheck": value})
 
   @property
   def readonly(self):
@@ -246,15 +246,15 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_input_readonly.asp
     """
-    return self._report.attr.get('readOnly', False)
+    return self.component.attr.get('readOnly', False)
 
   @readonly.setter
-  def readonly(self, value):
-    if not value and "readOnly" in self._report.attr:
-      del self._report.attr["readOnly"]
+  def readonly(self, value: bool):
+    if not value and "readOnly" in self.component.attr:
+      del self.component.attr["readOnly"]
 
     else:
-      self._report.set_attrs({"readOnly": value})
+      self.component.set_attrs({"readOnly": value})
 
   @property
   def reset(self):
@@ -265,7 +265,7 @@ class OptionsInput(Options):
     return self.get(False)
 
   @reset.setter
-  def reset(self, flag):
+  def reset(self, flag: bool):
     self.set(flag)
 
   @property
@@ -277,7 +277,7 @@ class OptionsInput(Options):
     return self.get(False)
 
   @select.setter
-  def select(self, flag):
+  def select(self, flag: bool):
     self.set(flag)
 
 
@@ -292,7 +292,7 @@ class OptionsInputRange(OptionsInput):
     return self._attrs.get('output', True)
 
   @output.setter
-  def output(self, flag):
+  def output(self, flag: bool):
     self.set(flag)
 
 
@@ -310,7 +310,7 @@ class OptionsInputInteger(OptionsInput):
   def quantity(self, flag):
     self.set(flag)
     if flag:
-      self._report.quantity()
+      self.component.quantity()
 
 
 class OptionsTimePicker(OptionsInput):
@@ -367,7 +367,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @closeOnWindowScroll.setter
-  def closeOnWindowScroll(self, value):
+  def closeOnWindowScroll(self, value: bool):
     self._config(value)
 
   def disableTimeRanges(self, values):
@@ -418,7 +418,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @disableTouchKeyboard.setter
-  def disableTouchKeyboard(self, flag):
+  def disableTouchKeyboard(self, flag: bool):
     self._config(flag)
 
   @property
@@ -453,7 +453,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @forceRoundTime.setter
-  def forceRoundTime(self, flag):
+  def forceRoundTime(self, flag: bool):
     self._config(flag)
 
   @property
@@ -489,7 +489,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(1)
 
   @listWidth.setter
-  def listWidth(self, num):
+  def listWidth(self, num: int):
     self._config(num)
 
   @property
@@ -507,7 +507,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get("24 hours after minTime")
 
   @maxTime.setter
-  def maxTime(self, value):
+  def maxTime(self, value: str):
     self._config(value)
 
   @property
@@ -525,7 +525,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get("12:00am")
 
   @minTime.setter
-  def minTime(self, value):
+  def minTime(self, value: str):
     self._config(value)
 
   @property
@@ -567,8 +567,8 @@ class OptionsTimePicker(OptionsInput):
     """
     Description:
     ------------
-    Function used to compute rounded times. The function will receive time in seconds and a settings object as arguments.
-    The function should handle a null value for seconds. default: round to nearest step.
+    Function used to compute rounded times. The function will receive time in seconds and a settings object as
+    arguments. The function should handle a null value for seconds. default: round to nearest step.
 
     Related Pages:
 
@@ -608,7 +608,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @selectOnBlur.setter
-  def selectOnBlur(self, flag):
+  def selectOnBlur(self, flag: bool):
     self._config(flag)
 
   @property
@@ -625,7 +625,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @show2400.setter
-  def show2400(self, flag):
+  def show2400(self, flag: bool):
     self._config(flag)
 
   @property
@@ -642,7 +642,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @showDuration.setter
-  def showDuration(self, flag):
+  def showDuration(self, flag: bool):
     self._config(flag)
 
   @property
@@ -661,7 +661,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @showOn.setter
-  def showOn(self, flag):
+  def showOn(self, flag: bool):
     self._config(flag)
 
   @property
@@ -680,7 +680,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(30)
 
   @step.setter
-  def step(self, num):
+  def step(self, num: int):
     self._config(num)
 
   @property
@@ -697,7 +697,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(False)
 
   @stopScrollPropagation.setter
-  def stopScrollPropagation(self, flag):
+  def stopScrollPropagation(self, flag: bool):
     self._config(flag)
 
   @property
@@ -715,7 +715,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get('g:ia')
 
   @timeFormat.setter
-  def timeFormat(self, value):
+  def timeFormat(self, value: str):
     self._config(value)
 
   @property
@@ -732,7 +732,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(True)
 
   @typeaheadHighlight.setter
-  def typeaheadHighlight(self, flag):
+  def typeaheadHighlight(self, flag: bool):
     self._config(flag)
 
   @property
@@ -750,7 +750,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(True)
 
   @useSelect.setter
-  def useSelect(self, flag):
+  def useSelect(self, flag: bool):
     self._config(flag)
 
   @property
@@ -768,7 +768,7 @@ class OptionsTimePicker(OptionsInput):
     return self._config_get(True)
 
   @wrapHours.setter
-  def wrapHours(self, flag):
+  def wrapHours(self, flag: bool):
     self._config(flag)
 
 
@@ -808,7 +808,7 @@ class OptionAutoComplete(OptionsInput):
     return self._config_get(False)
 
   @autoFocus.setter
-  def autoFocus(self, value):
+  def autoFocus(self, value: bool):
     self._config(value)
 
   @property
@@ -846,7 +846,7 @@ class OptionAutoComplete(OptionsInput):
     return self._config_get(300)
 
   @delay.setter
-  def delay(self, value):
+  def delay(self, value: int):
     self._config(value)
 
   @property
@@ -863,7 +863,7 @@ class OptionAutoComplete(OptionsInput):
     return self._config_get(True)
 
   @disabled.setter
-  def disabled(self, value):
+  def disabled(self, value: bool):
     self._config(value)
 
   @property
@@ -882,7 +882,7 @@ class OptionAutoComplete(OptionsInput):
     return self._config_get(0)
 
   @minLength.setter
-  def minLength(self, value):
+  def minLength(self, value: int):
     self._config(value)
 
   def position(self, my="left top", at="left bottom", of=None, using=None, within=None, collision=None):
@@ -925,7 +925,7 @@ class OptionAutoComplete(OptionsInput):
     return self.get(False)
 
   @reset.setter
-  def reset(self, flag):
+  def reset(self, flag: bool):
     self.set(flag)
 
   def on_select(self, js_funcs, profile=None):
@@ -1056,7 +1056,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @autoSize.setter
-  def autoSize(self, value):
+  def autoSize(self, value: bool):
     self._config(value)
 
   @property
@@ -1086,8 +1086,8 @@ class OptionsDatePicker(OptionsInput):
     """
     self._config(value)
 
-  def beforeShowDay(self, jsFncs, profile=None):
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+  def beforeShowDay(self, js_funcs, profile=None):
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def buttonImage(self):
@@ -1139,7 +1139,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get("...")
 
   @buttonText.setter
-  def buttonText(self, value):
+  def buttonText(self, value: str):
     self._config(value)
 
   @property
@@ -1277,14 +1277,15 @@ class OptionsDatePicker(OptionsInput):
     """
     return self._config_get([])
 
-  def dateJsOvr(self, jsFncs=None, profile=None):
-    if jsFncs is None:
+  def dateJsOvr(self, js_funcs=None, profile=None):
+    if js_funcs is None:
       self._config("new Date()", js_type=True)
-    elif jsFncs == 'COB':
+    elif js_funcs == 'COB':
       self._config(''' (function(){var cob = new Date(); var days = cob.getDay(); 
-          if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()''', js_type=True)
+          if(days == 1){cob.setDate(cob.getDate() - 3)} else { cob.setDate(cob.getDate() - 1)}; return cob})()''',
+                   js_type=True)
     else:
-      self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @dayNames.setter
   def dayNames(self, value):
@@ -1371,7 +1372,7 @@ class OptionsDatePicker(OptionsInput):
     return self.get(False)
 
   @inline.setter
-  def inline(self, flag):
+  def inline(self, flag: bool):
     self.set(flag)
 
   @property
@@ -1423,7 +1424,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @hideIfNoPrevNext.setter
-  def hideIfNoPrevNext(self, value):
+  def hideIfNoPrevNext(self, value: bool):
     self._config(value)
 
   @property
@@ -1440,7 +1441,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @isRTL.setter
-  def isRTL(self, value):
+  def isRTL(self, value: bool):
     self._config(value)
 
   @property
@@ -1596,7 +1597,7 @@ class OptionsDatePicker(OptionsInput):
 
       https://api.jqueryui.com/datepicker/#option-onClose
 
-
+    :param values:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
@@ -1613,6 +1614,9 @@ class OptionsDatePicker(OptionsInput):
     Related Pages:
 
       https://api.jqueryui.com/datepicker/#option-onSelect
+
+    :param values:
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     values = JsUtils.jsConvertFncs(values, toStr=True, profile=profile)
     self._config("function(dateText, inst){let data = dateText; %s}" % values, js_type=True)
@@ -1650,7 +1654,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @selectOtherMonths.setter
-  def selectOtherMonths(self, value):
+  def selectOtherMonths(self, value: bool):
     self._config(value)
 
   @property
@@ -1706,7 +1710,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @showButtonPanel.setter
-  def showButtonPanel(self, value):
+  def showButtonPanel(self, value: bool):
     self._config(value)
 
   @property
@@ -1741,7 +1745,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @showMonthAfterYear.setter
-  def showMonthAfterYear(self, value):
+  def showMonthAfterYear(self, value: bool):
     self._config(value)
 
   @property
@@ -1759,7 +1763,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get("focus")
 
   @showOn.setter
-  def showOn(self, value):
+  def showOn(self, value: bool):
     self._config(value)
 
   @property
@@ -1795,7 +1799,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @showOtherMonths.setter
-  def showOtherMonths(self, value):
+  def showOtherMonths(self, value: bool):
     self._config(value)
 
   @property
@@ -1813,7 +1817,7 @@ class OptionsDatePicker(OptionsInput):
     return self._config_get(False)
 
   @showWeek.setter
-  def showWeek(self, value):
+  def showWeek(self, value: bool):
     self._config(value)
 
   @property
@@ -1901,9 +1905,9 @@ class OptionsTextarea(OptionsInput):
 
       https://www.w3schools.com/tags/att_rows.asp
     """
-    return self._report.attr.get('rows', "")
+    return self.component.attr.get('rows', "")
 
   @rows.setter
   def rows(self, value):
-    self._report.set_attrs({"rows": value})
+    self.component.set_attrs({"rows": value})
 

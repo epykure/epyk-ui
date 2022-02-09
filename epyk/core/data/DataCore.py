@@ -3,6 +3,8 @@
 
 import json
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.py import OrderedSet
 
@@ -11,11 +13,11 @@ from epyk.core.js.primitives import JsObjects
 
 class DataAggregators:
 
-  def __init__(self,  varName, report=None):
-    self.varName = varName
-    self.page = report
+  def __init__(self,  js_code: str, page: primitives.PageModel = None):
+    self.varName = js_code
+    self.page = page
 
-  def max(self, column):
+  def max(self, column: str):
     """
     Description:
     -----------
@@ -31,13 +33,13 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column: String. The column name. The key in the list of dictionary.
+    :param str column: The column name. The key in the list of dictionary.
     """
     self.page.jsImports.add('underscore')
     return JsObjects.JsArray.JsArray("[_.max(%s, function(rec){return rec['%s']; })]" % (
-      self.varName, column), report=self.page)
+      self.varName, column), page=self.page)
 
-  def min(self, column):
+  def min(self, column: str):
     """
     Description:
     -----------
@@ -53,13 +55,13 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column: String. The column name. The key in the list of dictionary.
+    :param str column: The column name. The key in the list of dictionary.
     """
     self.page.jsImports.add('underscore')
     return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (
-      self.varName, column), report=self.page)
+      self.varName, column), page=self.page)
 
-  def sortBy(self, column):
+  def sortBy(self, column: str):
     """
     Description:
     ------------
@@ -69,13 +71,13 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column: String. The column name. The key in the list of dictionary.
+    :param str column: The column name. The key in the list of dictionary.
     """
     self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
-    return JsObjects.JsArray.JsArray("_.sortBy(%s, %s)" % (self.varName, column), report=self.page)
+    return JsObjects.JsArray.JsArray("_.sortBy(%s, %s)" % (self.varName, column), page=self.page)
 
-  def sum(self, columns, attrs=None):
+  def sum(self, columns: list, attrs: dict = None):
     """
     Description:
     -----------
@@ -83,16 +85,16 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param columns: List. The columns in the records to be counted.
-    :param attrs: Dictionary. Optional. The static values to be added to the final records.
+    :param list columns: The columns in the records to be counted.
+    :param dict attrs: Optional. The static values to be added to the final records.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += v[c]}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self.page)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), is_py_data=False, page=self.page)
 
-  def count(self, columns, attrs=None):
+  def count(self, columns: list, attrs: dict = None):
     """
     Description:
     -----------
@@ -100,16 +102,16 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param columns: List. The columns in the records to be counted.
-    :param attrs: Dictionary. Optional. The static values to be added to the final records.
+    :param list columns: The columns in the records to be counted.
+    :param dict attrs: Optional. The static values to be added to the final records.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, cs){ var result = {}; cs.forEach(function(c){result[c] = 0});
         r.forEach(function(v){cs.forEach(function(c){ if(typeof v[c] !== 'undefined'){ result[c] += 1}})
         }); var attrs = %s; if(attrs){for(var attr in attrs){result[attr] = attrs[attr]}}; return [result]})(%s, %s)
-        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), isPyData=False, report=self.page)
+        ''' % (json.dumps(attrs), self.varName, json.dumps(columns)), is_py_data=False, page=self.page)
 
-  def countBy(self, column):
+  def countBy(self, column: list):
     """
     Description:
     -----------
@@ -117,16 +119,16 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column: String. The columns in the records to be counted.
+    :param list column: The columns in the records to be counted.
     """
     return JsObjects.JsArray.JsArray('''
        (function(r, c){var tempDict = {};
         r.forEach(function(v){if(typeof v[c] !== 'undefined'){
           if(typeof tempDict[v[c]] === 'undefined'){tempDict[v[c]] = 0}; tempDict[v[c]] += 1} }); 
         result = []; for(var key in tempDict){result.push({[c]: key, count: tempDict[key]})}; return result})(%s, %s)
-        ''' % (self.varName, json.dumps(column)), isPyData=False, report=self.page)
+        ''' % (self.varName, json.dumps(column)), is_py_data=False, page=self.page)
 
-  def sumBy(self, columns, keys, dstKey=None, cast_vals=False):
+  def sumBy(self, columns, keys, dst_key=None, cast_vals=False):
     """
     Description:
     -----------
@@ -135,12 +137,12 @@ class DataAggregators:
     ----------
     :param columns: List. The list of columns / attributes in the JavaScript object.
     :param keys: List. The list of keys.
-    :param dstKey: Dictionary. Optional.
+    :param dst_key: Dictionary. Optional.
     :param cast_vals: Boolean. Optional.
     """
     constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     keys = JsUtils.jsConvertData(keys, None)
-    dstKey = JsUtils.jsConvertData(dstKey, None)
+    dst_key = JsUtils.jsConvertData(dst_key, None)
     columns = JsUtils.jsConvertData(columns, None)
     name = "AggSumBy"
     constructors[name] = '''
@@ -154,9 +156,9 @@ class DataAggregators:
         }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (
       name, "parseFloat(r[c])" if cast_vals else 'r[c]')
     return JsObjects.JsArray.JsRecordSet('%s(%s, %s, %s, %s)' % (
-      name, self.varName, columns, keys, dstKey), report=self.page)
+      name, self.varName, columns, keys, dst_key), page=self.page)
 
-  def pluck(self, column):
+  def pluck(self, column: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -168,32 +170,32 @@ class DataAggregators:
 
     Attributes:
     ----------
-    :param column: String. The column / attribute in the JavaScript object.
+    :param Union[str, primitives.JsDataModel] column: The column / attribute in the JavaScript object.
     """
     self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
-    return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), report=self.page)
+    return JsObjects.JsArray.JsArray("_.pluck(%s, %s)" % (self.varName, column), page=self.page)
 
 
 class DataFilters:
 
-  def __init__(self,  varName, filter_map, report=None):
-    self.varName, self.__filters = varName, OrderedSet()
-    self.page, self.filter_map = report, filter_map
+  def __init__(self,  js_code: str, filter_map, page: primitives.PageModel = None):
+    self.varName, self.__filters = js_code, OrderedSet()
+    self.page, self.filter_map = page, filter_map
 
-  def setFilter(self, name):
+  def setFilter(self, name: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param name: String. The filter reference on the JavaScript side.
+    :param str name: The filter reference on the JavaScript side.
     """
     self.filter_map[name] = self.toStr()
     return JsObjects.JsVoid("const %s = %s" % (name, self.filter_map[name]))
 
-  def match(self, data, case_sensitive=True):
+  def match(self, data: Union[dict, primitives.JsDataModel], case_sensitive: bool = True):
     """
     Description:
     -----------
@@ -201,8 +203,8 @@ class DataFilters:
 
     Attributes:
     ----------
-    :param data: Dictionary. The keys, values to be filtered.
-    :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
+    :param Union[dict, primitives.JsDataModel] data: The keys, values to be filtered.
+    :param bool case_sensitive: Optional. To make sure algorithm case sensitive.
     """
     constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     data = JsUtils.jsConvertData(data, None)
@@ -237,7 +239,7 @@ class DataFilters:
     self.__filters.add("%s(%%s, %s, %s)" % (name, value, keys))
     return self
 
-  def equal(self, key, value, case_sensitive=True):
+  def equal(self, key, value, case_sensitive: bool = True):
     """
     Description:
     -----------
@@ -247,7 +249,7 @@ class DataFilters:
     ----------
     :param key: String. The key in the various records.
     :param value: Object. The value to keep.
-    :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
+    :param bool case_sensitive: Optional. To make sure algorithm case sensitive.
     """
     constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
@@ -308,7 +310,7 @@ class DataFilters:
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
-  def sup(self, key, value, strict=True):
+  def sup(self, key: Union[str, primitives.JsDataModel], value: Union[float, primitives.JsDataModel], strict: bool = True):
     """
     Description:
     -----------
@@ -316,9 +318,9 @@ class DataFilters:
 
     Attributes:
     ----------
-    :param key: String. The key in the various records.
-    :param value: Number. The threshold.
-    :param strict: Boolean. Optional. Include threshold.
+    :param Union[str, primitives.JsDataModel] key: The key in the various records.
+    :param Union[float, primitives.JsDataModel] value: The threshold.
+    :param bool strict: Optional. Include threshold.
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -332,7 +334,8 @@ class DataFilters:
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
-  def inf(self, key, value, strict=True):
+  def inf(self, key: Union[str, primitives.JsDataModel], value: Union[float, primitives.JsDataModel],
+          strict: bool = True):
     """
     Description:
     -----------
@@ -340,9 +343,9 @@ class DataFilters:
 
     Attributes:
     ----------
-    :param key: String, The key in the various records.
-    :param value: Number. The threshold.
-    :param strict: Boolean. Optional. Include threshold.
+    :param Union[str, primitives.JsDataModel] key: The key in the various records.
+    :param Union[float, primitives.JsDataModel] value: The threshold.
+    :param bool strict: Optional. Include threshold.
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -356,7 +359,7 @@ class DataFilters:
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
-  def group(self):
+  def group(self) -> DataAggregators:
     """
     Description:
     -----------
@@ -365,7 +368,7 @@ class DataFilters:
     """
     return DataAggregators(self.toStr(), self.page)
 
-  def sortBy(self, column):
+  def sortBy(self, column: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -378,7 +381,7 @@ class DataFilters:
 
     Attributes:
     ----------
-    :param column: String. The key in the record to be used as key for sorting.
+    :param Union[str, primitives.JsDataModel] column: The key in the record to be used as key for sorting.
     """
     self.page.jsImports.add('underscore')
     column = JsUtils.jsConvertData(column, None)
@@ -432,23 +435,23 @@ return result}''' % {"fnc_name": fnc_name, "vFmt": val_fmt}
 
 class DataGlobal:
 
-  def __init__(self, varName, data, report=None):
+  def __init__(self, js_code: str, data, page: primitives.PageModel = None):
     if data is not None:
-      report._props["js"]["datasets"][varName] = "var %s = %s" % (varName, json.dumps(data))
-    self._data, self.__filters_groups, self.page, self.varName = data, {}, report, varName
+      page._props["js"]["datasets"][js_code] = "var %s = %s" % (js_code, json.dumps(data))
+    self._data, self.__filters_groups, self.page, self.varName = data, {}, page, js_code
     self.__filter_saved = {}
 
-  def getFilter(self, name, groupName=None):
+  def getFilter(self, name: str, group_name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param name: String. The filter alias name.
-    :param groupName: String. Optional. The filter group name.
+    :param str name: The filter alias name.
+    :param str group_name: Optional. The filter group name.
     """
-    if groupName is None:
+    if group_name is None:
       saved_filter = None
       for k, v in self.__filter_saved.items():
         if name in v:
@@ -456,33 +459,33 @@ class DataGlobal:
           break
 
     else:
-      if name not in self.__filter_saved[groupName]:
-        raise Exception("")
+      if name not in self.__filter_saved[group_name]:
+        raise NotImplementedError()
 
-      saved_filter = self.__filter_saved[groupName]
+      saved_filter = self.__filter_saved[group_name]
     return DataFilters(name, saved_filter, self.page)
 
-  def clearFilter(self, name, groupName=None):
+  def clearFilter(self, name: str, group_name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param name: String.
-    :param groupName: String. Optional.
+    :param str name:
+    :param str group_name: Optional.
     """
-    if groupName is None:
+    if group_name is None:
       for k, v in self.__filter_saved.items():
         if name in v:
           del v[name]
 
     else:
-      del self.__filter_saved[groupName][name]
+      del self.__filter_saved[group_name][name]
 
     return self
 
-  def filterGroup(self, groupName):
+  def filterGroup(self, group_name: str) -> DataFilters:
     """
     Description:
     -----------
@@ -491,24 +494,24 @@ class DataGlobal:
 
     Attributes:
     ----------
-    :param groupName: String. The filter name.
+    :param str group_name: The filter name.
     """
-    if groupName not in self.__filters_groups:
-      self.__filter_saved[groupName] = {}
-      self.__filters_groups[groupName] = DataFilters(self.varName, self.__filter_saved[groupName], self.page)
-    return self.__filters_groups[groupName]
+    if group_name not in self.__filters_groups:
+      self.__filter_saved[group_name] = {}
+      self.__filters_groups[group_name] = DataFilters(self.varName, self.__filter_saved[group_name], self.page)
+    return self.__filters_groups[group_name]
 
-  def cleafFilterGroup(self, groupName):
+  def cleafFilterGroup(self, group_name: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param groupName: String. The filter name.
+    :param str group_name: The filter name.
     """
-    if groupName not in self.__filters_groups:
-      del self.__filters_groups[groupName]
+    if group_name not in self.__filters_groups:
+      del self.__filters_groups[group_name]
 
     return self
 
@@ -523,10 +526,10 @@ class DataGlobal:
 
 
 class ServerNameSpaceConfig:
-  def __init__(self, config, name, alias, endPoints):
+  def __init__(self, config, name: str, alias: str, end_points: list):
     self.__config, self.end_points, self.name, self.alias = config, {}, name, alias
-    if endPoints is not None:
-      self.endPoints(endPoints)
+    if end_points is not None:
+      self.endPoints(end_points)
 
   @property
   def address(self):
@@ -538,7 +541,7 @@ class ServerNameSpaceConfig:
     """
     return JsObjects.JsObject.JsObject.get(self.__config.varId)[self.alias]['u']
 
-  def endPoint(self, name):
+  def endPoint(self, name: str):
     """
     Description:
     ------------
@@ -546,19 +549,19 @@ class ServerNameSpaceConfig:
 
     Attributes:
     ----------
-    :param name:
+    :param str name:
     """
     self.end_points[name] = "http://%s:%s/%s/%s" % (self.__config.hostname, self.name, self.__config.port, name)
     return self
 
-  def endPoints(self, names):
+  def endPoints(self, names: list):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param names:
+    :param list names:
     """
     for name in names:
       self.endPoint(name)
@@ -567,12 +570,12 @@ class ServerNameSpaceConfig:
 
 class ServerConfig:
 
-  def __init__(self, hostname, port, report=None):
-    self.varId = "server_config_%s" % id(self)
-    report._props["js"]["configs"][self.varId] = self
+  def __init__(self, hostname: str, port: int, page: primitives.PageModel = None):
+    self.js_code = "server_config_%s" % id(self)
+    page._props["js"]["configs"][self.js_code] = self
     self.__namespaces, self.__end_points, self.host, self.port = {}, {}, hostname, port
 
-  def getNamespace(self, alias):
+  def getNamespace(self, alias: str):
     """
     Description:
     ------------
@@ -580,11 +583,11 @@ class ServerConfig:
 
     Attributes:
     ----------
-    :param alias: String. The name space alias.
+    :param str alias: The name space alias.
     """
     return self.__namespaces[alias]
 
-  def addNamespace(self, name, alias=None, endPoints=None):
+  def addNamespace(self, name: str, alias: str = None, end_points: list = None):
     """
     Description:
     ------------
@@ -593,16 +596,16 @@ class ServerConfig:
 
     Attributes:
     ----------
-    :param name: String. The url name space.
-    :param alias: String. Optional. The alias for the entry point.
-    :param endPoints: List. Optional. The endpoint routes.
+    :param str name: The url name space.
+    :param str alias: Optional. The alias for the entry point.
+    :param list end_points: Optional. The endpoint routes.
     """
     if alias is None:
       alias = name
-    self.__namespaces[alias] = ServerNameSpaceConfig(self, name, alias, endPoints)
+    self.__namespaces[alias] = ServerNameSpaceConfig(self, name, alias, end_points)
     return self
 
-  def endPoint(self, name):
+  def endPoint(self, name: str):
     """
     Description:
     ------------
@@ -610,7 +613,7 @@ class ServerConfig:
 
     Attributes:
     ----------
-    :param name: String. The enpoint name.
+    :param str name: The endpoint name.
     """
     self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
     return self
@@ -629,7 +632,7 @@ class ServerConfig:
       self.__end_points[name] = "http://%s:%s/%s" % (self.host, self.port, name)
     return self
 
-  def get(self, name):
+  def get(self, name: str):
     """
     Description:
     ------------
@@ -637,12 +640,12 @@ class ServerConfig:
 
     Attributes:
     ----------
-    :param name: String. The end point name.
+    :param str name: The end point name.
     """
     if name not in self.__end_points:
-      raise Exception("Missing end point in the server configuration - %s" % name)
+      raise ValueError("Missing end point in the server configuration - %s" % name)
 
-    return JsObjects.JsObject.JsObject.get(self.varId)[name]
+    return JsObjects.JsObject.JsObject.get(self.js_code)[name]
 
   def toStr(self):
     """
@@ -653,7 +656,7 @@ class ServerConfig:
     for np, np_val in self.__namespaces.items():
       self.__end_points[np] = {'e': np_val.end_points, 'n': np_val.name, 'u': "http://%s:%s/%s" % (
         self.host, self.port, np_val.name)}
-    return "var %s = %s" % (self.varId, JsUtils.jsConvertData(self.__end_points, None))
+    return "var %s = %s" % (self.js_code, JsUtils.jsConvertData(self.__end_points, None))
 
   def __str__(self):
     return self.toStr()

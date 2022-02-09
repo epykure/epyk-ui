@@ -3625,7 +3625,7 @@ class ImportManager:
   self_contained = False
   _static_path = None
 
-  def __init__(self, report=None):
+  def __init__(self, page=None):
     """
     Description:
     ------------
@@ -3638,24 +3638,24 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param report: Report. Optional. The internal report object with all the required external modules.
+    :param page: Report. Optional. The internal report object with all the required external modules.
     """
-    self._report, ovr_version, self.__pkgs = report, {}, None
+    self.page, ovr_version, self.__pkgs = page, {}, None
     self.reload()
 
   def reload(self):
     ovr_version = {}
-    if self._report is not None and self._report.ext_packages is not None:
-      extend_imports(self._report.ext_packages)
+    if self.page is not None and self.page.ext_packages is not None:
+      extend_imports(self.page.ext_packages)
     # if report is not None and self._report.run.report_name is not None and self._report.run.local_path is not None
     # and os.path.exists(os.path.join(self._report.run.local_path, '__init__.py')):
     # Force the version of some external Javascript or CSS packages
     #  packages = importlib.import_module("%s.__init__" % self._report.run.report_name)
     #  ovr_version = getattr(packages, 'MODULES', {})
-    if self._report is not None:
-      self._report._with_google_imports = False
+    if self.page is not None:
+      self.page._with_google_imports = False
       # Apply the different reports overrides on the packages versions
-      ovr_version.update(self._report._props.get('packages', {}))
+      ovr_version.update(self.page._props.get('packages', {}))
     self.jsImports, self.cssImports, self.moduleConfigs, self.reqVersion = {}, {}, {}, {}
     self.__add_imports([('js', self.jsImports, JS_IMPORTS), ('css', self.cssImports, CSS_IMPORTS)])
 
@@ -3738,9 +3738,9 @@ class ImportManager:
     :param str alias: The external module alias.
     """
     if alias in JS_IMPORTS:
-      self._report.jsImports.add(alias)
+      self.page.jsImports.add(alias)
     if alias in CSS_IMPORTS:
-      self._report.cssImport.add(alias)
+      self.page.cssImport.add(alias)
 
   def extend(self, aliases: List[str]):
     """
@@ -3766,8 +3766,8 @@ class ImportManager:
 
       print(page.imports().requirements)
     """
-    module_alias = set(self.cleanImports(self._report.jsImports, JS_IMPORTS))
-    for css in self.cleanImports(self._report.cssImport, CSS_IMPORTS):
+    module_alias = set(self.cleanImports(self.page.jsImports, JS_IMPORTS))
+    for css in self.cleanImports(self.page.cssImport, CSS_IMPORTS):
       module_alias.add(css)
     return module_alias
 
@@ -3799,8 +3799,8 @@ class ImportManager:
     if module_details is None or alias not in module_details:
       module_details = dict(JS_IMPORTS)
     import_ref = JS_IMPORTS
-    if self._report.ext_packages is not None and alias in self._report.ext_packages:
-      import_ref = self._report.ext_packages
+    if self.page.ext_packages is not None and alias in self.page.ext_packages:
+      import_ref = self.page.ext_packages
 
     for mod in module_details[alias]['modules']:
       if 'version' not in mod:
@@ -3840,7 +3840,7 @@ class ImportManager:
       # This will allow different versions of packages according to the modules
       # For example NVD3 cannot use any recent version of D3
       if 'version' in mod:
-        if self._report is not None and self._report.verbose:
+        if self.page is not None and self.page.verbose:
           logging.warning("Setting %(alias)s to version %(version)s" % mod)
         if self.reqVersion.get(mod['alias']) is None or mod['version'] < self.reqVersion[mod['alias']]:
           self.reqVersion[mod['alias']] = mod['version']
@@ -3861,8 +3861,8 @@ class ImportManager:
           self.jsImports[mod['alias']]['dep'][i] = path
       mod = mod['alias']
     modules.append(mod)
-    if self._report.ext_packages is not None and mod in self._report.ext_packages:
-      import_hierarchy = self._report.ext_packages
+    if self.page.ext_packages is not None and mod in self.page.ext_packages:
+      import_hierarchy = self.page.ext_packages
     req_key = "req"
     if use_require_js:
       if "req_js" in import_hierarchy.get(mod, {}):
@@ -3897,7 +3897,7 @@ class ImportManager:
         if not PACKAGE_STATUS[a].get("allowed", True):
           raise ValueError("Package %s not allowed" % a)
 
-        if self._report is not None and "info" in PACKAGE_STATUS[a]:
+        if self.page is not None and "info" in PACKAGE_STATUS[a]:
           logging.warning("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
       occurrences = [j for j, x in enumerate(import_resolved) if x == a]
       if len(occurrences) > 1:
@@ -3926,7 +3926,7 @@ class ImportManager:
     :return: The string to be added to the header.
     """
     css = []
-    self.__add_imports([(None, None, self._report.ext_packages)])
+    self.__add_imports([(None, None, self.page.ext_packages)])
     # Import hierarchy will rely on the JS_IMPORT definition.
     css_aliases = [c for c in self.cleanImports(css_aliases, JS_IMPORTS) if c in self.cssImports or c in _SERVICES]
     for css_alias in css_aliases:
@@ -3942,16 +3942,16 @@ class ImportManager:
         continue
 
       for urlModule in list(self.cssImports[css_alias]['main']):
-        if self._report._node_modules is not None:
+        if self.page._node_modules is not None:
           node_sub_path = CSS_IMPORTS.get(css_alias, {}).get('register', {}).get('npm_path')
           if node_sub_path is not None:
             css_file = os.path.split(urlModule)[1]
             npm_alias = CSS_IMPORTS[css_alias]['register'].get('npm', css_alias)
             package_path = os.path.join(
-              self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, css_file)
+              self.page._node_modules[0], "node_modules", npm_alias, node_sub_path, css_file)
             if os.path.exists(package_path):
               urlModule = os.path.join(
-                self._report._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
+                self.page._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
         if os.path.isabs(urlModule):
           with open(urlModule, "rb") as fp:
             base64_bytes = base64.b64encode(fp.read())
@@ -4000,8 +4000,8 @@ class ImportManager:
     ----------
     :param List[str] js_aliases: An array with the list of aliases for the external packages.
     :param Optional[dict] local_js: Optional. The external file overrides with the full path.
-    :param Optional[List[str]] excluded: Optional. Packages excluded from the result object (mandatory for some frameworks already
-                     onboarding modules).
+    :param Optional[List[str]] excluded: Optional. Packages excluded from the result object
+      (mandatory for some frameworks already onboarding modules).
 
     :return: The string to be added to the header
     """
@@ -4016,16 +4016,16 @@ class ImportManager:
         self.pkgs.get(js_alias).set_local(static_url=self.static_url)
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
       for url_module in list(self.jsImports[js_alias]['main']):
-        if self._report._node_modules is not None:
+        if self.page._node_modules is not None:
           node_sub_path = JS_IMPORTS.get(js_alias, {}).get('register', {}).get('npm_path')
           if node_sub_path is not None:
             js_file = os.path.split(url_module)[1]
             npm_alias = JS_IMPORTS[js_alias]['register'].get('npm', js_alias)
             package_path = os.path.join(
-              self._report._node_modules[0], "node_modules", npm_alias, node_sub_path, js_file)
+              self.page._node_modules[0], "node_modules", npm_alias, node_sub_path, js_file)
             if os.path.exists(package_path):
               url_module = os.path.join(
-                self._report._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
+                self.page._node_modules[1], npm_alias, node_sub_path, js_file).replace("\\", "/")
 
         # if '/mode/' in url_module:
         #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
@@ -4169,11 +4169,11 @@ class ImportManager:
     import io
     import os
 
-    if not hasattr(self._report, "py"):
+    if not hasattr(self.page, "py"):
       from epyk.core.py.PyRest import PyRest
       webscrapper = PyRest().webscrapping
     else:
-      webscrapper = self._report.py.requests.webscrapping
+      webscrapper = self.page.py.requests.webscrapping
 
     if 'package' in JS_IMPORTS[alias]:
       if 'version' not in JS_IMPORTS[alias]['modules'][0]:
@@ -4340,16 +4340,16 @@ class ImportManager:
                                                                                        'paths': {}}
     m_versions = {}
     # Check first if some specific versions are required for the packages
-    for m in self._report.jsImports:
+    for m in self.page.jsImports:
       import_ref = JS_IMPORTS
-      if self._report.ext_packages is not None and m in self._report.ext_packages:
-        import_ref = self._report.ext_packages
+      if self.page.ext_packages is not None and m in self.page.ext_packages:
+        import_ref = self.page.ext_packages
       req_alias = "req_js" if "req_js" in import_ref[m] else "req"
       for req in import_ref[m].get(req_alias, []):
         if 'version' in req:
           m_versions[req['alias']] = req['version']
     # Produce the dependency tree for requirejs
-    for m in self.cleanImports(self._report.jsImports, JS_IMPORTS, use_require_js=True):
+    for m in self.cleanImports(self.page.jsImports, JS_IMPORTS, use_require_js=True):
       if excluded_packages is not None and m in excluded_packages:
         continue
 
@@ -4357,8 +4357,8 @@ class ImportManager:
         self.pkgs.get(m).set_local(static_url=self.static_url)
 
       import_ref = JS_IMPORTS
-      if self._report.ext_packages is not None and m in self._report.ext_packages:
-        import_ref = self._report.ext_packages
+      if self.page.ext_packages is not None and m in self.page.ext_packages:
+        import_ref = self.page.ext_packages
       if 'register' in import_ref[m]:
         alias = import_ref[m]['register'].get('alias', m)
         first_module = import_ref[m]['modules'][0]
@@ -4399,8 +4399,8 @@ class ImportManager:
     if group:
       for g, var in group:
         import_ref = JS_IMPORTS
-        if self._report.ext_packages is not None and name_to_alias[g] in self._report.ext_packages:
-          import_ref = self._report.ext_packages
+        if self.page.ext_packages is not None and name_to_alias[g] in self.page.ext_packages:
+          import_ref = self.page.ext_packages
         if 'init_fnc' in import_ref[name_to_alias[g]]['register']:
           results['jsFrgs'] = "%s; %s" % (import_ref[name_to_alias[g]]['register']['init_fnc'], results['jsFrgs'])
       results['jsFrgs'] = "require(['%s'], function (%s) { %s })" % (
@@ -4419,7 +4419,7 @@ class ImportManager:
     """
     packages = {}
     if not all:
-      for imp, repo in [(self._report.cssImport, CSS_IMPORTS), (self._report.jsImports, JS_IMPORTS)]:
+      for imp, repo in [(self.page.cssImport, CSS_IMPORTS), (self.page.jsImports, JS_IMPORTS)]:
         pkg = self.cleanImports(imp, repo)
         for c in pkg:
           for s in repo[c].get('modules', []):
@@ -4470,8 +4470,8 @@ class ImportManager:
       self.addPackage("google-%s" % p, GOOGLE_EXTENSIONS[p])
       JS_IMPORTS["google-%s" % p] = GOOGLE_EXTENSIONS[p]
       if 'launcher' in GOOGLE_EXTENSIONS[p]:
-        self._report._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
-    self._report._with_google_imports = True
+        self.page._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
+    self.page._with_google_imports = True
 
   def locals(self, aliases: List[str], end_points: Optional[str] = None):
     """

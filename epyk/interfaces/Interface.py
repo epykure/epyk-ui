@@ -3,6 +3,7 @@
 
 
 from typing import Union, Optional, List
+from epyk.core.py import primitives
 from epyk.core import html
 
 from epyk.core.css import Defaults_css
@@ -58,8 +59,7 @@ from epyk.customs import pyks
 
 class Components:
 
-  def __init__(self, page):
-    self.rptObj = page
+  def __init__(self, page: primitives.PageModel):
     self.page = page
     self.components_skin = None
 
@@ -173,7 +173,7 @@ class Components:
     return div
 
   @property
-  def codes(self):
+  def codes(self) -> CompCodes.Code:
     """
     Description:
     ------------
@@ -192,7 +192,7 @@ class Components:
     return CompCodes.Code(self)
 
   @property
-  def pollers(self):
+  def pollers(self) -> CompPollers.Poller:
     """
     Description:
     ------------
@@ -206,7 +206,7 @@ class Components:
     return CompPollers.Poller(self)
 
   @property
-  def network(self):
+  def network(self) -> CompNetwork.Network:
     """
     Description:
     ------------
@@ -223,7 +223,7 @@ class Components:
     return CompNetwork.Network(self)
 
   @property
-  def sliders(self):
+  def sliders(self) -> CompSliders.Sliders:
     """
     Description:
     ------------
@@ -240,7 +240,7 @@ class Components:
     return CompSliders.Sliders(self)
 
   @property
-  def _3d(self):
+  def _3d(self) -> CompCharts.Chart3d:
     """
     Description:
     ------------
@@ -252,7 +252,7 @@ class Components:
     return CompCharts.Chart3d(self)
 
   @property
-  def _2d(self):
+  def _2d(self) -> CompCharts.Chart2d:
     """
     Description:
     ------------
@@ -264,7 +264,7 @@ class Components:
     return CompCharts.Chart2d(self)
 
   @property
-  def titles(self):
+  def titles(self) -> CompTitles.Titles:
     """
     Description:
     ------------
@@ -277,7 +277,7 @@ class Components:
     return CompTitles.Titles(self)
 
   @property
-  def links(self):
+  def links(self) -> CompLinks.Links:
     """
     Description:
     ------------
@@ -289,7 +289,7 @@ class Components:
     return CompLinks.Links(self)
 
   @property
-  def navigation(self):
+  def navigation(self) -> CompNavigation.Navigation:
     """
     Description:
     ------------
@@ -301,7 +301,7 @@ class Components:
     return CompNavigation.Navigation(self)
 
   @property
-  def bars(self):
+  def bars(self) -> CompNavigation.NavBars:
     """
     Description:
     ------------
@@ -313,7 +313,7 @@ class Components:
     return CompNavigation.NavBars(self)
 
   @property
-  def banners(self):
+  def banners(self) -> CompNavigation.Banners:
     """
     Description:
     ------------
@@ -1250,7 +1250,7 @@ class Components:
 
 class WebComponents:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
     self.fwks = {}
 
@@ -1309,7 +1309,7 @@ class WebComponents:
     return self.fwks["bs"]
 
   @property
-  def mdc(self):
+  def mdc(self) -> MaterialUI.Components:
     """
     Description:
     ------------
@@ -1333,7 +1333,7 @@ class WebComponents:
     return self.fwks["mdc"]
 
   @property
-  def tui(self):
+  def tui(self) -> ToastUI.Components:
     """
     Description:
     ------------
@@ -1356,7 +1356,7 @@ class WebComponents:
     return self.fwks["tui"]
 
   @property
-  def clr(self):
+  def clr(self) -> ClarityUI.Components:
     """
     Description:
     ------------

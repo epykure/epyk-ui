@@ -1,60 +1,80 @@
 
+from typing import Any
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 
 
 class VegaChangeset:
-  def __init__(self, src, selector, varName=None, setVar=None, parent=None):
-    self.src, self._selector, self.varName = src, selector, varName
-    self._js, self.setVar, self.component = [], setVar, parent
+  def __init__(self, component: primitives.HtmlModel, selector, js_code=None, set_var=None, parent=None):
+    self.component, self._selector, self.varName = component, selector, js_code
+    self._js, self.setVar, self.component = [], set_var, parent
 
-  def remove(self, jsData):
+  def remove(self, data: Any):
     """
+    Description:
+    -----------
 
-    https://vega.github.io/vega/docs/api/view/
+    Related Pages:
 
-    :param jsData:
+      https://vega.github.io/vega/docs/api/view/
+
+    Attributes:
+    ----------
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    self._js.append("remove(%s)" % jsData)
+    data = JsUtils.jsConvertData(data, None)
+    self._js.append("remove(%s)" % data)
     return self
 
   def removeAll(self):
     """
+    Description:
+    -----------
+
+    Related Pages:
+
 
     """
     self._js.append("remove(vega.truthy)")
     return self
 
-  def insert(self, jsData):
+  def insert(self, data: Any):
     """
+    Description:
+    -----------
 
-    https://vega.github.io/vega/docs/api/view/
+    Related Pages:
 
-    :param jsData:
+      https://vega.github.io/vega/docs/api/view/
+
+    Attributes:
+    ----------
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    self._js.append("insert(%s)" % jsData)
+    data = JsUtils.jsConvertData(data, None)
+    self._js.append("insert(%s)" % data)
     return self
 
 
 class Vega(JsPackage):
   lib_alias = {'js': "vega", 'css': 'vega'}
 
-  def __init__(self, src, varName, setVar=False, report=None):
-    super(Vega, self).__init__(src=src, varName=varName, selector=varName, setVar=setVar)
-    self._report = report
+  def __init__(self, component: primitives.HtmlModel, js_code: str, set_var: bool = False,
+               page: primitives.PageModel = None):
+    super(Vega, self).__init__(component=component, js_code=js_code, selector=js_code, set_var=set_var, page=page)
 
   @property
   def changeset(self):
-    return VegaChangeset(self.src, selector="%s.svg" % self._selector)
+    return VegaChangeset(self.component, selector="%s.svg" % self._selector)
 
 
 class VegaView:
 
-  def __init__(self, src, selector, varName=None, setVar=None, parent=None):
-    self.src, self._selector, self.varName = src, selector, varName
-    self._js, self.setVar, self.component = [], setVar, parent
+  def __init__(self, component: primitives.HtmlModel, selector: str, js_code: str = None, set_var: bool = None,
+               page: primitives.PageModel = None):
+    self.component, self._selector, self.varName = component, selector, js_code
+    self._js, self.setVar, self.component = [], set_var, page
 
   def change(self, name, changeset):
     """
@@ -114,9 +134,15 @@ class VegaView:
 
   def run(self, encode=None, prerun=None, postrun=None):
     """
+    Description:
+    ------------
 
-    https://vega.github.io/vega/docs/api/view/#view_run
+    Related Pages:
 
+      https://vega.github.io/vega/docs/api/view/#view_run
+
+    Attributes:
+    ----------
     :param encode:
     :param prerun:
     :param postrun:
@@ -125,13 +151,22 @@ class VegaView:
 
   def runAfter(self, callback):
     """
-    https://vega.github.io/vega/docs/api/view/#view_runAfter
+    Description:
+    ------------
 
+    Related Pages:
+
+      https://vega.github.io/vega/docs/api/view/#view_runAfter
+
+    Attributes:
+    ----------
     :param callback:
     """
 
   def runAsync(self, encode=None, prerun=None, postrun=None):
     """
+    Description:
+    ------------
 
     :param encode:
     :param prerun:
@@ -142,20 +177,16 @@ class VegaView:
 class VegaChart(JsPackage):
   lib_alias = {'js': "vega", 'css': 'vega'}
 
-  def __init__(self, src, varName, setVar=False, report=None):
-    super(VegaChart, self).__init__(src=src, varName=varName, selector=varName, setVar=setVar)
-    self._report = report
+  def parse(self, data):
+    return JsUtils.jsWrap("vega.parse(%s)" % JsUtils.jsConvertData(data, None))
 
-  def parse(self, jsData):
-    return JsUtils.jsWrap("vega.parse(%s)" % JsUtils.jsConvertData(jsData, None))
-
-  def toSVG(self, scaleFactor):
+  def toSVG(self, scale_factor):
     pass
 
-  def toImageURL(self, kind, scaleFactor):
+  def toImageURL(self, kind, scale_factor):
     pass
 
-  def toCanvas(self, scaleFactor, options=None):
+  def toCanvas(self, scale_factor, options=None):
     pass
 
   def events(self, source, type, filter):

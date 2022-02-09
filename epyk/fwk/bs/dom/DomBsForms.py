@@ -10,4 +10,4 @@ class DomCheck(JsHtml.JsHtmlRich):
     ------------
     Common function to get the component content.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.checked" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.checked" % self.varName)

@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import json
-from typing import Union, Optional
+from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
@@ -23,10 +24,11 @@ from epyk.core.html import Defaults as Defaults_html
 class ChartJs(JsCanvas.Canvas):
   display_value = "inline-block"
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js = []
     self._jquery, self._jquery_ui, self._d3 = None, None, None
 
@@ -42,33 +44,31 @@ class ChartJs(JsCanvas.Canvas):
         self.htmlCode, self.content.toStr()))
 
   @property
-  def by_name(self):
+  def by_name(self) -> JsNodeDom.JsDomsList:
     """
     Description:
     -----------
 
     :rtype: JsNodeDom.JsDomsList
     """
-    if self._src.attr.get('name') is not None:
-      return JsNodeDom.JsDomsList(None, "document.getElementsByName('%s')" % self._src.attr.get('name'),
-                                        report=self._report)
+    if self.component.attr.get('name') is not None:
+      return JsNodeDom.JsDomsList(
+        None, "document.getElementsByName('%s')" % self.component.attr.get('name'), page=self.page)
 
     return self
 
   @property
-  def isInViewPort(self):
+  def isInViewPort(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     -----------
-    Check if the component is in the visible part of the page (the viewpport).
-
-    :rtype: JsObject.JsObject
+    Check if the component is in the visible part of the page (the viewport).
 
     :return: A Javascript boolean
     """
-    flag = JsBoolean.JsBoolean("!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True,
-                               isPyData=False)
-    flag._js.insert(0, self._report.js.viewHeight.setVar('viewHeight'))
+    flag = JsBoolean.JsBoolean("!(rect.bottom < 0 || rect.top - viewHeight >= 0)", js_code="visibleFlag", set_var=True,
+                               is_py_data=False)
+    flag._js.insert(0, self.component.js.viewHeight.setVar('viewHeight'))
     flag._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
@@ -82,7 +82,7 @@ class ChartJs(JsCanvas.Canvas):
     ----------
     :param Union[list, str] js_funcs: The Javascript events
     """
-    return self._src.js.if_(self.isInViewPort, js_funcs)
+    return self.component.js.if_(self.isInViewPort, js_funcs)
 
   @property
   def content(self):
@@ -91,13 +91,13 @@ class ChartJs(JsCanvas.Canvas):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.value" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
   def empty(self):
     return '%s.value = ""' % self.varName
 
   @property
-  def events(self):
+  def events(self) -> JsNodeDom.JsDomEvents:
     """
     Description:
     -----------
@@ -105,10 +105,10 @@ class ChartJs(JsCanvas.Canvas):
 
     :rtype: JsNodeDom.JsDomEvents
     """
-    return JsNodeDom.JsDomEvents(self._src)
+    return JsNodeDom.JsDomEvents(self.component)
 
   @property
-  def jquery(self):
+  def jquery(self) -> JsQuery.JQuery:
     """
     Description:
     -----------
@@ -117,12 +117,12 @@ class ChartJs(JsCanvas.Canvas):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode),
-                                    setVar=False)
+      self._jquery = JsQuery.JQuery(component=self.component,
+                                    selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
     return self._jquery
 
   @property
-  def d3(self):
+  def d3(self) -> JsD3.D3Select:
     """
     Description:
     -----------
@@ -131,26 +131,26 @@ class ChartJs(JsCanvas.Canvas):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(src=self._src, selector="d3.select('#%s')" % self._src.htmlCode)
+      self._d3 = JsD3.D3Select(component=self.component, selector="d3.select('#%s')" % self.component.htmlCode)
     return self._d3
 
   @property
-  def objects(self):
+  def objects(self) -> JsObjects.JsObjects:
     """
     Description:
     -----------
     Interface to the main Javascript Classes and Primitives.
     """
-    return JsObjects.JsObjects(self)
+    return JsObjects.JsObjects(self.page)
 
   @property
-  def format(self):
+  def format(self) -> JsHtml.Formatters:
     """
     Description:
     ------------
     Specific formatters for the HTML components.
     """
-    return JsHtml.Formatters(self._report, self.content.toStr())
+    return JsHtml.Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
     """
@@ -177,7 +177,7 @@ class ChartJs(JsCanvas.Canvas):
         split_css = k.split("-")
         k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
-    return ";".join(styles)
+    return JsUtils.jsConvertFncs(styles, toStr=True)
 
   def registerFunction(self, func_name: str, js_funcs: Union[list, str], pmts: Optional[dict] = None,
                        profile: Optional[Union[dict, bool]] = None):
@@ -199,7 +199,7 @@ class ChartJs(JsCanvas.Canvas):
     :return: The JsObject
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[func_name] = {'content': js_data, 'pmt': pmts}
+    self.page.properties.js.add_function(func_name, js_data, pmts)
     return self
 
   def hide(self):
@@ -315,24 +315,25 @@ class ChartJs(JsCanvas.Canvas):
         if isinstance(v, dict):
           dyn_attrs, dyn_attrs_orign = {}, {}
           if 'color' in v:
-            dyn_attrs['color'] = getattr(self._report.theme, *v['color'])
-            dyn_attrs_orign['color'] = self._report.theme.greys[0]
+            dyn_attrs['color'] = getattr(self.page.theme, *v['color'])
+            dyn_attrs_orign['color'] = self.page.theme.greys[0]
           css_attrs[k] = v['attr'] % dyn_attrs
-          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else v['attr'] % dyn_attrs_orign
+          css_attrs_origin[k] = self.component.attr[k] if k in self.component.attr else v['attr'] % dyn_attrs_orign
         else:
           css_attrs[k] = v
-          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else "none"
+          css_attrs_origin[k] = self.component.attr[k] if k in self.component.attr else "none"
     else:
       css_attrs_origin = {}
       for k in css_attrs.keys():
-        if k in self._src.attr:
-          css_attrs_origin[k] = self._src.attr[k]
+        if k in self.component.attr:
+          css_attrs_origin[k] = self.component.attr[k]
         else:
           css_attrs_origin[k] = "none"
     return '''%s; setTimeout(function(){%s}, %s)
         ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, components: list, append: bool = False, profile: Optional[Union[dict, bool]] = None):
+  def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -352,7 +353,7 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param list components: The different HTML objects to be added to the component.
+    :param List[primitives.HtmlModel] components: The different HTML objects to be added to the component.
     :param bool append: Mention if the component should replace or append the data.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
@@ -364,8 +365,8 @@ class ChartJs(JsCanvas.Canvas):
     js_funcs = []
     for i, h in enumerate(components):
       h.options.managed = False
-      js_funcs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
-      js_funcs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
+      js_funcs.append(self.page.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
+      js_funcs.append(self.innerHTML(self.page.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
   def options(self, options: Optional[dict] = None):
@@ -381,7 +382,7 @@ class ChartJs(JsCanvas.Canvas):
     ----------
     :param Optional[dict] options: Optional. The value to be changed.
     """
-    opt = dict(self._src._jsStyles)
+    opt = dict(self.component._jsStyles)
     if options is not None:
       opt.update(options)
     return opt

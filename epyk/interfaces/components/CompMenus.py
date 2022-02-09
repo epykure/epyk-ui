@@ -542,6 +542,7 @@ class Menus:
 
     Attributes:
     ----------
+    :param data:
     :param divider: symbols.shape | String. The symbol between the links.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit

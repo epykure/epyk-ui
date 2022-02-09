@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html.options import Options
 from epyk.core.js import Imports
 from epyk.core.js.packages import packageImport
@@ -23,58 +24,60 @@ class OptionExtraKeys(Options):
   def ctrl_space(self, value):
     self._config(value, "'Ctrl-Space'")
 
-  def f_11(self, jsFncs, profile=None):
+  def f_11(self, js_funcs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'F11'", js_type=True)
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), "'F11'", js_type=True)
 
-  def esc(self, jsFncs, profile=None):
+  def esc(self, js_funcs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'Esc'", js_type=True)
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), "'Esc'", js_type=True)
 
-  def ctrl_q(self, jsFncs, profile=None):
+  def ctrl_q(self, js_funcs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      'function(cm) {%s}' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), "'Ctrl-Q'", js_type=True)
+      'function(cm) {%s}' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), "'Ctrl-Q'", js_type=True)
 
 
 class OptionPanels:
 
-  def __init__(self, component):
-    self._component = component
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    self.component, self.page = component, page
+    if page is None:
+      self.page = component.page
 
-  def add(self, content, htmlCode, position="top"):
+  def add(self, content, html_code, position="top"):
     """
     Description:
     ------------
@@ -87,10 +90,10 @@ class OptionPanels:
     Attributes:
     ----------
     :param content: String. The panel content.
-    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. An identifier for this component (on both Python and Javascript side).
     :param position: String. Optional. The position of the panel on the component.
     """
-    htmlCode = JsUtils.jsConvertData(htmlCode, None)
+    html_code = JsUtils.jsConvertData(html_code, None)
     content = JsUtils.jsConvertData(content, None)
     position = JsUtils.jsConvertData(position, None)
     return '''
@@ -109,9 +112,9 @@ class OptionPanels:
         label.textContent = %(content)s;
         if (typeof window.editor_panels === 'undefined'){window.editor_panels = {}}
         window.editor_panels[node.id] = %(editorId)s.addPanel(node, {position: %(position)s, stable: true});
-      }''' % {"htmlCode": htmlCode, "position": position, "content": content, "editorId": self._component.editorId}
+      }''' % {"htmlCode": html_code, "position": position, "content": content, "editorId": self.component.editorId}
 
-  def remove(self, htmlCode):
+  def remove(self, html_code):
     """
     Description:
     ------------
@@ -123,18 +126,19 @@ class OptionPanels:
 
     Attributes:
     ----------
-    :param htmlCode: String. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. An identifier for this component (on both Python and Javascript side).
     """
-    htmlCode = JsUtils.jsConvertData(htmlCode, None)
+    html_code = JsUtils.jsConvertData(html_code, None)
     return '''window.editor_panels[%(htmlCode)s].clear(); delete window.editor_panels[%(htmlCode)s]''' % {
-      "htmlCode": htmlCode}
+      "htmlCode": html_code}
 
 
 class OptionCMAddons:
 
-  def __init__(self, options):
+  def __init__(self, options: Options):
     self.__option = options
-    self._report = options._report
+    self.component = options.component
+    self.page = options.page
 
   @packageImport('codemirror-search', 'codemirror-search')
   def search(self):
@@ -151,20 +155,21 @@ class OptionCMAddons:
     """
     extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
     extra_keys.alt_f("findPersistent")
-    return self._report
+    return self.component
 
   @packageImport('codemirror-trailingspace')
   def trailingspace(self):
     """
     Description:
     ------------
-    Adds an option showTrailingSpace which, when enabled, adds the CSS class cm-trailingspace to stretches of whitespace at the end of lines.
+    Adds an option showTrailingSpace which, when enabled, adds the CSS class cm-trailingspace to stretches of
+    whitespace at the end of lines.
 
     Related Pages:
 
       https://codemirror.net/demo/trailingspace.html
     """
-    self._report._report.body.style.custom_class({
+    self.page.body.style.custom_class({
       "background-image": "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==)",
       "background-position": "bottom left", "background-repeat": "repeat-x"}, "cm-trailingspace")
     self.__option._config(True, "showTrailingSpace")
@@ -174,7 +179,8 @@ class OptionCMAddons:
     """
     Description:
     ------------
-    Provides an option foldGutter, which can be used to create a gutter with markers indicating the blocks that can be folded.
+    Provides an option foldGutter, which can be used to create a gutter with markers indicating the blocks that can be
+    folded.
 
     Related Pages:
 
@@ -197,7 +203,7 @@ class OptionCMAddons:
 
       https://codemirror.net/demo/matchhighlighter.html
     """
-    self._report._report.body.style.custom_class({"background-color": self._report._report.theme.colors[1]}, "cm-matchhighlight")
+    self.page.body.style.custom_class({"background-color": self.page.theme.colors[1]}, "cm-matchhighlight")
     self.__option._config("{showToken: /\w/, annotateScrollbar: true}", "highlightSelectionMatches", js_type=True)
 
   @packageImport('codemirror-hint', 'codemirror-hint')
@@ -213,14 +219,15 @@ class OptionCMAddons:
     """
     extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
     extra_keys.ctrl_space('autocomplete')
-    return self._report
+    return self.component
 
   @packageImport('codemirror-fullscreen', 'codemirror-fullscreen')
   def fullscreen(self):
     """
     Description:
     ------------
-    Defines an option fullScreen that, when set to true, will make the editor full-screen (as in, taking up the whole browser window).
+    Defines an option fullScreen that, when set to true, will make the editor full-screen (as in, taking up the whole
+    browser window).
 
     Related Pages:
 
@@ -229,7 +236,7 @@ class OptionCMAddons:
     extra_keys = self.__option._config_sub_data("extraKeys", OptionExtraKeys)
     extra_keys.f_11('cm.setOption("fullScreen", !cm.getOption("fullScreen"))')
     extra_keys.esc('if (cm.getOption("fullScreen")) cm.setOption("fullScreen", false)')
-    return self._report
+    return self.component
 
   @packageImport('codemirror-placeholder')
   def placeholder(self):
@@ -246,18 +253,18 @@ class OptionCMAddons:
 
   @property
   @packageImport('codemirror-panel')
-  def panel(self):
+  def panel(self) -> OptionPanels:
     """
     Description:
     ------------
     Property to the panel add-on features.
     """
-    return OptionPanels(self._report)
+    return OptionPanels(self.component)
 
 
 class OptionsHints(Options):
 
-  def hint(self, mappings, jsFncs=None):
+  def hint(self, mappings, js_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -270,25 +277,25 @@ class OptionsHints(Options):
     Attributes:
     ----------
     :param mappings: List of List.
-    :param jsFncs: List | String. Optional. Javascript functions.
+    :param js_funcs: List | String. Optional. Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     mappings = JsUtils.jsConvertData(mappings, None)
     self._config('''
-      function(cm, option){
-        return new Promise(function(accept) { 
-          setTimeout(function() {
-            var cursor = cm.getCursor(), line = cm.getLine(cursor.line);  
-            var start = cursor.ch, end = cursor.ch;
-            while (start && /\w/.test(line.charAt(start - 1))) --start
-            while (end < line.length && /\w/.test(line.charAt(end))) ++end
-            var word = line.slice(start, end).toLowerCase(); var comp = %s; %s;
-            for (var i = 0; i < comp.length; i++) if (comp[i].indexOf(word) != -1)
-            return accept({list: comp[i], from: CodeMirror.Pos(cursor.line, start), to: CodeMirror.Pos(cursor.line, end)})
-          }) 
-        })
-      }''' % (mappings, JsUtils.jsConvertFncs(jsFncs, toStr=True)), js_type=True)
+    function(cm, option){
+      return new Promise(function(accept) { 
+        setTimeout(function() {
+          var cursor = cm.getCursor(), line = cm.getLine(cursor.line);  
+          var start = cursor.ch, end = cursor.ch;
+          while (start && /\w/.test(line.charAt(start - 1))) --start
+          while (end < line.length && /\w/.test(line.charAt(end))) ++end
+          var word = line.slice(start, end).toLowerCase(); var comp = %s; %s;
+          for (var i = 0; i < comp.length; i++) if (comp[i].indexOf(word) != -1)
+          return accept({list: comp[i], from: CodeMirror.Pos(cursor.line, start), to: CodeMirror.Pos(cursor.line, end)})
+        }) 
+      })
+    }''' % (mappings, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), js_type=True)
 
   def autocomplete(self):
     """
@@ -313,11 +320,12 @@ class OptionsHints(Options):
 class OptionsCode(Options):
 
   @property
-  def addons(self):
+  def addons(self) -> OptionCMAddons:
     """
     Description:
     ------------
-    The addon directory in the distribution contains a number of reusable components that implement extra editor functionality.
+    The addon directory in the distribution contains a number of reusable components that implement extra editor
+    functionality.
 
     Related Pages:
 
@@ -362,7 +370,7 @@ class OptionsCode(Options):
   def mode(self, value):
     Imports.extend('codemirror-%s' % value, [
       ('%s.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
-    self._report.jsImports.add('codemirror-%s' % value)
+    self.component.jsImports.add('codemirror-%s' % value)
     self._config(value)
 
   @property
@@ -371,8 +379,10 @@ class OptionsCode(Options):
     Description:
     ------------
     Explicitly set the line separator for the editor.
-    By default (value null), the document will be split on CRLFs as well as lone CRs and LFs, and a single LF will be used as line separator in all output (such as getValue).
-    When a specific string is given, lines will only be split on that string, and output will, by default, use that same separator.
+    By default (value null), the document will be split on CRLFs as well as lone CRs and LFs, and a single LF will be
+    used as line separator in all output (such as getValue).
+    When a specific string is given, lines will only be split on that string, and output will, by default, use that
+    same separator.
 
     Related Pages:
 
@@ -390,8 +400,10 @@ class OptionsCode(Options):
     Description:
     ------------
     Can be used to add extra gutters (beyond or instead of the line number gutter).
-    Should be an array of CSS class names or class name / CSS string pairs, each of which defines a width (and optionally a background), and which will be used to draw the background of the gutters.
-    May include the CodeMirror-linenumbers class, in order to explicitly set the position of the line number gutter (it will default to be to the right of all other gutters).
+    Should be an array of CSS class names or class name / CSS string pairs, each of which defines a width
+    (and optionally a background), and which will be used to draw the background of the gutters.
+    May include the CodeMirror-linenumbers class, in order to explicitly set the position of the line number gutter
+    (it will default to be to the right of all other gutters).
     These class names are the keys passed to setGutterMarker.
 
     Related Pages:
@@ -410,9 +422,11 @@ class OptionsCode(Options):
     Description:
     ------------
     The theme to style the editor with.
-    You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded (see the theme directory in the distribution).
+    You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded (see the theme directory
+    in the distribution).
     The default is "default", for which colors are included in codemirror.css.
-    It is possible to use multiple theming classes at once—for example "foo bar" will assign both the cm-s-foo and the cm-s-bar classes to the editor.
+    It is possible to use multiple theming classes at once—for example "foo bar" will assign both the cm-s-foo and the
+    cm-s-bar classes to the editor.
 
     Related Pages:
 
@@ -446,7 +460,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line before). Defaults to true.
+    Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line
+    before). Defaults to true.
 
     Related Pages:
 
@@ -497,7 +512,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation (only works if the mode supports indentation).
+    Configures whether the editor should re-indent the current line when a character is typed that might change its
+    proper indentation (only works if the mode supports indentation).
     Default is true.
 
     Related Pages:
@@ -516,7 +532,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Flips overall layout and selects base paragraph direction to be left-to-right or right-to-left.
-    Default is "ltr". CodeMirror applies the Unicode Bidirectional Algorithm to each line, but does not autodetect base direction — it's set to the editor direction for all lines.
+    Default is "ltr". CodeMirror applies the Unicode Bidirectional Algorithm to each line, but does not autodetect base
+    direction — it's set to the editor direction for all lines.
 
     Related Pages:
 
@@ -533,7 +550,9 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is visual (pressing the left arrow moves the cursor left) or logical (pressing the left arrow moves to the next lower index in the string, which is visually right in right-to-left text). The default is false on Windows, and true on other platforms.
+    Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is visual (pressing the
+    left arrow moves the cursor left) or logical (pressing the left arrow moves to the next lower index in the string,
+    which is visually right in right-to-left text). The default is false on Windows, and true on other platforms.
 
     Related Pages:
 
@@ -619,7 +638,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Determines whether the gutter scrolls along with the content horizontally (false) or whether it stays fixed during horizontal scrolling (true, the default).
+    Determines whether the gutter scrolls along with the content horizontally (false) or whether it stays fixed during
+    horizontal scrolling (true, the default).
 
     Related Pages:
 
@@ -637,7 +657,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Chooses a scrollbar implementation. The default is "native", showing native scrollbars.
-    The core library also provides the "null" style, which completely hides the scrollbars. Addons can implement additional scrollbar models.
+    The core library also provides the "null" style, which completely hides the scrollbars. Addons can implement
+    additional scrollbar models.
 
     Related Pages:
 
@@ -654,7 +675,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    When fixedGutter is on, and there is a horizontal scrollbar, by default the gutter will be visible to the left of this scrollbar.
+    When fixedGutter is on, and there is a horizontal scrollbar, by default the gutter will be visible to the left of
+    this scrollbar.
     If this option is set to true, it will be covered by an element with class CodeMirror-gutter-filler.
 
     Related Pages:
@@ -673,7 +695,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Selects the way CodeMirror handles input and focus.
-    he core library defines the "textarea" and "contenteditable" input models. On mobile browsers, the default is "contenteditable". On desktop browsers, the default is "textarea".
+    he core library defines the "textarea" and "contenteditable" input models. On mobile browsers, the default is
+    "contenteditable". On desktop browsers, the default is "textarea".
 
     Related Pages:
 
@@ -690,7 +713,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    This disables editing of the editor content by the user. If the special value "nocursor" is given (instead of simply true), focusing of the editor is also disallowed.
+    This disables editing of the editor content by the user. If the special value "nocursor" is given
+    (instead of simply true), focusing of the editor is also disallowed.
 
     Related Pages:
 
@@ -741,7 +765,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    When enabled, which is the default, doing copy or cut when there is no selection will copy or cut the whole lines that have cursors on them.
+    When enabled, which is the default, doing copy or cut when there is no selection will copy or cut the whole lines
+    that have cursors on them.
 
     Related Pages:
 
@@ -758,7 +783,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    When pasting something from an external source (not from the editor itself), if the number of lines matches the number of selection,
+    When pasting something from an external source (not from the editor itself), if the number of lines matches
+    the number of selection,
     CodeMirror will by default insert one line per selection. You can set this to false to disable that behavior.
 
     Related Pages:
@@ -776,7 +802,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Determines whether multiple selections are joined as soon as they touch (the default) or only when they overlap (true).
+    Determines whether multiple selections are joined as soon as they touch (the default) or only when they overlap
+    (true).
 
     Related Pages:
 
@@ -793,7 +820,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or deleting. Defaults to 1250.
+    The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or
+    deleting. Defaults to 1250.
 
     Related Pages:
 
@@ -828,7 +856,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Can be used to make CodeMirror focus itself on initialization. Defaults to off.
-    When fromTextArea is used, and no explicit value is given for this option, it will be set to true when either the source textarea is focused, or it has an autofocus attribute and no other element is focused.
+    When fromTextArea is used, and no explicit value is given for this option, it will be set to true when either the
+    source textarea is focused, or it has an autofocus attribute and no other element is focused.
 
     Related Pages:
 
@@ -863,7 +892,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Half-period in milliseconds used for cursor blinking.
-    The default blink rate is 530ms. By setting this to zero, blinking can be disabled. A negative value hides the cursor entirely.
+    The default blink rate is 530ms. By setting this to zero, blinking can be disabled. A negative value hides the
+    cursor entirely.
 
     Related Pages:
 
@@ -880,7 +910,8 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    How much extra space to always keep above and below the cursor when approaching the top or bottom of the visible view in a scrollable document. Default is 0.
+    How much extra space to always keep above and below the cursor when approaching the top or bottom of the visible
+    view in a scrollable document. Default is 0.
 
     Related Pages:
 
@@ -898,7 +929,8 @@ class OptionsCode(Options):
     Description:
     ------------
     Determines the height of the cursor. Default is 1, meaning it spans the whole height of the line.
-    For some fonts (and by some tastes) a smaller height (for example 0.85), which causes the cursor to not reach all the way to the bottom of the line, looks better
+    For some fonts (and by some tastes) a smaller height (for example 0.85), which causes the cursor to not reach all
+    the way to the bottom of the line, looks better
 
     Related Pages:
 
@@ -915,10 +947,13 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Defines an option matchBrackets which, when set to true or an options object, causes matching brackets to be highlighted whenever the cursor is next to them.
-    It also adds a method matchBrackets that forces this to happen once, and a method findMatchingBracket that can be used to run the bracket-finding algorithm that this uses internally.
+    Defines an option matchBrackets which, when set to true or an options object, causes matching brackets to be
+    highlighted whenever the cursor is next to them.
+    It also adds a method matchBrackets that forces this to happen once, and a method findMatchingBracket that can be
+    used to run the bracket-finding algorithm that this uses internally.
     It takes a start position and an optional config object.
-    By default, it will find the match to a matchable character either before or after the cursor (preferring the one before), but you can control its behavior with these options:
+    By default, it will find the match to a matchable character either before or after the cursor (preferring the one
+    before), but you can control its behavior with these options:
 
     Add extra addon: addon/selection/active-line.js
 
@@ -930,8 +965,9 @@ class OptionsCode(Options):
 
   @matchBrackets.setter
   def matchBrackets(self, value): # matchbrackets.js
-    Imports.extend('codemirror-matchbrackets', [('matchbrackets.min.js', 'codemirror/%(version)s/addon/edit/')], version="codemirror", required=["codemirror"])
-    self._report.jsImports.add('codemirror-matchbrackets')
+    Imports.extend('codemirror-matchbrackets', [('matchbrackets.min.js', 'codemirror/%(version)s/addon/edit/')],
+                   version="codemirror", required=["codemirror"])
+    self.component.jsImports.add('codemirror-matchbrackets')
     self._config(value)
 
   @property
@@ -939,7 +975,9 @@ class OptionsCode(Options):
     """
     Description:
     ------------
-    Defines a styleActiveLine option that, when enabled, gives the wrapper of the line that contains the cursor the class CodeMirror-activeline, adds a background with the class CodeMirror-activeline-background, and adds the class CodeMirror-activeline-gutter to the line's gutter space is enabled.
+    Defines a styleActiveLine option that, when enabled, gives the wrapper of the line that contains the cursor the
+    class CodeMirror-activeline, adds a background with the class CodeMirror-activeline-background, and adds the class
+    CodeMirror-activeline-gutter to the line's gutter space is enabled.
 
     Add extra addon: addon/edit/matchbrackets.js
 
@@ -951,12 +989,13 @@ class OptionsCode(Options):
 
   @styleActiveLine.setter
   def styleActiveLine(self, value):
-    Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')], version="codemirror", required=["codemirror"])
-    self._report.jsImports.add('codemirror-active-line')
+    Imports.extend('codemirror-active-line', [('active-line.min.js', 'codemirror/%(version)s/addon/selection/')],
+                   version="codemirror", required=["codemirror"])
+    self.component.jsImports.add('codemirror-active-line')
     self._config(value)
 
   @property
-  def hintOptions(self):
+  def hintOptions(self) -> OptionsHints:
     """
 
     https://codemirror.net/demo/complete.html

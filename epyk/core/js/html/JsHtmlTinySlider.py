@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
@@ -8,11 +9,11 @@ from epyk.core.js.primitives import JsObjects
 
 class JsInfo:
 
-  def __init__(self, component):
-    self._src = component
+  def __init__(self, component: primitives.HtmlModel):
+    self.component = component
     self.varName = "info"
 
-  def set(self, varName="info"):
+  def set(self, js_code: str = "info"):
     """
     Description:
     ------------
@@ -21,10 +22,10 @@ class JsInfo:
 
     Attributes:
     ----------
-    :param varName: String. Optional. The slider info variable name. Default info.
+    :param str js_code: Optional. The slider info variable name. Default info.
     """
-    self.varName = varName
-    return JsObjects.JsVoid("var %s = %s.getInfo()" % (varName, self._src.jsonId))
+    self.varName = js_code
+    return JsObjects.JsVoid("var %s = %s.getInfo()" % (js_code, self.component.jsonId))
 
   @property
   def index(self):
@@ -80,7 +81,7 @@ class JsInfo:
     """
     return JsObjects.JsNumber.JsNumber.get("%s.slideCountNew" % self.varName)
 
-  def slideItems(self, n=0):
+  def slideItems(self, n: int = 0):
     """
     Description:
     ------------
@@ -88,7 +89,7 @@ class JsInfo:
 
     Attributes:
     ----------
-    :param n: Integer. Optional. The index of the slide to be retrieved in the slider object.
+    :param int n: Optional. The index of the slide to be retrieved in the slider object.
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.slideItems[%s]" % (self.varName, n))
 
@@ -159,7 +160,7 @@ class JsHtmlTinySlider(JsHtml.JsHtmlRich):
     ------------
     Get the current index in the tiny slider.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.getInfo().index" % self._src.jsonId)
+    return JsHtml.ContentFormatters(self.page, "%s.getInfo().index" % self.component.jsonId)
 
   @property
   def info(self):
@@ -168,4 +169,4 @@ class JsHtmlTinySlider(JsHtml.JsHtmlRich):
     ------------
 
     """
-    return JsInfo(self._src)
+    return JsInfo(self.component)

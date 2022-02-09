@@ -8,6 +8,7 @@ Related Pages:
 
 		https://www.w3schools.com/Jsref/prop_win_localstorage.asp
 """
+
 from typing import Union, Optional, Any
 from epyk.core.py import primitives
 
@@ -299,7 +300,8 @@ class JsSessionStorage:
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject("sessionStorage.getItem(%s)" % key)
 
-  def removeItem(self, jsData, jsDataKey=None, isPyData: bool = False, jsFnc=None):
+  def removeItem(self, data, key: Union[str, primitives.JsDataModel] = None, is_py_data: bool = False,
+                 js_funcs: Union[list, str] = None):
     """
     Description:
     ------------
@@ -317,13 +319,13 @@ class JsSessionStorage:
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsDataKey:
-    :param isPyData:
-    :param jsFnc:
+    :param data:
+    :param key:
+    :param bool is_py_data:
+    :param Union[list, str] js_funcs:
     """
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
-    return JsFncs.JsFunction("sessionStorage.removeItem(%s)" % jsData)
+    data = JsUtils.jsConvert(data, key, is_py_data, js_funcs)
+    return JsFncs.JsFunction("sessionStorage.removeItem(%s)" % data)
 
   def clear(self):
     """
@@ -372,7 +374,7 @@ class JsHistory:
 
     :return: A Number, representing the number of entries in the session history
     """
-    return JsNumber.JsNumber("history.length", isPyData=False)
+    return JsNumber.JsNumber("history.length", is_py_data=False)
 
   def back(self):
     """
@@ -425,7 +427,7 @@ class JsHistory:
     """
     return JsFncs.JsFunction("window.history.go(%s)" % number)
 
-  def pushState(self, stateObj, title, url):
+  def pushState(self, state, title, url):
     """
     Description:
     ------------
@@ -440,7 +442,8 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param stateObj: The state object is a JavaScript object which is associated with the new history entry created by pushState()
+    :param state: The state object is a JavaScript object which is associated with the new history entry created by
+      pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
                   Passing the empty string here should be safe against future changes to the method.
                   Alternatively, you could pass a short title for the state to which you're moving.
@@ -449,9 +452,9 @@ class JsHistory:
 
     :return:
     """
-    return JsFncs.JsFunction("window.history.pushState('%s', '%s', %s)" % (stateObj, title, url))
+    return JsFncs.JsFunction("window.history.pushState('%s', '%s', %s)" % (state, title, url))
 
-  def replaceState(self, stateObj, title, url):
+  def replaceState(self, state, title, url):
     """
     Description:
     ------------
@@ -464,16 +467,17 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param stateObj: The state object is a JavaScript object which is associated with the new history entry created by pushState()
+    :param state: The state object is a JavaScript object which is associated with the new history entry created by
+      pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
                   Passing the empty string here should be safe against future changes to the method.
                   Alternatively, you could pass a short title for the state to which you're moving.
     :param url: The new history entry's URL is given by this parameter.
                 Note that the browser won't attempt to load this URL after a call to pushState(),
     """
-    return JsFncs.JsFunction("window.history.replaceState('%s', '%s', %s)" % (stateObj, title, url))
+    return JsFncs.JsFunction("window.history.replaceState('%s', '%s', %s)" % (state, title, url))
 
-  def updateState(self, key, val):
+  def updateState(self, key: str, val: str):
     """
     Description:
     ------------
@@ -492,8 +496,8 @@ class JsHistory:
 
     Attributes:
     ----------
-    :param key: String. The key to be added or updated in the current URL.
-    :param val: String. The value to be changed to the current URL.
+    :param str key: The key to be added or updated in the current URL.
+    :param str val: The value to be changed to the current URL.
 
     :return: The Javascript String for the method.
     """
@@ -508,7 +512,8 @@ class JsHistory:
         ])
       ]),
 
-      self.__jsObj.objects.get("newPmts").addItem(self.__jsObj.objects.get("urlKey"), self.__jsObj.objects.get("urlValue")),
+      self.__jsObj.objects.get("newPmts").addItem(
+        self.__jsObj.objects.get("urlKey"), self.__jsObj.objects.get("urlValue")),
       # Then we concatenate the URL
       self.__jsObj.objects.array.new([], varName="pmts"),
       self.__jsObj.objects.get("newPmts").entries().forEach([
@@ -516,7 +521,8 @@ class JsHistory:
           self.__jsObj.data.loop().val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop().val[1]))
       ]),
       self.__jsObj.return_(
-        self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get("pmts").join("&"))
+        self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get(
+          "pmts").join("&"))
       ], ["urlKey", "urlValue"])
     return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (
       JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
@@ -524,38 +530,40 @@ class JsHistory:
 
 class JsWindowEvent:
 
-  def addEventListener(self, eventType: Union[primitives.JsDataModel, str], jsFncs, windowId="window",
-                       subEvents=None, profile=False):
+  def addEventListener(self, event_type: Union[primitives.JsDataModel, str], js_funcs: Union[list, str],
+                       window_id: str = "window", sub_events: list = None,
+                       profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] eventType:
-    :param jsFncs:
-    :param windowId:
-    :param subEvents: List of names you want your underlying function to have as arguments.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[primitives.JsDataModel, str] event_type:
+    :param js_funcs: The PyJs functions.
+    :param str window_id: The window object reference.
+    :param list sub_events: List of names you want your underlying function to have as arguments.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    subEvents = '' if not subEvents else ','.join(subEvents)
-    eventType = JsUtils.jsConvertData(eventType, None)
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return JsFncs.JsFunction("%s.addEventListener(%s, function(%s){%s})" % (windowId, eventType, subEvents, jsFncs))
+    sub_events = '' if not sub_events else ','.join(sub_events)
+    event_type = JsUtils.jsConvertData(event_type, None)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsFncs.JsFunction(
+      "%s.addEventListener(%s, function(%s){%s})" % (window_id, event_type, sub_events, js_funcs))
 
-  def addScrollListener(self, jsFncs, windowId="window"):
+  def addScrollListener(self, js_funcs: Union[list, str], window_id: str = "window"):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param windowId:
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str window_id: The window object reference.
     """
-    return self.addEventListener("scroll", jsFncs, windowId)
+    return self.addEventListener("scroll", js_funcs, window_id)
 
-  def addContentLoaded(self, jsFncs, windowId="window"):
+  def addContentLoaded(self, js_funcs: Union[list, str], window_id: str = "window"):
     """
     Description:
     ------------
@@ -573,23 +581,23 @@ class JsWindowEvent:
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param windowId:
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str window_id: The window object reference.
     """
-    return self.addEventListener("DOMContentLoaded", jsFncs, windowId)
+    return self.addEventListener("DOMContentLoaded", js_funcs, window_id)
 
-  def addClickListener(self, jsFncs, windowId="window", subEvents=None):
+  def addClickListener(self, js_funcs: Union[list, str], window_id: str = "window", sub_events: list = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param windowId:
-    :param subEvents:
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str window_id: The window object reference.
+    :param list sub_events:
     """
-    return self.addEventListener("click", jsFncs, windowId, subEvents)
+    return self.addEventListener("click", js_funcs, window_id, sub_events)
 
 
 class JsWindow:
@@ -607,7 +615,7 @@ class JsWindow:
   """
 
   @property
-  def scrollY(self, windowId="window"):
+  def scrollY(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -620,12 +628,12 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The window reference.
+    :param str window_id: Optional. The window reference.
     """
-    return JsNumber.JsNumber("%s.scrollY" % windowId)
+    return JsNumber.JsNumber("%s.scrollY" % window_id)
 
   @property
-  def innerHeight(self, windowId="window"):
+  def innerHeight(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -637,12 +645,12 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The window reference.
+    :param str window_id: String. Optional. The window reference.
     """
-    return JsNumber.JsNumber("%s.innerHeight" % windowId)
+    return JsNumber.JsNumber("%s.innerHeight" % window_id)
 
   @property
-  def scrollEndPage(self, windowId="window"):
+  def scrollEndPage(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -650,13 +658,13 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The window reference.
+    :param str window_id: Optional. The window reference.
     """
     return JsBoolean.JsBoolean("(%s.scrollY + %s.innerHeight > document.body.clientHeight)? true: false" % (
-      windowId, windowId), isPyData=False)
+      window_id, window_id), is_py_data=False)
 
   @property
-  def scrollPercentage(self, windowId="window"):
+  def scrollPercentage(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -664,14 +672,14 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The window reference.
+    :param str window_id: Optional. The window reference.
     """
     return JsNumber.JsNumber(
       "Math.min((%s.scrollY + %s.innerHeight)/ document.body.clientHeight * 100, 100)" % (
-        windowId, windowId), isPyData=False)
+        window_id, window_id), is_py_data=False)
 
   @property
-  def scrollMaxY(self, windowId="window"):
+  def scrollMaxY(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -684,24 +692,22 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The window reference.
+    :param window_id: Optional. The window reference.
     """
     return JsNumber.JsNumber(
-      "(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % windowId)
+      "(%s.scrollMaxY || (document.documentElement.scrollHeight - document.documentElement.clientHeight))" % window_id)
 
-  def __init__(self, src=None):
+  def __init__(self, page: primitives.PageModel = None):
     """
     Description:
     ------------
 
-    :type src: epyk.Lib.js.Js.JsBase
-
     Attributes:
     ----------
-    :param src:
+    :param primitives.PageModel page:
     """
-    self.__src = src
-    self._context = src._context if hasattr(src, '_context') else {}
+    self.page = page
+    self._context = page._context if hasattr(page, '_context') else {}
 
   @property
   def document(self):
@@ -712,7 +718,7 @@ class JsWindow:
 
     :return: A Python JsDoms object wrapping the DOM Js interface.
     """
-    return JsNodeDom.JsDoms(self.__src)
+    return JsNodeDom.JsDoms(self.page)
 
   @property
   def history(self):
@@ -723,9 +729,9 @@ class JsWindow:
 
     :return: A Python Js History object.
     """
-    return JsHistory(self.__src)
+    return JsHistory(self.page)
 
-  def close(self, windowId="window"):
+  def close(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -737,11 +743,11 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: The String representing the Javascript function.
     """
-    return JsFncs.JsFunction("%s.close()" % windowId)
+    return JsFncs.JsFunction("%s.close()" % window_id)
 
   @property
   def events(self):
@@ -752,7 +758,8 @@ class JsWindow:
     """
     return JsWindowEvent()
 
-  def addEventListener(self, event_type: Union[primitives.JsDataModel, str], js_funcs: Union[primitives.JsDataModel, str],
+  def addEventListener(self, event_type: Union[primitives.JsDataModel, str],
+                       js_funcs: Union[primitives.JsDataModel, str],
                        window_id: str = "window", profile: Optional[Union[dict, bool]] = False):
     """
     Description:
@@ -769,7 +776,7 @@ class JsWindow:
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return JsFncs.JsFunction("%s.addEventListener(%s, function(){%s})" % (window_id, event_type, js_funcs))
 
-  def open(self, url, name="_self", specs=None, replace=None, windowId="window"):
+  def open(self, url: str, name: str = "_self", specs: list = None, replace: bool = None, window_id: str = "window"):
     """
     Description:
     ------------
@@ -781,31 +788,33 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with about:blank is opened
-    :param name: Optional. Specifies the target attribute or the name of the window.
-    :param specs: Optional. A comma-separated list of items, no whitespaces.
-    :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the history list
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param str url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with
+      about:blank is opened
+    :param str name: Optional. Specifies the target attribute or the name of the window.
+    :param list specs: Optional. A comma-separated list of items, no whitespaces.
+    :param bool replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in
+      the history list
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
     specs = JsUtils.jsConvertData(specs, None)
     replace = JsUtils.jsConvertData(replace, None)
-    return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (windowId, url, name, specs, replace))
+    return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (window_id, url, name, specs, replace))
 
-  def postData(self, jsData):
+  def postData(self, data):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    if not isinstance(jsData, list):
-      jsData = [jsData]
+    if not isinstance(data, list):
+      data = [data]
 
-  def download(self, data, fileName, profile=False):
+  def download(self, data, file_name: str, profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -818,22 +827,22 @@ class JsWindow:
     Attributes:
     ----------
     :param data:
-    :param fileName:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param file_name:
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
     :return: Void,
     """
     data = JsUtils.jsConvertData(data, None)
     return JsFncs.JsFunction(JsUtils.jsConvertFncs([
-      self.__src.createElement("a", varName="a_temp").setAttribute("download", fileName).setAttribute(
+      self.page.js.createElement("a", varName="a_temp").setAttribute("download", file_name).setAttribute(
         "href", JsFncs.JsFunction("'data:text/csv;base64,'+ %s" % data)),
-      self.__src.body.appendChild(self.__src.objects.get("a_temp")),
-      self.__src.objects.dom.get("a_temp").click(),
+      self.page.js.body.appendChild(self.page.js.objects.get("a_temp")),
+      self.page.js.objects.dom.get("a_temp").click(),
       #self.__src.objects.dom.get("a_temp").remove()
     ], toStr=True, profile=profile))
     #return JsFncs.JsFunction("%s.open('data:text/csv;base64,'+ %s, '_self')" % (windowId, data))
 
-  def moveBy(self, x, y, windowId="window"):
+  def moveBy(self, x: int, y: int, window_id: str = "window"):
     """
     Description:
     ------------
@@ -845,15 +854,15 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param x: Integer. The horizontal move in pixel.
-    :param y: Integer. The vertical move in pixel.
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param int x: The horizontal move in pixel.
+    :param int y: The vertical move in pixel.
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
     x = JsUtils.jsConvertData(x, None)
     y = JsUtils.jsConvertData(y, None)
-    return JsFncs.JsFunction("%s.moveBy(%s, %s)" % (windowId, x, y))
+    return JsFncs.JsFunction("%s.moveBy(%s, %s)" % (window_id, x, y))
 
-  def focus(self, windowId="window"):
+  def focus(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -865,13 +874,13 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
     """
-    return JsFncs.JsFunction("%s.focus()" % windowId)
+    return JsFncs.JsFunction("%s.focus()" % window_id)
 
-  def scroll(self, x, y, windowId="window"):
+  def scroll(self, x: int, y: int, window_id: str = "window"):
     """
     Description:
     ------------
@@ -883,13 +892,13 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param x: Integer. The pixel along the horizontal axis of the document that you want displayed in the upper left.
-    :param y: Integer. The pixel along the vertical axis of the document that you want displayed in the upper left.
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param int x: The pixel along the horizontal axis of the document that you want displayed in the upper left.
+    :param int y: The pixel along the vertical axis of the document that you want displayed in the upper left.
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
-    return JsFncs.JsFunction("%s.scroll(%s, %s)" % (windowId, x, y))
+    return JsFncs.JsFunction("%s.scroll(%s, %s)" % (window_id, x, y))
 
-  def scrollTo(self, x=None, y=None, windowId="window"):
+  def scrollTo(self, x: int = None, y: int = None, window_id: str = "window"):
     """
     Description:
     ------------
@@ -897,26 +906,26 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param x: Integer. Optional.
-    :param y: Integer. Optional.
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param int x: Optional.
+    :param int y: Optional.
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
     y = y or "document.body.scrollHeight"
     x = x or "document.body.scrollWidth"
-    return JsFncs.JsFunction("%s.scrollTo(%s, %s)" % (windowId, x, y))
+    return JsFncs.JsFunction("%s.scrollTo(%s, %s)" % (window_id, x, y))
 
-  def scrollUp(self, windowId="window"):
+  def scrollUp(self, window_id: str = "window"):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
-    return JsFncs.JsFunction("%s.scrollTo(0, 0)" % windowId)
+    return JsFncs.JsFunction("%s.scrollTo(0, 0)" % window_id)
 
-  def print_(self, windowId="window"):
+  def print_(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -928,13 +937,13 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
     """
-    return JsFncs.JsFunction("%s.print()" % windowId)
+    return JsFncs.JsFunction("%s.print()" % window_id)
 
-  def alert(self, jsData, jsFnc=None, windowId="window", skip_data_convert=False):
+  def alert(self, data, js_funcs: Union[list, str] = None, window_id: str = "window", skip_data_convert: bool = False):
     """
     Description:
     ------------
@@ -951,18 +960,21 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsData: Optional. Specifies the text to display in the alert box, or an object converted into a string and displayed
-    :param jsFnc: A JsFnc or a list of JsFncs.
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param data: Optional. Specifies the text to display in the alert box, or an object converted into a string and
+      displayed
+    :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs.
+    :param str window_id: Optional. The JavaScript window object reference variable.
+    :param bool skip_data_convert:
     """
     if skip_data_convert:
-      return JsFncs.JsFunction("%s.alert(%s)" % (windowId, jsData))
+      return JsFncs.JsFunction("%s.alert(%s)" % (window_id, data))
 
-    if hasattr(jsData, 'dom'):
-      jsData = jsData.dom.content
-    return JsFncs.JsFunction("%s.alert(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
+    if hasattr(data, 'dom'):
+      data = data.dom.content
+    return JsFncs.JsFunction("%s.alert(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)))
 
-  def atob(self, jsData, jsFnc=None, windowId="window"):
+  def atob(self, data: Union[str, primitives.JsDataModel], js_funcs: Union[list, str] = None,
+           window_id: str = "window"):
     """
     Description:
     ------------
@@ -979,13 +991,14 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsData: Required. The string which has been encoded by the btoa() method
-    :param jsFnc: A JsFnc or a list of JsFncs
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param Union[str, primitives.JsDataModel] data: The string which has been encoded by the btoa() method.
+    :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
-    return JsFncs.JsFunction("%s.atob(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
+    return JsFncs.JsFunction("%s.atob(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)))
 
-  def btoa(self, jsData, jsFnc=None, windowId="window"):
+  def btoa(self, data: Union[str, primitives.JsDataModel], js_funcs: Union[list, str] = None,
+           window_id: str = "window"):
     """
     Description:
     ------------
@@ -1001,13 +1014,14 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsData: Required. The string to be encoded
-    :param jsFnc: A JsFnc or a list of JsFncs
-    :param windowId: String. Optional. The JavaScript window object reference variable.
+    :param Union[str, primitives.JsDataModel] data: Required. The string to be encoded.
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str window_id: Optional. The JavaScript window object reference variable.
     """
-    return JsObject.JsObject("%s.btoa(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)), isPyData=False)
+    return JsObject.JsObject("%s.btoa(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)), is_py_data=False)
 
-  def setInterval(self, jsFncs, varId, milliseconds, windowId="window", setVar=True, profile=False):
+  def setInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds: int, window_id: str = "window",
+                  set_var: bool = True, profile=False):
     """
     Description:
     ------------
@@ -1028,27 +1042,28 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsFncs: Required. The function that will be executed
-    :param varId:
-    :param milliseconds: Required. The intervals (in milliseconds) on how often to execute the code. If the value is less than 10, the value 10 is used
-    :param windowId: The JavaScript window object
-    :param setVar: Boolean.
+    :param Union[list, str] js_funcs: The function that will be executed.
+    :param str var_id: The JavaScript variable name.
+    :param int milliseconds: The intervals (in milliseconds) on how often to execute the code.
+    If the value is less than 10, the value 10 is used.
+    :param str window_id: The JavaScript window object.
+    :param bool set_var: Set the variable on the JavaScript side.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    if setVar:
-      if windowId == 'window':
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if set_var:
+      if window_id == 'window':
         # To make the variable scope as global
-        varId = "window['%s']" % varId
+        var_id = "window['%s']" % var_id
       else:
-        varId = "var %s" % varId
+        var_id = "var %s" % var_id
 
       return JsFncs.JsFunction(
-        "%s = %s.setInterval(function(){%s}, %s)" % (varId, windowId, jsFncs, milliseconds))
+        "%s = %s.setInterval(function(){%s}, %s)" % (var_id, window_id, js_funcs, milliseconds))
 
-    return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (windowId, jsFncs, milliseconds))
+    return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (window_id, js_funcs, milliseconds))
 
-  def clearInterval(self, varId, windowId="window"):
+  def clearInterval(self, var_id: str, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1069,15 +1084,15 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param varId: A PythonJs object (JsArray, JsObject...)
-    :param windowId: The JavaScript window object
+    :param str var_id: A PythonJs object (JsArray, JsObject...) or reference
+    :param str window_id: The JavaScript window object.
 
     :return: Void, The Javascript String
     """
-    js_data = varId if not hasattr(varId, "toStr") else JsUtils.jsConvertData(varId, None)
-    return JsFncs.JsFunction("%s.clearInterval(%s); %s = undefined" % (windowId, js_data, js_data))
+    js_data = var_id if not hasattr(var_id, "toStr") else JsUtils.jsConvertData(var_id, None)
+    return JsFncs.JsFunction("%s.clearInterval(%s); %s = undefined" % (window_id, js_data, js_data))
 
-  def toggleInterval(self, jsFncs, varId, milliseconds, windowId="window"):
+  def toggleInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1090,16 +1105,17 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsFncs:
-    :param varId:
-    :param milliseconds:
-    :param windowId:
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str var_id: A PythonJs object (JsArray, JsObject...) or reference.
+    :param int milliseconds: Optional. The number of milliseconds to wait before executing the code.
+    :param str window_id: Optional. The JavaScript window object.
     """
-    interval = self.setInterval(jsFncs, varId, milliseconds, windowId, setVar=False)
-    clear = self.clearInterval(varId, windowId)
-    return JsFncs.JsFunction("if(%s){%s = %s} else{%s}" % (JsUtils.isNotDefined(varId), varId, interval, clear))
+    interval = self.setInterval(js_funcs, var_id, milliseconds, window_id, set_var=False)
+    clear = self.clearInterval(var_id, window_id)
+    return JsFncs.JsFunction("if(%s){%s = %s} else{%s}" % (JsUtils.isNotDefined(var_id), var_id, interval, clear))
 
-  def setTimeout(self, jsFncs, milliseconds=0, windowId="window", profile=False):
+  def setTimeout(self, js_funcs: Union[list, str], milliseconds: int = 0, window_id: str = "window",
+                 profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -1111,17 +1127,18 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsFncs: List. Required. The function that will be executed
-    :param milliseconds: Integer. Optional. The number of milliseconds to wait before executing the code.
-    :param windowId: String. Optional. The JavaScript window object.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Union[list, str] js_funcs: The function that will be executed.
+    :param int milliseconds: Optional. The number of milliseconds to wait before executing the code.
+    :param str window_id: Optional. The JavaScript window object.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     """
     return JsObject.JsObject(
       "%s.setTimeout(function(){%s}, %s)" % (
-        windowId, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), milliseconds),
-      setVar=True, isPyData=False)
+        window_id, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), milliseconds),
+      set_var=True, is_py_data=False)
 
-  def clearTimeout(self, jsData, jsFnc=None, windowId="window"):
+  def clearTimeout(self, data, js_funcs: Union[list, str] = None, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1134,13 +1151,13 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
-    :param windowId: The JavaScript window object.
+    :param data:
+    :param Union[list, str] js_funcs: The PyJs functions.
+    :param str window_id: The JavaScript window object.
     """
-    return JsFncs.JsFunction("%s.clearTimeout(%s)" % (windowId, JsUtils.jsConvertData(jsData, jsFnc)))
+    return JsFncs.JsFunction("%s.clearTimeout(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)))
 
-  def getComputedStyle(self, jsElement, jsPseudoElement=None, windowId="window"):
+  def getComputedStyle(self, element, pseudo_element=None, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1152,17 +1169,18 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param jsElement: Required. The element to get the computed style for
-    :param windowId: The JavaScript window object
+    :param element: The element to get the computed style for.
+    :param pseudo_element:
+    :param str window_id: The JavaScript window object.
 
     :return: A CSSStyleDeclaration object containing CSS declaration block of the element
     """
-    if jsPseudoElement is None:
-      return JsFncs.JsFunction("%s.getComputedStyle(%s)" % (windowId, jsElement))
+    if pseudo_element is None:
+      return JsFncs.JsFunction("%s.getComputedStyle(%s)" % (window_id, element))
 
-    return JsFncs.JsFunction("%s.getComputedStyle(%s, %s)" % (windowId, jsElement, jsPseudoElement))
+    return JsFncs.JsFunction("%s.getComputedStyle(%s, %s)" % (window_id, element, pseudo_element))
 
-  def getSelection(self, windowId="window"):
+  def getSelection(self, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1170,11 +1188,11 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param windowId: The JavaScript window object
+    :param str window_id: The JavaScript window object
     """
-    return JsFncs.JsFunction("%s.getSelection()" % windowId)
+    return JsFncs.JsFunction("%s.getSelection()" % window_id)
 
-  def getVar(self, varName, windowId="window"):
+  def getVar(self, var_id: str, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1182,40 +1200,40 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param varName: The Variable name.
-    :param windowId: The JavaScript window object.
+    :param str var_id: The Variable name.
+    :param str window_id: The JavaScript window object.
 
     :return: Return the piece of script to be added to the Javascript.
     """
-    return "%s['%s']" % (windowId, varName)
+    return "%s['%s']" % (window_id, var_id)
 
-  def onPageShow(self, jsFncs):
+  def onPageShow(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param Union[list, str] js_funcs: The PyJs functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._context.setdefault('pageshow', []).extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._context.setdefault('pageshow', []).extend(js_funcs)
 
-  def onBeforeUnload(self, jsFncs):
+  def onBeforeUnload(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs: A JsFnc or a list of JsFncs
+    :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._context.setdefault('beforeunload', []).extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._context.setdefault('beforeunload', []).extend(js_funcs)
 
-  def location(self, url, windowId="window"):
+  def location(self, url: str, window_id: str = "window"):
     """
     Description:
     ------------
@@ -1223,11 +1241,11 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param url: String. The new page url.
-    :param windowId: String. Optional. The JavaScript window object.
+    :param str url: The new page url.
+    :param str window_id: Optional. The JavaScript window object.
     """
     url = JsUtils.jsConvertData(url, None)
-    return JsFncs.JsFunction("%s.location = %s" % (windowId, url))
+    return JsFncs.JsFunction("%s.location = %s" % (window_id, url))
 
   @property
   def URL(self):

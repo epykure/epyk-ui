@@ -32,7 +32,7 @@ class Matrix(GraphCanvas.Canvas):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()))
+      self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Doctor(GraphCanvas.Canvas):
@@ -87,4 +87,4 @@ class Doctor(GraphCanvas.Canvas):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()))
+      self.get_attrs(css_class_names=self.style.get_classes()))

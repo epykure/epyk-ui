@@ -435,7 +435,7 @@ class Scatter(GraphPlotly.Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     -----------
@@ -443,11 +443,11 @@ class Scatter(GraphPlotly.Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutGeo:
     """
     Description:
     -----------
@@ -455,7 +455,7 @@ class Scatter(GraphPlotly.Chart):
     :rtype: LayoutGeo
     """
     if self._layout is None:
-      self._layout = LayoutGeo(self._report)
+      self._layout = LayoutGeo(self.page)
     return self._layout
 
   @property
@@ -478,7 +478,7 @@ class Chorolet(GraphPlotly.Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     -----------
@@ -486,11 +486,11 @@ class Chorolet(GraphPlotly.Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutGeo:
     """
     Description:
     -----------
@@ -498,7 +498,7 @@ class Chorolet(GraphPlotly.Chart):
     :rtype: LayoutGeo
     """
     if self._layout is None:
-      self._layout = LayoutGeo(self._report)
+      self._layout = LayoutGeo(self.page)
     return self._layout
 
   @property
@@ -511,7 +511,7 @@ class Chorolet(GraphPlotly.Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataScatterMapBox(self._report, attrs=c_data))
+    self._traces.append(DataScatterMapBox(self.page, attrs=c_data))
     return self
 
 
@@ -521,7 +521,7 @@ class Choropleth(GraphPlotly.Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     -----------
@@ -529,11 +529,11 @@ class Choropleth(GraphPlotly.Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutGeoMap:
     """
     Description:
     -----------
@@ -541,7 +541,7 @@ class Choropleth(GraphPlotly.Chart):
     :rtype: LayoutGeoMap
     """
     if self._layout is None:
-      self._layout = LayoutGeoMap(self._report)
+      self._layout = LayoutGeoMap(self.page)
     return self._layout
 
   @property
@@ -554,7 +554,7 @@ class Choropleth(GraphPlotly.Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    self._traces.append(DataChoropleth(self._report, attrs=c_data))
+    self._traces.append(DataChoropleth(self.page, attrs=c_data))
     return self
 
   @property
@@ -571,7 +571,7 @@ class BubbleGeo(GraphPlotly.Chart):
   __reqJs = ['plotly.js']
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     -----------
@@ -579,11 +579,11 @@ class BubbleGeo(GraphPlotly.Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutGeoMap:
     """
     Description:
     -----------
@@ -591,7 +591,7 @@ class BubbleGeo(GraphPlotly.Chart):
     :rtype: LayoutGeoMap
     """
     if self._layout is None:
-      self._layout = LayoutGeoMap(self._report)
+      self._layout = LayoutGeoMap(self.page)
     return self._layout
 
   @property
@@ -606,7 +606,7 @@ class BubbleGeo(GraphPlotly.Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    self._traces.append(DataBubble(self._report, attrs=c_data))
+    self._traces.append(DataBubble(self.page, attrs=c_data))
     return self
 
   @property

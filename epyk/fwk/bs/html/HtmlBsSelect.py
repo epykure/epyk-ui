@@ -21,13 +21,13 @@ class Select(Html.Html):
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
-  def __init__(self, report, records, html_code, width, height, profile, multiple, options):
-    super(Select, self).__init__(report, records, html_code=html_code, css_attrs={"width": width, "height": height},
+  def __init__(self, page, records, html_code, width, height, profile, multiple, options):
+    super(Select, self).__init__(page, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
     self._vals, self.button_css = records, None
-    if html_code in self._report.inputs:
+    if html_code in self.page.inputs:
       for v in self._vals:
-        if v['value'] == self._report.inputs[html_code]:
+        if v['value'] == self.page.inputs[html_code]:
           options['selected'] = v['value']
     if width[1] == 'px':
       self.attr["data-width"] = "%spx" % width[0]
@@ -37,7 +37,7 @@ class Select(Html.Html):
       self.style.add_classes.select.toggle()
 
   @property
-  def options(self):
+  def options(self) -> OptSelect.OptionsSelectJs:
     """
     Description:
     -----------
@@ -48,7 +48,7 @@ class Select(Html.Html):
     return super().options
 
   @property
-  def style(self):
+  def style(self) -> GrpClsList.ClassSelect:
     """
     Description:
     -----------
@@ -62,7 +62,7 @@ class Select(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlSelect.DomSelect:
     """
     Description:
     -----------
@@ -74,11 +74,11 @@ class Select(Html.Html):
     :rtype: JsHtmlSelect.DomSelect
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.DomSelect(self, report=self.page)
+      self._dom = JsHtmlSelect.DomSelect(self, page=self.page)
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsSelect.JSelect:
     """
     Description:
     -----------
@@ -96,7 +96,7 @@ class Select(Html.Html):
     :rtype: JsSelect.JSelect
     """
     if self._js is None:
-      self._js = JsSelect.JSelect(self, report=self.page)
+      self._js = JsSelect.JSelect(self, page=self.page)
     return self._js
 
   @property
@@ -192,17 +192,17 @@ class Select(Html.Html):
   def __str__(self):
     options, opt_groups = [], {}
     if self.options.all:
-      opt = HtmlSelect.Option(self._report, "all", "All", None,
+      opt = HtmlSelect.Option(self.page, "all", "All", None,
                    self.options.selected is not None and self.options.selected == "all")
       opt.options.managed = False
       options.append(opt.html())
     if self.options.empty:
-      opt = HtmlSelect.Option(self._report, "", "", None,
+      opt = HtmlSelect.Option(self.page, "", "", None,
                    self.options.selected is not None and self.options.selected == "")
       opt.options.managed = False
       options.append(opt.html())
     for val in self.val:
-      opt = HtmlSelect.Option(self._report, val['value'], val.get('name', val.get('text', '')), None,
+      opt = HtmlSelect.Option(self.page, val['value'], val.get('name', val.get('text', '')), None,
                    self.options.selected is not None and self.options.selected == val['value'],
                    options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
@@ -212,7 +212,7 @@ class Select(Html.Html):
         options.append(opt.html())
     data = options
     for k in sorted(opt_groups):
-      opt_rp = HtmlSelect.Optgroup(self._report, opt_groups[k], k)
+      opt_rp = HtmlSelect.Optgroup(self.page, opt_groups[k], k)
       opt_rp.options.managed = False
       data.append(opt_rp.html())
     self.page.properties.js.add_builders(
@@ -231,7 +231,7 @@ class Select(Html.Html):
     if self.button_css is not None:
       self.page.css.customText('.%s_button_bespoke {%s}' % (self.htmlCode, ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in self.button_css.items()])))
       self.attr['class'].insert(0, "%s_button_bespoke" % self.htmlCode)
-    data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
+    data_cls = self.get_attrs(css_class_names=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))
 
 

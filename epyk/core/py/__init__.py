@@ -1,10 +1,12 @@
 
+from typing import Any
+
 
 class OrderedSet(list):
   def __init__(self):
     super(OrderedSet, self).__init__()
 
-  def discard(self, value):
+  def discard(self, value: Any):
     """
     Description:
     ------------
@@ -12,11 +14,11 @@ class OrderedSet(list):
 
     Attributes:
     ----------
-    :param value: String. The class reference.
+    :param Any value: The class reference.
     """
     self.remove(value)
 
-  def add(self, key):
+  def add(self, key: Any):
     """
     Description:
     ------------
@@ -25,7 +27,7 @@ class OrderedSet(list):
     Class needs to be defined, this will just add the reference to the component.
     Attributes:
     ----------
-    :param key: String. The class name.
+    :param Any key: The class name.
     """
     if key not in self:
       self.append(key)

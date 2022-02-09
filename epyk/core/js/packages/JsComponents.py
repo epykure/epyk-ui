@@ -1,4 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.js.packages import JsPackage
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -7,10 +11,10 @@ from epyk.core.js.primitives import JsObjects
 class SkillBar(JsPackage):
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, setVar=False, report=None):
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = False,
+               page: primitives.PageModel = None):
     super(SkillBar, self).__init__(
-      htmlObj, varName=varName, selector=htmlObj.htmlCode, data=None, setVar=setVar, parent=None)
-    self._src, self._report = htmlObj, report
+      component, js_code=js_code, selector=component.htmlCode, data=None, set_var=set_var, page=page)
 
   @property
   def labels(self):
@@ -37,14 +41,14 @@ let r=0; while(row=component.firstChild.rows[r++]){
   records.push({"label": row.cells[0].innerText, "value": parseFloat(row.cells[1].firstChild.style["width"])}) ;
 }; return records})(%(varName)s)''' % {"varName": self.varName})
 
-  def get(self, label):
+  def get(self, label: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param label:
+    :param Union[str, primitives.JsDataModel] label:
     """
     label = JsUtils.jsConvertData(label, None)
     return JsObjects.JsVoid('''
@@ -53,16 +57,17 @@ let r=0; while(row=component.firstChild.rows[r++]){
   if(row.cells[0].innerText == label){rowCell = row; break}
 }; return rowCell})(%(varName)s, %(label)s)''' % {"varName": self.varName, "label": label})
 
-  def value(self, label, value=None, options=None):
+  def value(self, label: Union[str, primitives.JsDataModel],
+            value: Union[str, primitives.JsDataModel] = None, options: dict = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param label:
-    :param value:
-    :param options:
+    :param Union[str, primitives.JsDataModel] label:
+    :param Union[str, primitives.JsDataModel] value:
+    :param dict options:
     """
     label = JsUtils.jsConvertData(label, None)
     if value is None:
@@ -81,19 +86,19 @@ if (row != null){
   else if(cellValue > options.thresholds[0]) {row.cells[1].firstChild.style.backgroundColor = options.warning}
   else {row.cells[1].firstChild.style.backgroundColor = options.danger}
   row.title = cellValue + "%%"}})() ''' % {
-      "row": self.get(label).toStr(), "value": value, 'options': self._src.options.config_js(options)})
+      "row": self.get(label).toStr(), "value": value, 'options': self.component.options.config_js(options)})
 
   def load(self, values):
-    pass
+    raise NotImplementedError()
 
-  def remove(self, label):
+  def remove(self, label: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param label:
+    :param Union[str, primitives.JsDataModel] label:
     """
     label = JsUtils.jsConvertData(label, None)
     return JsObjects.JsVoid('''

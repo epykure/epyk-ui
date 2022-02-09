@@ -14,8 +14,8 @@ class ChartGeoGoogle(Html.Html):
   requirements = ('google-maps', )
   _option_cls = OptGoogle.OptionMaps
 
-  def __init__(self,  report, width, height, options, html_code, profile):
-    super(ChartGeoGoogle, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+  def __init__(self,  page, width, height, options, html_code, profile):
+    super(ChartGeoGoogle, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                          css_attrs={"width": width, "height": height})
     self.style.css.margin = "10px 0"
 
@@ -29,7 +29,7 @@ class ChartGeoGoogle(Html.Html):
     return "%s_obj" % self.htmlCode
 
   @property
-  def js(self):
+  def js(self) -> JsGoogleAPI.GoogleMapsAPI:
     """
     Description:
     -----------
@@ -47,7 +47,7 @@ class ChartGeoGoogle(Html.Html):
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptGoogle.OptionMaps:
     """
     Description:
     -----------
@@ -77,4 +77,4 @@ class ChartGeoGoogle(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
@@ -9,8 +10,8 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedApex(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
-    self.component.options.xaxis.labels.formatter(jsFncs, profile)
+  def x_format(self, js_funcs, profile: Union[dict, bool] = None):
+    self.component.options.xaxis.labels.formatter(js_funcs, profile)
     return self
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -238,17 +239,17 @@ class OptionDropShadow(Options):
 
 class OptionLabels(Options):
 
-  def formatter(self, jsFncs, profile=None):
+  def formatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def style(self):
@@ -605,7 +606,7 @@ class OptionAnimations(Options):
 
 class OptionEvents(Options):
 
-  def click(self, jsFncs, profile=None):
+  def click(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -617,14 +618,14 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config(
       "function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
-        jsFncs, toStr=True, profile=profile), js_type=True)
+        js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def mouseMove(self, jsFncs, profile=None):
+  def mouseMove(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -636,13 +637,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(event, chartContext, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def legendClick(self, jsFncs, profile=None):
+  def legendClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -654,13 +655,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, seriesIndex, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def markerClick(self, jsFncs, profile=None):
+  def markerClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -672,13 +673,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, seriesIndex, options){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def selection(self, jsFncs, profile=None):
+  def selection(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -691,13 +692,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def zoomed(self, jsFncs, profile=None):
+  def zoomed(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -710,13 +711,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def scrolled(self, jsFncs, profile=None):
+  def scrolled(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -729,13 +730,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, options){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def animationEnd(self, jsFncs, profile=None):
+  def animationEnd(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -747,13 +748,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def updated(self, jsFncs, profile=None):
+  def updated(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -765,13 +766,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def mounted(self, jsFncs, profile=None):
+  def mounted(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -783,13 +784,13 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def beforeMount(self, jsFncs, profile=None):
+  def beforeMount(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -801,11 +802,11 @@ class OptionEvents(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function(chartContext, config){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class OptionChart(Options):
@@ -815,7 +816,7 @@ class OptionChart(Options):
     return self._config_get()
 
   @height.setter
-  def height(self, num):
+  def height(self, num: int):
     self._config(num)
 
   @property
@@ -823,7 +824,7 @@ class OptionChart(Options):
     return self._config_get()
 
   @id.setter
-  def id(self, value):
+  def id(self, value: str):
     self._config(value)
 
   @property
@@ -835,7 +836,7 @@ class OptionChart(Options):
     self._config(value)
 
   @property
-  def zoom(self):
+  def zoom(self) -> OptionZoom:
     """
     Description:
     -----------
@@ -845,7 +846,7 @@ class OptionChart(Options):
     return self._config_sub_data("zoom", OptionZoom)
 
   @property
-  def events(self):
+  def events(self) -> OptionEvents:
     """
     Description:
     -----------
@@ -855,7 +856,7 @@ class OptionChart(Options):
     return self._config_sub_data("events", OptionEvents)
 
   @property
-  def animations(self):
+  def animations(self) -> OptionAnimations:
     """
     Description:
     -----------
@@ -865,7 +866,7 @@ class OptionChart(Options):
     return self._config_sub_data("animations", OptionAnimations)
 
   @property
-  def dropShadow(self):
+  def dropShadow(self) -> OptionDropShadow:
     """
     Description:
     -----------
@@ -875,7 +876,7 @@ class OptionChart(Options):
     return self._config_sub_data("dropShadow", OptionDropShadow)
 
   @property
-  def toolbar(self):
+  def toolbar(self) -> OptionToolbar:
     """
     Description:
     -----------
@@ -889,11 +890,11 @@ class OptionChart(Options):
     return self._config_get()
 
   @stacked.setter
-  def stacked(self, num):
+  def stacked(self, num: bool):
     self._config(num)
 
   @property
-  def sparkline(self):
+  def sparkline(self) -> OptionSparkline:
     """
     Description:
     -----------
@@ -907,7 +908,7 @@ class OptionChart(Options):
     return self._config_get()
 
   @stackType.setter
-  def stackType(self, num):
+  def stackType(self, num: str):
     self._config(num)
 
 
@@ -918,7 +919,7 @@ class OptionName(Options):
     return self._config_get()
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   @property
@@ -926,7 +927,7 @@ class OptionName(Options):
     return self._config_get()
 
   @fontSize.setter
-  def fontSize(self, num):
+  def fontSize(self, num: int):
     self._config("%spx" % num)
 
 
@@ -937,7 +938,7 @@ class OptionValue(Options):
     return self._config_get()
 
   @offsetY.setter
-  def offsetY(self, num):
+  def offsetY(self, num: int):
     self._config(num)
 
   @property
@@ -945,21 +946,21 @@ class OptionValue(Options):
     return self._config_get()
 
   @fontSize.setter
-  def fontSize(self, num):
+  def fontSize(self, num: int):
     self._config("%spx" % num)
 
-  def formatter(self, jsFncs, profile=None):
+  def formatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def formatters(self):
@@ -973,7 +974,7 @@ class OptionTotal(Options):
     return self._config_get()
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   @property
@@ -984,18 +985,18 @@ class OptionTotal(Options):
   def label(self, value):
     self._config(value)
 
-  def formatter(self, jsFncs, profile=None):
+  def formatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     self._config("function (value){%s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), js_type=True)
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def formatters(self):
@@ -1005,7 +1006,7 @@ class OptionTotal(Options):
 class OptionFormatters:
   def __init__(self, options, name):
     self.__option = options
-    self._report = options._report
+    self.component = options.component
     self.__name = name
 
   @packageImport("accounting")
@@ -1106,7 +1107,7 @@ class OptionDataLabels(Options):
     return self._config_get()
 
   @enabled.setter
-  def enabled(self, flag):
+  def enabled(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1122,7 +1123,7 @@ class OptionDataLabels(Options):
     return self._config_get()
 
   @textAnchor.setter
-  def textAnchor(self, flag):
+  def textAnchor(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1130,11 +1131,11 @@ class OptionDataLabels(Options):
     return self._config_get()
 
   @offsetY.setter
-  def offsetY(self, num):
+  def offsetY(self, num: int):
     self._config(num)
 
   @property
-  def name(self):
+  def name(self) -> OptionName:
     """
     Description:
     -----------
@@ -1144,7 +1145,7 @@ class OptionDataLabels(Options):
     return self._config_sub_data("name", OptionName)
 
   @property
-  def value(self):
+  def value(self) -> OptionValue:
     """
     Description:
     -----------
@@ -1164,7 +1165,7 @@ class OptionDataLabels(Options):
     return self._config_sub_data("style", OptionStyle)
 
   @property
-  def total(self):
+  def total(self) -> OptionTotal:
     """
     Description:
     -----------
@@ -1173,20 +1174,20 @@ class OptionDataLabels(Options):
     """
     return self._config_sub_data("total", OptionTotal)
 
-  def formatter(self, jsFncs, profile=None):
+  def formatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
-  def formatters(self):
+  def formatters(self) -> OptionFormatters:
     return OptionFormatters(self, "formatter")
 
 
@@ -1205,7 +1206,7 @@ class OptionStroke(Options):
     return self._config_get()
 
   @width.setter
-  def width(self, num):
+  def width(self, num: int):
     self._config(num)
 
   @property
@@ -1224,7 +1225,7 @@ class OptionStyle(Options):
     return self._config_get()
 
   @fontSize.setter
-  def fontSize(self, num):
+  def fontSize(self, num: int):
     self._config("%spx" % num)
 
   @property
@@ -1232,7 +1233,7 @@ class OptionStyle(Options):
     return self._config_get()
 
   @color.setter
-  def color(self, value):
+  def color(self, value: str):
     self._config(value)
 
 
@@ -1243,7 +1244,7 @@ class OptionTitle(Options):
     return self._config_get()
 
   @align.setter
-  def align(self, position):
+  def align(self, position: str):
     self._config(position)
 
   @property
@@ -1251,7 +1252,7 @@ class OptionTitle(Options):
     return self._config_get()
 
   @floating.setter
-  def floating(self, flag):
+  def floating(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1259,7 +1260,7 @@ class OptionTitle(Options):
     return self._config_get()
 
   @text.setter
-  def text(self, val):
+  def text(self, val: str):
     self._config(val)
 
   @property
@@ -1267,11 +1268,11 @@ class OptionTitle(Options):
     return self._config_get()
 
   @offsetX.setter
-  def offsetX(self, num):
+  def offsetX(self, num: int):
     self._config(num)
 
   @property
-  def style(self):
+  def style(self) -> OptionStyle:
     """
     Description:
     -----------
@@ -1288,7 +1289,7 @@ class OptionLegend(Options):
     return self._config_get()
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1320,7 +1321,7 @@ class OptionLegend(Options):
     return self._config_get()
 
   @offsetY.setter
-  def offsetY(self, num):
+  def offsetY(self, num: int):
     self._config(num)
 
   @property
@@ -1331,11 +1332,11 @@ class OptionLegend(Options):
   def offsetX(self, num):
     self._config(num)
 
-  def tooltipHoverFormatter(self, jsFncs):
-    pass
+  def tooltipHoverFormatter(self, js_funcs):
+    raise NotImplementedError()
 
   @property
-  def labels(self):
+  def labels(self) -> OptionLabels:
     """
     Description:
     -----------
@@ -1347,20 +1348,20 @@ class OptionLegend(Options):
 
 class OptionY(Options):
 
-  def formatter(self, jsFncs, profile=None):
+  def formatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
-  def formatters(self):
+  def formatters(self) -> OptionFormatters:
     return OptionFormatters(self, "formatter")
 
 
@@ -1371,7 +1372,7 @@ class OptionFixed(Options):
     return self._config_get()
 
   @enabled.setter
-  def enabled(self, flag):
+  def enabled(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1387,7 +1388,7 @@ class OptionFixed(Options):
     return self._config_get()
 
   @offsetY.setter
-  def offsetY(self, num):
+  def offsetY(self, num: int):
     self._config(num)
 
   @property
@@ -1395,7 +1396,7 @@ class OptionFixed(Options):
     return self._config_get()
 
   @offsetX.setter
-  def offsetX(self, num):
+  def offsetX(self, num: int):
     self._config(num)
 
 
@@ -1406,11 +1407,11 @@ class OptionTooltip(Options):
     return self._config_get()
 
   @shared.setter
-  def shared(self, flag):
+  def shared(self, flag: bool):
     self._config(flag)
 
   @property
-  def y(self):
+  def y(self) -> OptionY:
     """
     Description:
     -----------
@@ -1420,7 +1421,7 @@ class OptionTooltip(Options):
     return self._config_sub_data("y", OptionY)
 
   @property
-  def fixed(self):
+  def fixed(self) -> OptionFixed:
     """
     Description:
     -----------
@@ -1437,7 +1438,7 @@ class OptionGradient(Options):
     return self._config_get()
 
   @type.setter
-  def type(self, value):
+  def type(self, value: str):
     self._config(value)
 
   @property
@@ -1445,7 +1446,7 @@ class OptionGradient(Options):
     return self._config_get()
 
   @shadeIntensity.setter
-  def shadeIntensity(self, num):
+  def shadeIntensity(self, num: float):
     self._config(num)
 
   @property
@@ -1453,7 +1454,7 @@ class OptionGradient(Options):
     return self._config_get()
 
   @inverseColors.setter
-  def inverseColors(self, flag):
+  def inverseColors(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1461,16 +1462,16 @@ class OptionGradient(Options):
     return self._config_get()
 
   @opacityFrom.setter
-  def opacityFrom(self, flag):
-    self._config(flag)
+  def opacityFrom(self, value: float):
+    self._config(value)
 
   @property
   def opacityTo(self):
     return self._config_get()
 
   @opacityTo.setter
-  def opacityTo(self, flag):
-    self._config(flag)
+  def opacityTo(self, value: float):
+    self._config(value)
 
   @property
   def stops(self):
@@ -1508,7 +1509,7 @@ class OptionFill(Options):
     self._config(value)
 
   @property
-  def gradient(self):
+  def gradient(self) -> OptionGradient:
     """
     Description:
     -----------
@@ -1588,7 +1589,7 @@ class OptionTheme(Options):
     self._config(value)
 
   @property
-  def monochrome(self):
+  def monochrome(self) -> OptionMonochrome:
     """
     Description:
     -----------
@@ -1605,7 +1606,7 @@ class OptionHollow(Options):
     return self._config_get()
 
   @size.setter
-  def size(self, value):
+  def size(self, value: float):
     self._config(value)
 
 
@@ -1616,7 +1617,7 @@ class OptionPlotOptionsBar(Options):
     return self._config_get()
 
   @horizontal.setter
-  def horizontal(self, flag):
+  def horizontal(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1624,11 +1625,11 @@ class OptionPlotOptionsBar(Options):
     return self._config_get()
 
   @barHeight.setter
-  def barHeight(self, value):
+  def barHeight(self, value: int):
     self._config(value)
 
   @property
-  def dataLabels(self):
+  def dataLabels(self) -> OptionDataLabels:
     """
     Description:
     -----------
@@ -1641,7 +1642,7 @@ class OptionPlotOptionsBar(Options):
 class OptionsPlotRadialBar(Options):
 
   @property
-  def hollow(self):
+  def hollow(self) -> OptionHollow:
     """
     Description:
     -----------
@@ -1655,7 +1656,7 @@ class OptionsPlotRadialBar(Options):
     return self._config_get()
 
   @offsetY.setter
-  def offsetY(self, num):
+  def offsetY(self, num: int):
     self._config(num)
 
   @property
@@ -1663,7 +1664,7 @@ class OptionsPlotRadialBar(Options):
     return self._config_get()
 
   @startAngle.setter
-  def startAngle(self, num):
+  def startAngle(self, num: float):
     self._config(num)
 
   @property
@@ -1671,11 +1672,11 @@ class OptionsPlotRadialBar(Options):
     return self._config_get()
 
   @endAngle.setter
-  def endAngle(self, num):
+  def endAngle(self, num: float):
     self._config(num)
 
   @property
-  def dataLabels(self):
+  def dataLabels(self) -> OptionDataLabels:
     """
     Description:
     -----------
@@ -1688,7 +1689,7 @@ class OptionsPlotRadialBar(Options):
 class OptionPlotOptions(Options):
 
   @property
-  def bar(self):
+  def bar(self) -> OptionPlotOptionsBar:
     """
     Description:
     -----------
@@ -1701,7 +1702,7 @@ class OptionPlotOptions(Options):
 class OptionsPlotRadial(Options):
 
   @property
-  def radialBar(self):
+  def radialBar(self) -> OptionsPlotRadialBar:
     """
     Description:
     -----------
@@ -1711,7 +1712,7 @@ class OptionsPlotRadial(Options):
     return self._config_sub_data("radialBar", OptionsPlotRadialBar)
 
   @property
-  def dataLabels(self):
+  def dataLabels(self) -> OptionDataLabels:
     """
     Description:
     -----------
@@ -1724,7 +1725,7 @@ class OptionsPlotRadial(Options):
 class OptionsLine(OptChart.OptionsChart):
 
   @property
-  def chart(self):
+  def chart(self) -> OptionChart:
     """
     Description:
     -----------
@@ -1734,7 +1735,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("chart", OptionChart)
 
   @property
-  def grid(self):
+  def grid(self) -> OptionGrid:
     """
     Description:
     -----------
@@ -1744,7 +1745,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("grid", OptionGrid)
 
   @property
-  def markers(self):
+  def markers(self) -> OptionMarkers:
     """
     Description:
     -----------
@@ -1754,7 +1755,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("markers", OptionMarkers)
 
   @property
-  def title(self):
+  def title(self) -> OptionTitle:
     """
     Description:
     -----------
@@ -1764,7 +1765,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("title", OptionTitle)
 
   @property
-  def subtitle(self):
+  def subtitle(self) -> OptionTitle:
     """
     Description:
     -----------
@@ -1774,7 +1775,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("subtitle", OptionTitle)
 
   @property
-  def stroke(self):
+  def stroke(self) -> OptionStroke:
     """
     Description:
     -----------
@@ -1784,7 +1785,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("stroke", OptionStroke)
 
   @property
-  def dataLabels(self):
+  def dataLabels(self) -> OptionDataLabels:
     """
     Description:
     -----------
@@ -1794,7 +1795,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("dataLabels", OptionDataLabels)
 
   @property
-  def legend(self):
+  def legend(self) -> OptionLegend:
     """
     Description:
     -----------
@@ -1804,7 +1805,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("legend", OptionLegend)
 
   @property
-  def xaxis(self):
+  def xaxis(self) -> OptionXaxis:
     """
     Description:
     -----------
@@ -1814,7 +1815,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("xaxis", OptionXaxis)
 
   @property
-  def yaxis(self):
+  def yaxis(self) -> OptionYaxis:
     """
     Description:
     -----------
@@ -1824,7 +1825,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("yaxis", OptionYaxis)
 
   @property
-  def tooltip(self):
+  def tooltip(self) -> OptionTooltip:
     """
     Description:
     -----------
@@ -1834,7 +1835,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("tooltip", OptionTooltip)
 
   @property
-  def theme(self):
+  def theme(self) -> OptionTheme:
     """
     Description:
     -----------
@@ -1847,7 +1848,7 @@ class OptionsLine(OptChart.OptionsChart):
     """
     return self._config_sub_data("theme", OptionTheme)
 
-  def add_series(self):
+  def add_series(self) -> OptionSeries:
     """
     Description:
     -----------
@@ -1856,14 +1857,14 @@ class OptionsLine(OptChart.OptionsChart):
     """
     return self._config_sub_data_enum("series", OptionSeries)
 
-  def get_series(self, i=0):
+  def get_series(self, i: int = 0):
     return self.js_tree["series"][i]
 
   @property
   def all_series(self):
     return self.js_tree.get("series", [])
 
-  def add_responsive(self):
+  def add_responsive(self) -> OptionResponsive:
     """
     Description:
     -----------
@@ -1879,7 +1880,7 @@ class OptionsLine(OptChart.OptionsChart):
 class OptionsArea(OptionsLine):
 
   @property
-  def fill(self):
+  def fill(self) -> OptionFill:
     """
     Description:
     -----------
@@ -1893,7 +1894,7 @@ class OptionsBar(OptionsLine):
 
 
   @property
-  def plotOptions(self):
+  def plotOptions(self) -> OptionPlotOptions:
     """
     Description:
     -----------
@@ -1922,7 +1923,7 @@ class OptionsPie(OptionsLine):
     self._config(values)
 
   @property
-  def plotOptions(self):
+  def plotOptions(self) -> OptionsPlotRadial:
     """
     Description:
     -----------

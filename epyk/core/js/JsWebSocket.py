@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 
-from typing import Union, Optional
+from typing import Union, Optional, List
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsData
@@ -30,20 +31,33 @@ class HttpCode:
 
 class WebSocket:
 
-  def __init__(self, htmlCode: Optional[str] = None, src=None, secured: bool = False):
+  def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
+               secured: bool = False):
     """
     Description:
     ------------
+    The WebSocket object provides the API for creating and managing a WebSocket connection to a server,
+    as well as for sending and receiving data on the connection.
+
+    Attributes:
+    ----------
+    :param Optional[str] html_code: Optional. The Id of the script.
+    :param Optional[Union[str, primitives.PageModel]] src: Optional.
+    :param bool secured: Optional.
     """
-    self._src, self.secured, self.__connect = src, secured, None
-    self._selector = htmlCode or "websocket_%s" % id(self)
+    self.page, self.secured, self.__connect = src, secured, None
+    self._selector = html_code or "websocket_%s" % id(self)
 
   @property
   def readyState(self):
     """
     Description:
     ------------
+    The WebSocket.readyState read-only property returns the current state of the WebSocket connection.
 
+    Related Pages:
+
+          https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/readyState
     """
     return JsObjects.JsObject.JsObject.get("%s.readyState" % self._selector)
 
@@ -78,7 +92,11 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when data is received through a WebSocket. Also available via the onmessage property.
 
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/message_event
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
@@ -106,25 +124,26 @@ class WebSocket:
     Attributes:
     ----------
     :param str url: The URL to which to connect; this should be the URL to which the WebSocket server will respond.
-        This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
+        This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for
+        local connections.
     :param Optional[int] port: The application port number.
     :param Union[list, str] protocol: Either a single protocol string or an array of protocol strings.
     :param from_config:
     """
     if from_config is not None:
-      self._src._props['js']['builders'].add("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
+      self.page._props['js']['builders'].add("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
       self.__connect = "new WebSocket(%s)" % from_config.address
       return JsObjects.JsVoid("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
 
     prefix = "wss" if self.secured else 'ws'
     if protocol is None:
-      self._src._props['js']['builders'].add(
+      self.page._props['js']['builders'].add(
         "var %s = new WebSocket('%s://%s:%s')" % (self._selector, prefix, url, port))
       self.__connect = "new WebSocket('%s://%s:%s')" % (prefix, url, port)
       return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s')" % (self._selector, prefix, url, port))
 
     protocol = JsUtils.jsConvertData(protocol, None)
-    self._src._props['js']['builders'].add(
+    self.page._props['js']['builders'].add(
       "var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
     self.__connect = "new WebSocket('%s://%s:%s', %s)" % (prefix, url, port, protocol)
     return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
@@ -133,6 +152,7 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when a connection with a WebSocket is opened. Also available via the onopen property.
 
     Related Pages:
 
@@ -145,7 +165,7 @@ class WebSocket:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady(
+    self.page.js.onReady(
       "%s.onopen = function (event) {%s}" % (
         self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
@@ -154,6 +174,7 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when data is received through a WebSocket. Also available via the onmessage property.
 
     Related Pages:
 
@@ -166,7 +187,7 @@ class WebSocket:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onmessage = function (event) {%s}" % (
+    self.page.js.onReady("%s.onmessage = function (event) {%s}" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -174,6 +195,8 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when a connection with a WebSocket has been closed because of an error,
+    such as when some data couldn't be sent. Also available via the onerror property.
 
     Related Pages:
 
@@ -186,7 +209,7 @@ class WebSocket:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onerror = function (event) {%s}" % (
+    self.page.js.onReady("%s.onerror = function (event) {%s}" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -194,6 +217,7 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when a connection with a WebSocket is closed. Also available via the onclose property.
 
     Related Pages:
 
@@ -206,7 +230,7 @@ class WebSocket:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onclose = function (event) {%s}" % (
+    self.page.js.onReady("%s.onclose = function (event) {%s}" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -214,6 +238,7 @@ class WebSocket:
     """
     Description:
     ------------
+    Fired when data is received through a WebSocket. Also available via the onmessage property.
 
     Attributes:
     ----------
@@ -227,7 +252,7 @@ class WebSocket:
     """
     Description:
     ------------
-    Basic way to send a text message to the server
+    Basic way to send a text message to the server.
 
     Related Pages:
 
@@ -241,7 +266,7 @@ class WebSocket:
     return JsObjects.JsVoid("%(varName)s.send(%(data)s)" % {
       "varName": self._selector, "connect": self.__connect, "data": data})
 
-  def sendText(self, components, attrs: dict = None):
+  def sendText(self, components: List[primitives.HtmlModel], attrs: dict = None):
     """
     Description:
     ------------
@@ -253,20 +278,21 @@ class WebSocket:
 
     Attributes:
     ----------
-    :param components: List. The list of HTML components (it will get the dom.content automatically)
+    :param List[primitives.HtmlModel] components: The list of HTML components (it will get the dom.content
+      automatically)
     :param dict attrs: Optional. Attach some static attributes to the request
     """
     from epyk.core.data import primitives
     from epyk.core.data import datamap
 
-    dftl_attrs = {"type": 'message', 'date': primitives.date()}
+    dfl_attrs = {"type": 'message', 'date': primitives.date()}
     if attrs is not None:
-      dftl_attrs.update(attrs)
-    data = JsUtils.jsConvertData(datamap(components, attrs=dftl_attrs), None)
+      dfl_attrs.update(attrs)
+    data = JsUtils.jsConvertData(datamap(components, attrs=dfl_attrs), None)
     return JsObjects.JsVoid("%(varName)s.send(JSON.stringify(%(data)s))" % {
       "varName": self._selector, "connect": self.__connect, "data": data})
 
-  def close(self, code: int = 1000, reason: Optional[str] = None):
+  def close(self, code: int = 1000, reason: Optional[Union[str, primitives.JsDataModel]] = None):
     """
     Description:
     ------------
@@ -284,25 +310,27 @@ class WebSocket:
     if reason is None:
       return JsObjects.JsVoid("%s.close(%s)" % (self._selector, code))
 
+    reason = JsUtils.jsConvertData(reason, None)
     return JsObjects.JsVoid("%s.close(%s, '%s')" % (self._selector, code, reason))
 
 
 class Worker:
 
-  def __init__(self, htmlCode: Optional[str] = None, src: Optional[str] = None, server: bool = False):
+  def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
+               server: bool = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Optional[str] htmlCode: Optional. The Id of the script.
-    :param Optional[str] src: Optional.
+    :param Optional[str] html_code: Optional. The Id of the script.
+    :param Optional[Union[str, primitives.PageModel]] src: Optional.
     :param bool server: Optional. Specify if the page is running on a server.
     """
-    self._src, self.__server = src, server
-    self._selector = htmlCode or "worker_%s" % id(self)
-    self._src._props['js']['builders'].add("var %s" % self._selector)
+    self.page, self.__server = src, server
+    self._selector = html_code or "worker_%s" % id(self)
+    self.page._props['js']['builders'].add("var %s" % self._selector)
 
   @property
   def message(self):
@@ -324,8 +352,8 @@ class Worker:
     .. note::
 
       The JavaScript content used in a web worker need to be written in a way that he can be put in one line.
-      In order to be compatible with Jupyter this content need to be loaded from Js and this can only be done by loading a plain
-      text in one line.
+      In order to be compatible with Jupyter this content need to be loaded from Js and this can only be done by
+      loading a plain text in one line.
 
     Related Pages:
 
@@ -340,7 +368,8 @@ class Worker:
     """
     if not self.__server or content is not None:
       script_content = [
-        'if(document.getElementById("js_%(id)s") != null){document.getElementById("js_%(id)s").remove()}' % {"id": self._selector},
+        'if(document.getElementById("js_%(id)s") != null){document.getElementById("js_%(id)s").remove()}' % {
+          "id": self._selector},
         'var wkScript = document.createElement("script")',
         'wkScript.setAttribute("id", "js_%s")' % self._selector]
       if script is not None:
@@ -351,15 +380,15 @@ class Worker:
       else:
         script_content.append('wkScript.textContent = "%s"' % content.strip().replace("\n", ""))
       script_content.append('document.head.appendChild(wkScript)')
-      self._src._props['js']['builders'].add('''
-        %(content)s; var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
-        %(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {
-          "content": ";".join(script_content), 'selector': self._selector})
+      self.page._props['js']['builders'].add('''
+%(content)s; var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
+%(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {
+  "content": ";".join(script_content), 'selector': self._selector})
     else:
-      self._src._props['js']['builders'].add("%s = new Worker('%s')" % (self._selector, script))
+      self.page._props['js']['builders'].add("%s = new Worker('%s')" % (self._selector, script))
     return JsObjects.JsVoid("%s = new Worker('%s')" % (self._selector, script))
 
-  def postMessage(self, data, components=None):
+  def postMessage(self, data, components: List[primitives.HtmlModel] = None):
     """
     Description:
     ------------
@@ -376,7 +405,7 @@ class Worker:
     Attributes:
     ----------
     :param data:
-    :param components: HTML components. A list of html component or tuples with the alias
+    :param List[primitives.HtmlModel] components: A list of html component or tuples with the alias
     """
     if components is not None:
       data = JsData.Datamap(components=components, attrs=data)
@@ -384,32 +413,32 @@ class Worker:
       data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
-  def on(self, eventType: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def on(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param str eventType: The event type.
+    :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self._src.js.onReady(self.addEventListener(eventType, js_funcs, profile))
+    self.page.js.onReady(self.addEventListener(event_type, js_funcs, profile))
 
-  def addEventListener(self, eventType: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def addEventListener(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param str eventType: The event type.
+    :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
-      "varName": self._selector, 'eventType': eventType, "data":
+      "varName": self._selector, 'eventType': event_type, "data":
         JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
@@ -449,24 +478,29 @@ class Worker:
 
 class ServerSentEvent:
 
-  def __init__(self, htmlCode: Optional[str] = None, src=None, server: Optional[str] = False):
+  def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
+               server: Optional[str] = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
+    :param Optional[str] html_code: Optional. The Id of the script.
+    :param Optional[Union[str, primitives.PageModel]] src: Optional.
+    :param bool server: Optional. Specify if the page is running on a server.
     """
-    self._src, self.__server = src, server
-    self._selector = htmlCode or "sse_%s" % id(self)
-    self._src._props['js']['builders'].add("var %s" % self._selector)
+    self.page, self.__server = src, server
+    self._selector = html_code or "sse_%s" % id(self)
+    self.page._props['js']['builders'].add("var %s" % self._selector)
 
   @property
   def message(self):
     """
     Description:
     ------------
-
+    Get the data object from an event on the JavaScript part.
+    Point to the variable: event.data.
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
@@ -475,7 +509,7 @@ class ServerSentEvent:
     """
     Description:
     ------------
-    n order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will
+    In order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will
     automatically attempt to open the connection to the server.
 
     Related Pages:
@@ -484,18 +518,19 @@ class ServerSentEvent:
 
     Attributes:
     ----------
-    :param Optional[str] url: The URL to which to connect; this should be the URL to which the WebSocket server will respond.
-        This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for local connections.
+    :param Optional[str] url: The URL to which to connect; this should be the URL to which the WebSocket server will
+      respond. This should use the URL scheme wss://, although some software may allow you to use the insecure
+      ws:// for local connections.
     :param Optional[int] port:
     :param from_config:
     :param Optional[dict] options:
     """
     if from_config is not None:
-      self._src._props['js']['builders'].add("%s = new EventSource(%s)" % (self._selector, from_config.address))
+      self.page._props['js']['builders'].add("%s = new EventSource(%s)" % (self._selector, from_config.address))
       self.__connect = "new EventSource(%s)" % from_config.address
       return JsObjects.JsVoid("%s = new EventSource(%s)" % (self._selector, from_config.address))
 
-    self._src._props['js']['builders'].add("%s = new EventSource('%s:%s')" % (self._selector, url, port))
+    self.page._props['js']['builders'].add("%s = new EventSource('%s:%s')" % (self._selector, url, port))
     self.__connect = "new EventSource('%s:%s')" % (url, port)
     return JsObjects.JsVoid("%s = new EventSource('%s:%s')" % (self._selector, url, port))
 
@@ -516,7 +551,7 @@ class ServerSentEvent:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onmessage = function (event) { %s }" % (
+    self.page.js.onReady("%s.onmessage = function (event) { %s }" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -537,7 +572,7 @@ class ServerSentEvent:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onerror = function (event) {%s}" % (
+    self.page.js.onReady("%s.onerror = function (event) {%s}" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -558,7 +593,7 @@ class ServerSentEvent:
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._src.js.onReady("%s.onopen = function (event) { %s }" % (
+    self.page.js.onReady("%s.onopen = function (event) { %s }" % (
       self._selector, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
@@ -588,7 +623,7 @@ class ServerSentEvent:
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self._src.js.onReady(self.addEventListener(event_type, js_funcs, profile))
+    self.page.js.onReady(self.addEventListener(event_type, js_funcs, profile))
 
   def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """

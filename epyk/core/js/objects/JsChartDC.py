@@ -1,10 +1,12 @@
 
+from typing import Union, Optional
+
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 
 
 class JsChartDCLinks:
-  def __init__(self, data, js_src, data_schema=None, profile=False):
+  def __init__(self, data, js_src, data_schema=None, profile: Optional[Union[bool, dict]] = False):
     self._js_src, self._data_schema, self.profile, self._data = js_src, data_schema, profile, data
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):

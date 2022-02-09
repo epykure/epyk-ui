@@ -4,7 +4,7 @@
 import json
 import os
 import base64
-from typing import Union, Optional, Any, List
+from typing import Union, Optional, Any, List, Callable
 from epyk.core.py import primitives
 
 from epyk.core.html import KeyCodes
@@ -42,18 +42,14 @@ _CONSOLE_LOG_EXPR = "console.log({})"
 
 
 class JsBase:
-  class __internal:
-    _props, _context, http = {}, {}, []
-    jsImports, cssImport = set([]), set([])
-
-  def __init__(self, src: Optional[primitives.PageModel] = None, component: Optional[primitives.HtmlModel] = None):
+  def __init__(self, page: Optional[primitives.PageModel] = None, component: Optional[primitives.HtmlModel] = None):
     # The underlying source object is not supposed to be touched in the underlying classes
-    self._src = src if src else self.__internal()
-    self.component, self.page = component, src
-    self.console = JsConsole(self)
+    self.page = page
+    self.component = component
+    self.console = JsConsole(self.page)
     self.localStorage = JsWindow.JsLocalStorage()
-    self.window = JsWindow.JsWindow(self)
-    self.performance = JsPerformance.JsPerformance(self)
+    self.window = JsWindow.JsWindow(self.page)
+    self.performance = JsPerformance.JsPerformance(self.page)
     self.sessionStorage = JsWindow.JsSessionStorage()
     self.json = JsJson()
     self.math = JsMaths.JsMaths()
@@ -102,7 +98,7 @@ class JsBase:
     return JsScreen()
 
   @property
-  def navigator(self):
+  def navigator(self) -> JsNavigator.JsNavigator:
     """
     Description:
     ------------
@@ -114,7 +110,7 @@ class JsBase:
       - Some browsers misidentify themselves to bypass site tests.
       - Browsers cannot report new operating systems, released later than the browser.
     """
-    return JsNavigator.JsNavigator(self)
+    return JsNavigator.JsNavigator(self.page)
 
   @property
   def location(self) -> JsLocation.JsLocation:
@@ -138,6 +134,8 @@ class JsBase:
     """
     Description:
     ------------
+    The MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media.
+    It is created using the MediaRecorder() constructor.
 
     Related Pages:
 
@@ -146,21 +144,27 @@ class JsBase:
     :rtype: JsMediaRecorder.MediaRecorder
     """
     if self.__media_recorder is None:
-      self.__media_recorder = JsMediaRecorder.MediaRecorder(self)
+      self.__media_recorder = JsMediaRecorder.MediaRecorder(self.page)
     return self.__media_recorder
 
-  def speechRecognition(self, varName):
+  def speechRecognition(self, js_code: str):
     """
     Description:
     ------------
+    The SpeechRecognition interface of the Web Speech API is the controller interface for the recognition service;
+    this also handles the SpeechRecognitionEvent sent from the recognition service.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
 
+    Attributes:
+    ----------
+    :param str js_code: The variable name for the speech recognition object.
+
     :rtype: JsSpeechRecognition.SpeechRecognition
     """
-    return JsSpeechRecognition.SpeechRecognition(varName, self)
+    return JsSpeechRecognition.SpeechRecognition(js_code, self.page)
 
   @property
   def objects(self):
@@ -171,7 +175,7 @@ class JsBase:
 
     :rtype: JsObjects.JsObjects
     """
-    return JsObjects.JsObjects(self)
+    return JsObjects.JsObjects(self.page)
 
   @property
   def jquery(self):
@@ -192,7 +196,7 @@ class JsBase:
     from epyk.core.js.packages import JsQuery
 
     if self.component is not None:
-      return JsQuery.JQuery(self.component, varName=JsQuery.decorate_var(self.component.htmlCode), setVar=False)
+      return JsQuery.JQuery(self.component, js_code=JsQuery.decorate_var(self.component.htmlCode), set_var=False)
 
     return JsQuery.JQuery(self._jquery_ref)
 
@@ -218,7 +222,7 @@ class JsBase:
 
     return JsMoment.Moment()
 
-  def eval(self, jsData: Union[primitives.JsDataModel, str], js_conv_func: Optional[Union[str, list]] = None):
+  def eval(self, data: Union[primitives.JsDataModel, str], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -233,12 +237,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] jsData: Data to be evaluated.
+    :param Union[primitives.JsDataModel, str] data: Data to be evaluated.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
-    return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(jsData, js_conv_func))
+    return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
-  def socketio(self, htmlCode: Optional[str] = None):
+  def socketio(self, html_code: Optional[str] = None):
     """
     Description:
     ------------
@@ -253,13 +257,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] htmlCode: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param Optional[str] html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
     """
     from epyk.core.js.packages import JsSocketIO
 
-    return JsSocketIO.SocketIO(htmlCode, self._src)
+    return JsSocketIO.SocketIO(html_code, self.page)
 
-  def websocket(self, htmlCode: Optional[str] = None, secured: bool = False):
+  def websocket(self, html_code: Optional[str] = None, secured: bool = False):
     """
     Description:
     ------------
@@ -273,12 +277,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] htmlCode: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param Optional[str] html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
     :param bool secured: Optional. To define the right protocol for the WebSocket connection we or wss.
     """
-    return JsWebSocket.WebSocket(htmlCode, self._src, secured)
+    return JsWebSocket.WebSocket(html_code, self.page, secured)
 
-  def worker(self, htmlCode: Optional[str] = None, server: bool = False):
+  def worker(self, html_code: Optional[str] = None, server: bool = False):
     """
     Description:
     ------------
@@ -290,12 +294,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] htmlCode: The WebSocket id (variable name) on the JavaScript side.
+    :param Optional[str] html_code: The WebSocket id (variable name) on the JavaScript side.
     :param bool server: Boolean.
     """
-    return JsWebSocket.Worker(htmlCode, self._src, server)
+    return JsWebSocket.Worker(html_code, self.page, server)
 
-  def serverSentEvent(self, htmlCode: Optional[str] = None):
+  def serverSentEvent(self, html_code: Optional[str] = None):
     """
     Description:
     ------------
@@ -312,9 +316,9 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] htmlCode: The EventSource id (variable name) on the JavaScript side.
+    :param Optional[str] html_code: The EventSource id (variable name) on the JavaScript side.
     """
-    return JsWebSocket.ServerSentEvent(htmlCode, self._src)
+    return JsWebSocket.ServerSentEvent(html_code, self.page)
 
   @property
   def d3(self):
@@ -332,8 +336,7 @@ class JsBase:
       https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
-
-    return JsD3.JsD3(self._src, "d3")
+    return JsD3.JsD3(page=self.page)
 
   def not_(self, data, js_conv_func: Optional[Union[str, list]] = None):
     """
@@ -378,7 +381,7 @@ class JsBase:
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
-    self.__if = JsIf.JsIf(condition, js_funcs, self._src, profile)
+    self.__if = JsIf.JsIf(condition, js_funcs, self.page, profile)
     return self.__if
 
   def while_(self, condition: Union[str, list], js_funcs: Union[list, str], options: Optional[dict] = None,
@@ -401,7 +404,7 @@ class JsBase:
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
-    self.__while = JsWhile.JsWhile(condition, options, self._src).fncs(js_funcs, profile=profile)
+    self.__while = JsWhile.JsWhile(condition, options, self.page).fncs(js_funcs, profile=profile)
     return self.__while
 
   def for_(self, js_funcs: Union[list, str], step: int = 1, start: int = 0, end: int = 10,
@@ -464,7 +467,7 @@ class JsBase:
     self.__switch = JsSwitch.JsSwitch(variable)
     return self.__switch
 
-  def clipboard(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def clipboard(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -476,16 +479,16 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript expression.
+    :param Union[str, primitives.JsDataModel] data: The Javascript expression.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction('''
-        var elInput = document.createElement('input'); elInput.setAttribute('type', 'text');
-        elInput.setAttribute('value', %s); document.body.appendChild(elInput);
-        document.execCommand('copy', false, elInput.select()); elInput.remove()
-        ''' % JsUtils.jsConvertData(jsData, js_conv_func))
+var elInput = document.createElement('input'); elInput.setAttribute('type', 'text');
+elInput.setAttribute('value', %s); document.body.appendChild(elInput);
+document.execCommand('copy', false, elInput.select()); elInput.remove()
+''' % JsUtils.jsConvertData(data, js_conv_func))
 
-  def _addImport(self, importAlias: str):
+  def _addImport(self, import_alias: str):
     """
     Description:
     ------------
@@ -494,13 +497,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str importAlias: Alias reference of a JavaScript module.
+    :param str import_alias: Alias reference of a JavaScript module.
     """
-    self._src._props.setdefault('js', {}).setdefault('imports', set([])).add(importAlias)
+    self.page._props.setdefault('js', {}).setdefault('imports', set([])).add(import_alias)
     return self
 
   @staticmethod
-  def typeof(jsData: str, type: Optional[str] = None):
+  def typeof(data: str, var_type: Optional[str] = None):
     """
     Description:
     ------------
@@ -512,16 +515,16 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str jsData: A String corresponding to a JavaScript object.
-    :param Optional[str] type: Optional. The type of object.
+    :param str data: A String corresponding to a JavaScript object.
+    :param Optional[str] var_type: Optional. The type of object.
     """
-    if type is None:
-      return JsObjects.JsBoolean.JsBoolean("typeof %s" % jsData)
+    if var_type is None:
+      return JsObjects.JsBoolean.JsBoolean("typeof %s" % data)
 
-    return JsObjects.JsVoid("typeof %s === '%s'" % (jsData, type))
+    return JsObjects.JsVoid("typeof %s === '%s'" % (data, var_type))
 
-  def custom(self, jsData: Union[str, primitives.JsDataModel], jsDataKey: Optional[str] = None,
-             isPyData: bool = False, js_func: Optional[Union[list, str]] = None):
+  def custom(self, data: Union[str, primitives.JsDataModel], key: Optional[str] = None,
+             is_py_data: bool = False, js_func: Optional[Union[list, str]] = None):
     """
     Description:
     ------------
@@ -529,13 +532,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: A String corresponding to a JavaScript object.
-    :param jsDataKey: String. Optional. A key reference in the JavaScript object.
-    :param isPyData: Boolean. Optional. Specify if the data is in Python and should be jsonify first.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param str key: Optional. A key reference in the JavaScript object.
+    :param bool is_py_data: Optional. Specify if the data is in Python and should be jsonify first.
     :param Optional[Union[list, str]] js_func: Optional. Javascript functions.
     """
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, js_func)
-    self._src._props.setdefault('js', {}).setdefault('bespoke', []).append(jsData)
+    data = JsUtils.jsConvert(data, key, is_py_data, js_func)
+    self.page._props.setdefault('js', {}).setdefault('bespoke', []).append(data)
 
   def customText(self, text: str):
     """
@@ -550,7 +553,7 @@ class JsBase:
 
     :return: self to allow the chaining.
     """
-    self._src.properties.js.add_text(text)
+    self.page.properties.js.add_text(text)
     return self
 
   def customFile(self, filename: str, path: Optional[str] = None, module_type: str = "text/javascript",
@@ -618,11 +621,11 @@ class JsBase:
     :return: The Js Object to allow the chaining.
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    self._src._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (
+    self.page._props.setdefault('js', {}).setdefault('prototypes', {})["%s.prototype.%s" % (
       py_class._jsClass, func_name)] = {"content": js_data, 'pmts': pmts}
     return self
 
-  def request_http(self, method_type: str, url: str, varName: str= "response", is_json: bool = True,
+  def request_http(self, method_type: str, url: str, js_code: str = "response", is_json: bool = True,
                    components: Optional[List[primitives.HtmlModel]] = None):
     """
     Description:
@@ -642,17 +645,18 @@ class JsBase:
     ----------
     :param str method_type: The method of the HTTP Request.
     :param str url: The url path of the HTTP request.
-    :param str varName: Optional. The variable name created in the Javascript.
+    :param str js_code: Optional. The variable name created in the Javascript.
     :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. A list of HTML objects values to be passed in the request.
+    :param Optional[List[primitives.HtmlModel]] components: Optional. A list of HTML objects values to be passed in the
+    request.
 
     :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData(method_type, None)
-    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url)
+    return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url)
 
   def get(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
-          varName: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+          js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
           headers: Optional[dict] = None, asynchronous: bool = False):
     """
     Description:
@@ -670,9 +674,10 @@ class JsBase:
     ----------
     :param Union[str, primitives.JsDataModel] url: The url path of the HTTP request.
     :param Optional[dict] data: Optional. A String corresponding to a JavaScript object.
-    :param str varName: Optional. The variable name created in the Javascript (default response).
+    :param str js_code: Optional. The variable name created in the Javascript (default response).
     :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. This will add the component value to the request object.
+    :param Optional[List[primitives.HtmlModel]] components: Optional.
+    This will add the component value to the request object.
     :param Optional[dict] headers: Optional. The request headers.
     :param bool asynchronous: Async flag: true (asynchronous) or false (synchronous).
 
@@ -692,7 +697,7 @@ class JsBase:
         url_params.append('"%s=" + %s' % (k, JsUtils.jsConvertData(v, None)))
     if url_params:
       url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url, asynchronous=asynchronous)
+    request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
     request.send({}, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
@@ -701,7 +706,7 @@ class JsBase:
         request.setRequestHeader(k, v)
     return request
 
-  def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, varName: str = "response",
+  def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
            is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None, asynchronous: bool = False):
     """
@@ -713,9 +718,10 @@ class JsBase:
     ----------
     :param Union[str, primitives.JsDataModel] url: The url path of the HTTP request.
     :param Optional[dict] data: Optional. Corresponding to a JavaScript object.
-    :param str varName: Optional. The variable name created in the Javascript (default response).
+    :param str js_code: Optional. The variable name created in the Javascript (default response).
     :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. This will add the component value to the request object.
+    :param Optional[List[primitives.HtmlModel]] components: Optional. This will add the component value to the request
+    object.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     :param Optional[dict] headers: Optional. The request headers.
     :param bool asynchronous: Async flag: true (asynchronous) or false (synchronous).
@@ -724,7 +730,7 @@ class JsBase:
     """
     method_type = JsUtils.jsConvertData('POST', None)
     url = JsUtils.jsConvertData(url, None)
-    request = JsObjects.XMLHttpRequest(self._src, varName, method_type, url, asynchronous=asynchronous)
+    request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
     request.profile = profile
     if components is not None:
       if data is None:
@@ -743,8 +749,8 @@ class JsBase:
         request.setRequestHeader(k, v)
     return request
 
-  def request_rpc(self, varName: str, method_type: Union[str, primitives.JsDataModel],
-                  fnc, url: str, extra_params: Optional[Union[dict, primitives.JsDataModel]] = None):
+  def request_rpc(self, js_code: str, method_type: Union[str, primitives.JsDataModel],
+                  fnc: Callable, url: str, extra_params: Optional[Union[dict, primitives.JsDataModel]] = None):
     """
     Description:
     ------------
@@ -752,9 +758,9 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str varName: The variable name created in the Javascript.
+    :param str js_code: The variable name created in the Javascript.
     :param Union[str, primitives.JsDataModel] method_type: The method type
-    :param fnc: Fnc. A python function.
+    :param Callable fnc: Fnc. A python function.
     :param str url: The service url
     :param Optional[Union[dict, primitives.JsDataModel]] extra_params: Optional.
 
@@ -773,7 +779,7 @@ class JsBase:
     else:
       mod_path = os.path.abspath(os.path.dirname(fnc.__module__))
     rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path, 'extra_params': extra_params}
-    return JsObjects.XMLHttpRequest(self._src, varName, method_type, url, rpc_params)
+    return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, rpc_params)
 
   def fetch(self, url: str, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False,
             async_await: bool = False):
@@ -821,7 +827,7 @@ class JsBase:
 
     :return: The predefined functions.
     """
-    return JsFncs.JsRegisteredFunctions(self._src)
+    return JsFncs.JsRegisteredFunctions(self.page)
 
   @property
   def breadcrumb(self):
@@ -839,7 +845,7 @@ class JsBase:
     :return: A Python breadcrumb object.
     """
     if self._breadcrumb is None:
-      self._breadcrumb = JsBreadCrumb(self._src)
+      self._breadcrumb = JsBreadCrumb(self.page)
     return self._breadcrumb
 
   def navigateTo(self, url: Union[str, primitives.JsDataModel], options: Optional[dict] = None):
@@ -867,7 +873,7 @@ class JsBase:
 
     return self.location.open_new_tab(url=url)
 
-  def registerFunction(self, func_name: str, js_funcs: Union[str, list], pmts: Optional[dict] = None,
+  def registerFunction(self, func_name: str, js_funcs: Union[str, list], args: Optional[dict] = None,
                        profile: Optional[Union[dict, bool]] = False):
     """
     Description:
@@ -881,12 +887,12 @@ class JsBase:
     ------------
     :param str func_name: The function name.
     :param Union[str, list] js_funcs: The Javascript function definition.
-    :param Optional[dict] pmts: Optional. Specific Python options available for this component.
+    :param Optional[dict] args: Optional. Specific Python options available for this component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[func_name] = {
-      'content': js_data, 'pmt': pmts}
+    self.page._props.setdefault('js', {}).setdefault('functions', {})[func_name] = {
+      'content': js_data, 'pmt': args}
     return self
 
   @property
@@ -902,8 +908,8 @@ class JsBase:
 
     :rtype: KeyCodes.KeyCode
     """
-    keydown = KeyCodes.KeyCode(page=self._src, source_event='document')
-    self._src._props['js'].setdefault('events', {})['keydown'] = keydown
+    keydown = KeyCodes.KeyCode(page=self.page, source_event='document')
+    self.page._props['js'].setdefault('events', {})['keydown'] = keydown
     return keydown
 
   @property
@@ -919,8 +925,8 @@ class JsBase:
 
     :rtype: KeyCodes.KeyCode
     """
-    keypress = KeyCodes.KeyCode(page=self._src, source_event='document')
-    self._src._props['js'].setdefault('events', {})['keypress'] = keypress
+    keypress = KeyCodes.KeyCode(page=self.page, source_event='document')
+    self.page._props['js'].setdefault('events', {})['keypress'] = keypress
     return keypress
 
   @property
@@ -936,8 +942,8 @@ class JsBase:
 
     :rtype: KeyCodes.KeyCode
     """
-    keyup = KeyCodes.KeyCode(page=self._src, source_event='document')
-    self._src._props['js'].setdefault('events', {})['keyup'] = keyup
+    keyup = KeyCodes.KeyCode(page=self.page, source_event='document')
+    self.page._props['js'].setdefault('events', {})['keyup'] = keyup
     return keyup
 
   def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = False):
@@ -952,13 +958,13 @@ class JsBase:
 
     Attributes:
     ----------
-    :param js_funcs: List | String. The Javascript functions to be added to this section.
+    :param Union[str, list] js_funcs: The Javascript functions to be added to this section.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self._src._props['js']['onReady'].add(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    self.page._props['js']['onReady'].add(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def profile(self, type: Union[str, primitives.JsDataModel], htmlCode: str, mark: Union[str, primitives.JsDataModel],
+  def profile(self, type: Union[str, primitives.JsDataModel], html_code: str, mark: Union[str, primitives.JsDataModel],
               records_count: Optional[int] = None):
     """
     Description:
@@ -967,14 +973,14 @@ class JsBase:
     Attributes:
     ----------
     :param Union[str, primitives.JsDataModel] type: The type of profile tag.
-    :param htmlCode: String. The HTML component ID.
+    :param str html_code: The HTML component ID.
     :param Union[str, primitives.JsDataModel] mark: The mark reference.
     :param Optional[int] records_count: Optional. The records count.
     """
     type = JsUtils.jsConvertData(type, None)
     mark = JsUtils.jsConvertData(mark, None)
     return "profileObj.push({type: %s, htmlCode: '%s', mark: %s, records: %s})" % (
-      type, htmlCode, mark, records_count or "")
+      type, html_code, mark, records_count or "")
 
   @staticmethod
   def getElementById(id_name: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
@@ -1023,10 +1029,12 @@ class JsBase:
 
     :rtype: JsNodeDom.JsDomsList
     """
-    return JsNodeDom.JsDomsList.get(varName="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, js_conv_func))
+    return JsNodeDom.JsDomsList.get(
+      js_code="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, js_conv_func))
 
   @staticmethod
-  def getElementsByTagName(tag_name: Union[str, primitives.JsDataModel], i: int = 0, js_conv_func: Optional[Union[str, list]] = None):
+  def getElementsByTagName(tag_name: Union[str, primitives.JsDataModel], i: int = 0,
+                           js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -1047,10 +1055,10 @@ class JsBase:
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (
-      JsUtils.jsConvertData(tag_name, js_conv_func), i), varName="%s_%s" % (tag_name, i), setVar=True)
+      JsUtils.jsConvertData(tag_name, js_conv_func), i), js_code="%s_%s" % (tag_name, i), set_var=True)
 
   @staticmethod
-  def getElementsByClassName(clsName: str):
+  def getElementsByClassName(cls_name: str):
     """
     Description:
     ------------
@@ -1063,14 +1071,14 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str clsName: The class name of the elements you want to get.
+    :param str cls_name: The class name of the elements you want to get.
 
     :return: A NodeList object, representing a collection of elements with the specified class name.
              The elements in the returned collection are sorted as they appear in the source code.
     """
-    return JsNodeDom.JsDoms("document.getElementsByClassName(%s)" % clsName)
+    return JsNodeDom.JsDoms("document.getElementsByClassName(%s)" % cls_name)
 
-  def createElement(self, tagName, varName=None, setVar=True, dom_id=None):
+  def createElement(self, tag_name: str, js_code: str = None, set_var: bool = True, dom_id: str = None):
     """
     Description:
     ------------
@@ -1082,12 +1090,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param tagName: String. Required. The name of the element you want to create.
-    :param varName: String. Optional. The variable name to be set. Default random name.
-    :param setVar: Boolean. Optional. Create a variable for the new object. Default True.
-    :param dom_id: String. Optional. The Dom ID reference for the object.
+    :param str tag_name: The name of the element you want to create.
+    :param str js_code: The variable name to be set. Default random name.
+    :param bool set_var: Optional. Create a variable for the new object. Default True.
+    :param str dom_id: Optional. The Dom ID reference for the object.
     """
-    dom_obj = JsNodeDom.JsDoms.new(tagName, varName=varName, setVar=setVar, report=self._src)
+    dom_obj = JsNodeDom.JsDoms.new(tag_name, js_code=js_code, set_var=set_var, page=self.page)
     if dom_id is not None:
       dom_obj.attr("id", dom_id)
     return dom_obj
@@ -1111,9 +1119,9 @@ class JsBase:
     :return: A Text Node object with the created Text Node.
     """
     return JsObject.JsObject(
-      "document.createTextNode(%s)" % JsUtils.jsConvertData(text, js_conv_func), isPyData=False)
+      "document.createTextNode(%s)" % JsUtils.jsConvertData(text, js_conv_func), is_py_data=False)
 
-  def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
     """
     Description:
     ------------
@@ -1132,7 +1140,7 @@ class JsBase:
     """
     return JsObject.JsObject("encodeURIComponent(%s)" % JsUtils.jsConvertData(uri, js_conv_func))
 
-  def decodeURIComponent(self, url_enc: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def decodeURIComponent(self, url_enc: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
     """
     Description:
     ------------
@@ -1158,9 +1166,9 @@ class JsBase:
     ------------
     Get the DOM object.
 
-    This will return the object and it will not create any variable.
+    This will return the object. It will not create any variable.
     """
-    return JsNodeDom.JsDoms("document.body", setVar=False, isPyData=False)
+    return JsNodeDom.JsDoms("document.body", set_var=False, is_py_data=False)
 
   @property
   def data(self) -> JsData.JsData:
@@ -1171,10 +1179,10 @@ class JsBase:
     :rtype: JsData.JsData
     """
     if self.__data is None:
-      self.__data = JsData.JsData(self._src)
+      self.__data = JsData.JsData(self.page)
     return self.__data
 
-  def string(self, data, varName=None, setVar=False, isPyData=True):
+  def string(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
     """
     Description:
     ------------
@@ -1183,13 +1191,13 @@ class JsBase:
     Attributes:
     ----------
     :param data: String | Object. The String data.
-    :param varName: String. Optional. The specific name to be used for this JavaScript String.
-    :param setVar: Boolean. Optional. Set a variable. Default False.
-    :param isPyData: Boolean. Optional. Specify the type of data.
+    :param str js_code: Optional. The specific name to be used for this JavaScript String.
+    :param bool set_var: Optional. Set a variable. Default False.
+    :param bool is_py_data: Optional. Specify the type of data.
     """
-    return JsString.JsString(data, varName, setVar, isPyData, report=self._src)
+    return JsString.JsString(data, js_code, set_var, is_py_data, page=self.page)
 
-  def number(self, data, varName=None, setVar=False, isPyData=True):
+  def number(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
     """
     Description:
     ------------
@@ -1198,13 +1206,13 @@ class JsBase:
     Attributes:
     ----------
     :param data: String | Object. The String data.
-    :param varName: String. Optional. The specific name to be used for this JavaScript String.
-    :param setVar: Boolean. Optional. Set a variable. Default False.
-    :param isPyData: Boolean. Optional. Specify the type of data.
+    :param str js_code: Optional. The specific name to be used for this JavaScript String.
+    :param bool set_var: Optional. Set a variable. Default False.
+    :param bool is_py_data: Optional. Specify the type of data.
     """
-    return JsNumber.JsNumber(data, varName, setVar, isPyData, report=self._src)
+    return JsNumber.JsNumber(data, js_code, set_var, is_py_data, page=self.page)
 
-  def object(self, data, varName=None, setVar=False, isPyData=True):
+  def object(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
     """
     Description:
     ------------
@@ -1213,13 +1221,13 @@ class JsBase:
     Attributes:
     ----------
     :param data: String | Object. The String data.
-    :param varName: String. Optional. The specific name to be used for this JavaScript String.
-    :param setVar: Boolean. Optional. Set a variable. Default False.
-    :param isPyData: Boolean. Optional. Specify the type of data.
+    :param str js_code: Optional. The specific name to be used for this JavaScript String.
+    :param bool set_var: Optional. Set a variable. Default False.
+    :param bool is_py_data: Optional. Specify the type of data.
     """
-    return JsObject.JsObject(data, varName, setVar, isPyData, report=self._src)
+    return JsObject.JsObject(data, js_code, set_var, is_py_data, page=self.page)
 
-  def querySelectorAll(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def querySelectorAll(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
     """
     Description:
     ------------
@@ -1236,9 +1244,9 @@ class JsBase:
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsNodeDom.JsDomsList(
-      "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, js_conv_func), isPyData=False)
+      "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, js_conv_func), is_py_data=False)
 
-  def querySelector(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def querySelector(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
     """
     Description:
     ------------
@@ -1310,7 +1318,7 @@ class JsBase:
     """
     return JsObjects.JsVoid("document.execCommand('%s')" % command)
 
-  def createEvent(self, type: str):
+  def createEvent(self, event_type: str):
     """
     Description:
     ------------
@@ -1324,14 +1332,14 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str type: A String that specifies the type of the event.
+    :param str event_type: A String that specifies the type of the event.
 
     :return: An Event object
     """
-    if type not in ['AnimationEvent', 'ClipboardEvent', 'DragEvent', 'FocusEvent', 'HashChangeEvent', 'InputEvent',
-                    'MouseEvent', 'PageTransitionEvent', 'PopStateEvent', 'ProgressEvent', 'StorageEvent', 'TouchEvent',
-                    'TransitionEvent', 'UiEvent', 'WheelEvent', 'KeyboardEvent']:
-      raise ValueError("Not recognized type %s" % type)
+    if event_type not in ['AnimationEvent', 'ClipboardEvent', 'DragEvent', 'FocusEvent', 'HashChangeEvent',
+                          'InputEvent', 'MouseEvent', 'PageTransitionEvent', 'PopStateEvent', 'ProgressEvent',
+                          'StorageEvent', 'TouchEvent', 'TransitionEvent', 'UiEvent', 'WheelEvent', 'KeyboardEvent']:
+      raise ValueError("Not recognized type %s" % event_type)
 
   def createAttribute(self, attribute_name):
     """
@@ -1383,11 +1391,11 @@ class JsBase:
 
     Attributes:
     ----------
-    :param value: The string to be parsed.
+    :param str value: The string to be parsed.
 
     :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
-    return JsNumber.JsNumber("parseFloat(%s)" % value, isPyData=False)
+    return JsNumber.JsNumber("parseFloat(%s)" % value, is_py_data=False)
 
   @staticmethod
   def parseInt(value: str):
@@ -1406,7 +1414,7 @@ class JsBase:
 
     :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
-    return JsNumber.JsNumber("parseInt(%s)" % value, isPyData=False)
+    return JsNumber.JsNumber("parseInt(%s)" % value, is_py_data=False)
 
   @staticmethod
   def parseDate(value: str):
@@ -1426,9 +1434,9 @@ class JsBase:
 
     :return: Number. Representing the milliseconds between the specified date-time and midnight January 1, 1970.
     """
-    return JsNumber.JsNumber("Date.parse(%s)" % value, isPyData=False)
+    return JsNumber.JsNumber("Date.parse(%s)" % value, is_py_data=False)
 
-  def getVar(self, varName: str, varType: str = "var"):
+  def getVar(self, js_code: str, var_type: str = "var"):
     """
     Description:
     ------------
@@ -1436,17 +1444,17 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str varName: The Variable name.
-    :param str varType: Optional. The scope of the variable.
+    :param str js_code: The Variable name.
+    :param str var_type: Optional. The scope of the variable.
 
     :return: Return the piece of script to be added to the Javascript.
     """
-    if varType == 'var':
-      return "window['%s']" % varName
+    if var_type == 'var':
+      return "window['%s']" % js_code
 
-    return varName
+    return js_code
 
-  def info(self, jsData: Union[str, primitives.JsDataModel], css_style: Optional[dict] = None,
+  def info(self, data: Union[str, primitives.JsDataModel], css_style: Optional[dict] = None,
            icon: str = "fas fa-spinner fa-spin", seconds: int = 10000):
     """
     Description:
@@ -1459,7 +1467,7 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: A String corresponding to a JavaScript object
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object
     :param Optional[dict] css_style: Optional. The CSS attributes to be added to the HTML component.
     :param str icon: Optional. A string with the value of the icon to display from font-awesome.
     :param int seconds: Optional. The number of second the info will be visible.
@@ -1468,18 +1476,18 @@ class JsBase:
       css_style = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px',
                    "border": "1px solid black"}
     if icon is not None:
-      self._src.jsImports.add('font-awesome')
-      self._src.cssImport.add('font-awesome')
+      self.page.jsImports.add('font-awesome')
+      self.page.cssImport.add('font-awesome')
       return [
-        self.createElement("i", varName="popup_icon").setAttribute("aria-hidden", True).css(
+        self.createElement("i", js_code="popup_icon").setAttribute("aria-hidden", True).css(
           {"display": "inline-block", "width": "auto", "height": "auto", "margin-right": '5px'}).className(icon),
-        self.createElement("div", varName="popup_info").appendChild(
-          self.objects.dom("popup_icon")).css(css_style).text(jsData),
+        self.createElement("div", js_code="popup_info").appendChild(
+          self.objects.dom("popup_icon")).css(css_style).text(data),
         self.body.appendChild(self.objects.dom("popup_info")),
         self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 
     return [
-      self.createElement("div", varName="popup_info").css(css_style).text(jsData),
+      self.createElement("div", js_code="popup_info").css(css_style).text(data),
       self.body.appendChild(self.objects.dom("popup_info")),
       self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 
@@ -1496,8 +1504,8 @@ class JsBase:
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
     dfl_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
-                  "top": JsObject.JsObject.get('event.clientY + "px"'),
-                  'left': JsObject.JsObject.get('event.clientX + "px"')}
+                 "top": JsObject.JsObject.get('event.clientY + "px"'),
+                 'left': JsObject.JsObject.get('event.clientX + "px"')}
     if css_attrs is not None:
       dfl_attrs.update(css_attrs)
       if 'bottom' in css_attrs:
@@ -1566,9 +1574,9 @@ class JsBase:
     ------------
     Shortcut to predefined temporary messages displayed to the UI.
     """
-    return JsMsgAlerts.Msg(self._src)
+    return JsMsgAlerts.Msg(self.page)
 
-  def import_js(self, script, js_funcs: Union[str, list], profile: Optional[Union[bool, dict]] = None,
+  def import_js(self, script: str, js_funcs: Union[str, list], profile: Optional[Union[bool, dict]] = None,
                 self_contained: bool = False):
     """
     Description:
@@ -1619,7 +1627,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
     """
     Description:
     ------------
-    Add CSS file on the fly from a JavaScript event.
+    Add a CSS file on the fly from a JavaScript event.
 
     Related Pages:
 
@@ -1652,7 +1660,7 @@ class JsConsole:
     https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
   """
 
-  def __init__(self, page: JsBase = None):
+  def __init__(self, page: primitives.PageModel = None):
     self.page = page
 
   @property
@@ -1661,7 +1669,7 @@ class JsConsole:
     Description:
     ------------
     Trigger a Javascript debugger from this point.
-    The Javascript will be stopped and it will be possible to check the process step by step in the browser using F12.
+    The Javascript will be stopped. It will be possible to check the process step by step in the browser using F12.
 
     Usage::
 
@@ -1694,7 +1702,7 @@ class JsConsole:
     """
     return JsFncs.JsFunction("console.clear()")
 
-  def log(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None,
+  def log(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None,
           skip_data_convert: bool = False):
     """
     Description:
@@ -1711,24 +1719,24 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript fragment.
+    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     :param bool skip_data_convert:  Optional. Flag to specify to the framework if a Json conversion is needed.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
     if skip_data_convert:
-      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(jsData))
+      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(data))
 
-    if isinstance(jsData, list):
-      jsData = JsUtils.jsWrap(JsUtils.jsConvertFncs(jsData, toStr=True))
+    if isinstance(data, list):
+      data = JsUtils.jsWrap(JsUtils.jsConvertFncs(data, toStr=True))
     # display directly the content of the component
-    if hasattr(jsData, 'dom'):
-      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(jsData.dom.content, js_conv_func)))
+    if hasattr(data, 'dom'):
+      return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(data.dom.content, js_conv_func)))
 
-    return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(jsData, js_conv_func)))
+    return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(data, js_conv_func)))
 
-  def info(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def info(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -1740,14 +1748,14 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript fragment.
+    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(jsData, js_conv_func))
+    return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
-  def warn(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def warn(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -1759,14 +1767,14 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript fragment.
+    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(jsData, js_conv_func))
+    return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
-  def error(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def error(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -1778,14 +1786,14 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript fragment.
+    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
-    return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(jsData, js_conv_func))
+    return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
-  def table(self, jsData: Union[str, primitives.JsDataModel], js_header: Optional[list] = None):
+  def table(self, data: Union[str, primitives.JsDataModel], js_header: Optional[list] = None):
     """
     Description:
     ------------
@@ -1797,17 +1805,17 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: String | Object. Required. The data to fill the table with.
+    :param Union[str, primitives.JsDataModel] data: The data to fill the table with.
     :param Optional[list] js_header: Optional. An array containing the names of the columns to be included in the table.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
     if js_header is not None:
-      return JsFncs.JsFunction("console.table(%s, %s)" % (jsData, js_header))
+      return JsFncs.JsFunction("console.table(%s, %s)" % (data, js_header))
 
-    return JsFncs.JsFunction("console.table(%s)" % jsData)
+    return JsFncs.JsFunction("console.table(%s)" % data)
 
-  def time(self, htmlCode: Union[str, primitives.JsDataModel]):
+  def time(self, html_code: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -1819,13 +1827,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] htmlCode: Use the label parameter to give the timer a name.
+    :param Union[str, primitives.JsDataModel] html_code: Use the label parameter to give the timer a name.
 
     :return: A Python Javascript Number.
     """
-    return JsNumber.JsNumber("console.time('%s')" % htmlCode, isPyData=False)
+    return JsNumber.JsNumber("console.time('%s')" % html_code, is_py_data=False)
 
-  def timeEnd(self, htmlCode: Union[str, primitives.JsDataModel]):
+  def timeEnd(self, html_code: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -1837,13 +1845,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] htmlCode: The name of the timer to end.
+    :param Union[str, primitives.JsDataModel] html_code: The name of the timer to end.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
-    return JsFncs.JsFunction("console.timeEnd('%s')" % htmlCode)
+    return JsFncs.JsFunction("console.timeEnd('%s')" % html_code)
 
-  def _assert(self, jsData: Union[str, primitives.JsDataModel], strInfo: str,
+  def _assert(self, data: Union[str, primitives.JsDataModel], info: str,
               js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
@@ -1856,11 +1864,11 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The Javascript fragment.
-    :param str strInfo: The JavaScript result.
+    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
+    :param str info: The JavaScript result.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
-    return JsFncs.JsFunction("console.assert(%s, '%s')" % (JsUtils.jsConvertData(jsData, js_conv_func), strInfo))
+    return JsFncs.JsFunction("console.assert(%s, '%s')" % (JsUtils.jsConvertData(data, js_conv_func), info))
 
   def tryCatch(self, js_funcs: Union[str, list], js_funcs_errs: Union[str, list] = "console.warn(err.message)",
                profile: Optional[Union[dict, bool]] = False):
@@ -1886,7 +1894,7 @@ class JsConsole:
     return JsFncs.JsFunction(
       "try{%s} catch(err){%s}" % (JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_funcs_errs))
 
-  def perf(self, varName: str, label: Optional[str] = None):
+  def perf(self, js_code: str, label: Optional[str] = None):
     """
     Description:
     ------------
@@ -1895,13 +1903,13 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param str varName: The variable var name use to compute the performance.
+    :param str js_code: The variable var name use to compute the performance.
     :param Optional[str] label: Optional. The description.
     """
     if label is not None:
-      return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, varName))
+      return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, js_code))
 
-    return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % varName)
+    return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % js_code)
 
   def service(self, msg: str, headers: Optional[dict] = None):
     """
@@ -1919,7 +1927,7 @@ class JsConsole:
     if LOG_SERVICE is None:
       raise ValueError("Log service must be defined pk.LOG_SERVICE = <service_url>")
 
-    return self.page.post(LOG_SERVICE, {"content": msg}, headers=headers, asynchronous=True)
+    return self.page.js.post(LOG_SERVICE, {"content": msg}, headers=headers, asynchronous=True)
 
 
 class JsJson:
@@ -1936,7 +1944,7 @@ class JsJson:
     https://www.w3schools.com/js/js_json_intro.asp
   """
 
-  def parse(self, jsData: Union[str, primitives.JsDataModel],
+  def parse(self, data: Union[str, primitives.JsDataModel],
             js_result_func: Optional[str] = None, js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
@@ -1950,20 +1958,20 @@ class JsJson:
 
     Attributes:
     ----------
-    :param jsData: String. A String corresponding to a JavaScript object.
-    :param Optional[str] js_result_func: Optional. A function used to transform the result. The function is called for each item.
-                                  Any nested objects are transformed before the parent.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param Optional[str] js_result_func: Optional. A function used to transform the result. The function is called for
+    each item. Any nested objects are transformed before the parent.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript string method
     """
-    jsData = JsUtils.jsConvertData(jsData, js_conv_func)
+    data = JsUtils.jsConvertData(data, js_conv_func)
     if js_result_func is not None:
-      return JsFncs.JsFunction("JSON.parse(%s, %s)" % (jsData, js_result_func))
+      return JsFncs.JsFunction("JSON.parse(%s, %s)" % (data, js_result_func))
 
-    return JsFncs.JsFunction("JSON.parse(%s)" % jsData)
+    return JsFncs.JsFunction("JSON.parse(%s)" % data)
 
-  def stringify(self, jsData = Union[str, primitives.JsDataModel],
+  def stringify(self, data: Union[str, primitives.JsDataModel],
                 replacer=None, space: int = 0, js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
@@ -1976,7 +1984,7 @@ class JsJson:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: The value to convert to a string.
+    :param Union[str, primitives.JsDataModel] data: The value to convert to a string.
     :param replacer: Optional. Either a function or an array used to transform the result.
                                The replacer is called for each item.
     :param int space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
@@ -1987,18 +1995,18 @@ class JsJson:
     """
     return JsString.JsString(
       "JSON.stringify(%s, %s, %s)" % (
-        JsUtils.jsConvertData(jsData, js_conv_func), json.dumps(replacer), space), isPyData=False)
+        JsUtils.jsConvertData(data, js_conv_func), json.dumps(replacer), space), is_py_data=False)
 
 
 class JsBreadCrumb:
 
-  def __init__(self, src: JsBase = None):
-    self._src = src
+  def __init__(self, src: primitives.PageModel = None):
+    self.page = src
     self._selector = "breadcrumb"
     self._anchor = None
-    self._src.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self._src.inputs)))
+    self.page.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self.page.inputs)))
 
-  def add(self, key, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def add(self, key, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -2007,11 +2015,11 @@ class JsBreadCrumb:
     Attributes:
     ----------
     :param key: String. The key in the Breadcrumb dictionary.
-    :param Union[str, primitives.JsDataModel] jsData: A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (
-      self._selector, key, JsUtils.jsConvertData(jsData, js_conv_func)))
+      self._selector, key, JsUtils.jsConvertData(data, js_conv_func)))
 
   def get(self, key: Optional[str] = None):
     """
@@ -2030,7 +2038,7 @@ class JsBreadCrumb:
 
     return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
 
-  def hash(self, jsData: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def hash(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """
     Description:
     ------------
@@ -2042,10 +2050,10 @@ class JsBreadCrumb:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] jsData: A String corresponding to a JavaScript object.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
     :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
     """
-    return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(jsData, js_conv_func)))
+    return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(data, js_conv_func)))
 
   @property
   def url(self):
@@ -2060,7 +2068,7 @@ class JsBreadCrumb:
     return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
 
   def toStr(self):
-    return '%s(%s)' % (JsFncs.FncOnRecords(self._src._props['js']).url(), self._selector)
+    return '%s(%s)' % (JsFncs.FncOnRecords(self.page._props['js']).url(), self._selector)
 
 
 class JsScreen:

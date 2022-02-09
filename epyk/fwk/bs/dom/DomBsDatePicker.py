@@ -10,4 +10,4 @@ class DomDate(JsHtml.JsHtmlRich):
     ------------
     Common function to get the component content.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.value" % self.querySelector("input").varId)
+    return JsHtml.ContentFormatters(self.page, "%s.value" % self.querySelector("input").varId)

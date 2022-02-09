@@ -168,12 +168,12 @@ class OptionsDt(Options):
 
       https://eonasdan.github.io/bootstrap-datetimepicker/Options/#options_1
     """
-    return self._report._jsStyles
+    return self.page._jsStyles
 
   @options.setter
   def options(self, otps):
-    if not otps is None:
-      self._report._jsStyles.update(otps)
+    if otps is not None:
+      self.page._jsStyles.update(otps)
 
   @property
   def stepping(self):

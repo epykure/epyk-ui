@@ -1,9 +1,12 @@
 
 from epyk.core.css.styles.attributes import Attrs
+from epyk.core.py import primitives
 
 
 class AttrInput(Attrs):
   """
+  Description:
+  ------------
   CSS pre defined properties for the Input.
 
   CSS Properties:
@@ -13,8 +16,8 @@ class AttrInput(Attrs):
     box-sizing: border-box
   """
 
-  def __init__(self, component):
-    super(AttrInput, self).__init__(component)
+  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    super(AttrInput, self).__init__(component, page=page)
     self.font_size = component.page.body.style.globals.font.normal()
     self.font_family = component.page.body.style.globals.font.family
     self.box_sizing = 'border-box'

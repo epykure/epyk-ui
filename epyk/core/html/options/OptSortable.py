@@ -17,7 +17,7 @@ class OptionsSortable(Options):
     return self.get()
 
   @group.setter
-  def group(self, name):
+  def group(self, name: str):
     self.set(name)
 
   @property
@@ -34,8 +34,8 @@ class OptionsSortable(Options):
     return self.get(True)
 
   @sort.setter
-  def sort(self, bool):
-    self.set(bool)
+  def sort(self, flag: bool):
+    self.set(flag)
 
   @property
   def delay(self):
@@ -51,8 +51,8 @@ class OptionsSortable(Options):
     return self.get(0)
 
   @delay.setter
-  def delay(self, int):
-    self.set(int)
+  def delay(self, num: int):
+    self.set(num)
 
   @property
   def delayOnTouchOnly(self):
@@ -68,8 +68,8 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @delayOnTouchOnly.setter
-  def delayOnTouchOnly(self, bool):
-    self.set(bool)
+  def delayOnTouchOnly(self, flag: bool):
+    self.set(flag)
 
   @property
   def touchStartThreshold(self):
@@ -85,7 +85,7 @@ class OptionsSortable(Options):
     return self.get(0)
 
   @touchStartThreshold.setter
-  def touchStartThreshold(self, num):
+  def touchStartThreshold(self, num: float):
     self.set(num)
 
   @property
@@ -102,8 +102,8 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @disabled.setter
-  def disabled(self, bool):
-    self.set(bool)
+  def disabled(self, flag: bool):
+    self.set(flag)
 
   @property
   def store(self):
@@ -119,8 +119,8 @@ class OptionsSortable(Options):
     return self.get(None)
 
   @store.setter
-  def store(self, bool):
-    self.set(bool)
+  def store(self, flag: bool):
+    self.set(flag)
 
   @property
   def animation(self):
@@ -136,8 +136,8 @@ class OptionsSortable(Options):
     return self.get(150)
 
   @animation.setter
-  def animation(self, bool):
-    self.set(bool)
+  def animation(self, num: int):
+    self.set(num)
 
   @property
   def easing(self):
@@ -204,8 +204,8 @@ class OptionsSortable(Options):
     return self.get(True)
 
   @preventOnFilter.setter
-  def preventOnFilter(self, bool):
-    self.set(bool)
+  def preventOnFilter(self, flag: bool):
+    self.set(flag)
 
   @property
   def draggable(self):
@@ -255,7 +255,7 @@ class OptionsSortable(Options):
     return self.get("sortable-ghost")
 
   @ghostClass.setter
-  def ghostClass(self, val):
+  def ghostClass(self, val: str):
     self.set(val)
 
   @property
@@ -272,7 +272,7 @@ class OptionsSortable(Options):
     return self.get("sortable-chosen")
 
   @chosenClass.setter
-  def chosenClass(self, val):
+  def chosenClass(self, val: str):
     self.set(val)
 
   @property
@@ -289,7 +289,7 @@ class OptionsSortable(Options):
     return self.get("sortable-drag")
 
   @dragClass.setter
-  def dragClass(self, val):
+  def dragClass(self, val: str):
     self.set(val)
 
   @property
@@ -348,7 +348,8 @@ class OptionsSortable(Options):
     """
     Description:
     ------------
-    Direction that the Sortable should sort in. Can be set to 'vertical', 'horizontal', or a function, which will be called whenever a target is dragged over.
+    Direction that the Sortable should sort in. Can be set to 'vertical', 'horizontal', or a function,
+    which will be called whenever a target is dragged over.
     Must return 'vertical' or 'horizontal'.
 
     Related Pages:
@@ -375,7 +376,7 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @forceFallback.setter
-  def forceFallback(self, val):
+  def forceFallback(self, val: bool):
     self.set(val)
 
   @property
@@ -443,8 +444,8 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @dragoverBubble.setter
-  def dragoverBubble(self, bool):
-    self.set(bool)
+  def dragoverBubble(self, flag: bool):
+    self.set(flag)
 
   @property
   def removeCloneOnHide(self):
@@ -460,8 +461,8 @@ class OptionsSortable(Options):
     return self.get(True)
 
   @removeCloneOnHide.setter
-  def removeCloneOnHide(self, bool):
-    self.set(bool)
+  def removeCloneOnHide(self, flag: bool):
+    self.set(flag)
 
   @property
   def emptyInsertThreshold(self):
@@ -477,6 +478,6 @@ class OptionsSortable(Options):
     return self.get(5)
 
   @emptyInsertThreshold.setter
-  def emptyInsertThreshold(self, bool):
-    self.set(bool)
+  def emptyInsertThreshold(self, flag: bool):
+    self.set(flag)
 

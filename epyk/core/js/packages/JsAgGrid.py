@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from typing import Any
+from epyk.core.py import primitives
 from epyk.core.js.packages import JsPackage
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -9,9 +10,9 @@ from epyk.core.js.primitives import JsObjects
 
 class ColumnApi:
 
-  def __init__(self, report, varId):
-    self.varId = varId
-    self._report = report
+  def __init__(self, page: primitives.PageModel, js_code: str):
+    self.varId = js_code
+    self.page = page
 
   def sizeColumnsToFit(self, width):
     """
@@ -66,7 +67,7 @@ class ColumnApi:
     """
     Description:
     -----------
-    Gets the state of the columns. Typically used when saving column state.
+    Gets the state of the columns. It is used when saving column state.
 
     Related Pages:
 
@@ -75,7 +76,7 @@ class ColumnApi:
     """
     return JsObjects.JsVoid("%s.getColumnState()" % self.varId)
 
-  def setColumnState(self, columnState):
+  def setColumnState(self, column_state):
     """
     Description:
     -----------
@@ -86,7 +87,7 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    return JsObjects.JsVoid("%s.setColumnState(%s)" % (self.varId, JsUtils.jsConvertData(columnState, None)))
+    return JsObjects.JsVoid("%s.setColumnState(%s)" % (self.varId, JsUtils.jsConvertData(column_state, None)))
 
   def resetColumnState(self):
     """
@@ -140,7 +141,7 @@ class ColumnApi:
     """
     return JsObjects.JsVoid("%s.isPinningRight()" % self.varId)
 
-  def setColumnVisible(self, colKey, visible):
+  def setColumnVisible(self, col_name, visible):
     """
     Description:
     -----------
@@ -151,11 +152,11 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKey = JsUtils.jsConvertData(colKey, None)
+    col_name = JsUtils.jsConvertData(col_name, None)
     visible = JsUtils.jsConvertData(visible, None)
-    return JsObjects.JsVoid("%s.setColumnVisible(%s. %s)" % (self.varId, colKey, visible))
+    return JsObjects.JsVoid("%s.setColumnVisible(%s. %s)" % (self.varId, col_name, visible))
 
-  def setColumnsVisible(self, colKeys, visible):
+  def setColumnsVisible(self, col_names, visible):
     """
     Description:
     -----------
@@ -166,11 +167,11 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKeys = JsUtils.jsConvertData(colKeys, None)
+    col_names = JsUtils.jsConvertData(col_names, None)
     visible = JsUtils.jsConvertData(visible, None)
-    return JsObjects.JsVoid("%s.setColumnsVisible(%s. %s)" % (self.varId, colKeys, visible))
+    return JsObjects.JsVoid("%s.setColumnsVisible(%s. %s)" % (self.varId, col_names, visible))
 
-  def setColumnPinned(self, colKey, pinned):
+  def setColumnPinned(self, col_name, pinned):
     """
     Description:
     -----------
@@ -181,11 +182,11 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKey = JsUtils.jsConvertData(colKey, None)
+    col_name = JsUtils.jsConvertData(col_name, None)
     pinned = JsUtils.jsConvertData(pinned, None)
-    return JsObjects.JsVoid("%s.setColumnPinned(%s. %s)" % (self.varId, colKey, pinned))
+    return JsObjects.JsVoid("%s.setColumnPinned(%s. %s)" % (self.varId, col_name, pinned))
 
-  def setColumnsPinned(self, colKeys, pinned):
+  def setColumnsPinned(self, col_names, pinned):
     """
     Description:
     -----------
@@ -196,9 +197,9 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    colKeys = JsUtils.jsConvertData(colKeys, None)
+    col_names = JsUtils.jsConvertData(col_names, None)
     pinned = JsUtils.jsConvertData(pinned, None)
-    return JsObjects.JsVoid("%s.setColumnsPinned(%s. %s)" % (self.varId, colKeys, pinned))
+    return JsObjects.JsVoid("%s.setColumnsPinned(%s. %s)" % (self.varId, col_names, pinned))
 
   def getColumnGroupState(self):
     """
@@ -213,7 +214,7 @@ class ColumnApi:
     """
     return JsObjects.JsVoid("%s.getColumnGroupState()" % self.varId)
 
-  def autoSizeColumn(self, colKey):
+  def autoSizeColumn(self, col_name):
     """
     Description:
     -----------
@@ -224,9 +225,9 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    return JsObjects.JsVoid("%s.autoSizeColumn(%s)" % (self.varId, JsUtils.jsConvertData(colKey, None)))
+    return JsObjects.JsVoid("%s.autoSizeColumn(%s)" % (self.varId, JsUtils.jsConvertData(col_name, None)))
 
-  def autoSizeColumns(self, colKeys):
+  def autoSizeColumns(self, col_names):
     """
     Description:
     -----------
@@ -237,7 +238,7 @@ class ColumnApi:
       https://www.ag-grid.com/javascript-grid-column-api/
 
     """
-    return JsObjects.JsVoid("%s.autoSizeColumns(%s)" % (self.varId, JsUtils.jsConvertData(colKeys, None)))
+    return JsObjects.JsVoid("%s.autoSizeColumns(%s)" % (self.varId, JsUtils.jsConvertData(col_names, None)))
 
   def getDisplayNameForColumn(self, name):
     """
@@ -324,7 +325,7 @@ class ColumnApi:
     """
     return JsObjects.JsVoid("%s.getAllDisplayedVirtualColumns()" % self.varId)
 
-  def moveColumn(self, colKey, toIndex):
+  def moveColumn(self, col_name, to_index):
     """
     Description:
     -----------
@@ -337,14 +338,14 @@ class ColumnApi:
 
     Attributes:
     ----------
-    :param colKey:
-    :param toIndex:
+    :param col_name:
+    :param to_index:
     """
-    colKey = JsUtils.jsConvertData(colKey, None)
-    toIndex = JsUtils.jsConvertData(toIndex, None)
-    return JsObjects.JsVoid("%s.moveColumn(%s, %s)" % (self.varId, colKey, toIndex))
+    col_name = JsUtils.jsConvertData(col_name, None)
+    to_index = JsUtils.jsConvertData(to_index, None)
+    return JsObjects.JsVoid("%s.moveColumn(%s, %s)" % (self.varId, col_name, to_index))
 
-  def moveColumns(self, colKeys, toIndex):
+  def moveColumns(self, col_names, to_index):
     """
     Description:
     -----------
@@ -357,14 +358,14 @@ class ColumnApi:
 
     Attributes:
     ----------
-    :param colKeys:
-    :param toIndex:
+    :param col_names:
+    :param to_index:
     """
-    colKeys = JsUtils.jsConvertData(colKeys, None)
-    toIndex = JsUtils.jsConvertData(toIndex, None)
-    return JsObjects.JsVoid("%s.moveColumns(%s, %s)" % (self.varId, colKeys, toIndex))
+    col_names = JsUtils.jsConvertData(col_names, None)
+    to_index = JsUtils.jsConvertData(to_index, None)
+    return JsObjects.JsVoid("%s.moveColumns(%s, %s)" % (self.varId, col_names, to_index))
 
-  def setColumnAggFunc(self, column, aggFunc):
+  def setColumnAggFunc(self, column, agg_func):
     """
     Description:
     -----------
@@ -377,13 +378,13 @@ class ColumnApi:
     Attributes:
     ----------
     :param column:
-    :param aggFunc:
+    :param agg_func:
     """
     column = JsUtils.jsConvertData(column, None)
-    aggFunc = JsUtils.jsConvertData(aggFunc, None)
-    return JsObjects.JsVoid("%s.setColumnAggFunc(%s, %s)" % (self.varId, column, aggFunc))
+    agg_func = JsUtils.jsConvertData(agg_func, None)
+    return JsObjects.JsVoid("%s.setColumnAggFunc(%s, %s)" % (self.varId, column, agg_func))
 
-  def setColumnWidth(self, colKey, newWidth, finished=True):
+  def setColumnWidth(self, col_name, new_width, finished=True):
     """
     Description:
     -----------
@@ -396,16 +397,16 @@ class ColumnApi:
 
     Attributes:
     ----------
-    :param colKey:
-    :param newWidth:
+    :param col_name:
+    :param new_width:
     :param finished:
     """
-    colKey = JsUtils.jsConvertData(colKey, None)
-    newWidth = JsUtils.jsConvertData(newWidth, None)
+    col_name = JsUtils.jsConvertData(col_name, None)
+    new_width = JsUtils.jsConvertData(new_width, None)
     finished = JsUtils.jsConvertData(finished, None)
-    return JsObjects.JsVoid("%s.setColumnWidth(%s, %s, %s)" % (self.varId, colKey, newWidth, finished))
+    return JsObjects.JsVoid("%s.setColumnWidth(%s, %s, %s)" % (self.varId, col_name, new_width, finished))
 
-  def setColumnWidths(self, columnWidths, finished=True):
+  def setColumnWidths(self, column_widths, finished=True):
     """
     Description:
     -----------
@@ -418,12 +419,12 @@ class ColumnApi:
 
     Attributes:
     ----------
-    :param columnWidths:
+    :param column_widths:
     :param finished:
     """
-    columnWidths = JsUtils.jsConvertData(columnWidths, None)
+    column_widths = JsUtils.jsConvertData(column_widths, None)
     finished = JsUtils.jsConvertData(finished, None)
-    return JsObjects.JsVoid("%s.setColumnWidth(%s, %s)" % (self.varId, columnWidths, finished))
+    return JsObjects.JsVoid("%s.setColumnWidth(%s, %s)" % (self.varId, column_widths, finished))
 
   def custom(self, func_nam, *argv):
     """
@@ -468,9 +469,9 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-column-definitions/
     """
-    return ColumnApi(self.src, "%s.columnApi" % self.varId)
+    return ColumnApi(self.page, "%s.columnApi" % self.varId)
 
-  def setColumnDefs(self, colDefs):
+  def setColumnDefs(self, col_defs: Any):
     """
     Description:
     -----------
@@ -482,9 +483,9 @@ class AgGrid(JsPackage):
 
     Attributes:
     ----------
-    :param colDefs:
+    :param col_defs:
     """
-    return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(colDefs, None)))
+    return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
 
   def getColumnDefs(self):
     """
@@ -508,7 +509,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
 
-		Attributes:
+    Attributes:
     ----------
     :param rows:
     """
@@ -619,7 +620,7 @@ class AgGrid(JsPackage):
 
     Attributes:
     ----------
-    :param columns:
+    :param column:
     """
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {
       'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
@@ -809,7 +810,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.refreshHeader(%s)" % (self.varId))
+    return JsObjects.JsVoid("%s.api.refreshHeader()" % self.varId)
 
   def flashCells(self, params):
     """
@@ -834,7 +835,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.clearFocusedCell()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.clearFocusedCell()" % self.varId)
 
   def tabToNextCell(self):
     """
@@ -846,7 +847,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.tabToNextCell()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.tabToNextCell()" % self.varId)
 
   def tabToPreviousCell(self):
     """
@@ -858,7 +859,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.tabToPreviousCell()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.tabToPreviousCell()" % self.varId)
 
   def showLoadingOverlay(self):
     """
@@ -870,7 +871,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.showLoadingOverlay()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.showLoadingOverlay()" % self.varId)
 
   def showNoRowsOverlay(self):
     """
@@ -882,7 +883,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.showNoRowsOverlay()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.showNoRowsOverlay()" % self.varId)
 
   def hideOverlay(self):
     """
@@ -894,7 +895,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.hideOverlay()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.hideOverlay()" % self.varId)
 
   def destroy(self):
     """
@@ -906,7 +907,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.destroy()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.destroy()" % self.varId)
 
   def resetRowHeights(self):
     """
@@ -918,7 +919,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.resetRowHeights()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.resetRowHeights()" % self.varId)
 
   def paginationIsLastPageFound(self):
     """
@@ -932,9 +933,9 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.paginationIsLastPageFound()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.paginationIsLastPageFound()" % self.varId)
 
-  def copySelectedRangeToClipboard(self, includeHeaders):
+  def copySelectedRangeToClipboard(self, include_headers):
     """
     Description:
     -----------
@@ -944,8 +945,8 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    includeHeaders = JsUtils.jsConvertData(includeHeaders, None)
-    return JsObjects.JsVoid("%s.api.copySelectedRangeToClipboard(%s)" % (self.varId, includeHeaders))
+    include_headers = JsUtils.jsConvertData(include_headers, None)
+    return JsObjects.JsVoid("%s.api.copySelectedRangeToClipboard(%s)" % (self.varId, include_headers))
 
   def copySelectedRangeDown(self):
     """
@@ -969,9 +970,9 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.paginationGetPageSize()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.paginationGetPageSize()" % self.varId)
 
-  def paginationSetPageSize(self, newPageSize):
+  def paginationSetPageSize(self, new_page_size):
     """
     Description:
     -----------
@@ -981,8 +982,8 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    newPageSize = JsUtils.jsConvertData(newPageSize, None)
-    return JsObjects.JsVoid("%s.api.paginationSetPageSize(%s)" % (self.varId, newPageSize))
+    new_page_size = JsUtils.jsConvertData(new_page_size, None)
+    return JsObjects.JsVoid("%s.api.paginationSetPageSize(%s)" % (self.varId, new_page_size))
 
   def paginationGetCurrentPage(self):
     """
@@ -994,7 +995,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.paginationGetCurrentPage()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.paginationGetCurrentPage()" % self.varId)
 
   def paginationGetTotalPages(self):
     """
@@ -1006,7 +1007,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.paginationGetTotalPages()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.paginationGetTotalPages()" % self.varId)
 
   def paginationGetRowCount(self):
     """
@@ -1018,9 +1019,9 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.paginationGetRowCount()" % (self.varId))
+    return JsObjects.JsVoid("%s.api.paginationGetRowCount()" % self.varId)
 
-  def paginationGoToPage(self, pageNumber):
+  def paginationGoToPage(self, page_number):
     """
     Description:
     -----------
@@ -1030,8 +1031,8 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    pageNumber = JsUtils.jsConvertData(pageNumber, None)
-    return JsObjects.JsVoid("%s.api.paginationGoToPage(%s)" % (self.varId, pageNumber))
+    page_number = JsUtils.jsConvertData(page_number, None)
+    return JsObjects.JsVoid("%s.api.paginationGoToPage(%s)" % (self.varId, page_number))
 
   def paginationGoToNextPage(self):
     """

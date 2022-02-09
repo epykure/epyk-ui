@@ -1,8 +1,5 @@
-"""
-Related Pages:
-
-		https://www.w3schools.com/icons/fontawesome_icons_webapp.asp
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 ICON_ADDRESS_BOOK = 'fa fa-address-book'
 ICON_ADDRESS_BOOK_O = 'fa fa-address-book-o'

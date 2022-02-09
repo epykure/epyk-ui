@@ -11,9 +11,13 @@ class KeyTable(Options):
   @property
   def blurable(self):
     """
+    Description:
+    -----------
     Allow KeyTable's focus to be blurred (removed) from a table.
 
-    https://datatables.net/reference/option/keys.blurable
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.blurable
     """
     return self._config_get()
 
@@ -24,9 +28,13 @@ class KeyTable(Options):
   @property
   def className(self):
     """
+    Description:
+    -----------
     Set the class name used for the focused cell.
 
-    https://datatables.net/reference/option/keys.className
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.className
     """
     return self._config_get()
 
@@ -37,9 +45,13 @@ class KeyTable(Options):
   @property
   def clipboard(self):
     """
+    Description:
+    -----------
     Enable / disable clipboard interaction with KeyTable.
 
-    https://datatables.net/reference/option/keys.clipboard
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.clipboard
     """
     return self._config_get()
 
@@ -50,9 +62,13 @@ class KeyTable(Options):
   @property
   def clipboardOrthogonal(self):
     """
+    Description:
+    -----------
     Set the orthogonal data to copy to clipboard.
 
-    https://datatables.net/reference/option/keys.clipboardOrthogonal
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.clipboardOrthogonal
     """
     return self._config_get()
 
@@ -63,9 +79,13 @@ class KeyTable(Options):
   @property
   def columns(self):
     """
+    Description:
+    -----------
     Select the columns that can gain focus.
 
-    https://datatables.net/reference/option/keys.columns
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.columns
     """
     return self._config_get()
 
@@ -76,9 +96,13 @@ class KeyTable(Options):
   @property
   def focus(self):
     """
+    Description:
+    -----------
     Cell to receive initial focus in the table.
 
-    https://datatables.net/reference/option/keys.focus
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.focus
     """
     return self._config_get()
 
@@ -89,9 +113,13 @@ class KeyTable(Options):
   @property
   def keys(self):
     """
+    Description:
+    -----------
     Limit the keys that KeyTable will listen for and take action on
 
-    https://datatables.net/reference/option/keys.keys
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.keys
     """
     return self._config_get()
 
@@ -102,9 +130,13 @@ class KeyTable(Options):
   @property
   def tabIndex(self):
     """
+    Description:
+    -----------
     Set the table's tab index for when it will receive focus.
 
-    https://datatables.net/reference/option/keys.tabIndex
+    Related Pages:
+
+      https://datatables.net/reference/option/keys.tabIndex
     """
     return self._config_get()
 

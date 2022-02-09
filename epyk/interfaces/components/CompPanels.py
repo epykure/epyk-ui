@@ -149,7 +149,7 @@ class Panels:
       'background': html_tabs.page.theme.colors[-1]}
     html_tabs.style.css.overflow_x = "auto"
     html_tabs.tabs_container.style.css.text_align = align
-    html_tabs.tabs_container.style.css.border_bottom = "1px solid %s" % html_tabs._report.theme.colors[-1]
+    html_tabs.tabs_container.style.css.border_bottom = "1px solid %s" % html_tabs.page.theme.colors[-1]
     html_tabs.style.css.white_space = "nowrap"
     html.Html.set_component_skin(html_tabs)
     return html_tabs

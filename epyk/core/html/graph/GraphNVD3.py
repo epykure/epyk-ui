@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js import JsUtils
@@ -15,16 +16,16 @@ class Chart(Html.Html):
   requirements = ('nvd3', )
   _option_cls = OptChart.OptionsChart
 
-  def __init__(self,  report, width, height, options, html_code, profile):
+  def __init__(self,  page: primitives.PageModel, width, height, options, html_code, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._d3, self.html_items, self._datasets, self._labels = None, [], [], None
     self.style.css.margin_left = 10
     self.style.css.margin_right = 10
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartNvd3.OptionsChartSharedNVD3:
     """
     Description:
     -----------
@@ -39,7 +40,7 @@ class Chart(Html.Html):
     return OptChartNvd3.OptionsChartSharedNVD3(self)
 
   @property
-  def options(self):
+  def options(self) -> OptChart.OptionsChart:
     """
     Description:
     -----------
@@ -71,7 +72,7 @@ class Chart(Html.Html):
     """
     return self._datasets[-1]
 
-  def traces(self, i=None):
+  def traces(self, i: int = None):
     """
     Description:
     ------------
@@ -81,7 +82,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. Optional. An Index number.
+    :param int i: Optional. An Index number.
     """
     if i is None:
       return self._datasets[-1]
@@ -103,7 +104,7 @@ class Chart(Html.Html):
     :param source_event: String. Optional. The source target for the event.
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    raise Exception("Not implemented for this chart !")
+    raise NotImplementedError()
 
   def add_trace(self, data, name=""):
     """
@@ -151,7 +152,7 @@ class Chart(Html.Html):
     return self.add_trace([{"x": l, "y": data[i]} for i, l in enumerate(self._labels)], name=label)
 
   @property
-  def d3(self):
+  def d3(self) -> JsD3.D3Select:
     """
     Description:
     ------------
@@ -162,10 +163,11 @@ class Chart(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
+      self._d3 = JsD3.D3Select(page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False,
+                               component=self)
     return self._d3
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """
     Description:
     -----------
@@ -173,8 +175,6 @@ class Chart(Html.Html):
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
-
-    Usage::
 
     Attributes:
     ----------
@@ -237,7 +237,7 @@ class Chart(Html.Html):
       int(self.style.css.margin_left[:-2]) + int(self.style.css.margin_right[:-2]))
     self.page.properties.js.add_builders(self.build())
     str_items = "".join([h.html() for h in self.html_items])
-    return '%s<svg %s></svg>' % (str_items, self.get_attrs(pyClassNames=self.style.get_classes()))
+    return '%s<svg %s></svg>' % (str_items, self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class ChartLine(Chart):
@@ -253,7 +253,7 @@ class ChartLine(Chart):
     :rtype: JsNvd3.JsNvd3Line
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Line(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Line(page=self.page, setVar=self.chartId)
     return self._dom
 
   _js__builder__ = '''

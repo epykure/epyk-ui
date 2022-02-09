@@ -17,6 +17,8 @@ class DomModel:
   varId = None
   events = None
   isInViewPort = None
+  classList = None
+  jquery = None
 
   def getAttribute(self, value):
     ...
@@ -38,6 +40,8 @@ class HtmlModel:
   htmlCode = None
   style = None
   name = None
+  options = None
+  _browser_data = None
 
   @property
   @abstractmethod
@@ -57,7 +61,11 @@ class HtmlModel:
   def html(self):
     ...
 
+  def set_attrs(self):
+    ...
+
   jsImports = None
+  cssImport = None
   _browser_data = None
   attr = None
   page = None
@@ -95,3 +103,7 @@ class PageModel:
   @abstractmethod
   def style(self):
     ...
+
+
+class CssClsModel:
+   classname = None

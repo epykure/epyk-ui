@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html.options import OptTableAgGrid
 
@@ -17,14 +17,14 @@ class Table(Html.Html):
   requirements = ('ag-grid-community', )
   _option_cls = OptTableAgGrid.TableConfig
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
     data, columns, self.__config = [], [], None
-    super(Table, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Table, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     if records is not None:
       self.options.data = records
 
-  def headers(self, cols_def):
+  def headers(self, cols_def: dict):
     """
     Description:
     -----------
@@ -33,14 +33,14 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param cols_def:
+    :param dict cols_def:
     """
     for col in self.config['columnDefs']:
       if col['colId'] in cols_def:
         col.update(cols_def[col['colId']])
 
   @property
-  def style(self):
+  def style(self) -> GrpClsTable.Aggrid:
     """
     Description:
     -----------
@@ -54,7 +54,7 @@ class Table(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptTableAgGrid.TableConfig:
     """
     Description:
     ------------
@@ -65,7 +65,7 @@ class Table(Html.Html):
     return super().options
 
   @property
-  def config(self):
+  def config(self) -> OptTableAgGrid.TableConfig:
     """
     Description:
     -----------
@@ -75,11 +75,11 @@ class Table(Html.Html):
     :rtype: OptTableAgGrid.TableConfig
     """
     if self.__config is None:
-      self.__config = OptTableAgGrid.TableConfig(self._report)
+      self.__config = OptTableAgGrid.TableConfig(self.page)
     return self.__config
 
   @property
-  def js(self):
+  def js(self) -> JsAgGrid.AgGrid:
     """
     Description:
     -----------
@@ -92,7 +92,7 @@ class Table(Html.Html):
     :rtype: JsAgGrid.AgGrid
     """
     if self._js is None:
-      self._js = JsAgGrid.AgGrid(self._report, selector=self.tableId, setVar=False, parent=self)
+      self._js = JsAgGrid.AgGrid(self.page, selector=self.tableId, set_var=False, parent=self)
     return self._js
 
   def add_column(self, field, title=None):
@@ -146,4 +146,4 @@ class Table(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))

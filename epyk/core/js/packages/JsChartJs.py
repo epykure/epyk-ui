@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from typing import Union, Optional, List
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import DataAttrs
@@ -70,7 +71,7 @@ class Config(DataAttrs):
   @easing.setter
   def easing(self, value):
     if value not in EASING_OPTIONS:
-      raise Exception("%s is not allowed" % value)
+      raise ValueError("%s is not allowed" % value)
 
     self._attrs["easing"] = value
 
@@ -78,20 +79,22 @@ class Config(DataAttrs):
 class ChartJs(JsPackage):
   lib_alias = {'js': 'chart.js'}
 
-  class __internal(object):
-    jqId, htmlCode, jsImports, cssImport = 'chart', '', set([]), set([])
-
-  def __init__(self, htmlCode=None, config=None, src=None, varName=None, selector=None, setVar=False):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, html_code: str = None, config=None, component: primitives.HtmlModel = None, js_code: str = None,
+               selector: str = None, set_var: bool = False, page: primitives.PageModel = None):
+    self.component = component
+    if component is None:
+      self.page = page
+    else:
+      self.page = component.page
     if selector is None:
-      self._selector = 'new Chart(%s.getContext("2d"), %s)' % (htmlCode, config.toStr())
+      self._selector = 'new Chart(%s.getContext("2d"), %s)' % (html_code, config.toStr())
     else:
       self._selector = selector
-    self.varName, self.setVar = varName or self._selector, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
+    self.varName, self.setVar = js_code or self._selector, set_var
+    self.component.jsImports.add(self.lib_alias['js'])
     self._js = []
 
-  def getElementsAtEvent(self, jsFncs, profile=False):
+  def getElementsAtEvent(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     -----------
@@ -100,19 +103,20 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if self.src.page.imports.pkgs.chart_js.version:
-      return self.getElementsAtEventForMode(jsFncs, profile=profile)
+    if self.page.imports.pkgs.chart_js.version:
+      return self.getElementsAtEventForMode(js_funcs, profile=profile)
     else:
-      if not isinstance(jsFncs, list):
-        jsFncs = [jsFncs]
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
       return JsObjects.JsArray.JsArray("%s.getElementsAtEvent(%s)" % (
-        self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)), isPyData=False)
+        self.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), is_py_data=False)
 
   @JsUtils.fromVersion({'chart.js': '3.0.0'})
-  def getElementsAtEventForMode(self, jsFncs, mode="nearest", options=None, useFinalPosition=True, profile=False):
+  def getElementsAtEventForMode(self, js_funcs: Union[list, str], mode: str = "nearest", options: dict = None,
+                                use_final_position: bool = True, profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     -----------
@@ -126,23 +130,23 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
-    :param mode:
-    :param options:
-    :param useFinalPosition:
-    :param profile:
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param str mode:
+    :param dict options:
+    :param bool use_final_position:
+    :param Optional[Union[dict, bool]] profile:
     """
     mode = JsUtils.jsConvertData(mode, None)
     options = options or {"intersect": True}
     options = JsUtils.jsConvertData(options, None)
-    useFinalPosition = JsUtils.jsConvertData(useFinalPosition, None)
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    use_final_position = JsUtils.jsConvertData(use_final_position, None)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return JsObjects.JsArray.JsArray("%s.getElementsAtEventForMode(%s, %s, %s, %s)" % (
-      self.varName, JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), mode, options, useFinalPosition),
-                                     isPyData=False)
+      self.varName, JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), mode, options, use_final_position), is_py_data=False)
 
-  def add(self, point, values):
+  def add(self, point: Union[str, primitives.JsDataModel], values: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -172,7 +176,7 @@ class ChartJs(JsPackage):
           dataset.data.push(%(values)s[dataset.label])})}''' % {
       'varName': self.varName, 'point': point, 'values': values})
 
-  def remove(self, point=None, seriesNames=None):
+  def remove(self, point=None, series_names: Union[list, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -187,10 +191,10 @@ class ChartJs(JsPackage):
     Attributes:
     ----------
     :param point: Object. Optional. The point to be removed on the series. If none the last one will be removed.
-    :param seriesNames: List. Optional. The series name.
+    :param series_names: List. Optional. The series name.
     """
     point = JsUtils.jsConvertData(point, None)
-    if seriesNames is None:
+    if series_names is None:
       if point is None:
         return JsObjects.JsVoid('''
           %(varName)s.data.labels.pop();
@@ -203,14 +207,14 @@ class ChartJs(JsPackage):
           %(varName)s.data.datasets.forEach(function(dataset){ dataset.data.splice(index, 1) })
         } ''' % {'varName': self.varName, 'point': point})
 
-    seriesNames = JsUtils.jsConvertData(seriesNames, None)
+    series_names = JsUtils.jsConvertData(series_names, None)
     return JsObjects.JsVoid('''
         var index = %(varName)s.data.labels.indexOf(%(point)s);
         if(index >= 0){
           %(varName)s.data.datasets.forEach(function(dataset){
             if (%(seriesNames)s.includes(dataset.label)){
               dataset.data[index] = null}})} ''' % {
-      'varName': self.varName, 'point': point, 'seriesNames': seriesNames})
+      'varName': self.varName, 'point': point, 'seriesNames': series_names})
 
   def empty(self):
     """
@@ -222,7 +226,7 @@ class ChartJs(JsPackage):
     return JsObjects.JsVoid(
       "%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
-  def data(self, datasets, options=None, profile=None):
+  def data(self, datasets: dict, options: dict = None, profile=None):
     """
     Description:
     -----------
@@ -234,14 +238,14 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param datasets: Dictionary of dictionary. The full datasets object expected by ChartJs.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param dict datasets: The full datasets object expected by ChartJs.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    return self.src.build(
+    return self.component.build(
       JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
-  def load(self, name, points, options=None, color=""):
+  def load(self, name: str, points: List[dict], options: dict = None, color: str = ""):
     """
     Description:
     -----------
@@ -257,15 +261,15 @@ class ChartJs(JsPackage):
     Attributes:
     ----------
     :param name: String. The series name.
-    :param points: List of dictionaries. The list of points ({x: , y: }) to be added to the chart.
-    :param options: Dictionary. Optional. Specific Python options available for this series.
-    :param color: String. Optional. The color code for the chart.
+    :param List[dict] points: The list of points ({x: , y: }) to be added to the chart.
+    :param dict options: Optional. Specific Python options available for this series.
+    :param str color: Optional. The color code for the chart.
     """
     name = JsUtils.jsConvertData(name, None)
     points = JsUtils.jsConvertData(points, None)
-    current_options = dict(self.src.options.commons)
+    current_options = dict(self.component.options.commons)
     current_options.update(options or {})
-    options = self.src.options.config_js({"commons": current_options})
+    options = self.component.options.config_js({"commons": current_options})
     return JsObjects.JsVoid('''
       var values = []; var index= -1; var %(htmlCode)s_options = %(options)s;
       %(varName)s.data.datasets.forEach(function(d, i){if(d.label == %(name)s){index = i}});
@@ -279,9 +283,9 @@ class ChartJs(JsPackage):
         if (%(htmlCode)s_options.commons.type == "line"){%(htmlCode)s_options.commons.fill = null};
         %(varName)s.data.datasets.push(Object.assign({label: %(name)s, data: %(points)s}, %(htmlCode)s_options.commons))
       }''' % {'varName': self.varName, 'name': name, 'points': points, "options": options.toStr(),
-              "htmlCode": self.src.htmlCode, "color": color})
+              "htmlCode": self.component.htmlCode, "color": color})
 
-  def unload(self, names=None):
+  def unload(self, names: list = None):
     """
     Description:
     -----------
@@ -295,7 +299,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param names: List. Optional. The series names to be removed from the chart. If none all series will be removed.
+    :param list names: Optional. The series names to be removed from the chart. If none all series will be removed.
     """
     if names is None:
       return JsObjects.JsVoid(
@@ -315,7 +319,7 @@ class ChartJs(JsPackage):
     -----------
     Return the series label.
     """
-    return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, isPyData=False)
+    return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, is_py_data=False)
 
   @property
   def content(self):
@@ -325,7 +329,7 @@ class ChartJs(JsPackage):
 
     """
     return JsObjects.JsObject.JsObject(
-      "%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, isPyData=False)
+      "%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, is_py_data=False)
 
   @property
   def value(self):
@@ -336,7 +340,7 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {'htmlCode': self.src.htmlCode, "chart": self.varName}, isPyData=False)
 
-  def update(self, config=None):
+  def update(self, config: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -348,7 +352,8 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param config: Dictionary. Optional. A config object can be provided with additional configuration for the process.
+    :param Union[dict, primitives.JsDataModel] config: Optional. A config object can be provided with additional
+    configuration for the process.
     """
     if config is None:
       return JsObjects.JsObject.JsObject("%s.update()" % self.toStr())
@@ -456,7 +461,7 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.generateLegend()" % self.toStr())
 
-  def getElementAtEvent(self, jsEvent):
+  def getElementAtEvent(self, event: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -469,14 +474,14 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsEvent: String. The javascript event.
+    :param Union[str, primitives.JsDataModel] event: The javascript event.
 
     :return: the first element at the event point.
     """
-    jsEvent = JsUtils.jsConvertData(jsEvent, None)
-    return JsObjects.JsObject.JsObject("%s.getElementAtEvent(%s)" % (self.toStr(), jsEvent))
+    event = JsUtils.jsConvertData(event, None)
+    return JsObjects.JsObject.JsObject("%s.getElementAtEvent(%s)" % (self.toStr(), event))
 
-  def getDatasetAtEvent(self, jsEvent):
+  def getDatasetAtEvent(self, event: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -488,14 +493,14 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param jsEvent: String. The javascript event.
+    :param Union[str, primitives.JsDataModel] event: The javascript event.
 
     :return: an array of elements
     """
-    jsEvent = JsUtils.jsConvertData(jsEvent, None)
-    return JsObjects.JsArray.JsArray("%s.getDatasetAtEvent(%s)" % (self.toStr(), jsEvent))
+    event = JsUtils.jsConvertData(event, None)
+    return JsObjects.JsArray.JsArray("%s.getDatasetAtEvent(%s)" % (self.toStr(), event))
 
-  def getDatasetMeta(self, index):
+  def getDatasetMeta(self, index: int):
     """
     Description:
     ------------
@@ -511,11 +516,11 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param index: Integer. The index value of the series.
+    :param int index: The index value of the series.
     """
     return JsObjects.JsObject.JsObject("%s.getDatasetMeta(%s)" % (self.toStr(), index))
 
-  def render(self, config=None):
+  def render(self, config: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -532,7 +537,7 @@ class ChartJs(JsPackage):
 
     Attributes:
     ----------
-    :param config: Dictionary. Optional. A python dictionary as config object.
+    :param Union[dict, primitives.JsDataModel] config: Optional. A python dictionary as config object.
     """
     if config is None:
       return JsObjects.JsObject.JsObject("%s.render()" % self.toStr())
@@ -582,7 +587,7 @@ class ChartJs(JsPackage):
     :return: Return the Javascript String.
     """
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     if self.setVar:
       if len(self._js) > 0:
@@ -603,26 +608,26 @@ class ChartJs(JsPackage):
 
 class ChartJsOptTicks(DataAttrs):
 
-  def beginAtZero(self, flag):
+  def beginAtZero(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag: Boolean. A flag to activate the start to zero of the series.
+    :param Union[bool, primitives.JsDataModel] flag: A flag to activate the start to zero of the series.
     """
     self._attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def display(self, flag):
+  def display(self, flag: Union[bool, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag: Boolean. Show the series.
+    :param Union[bool, primitives.JsDataModel] flag: Show the series.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
@@ -630,7 +635,7 @@ class ChartJsOptTicks(DataAttrs):
 
 class ChartJsOptGridLines(DataAttrs):
 
-  def display(self, flag=False):
+  def display(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     ------------
@@ -638,12 +643,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def circular(self, flag=False):
+  def circular(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     ------------
@@ -651,12 +656,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["circular"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def color(self, colors=""):
+  def color(self, colors: Union[str, primitives.JsDataModel] = ""):
     """
     Description:
     ------------
@@ -666,24 +671,24 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param colors: String. Optional. The color code.
+    :param Union[str, primitives.JsDataModel] colors: Optional. The color code.
     """
     self._attrs["color"] = JsUtils.jsConvertData(colors, None)
     return self
 
-  def borderDash(self, narray):
+  def borderDash(self, narray: Union[list, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param narray: List.
+    :param Union[list, primitives.JsDataModel] narray:
     """
     self._attrs["borderDash"] = JsUtils.jsConvertData(narray, None)
     return self
 
-  def borderDashOffset(self, n=0.0):
+  def borderDashOffset(self, n: Union[float, primitives.JsDataModel] = 0.0):
     """
     Description:
     ------------
@@ -691,12 +696,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param n: Number. Optional. The dash offset number.
+    :param Union[float, primitives.JsDataModel] n: Optional. The dash offset number.
     """
     self._attrs["borderDashOffset"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def lineWidth(self, num):
+  def lineWidth(self, num: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -704,12 +709,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param num: Number. The line width.
+    :param Union[float, primitives.JsDataModel] num: The line width.
     """
     self._attrs["lineWidth"] = JsUtils.jsConvertData(num, None)
     return self
 
-  def drawBorder(self, flag=True):
+  def drawBorder(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -717,12 +722,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. Flag to draw the border.
+    :param Union[bool, primitives.JsDataModel] flag: Optional. Flag to draw the border.
     """
     self._attrs["drawBorder"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def drawOnChartArea(self, flag=True):
+  def drawOnChartArea(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -731,12 +736,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["drawOnChartArea"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def drawTicks(self, flag=True):
+  def drawTicks(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -744,12 +749,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["drawTicks"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def tickMarkLength(self, n=10):
+  def tickMarkLength(self, n: Union[int, primitives.JsDataModel] = 10):
     """
     Description:
     ------------
@@ -757,12 +762,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param n: Integer. Optional.
+    :param Union[int, primitives.JsDataModel] n: Optional.
     """
     self._attrs["tickMarkLength"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def zeroLineWidth(self, n=1):
+  def zeroLineWidth(self, n: Union[int, primitives.JsDataModel] = 1):
     """
     Description:
     ------------
@@ -770,12 +775,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param n: Integer. Optional.
+    :param Union[int, primitives.JsDataModel] n: Optional.
     """
     self._attrs["zeroLineWidth"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def zeroLineColor(self, color="rgba(0, 0, 0, 0.25)"):
+  def zeroLineColor(self, color: Union[str, primitives.JsDataModel] = "rgba(0, 0, 0, 0.25)"):
     """
     Description:
     ------------
@@ -783,12 +788,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param color: String. Optional. The RGBA color code.
+    :param Union[str, primitives.JsDataModel] color: Optional. The RGBA color code.
     """
     self._attrs["zeroLineColor"] = JsUtils.jsConvertData(color, None)
     return self
 
-  def zeroLineBorderDash(self, narray):
+  def zeroLineBorderDash(self, narray: Union[list, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -796,12 +801,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param narray: List.
+    :param Union[list, primitives.JsDataModel] narray:
     """
     self._attrs["zeroLineBorderDash"] = JsUtils.jsConvertData(narray, None)
     return self
 
-  def zeroLineBorderDashOffset(self, n=0.0):
+  def zeroLineBorderDashOffset(self, n: Union[float, primitives.JsDataModel] = 0.0):
     """
     Description:
     ------------
@@ -809,12 +814,12 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param n: Number. Optional.
+    :param Union[float, primitives.JsDataModel] n: Optional.
     """
     self._attrs["zeroLineBorderDashOffset"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def offsetGridLines(self, flag=True):
+  def offsetGridLines(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -825,7 +830,7 @@ class ChartJsOptGridLines(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["offsetGridLines"] = JsUtils.jsConvertData(flag, None)
     return self
@@ -833,13 +838,13 @@ class ChartJsOptGridLines(DataAttrs):
 
 class ChartJsOptScale(DataAttrs):
 
-  def ticks(self):
+  def ticks(self) -> ChartJsOptTicks:
     if "ticks" not in self._attrs:
-      self._attrs["ticks"] = ChartJsOptTicks(self._report)
+      self._attrs["ticks"] = ChartJsOptTicks(self.page)
     return self._attrs["ticks"]
 
   @property
-  def gridLines(self):
+  def gridLines(self) -> ChartJsOptGridLines:
     """
     Description:
     ------------
@@ -847,16 +852,16 @@ class ChartJsOptScale(DataAttrs):
     :rtype: ChartJsOptGridLines
     """
     if "gridLines" not in self._attrs:
-      self._attrs["gridLines"] = ChartJsOptGridLines(self._report)
+      self._attrs["gridLines"] = ChartJsOptGridLines(self.page)
     return self._attrs["gridLines"]
 
-  def stacked(self, flag=False):
+  def stacked(self, flag: Union[bool, primitives.JsDataModel] = False):
     pass
 
 
 class ChartJsOptScaleBar(ChartJsOptScale):
 
-  def barPercentage(self, n=0.9):
+  def barPercentage(self, n: Union[float, primitives.JsDataModel] = 0.9):
     """
     Description:
     ------------
@@ -865,15 +870,15 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
     Attributes:
     ----------
-    :param n: Number. Optional.
+    :param Union[float, primitives.JsDataModel] n: Optional.
     """
     if n > 1:
-      raise Exception("n cannot exceed 1")
+      raise ValueError("n cannot exceed 1")
 
     self._attrs["barPercentage"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def categoryPercentage(self, n=0.8):
+  def categoryPercentage(self, n: Union[float, primitives.JsDataModel] = 0.8):
     """
     Description:
     ------------
@@ -881,12 +886,12 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
     Attributes:
     ----------
-    :param n: Number. Optional.
+    :param Union[float, primitives.JsDataModel] n: Optional.
     """
     self._attrs["categoryPercentage"] = JsUtils.jsConvertData(n, None)
     return self
 
-  def barThickness(self, width="flex"):
+  def barThickness(self, width: Union[str, primitives.JsDataModel] = "flex"):
     """
     Description:
     ------------
@@ -897,12 +902,12 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
     Attributes:
     ----------
-    :param width: String. Optional.
+    :param Union[str, primitives.JsDataModel] width: Optional.
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
     return self
 
-  def maxBarThickness(self, width):
+  def maxBarThickness(self, width: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -910,19 +915,19 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
     Attributes:
     ----------
-    :param width: A float
+    :param Union[float, primitives.JsDataModel] width: A float
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
     return self
 
-  def minBarLength(self, width):
+  def minBarLength(self, width: Union[float, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param width:
+    :param Union[float, primitives.JsDataModel] width:
     """
     self._attrs["minBarLength"] = JsUtils.jsConvertData(width, None)
     return self
@@ -1018,7 +1023,7 @@ class ChartJsOptPadding(DataAttrs):
 
 
 class OptionsLegend(DataAttrs):
-  def display(self, flag=True):
+  def display(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
@@ -1030,12 +1035,12 @@ class OptionsLegend(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
     return self
 
-  def position(self, location="top"):
+  def position(self, location: Union[str, primitives.JsDataModel] = "top"):
     """
     Description:
     ------------
@@ -1043,22 +1048,23 @@ class OptionsLegend(DataAttrs):
 
     Attributes:
     ----------
-    :param location: String. Optional.
+    :param Union[str, primitives.JsDataModel] location: Optional.
     """
     self._attrs["position"] = JsUtils.jsConvertData(location, None)
     return self
 
-  def fullWidth(self, flag=True):
+  def fullWidth(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
 
-  def onClick(self, callback, profile=False):
+  def onClick(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
+              profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -1066,13 +1072,14 @@ class OptionsLegend(DataAttrs):
 
     Attributes:
     ----------
-    :param callback: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[List[Union[str, primitives.JsDataModel]], str] callback: The Javascript functions
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     self._attrs["onClick"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
-  def onHover(self, callback, profile=False):
+  def onHover(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
+              profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -1080,13 +1087,14 @@ class OptionsLegend(DataAttrs):
 
     Attributes:
     ----------
-    :param callback: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[List[Union[str, primitives.JsDataModel]], str] callback: The Javascript functions
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     self._attrs["onHover"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
-  def onLeave(self, callback, profile=False):
+  def onLeave(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
+              profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     ------------
@@ -1094,12 +1102,12 @@ class OptionsLegend(DataAttrs):
     Attributes:
     ----------
     :param callback: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     self._attrs["onLeave"] = JsUtils.jsConvertFncs(callback, profile=profile)
     return self
 
-  def reverse(self, flag=False):
+  def reverse(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
     Description:
     ------------
@@ -1107,13 +1115,13 @@ class OptionsLegend(DataAttrs):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional.
+    :param Union[bool, primitives.JsDataModel] flag: Boolean. Optional.
     """
-    self._attrs["reverse"] = JsUtils.jsConvertFncs(flag)
+    self._attrs["reverse"] = JsUtils.jsConvertData(flag, None)
     return self
 
   @property
-  def labels(self):
+  def labels(self) -> ChartJsOptLabels:
     """
     Description:
     ------------
@@ -1121,7 +1129,7 @@ class OptionsLegend(DataAttrs):
     :rtype: ChartJsOptLabels
     """
     if 'labels' not in self._attrs:
-      self._attrs["labels"] = ChartJsOptLabels(self._report)
+      self._attrs["labels"] = ChartJsOptLabels(self.page)
     return self._attrs["labels"]
 
 
@@ -1241,8 +1249,8 @@ class OptionsTitle(DataAttrs):
 
 class Options(DataAttrs):
 
-  def __init__(self, report, attrs=None, options=None):
-    super(Options, self).__init__(report, attrs, options)
+  def __init__(self, page, attrs=None, options=None):
+    super(Options, self).__init__(page, attrs, options)
 
   def title(self):
     """
@@ -1251,7 +1259,7 @@ class Options(DataAttrs):
 
     """
     if self._attrs.get("title") is None:
-      self._attrs['title'] = OptionsTitle(self._report)
+      self._attrs['title'] = OptionsTitle(self.page)
     return self._attrs['title']
 
 
@@ -1340,26 +1348,26 @@ class DataSet(DataAttrs):
         color = Colors.getHexToRgb(self._attrs["backgroundColor"])
         self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
 
-  def set_style(self, backgroundColor=None, fillOpacity=None, borderWidth=None, borderColor=None):
+  def set_style(self, background_color=None, fill_opacity=None, border_width=None, border_color=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param backgroundColor: String. Optional. The background color code.
-    :param fillOpacity: Number. Optional. The opacity factor.
-    :param borderWidth: Number. Optional. The border width.
-    :param borderColor: String. Optional. The border color code.
+    :param background_color: String. Optional. The background color code.
+    :param fill_opacity: Number. Optional. The opacity factor.
+    :param border_width: Number. Optional. The border width.
+    :param border_color: String. Optional. The border color code.
     """
-    if backgroundColor is not None:
-      self.backgroundColor = backgroundColor
-    if fillOpacity is not None:
-      self.fillOpacity = fillOpacity
-    if borderWidth is not None:
-      self.borderWidth = borderWidth
-    if borderColor is not None:
-      self.borderColor = borderColor
+    if background_color is not None:
+      self.backgroundColor = background_color
+    if fill_opacity is not None:
+      self.fillOpacity = fill_opacity
+    if border_width is not None:
+      self.borderWidth = border_width
+    if border_color is not None:
+      self.borderColor = border_color
     return self
 
 
@@ -1467,26 +1475,26 @@ class DataSetPie(DataSet):
   def weight(self, val):
     self._attrs["weight"] = val
 
-  def set_style(self, backgroundColors=None, fillOpacity=None, borderWidth=None, borderColors=None):
+  def set_style(self, background_colors=None, fill_opacity=None, border_width=None, border_colors=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param backgroundColors: List. Optional.
-    :param fillOpacity: Number. Optional. The opacity factor.
-    :param borderWidth:
-    :param borderColors:
+    :param background_colors: List. Optional.
+    :param fill_opacity: Number. Optional. The opacity factor.
+    :param border_width:
+    :param border_colors:
     """
-    if backgroundColors is not None:
-      self.backgroundColor = backgroundColors
-    if fillOpacity is not None:
-      self.fillOpacity = fillOpacity
-    if borderWidth is not None:
-      self.borderWidth = borderWidth
-    if borderColors is not None:
-      self.borderColor = borderColors
+    if background_colors is not None:
+      self.backgroundColor = background_colors
+    if fill_opacity is not None:
+      self.fillOpacity = fill_opacity
+    if border_width is not None:
+      self.borderWidth = border_width
+    if border_colors is not None:
+      self.borderColor = border_colors
     return self
 
 
@@ -2019,26 +2027,26 @@ class DataSetScatterLine(DataSet):
   def yAxisID(self, val):
     self._attrs["yAxisID"] = val
 
-  def set_style(self, backgroundColor=None, fillOpacity=None, borderWidth=None, borderColor=None):
+  def set_style(self, background_color=None, fill_opacity=None, border_width=None, border_color=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param backgroundColor:
-    :param fillOpacity:
-    :param borderWidth:
-    :param borderColor:
+    :param background_color:
+    :param fill_opacity:
+    :param border_width:
+    :param border_color:
     """
-    if backgroundColor is not None:
-      self.backgroundColor = backgroundColor
-    if fillOpacity is not None:
-      self.fillOpacity = fillOpacity
-    if borderWidth is not None:
-      self.borderWidth = borderWidth
-    if borderColor is not None:
-      self.borderColor = borderColor
+    if background_color is not None:
+      self.backgroundColor = background_color
+    if fill_opacity is not None:
+      self.fillOpacity = fill_opacity
+    if border_width is not None:
+      self.borderWidth = border_width
+    if border_color is not None:
+      self.borderColor = border_color
     return self
 
 

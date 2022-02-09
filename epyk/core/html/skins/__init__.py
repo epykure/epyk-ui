@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.html.skins import Winter
 from epyk.core.html.skins import Movies
 from epyk.core.html.skins import Parties
@@ -11,24 +13,25 @@ from epyk.core.html.skins import Summer
 
 class Skins:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
 
-  def set(self, skin="", options=None, profile=None):
+  def set(self, skin: str = "", options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param skin: String. Optional. The skin name.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param str skin: Optional. The skin name.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
     if skin:
       getattr(self, skin.lower())(options=options, profile=profile)
 
-  def rains(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
+  def rains(self, width: tuple = (100, '%'), height: tuple = (100, '%'), options: dict = None,
+            profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -44,8 +47,8 @@ class Skins:
     ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | String. Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param Union[dict, bool] profile:. Optional. A flag to set the component performance storage.
     """
     component = Winter.Rains(self.page, width, height, "snow_skin", options, profile)
     component.style.css.z_index = -1

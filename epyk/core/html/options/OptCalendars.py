@@ -21,7 +21,7 @@ class OptionDays(Options):
     return self.get({})
 
   @style.setter
-  def style(self, css):
+  def style(self, css: dict):
     self.set(css)
 
   @property
@@ -41,7 +41,7 @@ class OptionDays(Options):
     return self.get(100)
 
   @unit.setter
-  def unit(self, num):
+  def unit(self, num: float):
     self.set(num)
 
   @property
@@ -60,7 +60,7 @@ class OptionDays(Options):
     return self.get({})
 
   @overload.setter
-  def overload(self, css_attrs):
+  def overload(self, css_attrs: dict):
     self.set(css_attrs)
 
   @property
@@ -79,7 +79,7 @@ class OptionDays(Options):
     return self.get({})
 
   @number.setter
-  def number(self, css):
+  def number(self, css: dict):
     self.set(css)
 
   @property
@@ -98,7 +98,7 @@ class OptionDays(Options):
     return self.get({})
 
   @today.setter
-  def today(self, css):
+  def today(self, css: dict):
     self.set(css)
 
   @property
@@ -117,7 +117,7 @@ class OptionDays(Options):
     return self.get({})
 
   @header.setter
-  def header(self, css):
+  def header(self, css: dict):
     self.set(css)
 
 

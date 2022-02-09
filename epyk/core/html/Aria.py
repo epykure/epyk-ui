@@ -8,7 +8,7 @@ from epyk.core.py import primitives
 class Aria:
 
   def __init__(self, component: primitives.HtmlModel):
-    self.htmlObj = component
+    self.component = component
 
   def set(self, arias):
     """
@@ -34,7 +34,7 @@ class Aria:
     :param key:
     :param val:
     """
-    self.htmlObj.attr["aria-%s" % key] = val
+    self.component.attr["aria-%s" % key] = val
 
   @property
   def role(self):
@@ -45,11 +45,11 @@ class Aria:
     Example of roles
     Roles: button, checkbox, menuitem, menuitemcheckbox, menuitemradio, option, radio, switch, tab or treeitem
     """
-    return self.htmlObj.attr.get("role", '')
+    return self.component.attr.get("role", '')
 
   @role.setter
   def role(self, val):
-    self.htmlObj.attr["role"] = val
+    self.component.attr["role"] = val
 
   @property
   def atomic(self):
@@ -63,11 +63,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-atomic
     """
-    return self.htmlObj.attr.get("aria-atomic", False)
+    return self.component.attr.get("aria-atomic", False)
 
   @atomic.setter
   def atomic(self, flag):
-    self.htmlObj.attr["aria-atomic"] = flag
+    self.component.attr["aria-atomic"] = flag
 
   @property
   def autocomplete(self):
@@ -88,14 +88,14 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-autocomplete
     """
-    return self.htmlObj.attr.get("aria-autocomplete", False)
+    return self.component.attr.get("aria-autocomplete", False)
 
   @autocomplete.setter
   def autocomplete(self, flag):
-    if not flag and "aria-autocomplete" in self.htmlObj.attr:
-      del self.htmlObj.attr["aria-autocomplete"]
+    if not flag and "aria-autocomplete" in self.component.attr:
+      del self.component.attr["aria-autocomplete"]
     else:
-      self.htmlObj.attr["aria-autocomplete"] = None
+      self.component.attr["aria-autocomplete"] = None
 
   @property
   def busy(self):
@@ -113,11 +113,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-busy
     """
-    return self.htmlObj.attr.get("aria-busy", False)
+    return self.component.attr.get("aria-busy", False)
 
   @busy.setter
   def busy(self, flag):
-    self.htmlObj.attr["aria-busy"] = flag
+    self.component.attr["aria-busy"] = flag
 
   @property
   def checked(self):
@@ -136,11 +136,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-checked
     """
-    return self.htmlObj.attr.get("aria-checked", False)
+    return self.component.attr.get("aria-checked", False)
 
   @checked.setter
   def checked(self, flag):
-    self.htmlObj.attr["aria-checked"] = flag
+    self.component.attr["aria-checked"] = flag
 
   @property
   def colcount(self):
@@ -158,11 +158,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-colcount
     """
-    return self.htmlObj.attr.get("aria-colcount", 0)
+    return self.component.attr.get("aria-colcount", 0)
 
   @colcount.setter
   def colcount(self, num):
-    self.htmlObj.attr["aria-colcount"] = num
+    self.component.attr["aria-colcount"] = num
 
   @property
   def colindex(self):
@@ -181,11 +181,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-colindex
     """
-    return self.htmlObj.attr.get("aria-colindex", 0)
+    return self.component.attr.get("aria-colindex", 0)
 
   @colindex.setter
   def colindex(self, num):
-    self.htmlObj.attr["aria-colindex"] = num
+    self.component.attr["aria-colindex"] = num
 
   @property
   def colspan(self):
@@ -206,11 +206,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-colspan
     """
-    return self.htmlObj.attr.get("aria-colspan", 0)
+    return self.component.attr.get("aria-colspan", 0)
 
   @colspan.setter
   def colspan(self, num):
-    self.htmlObj.attr["aria-colspan"] = num
+    self.component.attr["aria-colspan"] = num
 
   @property
   def controls(self):
@@ -224,11 +224,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-controls
     """
-    return self.htmlObj.attr.get("aria-controls")
+    return self.component.attr.get("aria-controls")
 
   @controls.setter
   def controls(self, val):
-    self.htmlObj.attr["aria-controls"] = val
+    self.component.attr["aria-controls"] = val
 
   @property
   def current(self):
@@ -246,11 +246,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-current
     """
-    return self.htmlObj.attr.get("aria-current")
+    return self.component.attr.get("aria-current")
 
   @current.setter
   def current(self, val):
-    self.htmlObj.attr["aria-current"] = val
+    self.component.attr["aria-current"] = val
 
   @property
   def describedby(self):
@@ -267,11 +267,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
     """
-    return self.htmlObj.attr.get("aria-describedby")
+    return self.component.attr.get("aria-describedby")
 
   @describedby.setter
   def describedby(self, val):
-    self.htmlObj.attr["aria-describedby"] = val
+    self.component.attr["aria-describedby"] = val
 
   @property
   def details(self):
@@ -289,11 +289,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-details
     """
-    return self.htmlObj.attr.get("aria-details")
+    return self.component.attr.get("aria-details")
 
   @details.setter
   def details(self, val):
-    self.htmlObj.attr["aria-details"] = val
+    self.component.attr["aria-details"] = val
 
   @property
   def disabled(self):
@@ -313,11 +313,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-disabled
     """
-    return self.htmlObj.attr.get("aria-disabled", False)
+    return self.component.attr.get("aria-disabled", False)
 
   @disabled.setter
   def disabled(self, flag):
-    self.htmlObj.attr["aria-disabled"] = flag
+    self.component.attr["aria-disabled"] = flag
 
   @property
   def errormessage(self):
@@ -330,11 +330,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
     """
-    return self.htmlObj.attr.get("aria-errormessage")
+    return self.component.attr.get("aria-errormessage")
 
   @errormessage.setter
   def errormessage(self, val):
-    self.htmlObj.attr["aria-errormessage"] = val
+    self.component.attr["aria-errormessage"] = val
 
   @property
   def expanded(self):
@@ -353,11 +353,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-expanded
     """
-    return self.htmlObj.attr.get("aria-expanded")
+    return self.component.attr.get("aria-expanded")
 
   @expanded.setter
   def expanded(self, flag):
-    self.htmlObj.attr["aria-expanded"] = flag
+    self.component.attr["aria-expanded"] = flag
 
   @property
   def flowto(self):
@@ -376,11 +376,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-flowto
     """
-    return self.htmlObj.attr.get("aria-flowto")
+    return self.component.attr.get("aria-flowto")
 
   @flowto.setter
   def flowto(self, val):
-    self.htmlObj.attr["aria-flowto"] = val
+    self.component.attr["aria-flowto"] = val
 
   @property
   def haspopup(self):
@@ -398,11 +398,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
     """
-    return self.htmlObj.attr.get("aria-haspopup", False)
+    return self.component.attr.get("aria-haspopup", False)
 
   @haspopup.setter
   def haspopup(self, flag):
-    self.htmlObj.attr["aria-haspopup"] = flag
+    self.component.attr["aria-haspopup"] = flag
 
   @property
   def hidden(self):
@@ -420,11 +420,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-hidden
     """
-    return self.htmlObj.attr.get("aria-hidden")
+    return self.component.attr.get("aria-hidden")
 
   @hidden.setter
   def hidden(self, flag):
-    self.htmlObj.attr["aria-hidden"] = json.dumps(flag)
+    self.component.attr["aria-hidden"] = json.dumps(flag)
 
   @property
   def invalid(self):
@@ -442,11 +442,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-invalid
     """
-    return self.htmlObj.attr.get("aria-invalid")
+    return self.component.attr.get("aria-invalid")
 
   @invalid.setter
   def invalid(self, flag):
-    self.htmlObj.attr["aria-invalid"] = flag
+    self.component.attr["aria-invalid"] = flag
 
   @property
   def keyshortcuts(self):
@@ -465,11 +465,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-keyshortcuts
     """
-    return self.htmlObj.attr.get("aria-keyshortcuts")
+    return self.component.attr.get("aria-keyshortcuts")
 
   @keyshortcuts.setter
   def keyshortcuts(self, val):
-    self.htmlObj.attr["aria-keyshortcuts"] = val
+    self.component.attr["aria-keyshortcuts"] = val
 
   @property
   def label(self):
@@ -486,11 +486,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-label
     """
-    return self.htmlObj.attr.get("aria-label")
+    return self.component.attr.get("aria-label")
 
   @label.setter
   def label(self, val):
-    self.htmlObj.attr["aria-label"] = val
+    self.component.attr["aria-label"] = val
 
   @property
   def labelledby(self):
@@ -507,11 +507,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-label
     """
-    return self.htmlObj.attr.get("aria-labelledby")
+    return self.component.attr.get("aria-labelledby")
 
   @labelledby.setter
   def labelledby(self, val):
-    self.htmlObj.attr["aria-labelledby"] = val
+    self.component.attr["aria-labelledby"] = val
 
   @property
   def level(self):
@@ -528,11 +528,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-level
     """
-    return self.htmlObj.attr.get("aria-level")
+    return self.component.attr.get("aria-level")
 
   @level.setter
   def level(self, val):
-    self.htmlObj.attr["aria-level"] = val
+    self.component.attr["aria-level"] = val
 
   @property
   def live(self):
@@ -552,11 +552,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-level
     """
-    return self.htmlObj.attr.get("aria-live")
+    return self.component.attr.get("aria-live")
 
   @live.setter
   def live(self, val):
-    self.htmlObj.attr["aria-live"] = val
+    self.component.attr["aria-live"] = val
 
   @property
   def modal(self):
@@ -573,11 +573,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-modal
     """
-    return self.htmlObj.attr.get("aria-modal")
+    return self.component.attr.get("aria-modal")
 
   @modal.setter
   def modal(self, val):
-    self.htmlObj.attr["aria-modal"] = val
+    self.component.attr["aria-modal"] = val
 
   @property
   def multiline(self):
@@ -590,11 +590,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-multiline
     """
-    return self.htmlObj.attr.get("aria-multiline", False)
+    return self.component.attr.get("aria-multiline", False)
 
   @multiline.setter
   def multiline(self, flag):
-    self.htmlObj.attr["aria-multiline"] = flag
+    self.component.attr["aria-multiline"] = flag
 
   @property
   def multiselectable(self):
@@ -612,11 +612,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-multiselectable
     """
-    return self.htmlObj.attr.get("aria-multiselectable", False)
+    return self.component.attr.get("aria-multiselectable", False)
 
   @multiselectable.setter
   def multiselectable(self, val):
-    self.htmlObj.attr["aria-multiselectable"] = val
+    self.component.attr["aria-multiselectable"] = val
 
   @property
   def orientation(self):
@@ -629,11 +629,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-multiselectable
     """
-    return self.htmlObj.attr.get("aria-orientation")
+    return self.component.attr.get("aria-orientation")
 
   @orientation.setter
   def orientation(self, val):
-    self.htmlObj.attr["aria-orientation"] = val
+    self.component.attr["aria-orientation"] = val
 
   @property
   def owns(self):
@@ -652,11 +652,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-owns
     """
-    return self.htmlObj.attr.get("aria-owns")
+    return self.component.attr.get("aria-owns")
 
   @owns.setter
   def owns(self, val):
-    self.htmlObj.attr["aria-owns"] = val
+    self.component.attr["aria-owns"] = val
 
   @property
   def placeholder(self):
@@ -674,11 +674,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-placeholder
     """
-    return self.htmlObj.attr.get("aria-placeholder")
+    return self.component.attr.get("aria-placeholder")
 
   @placeholder.setter
   def placeholder(self, val):
-    self.htmlObj.attr["aria-placeholder"] = val
+    self.component.attr["aria-placeholder"] = val
 
   @property
   def posinset(self):
@@ -697,11 +697,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-posinset
     """
-    return self.htmlObj.attr.get("aria-posinset", 0)
+    return self.component.attr.get("aria-posinset", 0)
 
   @posinset.setter
   def posinset(self, num):
-    self.htmlObj.attr["aria-posinset"] = num
+    self.component.attr["aria-posinset"] = num
 
   @property
   def pressed(self):
@@ -720,11 +720,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-pressed
     """
-    return self.htmlObj.attr.get("aria-pressed", False)
+    return self.component.attr.get("aria-pressed", False)
 
   @pressed.setter
   def pressed(self, flag):
-    self.htmlObj.attr["aria-pressed"] = flag
+    self.component.attr["aria-pressed"] = flag
 
   @property
   def readonly(self):
@@ -742,11 +742,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-readonly
     """
-    return self.htmlObj.attr.get("aria-readonly", False)
+    return self.component.attr.get("aria-readonly", False)
 
   @readonly.setter
   def readonly(self, flag):
-    self.htmlObj.attr["aria-readonly"] = flag
+    self.component.attr["aria-readonly"] = flag
 
   @property
   def relevant(self):
@@ -763,11 +763,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-relevant
     """
-    return self.htmlObj.attr.get("aria-relevant", False)
+    return self.component.attr.get("aria-relevant", False)
 
   @relevant.setter
   def relevant(self, flag):
-    self.htmlObj.attr["aria-relevant"] = flag
+    self.component.attr["aria-relevant"] = flag
 
   @property
   def roledescription(self):
@@ -785,11 +785,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-roledescription
     """
-    return self.htmlObj.attr.get("aria-roledescription")
+    return self.component.attr.get("aria-roledescription")
 
   @roledescription.setter
   def roledescription(self, val):
-    self.htmlObj.attr["aria-roledescription"] = val
+    self.component.attr["aria-roledescription"] = val
 
   @property
   def rowindex(self):
@@ -808,11 +808,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-rowindex
     """
-    return self.htmlObj.attr.get("aria-rowindex")
+    return self.component.attr.get("aria-rowindex")
 
   @rowindex.setter
   def rowindex(self, num):
-    self.htmlObj.attr["aria-roledescription"] = num
+    self.component.attr["aria-roledescription"] = num
 
   @property
   def rowspan(self):
@@ -832,11 +832,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-rowspan
     """
-    return self.htmlObj.attr.get("aria-rowspan")
+    return self.component.attr.get("aria-rowspan")
 
   @rowspan.setter
   def rowspan(self, num):
-    self.htmlObj.attr["aria-rowspan"] = num
+    self.component.attr["aria-rowspan"] = num
 
   @property
   def selected(self):
@@ -849,11 +849,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-selected
     """
-    return self.htmlObj.attr.get("aria-selected", False)
+    return self.component.attr.get("aria-selected", False)
 
   @selected.setter
   def selected(self, flag):
-    self.htmlObj.attr["aria-selected"] = flag
+    self.component.attr["aria-selected"] = flag
 
   @property
   def setsize(self):
@@ -871,11 +871,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-setsize
     """
-    return self.htmlObj.attr.get("aria-setsize")
+    return self.component.attr.get("aria-setsize")
 
   @setsize.setter
   def setsize(self, num):
-    self.htmlObj.attr["aria-setsize"] = num
+    self.component.attr["aria-setsize"] = num
 
   @property
   def sort(self):
@@ -888,11 +888,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-sort
     """
-    return self.htmlObj.attr.get("aria-sort", False)
+    return self.component.attr.get("aria-sort", False)
 
   @sort.setter
   def sort(self, flag):
-    self.htmlObj.attr["aria-sort"] = flag
+    self.component.attr["aria-sort"] = flag
 
   @property
   def valuemin(self):
@@ -905,11 +905,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-valuemin
     """
-    return self.htmlObj.attr.get("aria-valuemin")
+    return self.component.attr.get("aria-valuemin")
 
   @valuemin.setter
   def valuemin(self, num):
-    self.htmlObj.attr["aria-valuemin"] = num
+    self.component.attr["aria-valuemin"] = num
 
   @property
   def valuemax(self):
@@ -922,11 +922,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-valuemax
     """
-    return self.htmlObj.attr.get("aria-valuemax")
+    return self.component.attr.get("aria-valuemax")
 
   @valuemax.setter
   def valuemax(self, num):
-    self.htmlObj.attr["aria-valuemax"] = num
+    self.component.attr["aria-valuemax"] = num
 
   @property
   def valuenow(self):
@@ -939,25 +939,25 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-valuenow
     """
-    return self.htmlObj.attr.get("aria-valuenow")
+    return self.component.attr.get("aria-valuenow")
 
   @valuenow.setter
   def valuenow(self, num):
-    self.htmlObj.attr["aria-valuenow"] = num
+    self.component.attr["aria-valuenow"] = num
 
   @property
   def valuetext(self):
     """
     Description:
     ------------
-    Defines the human readable text alternative of aria-valuenow for a range widget.
+    Defines the human-readable text alternative of aria-valuenow for a range widget.
 
     Related Pages:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-valuetext
     """
-    return self.htmlObj.attr.get("aria-valuetext")
+    return self.component.attr.get("aria-valuetext")
 
   @valuetext.setter
   def valuetext(self, text):
-    self.htmlObj.attr["aria-valuetext"] = text
+    self.component.attr["aria-valuetext"] = text

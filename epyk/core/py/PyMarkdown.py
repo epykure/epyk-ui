@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
+
 import re
 import json
 
@@ -53,9 +55,6 @@ def doc_string_attrs(func):
   ------------
   Write the attribute section in the framework documentation.
 
-  Usage::
-
-
   Attributes:
   ----------
   :param func: Function. A python function.
@@ -85,18 +84,18 @@ def doc_string_attrs(func):
 
 class MarkDown:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
 
   @classmethod
-  def translate(cls, data):
+  def translate(cls, data: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param data:
+    :param str data:
     """
     convert_data = data
     count, map_objs = 0, {}
@@ -117,7 +116,7 @@ class MarkDown:
       resolved_data.append(map_objs.get(rec, rec))
     return resolved_data
 
-  def resolve(self, data, css_attrs=None):
+  def resolve(self, data: str, css_attrs: dict = None):
     """
     Description:
     -----------
@@ -125,8 +124,8 @@ class MarkDown:
 
     Attributes:
     ----------
-    :param data: String. Data to be converted.
-    :param css_attrs: Dictionary. Optional. The CSS Style to be applied to the component.
+    :param str data: Data to be converted.
+    :param dict css_attrs: Optional. The CSS Style to be applied to the component.
     """
     components, css = [], css_attrs
     for line in data.split("\n"):
@@ -169,7 +168,7 @@ class MarkDown:
           components.append(self.page.ui.layouts.br())
     return components
 
-  def all(self, data):
+  def all(self, data: str):
     """
     Description:
     -----------
@@ -178,7 +177,7 @@ class MarkDown:
 
     Attributes:
     ----------
-    :param data: String. The data to be parsed.
+    :param str data: The data to be parsed.
     """
     for r, interface in RULES.items():
       if 'tag' not in interface:

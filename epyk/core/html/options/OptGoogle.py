@@ -1,4 +1,5 @@
 
+from typing import Union
 from epyk.core.html.options import Options
 
 
@@ -18,7 +19,7 @@ class OptionMaps(Options):
     return self._config_get(10)
 
   @zoom.setter
-  def zoom(self, num):
+  def zoom(self, num: int):
     self._config(num)
 
   @property
@@ -35,7 +36,7 @@ class OptionMaps(Options):
     return self._config_get(None)
 
   @center.setter
-  def center(self, point):
+  def center(self, point: Union[tuple, list]):
     self.js_type['center'] = True
     if isinstance(point, tuple):
       self._config("new google.maps.LatLng(%s, %s)" % (point[0], point[1]))
@@ -56,6 +57,6 @@ class OptionMaps(Options):
     return self._config_get("google.maps.MapTypeId.ROADMAP")
 
   @mapTypeId.setter
-  def mapTypeId(self, type_map):
+  def mapTypeId(self, type_map: str):
     self.js_type['mapTypeId'] = True
     self._config("google.maps.MapTypeId.%s" % type_map.upper())

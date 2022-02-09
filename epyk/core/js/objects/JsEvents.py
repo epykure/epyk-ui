@@ -13,10 +13,10 @@ from epyk.core.js.primitives import JsNumber
 
 class Event(primitives.JsDataModel):
 
-  def getEvent(self, varName: str):
-    return JsObject.JsObject.get(varName)
+  def getEvent(self, js_code: str):
+    return JsObject.JsObject.get(js_code)
 
-  def createEvent(self, varName: str, type: str = 'Event'):
+  def createEvent(self, js_code: str, event_type: Union[str, primitives.JsDataModel] = 'Event'):
     """
     Description:
     ------------
@@ -27,12 +27,13 @@ class Event(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str type:
-    :param str varName:
+    :param str js_code:
+    :param Union[str, primitives.JsDataModel] event_type:
     """
-    return "var %s = document.createEvent('%s')" % (varName, type)
+    event_type = JsUtils.jsConvertData(event_type, None)
+    return "var %s = document.createEvent(%s)" % (js_code, event_type)
 
-  def initEvent(self, name: Union[str, primitives.JsDataModel], varName: str = None,
+  def initEvent(self, name: Union[str, primitives.JsDataModel], js_code: str = None,
                 bubbles: Union[bool, primitives.JsDataModel] = True,
                 cancelable: Union[bool, primitives.JsDataModel] = True):
     """
@@ -47,14 +48,15 @@ class Event(primitives.JsDataModel):
     Attributes:
     ----------
     :param name: String. Optional.
+    :param str js_code: Optional.
     :param bubbles: Boolean. Optional.
     :param cancelable: Boolean. Optional.
     """
     name = JsUtils.jsConvertData(name, None)
     bubbles = JsUtils.jsConvertData(bubbles, None)
     cancelable = JsUtils.jsConvertData(cancelable, None)
-    varName = varName or "document.createEvent('Event')"
-    return JsObject.JsObject.get("%s.initEvent(%s, %s, %s)" % (varName, name, bubbles, cancelable))
+    js_code = js_code or "document.createEvent('Event')"
+    return JsObject.JsObject.get("%s.initEvent(%s, %s, %s)" % (js_code, name, bubbles, cancelable))
 
   def cancelBubble(self):
     """
@@ -129,7 +131,7 @@ class Event(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/event_timestamp.asp
     """
-    return JsString.JsString("event.timeStamp", isPyData=False)
+    return JsString.JsString("event.timeStamp", is_py_data=False)
 
   @property
   def defaultPrevented(self):
@@ -142,7 +144,7 @@ class Event(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/event_defaultprevented.asp
     """
-    return JsString.JsString("event.defaultPrevented", isPyData=False)
+    return JsString.JsString("event.defaultPrevented", is_py_data=False)
 
   def preventDefault(self):
     """
@@ -154,7 +156,7 @@ class Event(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/event_preventdefault.asp
     """
-    return JsString.JsString("event.preventDefault()", isPyData=False)
+    return JsString.JsString("event.preventDefault()", is_py_data=False)
 
   def stopImmediatePropagation(self):
     """
@@ -167,7 +169,7 @@ class Event(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
     """
-    return JsString.JsString("event.stopImmediatePropagation()", isPyData=False)
+    return JsString.JsString("event.stopImmediatePropagation()", is_py_data=False)
 
   def stopPropagation(self):
     """
@@ -179,7 +181,7 @@ class Event(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/event_stoppropagation.asp
     """
-    return JsString.JsString("event.stopPropagation()", isPyData=False)
+    return JsString.JsString("event.stopPropagation()", is_py_data=False)
 
   def toStr(self):
     return "event"
@@ -198,7 +200,7 @@ class UIEvent(Event):
 
       https://www.w3schools.com/jsref/event_detail.asp
     """
-    return JsNumber.JsNumber("event.detail", isPyData=False)
+    return JsNumber.JsNumber("event.detail", is_py_data=False)
 
   @property
   def view(self):
@@ -212,7 +214,6 @@ class UIEvent(Event):
       https://www.w3schools.com/jsref/event_view.asp
     """
     from epyk.core.js.JsWindow import JsWindow
-
     return JsWindow()
 
 
@@ -230,7 +231,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_altkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
   @property
   def charCode(self):
@@ -243,7 +244,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_charcode.asp
     """
-    return JsString.JsString.get(varName="event.charCode")
+    return JsString.JsString.get(js_code="event.charCode")
 
   @property
   @JsUtils.incompatibleBrowser(["Internet Explorer"])
@@ -257,7 +258,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_code.asp
     """
-    return JsString.JsString("event.code", isPyData=False)
+    return JsString.JsString("event.code", is_py_data=False)
 
   @property
   def ctrlKey(self):
@@ -271,7 +272,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_ctrlkey.asp
     """
-    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+    return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
   @property
   @JsUtils.incompatibleBrowser(["Safari"])
@@ -285,7 +286,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_key.asp
     """
-    return JsString.JsString("event.key", isPyData=False)
+    return JsString.JsString("event.key", is_py_data=False)
 
   @property
   def keyCode(self):
@@ -299,7 +300,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_keycode.asp
     """
-    return JsString.JsString("event.keyCode", isPyData=False)
+    return JsString.JsString("event.keyCode", is_py_data=False)
 
   @property
   @JsUtils.incompatibleBrowser(["Safari"])
@@ -313,7 +314,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_location.asp
     """
-    return JsNumber.JsNumber("event.location", isPyData=False)
+    return JsNumber.JsNumber("event.location", is_py_data=False)
 
   @property
   def metaKey(self):
@@ -327,7 +328,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_metakey.asp
     """
-    return JsString.JsString("event.metaKey", isPyData=False)
+    return JsString.JsString("event.metaKey", is_py_data=False)
 
   @property
   def shiftKey(self):
@@ -341,7 +342,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_shiftkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
   @property
   def which(self):
@@ -355,7 +356,7 @@ class KeyboardEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_key_which.asp
     """
-    return JsNumber.JsNumber("event.which", isPyData=False)
+    return JsNumber.JsNumber("event.which", is_py_data=False)
 
 
 class MouseEvent(UIEvent):
@@ -372,7 +373,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_altkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
   @property
   def button(self):
@@ -383,7 +384,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_button.asp
     """
-    return JsNumber.JsNumber("event.button", isPyData=False)
+    return JsNumber.JsNumber("event.button", is_py_data=False)
 
   @property
   @JsUtils.incompatibleBrowser(["Safari"])
@@ -396,7 +397,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_buttons.asp
     """
-    return JsNumber.JsNumber("event.buttons", isPyData=False)
+    return JsNumber.JsNumber("event.buttons", is_py_data=False)
 
   @property
   def isTrusted(self):
@@ -404,7 +405,7 @@ class MouseEvent(UIEvent):
 
     :return:
     """
-    return JsBoolean.JsBoolean.get(varName="event.isTrusted")
+    return JsBoolean.JsBoolean.get(js_code="event.isTrusted")
 
   @property
   def clientX(self):
@@ -418,7 +419,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_clientx.asp
     """
-    return JsNumber.JsNumber.get(varName="event.clientX")
+    return JsNumber.JsNumber.get(js_code="event.clientX")
 
   @property
   def clientY(self):
@@ -432,7 +433,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_clienty.asp
     """
-    return JsNumber.JsNumber.get(varName="event.clientY")
+    return JsNumber.JsNumber.get(js_code="event.clientY")
 
   @property
   def pageX(self):
@@ -440,7 +441,7 @@ class MouseEvent(UIEvent):
 
     :return:
     """
-    return JsNumber.JsNumber.get(varName="event.pageX")
+    return JsNumber.JsNumber.get(js_code="event.pageX")
 
   @property
   def pageY(self):
@@ -448,7 +449,7 @@ class MouseEvent(UIEvent):
 
     :return:
     """
-    return JsNumber.JsNumber.get(varName="event.pageY")
+    return JsNumber.JsNumber.get(js_code="event.pageY")
 
   @property
   def offsetX(self):
@@ -457,7 +458,7 @@ class MouseEvent(UIEvent):
     ------------
     Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
-    return JsNumber.JsNumber.get(varName="event.offsetX")
+    return JsNumber.JsNumber.get(js_code="event.offsetX")
 
   @property
   def offsetY(self):
@@ -466,7 +467,7 @@ class MouseEvent(UIEvent):
     ------------
     Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
-    return JsNumber.JsNumber.get(varName="event.offsetY")
+    return JsNumber.JsNumber.get(js_code="event.offsetY")
 
   def getField(self, field_name: str):
     return JsObject.JsObject.get("event.%s" % field_name)
@@ -479,7 +480,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_metakey.asp
     """
-    return JsString.JsString("event.metaKey", isPyData=False)
+    return JsString.JsString("event.metaKey", is_py_data=False)
 
   @property
   def shiftKey(self):
@@ -489,7 +490,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_shiftkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
   @property
   def ctrlKey(self):
@@ -499,7 +500,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_ctrlkey.asp
     """
-    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+    return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
   @property
   def which(self):
@@ -508,7 +509,7 @@ class MouseEvent(UIEvent):
 
     https://www.w3schools.com/jsref/event_which.asp
     """
-    return JsNumber.JsNumber("event.which", isPyData=False)
+    return JsNumber.JsNumber("event.which", is_py_data=False)
 
   @property
   def movementX(self):
@@ -521,7 +522,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
-    return JsNumber.JsNumber.get(varName="event.movementX")
+    return JsNumber.JsNumber.get(js_code="event.movementX")
 
   @property
   def movementY(self):
@@ -534,7 +535,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
-    return JsNumber.JsNumber.get(varName="event.movementY")
+    return JsNumber.JsNumber.get(js_code="event.movementY")
 
   @property
   def screenX(self):
@@ -547,7 +548,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
-    return JsNumber.JsNumber.get(varName="event.screenX")
+    return JsNumber.JsNumber.get(js_code="event.screenX")
 
   @property
   def screenY(self):
@@ -560,7 +561,7 @@ class MouseEvent(UIEvent):
 
       https://www.w3schools.com/jsref/obj_mouseevent.asp
     """
-    return JsNumber.JsNumber.get(varName="event.screenY")
+    return JsNumber.JsNumber.get(js_code="event.screenY")
 
   def toStr(self):
     return JsObject.JsObject.get("event")
@@ -580,7 +581,7 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_altkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.altKey")
+    return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
   @property
   def ctrlKey(self):
@@ -594,7 +595,7 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
     """
-    return JsBoolean.JsBoolean("event.ctrlKey", isPyData=False)
+    return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
   @property
   def metaKey(self):
@@ -608,7 +609,7 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_metakey.asp
     """
-    return JsString.JsString("event.metaKey", isPyData=False)
+    return JsString.JsString("event.metaKey", is_py_data=False)
 
   @property
   def shiftKey(self):
@@ -622,7 +623,7 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_shiftkey.asp
     """
-    return JsBoolean.JsBoolean.get(varName="event.shiftKey")
+    return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
   @property
   def targetTouches(self):
@@ -636,7 +637,7 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_targettouches.asp
     """
-    return JsArray.JsArray("event.shiftKey", isPyData=False)
+    return JsArray.JsArray("event.shiftKey", is_py_data=False)
 
   @property
   def touches(self):
@@ -649,16 +650,16 @@ class TouchEvent(UIEvent):
 
       https://www.w3schools.com/jsref/event_touch_touches.asp
     """
-    return JsArray.JsArray("event.shiftKey", isPyData=False)
+    return JsArray.JsArray("event.shiftKey", is_py_data=False)
 
   def ontouchcancel(self):
-    pass
+    raise NotImplementedError()
 
   def ontouchend(self):
-    pass
+    raise NotImplementedError()
 
   def ontouchmove(self):
-    pass
+    raise NotImplementedError()
 
   def ontouchstart(self):
-    pass
+    raise NotImplementedError()

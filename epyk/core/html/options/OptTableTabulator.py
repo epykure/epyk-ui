@@ -44,7 +44,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
+    however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -65,7 +66,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
+    however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -86,7 +88,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
+    however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -107,7 +110,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display however many decimals are provided with the number
+    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
+    however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -116,8 +120,8 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def bespoke(self, jsFncs, profile=None):
-    return self._set_value(value=JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+  def bespoke(self, js_funcs, profile=None):
+    return self._set_value(value=JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class EnumLayout(Enums):
@@ -1452,8 +1456,8 @@ class Column(Options):
     col_def.title = field if title is None else title
     return col_def
 
-  def cellClick(self, jsFncs, profile=None):
-    self._config("function(event, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+  def cellClick(self, js_funcs, profile=None):
+    self._config("function(event, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def cssClass(self):
@@ -1494,7 +1498,7 @@ class Column(Options):
 
       http://tabulator.info/docs/4.0/modules
     """
-    return Extensions(self._report, self._attrs)
+    return Extensions(self.component, self._attrs)
 
   @property
   def editors(self):
@@ -1621,21 +1625,21 @@ class Column(Options):
   def headerFilter(self, value):
     self._config(value)
 
-  def headerFilterFunc(self, jsFncs, profile=None):
+  def headerFilterFunc(self, js_funcs, profile=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
       "function customHeaderFilter(headerValue, rowValue, rowData, filterParams){%s}" % JsUtils.jsConvertFncs(
-        jsFncs, toStr=True, profile=profile), js_type=True)
+        js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def headerVertical(self):
@@ -2115,7 +2119,7 @@ class Keybindings(Options):
     ----------
     :param keys: String. The keys to trigger the event.
     """
-    self._report.extendModule(
+    self.component.extendModule(
       "keybindings", "actions", "addRow", "function(event){event.preventDefault(); this.table.addRow()}")
     self._attrs["addRow"] = keys
     return self
@@ -2136,7 +2140,7 @@ class Keybindings(Options):
     ----------
     :param keys: String. The keys to trigger the event.
     """
-    self._report.extendModule(
+    self.component.extendModule(
       "keybindings", "actions", "addRow",
       "function(){var rows = this.table.getSelectedRows(); rows.forEach(function(row){row.delete()})}")
     self._attrs["deleteSelectedRows"] = keys
@@ -2433,7 +2437,7 @@ class TableConfig(Options):
   def columnCalcs(self, val):
     self._config(val)
 
-  def cellClick(self, jsFncs, profile=None):
+  def cellClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2446,17 +2450,17 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
       "function(event, cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
-        jsFncs, toStr=True, profile=profile), js_type=True)
+        js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def clipboardPasted(self, jsFncs, profile=None):
+  def clipboardPasted(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2468,17 +2472,17 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
       "function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(
-        jsFncs, toStr=True, profile=profile), js_type=True)
+        js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellDblClick(self, jsFncs, profile=None):
+  def cellDblClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2491,16 +2495,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.component.style.css.cursor = "pointer"
-    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellContext(self, jsFncs, profile=None):
+  def cellContext(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2513,15 +2517,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellEditCancelled(self, jsFncs, profile=None):
+  def cellEditCancelled(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2533,15 +2537,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellEdited(self, jsFncs, profile=None):
+  def cellEdited(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2553,12 +2557,12 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
   @property
@@ -2811,7 +2815,7 @@ class TableConfig(Options):
   def groupValues(self, val):
     self._config(val)
 
-  def headerClick(self, jsFncs, profile=None):
+  def headerClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2824,16 +2828,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerDblClick(self, jsFncs, profile=None):
+  def headerDblClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2846,16 +2850,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerContext(self, jsFncs, profile=None):
+  def headerContext(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2868,16 +2872,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerTap(self, jsFncs, profile=None):
+  def headerTap(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2890,16 +2894,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerDblTap(self, jsFncs, profile=None):
+  def headerDblTap(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -2912,13 +2916,13 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
   @property
@@ -3360,7 +3364,7 @@ class TableConfig(Options):
   def resizableColumns(self, val):
     self._config(val)
 
-  def rowAdded(self, jsFncs, profile=None):
+  def rowAdded(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3372,12 +3376,12 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
   @property
@@ -3396,7 +3400,7 @@ class TableConfig(Options):
     contextMenu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
     return contextMenu
 
-  def rowClick(self, jsFncs, profile=None):
+  def rowClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3408,16 +3412,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.component.style.css.cursor = "pointer"
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowDblClick(self, jsFncs, profile=None):
+  def rowDblClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3429,16 +3433,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self.component.style.css.cursor = "pointer"
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowDelete(self, jsFncs, profile=None):
+  def rowDelete(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3450,15 +3454,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowContext(self, jsFncs, profile=None):
+  def rowContext(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3473,15 +3477,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowFormatter(self, jsFncs, profile=None):
+  def rowFormatter(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3494,15 +3498,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowMove(self, jsFncs, profile=None):
+  def rowMove(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3514,15 +3518,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowTap(self, jsFncs, profile=None):
+  def rowTap(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3534,15 +3538,15 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowUpdated(self, jsFncs, profile=None):
+  def rowUpdated(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3555,12 +3559,12 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
   @property
@@ -3804,7 +3808,7 @@ class TableTreeConfig(TableConfig):
   def dataTreeChildColumnCalcs(self, flag):
     self._config(flag)
 
-  def dataTreeRowExpanded(self, jsFncs, profile=None):
+  def dataTreeRowExpanded(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -3813,7 +3817,7 @@ class TableTreeConfig(TableConfig):
 
 
 
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    self._config("function(row, level) {%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(row, level) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)

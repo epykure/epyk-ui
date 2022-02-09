@@ -1,4 +1,8 @@
-import importlib, subprocess, sys, os, inspect
+import importlib
+import subprocess
+import sys
+import os
+import inspect
 
 
 class EpykMissingPykException(Exception):

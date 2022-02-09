@@ -52,7 +52,7 @@ class Choropleth(GraphChartJs.Chart):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<canvas %s></canvas>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<canvas %s></canvas>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class ChoroplethUs(Choropleth):
@@ -117,7 +117,7 @@ class ChoroplethUs(Choropleth):
     :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     :param alias: String. The chart alias name visible in the legend. Default the label.
     """
-    data = JsChartJs.DataSetBar(self._report, attrs={})
+    data = JsChartJs.DataSetBar(self.page, attrs={})
     self._datasets.append(data)
     alias = alias or label
     #if alias not in self.options.y_columns:
@@ -163,4 +163,5 @@ class ChoroplethCountry(Choropleth):
               %(chartId)s = new Chart(%(varId)s.getContext("2d"), chartContext)
               %(chartId)s.scale.projection.center([78.9629, 23.5937]).scale(1000);
           })}
-        )''' % {"chartId": self.chartId, "varId": self.dom.varId, "data": data, "ctx": self.getCtx(), 'map': self.geo_map}
+        )''' % {"chartId": self.chartId, "varId": self.dom.varId, "data": data,
+                "ctx": self.getCtx(), 'map': self.geo_map}

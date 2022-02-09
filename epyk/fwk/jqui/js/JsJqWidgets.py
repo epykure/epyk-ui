@@ -8,9 +8,9 @@ from epyk.core.js import JsUtils
 
 class Accordion(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def destroy(self):
@@ -23,7 +23,7 @@ class Accordion(JsPackage):
 
       https://api.jqueryui.com/accordion/
     """
-    return JsUtils.jsWrap("%s.accordion('destroy')" % self._src.var)
+    return JsUtils.jsWrap("%s.accordion('destroy')" % self.component.var)
 
   def disable(self):
     """
@@ -35,7 +35,7 @@ class Accordion(JsPackage):
 
       https://api.jqueryui.com/accordion/
     """
-    return JsUtils.jsWrap("%s.accordion('disable')" % self._src.var)
+    return JsUtils.jsWrap("%s.accordion('disable')" % self.component.var)
 
   def enable(self):
     """
@@ -47,7 +47,7 @@ class Accordion(JsPackage):
 
       https://api.jqueryui.com/accordion/
     """
-    return JsUtils.jsWrap("%s.accordion('enable')" % self._src.var)
+    return JsUtils.jsWrap("%s.accordion('enable')" % self.component.var)
 
   def options(self, optionName=None):
     """
@@ -65,10 +65,10 @@ class Accordion(JsPackage):
     :param optionName: String. Optional. The name of the option to set.
     """
     if optionName is None:
-      return JsObjects.JsObjects.get("%s.accordion('option')" % self._src.var)
+      return JsObjects.JsObjects.get("%s.accordion('option')" % self.component.var)
 
     optionName = JsUtils.jsConvertData(optionName, None)
-    return JsObjects.JsObjects.get("%s.accordion('option', %s)" % (self._src.var, optionName))
+    return JsObjects.JsObjects.get("%s.accordion('option', %s)" % (self.component.var, optionName))
 
   def set_options(self, optionName, value):
     """
@@ -87,7 +87,7 @@ class Accordion(JsPackage):
     """
     optionName = JsUtils.jsConvertData(optionName, None)
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get("%s.accordion('option', %s, %s)" % (self._src.var, optionName, value))
+    return JsObjects.JsObjects.get("%s.accordion('option', %s, %s)" % (self.component.var, optionName, value))
 
   def refresh(self):
     """
@@ -98,7 +98,7 @@ class Accordion(JsPackage):
 
       https://api.jqueryui.com/accordion/
     """
-    return JsUtils.jsWrap("%s.accordion('refresh')" % self._src.var)
+    return JsUtils.jsWrap("%s.accordion('refresh')" % self.component.var)
 
   def on(self, event, js_funcs, profile=None):
     """
@@ -119,7 +119,7 @@ class Accordion(JsPackage):
       js_funcs = [js_funcs]
     event = JsUtils.jsConvertData(event, None)
     return JsUtils.jsWrap("%s.on(%s, function(event, ui){%s})" % (
-      self._src.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def onCreate(self, js_funcs, profile=None):
     """
@@ -175,9 +175,9 @@ class Accordion(JsPackage):
 
 class Tabs(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def destroy(self):
@@ -190,7 +190,7 @@ class Tabs(JsPackage):
 
       https://api.jqueryui.com/tabs/
     """
-    return JsUtils.jsWrap("%s.tabs('destroy')" % self._src.var)
+    return JsUtils.jsWrap("%s.tabs('destroy')" % self.component.var)
 
   def disable(self, i=None):
     """
@@ -207,9 +207,9 @@ class Tabs(JsPackage):
     :param i: Array<Integer>. Optional. The zero-based index of the tab to disable.
     """
     if i is None:
-      return JsUtils.jsWrap("%s.tabs('disable')" % self._src.var)
+      return JsUtils.jsWrap("%s.tabs('disable')" % self.component.var)
 
-    return JsUtils.jsWrap("%s.tabs('disable', %s)" % (self._src.var, i))
+    return JsUtils.jsWrap("%s.tabs('disable', %s)" % (self.component.var, i))
 
   def enable(self, i=None):
     """
@@ -226,9 +226,9 @@ class Tabs(JsPackage):
     :param i: Array<Integer>. Optional. The zero-based index of the tab to disable.
     """
     if i is None:
-      return JsUtils.jsWrap("%s.tabs('enable')" % self._src.var)
+      return JsUtils.jsWrap("%s.tabs('enable')" % self.component.var)
 
-    return JsUtils.jsWrap("%s.tabs('enable', %s)" % (self._src.var, i))
+    return JsUtils.jsWrap("%s.tabs('enable', %s)" % (self.component.var, i))
 
   def load(self, value):
     """
@@ -245,7 +245,7 @@ class Tabs(JsPackage):
     :param value: Number | String. The href of the tab to load.
     """
     value = JsUtils.jsConvertData(value, None)
-    return JsUtils.jsWrap("%s.tabs('load', %s)" % (self._src.var, value))
+    return JsUtils.jsWrap("%s.tabs('load', %s)" % (self.component.var, value))
 
   def options(self, optionName=None):
     """
@@ -263,10 +263,10 @@ class Tabs(JsPackage):
     :param optionName: String. Optional. The name of the option to set.
     """
     if optionName is None:
-      return JsObjects.JsObjects.get("%s.tabs('option')" % self._src.var)
+      return JsObjects.JsObjects.get("%s.tabs('option')" % self.component.var)
 
     optionName = JsUtils.jsConvertData(optionName, None)
-    return JsObjects.JsObjects.get("%s.tabs('option', %s)" % (self._src.var, optionName))
+    return JsObjects.JsObjects.get("%s.tabs('option', %s)" % (self.component.var, optionName))
 
   def set_options(self, optionName, value):
     """
@@ -285,7 +285,7 @@ class Tabs(JsPackage):
     """
     optionName = JsUtils.jsConvertData(optionName, None)
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get("%s.tabs('option', %s, %s)" % (self._src.var, optionName, value))
+    return JsObjects.JsObjects.get("%s.tabs('option', %s, %s)" % (self.component.var, optionName, value))
 
   def refresh(self):
     """
@@ -296,7 +296,7 @@ class Tabs(JsPackage):
 
       https://api.jqueryui.com/tabs/
     """
-    return JsUtils.jsWrap("%s.tabs('refresh')" % self._src.var)
+    return JsUtils.jsWrap("%s.tabs('refresh')" % self.component.var)
 
   def on(self, event, js_funcs, profile=None):
     """
@@ -317,7 +317,7 @@ class Tabs(JsPackage):
       js_funcs = [js_funcs]
     event = JsUtils.jsConvertData(event, None)
     return JsUtils.jsWrap("%s.on(%s, function(event, ui){%s})" % (
-      self._src.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def onCreate(self, js_funcs, profile=None):
     """

@@ -9,7 +9,7 @@ from epyk.core.js.primitives import JsObjects
 class TinySlider(JsPackage):
   lib_alias = {"js": "tiny-slider", 'css': "tiny-slider"}
 
-  def goTo(self, n):
+  def goTo(self, n: int):
     """
     Description:
     ------------
@@ -17,7 +17,7 @@ class TinySlider(JsPackage):
 
     Attributes:
     ----------
-    :param n: Integer. the depth of the tree at start
+    :param int n: the depth of the tree at start.
 
     Related Pages:
 

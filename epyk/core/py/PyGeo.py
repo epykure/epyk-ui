@@ -1,14 +1,15 @@
 
+from epyk.core.py import primitives
 from math import cos, asin, sqrt, pi
 
 
 class PyGeo:
 
-  def __init__(self, page=None):
-    self._report = page
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
 
   @staticmethod
-  def distance(lat1, lon1, lat2, lon2, unit="km"):
+  def distance(lat1: float, lon1: float, lat2: float, lon2: float, unit: str = "km"):
     """
     Description:
     ------------

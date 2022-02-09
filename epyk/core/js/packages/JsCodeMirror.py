@@ -1,4 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+from typing import Union, Any
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -8,11 +12,13 @@ class CM(JsPackage):
   lib_alias = {"js": 'codemirror', 'css': 'codemirror'}
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, setVar=False, report=None):
-    super(CM, self).__init__(htmlObj, varName=varName, selector=htmlObj.editorId, data=None, setVar=setVar, parent=None)
-    self._src, self._report = htmlObj, report
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = False,
+               page: primitives.PageModel = None):
+    super(CM, self).__init__(
+      component=component, js_code=js_code, selector=component.editorId, data=None, set_var=set_var, page=page)
 
-  def setSize(self, width=None, height=None):
+  def setSize(self, width: Union[tuple, int, primitives.JsDataModel] = None,
+              height: Union[tuple, int, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -26,8 +32,8 @@ class CM(JsPackage):
 
     Attributes:
     ----------
-    :param width: String or integer. The width of the component
-    :param height: String or integer. The height of the component
+    :param Union[tuple, int, primitives.JsDataModel] width: The width of the component.
+    :param Union[tuple, int, primitives.JsDataModel] height: The height of the component.
 
     :return: The Javascript string fragment
     """
@@ -35,7 +41,7 @@ class CM(JsPackage):
     height = JsUtils.jsConvertData(height, None)
     return self.fnc_closure("setSize(%s, %s)" % (width, height))
 
-  def scrollTo(self, x=None, y=None):
+  def scrollTo(self, x: int = None, y: int = None):
     """
     Description:
     -----------
@@ -47,8 +53,8 @@ class CM(JsPackage):
 
     Attributes:
     ----------
-    :param x: Integer. The x position of the scrollbar
-    :param y: Integer. The y position of the scrollbar
+    :param int x: The x position of the scrollbar.
+    :param int y: The y position of the scrollbar.
 
     :return: The Javascript string fragment
     """
@@ -68,7 +74,7 @@ class CM(JsPackage):
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasFocus()" % self.varId)
 
-  def setOption(self, option, value):
+  def setOption(self, option: Union[dict, primitives.JsDataModel], value: Any):
     """
     Description:
     -----------
@@ -81,8 +87,8 @@ class CM(JsPackage):
 
     Attributes:
     ----------
-    :param option: String. The editor option name
-    :param value: Object. The editor option value
+    :param Union[dict, primitives.JsDataModel] option: The editor option name.
+    :param Any value: The editor option value
 
     :return: The Javascript string fragment
     """
@@ -120,7 +126,7 @@ class CM(JsPackage):
     """
     return self.fnc_closure("refresh()")
 
-  def execCommand(self, command):
+  def execCommand(self, command: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -131,6 +137,10 @@ class CM(JsPackage):
       https://codemirror.net/doc/manual.html#commands
 
     :return: The Javascript string fragment
+
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] command:
     """
     command = JsUtils.jsConvertData(command, None)
     return self.fnc_closure("execCommand(%s)" % command)

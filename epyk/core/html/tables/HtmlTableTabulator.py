@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlTabulator
@@ -17,9 +18,9 @@ class Table(Html.Html):
   name = 'Tabulator Table'
   _option_cls = OptTableTabulator.TableConfig
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
     data, columns, self._json_config = [], [], {}
-    super(Table, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Table, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     if records is not None:
       self.options.data = records
@@ -28,16 +29,16 @@ class Table(Html.Html):
   _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
 
   @property
-  def cell(self):
+  def cell(self) -> JsHtmlTabulator.JsHtmlTabulatorCell:
     """
     Description:
     ------------
 
     """
-    return JsHtmlTabulator.JsHtmlTabulatorCell(self.tableId, self.page)
+    return JsHtmlTabulator.JsHtmlTabulatorCell(self.tableId, page=self.page, component=self)
 
   @property
-  def style(self):
+  def style(self) -> GrpClsTable.Tabulator:
     """
     Description:
     ------------
@@ -50,16 +51,16 @@ class Table(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlTabulator.JsHtmlTabulator:
     """
     Description:
     -----------
     HTML Dom object.
 
-    :rtype: JsHtml.JsHtmlButton
+    :rtype: JsHtmlTabulator.JsHtmlTabulator
     """
     if self._dom is None:
-      self._dom = JsHtmlTabulator.JsHtmlTabulator(self, report=self._report)
+      self._dom = JsHtmlTabulator.JsHtmlTabulator(self, page=self.page)
     return self._dom
 
   @property
@@ -72,7 +73,7 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptTableTabulator.TableConfig:
     """
     Description:
     ------------
@@ -96,7 +97,7 @@ class Table(Html.Html):
     return self.options
 
   @property
-  def js(self):
+  def js(self) -> JsTabulator.Tabulator:
     """
     Description:
     ------------
@@ -107,7 +108,7 @@ class Table(Html.Html):
     :rtype: JsTabulator.Tabulator
     """
     if self._js is None:
-      self._js = JsTabulator.Tabulator(self.page, selector=self.tableId, setVar=False, parent=self)
+      self._js = JsTabulator.Tabulator(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
 
   def data(self, data):
@@ -132,7 +133,7 @@ class Table(Html.Html):
     """
     return self.options.add_column(field, title)
 
-  def get_column(self, by_field=None, by_title=None):
+  def get_column(self, by_field: str = None, by_title: str = None):
     """
     Description:
     ------------
@@ -141,8 +142,8 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param by_field: String. Optional. The field reference for the column.
-    :param by_title: String. Optional. The title reference for the column.
+    :param str by_field: Optional. The field reference for the column.
+    :param str by_title: Optional. The title reference for the column.
 
     :rtype: Column
     """
@@ -157,7 +158,7 @@ class Table(Html.Html):
     for c in self.options.columns:
       yield c
 
-  def headers(self, colsDef):
+  def headers(self, cols_def: dict):
     """
     Description:
     ------------
@@ -165,11 +166,11 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param colsDef: Dictionary. The header definition.
+    :param dict cols_def: The header definition.
     """
     for c in self.options.columns:
-      if c.field is not None and c.field in colsDef:
-        c.js_tree.update(colsDef[c.field])
+      if c.field is not None and c.field in cols_def:
+        c.js_tree.update(cols_def[c.field])
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
@@ -270,39 +271,39 @@ class Table(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s></div>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class TableTree(Table):
   _option_cls = OptTableTabulator.TableTreeConfig
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
     data, columns, self._json_config = [], [], {}
-    super(TableTree, self).__init__(report, records, width, height, html_code, options, profile)
+    super(TableTree, self).__init__(page, records, width, height, html_code, options, profile)
     if records is not None:
       self.options.data = records
     self.style.css.background = None
 
   @property
   @Html.deprecated("use self.options instead")
-  def config(self):
+  def config(self) -> OptTableTabulator.TableTreeConfig:
     """
     Description:
     ------------
     Tabulator configuration options.
     Deprecated and replaced by component options.
 
-    :rtype: TableTreeConfig
+    :rtype: OptTableTabulator.TableTreeConfig
     """
     return self.options
 
   @property
-  def options(self):
+  def options(self) -> OptTableTabulator.TableTreeConfig:
     """
     Description:
     ------------
     Tabulator table options.
 
-    :rtype: TableTreeConfig
+    :rtype: OptTableTabulator.TableTreeConfig
     """
     return super().options

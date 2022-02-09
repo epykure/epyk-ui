@@ -35,6 +35,7 @@ recognition.start();
 import json
 
 from typing import Union
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -70,12 +71,12 @@ class SpeechRecognition:
     interimResults: bool = False
     maxAlternatives: int = 1
 
-    def __init__(self, varName, src=None):
+    def __init__(self, js_code, src: primitives.PageModel = None):
       self.src = src
-      self.varName = varName
+      self.js_code = js_code
       self._js = [
         "var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition",
-        "var %s = new SpeechRecognition()" % varName]
+        "var %s = new SpeechRecognition()" % js_code]
 
     @property
     def event(self):
@@ -98,7 +99,7 @@ class SpeechRecognition:
 
         https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/abort
         """
-        return JsObjects.JsVoid("%s.abort()" % self.varName)
+        return JsObjects.JsVoid("%s.abort()" % self.js_code)
 
     def start(self):
         """
@@ -109,7 +110,7 @@ class SpeechRecognition:
 
         https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/start
         """
-        return JsObjects.JsVoid("%s.start()" % self.varName)
+        return JsObjects.JsVoid("%s.start()" % self.js_code)
 
     def stop(self):
         """
@@ -120,11 +121,12 @@ class SpeechRecognition:
 
         https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/stop
         """
-        return JsObjects.JsVoid("%s.stop()" % self.varName)
+        return JsObjects.JsVoid("%s.stop()" % self.js_code)
 
     def addEventListener(self, event: str, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
         self._js.append("%(selector)s.%(event)s = function(event) {var transcript = event.results[0][0].transcript; var confidence = event.results[0][0].confidence;%(funcs)s}" % {
-          "selector": self.varName, "event": event, "funcs": JsUtils.jsConvertFncs(js_funcs, profile=profile, toStr=True)})
+          "selector": self.js_code, "event": event,
+          "funcs": JsUtils.jsConvertFncs(js_funcs, profile=profile, toStr=True)})
         return self
 
     def audiostart(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
@@ -180,10 +182,10 @@ class SpeechRecognition:
     def toStr(self):
         obj_content = []
         # Add the object properties
-        self._js.insert(2, "%s.lang = %s" % (self.varName, json.dumps(self.lang)))
-        self._js.insert(3, "%s.continuous = %s" % (self.varName, json.dumps(self.continuous)))
-        self._js.insert(4, "%s.interimResults = %s" % (self.varName, json.dumps(self.interimResults)))
-        self._js.insert(5, "%s.maxAlternatives = %s" % (self.varName, json.dumps(self.maxAlternatives)))
+        self._js.insert(2, "%s.lang = %s" % (self.js_code, json.dumps(self.lang)))
+        self._js.insert(3, "%s.continuous = %s" % (self.js_code, json.dumps(self.continuous)))
+        self._js.insert(4, "%s.interimResults = %s" % (self.js_code, json.dumps(self.interimResults)))
+        self._js.insert(5, "%s.maxAlternatives = %s" % (self.js_code, json.dumps(self.maxAlternatives)))
         for js in self._js:
           obj_content.append(js)
         self._js = []

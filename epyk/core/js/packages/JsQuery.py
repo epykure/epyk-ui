@@ -32,7 +32,7 @@ class Jsjqxhr:
     self.__ajax = {'request': ajax}
     self.profile = False
 
-  def done(self, jsFncs):
+  def done(self, js_funcs):
     """
     AJAX Function
 
@@ -42,16 +42,16 @@ class Jsjqxhr:
 
       https://api.jquery.com/jQuery.ajax/#jqXHR
 
-    :param jsFncs: The Javascript Functions
+    :param js_funcs: The Javascript Functions
 
     :return:
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__ajax.setdefault("done", []).extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__ajax.setdefault("done", []).extend(js_funcs)
     return self
 
-  def fail(self, jsFncs):
+  def fail(self, js_funcs):
     """
     AJAX Function
 
@@ -61,16 +61,14 @@ class Jsjqxhr:
 
       https://api.jquery.com/jQuery.ajax/#jqXHR
 
-    :param jsFncs: The Javascript Functions
-
-    :return:
+    :param js_funcs: The Javascript Functions
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__ajax.setdefault("fail", []).extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__ajax.setdefault("fail", []).extend(js_funcs)
     return self
 
-  def always(self, jsFncs):
+  def always(self, js_funcs):
     """
     AJAX Function
 
@@ -80,13 +78,13 @@ class Jsjqxhr:
 
       https://api.jquery.com/jQuery.ajax/#jqXHR
 
-    :param jsFncs: The Javascript Functions
+    :param js_funcs: The Javascript Functions
 
     :return:
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self.__ajax.setdefault("always", []).extend(jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__ajax.setdefault("always", []).extend(js_funcs)
     return self
 
   def toStr(self):
@@ -133,7 +131,7 @@ class JQuery(JsPackage):
     :return: The Jquery Python object
     """
     if len(self._js) > 0:
-      raise Exception("Selector can only be changed first")
+      raise ValueError("Selector can only be changed first")
 
     if reference is None:
       self._selector = "jQuery(this)"
@@ -152,10 +150,10 @@ class JQuery(JsPackage):
     :param reference:
     """
     if len(self._js) > 0:
-      raise Exception("Selector can only be changed first")
+      raise ValueError("Selector can only be changed first")
 
     if tag is None and reference is None:
-      raise Exception("Tag or / and Reference must be defined")
+      raise ValueError("Tag or / and Reference must be defined")
 
     if tag is None and reference is not None:
       self._selector = "jQuery('%s')" % reference
@@ -196,18 +194,18 @@ class JQuery(JsPackage):
     """
     return self.fnc("toggle()")
 
-  def trigger(self, jsData, jsFnc=None):
+  def trigger(self, data, js_func=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
+    :param data:
+    :param js_func:
     """
-    jsData = JsUtils.jsConvertData(jsData, jsFnc)
-    return self.fnc("trigger(%(jsData)s)" % {"jsData": jsData})
+    data = JsUtils.jsConvertData(data, js_func)
+    return self.fnc("trigger(%(data)s)" % {"data": data})
 
   def hide(self, speed=None, callback=None):
     """
@@ -228,12 +226,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "hide(%(speed)s, function(){%(callback)s})" % {'speed': speed,  'callback': ";".join(callback)}
+        jq_func = "hide(%(speed)s, function(){%(callback)s})" % {'speed': speed,  'callback': ";".join(callback)}
       else:
-        jqFnc = "hide(%(speed)s)" % {'speed': speed}
+        jq_func = "hide(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "hide()"
-    return self.fnc(jqFnc)
+      jq_func = "hide()"
+    return self.fnc(jq_func)
 
   def show(self, speed=None, callback=None):
     """
@@ -254,12 +252,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "show(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "show(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "show(%(speed)s)" % {'speed': speed}
+        jq_func = "show(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "show()"
-    return self.fnc(jqFnc)
+      jq_func = "show()"
+    return self.fnc(jq_func)
 
   def fadeIn(self, speed=None, callback=None):
     """
@@ -282,12 +280,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "fadeIn(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "fadeIn(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "fadeIn(%(speed)s)" % {'speed': speed}
+        jq_func = "fadeIn(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "fadeIn()"
-    return self.fnc(jqFnc)
+      jq_func = "fadeIn()"
+    return self.fnc(jq_func)
 
   def fadeOut(self, speed=None, callback=None):
     """
@@ -308,12 +306,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "fadeOut(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "fadeOut(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "fadeOut(%(speed)s)" % {'speed': speed}
+        jq_func = "fadeOut(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "fadeOut()"
-    return self.fnc(jqFnc)
+      jq_func = "fadeOut()"
+    return self.fnc(jq_func)
 
   def fadeToggle(self, speed=None, callback=None):
     """
@@ -332,12 +330,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "fadeToggle(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "fadeToggle(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "fadeToggle(%(speed)s)" % {'speed': speed}
+        jq_func = "fadeToggle(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "fadeToggle()"
-    return self.fnc(jqFnc)
+      jq_func = "fadeToggle()"
+    return self.fnc(jq_func)
 
   def fadeTo(self, duration, opacity, easing=None, complete=None):
     """
@@ -363,14 +361,17 @@ class JQuery(JsPackage):
       complete = "function(){%s}" % ";".join(complete)
     if easing is not None:
       if complete is not None:
-        jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(easing)s, %(callback)s)" % {'speed': duration, 'opacity': opacity, 'easing': easing, 'callback': complete}
+        jq_func = "fadeTo(%(speed)s, %(opacity)s, %(easing)s, %(callback)s)" % {
+          'speed': duration, 'opacity': opacity, 'easing': easing, 'callback': complete}
       else:
-        jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(easing)s)" % {'speed': duration, 'opacity': opacity, 'easing': easing}
+        jq_func = "fadeTo(%(speed)s, %(opacity)s, %(easing)s)" % {
+          'speed': duration, 'opacity': opacity, 'easing': easing}
     elif complete is not None:
-      jqFnc = "fadeTo(%(speed)s, %(opacity)s, %(complete)s)" % {'speed': duration, 'opacity': opacity, 'complete': complete}
+      jq_func = "fadeTo(%(speed)s, %(opacity)s, %(complete)s)" % {
+        'speed': duration, 'opacity': opacity, 'complete': complete}
     else:
-      jqFnc = "fadeTo(%(speed)s, %(opacity)s)" % {'speed': duration, 'opacity': opacity}
-    return self.fnc(jqFnc)
+      jq_func = "fadeTo(%(speed)s, %(opacity)s)" % {'speed': duration, 'opacity': opacity}
+    return self.fnc(jq_func)
 
   def slideDown(self, speed=None, callback=None):
     """
@@ -392,12 +393,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "slideDown(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "slideDown(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "slideDown(%(speed)s)" % {'speed': speed}
+        jq_func = "slideDown(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "slideDown()"
-    return self.fnc(jqFnc)
+      jq_func = "slideDown()"
+    return self.fnc(jq_func)
 
   def slideUp(self, speed=None, callback=None):
     """
@@ -419,12 +420,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "slideUp(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "slideUp(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "slideUp(%(speed)s)" % {'speed': speed}
+        jq_func = "slideUp(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "slideUp()"
-    return self.fnc(jqFnc)
+      jq_func = "slideUp()"
+    return self.fnc(jq_func)
 
   def slideToggle(self, speed=None, callback=None):
     """
@@ -446,12 +447,12 @@ class JQuery(JsPackage):
       if callback is not None:
         if not isinstance(callback, list):
           callback = [callback]
-        jqFnc = "slideToggle(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
+        jq_func = "slideToggle(%(speed)s, function(){%(callback)s})" % {'speed': speed, 'callback': ";".join(callback)}
       else:
-        jqFnc = "slideToggle(%(speed)s)" % {'speed': speed}
+        jq_func = "slideToggle(%(speed)s)" % {'speed': speed}
     else:
-      jqFnc = "slideToggle()"
-    return self.fnc(jqFnc)
+      jq_func = "slideToggle()"
+    return self.fnc(jq_func)
 
   def animate(self, params, speed=400, easing='swing', callback=None):
     """
@@ -642,7 +643,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("last()")
 
-  def appendTo(self, dstJqId, jsFnc=None):
+  def appendTo(self, dstJqId, js_func=None):
     """
     Description:
     -----------
@@ -650,14 +651,15 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param dstJqId: A selector, element, HTML string, array of elements, or jQuery object; the matched set of elements will be inserted at the end of the element(s) specified by this parameter.
-    :param jsFnc:
+    :param dstJqId: A selector, element, HTML string, array of elements, or jQuery object; the matched set of
+    elements will be inserted at the end of the element(s) specified by this parameter.
+    :param js_func:
 
     :rtype: str
     """
-    return self.fnc("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
+    return self.fnc("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
-  def append(self, dstJqId, jsFnc=None):
+  def append(self, dstJqId, js_func=None):
     """
     Description:
     -----------
@@ -665,13 +667,13 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param dstJqId:
-    :param jsFnc:
+    :param js_func:
 
     :rtype: str
     """
-    return self.fnc("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, jsFnc)})
+    return self.fnc("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
-  def prepend(self, jsData, jsFnc=None):
+  def prepend(self, data, js_func=None):
     """
     Description:
     -----------
@@ -683,10 +685,10 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
+    :param data:
+    :param js_func:
     """
-    return self.fnc("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(jsData, jsFnc)})
+    return self.fnc("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(data, js_func)})
 
   def eq(self, i):
     """
@@ -723,7 +725,8 @@ class JQuery(JsPackage):
     """
     Description:
     -----------
-    Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object, or element.
+    Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object,
+    or element.
 
     Related Pages:
 
@@ -736,7 +739,7 @@ class JQuery(JsPackage):
     criteria = JsUtils.jsConvertData(criteria, None)
     return self.fnc("find(%s)" % criteria)
 
-  def each(self, jsFncs, profile=None):
+  def each(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -748,10 +751,10 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: A function to execute for each matched element.
+    :param js_funcs: A function to execute for each matched element.
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return self.fnc("each(function(index, data){%s})" % jsFncs)
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return self.fnc("each(function(index, data){%s})" % js_funcs)
 
   def css(self, key, value=None):
     """
@@ -769,8 +772,8 @@ class JQuery(JsPackage):
     :param key:
     :param value:
     """
-    if hasattr(self.src, "style"):
-      self.src.style.css(key, value)
+    if hasattr(self.component, "style"):
+      self.component.style.css(key, value)
       return self
 
     else:
@@ -795,12 +798,12 @@ class JQuery(JsPackage):
     :param value: A value to set for the attribute. If null, the specified attribute will be removed
     """
     if key.lower() in ["style", 'class']:
-      raise Exception("Only the css() function can be used to change the style")
+      raise ValueError("Only the css() function can be used to change the style")
 
-    self.src._attrs[key] = value
-    return self.src
+    self.component._attrs[key] = value
+    return self.component
 
-  def val(self, jsData=None, jsFnc=None):
+  def val(self, data=None, js_func=None):
     """
     Description:
     ------------
@@ -812,19 +815,20 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
+    :param data:
+    :param js_func:
     """
-    if jsData is None:
+    if data is None:
       return self.fnc("val()")
 
-    return self.fnc("val(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return self.fnc("val(%s)" % JsUtils.jsConvertData(data, js_func))
 
-  def text(self, jsData, jsFnc=None):
+  def text(self, data, js_func=None):
     """
     Description:
     ------------
-    Get the combined text contents of each element in the set of matched elements, including their descendants, or set the text contents of the matched elements.
+    Get the combined text contents of each element in the set of matched elements, including their descendants,
+    or set the text contents of the matched elements.
 
     Related Pages:
 
@@ -832,29 +836,29 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
+    :param data:
+    :param js_func:
     """
-    if jsData is None:
+    if data is None:
       return self.fnc("text()")
 
-    jsData = JsUtils.jsConvertData(jsData, jsFnc)
-    return self.fnc("text(%s)" % jsData)
+    data = JsUtils.jsConvertData(data, js_func)
+    return self.fnc("text(%s)" % data)
 
-  def html(self, jsData=None, jsFnc=None):
+  def html(self, data=None, js_func=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsFnc:
+    :param data:
+    :param js_func:
     """
-    if jsData is None:
+    if data is None:
       return self.fnc("html()")
 
-    return self.fnc("html(%s)" % JsUtils.jsConvertData(jsData, jsFnc))
+    return self.fnc("html(%s)" % JsUtils.jsConvertData(data, js_func))
 
   def toggleClass(self, clsName, propagate=False):
     """
@@ -886,11 +890,11 @@ class JQuery(JsPackage):
     :param eventAttrs: A nested python dictionary with the css attributes for each events
     """
     if attrs is not None or eventAttrs is not None:
-      clsName = self.src.style.cssName(clsName)
-      self.src.style.cssCls(clsName, attrs, eventAttrs, False)
+      clsName = self.component.style.cssName(clsName)
+      self.component.style.cssCls(clsName, attrs, eventAttrs, False)
     return self.fnc('addClass("%s")' % clsName)
 
-  def getJSON(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None, profile=None):
+  def getJSON(self, url, data, success, dataType='json', jsDataKey=None, isPyData=True, js_func=None, profile=None):
     """
     Description:
     ------------
@@ -904,11 +908,11 @@ class JQuery(JsPackage):
     ----------
     """
     success = JsUtils.jsConvertFncs(success, toStr=True, profile=profile)
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
+    data = JsUtils.jsConvert(data, jsDataKey, isPyData, js_func)
     return Jsjqxhr("jQuery.getJSON('%s', {data: JSON.stringify(%s)}, function(data) {%s}, '%s')" % (
-      url, jsData, success, dataType))
+      url, data, success, dataType))
 
-  def getJsScript(self, url, jsData, success, dataType='json', jsDataKey=None, isPyData=True, jsFnc=None, profile=None):
+  def getJsScript(self, url, data, success, dataType='json', jsDataKey=None, isPyData=True, js_func=None, profile=None):
     """
     Description:
     ------------
@@ -921,54 +925,19 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param url:
-    :param jsData:
+    :param data:
     :param success:
     :param dataType:
     :param jsDataKey:
     :param isPyData:
-    :param jsFnc:
+    :param js_func:
     """
     success = JsUtils.jsConvertFncs(success, toStr=True, profile=profile)
-    jsData = JsUtils.jsConvert(jsData, jsDataKey, isPyData, jsFnc)
+    data = JsUtils.jsConvert(data, jsDataKey, isPyData, js_func)
     return Jsjqxhr("jQuery.getScript('%s', {data: JSON.stringify(%s)}, function(data, textStatus, jqxhr) {%s}, '%s')" % (
-      url, jsData, success, dataType))
+      url, data, success, dataType))
 
-  def getPyScript(self, script, data=None, successFncs=None, options=None, timeout=None, props=None):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
-
-    Attributes:
-    ----------
-    :param script:
-    :param jsData:
-    :param success:
-    :param dataType:
-    :param jsDataKey:
-    :param isPyData:
-    :param jsFnc:
-    """
-
-    if not hasattr(self.src, "aresObj"):
-      if not hasattr(self.src, "run"):
-        raise Exception("Cannot work without a proper rptObj")
-
-      else:
-        rptObj = self.src
-    else:
-      rptObj = self.src._report
-    if data is None:
-      data = {}
-    qParams = self.getParams('%s/data/%s/%s' % (
-      rptObj._urlsApp['report'], rptObj.run.report_name, script.replace(".py", "")), data, successFncs, None, options,
-                             timeout, props)
-    return Jsjqxhr("jQuery.post(%s)" % qParams)
-
-  def load(self, url, jsData=None, successFncs=None, profile=None):
+  def load(self, url, data=None, success_funcs=None, profile=None):
     """
     Description:
     ------------
@@ -985,22 +954,23 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param url: A string containing the URL to which the request is sent.
-    :param jsData: A plain object or string that is sent to the server with the request.
-    :param successFncs: A callback function that is executed when the request completes.
+    :param data: A plain object or string that is sent to the server with the request.
+    :param success_funcs: A callback function that is executed when the request completes.
+    :param profile:
     """
     url = JsUtils.jsConvertData(url, None)
-    if successFncs is None:
-      if jsData is None:
+    if success_funcs is None:
+      if data is None:
         return "%s.load(%s)" % (self.varId, url)
-      return "%s.load(%s, {data: JSON.stringify(%s)})" % (self.varId, url, jsData)
+      return "%s.load(%s, {data: JSON.stringify(%s)})" % (self.varId, url, data)
 
-    str_fncs = JsUtils.jsConvertFncs(successFncs, toStr=True, profile=profile)
-    if jsData is None:
+    str_fncs = JsUtils.jsConvertFncs(success_funcs, toStr=True, profile=profile)
+    if data is None:
       return "%s.load(%s, function(data) {%s})" % (self.varId, url, str_fncs)
 
-    return "%s.load(%s, {data: JSON.stringify(%s)}, function(data) {%s})" % (self.varId, url, jsData, str_fncs)
+    return "%s.load(%s, {data: JSON.stringify(%s)}, function(data) {%s})" % (self.varId, url, data, str_fncs)
 
-  def ajaxError(self, jsFncs, profile=False):
+  def ajaxError(self, js_funcs, profile=False):
     """
     Description:
     ------------
@@ -1011,13 +981,13 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {%s})" % js_funcs
 
-  def ajaxStart(self, jsFncs, profile=None):
+  def ajaxStart(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -1030,10 +1000,10 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxStart(function() {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxStart(function() {%s})" % js_funcs
 
-  def ajaxStop(self, jsFncs, profile=None):
+  def ajaxStop(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -1045,12 +1015,12 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxStop(function() {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxStop(function() {%s})" % js_funcs
 
-  def ajaxSuccess(self, jsFncs, profile=None):
+  def ajaxSuccess(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -1062,13 +1032,13 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % js_funcs
 
-  def ajaxSend(self, jsFncs, profile=None):
+  def ajaxSend(self, js_funcs, profile=None):
     """
     Description:
     ------------
@@ -1081,23 +1051,23 @@ class JQuery(JsPackage):
     ----------
     :param profile:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxSend(function(event, jqxhr, settings) {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxSend(function(event, jqxhr, settings) {%s})" % js_funcs
 
-  def ajaxComplete(self, jsFncs, profile=None):
+  def ajaxComplete(self, js_funcs, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile:
     """
-    jsFncs = JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)
-    return "jQuery(document).ajaxComplete(function() {%s})" % jsFncs
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return "jQuery(document).ajaxComplete(function() {%s})" % js_funcs
 
-  def getParams(self, url, data, successFncs, errorFncs, options, timeout, props, profile=None):
+  def getParams(self, url, data, success_funcs, errorFncs, options, timeout, props, profile=None):
     """
 
     Attributes:
@@ -1114,15 +1084,15 @@ class JQuery(JsPackage):
     ajaxData.extend(["data: {data: JSON.stringify(%s)}" % data, "url: '%s'" % url])
     if timeout is not None:
       ajaxData.append("timeout: %s" % timeout)
-    if successFncs is not None:
+    if success_funcs is not None:
       ajaxData.append("success: function(result,status,xhr){%s}" % JsUtils.jsConvertFncs(
-        successFncs, toStr=True, profile=profile))
+        success_funcs, toStr=True, profile=profile))
     if errorFncs is not None:
       ajaxData.append("error: function(xhr, status, error){%s}" % JsUtils.jsConvertFncs(
         errorFncs, toStr=True, profile=profile))
     return "{%s}" % ", ".join(ajaxData)
 
-  def get(self, url, data, successFncs=None, options=None, timeout=None, props=None):
+  def get(self, url, data, success_funcs=None, options=None, timeout=None, props=None):
     """
     Description:
     ------------
@@ -1134,9 +1104,9 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     """
-    return Jsjqxhr("jQuery.get(%s)" % self.getParams(url, data, successFncs, None, options, timeout, props))
+    return Jsjqxhr("jQuery.get(%s)" % self.getParams(url, data, success_funcs, None, options, timeout, props))
 
-  def post(self, url, data=None, successFncs=None, options=None, timeout=None, props=None):
+  def post(self, url, data=None, success_funcs=None, options=None, timeout=None, props=None):
     """
     Description:
     ------------
@@ -1152,9 +1122,9 @@ class JQuery(JsPackage):
     :return:
     """
     data = data or {}
-    return Jsjqxhr("jQuery.post(%s)" % self.getParams(url, data, successFncs, None, options, timeout, props))
+    return Jsjqxhr("jQuery.post(%s)" % self.getParams(url, data, success_funcs, None, options, timeout, props))
 
-  def ajax(self, type, url, data=None, successFncs=None, errorFncs=None, options=None, timeout=None, props=None):
+  def ajax(self, type, url, data=None, success_funcs=None, errorFncs=None, options=None, timeout=None, props=None):
     """
     Description:
     ------------
@@ -1172,27 +1142,27 @@ class JQuery(JsPackage):
     :param type: Specifies the type of request. (GET or POST)
     :param url: Specifies the URL to send the request to. Default is the current page
     :param data: Specifies data to be sent to the server
-    :param successFncs: A function to be run when the request succeeds
+    :param success_funcs: A function to be run when the request succeeds
     :param errorFncs: A function to run if the request fails.
     :param options: The other parameters specifies one or more name/value pairs for the AJAX request
     :param timeout: The local timeout (in milliseconds) for the request
     """
     if type.upper() not in ['POST', 'GET']:
-      raise Exception("Method %s not recognised" % url)
+      raise ValueError("Method %s not recognised" % url)
 
     data = data or {}
-    return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, successFncs, errorFncs, options, timeout, props))
+    return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, success_funcs, errorFncs, options, timeout, props))
 
-  def click(self, jsFnc, profile=None):
+  def click(self, js_func, profile=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFnc:
+    :param js_func:
 
     :return:
     """
     self.css("cursor", "pointer")
-    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(jsFnc, toStr=True, profile=profile))
+    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(js_func, toStr=True, profile=profile))

@@ -31,8 +31,8 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
   name = 'Entries'
 
-  def __init__(self, report: primitives.PageModel, text: str, options: dict = None, html_code: str = None):
-    super(Li, self).__init__(report, text, html_code=html_code)
+  def __init__(self, page: primitives.PageModel, text: str, options: dict = None, html_code: str = None):
+    super(Li, self).__init__(page, text, html_code=html_code)
     if options is not None:
       self.item_type = options.get("item_type", "li")
     else:
@@ -116,7 +116,8 @@ class Li(Html.Html):
       self.innerPyHTML = component
     return self
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -150,21 +151,22 @@ class Li(Html.Html):
     :rtype: JsHtml.JsHtmlLi
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlLi(self, report=self.page)
+      self._dom = JsHtml.JsHtmlLi(self, page=self.page)
     return self._dom
 
   def __str__(self):
     return "<%(type)s %(attrs)s>%(content)s</%(type)s>" % {
-      "type": self.item_type, "attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "content": self.content}
+      "type": self.item_type, "attrs": self.get_attrs(css_class_names=self.style.get_classes()),
+      "content": self.content}
 
 
 class List(Html.Html):
   name = 'List'
   _option_cls = OptList.OptionsLi
 
-  def __init__(self, report: primitives.PageModel, data: list, color, width: tuple, height: tuple, html_code: str,
+  def __init__(self, page: primitives.PageModel, data: list, color, width: tuple, height: tuple, html_code: str,
                helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(List, self).__init__(report, [], css_attrs={"width": width, "height": height},
+    super(List, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
     self.color = color if color is not None else self.page.theme.greys[-1]
@@ -200,10 +202,10 @@ class List(Html.Html):
     :rtype: JsHtml.JsHtmlList
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlList(self, report=self.page)
+      self._dom = JsHtml.JsHtmlList(self, page=self.page)
     return self._dom
 
-  def items_style(self, style: str):
+  def items_style(self, style_type: str):
     """
     Description:
     ------------
@@ -211,9 +213,9 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param str style. The alias of the style to apply.
+    :param str style_type. The alias of the style to apply.
     """
-    if style == "bullets":
+    if style_type == "bullets":
       bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
                        'background': self.page.theme.greys[2],
                        'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'}
@@ -233,7 +235,8 @@ class List(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: Javascript functions.
-    :param bool prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
+    :param bool prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action
+      that belongs to the event will not occur.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     from epyk.core.js.primitives import JsObjects
@@ -364,15 +367,15 @@ class List(Html.Html):
 
   def __str__(self):
     self._vals = "".join([i.html() for i in self.items]) if self.items is not None else ""
-    return "<ul %s>%s</ul>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
+    return "<ul %s>%s</ul>" % (self.get_attrs(css_class_names=self.style.get_classes()), self._vals)
 
 
 class Groups(Html.Html):
   name = 'Groups'
 
-  def __init__(self, report: primitives.PageModel, data: list, categories: list, size: tuple, color: str, width: tuple,
+  def __init__(self, page: primitives.PageModel, data: list, categories: Optional[list], size: tuple, color: str, width: tuple,
                height: tuple, html_code: str, helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(Groups, self).__init__(report, [], css_attrs={"width": width, "height": height}, options=options,
+    super(Groups, self).__init__(page, [], css_attrs={"width": width, "height": height}, options=options,
                                  html_code=html_code, profile=profile)
     self.add_helper(helper)
     self.color = color if color is not None else self.page.theme.greys[9]
@@ -382,7 +385,7 @@ class Groups(Html.Html):
     for i, cat in enumerate(categories):
       self.add_list(data[i], cat)
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Html.Html:
     return self.val[i]
 
   def add_list(self, data, category: str = "", color: str = 'inherit', width: tuple = (None, 'px'),
@@ -404,16 +407,16 @@ class Groups(Html.Html):
       self._lists__map_index[i] if len(self._lists__map_index) > i else "Category %s" % i,
       l.html()) for i, l in enumerate(self.val)])
     self.builder_name = self.__class__.__name__
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self._vals)
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self._vals)
 
 
 class Items(Html.Html):
   name = 'Items'
   _option_cls = OptList.OptionsItems
 
-  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
                html_code: str, profile: Optional[Union[bool, dict]], helper: str):
-    super(Items, self).__init__(report, records, html_code=html_code, profile=profile, options=options,
+    super(Items, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, 'height': height})
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.__external_item = False
@@ -511,7 +514,7 @@ class Items(Html.Html):
     :rtype: JsHtmlList.JsItem
     """
     if self._dom is None:
-      self._dom = JsHtmlList.JsItem(self, report=self.page)
+      self._dom = JsHtmlList.JsItem(self, page=self.page)
     return self._dom
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -624,7 +627,7 @@ class Items(Html.Html):
       self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
         item_type_name, getattr(shapes, self.options.items_type)(self.page)))
     self.page.properties.js.add_builders(self.refresh())
-    return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<ul %s></ul>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class ListTournaments(Html.Html):
@@ -632,10 +635,10 @@ class ListTournaments(Html.Html):
   requirements = ('jquery-bracket', )
   _option_cls = OptList.OptionsListBrackets
 
-  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
     super(ListTournaments, self).__init__(
-      report, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
+      page, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.css({'overflow': 'auto', "padding": "auto", "margin": "auto"})
 
   _js__builder__ = '''options.init = data; %(jqId)s.bracket(options)
@@ -643,4 +646,4 @@ class ListTournaments(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s></div>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<div %s></div>" % self.get_attrs(css_class_names=self.style.get_classes())

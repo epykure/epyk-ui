@@ -11,6 +11,8 @@ Modules wrapped as part of this script
 # TODO add pandas to this module when it is available
 """
 
+from epyk.core.py import primitives
+
 import hashlib
 import os
 import json
@@ -28,13 +30,11 @@ except ImportError:
 
 
 class PyRest:
-  class __internal:
-    _props, _context = {}, {}
 
-  def __init__(self, src=None):
-    self.__src = src if src else self.__internal()
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
 
-  def proxy(self, username, password, proxy_host, proxy_port, protocols=None):
+  def proxy(self, username: str, password: str, proxy_host: str, proxy_port: int, protocols: list = None):
     """
     Description:
     ------------
@@ -42,11 +42,11 @@ class PyRest:
 
     Attributes:
     ----------
-    :param username: String. The username.
-    :param password: String. The user password.
-    :param proxy_host: String. The proxy server hostname.
-    :param proxy_port: Integer. The proxy server port.
-    :param protocols: List. Protocols for the proxy. Default [('http', 'http://'), ('https', 'https://')]
+    :param str username: The username.
+    :param str password: The user password.
+    :param str proxy_host: The proxy server hostname.
+    :param int proxy_port: The proxy server port.
+    :param list protocols: Protocols for the proxy. Default [('http', 'http://'), ('https', 'https://')]
     """
     if protocols is None:
       protocols = [('http', 'http://'), ('https', 'https://')]
@@ -55,7 +55,7 @@ class PyRest:
     opener = build_opener(proxy)
     install_opener(opener)
 
-  def http_server(self, port=5000, service_name=""):
+  def http_server(self, port: int = 5000, service_name: str = ""):
     """
     Description:
     ------------
@@ -64,8 +64,8 @@ class PyRest:
 
     Attributes:
     ----------
-    :param port: Integer.
-    :param service_name: String.
+    :param int port:
+    :param str service_name:
     """
     import http.server
     import socketserver
@@ -89,11 +89,11 @@ class PyRest:
         response.write(body)
         self.wfile.write(response.getvalue())
 
-    Handler = GetHandler
-    httpd = socketserver.TCPServer(("", port), Handler)
+    handler = GetHandler
+    httpd = socketserver.TCPServer(("", port), handler)
     httpd.serve_forever()
 
-  def post(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
+  def post(self, url: str, data=None, encoding: str = 'utf-8', headers: dict = None, proxy: dict = None):
     """
     Description:
     ------------
@@ -128,7 +128,7 @@ class PyRest:
 
     return urlopen(request).read()
 
-  def get(self, url, data=None, encoding='utf-8', headers=None, proxy=None):
+  def get(self, url: str, data=None, encoding: str = 'utf-8', headers: dict = None, proxy: dict = None):
     """
     Description:
     ------------
@@ -167,7 +167,9 @@ class PyRest:
 
     return urlopen(request).read()
 
-  def request(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
+  @staticmethod
+  def request(url: str, data=None, method: str = None, encoding: str = 'utf-8', headers: dict = None,
+              unverifiable: bool = False, proxy: dict = None):
     """
     Description:
     ------------
@@ -187,7 +189,7 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: String. Should be a string containing a valid URL
+    :param str url: Should be a string containing a valid URL
     :param method: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
     :param encoding: String. Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
@@ -202,7 +204,9 @@ class PyRest:
     request = Request(url, data, method=method, headers={} if headers is None else headers, unverifiable=unverifiable)
     return urlopen(request).read()
 
-  def webscrapping(self, url, data=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
+  @staticmethod
+  def webscrapping(url: str, data=None, encoding: str = 'utf-8', headers: dict = None,
+                   unverifiable: bool = False, proxy: dict = None):
     """
     Description:
     ------------
@@ -214,12 +218,12 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: Should be a string containing a valid URL
+    :param str url: Should be a string containing a valid URL
     :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
-    :param encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
-    :param headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with each key and value as arguments
-    :param unverifiable: Optional. Should indicate whether the request is unverifiable, as defined by RFC 2965
-    :param proxy: Optional.
+    :param str encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
+    :param dict headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with each key and value as arguments
+    :param bool unverifiable: Optional. Should indicate whether the request is unverifiable, as defined by RFC 2965
+    :param dict proxy: Optional.
 
     :return: The HTML content of the REST call as a String
     """
@@ -233,12 +237,14 @@ class PyRest:
     if headers is not None:
       default_headers.update(headers)
     try:
-      return self.request(url, data, "GET", encoding, default_headers, unverifiable, proxy)
+      return PyRest.request(url, data, "GET", encoding, default_headers, unverifiable, proxy)
 
     except Exception as err:
       return err
 
-  def csv(self, url, delimiter=",", encoding='utf-8', with_header=True, store_location=None):
+  @staticmethod
+  def csv(url: str, delimiter: str = ",", encoding: str = 'utf-8', with_header: bool = True,
+          store_location: str = None):
     """
     Description:
     ------------
@@ -246,14 +252,15 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: String. The url with the data to request.
-    :param delimiter: String. Optional. The line delimiter.
-    :param encoding: String. Optional. The encoding format.
-    :param with_header: Boolean. Optional. A flag to mention if the header is available. (it will be used for the keys)
-    :param store_location: String. Optional. String. The temp folder to cache the data locally. False will cancel the temps data retrievall
+    :param str url: The url with the data to request.
+    :param str delimiter: Optional. The line delimiter.
+    :param str encoding: Optional. The encoding format.
+    :param bool with_header: Optional. A flag to mention if the header is available. (it will be used for the keys)
+    :param str store_location: Optional. String. The temp folder to cache the data locally. False will cancel the
+    temps data retrievall
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
-    if store_location is not False:
+    if store_location is None or store_location:
       # False will override the fact that we do not want to get stored data for this call
       store_location = store_location or TMP_PATH
     else:
@@ -263,7 +270,7 @@ class PyRest:
       if os.path.isfile(file_path):
         return json.load(open(file_path))
 
-    raw_data = self.webscrapping(url).decode(encoding).splitlines()
+    raw_data = PyRest.webscrapping(url).decode(encoding).splitlines()
     if url.endswith(".tsv"):
       delimiter = "\t"
     records = []
@@ -275,13 +282,13 @@ class PyRest:
         records.append(dict(zip(header, line)))
       for line in raw_data[1:]:
         records.append(dict(zip(header, line.split(delimiter))))
-
     if store_location is not None:
+      file_path = os.path.join(store_location, has_file)
       with open(file_path, "w") as f:
         json.dump(records, f)
     return records
 
-  def json(self, url, encoding='utf-8', store_location=None):
+  def json(self, url: str, encoding: str = 'utf-8', store_location: str = None):
     """
     Description:
     ------------
@@ -289,9 +296,9 @@ class PyRest:
 
     Attributes:
     ----------
-    :param url: String. The url with the data to request.
-    :param encoding: String. Optional. The encoding format.
-    :param store_location: String. Optional. String. The temp folder to cache the data locally.
+    :param str url: The url with the data to request.
+    :param str encoding: Optional. The encoding format.
+    :param str store_location: Optional. String. The temp folder to cache the data locally.
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
     if store_location is not False:
@@ -303,40 +310,8 @@ class PyRest:
       if os.path.isfile(file_path):
         return json.load(open(file_path))
 
-    raw_data = json.loads(self.webscrapping(url).decode(encoding))
-    if store_location is not None:
-      with open(file_path, "w") as f:
-        json.dump(raw_data, f)
-    return raw_data
-
-  def query(self, service_name, function_name="getData", report_name=None, data=None, encoding='utf-8'):
-    """
-    Description:
-    ------------
-
-    Usage::
-
-      page.py.requests.query("SrcTest", "textbubble")
-
-    Attributes:
-    ----------
-    :param service_name: String. The service Name in the sources folder.
-    :param function_name: String. Optional. the function name in the service. Default getData().
-    :param report_name: String. Optional. The folder name.
-    :param data: Dictionary. Optional. The input data for the service.
-    :param encoding: String. Optional. The encoding for the input data. Default utf-8.
-    """
-    if data is None:
-      data = {}
-    if "data" not in data:
-      data = {"data": data}
-    data["_function"] = function_name
-    if report_name is None:
-      report_name = self.__src.run.report_name
-    try:
-      headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
-    except Exception as err:
-      headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
-    url = "%sdata/%s/%s" % ("http://192.168.0.34:5000/reports/", report_name, service_name)
-    request = Request(url, json.dumps(data).encode(encoding=encoding), headers)
-    return json.loads(urlopen(request).read())
+      raw_data = json.loads(self.webscrapping(url).decode(encoding))
+      if store_location is not None:
+        with open(file_path, "w") as f:
+          json.dump(raw_data, f)
+      return raw_data

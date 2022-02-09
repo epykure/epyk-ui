@@ -33,7 +33,7 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param flag:
+    :prop flag:
     """
     return self._config_group_get('opts', False)
 
@@ -55,7 +55,7 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param num:
+    :prop num:
     """
     return self._config_group_get('opts', 100)
 
@@ -77,7 +77,7 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param num:
+    :prop num:
     """
     return self._config_group_get('opts', 5)
 
@@ -98,12 +98,12 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param flag:
+    :prop flag:
     """
     return self._config_group_get('opts', True)
 
   @animateOpen.setter
-  def animateOpen(self, flag):
+  def animateOpen(self, flag: bool):
     self._config_group('opts', flag)
 
   @property
@@ -119,12 +119,12 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param flag:
+    :prop flag:
     """
     return self._config_group_get('opts', True)
 
   @animateClose.setter
-  def animateClose(self, flag):
+  def animateClose(self, flag: bool):
     self._config_group('opts', flag)
 
   @property
@@ -142,12 +142,12 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param flag:
+    :prop flag:
     """
     return self._config_group_get('opts', True)
 
   @useToJSON.setter
-  def useToJSON(self, flag):
+  def useToJSON(self, flag: bool):
     self._config_group('opts', flag)
 
   @property
@@ -163,12 +163,12 @@ class OptionsJsonFmt(Options):
 
     Attributes:
     ----------
-    :param flag:
+    :prop flag:
     """
     return self._config_group_get('opts', None)
 
   @sortPropertiesBy.setter
-  def sortPropertiesBy(self, flag):
+  def sortPropertiesBy(self, flag: bool):
     self._config_group('opts', flag)
 
 
@@ -182,10 +182,10 @@ class OptionsLegend(Options):
 
     Attributes:
     ----------
-    :param css_attrs:
+    :prop css_attrs:
     """
     return self.get({})
 
   @style.setter
-  def style(self, css_attrs):
+  def style(self, css_attrs: dict):
     self.set(css_attrs)

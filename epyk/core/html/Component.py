@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional
+from epyk.core.py import primitives
 from epyk.core.html import Defaults
 
 
 class Component:
 
-  def __init__(self, html):
+  def __init__(self, html: primitives.HtmlModel):
     self._html = html
     self.name = html.__class__.__name__
     self.folder = self.name.lower()
@@ -40,7 +41,7 @@ class Component:
     Description:
     -----------
     Component export for an Angular app.
-    This will allow to build apps directly from reports using each underlying components available in the framework.
+    This will allow building apps directly from reports using each underlying components available in the framework.
 
     Attributes:
     ----------

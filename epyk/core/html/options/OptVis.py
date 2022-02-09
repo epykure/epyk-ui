@@ -266,7 +266,8 @@ class OptionsCameraPosition(DataClass):
     """
     Description:
     -----------
-    The (normalized) distance from the camera to the center of the graph, in the range of 0.71 to 5.0. A larger distance puts the graph further away, making it smaller.
+    The (normalized) distance from the camera to the center of the graph, in the range of 0.71 to 5.0.
+    A larger distance puts the graph further away, making it smaller.
 
     https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
@@ -299,9 +300,9 @@ class OptionsInterpolation(DataClass):
     """
     Description:
     -----------
-    Define the type of parametrizaion for the catmullRom interpolation. Example 7 shows the different parametrizations.
-    The options are 'centripetal' (best results), 'chordal' and 'uniform'. Uniform is the computationally cheapest variant.
-    If interpolation is disabled, linear interpolation is used.
+    Define the type of parametrization for the catmullRom interpolation. Example 7 shows the different parametrizations.
+    The options are 'centripetal' (best results), 'chordal' and 'uniform'. Uniform is the computationally cheapest
+    variant. If interpolation is disabled, linear interpolation is used.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -474,7 +475,10 @@ class OptionsdrawPoints(DataClass):
     """
     Description:
     -----------
-    Defines a render function for every datapoint. If a group has no drawPoints.onRender callback, the graph2d drawPoints.onRender callback will be used. If neither is defined, the datapoint will be rendered according to the group setting of drawPoints.enabled. This callback must return true if the datapoint should be rendered, otherwise false.
+    Defines a render function for every datapoint. If a group has no drawPoints.onRender callback,
+    the graph2d drawPoints.onRender callback will be used. If neither is defined, the datapoint will be rendered
+    according to the group setting of drawPoints.enabled. This callback must return true if the datapoint should be
+    rendered, otherwise false.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -529,7 +533,8 @@ class OptionBarChart(DataClass):
     Description:
     -----------
     If two datapoints of a barchart overlap, they are drawn over eachother by default.
-    If sideBySide is set to true, they will be drawn side by side, within the same width as a single bar.. See example 10 for more information. When using groups, see example 11.
+    If sideBySide is set to true, they will be drawn side by side, within the same width as a single bar..
+    See example 10 for more information. When using groups, see example 11.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -559,7 +564,8 @@ class OptionBarChart(DataClass):
     """
     Description:
     -----------
-    The minimum width of the bars in pixels: by default the bars get smaller while zooming out to prevent overlap, this value is the minimum width of the bar. Default behavior (when minWidth is not set) is 10% of the bar width.
+    The minimum width of the bars in pixels: by default the bars get smaller while zooming out to prevent overlap,
+    this value is the minimum width of the bar. Default behavior (when minWidth is not set) is 10% of the bar width.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -577,7 +583,8 @@ class OptionsLegendPosition(DataClass):
     """
     Description:
     -----------
-    Both axis, left and right, have a corresponding legend. This toggles the visibility of the legend that is coupled with the left axis.
+    Both axis, left and right, have a corresponding legend. This toggles the visibility of the legend that is coupled
+    with the left axis.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -592,7 +599,8 @@ class OptionsLegendPosition(DataClass):
     """
     Description:
     -----------
-    Determine the position of the legend coupled to the left axis. Options are 'top-left', 'top-right', 'bottom-left' or 'bottom-right'.
+    Determine the position of the legend coupled to the left axis. Options are 'top-left', 'top-right',
+    'bottom-left' or 'bottom-right'.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -709,7 +717,7 @@ class Options2D(DataClass):
     self._attrs["defaultGroup"] = val
 
   @property
-  def drawPoints(self):
+  def drawPoints(self) -> OptionsdrawPoints:
     """
     Description:
     -----------
@@ -721,7 +729,7 @@ class Options2D(DataClass):
     return self.has_attribute(OptionsdrawPoints)
 
   @property
-  def dataAxis(self):
+  def dataAxis(self) -> OptionAxis:
     """
     Description:
     -----------
@@ -733,7 +741,7 @@ class Options2D(DataClass):
     return self.has_attribute(OptionAxis)
 
   @property
-  def interpolation(self):
+  def interpolation(self) -> OptionsInterpolation:
     """
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
@@ -756,7 +764,8 @@ class Options2D(DataClass):
     Description:
     -----------
     This is the height of the graph SVG canvas.
-    If it is larger than the height of the outer frame, you can drag up and down the vertical direction as well as the usual horizontal direction.
+    If it is larger than the height of the outer frame, you can drag up and down the vertical direction as well as the
+    usual horizontal direction.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -782,7 +791,7 @@ class Options2D(DataClass):
     self._attrs["height"] = val
 
   @property
-  def legend(self):
+  def legend(self) -> OptionsLegend:
     """
 
     :rtype: OptionsLegend
@@ -838,7 +847,7 @@ class Options2D(DataClass):
     self._attrs["moveable"] = val
 
   @property
-  def orientation(self):
+  def orientation(self) -> EnumOrientation:
     """
 
     :rtype: EnumOrientation
@@ -846,7 +855,7 @@ class Options2D(DataClass):
     return self.has_attribute(EnumOrientation)
 
   @property
-  def shaded(self):
+  def shaded(self) -> EnumOrientation:
     """
 
     :rtype: EnumOrientation
@@ -926,7 +935,7 @@ class Options2D(DataClass):
     self._attrs["zoomMin"] = val
 
   @property
-  def timeAxis(self):
+  def timeAxis(self) -> OptionsTime:
     return self.sub_data("timeAxis", OptionsTime)
 
   @property
@@ -938,8 +947,8 @@ class Options2D(DataClass):
     return self.get(True)
 
   @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+  def managed(self, flag: bool):
+    self.set(flag)
 
 
 class Options3D(DataClass):
@@ -967,7 +976,8 @@ class Options3D(DataClass):
     Description:
     -----------
     If false, the animation frames are loaded as soon as they are requested.
-    if animationPreload is true, the graph will automatically load all frames in the background, resulting in a smoother animation as soon as all frames are loaded. The load progress is shown on screen.
+    if animationPreload is true, the graph will automatically load all frames in the background, resulting in a
+    smoother animation as soon as all frames are loaded. The load progress is shown on screen.
 
     Related Pages:
 
@@ -1022,11 +1032,11 @@ class Options3D(DataClass):
     self._attrs["autoResize"] = val
 
   @property
-  def backgroundColor(self):
+  def backgroundColor(self) -> OptionsBackgroundColor:
     return self.sub_data("backgroundColor", OptionsBackgroundColor)
 
   @property
-  def cameraPosition(self):
+  def cameraPosition(self) -> OptionsCameraPosition:
     """
 
     :rtype: OptionsCameraPosition
@@ -1042,7 +1052,7 @@ class Options3D(DataClass):
     self._attrs["ctrlToZoom"] = val
 
   @property
-  def dataColor(self):
+  def dataColor(self) -> OptionsBackgroundColor:
     return self.sub_data("dataColor", OptionsBackgroundColor)
 
   @property
@@ -1350,7 +1360,7 @@ class Options3D(DataClass):
     self._attrs["showSurfaceGrid"] = val
 
   @property
-  def style(self):
+  def style(self) -> Enum3dStyles:
     """
     Description:
     -----------
@@ -1371,7 +1381,8 @@ class Options3D(DataClass):
     -----------
     Show a tooltip showing the values of the hovered data point.
     The contents of the tooltip can be customized by providing a callback function as tooltip.
-    In this case the function is called with an object containing parameters x, y, z, and data (the source JS object for the point) as an argument, and must return a string which may contain HTML.
+    In this case the function is called with an object containing parameters x, y, z, and data
+    (the source JS object for the point) as an argument, and must return a string which may contain HTML.
 
     Related Pages:
 
@@ -1401,7 +1412,7 @@ class Options3D(DataClass):
     self._attrs["tooltipDelay"] = val
 
   @property
-  def tooltipStyle(self):
+  def tooltipStyle(self) -> OptionsTooltipStyle:
     """
 
     :rtype: OptionsTooltipStyle
@@ -1448,7 +1459,8 @@ class Options3D(DataClass):
     Description:
     -----------
     A value between 0.1 and 1.0.
-    This scales the vertical size of the graph When keepAspectRatio is set to false, and verticalRatio is set to 1.0, the graph will be a cube.
+    This scales the vertical size of the graph When keepAspectRatio is set to false, and verticalRatio is set to 1.0,
+    the graph will be a cube.
 
     Related Pages:
 
@@ -1745,8 +1757,8 @@ class Options3D(DataClass):
     return self.get(True)
 
   @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+  def managed(self, flag: bool):
+    self.set(flag)
 
 
 class OptionsEditable(DataClass):
@@ -1756,7 +1768,8 @@ class OptionsEditable(DataClass):
     """
     Description:
     -----------
-    If true, new items can be created by double tapping an empty space in the Timeline. See section Editing Items for a detailed explanation.
+    If true, new items can be created by double tapping an empty space in the Timeline. See section Editing Items for
+    a detailed explanation.
 
     Related Pages:
 
@@ -1773,7 +1786,8 @@ class OptionsEditable(DataClass):
     """
     Description:
     -----------
-    If true, items can be deleted by first selecting them, and then clicking the delete button on the top right of the item. See section Editing Items for a detailed explanation.
+    If true, items can be deleted by first selecting them, and then clicking the delete button on the top right of the
+    item. See section Editing Items for a detailed explanation.
 
     Related Pages:
 
@@ -1790,7 +1804,8 @@ class OptionsEditable(DataClass):
     """
     Description:
     -----------
-    If true, items can be dragged from one group to another. Only applicable when the Timeline has groups. See section Editing Items for a detailed explanation.
+    If true, items can be dragged from one group to another. Only applicable when the Timeline has groups.
+    See section Editing Items for a detailed explanation.
 
     Related Pages:
 
@@ -1877,7 +1892,8 @@ class OptionsTimeline(DataClass):
     """
     Description:
     -----------
-    The initial end date for the axis of the timeline. If not provided, the latest date present in the items set is taken as end date.
+    The initial end date for the axis of the timeline. If not provided, the latest date present in the items set is
+    taken as end date.
 
     Related Pages:
 
@@ -1894,7 +1910,9 @@ class OptionsTimeline(DataClass):
     """
     Description:
     -----------
-    When a Timeline is configured to be clickToUse, it will react to mouse and touch events only when active. When active, a blue shadow border is displayed around the Timeline. The Timeline is set active by clicking on it, and is changed to inactive again by clicking outside the Timeline or by pressing the ESC key.
+    When a Timeline is configured to be clickToUse, it will react to mouse and touch events only when active.
+    When active, a blue shadow border is displayed around the Timeline. The Timeline is set active by clicking on it,
+    and is changed to inactive again by clicking outside the Timeline or by pressing the ESC key.
 
     Related Pages:
 
@@ -1911,7 +1929,8 @@ class OptionsTimeline(DataClass):
     """
     Description:
     -----------
-    The initial start date for the axis of the timeline. If not provided, the earliest date present in the events is taken as start date.
+    The initial start date for the axis of the timeline. If not provided, the earliest date present in the events is
+    taken as start date.
 
     Related Pages:
 
@@ -1962,7 +1981,8 @@ class OptionsTimeline(DataClass):
     """
     Description:
     -----------
-    If true, multiple items can be selected using ctrl+click, shift+click, or by holding items. Only applicable when option selectable is true.
+    If true, multiple items can be selected using ctrl+click, shift+click, or by holding items.
+    Only applicable when option selectable is true.
 
     Related Pages:
 
@@ -2000,8 +2020,8 @@ class OptionsTimeline(DataClass):
     return self.get(True)
 
   @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+  def managed(self, flag: bool):
+    self.set(flag)
 
 
 class OptionLabel(DataClass):
@@ -2011,7 +2031,8 @@ class OptionLabel(DataClass):
     """
     Description:
     -----------
-    Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the properties in this object are defined.
+    Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the
+    properties in this object are defined.
 
     Related Pages:
 
@@ -2082,7 +2103,8 @@ class OptionLabel(DataClass):
     Description:
     -----------
     When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn.
-    When using font scaling, you can use this together with the maxVisible to first show labels of important edges when zoomed out and only show the rest when zooming in.
+    When using font scaling, you can use this together with the maxVisible to first show labels of important edges when
+    zoomed out and only show the rest when zooming in.
 
     Related Pages:
 
@@ -2114,7 +2136,7 @@ class OptionNodeScaling(DataClass):
     self._attrs["max"] = val
 
   @property
-  def label(self):
+  def label(self) -> OptionLabel:
     """
 
     :rtype: OptionLabel
@@ -2144,7 +2166,7 @@ class OptionFont(DataClass):
 class OptionNode(DataClass):
 
   @property
-  def shape(self):
+  def shape(self) -> EnumNodeShapes:
     """
 
     :rtype: EnumNodeShapes
@@ -2152,7 +2174,7 @@ class OptionNode(DataClass):
     return self.has_attribute(EnumNodeShapes)
 
   @property
-  def scaling(self):
+  def scaling(self) -> OptionNodeScaling:
     """
 
     :rtype: OptionNodeScaling
@@ -2160,7 +2182,7 @@ class OptionNode(DataClass):
     return self.has_attribute(OptionNodeScaling)
 
   @property
-  def font(self):
+  def font(self) -> OptionFont:
     """
 
     :rtype: OptionFont
@@ -2268,9 +2290,12 @@ class OptionShadow(DataClass):
     """
     Description:
     -----------
-    Toggle the casting of shadows. If this option is not defined, it is set to true if any of the properties in this object are defined.
+    Toggle the casting of shadows. If this option is not defined, it is set to true if any of the properties in
+    this object are defined.
 
-    https://visjs.github.io/vis-network/docs/network/edges.html
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["enabled"]
 
@@ -2283,9 +2308,12 @@ class OptionShadow(DataClass):
     """
     Description:
     -----------
-    The color size of the shadow as a string. Supported formats are 'rgb(255,255,255)', 'rgba(255,255,255,1)' and '#FFFFFF'.
+    The color size of the shadow as a string. Supported formats are 'rgb(255,255,255)', 'rgba(255,255,255,1)'
+    and '#FFFFFF'.
 
-    https://visjs.github.io/vis-network/docs/network/edges.html
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["color"]
 
@@ -2300,7 +2328,9 @@ class OptionShadow(DataClass):
     -----------
     The blur size of the shadow.
 
-    https://visjs.github.io/vis-network/docs/network/edges.html
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["size"]
 
@@ -2315,7 +2345,9 @@ class OptionShadow(DataClass):
     -----------
     The x offset.
 
-    https://visjs.github.io/vis-network/docs/network/edges.html
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["x"]
 
@@ -2330,7 +2362,9 @@ class OptionShadow(DataClass):
     -----------
     The y offset.
 
-    https://visjs.github.io/vis-network/docs/network/edges.html
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/edges.html
     """
     return self._attrs["y"]
 
@@ -2342,7 +2376,7 @@ class OptionShadow(DataClass):
 class OptionEdge(DataClass):
 
   @property
-  def color(self):
+  def color(self) -> OptionColor:
     """
 
     :rtype: OptionColor
@@ -2358,7 +2392,7 @@ class OptionEdge(DataClass):
     self._attrs["hoverWidth"] = val
 
   @property
-  def interaction(self):
+  def interaction(self) -> OptionInteraction:
     """
 
     :rtype: OptionInteraction
@@ -2374,7 +2408,7 @@ class OptionEdge(DataClass):
     self._attrs["width"] = val
 
   @property
-  def smooth(self):
+  def smooth(self) -> OptionSmooth:
     """
 
     :rtype: OptionSmooth
@@ -2382,7 +2416,7 @@ class OptionEdge(DataClass):
     return self.has_attribute(OptionSmooth)
 
   @property
-  def shadow(self):
+  def shadow(self) -> OptionShadow:
     """
 
     :rtype: OptionShadow
@@ -2400,7 +2434,9 @@ class OPtionsHierarchical(DataClass):
     Toggle the usage of the hierarchical layout system.
     If this option is not defined, it is set to true if any of the properties in this object are defined.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["enabled"]
 
@@ -2415,7 +2451,9 @@ class OPtionsHierarchical(DataClass):
     -----------
     The distance between the different levels.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["levelSeparation"]
 
@@ -2431,7 +2469,9 @@ class OPtionsHierarchical(DataClass):
     Minimum distance between nodes on the free axis. This is only for the initial layout.
     If you enable physics, the node distance there will be the effective node distance
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["nodeSpacing"]
 
@@ -2447,7 +2487,9 @@ class OPtionsHierarchical(DataClass):
     Distance between different trees (independent networks). This is only for the initial layout.
     If you enable physics, the repulsion model will denote the distance between the trees.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["treeSpacing"]
 
@@ -2464,7 +2506,9 @@ class OPtionsHierarchical(DataClass):
     Each node will check for whitespace and will shift it's branch along with it for as far as it can, respecting the nodeSpacing on any level.
     This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics. This will greatly speed up the stabilization time though!
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["blockShifting"]
 
@@ -2483,7 +2527,9 @@ class OPtionsHierarchical(DataClass):
     This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics.
     This will greatly speed up the stabilization time though!
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["edgeMinimization"]
 
@@ -2498,7 +2544,9 @@ class OPtionsHierarchical(DataClass):
     -----------
     When true, the parents nodes will be centered again after the layout algorithm has been finished.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["parentCentralization"]
 
@@ -2517,9 +2565,12 @@ class OptionLayout(DataClass):
     When NOT using the hierarchical layout, the nodes are randomly positioned initially.
     This means that the settled result is different every time. If you provide a random seed manually,
     the layout will be the same every time.
-    Ideally you try with an undefined seed, reload until you are happy with the layout and use the getSeed() method to ascertain the seed.
+    Ideally you try with an undefined seed, reload until you are happy with the layout and use the getSeed() method to
+    ascertain the seed.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["randomSeed"]
 
@@ -2537,7 +2588,9 @@ class OptionLayout(DataClass):
     This can greatly improve the stabilization times. If the network is very interconnected (no or few leaf nodes),
     this may not work and it will revert back to the old method. Performance will be improved in the future
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["improvedLayout"]
 
@@ -2552,7 +2605,9 @@ class OptionLayout(DataClass):
     -----------
     Cluster threshold to which improvedLayout applies.
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
     """
     return self._attrs["clusterThreshold"]
 
@@ -2561,12 +2616,14 @@ class OptionLayout(DataClass):
     self._attrs["clusterThreshold"] = val
 
   @property
-  def hierarchical(self):
+  def hierarchical(self) -> OPtionsHierarchical:
     """
     Description:
     -----------
 
-    https://visjs.github.io/vis-network/docs/network/layout.html#
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/layout.html#
 
     :rtype: OPtionsHierarchical
     """
@@ -2592,9 +2649,12 @@ class OptionsNetwork(DataClass):
     Description:
     -----------
     If true, the Network will automatically detect when its container is resized, and redraw itself accordingly.
-    If false, the Network can be forced to repaint after its container has been resized using the function redraw() and setSize().
+    If false, the Network can be forced to repaint after its container has been resized using the function redraw()
+    and setSize().
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
     """
     return self._attrs["autoResize"]
 
@@ -2609,7 +2669,9 @@ class OptionsNetwork(DataClass):
     -----------
     the width of the canvas. Can be in percentages or pixels (ie. '400px').
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
     """
     return self._attrs["width"]
 
@@ -2624,7 +2686,9 @@ class OptionsNetwork(DataClass):
     -----------
     the height of the canvas. Can be in percentages or pixels (ie. '400px').
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
     """
     return self._attrs["height"]
 
@@ -2639,7 +2703,9 @@ class OptionsNetwork(DataClass):
     -----------
     Select the locale. By default, the language is English
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
     """
     return self._attrs["locale"]
 
@@ -2648,37 +2714,44 @@ class OptionsNetwork(DataClass):
     self._attrs["locale"] = val
 
   @property
-  def nodes(self):
+  def nodes(self) -> OptionNode:
     """
     Description:
     -----------
     All options in this object are explained in the nodes module.
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     :rtype: OptionNode
     """
     return self.has_attribute(OptionNode)
 
   @property
-  def edges(self):
+  def edges(self) -> OptionEdge:
     """
     Description:
     -----------
     All options in this object are explained in the edges module.
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     :rtype: OptionEdge
     """
     return self.has_attribute(OptionEdge)
 
   @property
-  def layout(self):
+  def layout(self) -> OptionLayout:
     """
     Description:
     -----------
-    https://visjs.github.io/vis-network/docs/network/
+
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     All options in this object are explained in the layout module.
 
@@ -2687,39 +2760,45 @@ class OptionsNetwork(DataClass):
     return self.has_attribute(OptionLayout)
 
   @property
-  def physics(self):
+  def physics(self) -> OptionPhysics:
     """
     Description:
     -----------
     All options in this object are explained in the physics module.
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     :rtype: OptionPhysics
     """
     return self.has_attribute(OptionPhysics)
 
   @property
-  def interaction(self):
+  def interaction(self) -> OptionInteraction:
     """
     Description:
     -----------
     All options in this object are explained in the interaction module.
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     :rtype: OptionInteraction
     """
     return self.has_attribute(OptionInteraction)
 
   @property
-  def manipulation(self):
+  def manipulation(self) -> OptionManipulation:
     """
     Description:
     -----------
     All options in this object are explained in the manipulation module.
 
-    https://visjs.github.io/vis-network/docs/network/
+    Related Pages:
+
+      https://visjs.github.io/vis-network/docs/network/
 
     :rtype: OptionManipulation
     """
@@ -2734,5 +2813,5 @@ class OptionsNetwork(DataClass):
     return self.get(True)
 
   @managed.setter
-  def managed(self, bool):
-    self.set(bool)
+  def managed(self, flag: bool):
+    self.set(flag)

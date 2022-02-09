@@ -25,7 +25,7 @@ class UpDown(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, 'accounting')
   _option_cls = OptText.OptionsNumberMoves
 
-  def __init__(self, report: primitives.PageModel, record: list, components: List[Html.Html], color: Optional[str],
+  def __init__(self, page: primitives.PageModel, record: list, components: List[Html.Html], color: Optional[str],
                label: Optional[str], width: tuple, height: tuple, options: Optional[dict], helper: Optional[str],
                profile: Optional[Union[bool, dict]]):
     if record is None:
@@ -33,7 +33,7 @@ class UpDown(Html.Html):
     if label is not None:
       record["label"] = label
     super(UpDown, self).__init__(
-      report, record, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, record, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.add_helper(helper)
     self.style.css.position = "relative"
     if self.helper:
@@ -112,7 +112,8 @@ class UpDown(Html.Html):
     self.components[component.htmlCode] = component
     return self
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -135,16 +136,16 @@ class UpDown(Html.Html):
     for component in self.components.values():
       rows.append(str(component))
     return '<div %s>%s<div id="%s_content"></div>%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.htmlCode,  self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.htmlCode,  self.helper)
 
 
 class BlockText(Html.Html):
   name = 'Block text'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
+  def __init__(self, page: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
                height: tuple, helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(BlockText, self).__init__(report, record, profile=profile, options=options,
+    super(BlockText, self).__init__(page, record, profile=profile, options=options,
                                     css_attrs={'color': color, "width": width, "height": height})
     self.add_helper(helper)
     self.css({'padding': '5px'})
@@ -176,7 +177,7 @@ class BlockText(Html.Html):
 
   def __str__(self):
     items = [
-      '<div %s>' % self.get_attrs(pyClassNames=self.style.get_classes()),
+      '<div %s>' % self.get_attrs(css_class_names=self.style.get_classes()),
       '<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (
         self.htmlCode, self.page.body.style.globals.font.normal(3)),
       '<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode,
@@ -190,10 +191,10 @@ class TextWithBorder(Html.Html):
   name = 'Text with Border and Icon'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
+  def __init__(self, page: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(TextWithBorder, self).__init__(
-      report, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
+      page, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     self.align = align
     if 'colorTitle' not in self.val:
@@ -222,7 +223,7 @@ class TextWithBorder(Html.Html):
       htmlObj.querySelector('legend').innerHTML = data.title; htmlObj.querySelector('span').innerHTML = data.value'''
 
   def __str__(self):
-    item = ['<fieldset %s>' % self.get_attrs(pyClassNames=self.style.get_classes())]
+    item = ['<fieldset %s>' % self.get_attrs(css_class_names=self.style.get_classes())]
     if 'icon' in self.val:
       self.val['align'] = self.align
       item.append('<i class="%(icon)s fa-5x" style="width:100%%;text-align:%(align)s;margin:2px 0 10px 0;color:%(color)s"></i>' % self.val)
@@ -240,8 +241,8 @@ class TextWithBorder(Html.Html):
 class Number(Html.Html):
   name = 'Number'
 
-  def __init__(self, report: primitives.PageModel, number, components, label, width, height, profile, options, helper):
-    super(Number, self).__init__(report, number, css_attrs={"width": width, "height": height}, profile=profile)
+  def __init__(self, page: primitives.PageModel, number, components, label, width, height, profile, options, helper):
+    super(Number, self).__init__(page, number, css_attrs={"width": width, "height": height}, profile=profile)
     if options.get('url', None) is not None:
       self.add_link(number, url=options['url'], css={
         "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
@@ -286,7 +287,7 @@ class Number(Html.Html):
 
   def __str__(self):
     rows = [str(self.components[htmlCode]) for htmlCode in self.__comps]
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.helper)
 
 
 class Delta(Html.Html):
@@ -294,8 +295,8 @@ class Delta(Html.Html):
   name = 'Delta Figures'
   _option_cls = OptText.OptionsNumberDelta
 
-  def __init__(self, report, records, components, width, height, options, helper, profile):
-    super(Delta, self).__init__(report, records, options=options,
+  def __init__(self, page: primitives.PageModel, records, components, width, height, options, helper, profile):
+    super(Delta, self).__init__(page, records, options=options,
                                 css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     if 'color' not in self.val:
@@ -369,7 +370,7 @@ class Delta(Html.Html):
       <div id="progress" style="height:10px;color:%(color)s;border:1px solid %(greyColor)s"></div>
       <div style="font-size:10px;font-style:italic;color:%(greyColor)s;padding-bottom:5px;text-align:left"></div>
       %(helper)s
-      </div>''' % {"strAttr": self.get_attrs(pyClassNames=self.style.get_classes()),
+      </div>''' % {"strAttr": self.get_attrs(css_class_names=self.style.get_classes()),
                    "size": self.page.body.style.globals.font.normal(6),
                    'htmlCode': self.htmlCode, "color": self.val['color'], "components": "".join(rows),
                    "greyColor": self.page.theme.greys[6], "helper": self.helper}
@@ -379,8 +380,8 @@ class Formula(Html.Html):
   requirements = ('mathjax', )
   name = 'Latex Formula'
 
-  def __init__(self, report, text, width, height, color, html_code, helper, options, profile):
-    super(Formula, self).__init__(report, text, options=options, html_code=html_code,
+  def __init__(self, page: primitives.PageModel, text, width, height, color, html_code, helper, options, profile):
+    super(Formula, self).__init__(page, text, options=options, html_code=html_code,
                                   css_attrs={"color": color, "width": width, "height": height}, profile=profile)
     self.add_helper(helper)
 
@@ -423,16 +424,16 @@ class Formula(Html.Html):
     return self._js
 
   def __str__(self):
-    return '<font %s>%s</font>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
+    return '<font %s>%s</font>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.content, self.helper)
 
 
 class TrafficLight(Html.Html):
   name = 'Light'
 
-  def __init__(self, report, color, label, height, tooltip, helper, options, profile):
+  def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile):
     # Small change to allow the direct use of boolean and none to define the color
     # Those standards will simplify the creation of themes going forward
-    super(TrafficLight, self).__init__(report, color, css_attrs={"width": height, "height": height},
+    super(TrafficLight, self).__init__(page, color, css_attrs={"width": height, "height": height},
                                        options=options, profile=profile)
     self.add_helper(helper, css={"margin-top": "-17px"})
     self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
@@ -461,7 +462,7 @@ class TrafficLight(Html.Html):
     :rtype: JsHtml.JsHtmlBackground
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlBackground(self, report=self.page)
+      self._dom = JsHtml.JsHtmlBackground(self, page=self.page)
     return self._dom
 
   def colors(self, green: Optional[str] = None, red: Optional[str] = None, neutral: Optional[str] = None):
@@ -537,20 +538,20 @@ class TrafficLight(Html.Html):
   def __str__(self):
     if self.action is not None:
       return '<div id="%s"><div %s></div>%s</div>%s' % (
-        self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False),
+        self.htmlCode, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
         self.action.html(), self.helper)
 
     return '<div id="%s"><div %s></div></div>%s' % (
-      self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.helper)
+      self.htmlCode, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self.helper)
 
 
 class ContentsTable(Html.Html):
   name = 'Contents Table'
   _option_cls = OptText.OptContents
 
-  def __init__(self, report, title, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, title, width, height, html_code, options, profile):
     self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
-    super(ContentsTable, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(ContentsTable, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                         css_attrs={"width": width, "height": height})
     self.style.css.position = "fixed"
     self.title = self.page.ui.div()
@@ -758,7 +759,7 @@ class ContentsTable(Html.Html):
     self.menu.options.managed = False
     self.title[-1].click([self.menu.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
     return '''<div %(attr)s>%(title)s%(links)s</div> ''' % {
-      'attr': self.get_attrs(pyClassNames=self.style.get_classes()),
+      'attr': self.get_attrs(css_class_names=self.style.get_classes()),
       'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': self.menu.html()}
 
 
@@ -767,9 +768,9 @@ class SearchResult(Html.Html):
   requirements = ('jquery', )
   _option_cls = OptText.OptSearchResult
 
-  def __init__(self, report, records, width, height, options, profile):
+  def __init__(self, page: primitives.PageModel, records, width, height, options, profile):
     super(SearchResult, self).__init__(
-      report, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
+      page, records, options=options, profile=profile, css_attrs={"width": width, "height": height})
 
   _js__builder__ = '''
       jHtmlObj = %(jquery)s; jHtmlObj.empty();
@@ -820,15 +821,15 @@ class SearchResult(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s style="margin:5px 10px 5px 10px;"></div> ' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Composite(Html.Html):
   name = 'Composite'
   _option_cls = OptText.OptionsComposite
 
-  def __init__(self, report, schema, width, height, html_code, options, profile, helper):
-    super(Composite, self).__init__(report, None, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, schema, width, height, html_code, options, profile, helper):
+    super(Composite, self).__init__(page, None, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
     self.__builders, ref_map, self.main = set(), {}, None
     self.add_helper(helper)
@@ -867,7 +868,7 @@ class Composite(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self.val, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self.val, page=self.page)
     return self._dom
 
   @dom.setter
@@ -939,7 +940,7 @@ class Composite(Html.Html):
       'hr': comp_ui.layouts.hr,
     }
 
-  def _set_comp(self, comp: Html.Html, schema_child, builders, ref_map):
+  def _set_comp(self, comp: Optional[Html.Html], schema_child, builders, ref_map):
     """
     Description:
     ------------
@@ -1006,8 +1007,8 @@ class Status(Html.Html):
   name = 'status'
   _option_cls = OptText.OptionsStatus
 
-  def __init__(self, report, status, width, height, html_code, profile, options):
-    super(Status, self).__init__(report, status, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, status, width, height, html_code, profile, options):
+    super(Status, self).__init__(page, status, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     self.style.css.text_align = 'center'
     self.style.css.line_height = 30
@@ -1047,4 +1048,4 @@ class Status(Html.Html):
         self.context.dom.hide()])
     self.style.css.background = self.options.states.get(self.val, self.options.background)
     self.style.css.color = self.options.color
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)

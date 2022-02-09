@@ -1,3 +1,8 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+from typing import Union, Optional
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 
@@ -416,7 +421,7 @@ class LMapAttributionControl:
 
 class LMap:
 
-  def __init__(self, component=None, set_var=None):
+  def __init__(self, component: primitives.HtmlModel = None, set_var: bool = None):
     self.component = component
     self._js, self.set_var = [], set_var
     self.varId = "L.map(%s)" % JsUtils.jsConvertData(component.htmlCode, None)
@@ -446,39 +451,39 @@ class LMap:
       self._js.append("setView(%s)" % LatLng)
     return self
 
-  def on(self, typeEvent, jsFuncs, profile=None):
+  def on(self, typeEvent, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
 
     :param typeEvent:
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     return JsUtils.jsWrap("%s; %s.on('%s', function(event){%s})" % (
-      self.toStr(), self.varName, typeEvent, JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)))
+      self.toStr(), self.varName, typeEvent, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
-  def locationfound(self, jsFuncs, profile=None):
+  def locationfound(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Fired when geolocation (using the locate method) went successfully.
 
     https://leafletjs.com/reference-1.7.1.html#map-locationfound
     https://leafletjs.com/examples/mobile/
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
-    return self.on("locationfound", jsFuncs, profile)
+    return self.on("locationfound", js_funcs, profile)
 
-  def locationerror(self, jsFuncs, profile=None):
+  def locationerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Fired when geolocation (using the locate method) failed.
 
     https://leafletjs.com/examples/mobile/
     https://leafletjs.com/reference-1.7.1.html#map-locationerror
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
-    return self.on("locationerror", jsFuncs, profile)
+    return self.on("locationerror", js_funcs, profile)
 
   def createPane(self, text):
     """
@@ -565,10 +570,10 @@ class LControl:
     self._js, self.set_var = [], set_var
     self.varId, self.varName = "L.control()" if options is None else "L.control(%s)" % JsUtils.jsConvertData(options, None), None
 
-  def onAdd(self, jsFuncs, profile=None):
+  def onAdd(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     pass
 
-  def update(self, jsFuncs, profile=None):
+  def update(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     pass
 
   def addTo(self):
@@ -611,7 +616,8 @@ class LEventlLatlng:
     return "event.latlng"
 
 
-class LEvent:
+class LEvent(JsPackage):
+  lib_alias = {'js': "leaflet", 'css': 'leaflet'}
 
   @property
   def latlng(self):
@@ -624,18 +630,21 @@ class LEvent:
 class LeafLet(JsPackage):
   lib_alias = {'js': "leaflet", 'css': 'leaflet'}
 
-  def __init__(self, htmlCode=None, config=None, src=None, varName=None, selector=None, setVar=False):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, html_code=None, config=None, component=None, js_code=None, selector=None, set_var=False,
+               page=None):
+    self.component, self.page = component, page
+    if page is None and component is not None:
+      self.page = component.page
     self._selector = selector
-    self.varName, self.setVar = varName or self._selector, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
-    self.src.cssImport.add(self.lib_alias['css'])
+    self.varName, self.setVar = js_code or self._selector, set_var
+    self.component.jsImports.add(self.lib_alias['js'])
+    self.component.cssImport.add(self.lib_alias['css'])
     self._js, self._map, self._control = [], None, {}
 
   @property
   def map(self):
     if self._map is None:
-      self._map = LMap(self.src, set_var=self._selector)
+      self._map = LMap(self.component, set_var=self._selector)
     return self._map
 
   def control(self, alias, options=None):
@@ -645,7 +654,7 @@ class LeafLet(JsPackage):
     :param options:
     """
     if alias not in self._control:
-      self._control[alias] = LControl(self.src, options=options, set_var=self._selector)
+      self._control[alias] = LControl(self.component, options=options, set_var=self._selector)
     return self._control[alias]
 
   def setZoom(self, zoom):
@@ -727,7 +736,7 @@ class LeafLet(JsPackage):
     :param options:
     :param url:
     """
-    return LtileLayer(self.src, token, url, options, leaflet_map=self.map)
+    return LtileLayer(self.component, token, url, options, leaflet_map=self.map)
 
   def popup(self, options=None, source=None):
     """

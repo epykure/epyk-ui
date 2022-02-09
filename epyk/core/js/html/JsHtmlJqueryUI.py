@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, List
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js.fncs import JsFncs
 from epyk.core.js import JsUtils
@@ -19,7 +22,7 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlCode, self._src.dom.jquery.varId))
+        self.htmlCode, self.component.dom.jquery.varId))
 
   @property
   def content(self):
@@ -28,7 +31,7 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     ------------
 
     """
-    return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, '%s.val()' % self.component.dom.jquery.varId)
 
 
 class JsHtmlDateFieldPicker(JsHtml.JsHtml):
@@ -42,16 +45,16 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-      self.htmlCode, self.content.toStr()))
+        self.htmlCode, self.content.toStr()))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
-    return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.input.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, '%s.val()' % self.component.input.dom.jquery.varId)
 
 
 class JsHtmlProgressBar(JsHtml.JsHtml):
@@ -65,41 +68,41 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.progressbar('value'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self._src.dom.jquery.varId))
+        self.htmlCode, self.component.dom.jquery.varId))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
-    return JsHtml.ContentFormatters(self._report, '%s.progressbar("value")' % self._src.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, '%s.progressbar("value")' % self.component.dom.jquery.varId)
 
-  def to(self, number, timer=10):
+  def to(self, number: int, timer: int = 10):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param number: Integer.
-    :param timer: Integer. Optional. the spped of the increase in millisecond.
+    :param int number:
+    :param int timer: Optional. the speed of the increase in millisecond.
     """
     return JsUtils.jsConvertFncs([
-      self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
-      self._report.js.window.setInterval([
-        self._report.js.if_(
-          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
-            self._report.js.objects.number(
-              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+      self.page.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.window.setInterval([
+        self.page.js.if_(
+          self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self.page.js.objects.number(
+              self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
               varName="window.%s_counter" % self.htmlCode, setVar=True),
-            self._src.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
-          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+            self.component.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ], toStr=True)
 
-  def position(self, val, jsFnc):
+  def position(self, val, js_funcs: Union[List[Union[str, primitives.JsDataModel]], str]):
     """
     Description:
     ------------
@@ -107,26 +110,27 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     Attributes:
     ----------
     :param val:
-    :param jsFnc: List | String. Javascript functions.
+    :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: Javascript functions.
     """
-    return JsFncs.JsFunction("if((%(content)s >= %(val)s) && (%(content)s <= %(val)s + 10)){%(fnc)s}" % {'content': self.content, 'val': val, 'fnc': JsUtils.jsConvertFncs(jsFnc, toStr=True)})
+    return JsFncs.JsFunction("if((%(content)s >= %(val)s) && (%(content)s <= %(val)s + 10)){%(fnc)s}" % {
+      'content': self.content, 'val': val, 'fnc': JsUtils.jsConvertFncs(js_funcs, toStr=True)})
 
-  def max(self, jsFnc):
+  def max(self, js_funcs: Union[List[Union[str, primitives.JsDataModel]], str]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFnc: List | String. Javascript functions.
+    :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: Javascript functions.
     """
-    return self.position(100, jsFnc)
+    return self.position(100, js_funcs)
 
 
 class JsHtmlTimePicker(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -134,16 +138,16 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.val(), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self._src.dom.jquery.varId))
+        self.htmlCode, self.component.dom.jquery.varId))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
-    return JsHtml.ContentFormatters(self._report, '%s.val()' % self._src.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, '%s.val()' % self.component.dom.jquery.varId)
 
   def hide(self):
     """
@@ -159,9 +163,9 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
-    return JsObjects.JsObjects.get("%s.timepicker('hide')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.timepicker('hide')" % self.component.dom.jquery.varId)
 
-  def show(self):
+  def show(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     -----------
@@ -175,13 +179,13 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
-    return JsObjects.JsObjects.get("%s.timepicker('show')" % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get("%s.timepicker('show')" % self.component.dom.jquery.varId)
 
 
 class JsHtmlSlider(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -192,7 +196,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
         self.htmlCode, self.component.dom.jquery.varId))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
@@ -214,7 +218,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     return JsHtml.ContentFormatters(self.page, '%s.slider("value")' % self.component.dom.jquery.varId)
 
   @property
-  def max_select(self):
+  def max_select(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
@@ -232,7 +236,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     return self.content
 
   @property
-  def min_select(self):
+  def min_select(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
@@ -250,7 +254,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     return self.content
 
   @property
-  def upper_bound(self):
+  def upper_bound(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
@@ -262,7 +266,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
     return self.content
 
   @property
-  def lower_bound(self):
+  def lower_bound(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
@@ -277,7 +281,7 @@ class JsHtmlSlider(JsHtml.JsHtml):
 class JsHtmlSliderRange(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -285,22 +289,22 @@ class JsHtmlSliderRange(JsHtml.JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s.slider('values'), timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self._src.dom.jquery.varId))
+        self.htmlCode, self.component.dom.jquery.varId))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
-    return JsHtml.ContentFormatters(self._report, '%s.slider("values")' % self._src.dom.jquery.varId)
+    return JsHtml.ContentFormatters(self.page, '%s.slider("values")' % self.component.dom.jquery.varId)
 
 
 class JsHtmlSliderDate(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -311,20 +315,20 @@ class JsHtmlSliderDate(JsHtml.JsHtml):
         self.htmlCode, self.content.toStr()))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
     return JsHtml.ContentFormatters(
-      self._report, 'new Date(%s.slider("value") * 1000).toISOString().split("T")[0]' % self._src.dom.jquery.varId)
+      self.page, 'new Date(%s.slider("value") * 1000).toISOString().split("T")[0]' % self.component.dom.jquery.varId)
 
 
 class JsHtmlSliderDates(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -335,14 +339,15 @@ class JsHtmlSliderDates(JsHtml.JsHtml):
         self.htmlCode, self.content.toStr()))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
     return JsHtml.ContentFormatters(
-      self._report, 'function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (self._src.dom.jquery.varId, self._src.dom.jquery.varId))
+      self.page, 'function() {return [new Date(%s.slider("values")[0] * 1000).toISOString().split("T")[0], new Date(%s.slider("values")[1] * 1000).toISOString().split("T")[0]]}()' % (
+        self.component.dom.jquery.varId, self.component.dom.jquery.varId))
 
 
 class JsHtmlSparkline(JsHtml.JsHtml):
@@ -358,16 +363,16 @@ class JsHtmlSparkline(JsHtml.JsHtml):
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.region))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
 
     """
-    if self._src._jsStyles['type'] in ['bar']:
-      return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
+    if self.component._jsStyles['type'] in ['bar']:
+      return JsHtml.ContentFormatters(self.page, 'event.sparklines[0].getCurrentRegionFields()[0].value')
 
-    return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields().y')
+    return JsHtml.ContentFormatters(self.page, 'event.sparklines[0].getCurrentRegionFields().y')
 
   @property
   def value(self):
@@ -376,10 +381,10 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     ------------
 
     """
-    if self._src._jsStyles['type'] in ['bar']:
-      return JsHtml.ContentFormatters(self._report, 'event.sparklines[0].getCurrentRegionFields()[0].value')
+    if self.component._jsStyles['type'] in ['bar']:
+      return JsHtml.ContentFormatters(self.page, 'event.sparklines[0].getCurrentRegionFields()[0].value')
 
-    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", isPyData=False)
+    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", is_py_data=False)
 
   @property
   def region(self):
@@ -397,7 +402,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     ------------
 
     """
-    if self._src._jsStyles['type'] in ['bar']:
+    if self.component._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
 
     return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().x")
@@ -409,7 +414,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     ------------
 
     """
-    if self._src._jsStyles['type'] in ['bar']:
+    if self.component._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].offset")
 
     return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields().offset")
@@ -421,7 +426,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     ------------
 
     """
-    if self._src._jsStyles['type'] in ['bar']:
+    if self.component._jsStyles['type'] in ['bar']:
       return JsObjects.JsObjects.get("event.sparklines[0].getCurrentRegionFields()[0].value")
 
-    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", isPyData=False)
+    return JsObjects.JsNumber.JsNumber("event.sparklines[0].getCurrentRegionFields().y", is_py_data=False)

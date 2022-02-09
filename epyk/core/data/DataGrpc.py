@@ -10,7 +10,7 @@ import importlib
 
 class DataGrpc:
 
-  def __init__(self, service_name, path, module, host, port):
+  def __init__(self, service_name: str, path: str, module: str, host: str, port: int):
     """
     Description:
     ------------
@@ -18,18 +18,18 @@ class DataGrpc:
 
     Attributes:
     ----------
-    :param service_name: String. The Service name (the class name in the python module).
-    :param path: String. The path with the GRPC features.
-    :param module: String. The python module name for the service.
-    :param host: String. The service host name (e.g localhost).
-    :param port: Integer. The service port.
+    :param str service_name: The Service name (the class name in the python module).
+    :param str path: The path with the GRPC features.
+    :param str module: The python module name for the service.
+    :param str host: The service host name (e.g localhost).
+    :param int port: The service port.
     """
     if path not in sys.path:
       sys.path.append(path)
     self.host, self.port, self.module = host, port, module.replace(".py", "")
     self.service_name, self._libs = service_name, {}
     if not module.endswith("_grpc"):
-      raise Exception("Service module should ends with _grpc")
+      raise ValueError("Service module should ends with _grpc")
 
   @property
   def py(self):
@@ -48,7 +48,7 @@ class DataGrpc:
     """
     return self.imp(self.module.replace("_grpc", ""))
 
-  def imp(self, module):
+  def imp(self, module: str):
     """
     Description:
     -----------
@@ -61,7 +61,7 @@ class DataGrpc:
 
     Attributes:
     ----------
-    :param module: String. The python module name.
+    :param str module: The python module name.
 
     :return: A python module
     """
@@ -70,7 +70,7 @@ class DataGrpc:
       self._libs[module] = importlib.import_module(module)
     return self._libs[module]
 
-  def request(self, method, data=None, options=None):
+  def request(self, method: str, data: dict = None, options: dict = None):
     """
     Description:
     -----------
@@ -83,9 +83,9 @@ class DataGrpc:
 
     Attributes:
     ----------
-    :param method: String. The function name to be called for the request.
-    :param data: Dictionary. Optional. The data to be passed during the call.
-    :param options: Dictionary. Optional. The GRPC service call options.
+    :param str method: The function name to be called for the request.
+    :param dict data: Optional. The data to be passed during the call.
+    :param dict options: Optional. The GRPC service call options.
     """
     import grpc
 

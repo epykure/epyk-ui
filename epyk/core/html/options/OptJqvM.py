@@ -211,7 +211,7 @@ class OptionsJqVM(Options):
     ----------
     :prop color: String. The color code.
     """
-    return self._config_get(self._report._report.theme.success[1])
+    return self._config_get(self.page.theme.success[1])
 
   @hoverColor.setter
   def hoverColor(self, color):
@@ -276,7 +276,7 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
     """
-    return self._config_get(self._report._report.theme.colors[-1])
+    return self._config_get(self.page.theme.colors[-1])
 
   @selectedColor.setter
   def selectedColor(self, num):
@@ -340,7 +340,7 @@ class OptionsJqVM(Options):
     ----------
     :prop colors: List. The colors codes.
     """
-    return self._config_get([self._report._report.theme.colors[0], self._report._report.theme.colors[-1]])
+    return self._config_get([self.page.theme.colors[0], self.page.theme.colors[-1]])
 
   @scaleColors.setter
   def scaleColors(self, colors):
@@ -369,7 +369,7 @@ class OptionsJqVM(Options):
   def normalizeFunction(self, value):
     self._config(value)
 
-  def onRegionClick(self, jsFncs, profile=None):
+  def onRegionClick(self, js_funcs, profile=None):
     """
     Description:
     -----------
@@ -382,9 +382,9 @@ class OptionsJqVM(Options):
 
     Attributes:
     ----------
-    :param jsFncs: List | String. A Javascript Python function.
+    :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self.js_type["onRegionClick"] = True
     self._config("function(element, code, region){var data = region; %s}" % JsUtils.jsConvertFncs(
-      jsFncs, toStr=True, profile=profile), "onRegionClick")
+      js_funcs, toStr=True, profile=profile), "onRegionClick")

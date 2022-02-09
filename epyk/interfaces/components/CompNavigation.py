@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
+from typing import Union
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
@@ -773,7 +774,7 @@ class Banners:
     html.Html.set_component_skin(div)
     return div
 
-  def bottom(self, data="", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
+  def bottom(self, data: Union[str, list] = "", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
              profile=False):
     """
     Description:

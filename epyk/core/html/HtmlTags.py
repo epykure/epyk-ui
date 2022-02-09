@@ -14,10 +14,10 @@ class HtmlGeneric(Html.Html):
   name = 'tag'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, tag: str, text: primitives.HtmlModel, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, tag: str, text: Union[str, primitives.HtmlModel], width: tuple, height: tuple,
                html_code: Optional[str], tooltip: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self.tag = tag
-    super(HtmlGeneric, self).__init__(report, [], html_code=html_code, css_attrs={"width": width, "height": height},
+    super(HtmlGeneric, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                       options=options, profile=profile)
     self.add(text)
     if tooltip:
@@ -36,7 +36,7 @@ class HtmlGeneric(Html.Html):
     """
     return super().options
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Html.Html:
     if not isinstance(self.val, list):
       return self.val
 
@@ -69,7 +69,7 @@ class HtmlGeneric(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   _js__builder__ = 'htmlObj.innerHTML = data'
@@ -77,10 +77,10 @@ class HtmlGeneric(Html.Html):
   def __str__(self):
     if isinstance(self.val, list):
       str_val = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-      return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.style.get_classes()), str_val,
+      return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_val,
                                    self.tag, self.helper)
 
-    return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(pyClassNames=self.style.get_classes()), self.val,
+    return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val,
                                  self.tag, self.helper)
 
 

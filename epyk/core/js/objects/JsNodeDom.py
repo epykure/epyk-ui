@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import primitives
 
 from epyk.core.js.fncs import JsFncs
@@ -21,16 +21,13 @@ from epyk.core.js import JsUtils
 
 class JsDomEvents(primitives.JsDataModel):
 
-  class __internal:
-    htmlCode = None
-
-  def __init__(self, src=None, varName: str = None):
-    self._src = src if src is not None else self.__internal()
+  def __init__(self, component: primitives.HtmlModel = None, js_code: str = None):
+    self.component = component
     self._js = []
-    if varName is not None:
-      self.varName = varName
+    if js_code is not None:
+      self.varName = js_code
     else:
-      self.varName = "document.getElementById('%s')" % self._src.htmlCode
+      self.varName = "document.getElementById('%s')" % self.component.htmlCode
 
   def stopPropagation(self):
     """
@@ -65,7 +62,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("blur", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("blur", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def click(self, js_funcs: Union[list, str]):
@@ -88,7 +85,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("click", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("click", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def change(self, js_funcs: Union[list, str]):
@@ -112,14 +109,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("change", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("change", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def dblclick(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    The event occurs when the user double-clicks on an element
+    The event occurs when the user double-clicks on an element.
 
     Related Pages:
 
@@ -131,14 +128,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("dblclick", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("dblclick", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def focus(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    The event occurs when an element gets focus
+    The event occurs when an element gets focus.
 
     Related Pages:
 
@@ -150,16 +147,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("focus", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("focus", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def focusin(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    Description:
-    ------------
-    The event occurs when an element is about to get focus
+    The event occurs when an element is about to get focus.
 
     Related Pages:
 
@@ -171,7 +166,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("focusin", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("focusin", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def focusout(self, js_funcs: Union[list, str]):
@@ -190,7 +185,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("focusin", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("focusin", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def keydown(self, js_funcs: Union[list, str]):
@@ -210,10 +205,10 @@ class JsDomEvents(primitives.JsDataModel):
     :return: The Python Dom object
     """
     self._js.append(
-      'addEventListener("keydown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+      'addEventListener("keydown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def keypress(self, js_funcs):
+  def keypress(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
@@ -229,7 +224,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("keypress", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("keypress", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def keyup(self, js_funcs: Union[list, str]):
@@ -248,7 +243,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("keyup", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("keyup", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mousedown(self, js_funcs: Union[list, str]):
@@ -267,14 +262,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mousedown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mousedown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mouseenter(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    The event occurs when the pointer is moved onto an element
+    The event occurs when the pointer is moved onto an element.
 
     Related Pages:
 
@@ -286,7 +281,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mousedown", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mousedown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mouseleave(self, js_funcs: Union[list, str]):
@@ -309,14 +304,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mouseleave", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mouseleave", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mouseover(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    The event occurs when the pointer is moved onto an element, or onto one of its children
+    The event occurs when the pointer is moved onto an element, or onto one of its children.
 
     Related Pages:
 
@@ -328,7 +323,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mouseover", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mouseover", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mouseup(self, js_funcs: Union[list, str]):
@@ -347,14 +342,14 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mouseover", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mouseover", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def mouseout(self, js_funcs: Union[list, str]):
     """
     Description:
     ------------
-    The event occurs when a user releases a mouse button over an element
+    The event occurs when a user releases a mouse button over an element.
 
     Related Pages:
 
@@ -366,7 +361,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append('addEventListener("mouseout", function(){%s})' % ";".join(JsUtils.jsConvertFncs(js_funcs)))
+    self._js.append('addEventListener("mouseout", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
   def trigger(self, event: Union[str, primitives.JsDataModel], with_focus: bool = True,
@@ -404,7 +399,8 @@ class JsDomEvents(primitives.JsDataModel):
       if options is not None and 'timer' in options:
         return JsFncs.JsFunction(
           "window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)" % {
-            "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": self.varName, 'timer': options['timer'] * 1000})
+            "htmlCode": self.component.htmlCode, "event_name": event_name, "event": event, "elem": self.varName,
+            'timer': options['timer'] * 1000})
 
       else:
         return JsFncs.JsFunction(
@@ -415,7 +411,7 @@ class JsDomEvents(primitives.JsDataModel):
       return JsFncs.JsFunction('''
         window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; 
           %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)''' % {
-        "htmlCode": self._src.htmlCode, "event_name": event_name, "event": event, "elem": self.varName,
+        "htmlCode": self.component.htmlCode, "event_name": event_name, "event": event, "elem": self.varName,
         'timer': options['timer'] * 1000})
 
     else:
@@ -424,11 +420,11 @@ class JsDomEvents(primitives.JsDataModel):
           "event": event, "event_name": event_name, "elem": self.varName})
 
   def toStr(self):
-    if self._src.htmlCode is None:
+    if self.component.htmlCode is None:
       raise ValueError("Selector not defined, use this() or new() first")
 
     if len(self._js) == 0:
-      return self._src.htmlCode
+      return self.component.htmlCode
 
     str_data = "%(varName)s.%(items)s" % {
       'varName': self.varName, 'items': ".".join(self._js)}
@@ -438,8 +434,8 @@ class JsDomEvents(primitives.JsDataModel):
 
 class JsDomsTransforms:
 
-  def __init__(self, src, selector):
-    self._src, self.selector = src, selector
+  def __init__(self, page, selector):
+    self.page, self.selector = page, selector
 
   def initial(self):
     """
@@ -459,11 +455,12 @@ class JsDomsTransforms:
     """
     return "%s.initial" % self.selector
 
-  def matrix(self, scaleX, skewY, skewX, scaleY, translateX, translateY):
+  def matrix(self, scale_x: float, skew_y: float, skew_x: float, scale_y: float, translate_x: float,
+             translate_y: float):
     """
     Description:
     ------------
-    Defines a 2D transformation, using a matrix of six values
+    Defines a 2D transformation, using a matrix of six values.
 
     Usage::
 
@@ -473,15 +470,15 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param scaleX: Number.
-    :param skewY: Number.
-    :param skewX: Number.
-    :param scaleY: Number.
-    :param translateX: Number.
-    :param translateY: Number.
+    :param float scale_x:
+    :param float skew_y:
+    :param float skew_x:
+    :param float scale_y:
+    :param float translate_x:
+    :param float translate_y:
     """
     return "%s.style.transform = 'matrix(%s, %s, %s, %s, %s, %s)'" % (
-      self.selector, scaleX, skewY, skewX, scaleY, translateX, translateY)
+      self.selector, scale_x, skew_y, skew_x, scale_y, translate_x, translate_y)
 
   def translateX(self, x: int, unit: str = 'px'):
     """
@@ -497,8 +494,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param x: Number.
-    :param unit: String. The unit used for the transformation (px, cm, rem...)
+    :param int x:
+    :param str unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translateX(%s%s)'" % (self.selector, x, unit)
 
@@ -515,8 +512,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param y:
-    :param unit: String. The unit used for the transformation (px, cm, rem...)
+    :param int y:
+    :param float unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translateY(%s%s)'" % (self.selector, y, unit)
 
@@ -533,9 +530,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param x:
-    :param y:
-    :param unit: String. The unit used for the transformation (px, cm, rem...)
+    :param int x:
+    :param int y:
+    :param str unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translate(%s%s, %s%s)'" % (self.selector, x, unit, y, unit)
 
@@ -553,9 +550,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param d: Is a <length> representing the distance from the user to the z=0 plane.
+    :param int d: Is a <length> representing the distance from the user to the z=0 plane.
               If it is 0 or a negative value, no perspective transform is applied.
-    :param unit: String. The unit used for the transformation (px, cm, rem...)
+    :param str unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'perspective(%s%s)'" % (self.selector, d, unit)
 
@@ -571,8 +568,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param x: Number. A <number> representing the abscissa of the scaling vector.
-    :param y: Number. A <number> representing the ordinate of the scaling vector.
+    :param float x: A <number> representing the abscissa of the scaling vector.
+    :param float y: A <number> representing the ordinate of the scaling vector.
               If not defined, its default value is sx, resulting in a uniform scaling that preserves the element's
               aspect ratio.
     """
@@ -591,7 +588,7 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param x: Number. Is a <number> representing the scaling factor to apply on the abscissa of each point of the
+    :param float x: Is a <number> representing the scaling factor to apply on the abscissa of each point of the
     element.
     """
     return "%s.style.transform = 'scaleX(%s)'" % (self.selector, x)
@@ -609,12 +606,12 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param y: Number. Is a <number> representing the scaling factor to apply on the ordinate of each point of the
+    :param float y: Is a <number> representing the scaling factor to apply on the ordinate of each point of the
     element.
     """
     return "%s.style.transform = 'scaleY(%s)'" % (self.selector, y)
 
-  def skew(self, angleX: float, angleY: float = 0, unit: str = 'deg'):
+  def skew(self, angle_x: float, angle_y: float = 0, unit: str = 'deg'):
     """
     Description:
     ------------
@@ -627,12 +624,12 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param angleX: Number. Is an <angle> representing the angle to use to distort the element along the abscissa.
-    :param angleY: Number. Is an <angle> representing the angle to use to distort the element along the ordinate.
-                           If not defined, its default value is 0, resulting in a purely horizontal skewing.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float angle_x: Is an <angle> representing the angle to use to distort the element along the abscissa.
+    :param float angle_y: Is an <angle> representing the angle to use to distort the element along the ordinate.
+    If not defined, its default value is 0, resulting in a purely horizontal skewing.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
-    return "%s.style.transform = 'skew(%s%s, %s%s)'" % (self.selector, angleX, unit, angleY, unit)
+    return "%s.style.transform = 'skew(%s%s, %s%s)'" % (self.selector, angle_x, unit, angle_y, unit)
 
   def skewX(self, angle: float, unit: str = 'deg'):
     """
@@ -651,8 +648,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param angle: Number. Is an <angle> representing the angle to use to distort the element along the abscissa.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float angle: Is an <angle> representing the angle to use to distort the element along the abscissa.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'skewX(%s%s)'" % (self.selector, angle, unit)
 
@@ -669,8 +666,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param angle: Number. Is an <angle> representing the angle to use to distort the element along the ordinate.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float angle: Is an <angle> representing the angle to use to distort the element along the ordinate.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'skewY(%s%s)'" % (self.selector, angle, unit)
 
@@ -692,8 +689,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+    a negative angle a counter-clockwise one.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotate(%s%s)'" % (self.selector, r, unit)
 
@@ -711,11 +709,11 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param z: Is a <number> describing the z-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param a: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
+    :param float y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
+    :param float z: Is a <number> describing the z-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
+    :param float a: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotate3d(%s, %s, %s, %s%s)'" % (self.selector, x, y, z, a, unit)
 
@@ -733,8 +731,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+    a negative angle a counter-clockwise one.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateX(%s%s)'" % (self.selector, r, unit)
 
@@ -752,8 +751,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+    a negative angle a counter-clockwise one.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateY(%s%s)'" % (self.selector, r, unit)
 
@@ -770,47 +770,103 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param unit: String. The unit for the transformation (deg, turn, rad...)
+    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+    a negative angle a counter-clockwise one.
+    :param str unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateZ(%s%s)'" % (self.selector, r, unit)
 
 
 class JsDomEffects:
 
-  def __init__(self, src, component: primitives.HtmlModel):
-    self._effects = Effects.Effects(src)
-    self._htmlObj = component
+  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel):
+    self._effects = Effects.Effects(page)
+    self.component = component
 
   def glow(self, color, radius=50, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
            direction="alternate", fill_mode='forwards'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param color:
+    :param radius:
+    :param duration:
+    :param timing_fnc:
+    :param delay:
+    :param iteration_count:
+    :param direction:
+    :param fill_mode:
+    """
     name = self._effects.glow(color, radius, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (
+    return self.component.dom.css('animation', "%s %ss %s %ss %s %s %s" % (
       name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
 
   def blink(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
             fill_mode='forwards'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param timing_fnc:
+    :param delay:
+    :param iteration_count:
+    :param direction:
+    :param fill_mode:
+    """
     name = self._effects.blink(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s" % (
+    return self.component.dom.css('animation', "%s %ss %s %ss %s %s" % (
       name, duration, timing_fnc, delay, iteration_count, direction))
 
   def fade_out(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
                fill_mode='forwards'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param timing_fnc:
+    :param delay:
+    :param iteration_count:
+    :param direction:
+    :param fill_mode:
+    :return:
+    """
     name = self._effects.fade_out(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s" % (
+    return self.component.dom.css('animation', "%s %ss %s %ss %s %s" % (
       name, duration, timing_fnc, delay, iteration_count, direction))
 
   def fade_in(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
               fill_mode='forwards'):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param duration:
+    :param timing_fnc:
+    :param delay:
+    :param iteration_count:
+    :param direction:
+    :param fill_mode:
+    """
     name = self._effects.fade_in(duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    return self._htmlObj.dom.css('animation', "%s %ss %s %ss %s %s %s" % (
+    return self.component.dom.css('animation', "%s %ss %s %ss %s %s %s" % (
       name, duration, timing_fnc, delay, iteration_count, direction, fill_mode))
 
 
 class JsClassList:
 
-  def __init__(self, varId, component: primitives.HtmlModel = None):
-    self.varId = varId
+  def __init__(self, js_code: str, component: primitives.HtmlModel = None):
+    self.varId = js_code
     self.component = component
 
   @property
@@ -881,6 +937,15 @@ class JsClassList:
     return JsBoolean.JsBoolean.get("%s.contains(%s)" % (self.varId, cls_name))
 
   def is_missing(self, cls_name: str):
+    """
+    Description:
+    ------------
+    Check if a CSS class is missing in the component classes definitions.
+
+    Attributes:
+    ----------
+    :param str cls_name: The CSS classname.
+    """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean.get("!%s.contains(%s)" % (self.varId, cls_name))
 
@@ -990,7 +1055,8 @@ class JsDoms(JsObject.JsObject):
   display_value = 'block'
 
   @classmethod
-  def new(cls, tagName=None, varName=None, isPyData=True, setVar=True, report=None):
+  def new(cls, tag_name: Union[str, primitives.JsDataModel] = None, js_code: str = None, is_py_data: bool = True,
+          set_var: bool = True, page: primitives.PageModel = None):
     """
     Description:
     ------------
@@ -1002,14 +1068,18 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param tagName: The tag name to be created
-    :param varName: Optional,
-    :param isPyData: Optional,
+    :param Union[str, primitives.JsDataModel] tag_name: The tag name to be created.
+    :param str js_code: Optional,
+    :param bool is_py_data: Optional,
+    :param bool set_var: Optional,
+    :param primitives.PageModel page: Optional,
 
     :return: The Python Javascript Date primitive
     """
+    tag_name = JsUtils.jsConvertData(tag_name, None)
     return cls(
-      data="document.createElement('%s')" % tagName, varName=varName, setVar=setVar, isPyData=isPyData, report=report)
+      data="document.createElement('%s')" % tag_name, js_code=js_code, set_var=set_var, is_py_data=is_py_data,
+      page=page)
 
   @property
   def parentNode(self):
@@ -1025,21 +1095,22 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_node_parentnode.asp
     """
-    return JsDoms('', varName="%s.parentNode" % self.toStr())
+    return JsDoms('', js_code="%s.parentNode" % self.toStr())
 
   def querySelector(self, tag: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
+    Get element by tag.
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] tag:
+    :param Union[str, primitives.JsDataModel] tag: The DOM tag reference.
     """
     tag = JsUtils.jsConvertData(tag, None)
     return JsDoms("%s.querySelector(%s)" % (self.toStr(), tag))
 
-  def querySelectorAll(self, tag: Union[str, primitives.JsDataModel], varName: str = None):
+  def querySelectorAll(self, tag: Union[str, primitives.JsDataModel], js_code: str = None):
     """
     Description:
     ------------
@@ -1053,16 +1124,16 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param Union[str, primitives.JsDataModel] tag: The tag name.
-    :param str varName: The variable name on the javascript side.
+    :param str js_code: The variable name on the javascript side.
 
     :return: A javascript Array object
     """
     tag = JsUtils.jsConvertData(tag, None)
-    if varName is None:
-      return JsArray.JsArray("%s.querySelectorAll(%s)" % (self.toStr(), tag), isPyData=False)
+    if js_code is None:
+      return JsArray.JsArray("%s.querySelectorAll(%s)" % (self.toStr(), tag), is_py_data=False)
 
     return JsArray.JsArray(
-      "%s.querySelectorAll(%s)" % (self.toStr(), tag), varName=varName, setVar=True, isPyData=False)
+      "%s.querySelectorAll(%s)" % (self.toStr(), tag), js_code=js_code, set_var=True, is_py_data=False)
 
   def empty(self):
     """
@@ -1074,7 +1145,7 @@ class JsDoms(JsObject.JsObject):
     return JsObject.JsObject('%s.innerHTML = ""' % self.varId)
 
   @property
-  def events(self):
+  def events(self) -> JsDomEvents:
     """
     Description:
     -----------
@@ -1082,7 +1153,7 @@ class JsDoms(JsObject.JsObject):
 
     :rtype: JsDomEvents
     """
-    return JsDomEvents(self.page, varName=self.varName)
+    return JsDomEvents(self.page, js_code=self.varName)
 
   @property
   def effects(self):
@@ -1091,7 +1162,7 @@ class JsDoms(JsObject.JsObject):
     ------------
     Add CSS pre defined events from a dom object.
     """
-    return JsDomEffects(self._report, self._src)
+    return JsDomEffects(self.page, self.component)
 
   @property
   def transform(self):
@@ -1106,7 +1177,7 @@ class JsDoms(JsObject.JsObject):
       https://www.w3schools.com/jsref/prop_style_transform.asp
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function
     """
-    return JsDomsTransforms(self._report, self.varId)
+    return JsDomsTransforms(self.page, self.varId)
 
   @property
   def jquery(self):
@@ -1123,7 +1194,7 @@ class JsDoms(JsObject.JsObject):
       raise ValueError("Id must be defined to attach Jquery features to this object")
 
     if getattr(self, '_jq', None) is None:
-      self._jq = JsQuery.JQuery(self._report, selector="jQuery('#%s')" % self._id, setVar=False)
+      self._jq = JsQuery.JQuery(self.page, selector="jQuery('#%s')" % self._id, set_var=False)
     return self._jq
 
   def addEventListener(self, event: Union[str, primitives.JsDataModel], js_funcs: Union[list, str]):
@@ -1176,10 +1247,10 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param Union[list, str] js_funcs: The Javascript functions
     """
-    self._report._props.setdefault('js', {}).setdefault(
+    self.page._props.setdefault('js', {}).setdefault(
       'onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(js_funcs))
 
-  def innerText(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, valType=None):
+  def innerText(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1195,20 +1266,20 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added
-    :param append: Boolean. Mention if the component should replace or append the data
-    :param valType: Type: The type of data expected in the component
+    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
+    :param append: Boolean. Mention if the component should replace or append the data.
+    :param val_type: The type of data expected in the component.
 
     :return: The JsObj to allow the chaining
     """
     if text is None:
-      return JsString.JsString("%s.innerText" % self.varId, isPyData=False)
+      return JsString.JsString("%s.innerText" % self.varId, is_py_data=False)
 
     if append:
-      if valType == int:
+      if val_type == int:
         self._js.append("%s.innerText = parseInt(%s.innerText) + %s" % (
           self.varId, self.varId, JsUtils.jsConvertData(text, None)))
-      elif valType == float:
+      elif val_type == float:
         self._js.append("%s.innerText = parseFloat(%s.innerText) + %s" % (
           self.varId, self.varId, JsUtils.jsConvertData(text, None)))
       else:
@@ -1217,7 +1288,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def textContent(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, valType=None):
+  def textContent(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1235,18 +1306,18 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
     :param append: Boolean. Mention if the component should replace or append the data.
-    :param valType: Type: The type of data expected in the component.
+    :param val_type: Type: The type of data expected in the component.
 
     :return: The JsObj to allow the chaining
     """
     if text is None:
-      return JsString.JsString("%s.textContent" % self.varId, isPyData=False)
+      return JsString.JsString("%s.textContent" % self.varId, is_py_data=False)
 
     if append:
-      if valType == int:
+      if val_type == int:
         self._js.append("%s.textContent = parseInt(%s.textContent) + %s" % (
         self.varId, self.varId, JsUtils.jsConvertData(text, None)))
-      elif valType == float:
+      elif val_type == float:
         self._js.append("%s.textContent = parseFloat(%s.textContent) + %s" % (
         self.varId, self.varId, JsUtils.jsConvertData(text, None)))
       else:
@@ -1255,7 +1326,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.textContent = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def innerHTML(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, valType=None):
+  def innerHTML(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1274,18 +1345,18 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
     :param append: Boolean. Mention if the component should replace or append the data.
-    :param valType: Type: The type of data expected in the component.
+    :param val_type: Type: The type of data expected in the component.
 
     :return: self to allow the chaining
     """
     if text is None:
-      return JsString.JsString("%s.innerHTML" % self.varId, isPyData=False)
+      return JsString.JsString("%s.innerHTML" % self.varId, is_py_data=False)
 
     if append:
-      if valType == int:
+      if val_type == int:
         self._js.append("%s.innerHTML = parseInt(%s.innerHTML) + %s" % (
           self.varId, self.varId, JsUtils.jsConvertData(text, None)))
-      elif valType == int:
+      elif val_type == int:
         self._js.append("%s.innerHTML = parseFloat(%s.innerHTML) + %s" % (
           self.varId, self.varId, JsUtils.jsConvertData(text, None)))
       else:
@@ -1311,7 +1382,7 @@ class JsDoms(JsObject.JsObject):
     :return: self to allow the chaining
     """
     if text is None:
-      return JsString.JsString("%s.outerText" % self.varId, isPyData=False)
+      return JsString.JsString("%s.outerText" % self.varId, is_py_data=False)
 
     self._js.append("%s.outerText = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
@@ -1334,7 +1405,7 @@ class JsDoms(JsObject.JsObject):
     :return: self to allow the chaining
     """
     if text is None:
-      return JsString.JsString("%s.outerHTML" % self.varId, isPyData=False)
+      return JsString.JsString("%s.outerHTML" % self.varId, is_py_data=False)
 
     self._js.append("%s.outerHTML = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
@@ -1354,7 +1425,7 @@ class JsDoms(JsObject.JsObject):
     :param Union[str, primitives.JsDataModel] text: Optional. Set the input value.
     """
     if text is None:
-      return JsString.JsString("%s.value" % self.varId, isPyData=False)
+      return JsString.JsString("%s.value" % self.varId, is_py_data=False)
 
     self._js.append("%s.value = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
@@ -1376,12 +1447,13 @@ class JsDoms(JsObject.JsObject):
     :param Union[str, primitives.JsDataModel] text: Optional. Set the node value.
     """
     if text is None:
-      return JsString.JsString("%s.nodeValue" % self.varId, isPyData=False)
+      return JsString.JsString("%s.nodeValue" % self.varId, is_py_data=False)
 
     self._js.append("%s.nodeValue = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def attr(self, value: Union[dict, str, primitives.JsDataModel], data: Union[str, primitives.JsDataModel] = None):
+  def attr(self, value: Union[dict, str, primitives.JsDataModel],
+           data: Union[str, bool, float, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -1422,7 +1494,7 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def setAttribute(self, attribute_name: Union[str, primitives.JsDataModel],
-                   attribute_value: Union[str, primitives.JsDataModel]):
+                   attribute_value: Union[str, bool, float, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -1439,14 +1511,14 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param Union[str, primitives.JsDataModel] attribute_name: The name of the attribute you want to add.
-    :param Union[str, primitives.JsDataModel] attribute_value: The value of the attribute you want to add.
+    :param Union[str, bool, primitives.JsDataModel] attribute_value: The value of the attribute you want to add.
     """
     attribute_name = JsUtils.jsConvertData(attribute_name, None)
     self._js.append("%s.setAttribute(%s, %s)" % (
       self.varId, attribute_name, JsUtils.jsConvertData(attribute_value, None)))
     return self
 
-  def addClass(self, clsName, attrs: dict = None, event_attrs: dict = None, extend: bool = True):
+  def addClass(self, cls_name: str, attrs: dict = None, event_attrs: dict = None, extend: bool = True):
     """
     Description:
     -----------
@@ -1464,18 +1536,18 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param clsName: The Css classname.
+    :param str cls_name: The Css classname.
     :param dict attrs: A python dictionary with the css attributes.
     :param dict event_attrs: A nested python dictionary with the css attributes for each event.
     :param bool extend: To set if the class should replace the existing style definition.
     """
     if attrs is not None or event_attrs is not None:
-      clsName = self._report.style.cssName(clsName)
-      self._report.style.cssCls(clsName, attrs, event_attrs, False)
+      cls_name = self.page.style.cssName(cls_name)
+      self.page.style.cssCls(cls_name, attrs, event_attrs, False)
     if extend:
-      self._js.append('%s.setAttribute("class", %s.getAttribute("class") + " %s")' % (self.varId, self.varId, clsName))
+      self._js.append('%s.setAttribute("class", %s.getAttribute("class") + " %s")' % (self.varId, self.varId, cls_name))
     else:
-      self._js.append('%s.setAttribute("class", "%s")' % (self.varId, clsName))
+      self._js.append('%s.setAttribute("class", "%s")' % (self.varId, cls_name))
     return self
 
   def removeClass(self, cls_name: Union[str, primitives.JsDataModel]):
@@ -1507,7 +1579,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_element_classlist.asp
     """
-    return JsClassList("%s.classList" % self.varId, self._src)
+    return JsClassList("%s.classList" % self.varId, self.component)
 
   def css(self, attr: Union[dict, str], data: Union[str, primitives.JsDataModel] = None, duration: int = None):
     """
@@ -1564,21 +1636,23 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param x: Integer. The positinn from the top of the page
-    :param y: Integer. The position from the left
-    :param dx: Integer.
-    :param dy: Integer.
+    :param int x: The position from the top of the page
+    :param int y: The position from the left
+    :param int dx:
+    :param int dy:
 
     :return: A JsObj
     """
     if x is None and y is None:
-      self.css({"position": 'absolute', 'top': JsObject.JsObject.get("(event.clientY + window.scrollY + %s) + 'px'" % dy),
+      self.css({"position": 'absolute',
+                'top': JsObject.JsObject.get("(event.clientY + window.scrollY + %s) + 'px'" % dy),
                 'left': JsObject.JsObject.get("(event.clientX + window.scrollX + %s) + 'px'" % dx)})
     else:
       self.css({"position": 'absolute', 'top': "%spx" % x or 0, 'left': "%spx" % x or 0})
     return self
 
-  def toggle_transition(self, attribute, value, value2, duration=1, timing_fnc='ease', delay=None):
+  def toggle_transition(self, attribute, value, value2, duration: int = 1,
+                        timing_func: str = 'ease', delay: float = None):
     """
     Description:
     ------------
@@ -1595,7 +1669,7 @@ class JsDoms(JsObject.JsObject):
     :param value2: String or List. Specifies the value of the CSS property the transition effect is for
     :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
     :param delay: Number. Defines when the transition effect will start
-    :param timing_fnc: String. The transition-timing-function property specifies the speed curve of the transition effect.
+    :param timing_func: String. The transition-timing-function property specifies the speed curve of the transition effect.
     """
     if "-" in attribute:
       split_css = attribute.split("-")
@@ -1604,18 +1678,18 @@ class JsDoms(JsObject.JsObject):
       css_attr = attribute
     tmp = list(self._js)
     self._js = []
-    self.transition(attribute, value, duration, delay, timing_fnc)
+    self.transition(attribute, value, duration, delay, timing_func)
     if_ = "; ".join(self._js)
 
     self._js = []
-    self.transition(attribute, value2, duration, delay, timing_fnc)
+    self.transition(attribute, value2, duration, delay, timing_func)
     else_ = "; ".join(self._js)
     self._js = tmp
     self._js.append("if(%s.style.%s != '%s') {%s} else {%s}" % (self.varId, css_attr, value, if_, else_))
     return self
 
-  def transition(self, attribute: Union[str, list], value: Optional[Union[str, primitives.JsDataModel]],
-                 duration: int = 1, delay: int = None, timing_fnc: str = 'ease', reverse: bool = False):
+  def transition(self, attribute: Union[str, list], value: Optional[Union[str, list, primitives.JsDataModel]],
+                 duration: Union[float, List[float]] = 1, delay: int = None, timing_fnc: str = 'ease', reverse: bool = False):
     """
     Description:
     ------------
@@ -1721,7 +1795,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration * 1000))
     return self
 
-  def toggle(self, attr="display", jsVal1=None, jsVal2="none"):
+  def toggle(self, attr: str = "display", val_1: str = None, val_2: str = "none"):
     """
     Description:
     ------------
@@ -1730,17 +1804,17 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attr:
-    :param jsVal1:
-    :param jsVal2:
+    :param str attr:
+    :param str val_1:
+    :param str val_2:
     """
-    if attr == 'display' and jsVal1 is None:
-      jsVal1 = self.display_value
+    if attr == 'display' and val_1 is None:
+      val_1 = self.display_value
     if "-" in attr:
       split_css = attr.split("-")
       attr = "%s%s" % (split_css[0], split_css[1].title())
     self._js.append("if(window.getComputedStyle(%(varId)s).%(attr)s == '%(jsVal1)s'){ %(varId)s.style.%(attr)s = '%(jsVal2)s'} else { %(varId)s.style.%(attr)s = '%(jsVal1)s'}" % {
-      "varId": self.varId, "attr": attr, "jsVal1": jsVal1, "jsVal2": jsVal2})
+      "varId": self.varId, "attr": attr, "jsVal1": val_1, "jsVal2": val_2})
     return self
 
   def toggleAttrs(self, pivot_key, pivot_val, attrs_off: dict, attrs_on: dict):
@@ -1753,8 +1827,8 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param pivot_key:
     :param pivot_val:
-    :param attrs_on: A python dictionary with CSS attributes
-    :param attrs_off: A python dictionary with CSS attributes
+    :param dict attrs_on: A python dictionary with CSS attributes
+    :param dict attrs_off: A python dictionary with CSS attributes
     """
     if pivot_key in ["color"] and not pivot_val.startswith("rgb"):
       colors_def = Colors.defined[pivot_val.upper()]
@@ -1799,7 +1873,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsNumber.JsNumber("%s.clientHeight" % self.varId)
 
-  def toggleClass(self, clsName: Union[str, primitives.JsDataModel], propagate: bool = False):
+  def toggleClass(self, cls_name: Union[str, primitives.JsDataModel], propagate: bool = False):
     """
     Description:
     ------------
@@ -1807,17 +1881,18 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] clsName: The classname to be toggled.
+    :param Union[str, primitives.JsDataModel] cls_name: The classname to be toggled.
     :param propagate: Boolean. Optional.
     """
-    clsName = JsUtils.jsConvertData(clsName, None)
+    cls_name = JsUtils.jsConvertData(cls_name, None)
     if propagate:
       self._js.append('%(varId)s.parentNode.childNodes.forEach(function(e){e.classList.remove(%(data)s)})' % {
-        "varId": self.varId, 'data': clsName})
-    self._js.append('var classes = %(data)s.split(" "); classes.forEach(function(cls){ %(varId)s.classList.toggle(cls); })' % {"varId": self.varId, 'data': clsName})
+        "varId": self.varId, 'data': cls_name})
+    self._js.append('var classes = %(data)s.split(" "); classes.forEach(function(cls){ %(varId)s.classList.toggle(cls); })' % {
+      "varId": self.varId, 'data': cls_name})
     return self
 
-  def switchClass(self, clsName1: Union[str, primitives.JsDataModel], clsName2: Union[str, primitives.JsDataModel]):
+  def switchClass(self, cls_name_1: Union[str, primitives.JsDataModel], cls_name_2: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -1829,15 +1904,15 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] clsName1: A class name or a string with a list of classname space
-    separated
-    :param Union[str, primitives.JsDataModel] clsName2: A class name or a string with a list of classname space
-    separated
+    :param Union[str, primitives.JsDataModel] cls_name_1: A class name or a string with a list of classname space
+    separated.
+    :param Union[str, primitives.JsDataModel] cls_name_2: A class name or a string with a list of classname space
+    separated.
 
     :return: Self to allow the chaining
     """
-    self.toggleClass(clsName1)
-    self.toggleClass(clsName2)
+    self.toggleClass(cls_name_1)
+    self.toggleClass(cls_name_2)
     return self
 
   @property
@@ -1858,7 +1933,7 @@ class JsDoms(JsObject.JsObject):
 
     :return: A new JsDom python object
     """
-    return JsDoms('', varName="%s.firstChild" % self.varId)
+    return JsDoms('', js_code="%s.firstChild" % self.varId)
 
   def child(self, i: int):
     """
@@ -1883,7 +1958,7 @@ class JsDoms(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/prop_node_nextsibling.asp
     """
-    return JsDoms('', varName="%s.nextSibling" % self.varId)
+    return JsDoms('', js_code="%s.nextSibling" % self.varId)
 
   def contains(self, node: str):
     """
@@ -1924,7 +1999,7 @@ class JsDoms(JsObject.JsObject):
     :return: A String, representing the specified attribute's value.
     """
     return JsObject.JsObject(
-      "%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attribute_name, None)), isPyData=False)
+      "%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attribute_name, None)), is_py_data=False)
 
   def getAttributeNode(self, attribute_name: Union[str, primitives.JsDataModel]):
     """
@@ -1955,12 +2030,12 @@ class JsDoms(JsObject.JsObject):
     :param Union[str, primitives.JsDataModel] attribute_name: String. Optional.
     """
     if attribute_name is None:
-      return JsString.JsString("getComputedStyle(%s)" % self.varId, isPyData=False)
+      return JsString.JsString("getComputedStyle(%s)" % self.varId, is_py_data=False)
 
     if "-" in attribute_name:
       split_css = attribute_name.split("-")
       attribute_name = "%s%s" % (split_css[0], split_css[1].title())
-    return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attribute_name), isPyData=False)
+    return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attribute_name), is_py_data=False)
 
   def getBoundingClientRect(self):
     """
@@ -1992,19 +2067,19 @@ class JsDoms(JsObject.JsObject):
 
     :return: A Boolean, returns true if the node has child nodes, false otherwise
     """
-    return JsBoolean.JsBoolean("%s.hasChildNodes()" % self.varId, isPyData=False)
+    return JsBoolean.JsBoolean("%s.hasChildNodes()" % self.varId, is_py_data=False)
 
-  def hasClass(self, className: Union[str, primitives.JsDataModel]):
+  def hasClass(self, cls_name: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] className:
+    :param Union[str, primitives.JsDataModel] cls_name:
     """
-    className = JsUtils.jsConvertData(className, None)
-    return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, className), isPyData=False)
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, cls_name), is_py_data=False)
 
   def text(self, value: Union[str, primitives.JsDataModel]):
     """
@@ -2059,7 +2134,7 @@ class JsDoms(JsObject.JsObject):
 
     :return: A String, representing the tag name of the element in uppercase
     """
-    return JsString.JsString("%s.tagName" % self.varId, isPyData=False)
+    return JsString.JsString("%s.tagName" % self.varId, is_py_data=False)
 
   @property
   def offsetTop(self):
@@ -2073,7 +2148,7 @@ class JsDoms(JsObject.JsObject):
 
       https://developer.mozilla.org/fr/docs/Web/API/HTMLElement/offsetTop
     """
-    return JsString.JsString("%s.offsetTop" % self.varId, isPyData=False)
+    return JsString.JsString("%s.offsetTop" % self.varId, is_py_data=False)
 
   def contentEditable(self, flag: Union[bool, primitives.JsDataModel]):
     """
@@ -2093,7 +2168,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsBoolean.JsBoolean.get("%s.contentEditable = %s" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
-  def className(self, className: Union[str, primitives.JsDataModel] = None):
+  def className(self, cls_name: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -2109,17 +2184,17 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] className: Specifies the class name of an element. To apply multiple classes, separate them with
+    :param Union[str, primitives.JsDataModel] cls_name: Specifies the class name of an element. To apply multiple classes, separate them with
     spaces, like "test demo"
 
     :return: A String, representing the class, or a space-separated list of classes, of an element
     """
-    if className is None:
-      return JsString.JsString("%s.className" % self.varId, isPyData=False)
+    if cls_name is None:
+      return JsString.JsString("%s.className" % self.varId, is_py_data=False)
 
     # TODO fix this properly
     return JsString.JsString("%s; %s.className = %s" % (
-      self.toStr(), self.varId, JsUtils.jsConvertData(className, None)), isPyData=False)
+      self.toStr(), self.varId, JsUtils.jsConvertData(cls_name, None)), is_py_data=False)
 
   def cloneNode(self, deep: Union[bool, primitives.JsDataModel] = True):
     """
@@ -2260,7 +2335,7 @@ class JsDoms(JsObject.JsObject):
     if js_funcs is None:
       return JsObject.JsObject("%s.click()" % self.varId)
 
-    self._js.append("%s.click(%s)" % (self.varId, ";".join(JsUtils.jsConvertFncs(js_funcs))))
+    self._js.append("%s.click(%s)" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
   def onclick(self, js_funcs: Union[str, list], auto_style: bool = True):
@@ -2285,7 +2360,7 @@ class JsDoms(JsObject.JsObject):
       js_funcs = [js_funcs]
     if auto_style:
       self.css({"cursor": "pointer"})
-    self._js.append("%s.onclick = function(){%s}" % (self.varId, ";".join(JsUtils.jsConvertFncs(js_funcs))))
+    self._js.append("%s.onclick = function(){%s}" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
   def onVisible(self, js_funcs: Union[str, list]):
@@ -2417,7 +2492,7 @@ class JsDomsList(JsArray.JsArray):
     self._js.append("for(let e of %s){ console.log(e) }" % self.varId)
     return self
 
-  def attr(self, value: Union[str, dict], data: Union[dict, str, primitives.JsDataModel] = None):
+  def attr(self, value: Union[str, dict], data: Union[dict, str, bool, primitives.JsDataModel] = None):
     """
     Description:
     ------------

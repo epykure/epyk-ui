@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
 
@@ -16,10 +17,10 @@ class Chart(Html.Html):
   _option_cls = OptChartC3.C3
   _type = None
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
     self.height, self._d3 = height[0], None
     super(Chart, self).__init__(
-      report, [], html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile, options=options)
+      page, [], html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile, options=options)
     self.style.css.margin_top = 10
     self.style.css.padding = 5
     self.options.type = self._type
@@ -27,7 +28,7 @@ class Chart(Html.Html):
       self.style.css.width_calc(10, None)
 
   @property
-  def options(self):
+  def options(self) -> OptChartC3.C3:
     """
     Description:
     -----------
@@ -41,7 +42,7 @@ class Chart(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> OptChartC3.C3:
     """
     Description:
     -----------
@@ -53,11 +54,11 @@ class Chart(Html.Html):
     :rtype: OptChartC3.C3
     """
     if self._dom is None:
-      self._dom = OptChartC3.C3(self.page)
+      self._dom = OptChartC3.C3(page=self.page, component=self)
     return self._dom
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartC3.OptionsChartSharedC3:
     """
     Description:
     -----------
@@ -81,7 +82,7 @@ class Chart(Html.Html):
     return "%s_obj" % self.htmlCode
 
   @property
-  def js(self):
+  def js(self) -> JsC3.C3:
     """
     Description:
     -----------
@@ -96,10 +97,10 @@ class Chart(Html.Html):
     :rtype: JsC3.C3
     """
     if self._js is None:
-      self._js = JsC3.C3(self, varName=self.chartId, report=self._report)
+      self._js = JsC3.C3(self, js_code=self.chartId, page=self.page, component=self)
     return self._js
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """
     Description:
     -----------
@@ -153,7 +154,7 @@ class Chart(Html.Html):
     return self
 
   @property
-  def d3(self):
+  def d3(self) -> JsD3.D3Select:
     """
     Description:
     -----------
@@ -162,7 +163,8 @@ class Chart(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
+      self._d3 = JsD3.D3Select(page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False,
+                               component=self)
     return self._d3
 
   def build(self, data=None, options=None, profile=False, component_id=None):
@@ -206,14 +208,14 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class ChartLine(Chart):
   _type = 'line'
 
-  def __init__(self, report, width, height, html_code, options, profile):
-    super(ChartLine, self).__init__(report, width, height, html_code, options, profile)
+  def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
+    super(ChartLine, self).__init__(page, width, height, html_code, options, profile)
     self.options.bindto = "#%s" % self.htmlCode
 
   def labels(self, labels, series_id='x'):

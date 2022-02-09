@@ -29,14 +29,14 @@ from epyk.core import data
 class Image(Html.Html):
   name = 'Picture'
 
-  def __init__(self, report, image, path, align, html_code, width, height, profile, options):
+  def __init__(self, page, image, path, align, html_code, width, height, profile, options):
     if path is None and image is not None:
       if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]
         image = os.path.split(image)[-1]
-    super(Image, self).__init__(report, {'path': path, 'image': image}, html_code=html_code, profile=profile,
+    super(Image, self).__init__(page, {'path': path, 'image': image}, html_code=html_code, profile=profile,
                                 css_attrs={"width": width, "height": height})
     self._jsStyles = options
     if align is not None:
@@ -59,7 +59,7 @@ class Image(Html.Html):
     :rtype: JsHtml.JsHtmlImg
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlImg(self, report=self.page)
+      self._dom = JsHtml.JsHtmlImg(self, page=self.page)
     return self._dom
 
   def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
@@ -150,32 +150,32 @@ class Image(Html.Html):
   def __str__(self):
     if self.val["image"] is not None:
       self.attr["src"] = "%(path)s/%(image)s" % self.val
-    return '<img %s />%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<img %s />%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'
 
-  def __init__(self, report, image, text, title, html_code, url, path, width, height, options, profile):
+  def __init__(self, page, image, text, title, html_code, url, path, width, height, options, profile):
     if path is None:
       if Defaults.SERVER_PATH is not None and not image.startswith("http"):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]
         image = os.path.split(image)[-1]
-    super(AnimatedImage, self).__init__(report,
+    super(AnimatedImage, self).__init__(page,
                                         {'path': path, 'image': image, 'text': text, "title": title, 'url': url},
                                         css_attrs={"width": width, "height": height, 'overflow': 'hidden',
                                                    'display': 'block'},
                                         options=options, profile=profile)
-    self.img = report.ui.img(
+    self.img = page.ui.img(
       image, path=path, width="auto", html_code=html_code, height=(100, "%"), options=options)
     self.img.options.managed = False
-    self.title = report.ui.tags.h2(title).css({"display": 'block'})
-    self.text = report.ui.tags.p(text).css({"display": 'block'})
-    self.a = report.ui.tags.a("Enter", url).css({"width": "100px", "background": "white"})
+    self.title = page.ui.tags.h2(title).css({"display": 'block'})
+    self.text = page.ui.tags.p(text).css({"display": 'block'})
+    self.a = page.ui.tags.a("Enter", url).css({"width": "100px", "background": "white"})
     self.a.style.add_classes.image.info_link()
-    self.div = report.ui.div([self.title, self.text, self.a], width=(100, "%"))
+    self.div = page.ui.div([self.title, self.text, self.a], width=(100, "%"))
     self.div.style.add_classes.image.mask()
     self.div.style.css.position = "absolute"
     self.div.style.css.padding = 10
@@ -240,7 +240,7 @@ class AnimatedImage(Html.Html):
 
   def __str__(self):
     return '''<div %(cssAttr)s>%(div)s%(img)s</div>
-      ''' % {"cssAttr": self.get_attrs(pyClassNames=self.style.get_classes()), 'img': self.img.html(),
+      ''' % {"cssAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'img': self.img.html(),
              'div': self.div.html()}
 
 
@@ -248,9 +248,9 @@ class ImgCarousel(Html.Html):
   name = 'Carousel'
   _option_cls = OptImg.OptionsImage
 
-  def __init__(self, report, images, path, selected, width, height, options, profile):
+  def __init__(self, page, images, path, selected, width, height, options, profile):
     self.items, self.__click_items = [], []
-    super(ImgCarousel, self).__init__(report, "", css_attrs={"width": width, "height": height}, profile=profile)
+    super(ImgCarousel, self).__init__(page, "", css_attrs={"width": width, "height": height}, profile=profile)
     self.attr['data-current_picture'] = 0
     for i, rec in enumerate(images):
       if not hasattr(rec, 'options'):
@@ -260,15 +260,15 @@ class ImgCarousel(Html.Html):
           rec['path'] = path
         if rec.get('selected') is not None:
           selected = i
-        img = report.ui.img(rec["image"], path=rec["path"], width=width,
-                            height=(height[0] - 60 if height[0] is not None else None, height[1]))
-        img_title = report.ui.tags.h3(rec['title'])
-        div = report.ui.layouts.div([img_title, img], html_code="%s_img_%s" % (self.htmlCode, i)).css(
+        img = page.ui.img(rec["image"], path=rec["path"], width=width,
+                          height=(height[0] - 60 if height[0] is not None else None, height[1]))
+        img_title = page.ui.tags.h3(rec['title'])
+        div = page.ui.layouts.div([img_title, img], html_code="%s_img_%s" % (self.htmlCode, i)).css(
           {"display": 'none', "text-align": "center"})
         div.title = img_title
         div.img = img
       else:
-        div = report.ui.layouts.div(rec, html_code="%s_img_%s" % (self.htmlCode, i)).css(
+        div = page.ui.layouts.div(rec, html_code="%s_img_%s" % (self.htmlCode, i)).css(
           {"display": 'none', "text-align": "center"})
       div.set_attrs(name="name", value="%s_img" % self.htmlCode)
       div.options.managed = False
@@ -300,7 +300,7 @@ class ImgCarousel(Html.Html):
       self.set_nav_dots()
     self.css({'padding-top': '20px', 'padding': "2px", 'margin': 0, 'position': 'relative'})
 
-  def __getitem__(self, i):
+  def __getitem__(self, i) -> Html.Html:
     return self.items[i]
 
   def add_plot(self, plot, title: str = "", width: Union[str, tuple] = "auto"):
@@ -431,7 +431,7 @@ class ImgCarousel(Html.Html):
         ] if self.infinity else None)
       ])
     return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
-      ''' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'img_cont': self.container.html(),
+      ''' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'img_cont': self.container.html(),
              "points": self.points.html(), 'next': self.next.html() if hasattr(self.next, 'html') else '',
              'previous': self.previous.html() if hasattr(self.previous, 'html') else ''}
 
@@ -439,10 +439,10 @@ class ImgCarousel(Html.Html):
 class Icon(Html.Html):
   name = 'Icon'
 
-  def __init__(self, report, value, width, height, color, tooltip, options, html_code, profile):
+  def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile):
     if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
       self.requirements = (options['icon_family'],)
-    super(Icon, self).__init__(report, "", css_attrs={"color": color, "width": width, "height": height},
+    super(Icon, self).__init__(page, "", css_attrs={"color": color, "width": width, "height": height},
                                html_code=html_code, profile=profile)
     if options['icon_family'] == 'office-ui-fabric-core':
       self.attr['class'].add("ms-Icon")
@@ -498,7 +498,7 @@ class Icon(Html.Html):
     :rtype: JsHtml.JsHtmlIcon
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlIcon(self, report=self.page)
+      self._dom = JsHtml.JsHtmlIcon(self, page=self.page)
     return self._dom
 
   @property
@@ -711,7 +711,7 @@ class Icon(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
 
   def __str__(self):
-    return '<i %s>%s</i>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
+    return '<i %s>%s</i>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)
 
 
 class IconToggle(Icon):
@@ -766,9 +766,9 @@ class IconToggle(Icon):
 class Emoji(Html.Html):
   name = 'Emoji'
 
-  def __init__(self, report: primitives.PageModel, symbol: str, top: tuple, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, symbol: str, top: tuple, options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
-    super(Emoji, self).__init__(report, symbol, options=options, profile=profile)
+    super(Emoji, self).__init__(page, symbol, options=options, profile=profile)
     self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
   _js__builder__ = '''
@@ -788,11 +788,11 @@ class Emoji(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def __str__(self):
-    return '<p %s>%s</p>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val)
+    return '<p %s>%s</p>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)
 
 
 class Badge(Html.Html):
@@ -800,9 +800,10 @@ class Badge(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, 'bootstrap')
   _option_cls = OptButton.OptionsBadge
 
-  def __init__(self, report, text, width, height, label, icon, background_color, color, url, tooltip, options, profile):
-    super(Badge, self).__init__(report, None, css_attrs={"width": width, "height": height},
-                                profile=profile, options=options)
+  def __init__(self, page: primitives.PageModel, text, width, height, label, icon, background_color,
+               color, url, tooltip, options, profile):
+    super(Badge, self).__init__(
+      page, None, css_attrs={"width": width, "height": height}, profile=profile, options=options)
     self.add_label(label, html_code=self.htmlCode, css={"vertical-align": "middle", "width": 'none', "height": 'none'})
     if self.options.badge_position == 'left':
       self.add_icon(icon, html_code=self.htmlCode, css={"float": 'None', 'margin-left': "5px"}, position="after",
@@ -858,7 +859,7 @@ class Badge(Html.Html):
     return super(Badge, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
   def __str__(self):
-    return '<span %s>%s</span>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.link)
+    return '<span %s>%s</span>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.link)
 
 
 class Figure(HtmlContainer.Div):
@@ -875,7 +876,7 @@ class Figure(HtmlContainer.Div):
         rows.append(str(component))
 
     return "<figure %s>%s</figure>%s" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows), self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.helper)
 
 
 class SlideShow(Html.Html):
@@ -883,8 +884,8 @@ class SlideShow(Html.Html):
   requirements = ('tiny-slider', )
   _option_cls = OptImg.OptionsTinySlider
 
-  def __init__(self, report, images, width, height, options, profile):
-    super(SlideShow, self).__init__(report, [], css_attrs={"width": width, "height": height},
+  def __init__(self, page, images, width, height, options, profile):
+    super(SlideShow, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                     profile=profile, options=options)
     for i in images:
       self.add(i)
@@ -943,7 +944,7 @@ class SlideShow(Html.Html):
     :rtype: JsTinySlider.TinySlider
     """
     if self._js is None:
-      self._js = JsTinySlider.TinySlider(self.page, varName=self.jsonId, setVar=False, parent=self)
+      self._js = JsTinySlider.TinySlider(self.page, js_code=self.jsonId, set_var=False, parent=self)
     return self._js
 
   @property
@@ -959,7 +960,7 @@ class SlideShow(Html.Html):
     :rtype: JsHtmlTinySlider.JsHtmlTinySlider
     """
     if self._dom is None:
-      self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, report=self.page)
+      self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, page=self.page)
     return self._dom
 
   def _events(self, event, js_funcs, source_event, profile=None, add=True):
@@ -1365,7 +1366,7 @@ class SlideShow(Html.Html):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     rows = [htmlObj.html() for htmlObj in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows))
 
 
 class Background(HtmlContainer.Div):

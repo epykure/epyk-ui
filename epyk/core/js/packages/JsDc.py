@@ -4,6 +4,7 @@ DC.js API
 http://dc-js.github.io/dc.js/docs/html/
 """
 
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.packages import JsPackage
@@ -12,14 +13,14 @@ from epyk.core.js.packages import JsPackage
 class DC(JsPackage):
   lib_alias = {'css': 'dc', 'js': 'dc'}
 
-  def __init__(self, src=None, varName=None, setVar=True, parent=None):
-    self.src, self._sub_chart = src, None
-    if parent is not None:
+  def __init__(self, page=None, js_code=None, set_var=True, component=None):
+    self.page, self._sub_chart, self.component = page, None, component
+    if component is not None:
       # for series chart the selector is specific
-      self._selector = "new dc.%s('#%s')" % (self.chartFnc, parent.htmlCode)
-    self.varName, self.setVar = varName, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
-    self.src.cssImport.add(self.lib_alias['css'])
+      self._selector = "new dc.%s('#%s')" % (self.chartFnc, component.htmlCode)
+    self.varName, self.setVar = js_code, set_var
+    self.page.jsImports.add(self.lib_alias['js'])
+    self.page.cssImport.add(self.lib_alias['css'])
     self._js, self._xaxis, self._yaxis, self._u = [[]], None, None, {}
 
   def x(self):
@@ -35,57 +36,88 @@ class DC(JsPackage):
     Redraws all charts in the same group as this chart, typically in reaction to a filter change. If the chart has
     a commitHandler, it will be executed and waited for.
 
-    http://dc-js.github.io/dc.js/docs/html/BaseMixin.html#redrawGroup__anchor
+    Related Pages:
+
+      http://dc-js.github.io/dc.js/docs/html/BaseMixin.html#redrawGroup__anchor
     """
     return JsObject.JsObject.get("%s.redrawGroup()" % self.varId)
 
   def width(self, n):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param n:
 
-    :return: Return 'self' to allow the cnains on the Python side
+    :return: Return 'self' to allow the chaining on the Python side
     """
     return self.fnc("width(%s)" % JsUtils.jsConvertData(n, None))
 
   def height(self, n):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param n:
-    :return:
     """
     return self.fnc("height(%s)" % JsUtils.jsConvertData(n, None))
 
   def yAxisLabel(self, text):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param text:
-
-    :return:
     """
     return self.fnc("yAxisLabel(%s)" % JsUtils.jsConvertData(text, None))
 
   def xAxisLabel(self, text):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param text:
-    :return:
     """
     return self.fnc("xAxisLabel(%s)" % JsUtils.jsConvertData(text, None))
 
   def render(self):
     """
+    Description:
+    -----------
 
-    :return:
     """
     self._js.append(["render()"])
     return self
 
   def dimension(self, values):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param values:
+    """
     return self.fnc("dimension(%s)" % values)
     #return self.fnc("dimension(%s)" % JsUtils.jsConvertData(values, None))
 
   def group(self, groups):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param groups:
+    """
     return self.fnc("group(%s)" % groups)
     #return self.fnc("group(%s)" % JsUtils.jsConvertData(groups, None))
 
@@ -105,7 +137,7 @@ class DC(JsPackage):
         str_chart = ".chart(function(c) { return %s; })" % self._sub_chart._selector
 
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     obj_content = []
     for i, js in enumerate(self._js):
@@ -125,8 +157,8 @@ class DC(JsPackage):
             # to avoid raising an error when the variable is not defined
             str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
           else:
-            varId = self._mapVarId(str_fnc, self.varId)
-            str_fnc = "%s.%s" % (varId, str_fnc)
+            js_code = self._mapVarId(str_fnc, self.varId)
+            str_fnc = "%s.%s" % (js_code, str_fnc)
         else:
           str_fnc = self.varId
       obj_content.append(str_fnc)
@@ -145,24 +177,34 @@ class Line(DC):
 
   def renderArea(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("renderArea(%s)" % JsUtils.jsConvertData(flag, None))
 
   def renderDataPoints(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
-    :return:
     """
     return self.fnc("renderDataPoints(%s)" % JsUtils.jsConvertData(flag, None))
 
   def clipPadding(self, value):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param value:
-    :return:
     """
     return self.fnc("clipPadding(%s)" % JsUtils.jsConvertData(value, None))
 
@@ -172,9 +214,15 @@ class Bar(DC):
 
   def controlsUseVisibility(self, flag):
     """
+    Description:
+    -----------
 
-    https://dc-js.github.io/dc.js/examples/bar-single-select.html
+    Related Pages:
 
+      https://dc-js.github.io/dc.js/examples/bar-single-select.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("controlsUseVisibility(%s)" % JsUtils.jsConvertData(flag, None))
@@ -196,24 +244,36 @@ class Row(DC):
 
   def elasticY(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/row-targets.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/row-targets.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticY(%s)" % JsUtils.jsConvertData(flag, None))
 
   def elasticX(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/row-targets.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/row-targets.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticX(%s)" % JsUtils.jsConvertData(flag, None))
 
   def yAxisLabel(self, text):
-    raise Exception("")
+    raise NotImplementedError()
 
 
 class Pie(DC):
@@ -221,18 +281,30 @@ class Pie(DC):
 
   def slicesCap(self, value):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie.html
+
+    Attributes:
+    ----------
     :param value:
     """
     return self.fnc("slicesCap(%s)" % JsUtils.jsConvertData(value, None))
 
   def innerRadius(self, value):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie.html
+
+    Attributes:
+    ----------
     :param value:
     """
     return self.fnc("innerRadius(%s)" % JsUtils.jsConvertData(value, None))
@@ -242,27 +314,45 @@ class Pie(DC):
 
   def drawPaths(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("drawPaths(%s)" % JsUtils.jsConvertData(flag, None))
 
   def externalLabels(self, size):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+
+    Attributes:
+    ----------
     :param size:
     """
     return self.fnc("externalLabels(%s)" % JsUtils.jsConvertData(size, None))
 
   def externalRadiusPadding(self, size):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pie-external-labels.html
+
+    Attributes:
+    ----------
     :param size:
     """
     return self.fnc("externalRadiusPadding(%s)" % JsUtils.jsConvertData(size, None))
@@ -272,35 +362,44 @@ class Series(DC):
   chartFnc = "SeriesChart"
 
   def line(self):
-    self._sub_chart = Line(src=self.src, setVar=False)
+    self._sub_chart = Line(js_code=self.page, set_var=False)
     self._sub_chart._selector = "new dc.LineChart(c)"
     return self
 
   def scatter(self):
-    self._sub_chart = Scatter(src=self.src, setVar=False)
+    self._sub_chart = Scatter(js_code=self.page, set_var=False)
     self._sub_chart._selector = "new dc.ScatterPlot(c)"
     return self
 
   def bubble(self):
-    self._sub_chart = Bubble(src=self.src, setVar=False)
+    self._sub_chart = Bubble(js_code=self.page, set_var=False)
     self._sub_chart._selector = "new dc.BubbleChart(c)"
     return self
 
   def bar(self):
-    self._sub_chart = Bar(src=self.src, setVar=False)
+    self._sub_chart = Bar(js_code=self.page, set_var=False)
     self._sub_chart._selector = "new dc.BarChart(c)"
     return self
 
-  def seriesAccessor(self, jsFncs, profile=False):
+  def seriesAccessor(self, js_funcs, profile=False):
     """
+    Description:
+    -----------
 
-    :param jsFncs:
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
     """
-    return self.fnc("seriesAccessor(function(d) {%s; })" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    return self.fnc("seriesAccessor(function(d) {%s; })" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
   def seriesAccessorByKey(self, index=None, str_format=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param index:
     :param str_format:
     """
@@ -324,30 +423,48 @@ class Series(DC):
 
   def elasticY(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticY(%s)" % JsUtils.jsConvertData(flag, None))
 
   def mouseZoomable(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("mouseZoomable(%s)" % JsUtils.jsConvertData(flag, None))
 
   def shareTitle(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("shareTitle(%s)" % JsUtils.jsConvertData(flag, None))
 
   def controlsUseVisibility(self, flag):
     """
+    Description:
+    -----------
 
-    https://dc-js.github.io/dc.js/examples/bar-single-select.html
+    Related Pages:
 
+      https://dc-js.github.io/dc.js/examples/bar-single-select.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("controlsUseVisibility(%s)" % JsUtils.jsConvertData(flag, None))
@@ -365,7 +482,11 @@ class Series(DC):
 
   def renderArea(self, flag):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("renderArea(%s)" % JsUtils.jsConvertData(flag, None))
@@ -376,7 +497,11 @@ class Scatter(DC):
 
   def radiusValueAccessorByKey(self, index=None, str_format=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param index:
     :param str_format:
     """
@@ -391,45 +516,72 @@ class Scatter(DC):
 
   def elasticX(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/splom.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/splom.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticX(%s)" % JsUtils.jsConvertData(flag, None))
 
   def excludedOpacity(self, value):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+
+    Attributes:
+    ----------
     :param value:
     """
     return self.fnc("excludedOpacity(%s)" % JsUtils.jsConvertData(value, None))
 
   def excludedColor(self, color):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+
+    Attributes:
+    ----------
     :param color:
     """
     return self.fnc("excludedColor(%s)" % JsUtils.jsConvertData(color, None))
 
   def symbolSize(self, size):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+    Related Pages:
 
-    :param color:
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/scatter-brushing.html
+
+    Attributes:
+    ----------
+    :param size:
     """
     return self.fnc("symbolSize(%s)" % JsUtils.jsConvertData(size, None))
 
   def clipPadding(self, value):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param value:
-    :return:
     """
     return self.fnc("clipPadding(%s)" % JsUtils.jsConvertData(value, None))
 
@@ -438,6 +590,14 @@ class Bubble(Scatter):
   chartFnc = "BubbleChart"
 
   def keyAccessor(self, index=None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param index:
+    """
     if index is None:
       return self.fnc("keyAccessor(function(d) {return +d.key; })")
 
@@ -445,7 +605,11 @@ class Bubble(Scatter):
 
   def radiusValueAccessorByKey(self, index=None, str_format=None, statc_factor=None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param index:
     :param str_format:
     """
@@ -465,28 +629,42 @@ class Sunburst(DC):
 
   def innerRadius(self, value):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
+
+    Attributes:
+    ----------
     :param value:
     """
     return self.fnc("innerRadius(%s)" % JsUtils.jsConvertData(value, None))
 
-  def ringSizes(self, jsFnc):
+  def ringSizes(self, js_func):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
+    Related Pages:
 
-    :param jsFnc:
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
+
+    Attributes:
+    ----------
+    :param js_func:
     """
-    return self.fnc("ringSizes(%s)" % jsFnc)
+    return self.fnc("ringSizes(%s)" % js_func)
 
   def equalRingSizes(self):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
+    Related Pages:
 
-    :return:
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/sunburst-equal-radii.html
     """
     return self.fnc("ringSizes(%s.equalRingSizes())" % self.varId)
 
@@ -499,13 +677,19 @@ class Composite(DC):
 
   def xUnits(self):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/pareto-chart.html
+    Related Pages:
+
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/pareto-chart.html
     """
     pass
 
   def elasticY(self, flag):
     """
+    Description:
+    -----------
 
     :param flag:
     """
@@ -513,9 +697,15 @@ class Composite(DC):
 
   def renderHorizontalGridLines(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/composite-bar-line.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/composite-bar-line.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("renderHorizontalGridLines(%s)" % JsUtils.jsConvertData(flag, None))
@@ -529,18 +719,30 @@ class BoxPlot(DC):
 
   def elasticY(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/boxplot-basic.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/boxplot-basic.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticY(%s)" % JsUtils.jsConvertData(flag, None))
 
   def elasticX(self, flag):
     """
+    Description:
+    -----------
 
-    https://github.com/dc-js/dc.js/blob/master/web-src/examples/boxplot-basic.html
+    Related Pages:
 
+      https://github.com/dc-js/dc.js/blob/master/web-src/examples/boxplot-basic.html
+
+    Attributes:
+    ----------
     :param flag:
     """
     return self.fnc("elasticX(%s)" % JsUtils.jsConvertData(flag, None))

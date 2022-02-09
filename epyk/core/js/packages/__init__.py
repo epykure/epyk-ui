@@ -7,7 +7,7 @@ from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
-def packageImport(jsPackage: str = None, cssPackage: str = None, if_true: bool = False):
+def packageImport(js_package: str = None, css_package: str = None, if_true: bool = False):
   """
   Description
   ---------------
@@ -21,17 +21,23 @@ def packageImport(jsPackage: str = None, cssPackage: str = None, if_true: bool =
     @packageImport('myJsPackage', 'myCssPackage')
     def myHtmlComponent():
       pass
+
+  Attributes:
+  ----------
+  :param str js_package:
+  :param str css_package:
+  :param bool if_true:
   """
   def wrap(func):
     def inner(page, *args, **kwargs):
-      report = getattr(page, '_report') if getattr(page, '_report', None) else page
+      report = getattr(page, 'page') if getattr(page, 'page', None) else page
       add_package = True
       if if_true and not args[0]:
         add_package = False
-      if add_package and jsPackage:
-        report.jsImports.add(jsPackage)
-      if add_package and cssPackage:
-        report.cssImport.add(cssPackage)
+      if add_package and js_package:
+        report.jsImports.add(js_package)
+      if add_package and css_package:
+        report.cssImport.add(css_package)
       return func(page, *args, **kwargs)
 
     return inner
@@ -42,38 +48,42 @@ def packageImport(jsPackage: str = None, cssPackage: str = None, if_true: bool =
 class JsPackage(primitives.JsDataModel):
   lib_alias, lib_selector, lib_set_var = None, None, True
 
-  class __internal:
-    # By default it will attach everything to the body
-    jqId, jsImports, cssImport = '', set([]), set([])
-
-  def __init__(self, src=None, varName: str = None, selector=None, data=None, setVar: bool = None, parent=None):
-    self.src = src if src is not None else self.__internal()
-    self.component = parent
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None, js_code: str = None,
+               selector: str = None, data: Any = None, set_var: bool = None):
+    self.component, self.page = component, page
+    if page is None and component is not None:
+      self.page = component.page
     self._selector = selector if selector is not None else self.lib_selector
-    self.varName, self.setVar, self._parent = varName, self.lib_set_var if setVar is None else setVar, parent
+    self.varName, self.setVar = js_code, self.lib_set_var if set_var is None else set_var
     self._data = data
-    self._js, self._u, self._js_enums = [[]], {}, {} # a list of list of object definition
+    self._js, self._u, self._js_enums = [[]], {}, {}    # a list of lists of objects definition
     self.__js_uniq_fncs = {}
     if self.lib_alias is not None:
-      if 'css' in self.lib_alias:
-        self.src.cssImport.add(self.lib_alias['css'])
-      if 'js' in self.lib_alias:
-        self.src.jsImports.add(self.lib_alias['js'])
+      if component is not None:
+        if 'css' in self.lib_alias:
+          self.component.cssImport.add(self.lib_alias['css'])
+        if 'js' in self.lib_alias:
+          self.component.jsImports.add(self.lib_alias['js'])
+      else:
+        if 'css' in self.lib_alias:
+          self.page.cssImport.add(self.lib_alias['css'])
+        if 'js' in self.lib_alias:
+          self.page.jsImports.add(self.lib_alias['js'])
 
   @property
   def varId(self):
     """
     Description:
     ------------
-    The Javascript and Python reference ID
+    The Javascript and Python reference ID.
     """
     return self._selector if self.varName is None else self.varName
 
-  def version(self, ver: str):
+  def version(self, tag: str, js: dict = None, css: dict = None):
     """
     Description:
     ------------
-    Change the package version number
+    Change the package version number.
 
     Usage::
 
@@ -81,9 +91,11 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str ver: The package versions example 1.11.0.
+    :param str tag: The package versions example 1.11.0.
+    :param dict js: Optional. The JavaScript packages to be added.
+    :param dict css: Optional. The CSS packages to be added.
     """
-    self.src._props.setdefault("packages", {})[self.lib_alias] = ver
+    self.page.imports.setVersion(self.lib_alias, tag, js, css)
     return self
 
   def fnc(self, data: str, unique: bool = False):
@@ -127,10 +139,10 @@ class JsPackage(primitives.JsDataModel):
     elif name not in self._js_enums[index]:
       self._js_enums[index][name] = []
       self._js[-1].append(name)
-    self._js_enums[index][name].append(data_class(self.src))
+    self._js_enums[index][name].append(data_class(self.page))
     return self._js_enums[index][name][-1]
 
-  def fnc_closure(self, data: str, checkUndefined: bool = False, unique: bool = False):
+  def fnc_closure(self, data: str, check_undefined: bool = False, unique: bool = False):
     """
     Description:
     ------------
@@ -142,9 +154,9 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str data: The Javascript fragment to be added
-    :param bool checkUndefined: Add a check on the variable definition
-    :param unique: Ensure the function is available one time in the chain. If not the last call we will present
+    :param str data: The Javascript fragment to be added.
+    :param bool check_undefined: Add a check on the variable definition.
+    :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
 
     :return: The "self" to allow the chains
     """
@@ -156,12 +168,12 @@ class JsPackage(primitives.JsDataModel):
       self.__js_uniq_fncs[fnc_name] = (len(self._js)-1, self._js[-1])
 
     self._js[-1].append(data)
-    if checkUndefined:
-      self._u[len(self._js) - 1] = checkUndefined
+    if check_undefined:
+      self._u[len(self._js) - 1] = check_undefined
     self._js.append([])
     return self
 
-  def fnc_closure_in_promise(self, data: str, checkUndefined: bool = False):
+  def fnc_closure_in_promise(self, data: str, check_undefined: bool = False):
     """
     Description:
     ------------
@@ -172,14 +184,14 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str data: The Javascript fragment to be added
-    :param bool checkUndefined: Add a check on the variable definition
+    :param str data: The Javascript fragment to be added.
+    :param bool check_undefined: Add a check on the variable definition.
 
     :return: The promise
     """
     self._js[-1].append(JsObjects.JsPromise(data))
-    if checkUndefined:
-      self._u[len(self._js) - 1] = checkUndefined
+    if check_undefined:
+      self._u[len(self._js) - 1] = check_undefined
     self._js.append([])
     return data
 
@@ -190,7 +202,7 @@ class JsPackage(primitives.JsDataModel):
     ------------
     Property to return the variable name as a valid pyJs object
     """
-    return JsString.JsString(self.varId, isPyData=False)
+    return JsString.JsString(self.varId, is_py_data=False)
 
   def set_var(self, flag: bool):
     """
@@ -208,24 +220,28 @@ class JsPackage(primitives.JsDataModel):
     self.setVar = flag
     return self
 
-  def getStr(self, emptyStack: bool = True):
+  def getStr(self, empty_stack: bool = True):
     """
     Description:
     ------------
-    Get the current string representation for the object and remove the stack
+    Get the current string representation for the object and remove the stack.
+
+    Attributes:
+    ----------
+    :param bool empty_stack:
     """
     js_stack = None
-    if not emptyStack:
+    if not empty_stack:
       js_stack = list(self._js)
     content = self.toStr()
-    if not emptyStack:
+    if not empty_stack:
       self._js = js_stack
     if not content:
       return self.varId
 
     return content
 
-  def _mapVarId(self, strFnc, varId):
+  def _mapVarId(self, func, js_code: str):
     """
     Description:
     ------------
@@ -234,12 +250,12 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str strFnc: The function string.
-    :param str varId: The object reference.
+    :param str func: The function string.
+    :param str js_code: The object reference.
 
     :return: The converted object reference
     """
-    return varId
+    return js_code
 
   def custom(self, func_nam: str, *argv):
     """
@@ -298,8 +314,7 @@ class JsPackage(primitives.JsDataModel):
               # to avoid raising an error when the variable is not defined
               str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
             else:
-              varId = self._mapVarId(str_fnc, self.varId)
-              str_fnc = "%s.%s" % (varId, str_fnc)
+              str_fnc = "%s.%s" % (self._mapVarId(str_fnc, self.varId), str_fnc)
           else:
             str_fnc = self.varId
         obj_content.append(str_fnc)
@@ -309,13 +324,13 @@ class JsPackage(primitives.JsDataModel):
         self.setVar = False
       else:
         obj_content.append(self.varId)
-    self._js = [[]] # empty the stack
+    self._js = [[]]    # empty the stack
     return "; ".join(obj_content)
 
 
 class DataAttrs(primitives.JsDataModel):
-  def __init__(self, report: primitives.PageModel, attrs: dict = None, options: dict = None):
-    self._report, self.options, self._attrs = report, options, attrs or {}
+  def __init__(self, page: primitives.PageModel, attrs: dict = None, options: dict = None):
+    self.page, self.options, self._attrs = page, options, attrs or {}
 
   def custom(self, name: str, value: Union[str, primitives.JsDataModel]):
     """
@@ -324,7 +339,7 @@ class DataAttrs(primitives.JsDataModel):
     Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
-    If the value is a Javascript object, the PyJs object must be used
+    If the value is a Javascript object, the PyJs object must be used.
 
     Attributes:
     ----------

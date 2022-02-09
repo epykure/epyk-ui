@@ -16,10 +16,10 @@ from epyk.core.css import Defaults as cssDefaults
 class Radio(Html.Html):
   name = 'Radio Buttons'
 
-  def __init__(self, report: primitives.PageModel, vals: List[dict], html_code: Optional[str],
+  def __init__(self, page: primitives.PageModel, vals: List[dict], html_code: Optional[str],
                group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    super(Radio, self).__init__(report, [], html_code=html_code,
+    super(Radio, self).__init__(page, [], html_code=html_code,
                                 css_attrs={"width": width, "height": height}, profile=profile, options=options)
     self.group_name = group_name or self.htmlCode
     for v in vals:
@@ -81,25 +81,25 @@ class Radio(Html.Html):
     :rtype: JsHtmlSelect.Radio
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.Radio(self, report=self.page)
+      self._dom = JsHtmlSelect.Radio(self, page=self.page)
     return self._dom
 
   def __str__(self):
     row = self.page.ui.layouts.div(self.val)
     row.options.managed = False
     row.style.css.text_align = "inherit"
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), row.html(), self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), row.html(), self.helper)
 
 
 class Tick(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Tick'
 
-  def __init__(self, report: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
+  def __init__(self, page: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
                width: tuple, height: tuple, html_code: str, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
     self._options = options
-    super(Tick, self).__init__(report, '', html_code=html_code, profile=profile,
+    super(Tick, self).__init__(page, '', html_code=html_code, profile=profile,
                                css_attrs={"width": width, 'height': height,
                                           'float': 'left' if position is None else position})
     if tooltip is not None:
@@ -107,7 +107,7 @@ class Tick(Html.Html):
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
     self.add_icon(icon, {"color": self.page.theme.success[1], "margin": "2px",
-                         'font-size': report.body.style.globals.font.normal()},
+                         'font-size': page.body.style.globals.font.normal()},
                   html_code=self.htmlCode, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()
     self.css({"margin": "5px 0", 'cursor': 'pointer'})
@@ -129,40 +129,40 @@ class Tick(Html.Html):
     :rtype: JsHtmlSelect.Tick
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.Tick(self, report=self.page)
+      self._dom = JsHtmlSelect.Tick(self, page=self.page)
       self._dom.options = self._options
     return self._dom
 
   def __str__(self):
-    return "<span %s></span>" % (self.get_attrs(pyClassNames=self.style.get_classes()))
+    return "<span %s></span>" % (self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, report: primitives.PageModel, records: list, color: str, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, records: list, color: str, width: tuple, height: tuple,
                html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self.width, self.jsChange = width[0], ''
-    super(Switch, self).__init__(report, records, html_code=html_code, options=options, profile=profile,
+    super(Switch, self).__init__(page, records, html_code=html_code, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
     self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': [], "profile": False}
 
     is_on = options.get("is_on", False)
-    self.checkbox = report.ui.inputs.checkbox(is_on, width=(None, "%"))
+    self.checkbox = page.ui.inputs.checkbox(is_on, width=(None, "%"))
     self.checkbox.style.add_classes.radio.switch_checkbox()
     self.checkbox.options.managed = False
     if is_on:
       self.checkbox.attr["checked"] = is_on
 
-    self.switch_label = report.ui.texts.label(report.entities.non_breaking_space, width=(50, "px"))
+    self.switch_label = page.ui.texts.label(page.entities.non_breaking_space, width=(50, "px"))
     self.switch_label.style.clear()
     self.switch_label.style.add_classes.radio.switch_label()
     self.switch_label.options.managed = False
     self.switch_label.style.css.line_height = "10px"
 
-    self.switch_text = report.ui.tags.p(self.val['on'] if is_on else self.val['off'])
+    self.switch_text = page.ui.tags.p(self.val['on'] if is_on else self.val['off'])
     self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
     self.switch_text.tooltip(self.val.get('text', ''))
     self.switch_text.options.managed = False
@@ -182,7 +182,7 @@ class Switch(Html.Html):
     :rtype: JsHtmlSelect.JsHtmlSwitch
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.JsHtmlSwitch(self, report=self.page)
+      self._dom = JsHtmlSelect.JsHtmlSwitch(self, page=self.page)
     return self._dom
 
   _js__builder__ = '''
@@ -204,7 +204,7 @@ class Switch(Html.Html):
     :rtype: JsComponents.Switch
     """
     if self._js is None:
-      self._js = JsComponents.Switch(self, report=self.page)
+      self._js = JsComponents.Switch(self, page=self.page)
     return self._js
 
   def event_fnc(self, event: str):
@@ -237,7 +237,8 @@ class Switch(Html.Html):
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -251,7 +252,7 @@ class Switch(Html.Html):
     Description:
     ------------
     Set the click property for the Switch.
-    The toggle event allow to specify different Javascript functions for each states of the component.
+    The toggle event allow specifying different Javascript functions for each states of the component.
 
     Usage::
 
@@ -292,5 +293,5 @@ class Switch(Html.Html):
                'clickOff': JsUtils.jsConvertFncs(self._clicks["on"], toStr=True, profile=self._clicks['profile'])
                }).toStr())
     return '''
-      <div %s>%s %s %s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()),
+      <div %s>%s %s %s</div>''' % (self.get_attrs(css_class_names=self.style.get_classes()),
                                    self.checkbox.html(), self.switch_label.html(), self.switch_text.html())

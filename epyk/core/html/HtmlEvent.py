@@ -28,11 +28,11 @@ class ProgressBar(Html.Html):
   name = 'Progress Bar'
   _option_cls = OptSliders.OptionsProgBar
 
-  def __init__(self, report: primitives.PageModel, number: int, total, width: tuple,
+  def __init__(self, page: primitives.PageModel, number: int, total, width: tuple,
                height: tuple, helper: Optional[str], options: Optional[dict], html_code: Optional[str],
                profile: Optional[Union[dict, bool]]):
     options['max'] = total
-    super(ProgressBar, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
+    super(ProgressBar, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.add_helper(helper)
     self.options.background = self.page.theme.success[1]
@@ -79,9 +79,9 @@ class ProgressBar(Html.Html):
     return self
 
   _js__builder__ = '''
-      options.value = parseFloat(data);
-      %(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
-      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+options.value = parseFloat(data);
+%(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
+''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
   def js(self) -> JsQueryUi.ProgressBar:
@@ -100,7 +100,7 @@ class ProgressBar(Html.Html):
     :rtype: JsQueryUi.ProgressBar
     """
     if self._js is None:
-      self._js = JsQueryUi.ProgressBar(self, report=self.page)
+      self._js = JsQueryUi.ProgressBar(self, page=self.page)
     return self._js
 
   @property
@@ -116,12 +116,12 @@ class ProgressBar(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
     return self._dom
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class Menu(Html.Html):
@@ -129,8 +129,8 @@ class Menu(Html.Html):
   name = 'Menu'
   _option_cls = OptSliders.OptionsMenu
 
-  def __init__(self, report, records, width, height, helper, options, html_code, profile):
-    super(Menu, self).__init__(report, records, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page, records, width, height, helper, options, html_code, profile):
+    super(Menu, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height})
     self.add_helper(helper)
     self.style.css.display = 'block'
@@ -198,7 +198,7 @@ class Menu(Html.Html):
     :rtype: JsQueryUi.Menu
     """
     if self._js is None:
-      self._js = JsQueryUi.Menu(self, report=self.page)
+      self._js = JsQueryUi.Menu(self, page=self.page)
     return self._js
 
   @property
@@ -214,12 +214,12 @@ class Menu(Html.Html):
     :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
     return self._dom
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<ul %s></ul>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<ul %s></ul>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class Dialog(Html.Html):
@@ -277,7 +277,7 @@ class Dialog(Html.Html):
     :rtype: JsQueryUi.Dialog
     """
     if self._js is None:
-      self._js = JsQueryUi.Dialog(self, report=self.page)
+      self._js = JsQueryUi.Dialog(self, page=self.page)
     return self._js
 
   @property
@@ -293,7 +293,7 @@ class Dialog(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
     return self._dom
 
   def __str__(self):
@@ -308,7 +308,7 @@ class Dialog(Html.Html):
         "More details https://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x")
     self.page.properties.js.add_builders(self.refresh())
     return '<div %s>%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(static_content), self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(static_content), self.helper)
 
 
 class Slider(Html.Html):
@@ -317,11 +317,11 @@ class Slider(Html.Html):
   _option_cls = OptSliders.OptionsSlider
   is_range = False
 
-  def __init__(self, report: primitives.PageModel, number: int, min_val: int, max_val: int,
+  def __init__(self, page: primitives.PageModel, number: int, min_val: int, max_val: int,
                width: tuple, height: tuple, helper: Optional[str], options: Optional[dict],
                html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     options.update({'max': max_val, 'min': min_val})
-    super(Slider, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
+    super(Slider, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     if self.options.show_min_max:
       self.style.css.padding = "0 10px"
@@ -372,7 +372,7 @@ class Slider(Html.Html):
     :rtype: JsQueryUi.Slider
     """
     if self._js is None:
-      self._js = JsQueryUi.Slider(self, report=self.page)
+      self._js = JsQueryUi.Slider(self, page=self.page)
     return self._js
 
   def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
@@ -467,7 +467,7 @@ class Slider(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlSlider
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, page=self.page)
     return self._dom
 
   _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css)
@@ -492,12 +492,12 @@ class Slider(Html.Html):
             <span style="float:right;display:inline-block">%(max)s</span>
           </div>
           <div id="%(htmlCode)s"></div>
-        </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
+        </div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
                                "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
     return '''
             <div %(strAttr)s>
               <div id="%(htmlCode)s"></div>
-            </div>%(helper)s''' % {"strAttr": self.get_attrs(withId=False), "min": self.options.min,
+            </div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
                                    "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
 
 
@@ -514,9 +514,8 @@ class Range(Slider):
 class SliderDate(Slider):
   name = "Slider Date"
 
-  def __init__(self, report, number, min_val, max_val, width, height, helper, options, html_code, profile):
-    super(SliderDate, self).__init__(report, number, min_val, max_val, width, height, helper, options, html_code,
-                                     profile)
+  def __init__(self, page: primitives.PageModel, number: Union[float, list], min_val, max_val, width, height, helper, options, html_code, profile):
+    super(SliderDate, self).__init__(page, number, min_val, max_val, width, height, helper, options, html_code, profile)
     self.options.min, self.options.max, self.options.step = min_val, max_val, 86400
 
   _js__builder__ = '''
@@ -537,7 +536,7 @@ class SliderDate(Slider):
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, page=self.page)
     return self._dom
 
 
@@ -561,7 +560,7 @@ class SliderDates(SliderDate):
     :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, report=self.page)
+      self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, page=self.page)
     return self._dom
 
 
@@ -569,16 +568,17 @@ class SkillBar(Html.Html):
   name = 'Skill Bars'
   _option_cls = OptSliders.OptionsSkillbars
 
-  def __init__(self, report, data, y_column, x_axis, title, width, height, html_code, options, profile):
-    super(SkillBar, self).__init__(report, "", html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, data, y_column, x_axis, title, width, height, html_code,
+               options, profile):
+    super(SkillBar, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height})
     self.add_title(title, options={'content_table': False})
-    self.innerPyHTML = report.ui.layouts.table(options={"header": False})
+    self.innerPyHTML = page.ui.layouts.table(options={"header": False})
     self.innerPyHTML.options.managed = False
     for rec in data:
-      value = report.ui.div(EntHtml4.NO_BREAK_SPACE).css(
+      value = page.ui.div(EntHtml4.NO_BREAK_SPACE).css(
         {"width": '%s%s' % (rec[y_column], options.get("unit", '%')), 'margin-left': "2px",
-         "background": options.get("background", report.theme.success[0])})
+         "background": options.get("background", page.theme.success[0])})
       value.options.managed = False
       if options.get("values", False):
         self.innerPyHTML += [rec[x_axis], value, "%s%s" % (int(rec[y_column]), options.get("unit", 'px'))]
@@ -589,7 +589,7 @@ class SkillBar(Html.Html):
       self.innerPyHTML[-1][0].style.css.padding = "0 5px"
       self.innerPyHTML[-1][1].style.css.width = "100%"
       if options.get("borders", False):
-        self.innerPyHTML[-1][1].style.css.border = "1px solid %s" % report.theme.greys[4]
+        self.innerPyHTML[-1][1].style.css.border = "1px solid %s" % page.theme.greys[4]
         self.innerPyHTML[-1][1][0].style.css.margin_left = 0
     self.innerPyHTML.style.clear()
     self.css({"margin": '5px 0'})
@@ -621,7 +621,7 @@ class SkillBar(Html.Html):
     :rtype: JsComponents.SkillBar
     """
     if self._js is None:
-      self._js = JsComponents.SkillBar(self, varName=self.dom.varName, report=self.page)
+      self._js = JsComponents.SkillBar(self, js_code=self.dom.varName, page=self.page)
     return self._js
 
   _js__builder__ = ''' 
@@ -677,7 +677,7 @@ class SkillBar(Html.Html):
       if self.options.percentage:
         row[1][0]._vals = [row[1][0].css("width")]
         row[1][0].style.css.padding_left = 5
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content)
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.content)
 
 
 class OptionsBar(Html.Html):
@@ -685,9 +685,9 @@ class OptionsBar(Html.Html):
   name = 'Options'
   _option_cls = OptSliders.OptionBar
 
-  def __init__(self, report: primitives.PageModel, records, width: tuple, height: tuple, color: str,
+  def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, color: str,
                options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(OptionsBar, self).__init__(report, [], css_attrs={"width": width, 'height': height},
+    super(OptionsBar, self).__init__(page, [], css_attrs={"width": width, 'height': height},
                                      profile=profile, options=options)
     self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
               'background': self.page.theme.greys[0]})
@@ -725,15 +725,15 @@ class OptionsBar(Html.Html):
   def __str__(self):
     str_html = "".join([v.html() for v in self.val])
     return '<div %(attrs)s>%(icons)s</div>' % {
-      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()), 'icons': str_html}
+      'attrs': self.get_attrs(css_class_names=self.style.get_classes()), 'icons': str_html}
 
 
 class SignIn(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   name = 'SignIn'
 
-  def __init__(self, report: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str]):
-    super(SignIn, self).__init__(report, text, css_attrs={"width": size, 'height': size})
+  def __init__(self, page: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str]):
+    super(SignIn, self).__init__(page, text, css_attrs={"width": size, 'height': size})
     self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
     self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
               "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "display": "inline-block",
@@ -747,13 +747,13 @@ class SignIn(Html.Html):
       self.style.css.padding = "2px"
       self.style.css.font_size = self.size
       return '<i title="Guest Mode" %(attrs)s></i>' % {
-        'size': self.size, 'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
+        'size': self.size, 'attrs': self.get_attrs(css_class_names=self.style.get_classes())}
 
     return '''
       <div title="%(user)s" %(attrs)s>
         <p style="font-size:%(size)s;line-height:%(height)s;margin:0;padding:0">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self.page.user[0].upper(), 'user': self.page.user,
-                    'attrs': self.get_attrs(pyClassNames=self.style.get_classes())}
+      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self.page.user[0].upper(),
+                    'user': self.page.user, 'attrs': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Filters(Html.Html):
@@ -761,8 +761,8 @@ class Filters(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   _option_cls = OptList.OptionsTagItems
 
-  def __init__(self, report: primitives.PageModel, items, width, height, html_code, helper, options, profile):
-    super(Filters, self).__init__(report, items, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile):
+    super(Filters, self).__init__(page, items, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "min-height": height})
     self.input = self.page.ui.input()
     self.input.style.css.text_align = 'left'
@@ -909,7 +909,7 @@ class Filters(Html.Html):
     :rtype: JsHtmlList.Tags
     """
     if self._dom is None:
-      self._dom = JsHtmlList.Tags(self, report=self.page)
+      self._dom = JsHtmlList.Tags(self, page=self.page)
     return self._dom
 
   def __str__(self):
@@ -958,5 +958,5 @@ class Filters(Html.Html):
     if not self.options.visible:
       self.input.style.css.display = False
     return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {
-      'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+      'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
       'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}

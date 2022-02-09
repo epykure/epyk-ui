@@ -1,65 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.css import Properties
-
-
-class Data(Properties.CssMixin):
-
-  def __init__(self, css_ovrs, selector):
-    self._content = css_ovrs or {}
-    self.__selector = selector
-    self.has_changed = False
-
-  def css(self, k, v=None, important=False, change=True):
-    """
-    Description:
-    ------------
-    Set multiple CSS attributes to the HTML component.
-
-    Attributes:
-    ----------
-    :param k: Dictionary | String. optional. The attributes to be added.
-    :param v: String. Optional. The value for a given item.
-    :param important: Boolean. Optional. Specify if the style is important.
-    :param change: Boolean. Optional. State of the CSS group from the creation.
-    """
-    if change:
-      self.has_changed = True
-    if not isinstance(k, dict) and v is not None:
-      k = {k: v}
-    for attr, val in k.items():
-      if important:
-        val = "%s !IMPORTANT" % val
-      self._content[attr] = val
-    return self
-
-  def clear(self):
-    """
-    Description:
-    ------------
-    Clear all the CSS attributes defined for this class.
-
-    :return: Self to allow the chaining.
-    """
-    self.has_changed = True
-    self._content = {}
-    return self
-
-  @property
-  def selector(self):
-    return self.__selector
-
-  def __str__(self):
-    if self._content:
-      return "{%s;}" % ";".join(["%s: %s " % (k, v) for k, v in self._content.items()])
-
-    return ""
 
 
 class Selector:
 
-  def __init__(self, selector_ovrs):
+  def __init__(self, selector_ovrs: dict):
     map_fncs = {"parent": "parent_element", "child": "sub_element"}
     self.__this, self._suffix = selector_ovrs["classname"], ''
     del selector_ovrs["classname"]
@@ -67,7 +16,7 @@ class Selector:
       getattr(self, map_fncs.get(k, k))(v)
     self.__element = False
 
-  def elements(self, element_types):
+  def elements(self, element_types: Union[str, list]):
     """
     Description:
     ------------
@@ -79,7 +28,7 @@ class Selector:
 
     Attributes:
     ----------
-    :param element_types: List. All the element tags.
+    :param Union[str, list] element_types: All the element tags.
     """
     if not isinstance(element_types, list):
       element_types = [element_types]
@@ -90,7 +39,7 @@ class Selector:
       self.__element = True
     return self
 
-  def sub_element(self, element, direct_parent=False, class_name=None):
+  def sub_element(self, element: str, direct_parent: bool = False, class_name: str = None):
     """
     Description:
     ------------
@@ -102,9 +51,9 @@ class Selector:
 
     Attributes:
     ----------
-    :param element: String. The element tag.
-    :param direct_parent: Boolean. Optional. the link with the main component.
-    :param class_name: String. Optional. The CSS class name.
+    :param str element: The element tag.
+    :param bool direct_parent: Optional. the link with the main component.
+    :param str class_name: Optional. The CSS class name.
     """
     if direct_parent:
       self.__this = "%s > %s" % (self.__this, element)
@@ -112,7 +61,7 @@ class Selector:
       self.__this = "%s %s" % (self.__this, element)
     return self
 
-  def parent_element(self, element, direct_parent=False, class_name=None):
+  def parent_element(self, element: str, direct_parent: bool = False, class_name: str = None):
     """
     Description:
     ------------
@@ -124,9 +73,9 @@ class Selector:
 
     Attributes:
     ----------
-    :param element: String. The element tag.
-    :param direct_parent: Boolean. Optional. the link with the main component.
-    :param class_name: String. Optional. The CSS class name.
+    :param str element: The element tag.
+    :param bool direct_parent: Optional. the link with the main component.
+    :param str class_name: Optional. The CSS class name.
     """
     if direct_parent:
       self.__this = "%s > %s" % (element, self.__this)
@@ -134,7 +83,7 @@ class Selector:
       self.__this = "%s %s" % (element, self.__this)
     return self
 
-  def with_next_element(self, element, class_name=None):
+  def with_next_element(self, element: str, class_name: str = None):
     """
     Description:
     ------------
@@ -146,13 +95,13 @@ class Selector:
 
     Attributes:
     ----------
-    :param element: The element tag.
-    :param class_name: String. Optional. The CSS class name.
+    :param str element: The element tag.
+    :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s + %s" % (self.__this, element)
     return self
 
-  def with_prev_element(self, element, class_name=None):
+  def with_prev_element(self, element: str, class_name: str = None):
     """
     Description:
     ------------
@@ -164,13 +113,13 @@ class Selector:
 
     Attributes:
     ----------
-    :param element: String. The element tag.
-    :param class_name: String. Optional. The CSS class name.
+    :param str element: The element tag.
+    :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s ~ %s" % (self.__this, element)
     return self
 
-  def join_class(self, class_name):
+  def join_class(self, class_name: str):
     """
     Description:
     ------------
@@ -178,12 +127,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param class_name: String. Optional. The CSS class name.
+    :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s.%s" % (self.__this, class_name)
     return self
 
-  def add_class(self, class_name):
+  def add_class(self, class_name: str):
     """
     Description:
     ------------
@@ -191,12 +140,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param class_name: String. Optional. The CSS class name.
+    :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s .%s" % (self.__this, class_name)
     return self
 
-  def sub_class(self, class_name, direct_parent=False):
+  def sub_class(self, class_name: str, direct_parent: bool = False):
     """
     Description:
     ------------
@@ -208,8 +157,8 @@ class Selector:
 
     Attributes:
     ----------
-    :param class_name: String. Optional. The CSS class name.
-    :param direct_parent: Boolean. Optional. the link with the main component.
+    :param str class_name: Optional. The CSS class name.
+    :param bool direct_parent: Optional. the link with the main component.
     """
     if direct_parent:
       self.__this = "%s > .%s" % (self.__this, class_name)
@@ -217,7 +166,7 @@ class Selector:
       self.__this = "%s .%s" % (self.__this, class_name)
     return self
 
-  def element(self, flag=None):
+  def element(self, flag: bool = None):
     """
     Description:
     ------------
@@ -225,7 +174,7 @@ class Selector:
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. Define if the element tag needs to be added.
+    :param bool flag: Optional. Define if the element tag needs to be added.
     """
     if flag is None:
       return self.__element
@@ -233,7 +182,7 @@ class Selector:
     self.__element = flag
     return self
 
-  def add_element_id(self, component):
+  def add_element_id(self, component: primitives.HtmlModel):
     """
     Description:
     ------------
@@ -245,12 +194,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param component: HTML. The component.
+    :param primitives.HtmlModel component: The component.
     """
     self.__this = "%s%s" % (component.htmlCode, self.__this)
     return self
 
-  def not_element(self, element):
+  def not_element(self, element: str):
     """
     Description:
     ------------
@@ -262,7 +211,7 @@ class Selector:
 
     Attributes:
     ----------
-    :param element: String. The element reference (tag).
+    :param str element: The element reference (tag).
     """
     self.__this = "%s:not(%s)" % (self.__this, element)
     return self
@@ -371,7 +320,7 @@ class Selector:
     self.__this = "%s:link" % self.__this
     return self
 
-  def nth_child(self, n):
+  def nth_child(self, n: int):
     """
     Description:
     ------------
@@ -383,12 +332,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param n:
+    :param int n: The child index from the start.
     """
     self.__this = "%s:nth-child(%s)" % (self.__this, n)
     return self
 
-  def nth_last_child(self, n):
+  def nth_last_child(self, n: int):
     """
     Description:
     ------------
@@ -400,12 +349,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param n: Integer. The index from the end for a list of elements.
+    :param int n: The index from the end for a list of elements.
     """
     self.__this = "%s:nth-last-child(%s)" % (self.__this, n)
     return self
 
-  def nth_last_of_type(self, n):
+  def nth_last_of_type(self, n: int):
     """
     Description:
     ------------
@@ -417,12 +366,12 @@ class Selector:
 
     Attributes:
     ----------
-    :param n: Integer. The index from the end for a list of element types.
+    :param int n: The index from the end for a list of element types.
     """
     self.__this = "%s:nth-last-of-type(%s)" % (self.__this, n)
     return self
 
-  def nth_of_type(self, n):
+  def nth_of_type(self, n: int):
     """
     Description:
     ------------
@@ -434,7 +383,7 @@ class Selector:
 
     Attributes:
     ----------
-    :param n: Integer. The index from the start for a list of element types.
+    :param int n: The index from the start for a list of element types.
     """
     self.__this = "%s:nth-of-type(%s)" % (self.__this, n)
     return self
@@ -520,10 +469,64 @@ class Selector:
     return self.__this
 
 
+class Data(Properties.CssMixin):
+
+  def __init__(self, css_ovrs: dict, selector: Union[str, Selector]):
+    self._content = css_ovrs or {}
+    self.__selector = selector
+    self.has_changed = False
+
+  def css(self, k: Union[str, dict], v: str = None, important: bool = False, change: bool = True):
+    """
+    Description:
+    ------------
+    Set multiple CSS attributes to the HTML component.
+
+    Attributes:
+    ----------
+    :param Union[str, dict] k: Optional. The attributes to be added.
+    :param str v: Optional. The value for a given item.
+    :param bool important: Optional. Specify if the style is important.
+    :param bool change: Optional. State of the CSS group from the creation.
+    """
+    if change:
+      self.has_changed = True
+    if not isinstance(k, dict) and v is not None:
+      k = {k: v}
+    for attr, val in k.items():
+      if important:
+        val = "%s !IMPORTANT" % val
+      self._content[attr] = val
+    return self
+
+  def clear(self):
+    """
+    Description:
+    ------------
+    Clear all the CSS attributes defined for this class.
+
+    :return: Self to allow the chaining.
+    """
+    self.has_changed = True
+    self._content = {}
+    return self
+
+  @property
+  def selector(self):
+    return self.__selector
+
+  def __str__(self):
+    if self._content:
+      return "{%s;}" % ";".join(["%s: %s " % (k, v) for k, v in self._content.items()])
+
+    return ""
+
+
 class Style:
   classname, classnames, is_class, is_page_scope = None, None, True, True
 
-  def __init__(self, page, css_ovrs=None, selector_ovrs=None, html_id=None):
+  def __init__(self, page: primitives.PageModel, css_ovrs: dict = None, selector_ovrs: dict = None,
+               html_id: str = None):
     self.html_id, self.cls_ref, self.__has_changed = html_id, None, False
     self.page = page
     css_ovrs = css_ovrs or {}
@@ -551,16 +554,20 @@ class Style:
       selector_ids.update(selector_ovrs)
     self.__selector = Selector(selector_ids)
 
-    self.__attrs, self.__hover, self.__focus = dict(getattr(self, '_attrs', {})), dict(getattr(self, '_hover', {})), dict(getattr(self, '_focus', {}))
-    self.__checked, self.__disabled, self.__empty = dict(getattr(self, '_checked', {})), dict(getattr(self, '_disabled', {})), dict(getattr(self, '_empty', {}))
-    self.__enabled, self.__invalid, self.__valid = dict(getattr(self, '_enabled', {})), dict(getattr(self, '_invalid', {})), dict(getattr(self, '_valid', {}))
-    self.__visited, self.__after, self.__before = dict(getattr(self, '_visited', {})), dict(getattr(self, '_after', {})), dict(getattr(self, '_before', {}))
+    self.__attrs = dict(getattr(self, '_attrs', {}))
+    self.__hover, self.__focus = dict(getattr(self, '_hover', {})), dict(getattr(self, '_focus', {}))
+    self.__checked = dict(getattr(self, '_checked', {}))
+    self.__disabled, self.__empty = dict(getattr(self, '_checked', {})), dict(getattr(self, '_disabled', {}))
+    self.__enabled = dict(getattr(self, '_enabled', {}))
+    self.__invalid, self.__valid = dict(getattr(self, '_invalid', {})), dict(getattr(self, '_valid', {}))
+    self.__visited = dict(getattr(self, '_visited', {}))
+    self.__after, self.__before = dict(getattr(self, '_after', {})), dict(getattr(self, '_before', {}))
     self.__active = dict(getattr(self, '_active', {}))
 
     # More bespoke items
     self.__webkit_slider_thumb = dict(getattr(self, '_webkit_slider_thumb', {}))
-    self.__internal_props = ["attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled",
-                             "invalid", "active"]
+    self.__internal_props = [
+      "attrs", "hover", "focus", "checked", "valid", "disabled", "empty", "enabled", "invalid", "active"]
     self.customize()
     for k in self.__internal_props:
       s = getattr(self, k)
@@ -577,34 +584,35 @@ class Style:
     """
     Description:
     ------------
-
+    Define for child classes to define some CSS attributes.
+    This parent class is just there to define the structure of all the child ones, it is not used directly.
     """
     pass
 
-  def transition(self, attribute, duration=2, delay=None, iteration=None, timing_fnc=None):
+  def transition(self, attribute: str, duration: int = 2, delay: int = None, iteration=None, timing_fnc : str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param attribute:
-    :param duration:
-    :param delay:
-    :param iteration:
-    :param timing_fnc:
+    :param str attribute:
+    :param int duration: Optional. The duration of the transition effect.
+    :param int delay: Optional. The time delay before starting the transition.
+    :param int iteration: Optional. The count of iteration.
+    :param str timing_fnc: Optional. The timing function from ("ease", "linear", "ease-in", "ease-out", "ease-in-out").
     """
-    timing_fncs = ("ease", "linear", "ease-in", "ease-out", "ease-in-out")
+    timing_funcs = ("ease", "linear", "ease-in", "ease-out", "ease-in-out")
     css_transition = {"transition-property": attribute, "transition-duration": "%ss" % duration}
     if delay:
       css_transition["transition-delay"] = "%ss" % delay
     if iteration:
       css_transition["transition-iteration-count"] = iteration
     if timing_fnc is not None:
-      if timing_fnc not in timing_fncs and not timing_fnc.startswith("cubic-bezier"):
-        raise Exception("%s missing from the list" % timing_fnc)
+      if timing_fnc not in timing_funcs and not timing_fnc.startswith("cubic-bezier"):
+        raise ValueError("%s missing from the list" % timing_fnc)
 
-      css_transition["transition-timing-function"] = timing_fnc
+      css_transition["transition-timing-function"] = timing_funcs
     # Add the -webkit- prefix for compatibility with some browsers
     safari_css = dict([("-webkit-%s" % k, v) for k, v in css_transition.items()])
     css_transition.update(safari_css)
@@ -642,7 +650,8 @@ class Style:
     :param delay:
     :param iteration:
     :param timing_fnc:
-    :param fill_mode: String Specify the fill mode (whether the style should go back to its original position or something else etc...
+    :param fill_mode: String Specify the fill mode (whether the style should go back to its original position or
+    something else etc...
     """
     name = self.keyframes(name, attrs, effect)
     css_animation = {"animation-name": name, "animation-duration": "%ss" % duration}
@@ -655,7 +664,7 @@ class Style:
     if timing_fnc is not None:
       if timing_fnc not in ["ease", "linear", "ease-in", "ease-out", "ease-in-out"] and not timing_fnc.startswith(
         "cubic-bezier"):
-        raise Exception("%s missing from the list" % timing_fnc)
+        raise ValueError("%s missing from the list" % timing_fnc)
 
       css_animation["animation-timing-function"] = timing_fnc
     # Add the -webkit- prefix for compatibility with some browsers
@@ -665,17 +674,17 @@ class Style:
     return self
 
   @property
-  def selector(self):
+  def selector(self) -> Selector:
     return self.__selector
 
   @property
-  def attrs(self):
+  def attrs(self) -> Data:
     if self.__attrs is None or isinstance(self.__attrs, dict):
       self.__attrs = Data(self.__attrs or {}, self.__selector)
     return self.__attrs
 
   @property
-  def hover(self):
+  def hover(self) -> Data:
     """
     Description:
     ------------
@@ -690,7 +699,7 @@ class Style:
     return self.__hover
 
   @property
-  def checked(self):
+  def checked(self) -> Data:
     """
     Description:
     ------------
@@ -705,7 +714,7 @@ class Style:
     return self.__checked
 
   @property
-  def disabled(self):
+  def disabled(self) -> Data:
     """
     Description:
     ------------
@@ -720,7 +729,7 @@ class Style:
     return self.__disabled
 
   @property
-  def focus(self):
+  def focus(self) -> Data:
     """
     Description:
     ------------
@@ -735,7 +744,7 @@ class Style:
     return self.__focus
 
   @property
-  def empty(self):
+  def empty(self) -> Data:
     """
     Description:
     ------------
@@ -750,7 +759,7 @@ class Style:
     return self.__empty
 
   @property
-  def enabled(self):
+  def enabled(self) -> Data:
     """
     Description:
     ------------
@@ -765,7 +774,7 @@ class Style:
     return self.__enabled
 
   @property
-  def invalid(self):
+  def invalid(self) -> Data:
     """
     Description:
     ------------
@@ -780,7 +789,7 @@ class Style:
     return self.__invalid
 
   @property
-  def valid(self):
+  def valid(self) -> Data:
     """
     Description:
     ------------
@@ -795,7 +804,7 @@ class Style:
     return self.__valid
 
   @property
-  def visited(self):
+  def visited(self) -> Data:
     """
     Description:
     ------------
@@ -810,7 +819,7 @@ class Style:
     return self.__visited
 
   @property
-  def before(self):
+  def before(self) -> Data:
     """
     Description:
     ------------
@@ -825,7 +834,7 @@ class Style:
     return self.__before
 
   @property
-  def after(self):
+  def after(self) -> Data:
     """
     Description:
     ------------
@@ -840,7 +849,7 @@ class Style:
     return self.__after
 
   @property
-  def webkit_slider_thumb(self):
+  def webkit_slider_thumb(self) -> Data:
     """
     Description:
     ------------
@@ -850,7 +859,7 @@ class Style:
     return self.__webkit_slider_thumb
 
   @property
-  def active(self):
+  def active(self) -> Data:
     """
     Description:
     ------------
@@ -865,7 +874,7 @@ class Style:
     return self.__active
 
   @property
-  def has_changed(self):
+  def has_changed(self) -> bool:
     """
     Description:
     ------------
@@ -882,7 +891,7 @@ class Style:
       self.__has_changed |= s.has_changed
     return self.__has_changed
 
-  def css(self, key, value=None, important=False, change=True):
+  def css(self, key: Union[str, dict], value: str = None, important: bool = False, change: bool = True):
     """
     Description:
     ------------
@@ -890,14 +899,14 @@ class Style:
 
     Attributes:
     ----------
-    :param key: String. The CSS attribute.
-    :param value: String. Optional. The CSS value.
-    :param important: Boolean. Optional. The level of priority for this attribute.
-    :param change: Boolean. Optional. A flag to specify the state of the CSS class.
+    :param Union[str, dict] key: The CSS attribute.
+    :param str value: Optional. The CSS value.
+    :param bool important: Optional. The level of priority for this attribute.
+    :param bool change: Optional. A flag to specify the state of the CSS class.
     """
     return self.attrs.css(key, value, important, change)
 
-  def media(self, attrs, rule=None, media_type=None, media_feature=None, change=True, this_class=False):
+  def media(self, attrs: dict, rule=None, media_type=None, media_feature=None, change=True, this_class=False):
     """
     Description:
     ------------
@@ -907,7 +916,7 @@ class Style:
     -----
 
       page.style.media({"body": {"background-color": "lightblue"}}, "only", "screen",
-    {'and': [{'height': '100px'}, {'min-width': '600px'}]})
+        {'and': [{'height': '100px'}, {'min-width': '600px'}]})
 
     The first key of the attributes can be an Epyk html object.
 
@@ -917,7 +926,7 @@ class Style:
 
     Attributes:
     ----------
-    :param attrs: String. Required. Percentage of the animation duration.
+    :param dict attrs: Percentage of the animation duration.
     :param rule: String. Optional. not or only or and see documentation for more info.
     :param media_type: String. Optional. the media to which the rule will need to be applied.
     :param media_feature: String. Optional. Media features provide more specific details to media queries.
@@ -926,25 +935,24 @@ class Style:
     """
     if this_class:
       attrs = {".%s" % self.classname: attrs}
-
     if change:
       self.__has_changed = True
     media_props = []
     if rule is not None:
       if rule in ['only', 'not'] and not media_type:
-        raise Exception('You need to specify a mediatype when using rules not or only')
+        raise ValueError('You need to specify a mediatype when using rules not or only')
 
       media_props.extend([rule, media_type])
       if media_feature:
         for op, m_features in media_feature.items():
           for feature in m_features:
             features = ['(%s: %s)' % (k, v) for k, v in feature.items()]
-          media_props.extend([op, ('%s ' % op).join(features)])
+            media_props.extend([op, ('%s ' % op).join(features)])
     name = ' '.join(media_props)
     self.__media[name] = attrs
     return name
 
-  def keyframes(self, name, attrs, effects=None, change=True):
+  def keyframes(self, name: str, attrs: dict, effects=None, change: bool = True):
     """
     Description:
     ------------
@@ -967,10 +975,10 @@ class Style:
 
     Attributes:
     ----------
-    :param effects: String. Effect Class.
-    :param name: String. Required. Defines the name of the animation.
-    :param attrs: String. Required. Percentage of the animation duration.
-    :param change: Boolean. Optional. A flag to specify the state of the CSS class.
+    :param effects: Effect Class.
+    :param str name: Defines the name of the animation.
+    :param dict attrs: Percentage of the animation duration.
+    :param bool change: Optional. A flag to specify the state of the CSS class.
     """
     if change:
       self.__has_changed = True
@@ -980,12 +988,11 @@ class Style:
     self.__keyframes[name] = attrs
     return name
 
-  def get_ref(self):
+  def get_ref(self) -> str:
     """
     Description:
     ------------
-
-    :return:
+    Get the style class reference.
     """
     # dedicated unique ID if it is not the original style
     if self.has_changed and self.cls_ref in [None, self.classname]:

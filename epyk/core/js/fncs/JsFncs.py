@@ -384,14 +384,11 @@ class FncFiltere:
 
 class JsRegisteredFunctions:
 
-  class __internal:
-    _props = {}
-
-  def __init__(self, src=None):
-    self.src = src or self.__internal()
-    if 'js' not in self.src._props:
-      self.src._props['js'] = {}
-    self._js_src = self.src._props['js']
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
+    if 'js' not in self.page._props:
+      self.page._props['js'] = {}
+    self._js_src = self.page._props['js']
 
   def cssStyle(self, params):
     """
@@ -416,8 +413,8 @@ class JsRegisteredFunctions:
     TODO: To be improved and extended.
     """
     self._js_src.setdefault('functions', {})["serviceCall"] = {
-      'content': self.src.js.post(JsUtils.jsWrap("url"), {"data": JsUtils.jsWrap("data")}).onSuccess([
-        self.src.js.msg.status()
+      'content': self.page.js.post(JsUtils.jsWrap("url"), {"data": JsUtils.jsWrap("data")}).onSuccess([
+        self.page.js.msg.status()
       ]).toStr(),
       'pmt': ["url", "data"]}
     return "serviceCall"
@@ -443,7 +440,7 @@ class JsRegisteredFunctions:
 
     return JsFunction("(function(%s){%s})()" % (",".join(pmts), js_funcs))
 
-  def get(self, fnc_name: str, *args):
+  def get(self, func_name: str, *args):
     """
     Description:
     ------------
@@ -451,15 +448,14 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param str fnc_name: The function name.
+    :param str func_name: The function name.
     :param args: Dictionary. The different arguments in the function definition.
 
     :return: The Javascript sting
     """
-    pmts = [str(JsUtils.jsConvertData(p, None)) for p in args]
-    return "%s(%s)" % (fnc_name, ", ".join(pmts))
+    return "%s(%s)" % (func_name, ", ".join([str(JsUtils.jsConvertData(p, None)) for p in args]))
 
-  def inline(self, fnc_name: str, js_funcs: Union[str, list], pmts: dict = None):
+  def inline(self, func_name: str, js_funcs: Union[str, list], pmts: dict = None):
     """
     Description:
     ------------
@@ -471,15 +467,15 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param str fnc_name: The function name.
+    :param str func_name: The function name.
     :param Union[str, list] js_funcs: Javascript functions.
     :param dict pmts: Optional. The function parameters.
 
     :return: The function name which can be used in the Javascript
     """
-    self._js_src.setdefault('functions', {})[fnc_name] = {
+    self._js_src.setdefault('functions', {})[func_name] = {
       'content': JsUtils.jsConvertFncs(js_funcs, toStr=True), 'pmt': pmts}
-    return fnc_name
+    return func_name
 
   @property
   def records(self):
@@ -547,26 +543,26 @@ class JsLambda:
     global _JSFNCS
 
     _JSFNCS += 1
-    self.fncName = "function_%s" % _JSFNCS
+    self.func_name = "function_%s" % _JSFNCS
 
 
 class JsTypeOf:
-  fncName = "typeof"
+  func_name = "typeof"
 
-  def __init__(self, jsData):
-    if self.fncName is None:
-      raise Exception("Private fncName variable should be defined for pre defined functions ")
+  def __init__(self, data):
+    if self.func_name is None:
+      raise ValueError("Private fncName variable should be defined for pre defined functions ")
 
-    self.__jsArgs = [jsData]
+    self.__jsArgs = [data]
 
   def __str__(self):
-    return "%s(%s)" % (self.fncName, ", ".join([str(a) for a in self.__jsArgs]))
+    return "%s(%s)" % (self.func_name, ", ".join([str(a) for a in self.__jsArgs]))
 
 
 class JsAnonymous(primitives.JsDataModel):
 
-  def __init__(self, jsFncs):
-    self.__strFnc, self.__returnFnc, self.__paramsFnc = jsFncs, "", []
+  def __init__(self, js_funcs):
+    self.__strFnc, self.__returnFnc, self.__paramsFnc = js_funcs, "", []
 
   def return_(self, value):
     """
@@ -580,14 +576,14 @@ class JsAnonymous(primitives.JsDataModel):
     self.__returnFnc = value
     return self
 
-  def params(self, pmts):
+  def params(self, pmts: dict):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param pmts: Dictionary. The function parameters.
+    :param dict pmts: The function parameters.
     """
     self.__paramsFnc = pmts
     return self

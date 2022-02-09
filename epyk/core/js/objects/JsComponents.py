@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
@@ -9,9 +12,10 @@ from epyk.core.js.html import JsHtml
 
 class Radio(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def check(self):
@@ -20,7 +24,7 @@ class Radio(JsPackage):
     -----------
     Set the status of the Check / Radio component to checked.
     """
-    return JsUtils.jsWrap("%s.checked = true" % self._src.dom.varName)
+    return JsUtils.jsWrap("%s.checked = true" % self.component.dom.varName)
 
   def uncheck(self):
     """
@@ -28,9 +32,10 @@ class Radio(JsPackage):
     -----------
     Set the status of the Check / Radio component to unchecked.
     """
-    return JsUtils.jsWrap("%s.checked = false" % self._src.dom.varName)
+    return JsUtils.jsWrap("%s.checked = false" % self.component.dom.varName)
 
-  def is_checked(self, jsFuncs, elseFuncs=None, profile=None):
+  def is_checked(self, js_funcs: Union[list, str], else_funcs: Union[list, str] = None,
+                 profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -39,18 +44,19 @@ class Radio(JsPackage):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
-    :param elseFuncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Union[list, str] else_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
-    js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
-    if elseFuncs is not None:
-      elseFuncs = JsUtils.jsConvertFncs(elseFuncs, toStr=True, profile=profile)
-      return JsUtils.jsWrap("if(%s.checked){%s} else {%s}" % (self._src.dom.varName, js_funcs, elseFuncs))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if else_funcs is not None:
+      else_funcs = JsUtils.jsConvertFncs(else_funcs, toStr=True, profile=profile)
+      return JsUtils.jsWrap("if(%s.checked){%s} else {%s}" % (self.component.dom.varName, js_funcs, else_funcs))
 
-    return JsUtils.jsWrap("if(%s.checked){%s}" % (self._src.dom.varName, js_funcs))
+    return JsUtils.jsWrap("if(%s.checked){%s}" % (self.component.dom.varName, js_funcs))
 
-  def is_not_checked(self, jsFuncs, elseFuncs=None, profile=None):
+  def is_not_checked(self, js_funcs: Union[list, str], else_funcs: Union[list, str] = None,
+                     profile: Optional[Union[bool, dict]] = None):
     """
     Description:
     -----------
@@ -59,26 +65,27 @@ class Radio(JsPackage):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
-    :param elseFuncs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Union[list, str] else_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
-    js_funcs = JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile)
-    if elseFuncs is not None:
-      elseFuncs = JsUtils.jsConvertFncs(elseFuncs, toStr=True, profile=profile)
-      return JsUtils.jsWrap("if(!%s.checked){%s} else {%s}" % (self._src.dom.varName, js_funcs, elseFuncs))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if else_funcs is not None:
+      else_funcs = JsUtils.jsConvertFncs(else_funcs, toStr=True, profile=profile)
+      return JsUtils.jsWrap("if(!%s.checked){%s} else {%s}" % (self.component.dom.varName, js_funcs, else_funcs))
 
-    return JsUtils.jsWrap("if(!%s.checked){%s}" % (self._src.dom.varName, js_funcs))
+    return JsUtils.jsWrap("if(!%s.checked){%s}" % (self.component.dom.varName, js_funcs))
 
 
 class CheckButton(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, setVar=True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
-  def checked(self, color=None):
+  def checked(self, color: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -86,13 +93,15 @@ class CheckButton(JsPackage):
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
+    :param Union[str, primitives.JsDataModel] color: Optional. The font color in the component. Default inherit.
     """
-    times = self._src.options.icon_not_check
-    check = self._src.options.icon_check
-    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, times, check, self._src.dom.varName, color or self._report.theme.success[1]))
+    times = self.component.options.icon_not_check
+    check = self.component.options.icon_check
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
+      self.component.dom.varName, times, check, self.component.dom.varName,
+      JsUtils.jsConvertData(color, None) or self.page.theme.success[1]))
 
-  def unchecked(self, color=None):
+  def unchecked(self, color: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -100,18 +109,21 @@ class CheckButton(JsPackage):
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
+    :param Union[str, primitives.JsDataModel] color: Optional. The font color in the component. Default inherit.
     """
-    times = self._src.options.icon_not_check
-    check = self._src.options.icon_check
-    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = '%s'" % (self._src.dom.varName, check, times, self._src.dom.varName, color or self._report.theme.danger[1]))
+    times = self.component.options.icon_not_check
+    check = self.component.options.icon_check
+    return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
+      self.component.dom.varName, check, times, self.component.dom.varName,
+      JsUtils.jsConvertData(color, None) or self.page.theme.danger[1]))
 
 
 class Menu(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code: str = None, set_var: bool = True, is_py_data: bool = True,
+               page: primitives.PageModel = None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   @property
@@ -121,9 +133,9 @@ class Menu(JsPackage):
     -----------
     Return the content of the component.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.innerHTML" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.innerHTML" % self.varName)
 
-  def set_text(self, value):
+  def set_text(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -131,7 +143,7 @@ class Menu(JsPackage):
 
     Attributes:
     ----------
-    :param value: String. The text to be set.
+    :param Union[str, primitives.JsDataModel] value: The text to be set.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.innerHTML = %s" % (self.varName, value))
@@ -163,10 +175,11 @@ class Menu(JsPackage):
 
 class Switch(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True,  page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def toggle(self):
@@ -175,9 +188,9 @@ class Switch(JsPackage):
     -----------
     Simulate a click event on the component.
     """
-    return JsObjects.JsObjects.get(self._src.switch.click())
+    return JsObjects.JsObjects.get(self.component.switch.click())
 
-  def val(self, jsData):
+  def val(self, data: Union[bool, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -185,13 +198,13 @@ class Switch(JsPackage):
 
     Attributes:
     ----------
-    :param jsData: Boolean. Flag to specify the state for the switch.
+    :param Union[bool, primitives.JsDataModel] data: Flag to specify the state for the switch.
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
         if(%(flag)s) {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.on}
         else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {
-      "varName": self.varName, "flag": jsData, "htmlCode": self.htmlCode})
+      "varName": self.varName, "flag": data, "htmlCode": self.htmlCode})
 
   def false(self):
     """
@@ -216,22 +229,23 @@ class Switch(JsPackage):
 
 class Alerts(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
-  def replay(self, time=None):
+  def replay(self, time: int = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param time:
+    :param int time:
     """
-    time = time or self._src.options.time
+    time = time or self.component.options.time
     return JsObjects.JsVoid('''
     var s = %(varName)s.style; s.opacity = 1; %(varName)s.style.display = 'block';
     (function fade(){(s.opacity-=.1)<0?s.display="none":setTimeout(fade, %(time)s)})();
@@ -240,10 +254,11 @@ class Alerts(JsPackage):
 
 class News(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def reset(self):
@@ -257,24 +272,27 @@ class News(JsPackage):
 
 class Chat(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def add(self, message):
     return JsObjects.JsVoid('''
       %(builder)s; %(counter)s
-      ''' % {"builder": self._src.build(message), 'counter': self._src.dom.querySelector(' [name=count]').innerText(1, append=True, valType=int).r})
+      ''' % {"builder": self.component.build(message),
+             'counter': self.component.dom.querySelector(' [name=count]').innerText(1, append=True, valType=int).r})
 
 
 class Room(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def typing(self):
@@ -283,6 +301,6 @@ class Room(JsPackage):
     -----------
     Display dots in the status to inform user is typing.
     """
-    return self._src.dom.querySelector("div[name=dots]").show(duration=3000)
+    return self.component.dom.querySelector("div[name=dots]").show(duration=3000)
 
 

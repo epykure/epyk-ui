@@ -11,9 +11,9 @@ from epyk.core.html.options import OptPanel
 class Popup(Html.Html):
   name = 'Popup Container'
 
-  def __init__(self, report: primitives.PageModel, components: List[Html.Html], width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple, height: tuple,
                options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(Popup, self).__init__(report, [], css_attrs={"width": width, "height": height}, profile=profile)
+    super(Popup, self).__init__(page, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
       self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': 'rgba(0,0,0,0.4)',
@@ -25,14 +25,14 @@ class Popup(Html.Html):
     self.window = self.page.ui.div(width="auto")
     self.window.options.managed = False
     self.window.style.css.padding = 10
-    self.window.style.css.border = "3px solid %s" % report.theme.greys[3]
+    self.window.style.css.border = "3px solid %s" % page.theme.greys[3]
     self.window.style.css.top = "200px"
     self.window.style.css.min_width = "300px"
     self.window.style.css.left = "50%"
     self.window.style.css.transform = "translate(-50%, -50%)"
     self.window.style.css.position = "fixed"
     self.window.style.css.background = "white"
-    self.container = report.ui.div(components, width=(100, '%'), height=(100, '%'))
+    self.container = page.ui.div(components, width=(100, '%'), height=(100, '%'))
     self.container.options.managed = False
     self.container.style.css.position = 'relative'
     self.container.style.css.overflow = "auto"
@@ -40,7 +40,7 @@ class Popup(Html.Html):
     self.container.style.css.vertical_align = "middle"
     self.window.add(self.container)
     if not self.options.background and self.options.draggable:
-      report.body.onReady([self.window.dom.jquery_ui.draggable()])
+      page.body.onReady([self.window.dom.jquery_ui.draggable()])
 
   def add(self, component: Html.Html):
     """
@@ -128,4 +128,4 @@ class Popup(Html.Html):
       self.close.style.css.position = 'absolute'
       self.close.click([self.dom.hide()])
       self.window.add(self.close)
-    return '''<div %s>%s</div>''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.window.html())
+    return '''<div %s>%s</div>''' % (self.get_attrs(css_class_names=self.style.get_classes()), self.window.html())

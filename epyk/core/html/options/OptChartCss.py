@@ -14,39 +14,39 @@ class ChartCssOptions(Options):
     return self._config_get()
 
   @title.setter
-  def title(self, text):
+  def title(self, text: str):
     self._config(text)
     self.show_heading()
 
   def show_labels(self):
-    self._report.attr["class"].add("show-labels")
+    self.component.attr["class"].add("show-labels")
 
   def show_data_axes(self):
-    self._report.attr["class"].add("show-data-axes")
+    self.component.attr["class"].add("show-data-axes")
 
   def reverse_data(self):
-    self._report.attr["class"].add("reverse-data")
+    self.component.attr["class"].add("reverse-data")
 
   def reverse_datasets(self):
-    self._report.attr["class"].add("reverse-datasets")
+    self.component.attr["class"].add("reverse-datasets")
 
-  def show_secondary_axes(self, n):
-    self._report.attr["class"].add("show-%s-secondary-axes" % n)
+  def show_secondary_axes(self, n: int):
+    self.component.attr["class"].add("show-%s-secondary-axes" % n)
 
   def show_primary_axis(self):
-    self._report.attr["class"].add("show-primary-axis")
+    self.component.attr["class"].add("show-primary-axis")
 
   def multiple(self):
-    self._report.attr["class"].add("multiple")
+    self.component.attr["class"].add("multiple")
 
   def show_heading(self):
-    self._report.attr["class"].add("show-heading")
+    self.component.attr["class"].add("show-heading")
 
-  def datasets_spacing(self, n):
-    self._report.attr["class"].add("datasets-spacing-%s" % n)
+  def datasets_spacing(self, n: int):
+    self.component.attr["class"].add("datasets-spacing-%s" % n)
 
-  def data_spacing(self, n):
-    self._report.attr["class"].add("data-spacing-%s" % n)
+  def data_spacing(self, n: int):
+    self.component.attr["class"].add("data-spacing-%s" % n)
 
-  def row_style(self, attrs):
-    self._report.row_style.attrs.update(attrs)
+  def row_style(self, attrs: dict):
+    self.component.row_style.attrs.update(attrs)

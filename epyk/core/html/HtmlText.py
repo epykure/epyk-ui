@@ -21,7 +21,7 @@ class Label(Html.Html):
   name = 'Label'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, text=None, color=None, align=None, width=None, height=None,
+  def __init__(self, page: primitives.PageModel, text=None, color=None, align=None, width=None, height=None,
                html_code=None, tooltip=None, profile=None, options=None):
     text = text or []
     if not isinstance(text, list):
@@ -29,7 +29,7 @@ class Label(Html.Html):
     for obj in text:
       if hasattr(obj, 'options'):
         obj.options.managed = False
-    super(Label, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+    super(Label, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height, 'color': color, 'text-align': align})
     self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
               'vertical-align': 'middle', 'text-align': 'left'})
@@ -37,7 +37,7 @@ class Label(Html.Html):
       self.set_attrs(name='title', value=tooltip)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     -----------
@@ -54,11 +54,11 @@ class Label(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   @property
-  def id_html(self):
+  def id_html(self) -> JsNodeDom.JsDoms:
     """
     Description:
     ------------
@@ -148,16 +148,16 @@ class Label(Html.Html):
           res.append(self.page.py.markdown.all(self.val))
         else:
           res.append(str(v))
-    return '<label %s>%s</label>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(res), self.helper)
+    return '<label %s>%s</label>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(res), self.helper)
 
 
 class Span(Html.Html):
   name = 'Span'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, text="", color=None, align=None, width=None, height=None, html_code=None, tooltip=None,
+  def __init__(self, page: primitives.PageModel, text="", color=None, align=None, width=None, height=None, html_code=None, tooltip=None,
                options=None, profile=None):
-    super(Span, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+    super(Span, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
     self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block',
               'vertical-align': 'middle'})
@@ -210,7 +210,7 @@ class Span(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -252,7 +252,7 @@ class Span(Html.Html):
 
   def __str__(self):
     val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
-    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+    return '<span %s>%s</span>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), val, self.helper)
 
 
 class Position(Span):
@@ -270,7 +270,7 @@ class Position(Span):
     self._jsStyles["digits"] = flag
     return self
 
-  def position(self, index, style):
+  def position(self, index: int, style: dict):
     """
     Description:
     ------------
@@ -278,8 +278,8 @@ class Position(Span):
 
     Attributes:
     ----------
-    :param index: Integer. A number.
-    :param style: Dictionary. The CSS Style to be used.
+    :param int index: A number.
+    :param dict style: The CSS Style to be used.
     """
     self._jsStyles.setdefault("positions", {})[index] = style
     return self
@@ -315,15 +315,15 @@ class Position(Span):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<span %s>%s</span>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    return '<span %s>%s</span>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.helper)
 
 
 class Text(Html.Html):
   name = 'Text'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, text, color, align, width, height, html_code, tooltip, options, helper, profile):
-    super(Text, self).__init__(report, text, css_attrs={"color": color, "width": width, "height": height},
+  def __init__(self, page: primitives.PageModel, text, color, align, width, height, html_code, tooltip, options, helper, profile):
+    super(Text, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
     self.css({'text-align': align})
@@ -406,7 +406,7 @@ class Text(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   @property
@@ -493,23 +493,23 @@ class Text(Html.Html):
   def __str__(self):
     if self.options.markdown:
       self.page.properties.js.add_builders(self.refresh())
-      return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+      return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.content, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.content, self.helper)
 
 
 class Pre(Html.Html):
   name = 'Pre formatted text'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, vals, color, width, height, html_code, options, helper, profile):
-    super(Pre, self).__init__(report, vals, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, vals, color, width, height, html_code, options, helper, profile):
+    super(Pre, self).__init__(page, vals, html_code=html_code, profile=profile, options=options,
                               css_attrs={"width": width, 'height': height, 'color': color})
     self.css({"text-align": 'left'})
     self.add_helper(helper)
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtml.JsHtmlRich:
     """
     Description:
     ------------
@@ -521,7 +521,7 @@ class Pre(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def selectable(self, flag: bool = False):
@@ -559,14 +559,14 @@ class Pre(Html.Html):
 
   def __str__(self):
     val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
-    return '<pre %s>%s</pre>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+    return '<pre %s>%s</pre>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), val, self.helper)
 
 
 class Paragraph(Html.Html):
   name = 'Paragraph'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report, text, color, background_color, border, width, height, html_code, encoding, helper,
+  def __init__(self, page: primitives.PageModel, text, color, background_color, border, width, height, html_code, encoding, helper,
                options, profile):
     tmp_text = []
     if not isinstance(text, list):
@@ -579,8 +579,8 @@ class Paragraph(Html.Html):
       if css_styles is not None:
         content = t.replace(css_styles.group(0), '').decode(encoding) if hasattr(t, 'decode') else t.replace(css_styles.group(0), '')
         tmp_text.append(content)
-        for cssAttr in css_styles.group(1).split(","):
-          css_key, css_val = cssAttr.split(":")
+        for css_attr in css_styles.group(1).split(","):
+          css_key, css_val = css_attr.split(":")
           js_attr[css_key.strip()] = css_val.strip()
       else:
         if hasattr(t, 'decode'):
@@ -588,7 +588,7 @@ class Paragraph(Html.Html):
         else:
           tmp_text.append(t)
       options["classes"].append(js_attr)
-    super(Paragraph, self).__init__(report, tmp_text, html_code=html_code, options=options,
+    super(Paragraph, self).__init__(page, tmp_text, html_code=html_code, options=options,
                                     css_attrs={'color': color, "width": width, "height": height,
                                                "background-color": background_color}, profile=profile)
     self.add_helper(helper)
@@ -635,19 +635,19 @@ class Paragraph(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class BlockQuote(Html.Html):
   name = 'Block quotation'
 
-  def __init__(self, report, text, author, color, width, height, html_code, helper, options, profile):
-    super(BlockQuote, self).__init__(report, {'text': text, 'author': author}, html_code=html_code, profile=profile,
+  def __init__(self, page: primitives.PageModel, text, author, color, width, height, html_code, helper, options, profile):
+    super(BlockQuote, self).__init__(page, {'text': text, 'author': author}, html_code=html_code, profile=profile,
                                      css_attrs={"width": width, "height": height, 'color': color})
     self.add_helper(helper)
     self.__options = OptText.OptionsText(self, options)
@@ -665,23 +665,23 @@ class BlockQuote(Html.Html):
           <div style="padding:5px;border-left:2px solid %s"></div>
           <div style="text-align:right"></div>
       </blockquote>%s''' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.page.theme.colors[3], self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), self.page.theme.colors[3], self.helper)
 
 
 class Title(Html.Html):
   name = 'Title'
   _option_cls = OptText.OptionsTitle
 
-  def __init__(self, report, text, level, name, contents, color, picture, icon, marginTop, html_code, width,
-               height, align, options, profile):
+  def __init__(self, page: primitives.PageModel, text, level, name, contents, color, picture,
+               icon, marginTop, html_code, width, height, align, options, profile):
 
     css_styles = re.search(" css\{(.*)\}", text)
     if css_styles is not None:
       text = text.replace(css_styles.group(0), '')
-      for cssAttr in css_styles.group(1).split(","):
-        css_key, css_val = cssAttr.split(":")
+      for css_attr in css_styles.group(1).split(","):
+        css_key, css_val = css_attr.split(":")
         options[css_key.strip()] = css_val.strip()
-    super(Title, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+    super(Title, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._name, self.level, self.picture = name, level, picture
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
@@ -702,8 +702,8 @@ class Title(Html.Html):
       self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': align})
     else:
       self.css({'display': 'inline-block'}) # , "margin-right": "10px"
-    if hasattr(report, '_content_table') and not report._content_table.options.manual and self.__options.content_table:
-      report._content_table.add_title(self, level=level)
+    if hasattr(page, '_content_table') and not page._content_table.options.manual and self.__options.content_table:
+      page._content_table.add_title(self, level=level)
 
   @property
   def style(self) -> GrpCls.ClassHtmlEmpty:
@@ -731,7 +731,7 @@ class Title(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   @property
@@ -791,10 +791,10 @@ class Title(Html.Html):
     if self.picture is not None:
       path = Default_html.SERVER_PATH or os.path.split(self.picture)[0]
       return '<div %s><img src="%s/%s" />&nbsp;<a%s></a>%s%s</div>' % (
-        self.get_attrs(pyClassNames=self.style.get_classes()), path, self.picture, anchor_name, val, self.helper)
+        self.get_attrs(css_class_names=self.style.get_classes()), path, self.picture, anchor_name, val, self.helper)
 
     return '<div %s><a%s></a>%s%s</div>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), anchor_name, val, self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), anchor_name, val, self.helper)
 
 
 class Numeric(Html.Html):
@@ -802,8 +802,8 @@ class Numeric(Html.Html):
   requirements = ('accounting', )
   _option_cls = OptText.OptionsNumber
 
-  def __init__(self, report, number, title, label, icon, color, tooltip, html_code, options, helper, width, profile):
-    super(Numeric, self).__init__(report, number, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, number, title, label, icon, color, tooltip, html_code, options, helper, width, profile):
+    super(Numeric, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "color": color})
     # Add the components label and icon
     self.add_label(label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, html_code=self.htmlCode)
@@ -876,7 +876,7 @@ class Numeric(Html.Html):
     :rtype: JsHtml.JsHtmlNumeric
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlNumeric(self, report=self.page)
+      self._dom = JsHtml.JsHtmlNumeric(self, page=self.page)
     return self._dom
 
   def to(self, number: int, timer: int = 1):
@@ -951,8 +951,8 @@ class Highlights(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptText.OptionsHighlights
 
-  def __init__(self, report, text, title, icon, type, color, width, height, html_code, helper, options, profile):
-    super(Highlights, self).__init__(report, text, css_attrs={"width": width, "height": height},
+  def __init__(self, page: primitives.PageModel, text, title, icon, type, color, width, height, html_code, helper, options, profile):
+    super(Highlights, self).__init__(page, text, css_attrs={"width": width, "height": height},
                                      html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
     self.style.css.color = color if color is not None else self.page.theme.greys[-1]
@@ -994,19 +994,19 @@ class Highlights(Html.Html):
         <div %s>
           <span aria-hidden='true' style='float:right;font-size:20px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
           <div name='content'>%s</div></div>%s
-      ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+      ''' % (self.get_attrs(css_class_names=self.style.get_classes()), val, self.helper)
 
     return '''<div %s><div name='content'>%s</div></div>%s
-          ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), val, self.helper)
+          ''' % (self.get_attrs(css_class_names=self.style.get_classes()), val, self.helper)
 
 
 class Fieldset(Html.Html):
   name = 'Fieldset'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, legend: str, width: str, height: str, helper: Optional[str],
+  def __init__(self, page: primitives.PageModel, legend: str, width: str, height: str, helper: Optional[str],
                options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(Fieldset, self).__init__(report, legend, css_attrs={"width": width, "height": height},
+    super(Fieldset, self).__init__(page, legend, css_attrs={"width": width, "height": height},
                                    profile=profile, options=options)
     self.add_helper(helper)
     self.css({'padding': '5px', 'border': '1px groove %s' % self.page.theme.greys[3], 'display': 'block',
@@ -1045,4 +1045,4 @@ class Fieldset(Html.Html):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.components.values()])
     val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     return '<fieldset %s><legend style="width:auto">%s</legend>%s</fieldset>%s' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), val, str_div, self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), val, str_div, self.helper)

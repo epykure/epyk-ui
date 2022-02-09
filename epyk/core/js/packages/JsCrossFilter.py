@@ -1,4 +1,10 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+# TODO finalize module
+
+from typing import Union, Any
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -7,11 +13,13 @@ from epyk.core.js.primitives import JsObjects
 class CrossFilter(JsPackage):
   lib_alias = {'js': "crossfilter"}
 
-  def __init__(self, src, varName, data, setVar=True):
-    super(CrossFilter, self).__init__(src=src, varName=varName, selector="crossfilter(%s)" % data, setVar=setVar)
+  def __init__(self, data, component: primitives.HtmlModel = None, js_code: str = None, set_var=True,
+               page: primitives.PageModel = None):
+    super(CrossFilter, self).__init__(
+      component=component, js_code=js_code, selector="crossfilter(%s)" % data, set_var=set_var, page=page)
 
   @staticmethod
-  def permute(array, index):
+  def permute(array: Union[list, primitives.JsDataModel], index: int):
     """
     Description:
     -----------
@@ -26,12 +34,12 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param array:
-    :param index:
+    :param Union[list, primitives.JsDataModel] array:
+    :param int index:
     """
     return JsObjects.JsArray.JsArray("permute(%s, %s)" % (JsUtils.jsConvertData(array, None), index))
 
-  def add(self, records):
+  def add(self, records: Any):
     """
     Description:
     -----------
@@ -43,11 +51,11 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param records:
+    :param Any records:
     """
     return self.fnc_closure("add(%s)" % JsUtils.jsConvertData(records, None))
 
-  def removeByValue(self, column, value):
+  def removeByValue(self, column: Union[str, primitives.JsDataModel], value: Any):
     """
     Description:
     -----------
@@ -59,8 +67,8 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param column: String. The column name in the underlying data
-    :param value: Object. The value
+    :param Union[str, primitives.JsDataModel] column: The column name in the underlying data
+    :param Any value: The value
     """
     return self.fnc_closure("remove(function (d,i) { return d[%s] === %s;})" % (
       JsUtils.jsConvertData(column, None), JsUtils.jsConvertData(value, None)))
@@ -78,7 +86,7 @@ class CrossFilter(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.size()" % self.varId)
 
-  def groupAll(self, varName):
+  def groupAll(self, js_code: str):
     """
     Description:
     -----------
@@ -91,12 +99,12 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param varName: String. The Javascript variable name
+    :param js_code: String. The Javascript variable name
     """
-    groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
-    return groupObj
+    group = GroupAll(selector="%s.groupAll()" % self.varId, js_code=js_code, set_var=True)
+    return group
 
-  def dimension(self, columns, varName=None):
+  def dimension(self, columns: Union[list, int], js_code: str = None):
     """
     Description:
     -----------
@@ -108,12 +116,12 @@ class CrossFilter(JsPackage):
 
     Attributes:
     ----------
-    :param columns: String. The column name on which the dimension will be defined
-    :param varName: String. The Javascript variable name
+    :param Union[list, int] columns: The column name on which the dimension will be defined
+    :param str js_code: The Javascript variable name
     """
     ools = {}
-    if varName is None:
-      return Dimension(selector=self.toStr(), setVar=False)
+    if js_code is None:
+      return Dimension(selector=self.toStr(), set_var=False)
 
     if not isinstance(columns, list):
       columns = [(columns, int)]
@@ -130,8 +138,8 @@ class CrossFilter(JsPackage):
         else:
           js_frg.append("+d[%s]" % JsUtils.jsConvertData(col_def[0], None))
       js_columns = "[%s]" % ", ".join(js_frg)
-    dim = Dimension(varName=varName, selector="%s.dimension(function(d) { return %s })" % (
-      self.varId, js_columns), setVar=True)
+    dim = Dimension(js_code=js_code, selector="%s.dimension(function(d) { return %s })" % (
+      self.varId, js_columns), set_var=True)
     dim.cols = ools
     return dim
 
@@ -148,7 +156,7 @@ class Bissect(JsPackage):
     ----------
     :param value:
     """
-    raise Exception("Not implemented yet !")
+    raise NotImplementedError()
 
   @property
   def right(self):
@@ -159,19 +167,19 @@ class Bissect(JsPackage):
     value in array.
 
     """
-    raise Exception("Not implemented yet !")
+    raise NotImplementedError()
 
   @property
   def left(self):
     """
 
     """
-    raise Exception("Not implemented yet !")
+    raise NotImplementedError()
 
 
 class Heap(JsPackage):
 
-  def byColumn(self, name):
+  def byColumn(self, name: Union[str, JsUtils.jsConvertData]):
     """
     Description:
     -----------
@@ -180,12 +188,13 @@ class Heap(JsPackage):
     ----------
     :param name:
     """
-    return self.fnc("function(d) { return d['%s']; }" % name)
+    name = JsUtils.jsConvertData(name, None)
+    return self.fnc("function(d) { return d[%s]; }" % name)
 
 
 class Heapselect(JsPackage):
 
-  def byColumn(self, name):
+  def byColumn(self, name: Union[str, JsUtils.jsConvertData]):
     """
     Description:
     -----------
@@ -195,14 +204,15 @@ class Heapselect(JsPackage):
 
     Attributes:
     ----------
-    :param name:
+    :param Union[str, JsUtils.jsConvertData] name: The column name
     """
-    return self.fnc("function(d) { return d['%s']; }" % name)
+    name = JsUtils.jsConvertData(name, None)
+    return self.fnc("function(d) { return d[%s]; }" % name)
 
 
 class Insertionsort(JsPackage):
 
-  def byColumn(self, name):
+  def byColumn(self, name: Union[str, JsUtils.jsConvertData]):
     """
     Description:
     -----------
@@ -212,14 +222,15 @@ class Insertionsort(JsPackage):
 
     Attributes:
     ----------
-    :param name:
+    :param Union[str, JsUtils.jsConvertData] name:
     """
-    return self.fnc("function(d) { return d['%s']; }" % name)
+    name = JsUtils.jsConvertData(name, None)
+    return self.fnc("function(d) { return d[%s]; }" % name)
 
 
 class Quicksort(JsPackage):
 
-  def byColumn(self, name):
+  def byColumn(self, name: Union[str, JsUtils.jsConvertData]):
     """
     Description:
     -----------
@@ -233,14 +244,15 @@ class Quicksort(JsPackage):
 
     Attributes:
     ----------
-    :param name: String. The column name
+    :param Union[str, JsUtils.jsConvertData] name: The column name
     """
-    return self.fnc("function(d) { return d['%s']; }" % name)
+    name = JsUtils.jsConvertData(name, None)
+    return self.fnc("function(d) { return d[%s]; }" % name)
 
 
 class Dimension(JsPackage):
 
-  def filter(self, jsData):
+  def filter(self, data):
     """
     Description:
     -----------
@@ -252,9 +264,9 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    self._js.append("filter(%s)" % JsUtils.jsConvertData(jsData, None))
+    self._js.append("filter(%s)" % JsUtils.jsConvertData(data, None))
     return self
 
   def filterExact(self, value):
@@ -271,8 +283,9 @@ class Dimension(JsPackage):
     ----------
     :param value:
     """
+    raise NotImplementedError()
 
-  def filterRange(self, min, max):
+  def filterRange(self, min: float, max: float):
     """
     Description:
     -----------
@@ -285,21 +298,21 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param min:
-    :param max:
+    :param float min:
+    :param float max:
     """
     self._js.append("filterRange([%s, %s])" % (min, max))
     return self
 
-  def filterOnColumn(self, value, column):
+  def filterOnColumn(self, value: Any, column: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param value:
-    :param column:
+    :param Any value:
+    :param str column:
     """
     if column is None:
       return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d === %(value)s} )" % {
@@ -308,7 +321,7 @@ class Dimension(JsPackage):
     return JsObjects.JsObject.JsObject("%(id)s.filter(function(d) { return d[%(column)s] === %(value)s} )" % {
       'id': self.varId, 'column': self.cols[column], 'value': JsUtils.jsConvertData(value, None)})
 
-  def filterFunction(function):
+  def filterFunction(self, function):
     """
     Description:
     -----------
@@ -323,6 +336,7 @@ class Dimension(JsPackage):
     ----------
     :param function:
     """
+    raise NotImplementedError()
 
   def filterAll(self):
     """
@@ -348,7 +362,7 @@ class Dimension(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.id()" % self.varId)
 
-  def top(self, k=None):
+  def top(self, k: int = None):
     """
     Description:
     -----------
@@ -361,7 +375,7 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param k: The number of entries to keep
+    :param int k: The number of entries to keep
 
     :return: An array with the data
     """
@@ -370,7 +384,7 @@ class Dimension(JsPackage):
 
     return JsObjects.JsArray.JsArray("%s.top(%s)" % (self.varId, k))
 
-  def bottom(self, k):
+  def bottom(self, k: int):
     """
     Description:
     -----------
@@ -382,7 +396,7 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param k: The number of entries to keep
+    :param int k: The number of entries to keep
 
     :return: An array with the data
     """
@@ -401,7 +415,7 @@ class Dimension(JsPackage):
     """
     return self.fnc_closure("dispose()")
 
-  def group(self, varName):
+  def group(self, js_code: str):
     """
     Description:
     -----------
@@ -411,11 +425,16 @@ class Dimension(JsPackage):
     Related Pages:
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
-    """
-    groupObj = Group(selector="%s.group()" % self.varId, varName=varName, setVar=True)
-    return groupObj
 
-  def GroupAll(self, varName):
+    Attributes:
+    ----------
+    :param str js_code: The variable reference for the group.
+
+    """
+    group = Group(selector="%s.group()" % self.varId, js_code=js_code, set_var=True)
+    return group
+
+  def GroupAll(self, js_code: str):
     """
     Description:
     -----------
@@ -425,17 +444,26 @@ class Dimension(JsPackage):
     Related Pages:
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
+
+    Attributes:
+    ----------
+    :param str js_code: The variable reference for the group.
     """
-    groupObj = GroupAll(selector="%s.groupAll()" % self.varId, varName=varName, setVar=True)
-    return groupObj
+    group = GroupAll(selector="%s.groupAll()" % self.varId, js_code=js_code, set_var=True)
+    return group
 
-  def groupFunction(self, varName, Fnc):
-    groupObj = Group(selector="%s.group(%s)" % (self.varId, Fnc), varName=varName, setVar=True)
-    return groupObj
+  def groupFunction(self, js_code: str, func):
+    """
+    Description:
+    -----------
 
-    # groupObj = Group("%s.group(%s)" % (self.toStr(), jsFnc))
-    # groupObj._set_var = self._set_var
-    # return groupObj
+    Attributes:
+    ----------
+    :param js_code:
+    :param func:
+    """
+    group = Group(selector="%s.group(%s)" % (self.varId, func), js_code=js_code, set_var=True)
+    return group
 
   def hasCurrentFilter(self):
     """
@@ -449,7 +477,7 @@ class Dimension(JsPackage):
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasCurrentFilter()" % self.varId)
 
-  def quicksort(self, varName):
+  def quicksort(self, js_code: str):
     """
     Description:
     -----------
@@ -463,11 +491,11 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param varName:
+    :param str js_code: The variable reference on the Js side of this group.
     """
-    return Quicksort(selector="%s.quicksort" % self.varId, varName=varName, setVar=True)
+    return Quicksort(selector="%s.quicksort" % self.varId, js_code=js_code, set_var=True)
 
-  def insertionsort(self, varName):
+  def insertionsort(self, js_code: str):
     """
     Description:
     -----------
@@ -481,27 +509,11 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param varName:
+    :param str js_code: The variable reference on the Js side of this group.
     """
-    return Insertionsort(selector="%s.insertionsort" % self.varId, varName=varName, setVar=True)
+    return Insertionsort(selector="%s.insertionsort" % self.varId, js_code=js_code, set_var=True)
 
-  def heapselect(self, varName):
-    """
-    Description:
-    -----------
-    The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
-
-    Related Pages:
-
-      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
-
-    Attributes:
-    ----------
-    :param varName:
-    """
-    return Heapselect(selector="%s.heapselect" % self.varId, varName=varName, setVar=True)
-
-  def heap(self, varName):
+  def heapselect(self, js_code: str):
     """
     Description:
     -----------
@@ -513,9 +525,25 @@ class Dimension(JsPackage):
 
     Attributes:
     ----------
-    :param varName:
+    :param str js_code: The variable reference on the Js side of this group.
     """
-    return Heap(selector="%s.heap" % self.varId, varName=varName, setVar=True)
+    return Heapselect(selector="%s.heapselect" % self.varId, js_code=js_code, set_var=True)
+
+  def heap(self, js_code):
+    """
+    Description:
+    -----------
+    The identity heapselect function; suitable for numbers, dates, strings, and other naturally-comparable objects.
+
+    Related Pages:
+
+      https://github.com/crossfilter/crossfilter/wiki/API-Reference#dimension_group
+
+    Attributes:
+    ----------
+    :param js_code:
+    """
+    return Heap(selector="%s.heap" % self.varId, js_code=js_code, set_var=True)
 
 
 class Group(JsPackage):
@@ -549,7 +577,7 @@ class Group(JsPackage):
     :param remove:
     :param initial:
     """
-    raise Exception("Not implemented yet !")
+    raise NotImplementedError()
 
   def reduceCount(self, value):
     """
@@ -587,7 +615,7 @@ class Group(JsPackage):
     """
     return self.fnc("reduceSum(function(d) { return d['%s'] ;})" % value)
 
-  def order(self, orderValue):
+  def order(self, order_value):
     """
     Description:
     -----------
@@ -598,9 +626,9 @@ class Group(JsPackage):
 
     Attributes:
     ----------
-    :param orderValue:
+    :param order_value:
     """
-    raise Exception("Not implemented yet !")
+    raise NotImplementedError()
 
   def orderNatural(self):
     """
@@ -610,8 +638,8 @@ class Group(JsPackage):
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
     """
-    groupObj = Group("%s.orderNatural()" % self.toStr())
-    return groupObj
+    group = Group("%s.orderNatural()" % self.toStr())
+    return group
 
   def top(self, k=None):
     """

@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
+
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.primitives import JsNumber
@@ -11,8 +14,8 @@ from epyk.core.js import JsUtils
 
 
 class MesuredText:
-  def __init__(self, varId):
-    self.varId = varId
+  def __init__(self, js_code: str):
+    self.varId = js_code
 
   @property
   def width(self):
@@ -21,15 +24,15 @@ class MesuredText:
     ------------
 
     """
-    return JsNumber.JsNumber("%s.width" % self.varId, isPyData=False)
+    return JsNumber.JsNumber("%s.width" % self.varId, is_py_data=False)
 
 
 class RadialGradient:
-  def __init__(self, varData, varId):
-    self.varId, self.varData, self.__set = varId, varData, True
+  def __init__(self, data, js_code: str):
+    self.varId, self.varData, self.__set = js_code, data, True
     self._js = []
 
-  def addColorStop(self, stop, color):
+  def addColorStop(self, stop: float, color: str):
     """
     Description:
     ------------
@@ -43,8 +46,8 @@ class RadialGradient:
 
     Attributes:
     ----------
-    :param stop: Float. A value between 0.0 and 1.0 that represents the position between start and end in a gradient.
-    :param color: String. A CSS color value to display at the stop position.
+    :param float stop: A value between 0.0 and 1.0 that represents the position between start and end in a gradient.
+    :param str color: A CSS color value to display at the stop position.
     """
     self._js.append("%s.addColorStop(%s, %s)" % (self.varId, stop, JsUtils.jsConvertData(color, None)))
     return self
@@ -59,10 +62,10 @@ class RadialGradient:
 
 
 class Context2D:
-  def __init__(self, src):
-    self.varId = '%s.getContext("2d")' % src.dom.varId
+  def __init__(self, component: primitives.HtmlModel):
+    self.varId = '%s.getContext("2d")' % component.dom.varId
 
-  def arc(self, x, y, r, sAngle, eAngle, counterclockwise=None):
+  def arc(self, x: float, y: float, r: float, start_angle: float, end_angle: float, counterclockwise: bool = None):
     """
     Description:
     ------------
@@ -74,14 +77,15 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of the center of the circle.
-    :param y: Float. The y-coordinate of the center of the circle.
-    :param r: Float. 	The radius of the circle.
-    :param sAngle: Float. The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle).
-    :param eAngle: Float. The ending angle, in radians.
-    :param counterclockwise: Boolean. Optional. Specifies whether the drawing should be counterclockwise or clockwise. False is default, and indicates clockwise, while true indicates counter-clockwise.
+    :param float x: The x-coordinate of the center of the circle.
+    :param float y: The y-coordinate of the center of the circle.
+    :param float r: The radius of the circle.
+    :param float start_angle: The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle).
+    :param float end_angle: The ending angle, in radians.
+    :param bool counterclockwise: Optional. Specifies whether the drawing should be counterclockwise or clockwise.
+    False is default, and indicates clockwise, while true indicates counter-clockwise.
     """
-    return "%s.arc(%s, %s, %s, %s, %s)" % (self.varId, x, y, r, sAngle, eAngle)
+    return "%s.arc(%s, %s, %s, %s, %s)" % (self.varId, x, y, r, start_angle, end_angle)
 
   def beginPath(self):
     """
@@ -95,7 +99,7 @@ class Context2D:
     """
     return "%s.beginPath()" % self.varId
 
-  def bezierCurveTo(self, cp1x, cp1y, cp2x, cp2y, x, y):
+  def bezierCurveTo(self, cp1x: float, cp1y: float, cp2x: float, cp2y: float, x: float, y: float):
     """
     Description:
     ------------
@@ -108,16 +112,16 @@ class Context2D:
 
     Attributes:
     ----------
-    :param cp1x: Float. The x-coordinate of the first Bézier control point.
-    :param cp1y: Float. The y-coordinate of the first Bézier control point.
-    :param cp2x: Float. The x-coordinate of the second Bézier control point.
-    :param cp2y: Float. The y-coordinate of the second Bézier control point.
-    :param x: Float. The x-coordinate of the ending point.
-    :param y: Float. The y-coordinate of the ending point.
+    :param float cp1x: The x-coordinate of the first Bézier control point.
+    :param float cp1y: The y-coordinate of the first Bézier control point.
+    :param float cp2x: The x-coordinate of the second Bézier control point.
+    :param float cp2y: The y-coordinate of the second Bézier control point.
+    :param float x: The x-coordinate of the ending point.
+    :param float y: The y-coordinate of the ending point.
     """
     return "%s.bezierCurveTo(%s, %s, %s, %s, %s, %s)" % (self.varId, cp1x, cp1y, cp2x, cp2y, x, y)
 
-  def clearRect(self, x, y, width, height):
+  def clearRect(self, x: float, y: float, width: float, height: float):
     """
     Description:
     ------------
@@ -129,10 +133,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of the upper-left corner of the rectangle to clear.
-    :param y: Float. The y-coordinate of the upper-left corner of the rectangle to clear.
-    :param width: Float. The width of the rectangle to clear, in pixels.
-    :param height: Float. The height of the rectangle to clear, in pixels.
+    :param float x: The x-coordinate of the upper-left corner of the rectangle to clear.
+    :param float y: The y-coordinate of the upper-left corner of the rectangle to clear.
+    :param float width: The width of the rectangle to clear, in pixels.
+    :param float height: The height of the rectangle to clear, in pixels.
     """
     return "%s.clearRect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
@@ -160,7 +164,7 @@ class Context2D:
     """
     return "%s.closePath()" % self.varId
 
-  def createPattern(self, image, repeatType):
+  def createPattern(self, image: Union[str, primitives.JsDataModel], repeat_type: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -174,14 +178,14 @@ class Context2D:
 
     Attributes:
     ----------
-    :param image: Specifies the image, canvas, or video element of the pattern to use.
-    :param repeatType: Default. The pattern repeats both horizontally and vertically.
+    :param Union[str, primitives.JsDataModel] image: Specifies the image, canvas, or video element of the pattern to use.
+    :param Union[str, primitives.JsDataModel] repeat_type: Default. The pattern repeats both horizontally and vertically.
     """
     image = JsUtils.jsConvertData(image, None)
-    repeatType = JsUtils.jsConvertData(repeatType, None)
-    return "%s.createPattern(%s, %s)" % (self.varId, image, repeatType)
+    repeat_type = JsUtils.jsConvertData(repeat_type, None)
+    return "%s.createPattern(%s, %s)" % (self.varId, image, repeat_type)
 
-  def createRadialGradient(self, x0, y0, r0, x1, y1, r1, varName):
+  def createRadialGradient(self, x0: float, y0: float, r0: float, x1: float, y1: float, r1: float, js_code: str):
     """
     Description:
     ------------
@@ -194,18 +198,18 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x0: Float. The x-coordinate of the starting circle of the gradient.
-    :param y0: Float. 	The y-coordinate of the starting circle of the gradient.
-    :param r0: Float. The radius of the starting circle.
-    :param x1: Float. The x-coordinate of the ending circle of the gradient.
-    :param y1: Float. The y-coordinate of the ending circle of the gradient.
-    :param r1: Float. The radius of the ending circle.
-    :param varName: String. The object reference on the Javascript side.
+    :param float x0: The x-coordinate of the starting circle of the gradient.
+    :param float y0: The y-coordinate of the starting circle of the gradient.
+    :param float r0: The radius of the starting circle.
+    :param float x1: The x-coordinate of the ending circle of the gradient.
+    :param float y1: The y-coordinate of the ending circle of the gradient.
+    :param float r1: The radius of the ending circle.
+    :param str js_code: The object reference on the Javascript side.
     """
     gradient_id = "%s.createRadialGradient(%s, %s, %s, %s, %s, %s)" % (self.varId, x0, y0, r0, x1, y1, r1)
-    return RadialGradient(varData=gradient_id, varId=varName)
+    return RadialGradient(data=gradient_id, js_code=js_code)
 
-  def createLinearGradient(self, x0, y0, x1, y1, varName):
+  def createLinearGradient(self, x0: float, y0: float, x1: float, y1: float, js_code: str):
     """
     Description:
     ------------
@@ -226,16 +230,16 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x0: Float. The x-coordinate of the start point of the gradient.
-    :param y0: Float. The y-coordinate of the start point of the gradient.
-    :param x1: Float. The x-coordinate of the end point of the gradient.
-    :param y1: Float. The y-coordinate of the end point of the gradient.
-    :param varName: String. The object reference on the Javascript side.
+    :param float x0: The x-coordinate of the start point of the gradient.
+    :param float y0: The y-coordinate of the start point of the gradient.
+    :param float x1: The x-coordinate of the end point of the gradient.
+    :param float y1: The y-coordinate of the end point of the gradient.
+    :param str js_code: The object reference on the Javascript side.
     """
     gradient_id = "%s.createLinearGradient(%s, %s, %s, %s)" % (self.varId, x0, y0, x1, y1)
-    return RadialGradient(varData=gradient_id, varId=varName)
+    return RadialGradient(data=gradient_id, js_code=js_code)
 
-  def fill(self, color=None):
+  def fill(self, color: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -247,14 +251,14 @@ class Context2D:
 
     Attributes:
     ----------
-    :param color: Optional. String the color to be added to the fillStyle
+    :param Union[str, primitives.JsDataModel] color: Optional. String the color to be added to the fillStyle.
     """
     if color is None:
       return "%s.fill()" % self.varId
 
     return "%s; %s.fill()" % (self.fillStyle(color), self.varId)
 
-  def fillStyle(self, color):
+  def fillStyle(self, color: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -266,12 +270,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param color: String. The colur definition
+    :param Union[str, primitives.JsDataModel] color: The color definition.
     """
-    color = JsUtils.jsConvertData(color, None)
-    return "%s.fillStyle = %s" % (self.varId, color)
+    return "%s.fillStyle = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
-  def fillText(self, text, x, y, maxWidth=None, fillStyle=None):
+  def fillText(self, text, x, y, max_width: int = None, fill_style: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -286,21 +289,22 @@ class Context2D:
     :param text: String. Specifies the text that will be written on the canvas.
     :param x: Float. The x coordinate where to start painting the text (relative to the canvas).
     :param y: Float. The y coordinate where to start painting the text (relative to the canvas).
-    :param maxWidth: Optional. The maximum allowed width of the text, in pixels.
+    :param int max_width: Optional. The maximum allowed width of the text, in pixels.
+    :param Union[str, primitives.JsDataModel] fill_style:
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
     else:
       text = JsUtils.jsConvertData(text, None)
-    if fillStyle is not None:
-      return "%s; %s.fillText(%s, %s, %s)" % (self.fillStyle(fillStyle), self.varId, text, x, y)
+    if fill_style is not None:
+      return "%s; %s.fillText(%s, %s, %s)" % (self.fillStyle(fill_style), self.varId, text, x, y)
 
-    if maxWidth is not None:
-      return "%s.fillText(%s, %s, %s, %s)" % (self.varId, text, x, y, maxWidth)
+    if max_width is not None:
+      return "%s.fillText(%s, %s, %s, %s)" % (self.varId, text, x, y, max_width)
 
     return "%s.fillText(%s, %s, %s)" % (self.varId, text, x, y)
 
-  def lineCap(self, value):
+  def lineCap(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -312,12 +316,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value:
+    :param Union[str, primitives.JsDataModel] value:
     """
-    value = JsUtils.jsConvertData(value, None)
-    return "%s.lineCap = %s" % (self.varId, value)
+    return "%s.lineCap = %s" % (self.varId, JsUtils.jsConvertData(value, None))
 
-  def lineJoin(self, value):
+  def lineJoin(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -329,12 +332,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value:
+    :param Union[str, primitives.JsDataModel] value:
     """
-    value = JsUtils.jsConvertData(value, None)
-    return "%s.lineJoin = %s" % (self.varId, value)
+    return "%s.lineJoin = %s" % (self.varId, JsUtils.jsConvertData(value, None))
 
-  def lineTo(self, x, y):
+  def lineTo(self, x: float, y: float):
     """
     Description:
     ------------
@@ -346,12 +348,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of where to create the line to
-    :param y: Float. The y-coordinate of where to create the line to
+    :param float x: The x-coordinate of where to create the line to
+    :param float y: The y-coordinate of where to create the line to
     """
     return "%s.lineTo(%s, %s)" % (self.varId, x, y)
 
-  def lineWidth(self, value):
+  def lineWidth(self, value: float):
     """
     Description:
     ------------
@@ -363,11 +365,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value: Float. The current line width, in pixels.
+    :param float value: The current line width, in pixels.
     """
     return "%s.lineWidth = %s" % (self.varId, value)
 
-  def moveTo(self, x, y):
+  def moveTo(self, x: float, y: float):
     """
     Description:
     ------------
@@ -379,12 +381,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of where to move the path to
-    :param y: Float. The y-coordinate of where to move the path to
+    :param float x: The x-coordinate of where to move the path to
+    :param float y: The y-coordinate of where to move the path to
     """
     return "%s.moveTo(%s, %s)" % (self.varId, x, y)
 
-  def rect(self, x, y, width, height):
+  def rect(self, x: float, y: float, width: float, height: float):
     """
     Description:
     ------------
@@ -396,14 +398,14 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of the upper-left corner of the rectangle
-    :param y: Float. The y-coordinate of the upper-left corner of the rectangle
-    :param width: Float. The width of the rectangle, in pixels
-    :param height: Float. 	The height of the rectangle, in pixels
+    :param float x: The x-coordinate of the upper-left corner of the rectangle
+    :param float y: The y-coordinate of the upper-left corner of the rectangle
+    :param float width: The width of the rectangle, in pixels
+    :param float height: The height of the rectangle, in pixels
     """
     return "%s.rect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
-  def fillRect(self, x, y, width, height):
+  def fillRect(self, x: float, y: float, width: float, height: float):
     """
     Description:
     ------------
@@ -415,14 +417,14 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate of the upper-left corner of the rectangle
-    :param y: Float. The y-coordinate of the upper-left corner of the rectangle
-    :param width: Float. The width of the rectangle, in pixels
-    :param height: Float. 	The height of the rectangle, in pixels
+    :param float x: The x-coordinate of the upper-left corner of the rectangle
+    :param float y: float The y-coordinate of the upper-left corner of the rectangle
+    :param float width: The width of the rectangle, in pixels
+    :param float height: The height of the rectangle, in pixels
     """
     return "%s.fillRect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
-  def font(self, fontStyle):
+  def font(self, font_style: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -434,18 +436,17 @@ class Context2D:
 
     Attributes:
     ----------
-    :param fontStyle: String. The font properties
+    :param Union[str, primitives.JsDataModel] font_style: The font properties.
     """
-    fontStyle = JsUtils.jsConvertData(fontStyle, None)
-    return "%s.font = %s" % (self.varId, fontStyle)
+    return "%s.font = %s" % (self.varId, JsUtils.jsConvertData(font_style, None))
 
-  def globalAlpha(self, number):
+  def globalAlpha(self, number: float):
     """
     Description:
     ------------
     The globalAlpha property sets or returns the current alpha or transparency value of the drawing.
 
-    The globalAlpha property value must be a number between 0.0 (fully transparent) and 1.0 (no transparancy).
+    The globalAlpha property value must be a number between 0.0 (fully transparent) and 1.0 (no transparency).
 
     Related Pages:
 
@@ -453,11 +454,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param number: Float. The transparency value. Must be a number between 0.0 (fully transparent) and 1.0 (no transparancy)
+    :param float number: The transparency value. Must be a number between 0.0 (fully transparent) and 1.0 (no transparency)
     """
     return "%s.globalAlpha = %s" % (self.varId, number)
 
-  def isPointInPath(self, x, y):
+  def isPointInPath(self, x: float, y: float):
     """
     Description:
     ------------
@@ -469,12 +470,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x-coordinate to test
-    :param y: Float. The y-coordinate to test
+    :param float x: The x-coordinate to test.
+    :param float y: The y-coordinate to test.
     """
-    return JsBoolean.JsBoolean("%s.isPointInPath(%s, %s)" % (self.varId, x, y), isPyData=False)
+    return JsBoolean.JsBoolean("%s.isPointInPath(%s, %s)" % (self.varId, x, y), is_py_data=False)
 
-  def measureText(self, text):
+  def measureText(self, text: Union[str, list, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -486,7 +487,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param text: String. The text
+    :param Union[str, primitives.JsDataModel] text: The text.
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
@@ -494,7 +495,7 @@ class Context2D:
       text = JsUtils.jsConvertData(text, None)
     return MesuredText("%s.measureText(%s)" % (self.varId, text))
 
-  def rotate(self, angle):
+  def rotate(self, angle: float):
     """
     Description:
     ------------
@@ -506,11 +507,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param angle: Float. The angle number
+    :param float angle: The angle number
     """
     return "%s.rotate(%s)" % (self.varId, angle)
 
-  def scale(self, scalewidth, scaleheight):
+  def scale(self, scale_width: float, scale_height: float):
     """
     Description:
     ------------
@@ -522,12 +523,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param scalewidth: Float. Scales the width of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
-    :param scaleheight: Float. Scales the height of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
+    :param float scale_width: Scales the width of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
+    :param float scale_height: Scales the height of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
     """
-    return "%s.scale(%s, %s)" % (self.varId, scalewidth, scaleheight)
+    return "%s.scale(%s, %s)" % (self.varId, scale_width, scale_height)
 
-  def shadowBlur(self, value):
+  def shadowBlur(self, value: float):
     """
     Description:
     ------------
@@ -539,11 +540,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value: Float. The blur level for the shadow
+    :param float value: The blur level for the shadow.
     """
     return "%s.shadowBlur = %s" % (self.varId, value)
 
-  def shadowColor(self, color):
+  def shadowColor(self, color: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -555,12 +556,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param color: String. the color code
+    :param Union[str, primitives.JsDataModel] color: the color code.
     """
-    color = JsUtils.jsConvertData(color, None)
-    return "%s.shadowColor = %s" % (self.varId, color)
+    return "%s.shadowColor = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
-  def shadowOffsetX(self, value):
+  def shadowOffsetX(self, value: float):
     """
     Description:
     ------------
@@ -572,11 +572,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value: Float. A positive or negative number that defines the horizontal distance of the shadow from the shape
+    :param float value: A positive or negative number that defines the horizontal distance of the shadow from the shape
     """
     return "%s.shadowOffsetX = %s" % (self.varId, value)
 
-  def shadowOffsetY(self, value):
+  def shadowOffsetY(self, value: float):
     """
     Description:
     ------------
@@ -588,7 +588,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param value: A positive or negative number that defines the vertical distance of the shadow from the shape
+    :param float value: A positive or negative number that defines the vertical distance of the shadow from the shape
     """
     return "%s.shadowOffsetY = %s" % (self.varId, value)
 
@@ -601,18 +601,18 @@ class Context2D:
     """
     return "%s.stroke()" % self.varId
 
-  def strokeWeight(self, val):
+  def strokeWeight(self, val: float):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param val:
+    :param float val:
     """
     return "%s.strokeWeight = %s" % (self.varId, val)
 
-  def strokeStyle(self, color="#000000"):
+  def strokeStyle(self, color: Union[str, primitives.JsDataModel] = "#000000"):
     """
     Description:
     ------------
@@ -624,7 +624,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param color: A CSS color value that indicates the stroke color of the drawing. Default value is #000000
+    :param Union[str, primitives.JsDataModel] color: A CSS color value that indicates the stroke color of the drawing.
+    Default value is #000000
     """
     return "%s.strokeStyle = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
@@ -639,7 +640,7 @@ class Context2D:
       https://www.w3schools.com/tags/canvas_strokestyle.asp
     """
 
-  def strokeText(self, text, x, y, maxWidth=None):
+  def strokeText(self, text: Union[str, list, primitives.JsDataModel], x: float, y: float, max_width: float = None):
     """
     Description:
     ------------
@@ -651,10 +652,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param text: String. Specifies the text that will be written on the canvas
-    :param x: Float. The x coordinate where to start painting the text (relative to the canvas)
-    :param y: Float. The y coordinate where to start painting the text (relative to the canvas)
-    :param maxWidth: Optional. The maximum allowed width of the text, in pixels
+    :param Union[str, list, primitives.JsDataModel] text: Specifies the text that will be written on the canvas.
+    :param float x: The x coordinate where to start painting the text (relative to the canvas).
+    :param float y: The y coordinate where to start painting the text (relative to the canvas).
+    :param float max_width: Optional. The maximum allowed width of the text, in pixels.
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
@@ -662,7 +663,7 @@ class Context2D:
       text = JsUtils.jsConvertData(text, None)
     return "%s.strokeText(%s, %s, %s)" % (self.varId, text, x, y)
 
-  def textAlign(self, position):
+  def textAlign(self, position: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -674,11 +675,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param position: String. The context align
+    :param Union[str, primitives.JsDataModel] position: The context align
     """
     return "%s.textAlign = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
-  def translate(self, x, y):
+  def translate(self, x: float, y: float):
     """
     Description:
     ------------
@@ -690,12 +691,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The value to add to horizontal (x) coordinates
-    :param y: Float. The value to add to vertical (y) coordinates
+    :param float x: The value to add to horizontal (x) coordinates
+    :param float y: The value to add to vertical (y) coordinates
     """
     return "%s.translate(%s, %s)" % (self.varId, x, y)
 
-  def textBaseline(self, position):
+  def textBaseline(self, position: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -707,11 +708,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param position: String. The context baseline
+    :param Union[str, primitives.JsDataModel] position: The context baseline.
     """
     return "%s.textBaseline = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
-  def drawImage(self, img, x, y, width, height):
+  def drawImage(self, img, x: float, y: float, width: float, height: float):
     """
     Description:
     ------------
@@ -723,20 +724,20 @@ class Context2D:
 
     Attributes:
     ----------
-    :param img: String. Specifies the image, canvas, or video element to use
-    :param x: Float. Optional. The x coordinate where to place the image on the canvas
-    :param y: Float. Optional. The y coordinate where to place the image on the canvas
-    :param width: Float. Optional. The width of the image to use (stretch or reduce the image)
-    :param height: Float. Optional. The height of the image to use (stretch or reduce the image)
+    :param img: String. Specifies the image, canvas, or video element to use.
+    :param float x: Optional. The x coordinate where to place the image on the canvas.
+    :param float y: Optional. The y coordinate where to place the image on the canvas.
+    :param float width: Optional. The width of the image to use (stretch or reduce the image).
+    :param float height: Optional. The height of the image to use (stretch or reduce the image).
     """
     pass
 
-  def getImageData(self, x, y, width, height):
+  def getImageData(self, x: float, y: float, width: float, height: float):
     """
     Description:
     ------------
     The getImageData() method returns an ImageData object that copies the pixel data for the specified rectangle
-    on a canvas..
+    on a canvas.
 
     Related Pages:
 
@@ -744,20 +745,21 @@ class Context2D:
 
     Attributes:
     ----------
-    :param x: Float. The x coordinate (in pixels) of the upper-left corner to start copy from.
-    :param y: Float. The y coordinate (in pixels) of the upper-left corner to start copy from.
-    :param width: Float. The width of the rectangular area you will copy.
-    :param height: Float. The height of the rectangular area you will copy.
+    :param float x: The x coordinate (in pixels) of the upper-left corner to start copy from.
+    :param float y: The y coordinate (in pixels) of the upper-left corner to start copy from.
+    :param float width: The width of the rectangular area you will copy.
+    :param float height: The height of the rectangular area you will copy.
     """
     return "%s.getImageData(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
 
 class Canvas(JsNodeDom.JsDoms):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
+    self.component, self.page = component, page
     self._js, self.__2d_context = [], None
     self._jquery, self._jquery_ui = None, None
 
@@ -771,7 +773,7 @@ class Canvas(JsNodeDom.JsDoms):
     return JsNumber.JsNumber("%s.width" % self.varId)
 
   @property
-  def getContext2D(self):
+  def getContext2D(self) -> Context2D:
     """
     Description:
     ------------
@@ -785,7 +787,7 @@ class Canvas(JsNodeDom.JsDoms):
     :rtype: Context2D
     """
     if self.__2d_context is None:
-      self.__2d_context = Context2D(self._src)
+      self.__2d_context = Context2D(self.component)
     return self.__2d_context
 
   @property
@@ -807,10 +809,10 @@ class Canvas(JsNodeDom.JsDoms):
 
     :rtype: JsNodeDom.JsDomEvents
     """
-    return JsNodeDom.JsDomEvents(self._src)
+    return JsNodeDom.JsDomEvents(self.component)
 
   @property
-  def jquery(self):
+  def jquery(self) -> JsQuery.JQuery:
     """
     Description:
     ------------
@@ -818,11 +820,12 @@ class Canvas(JsNodeDom.JsDoms):
     :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
-      self._jquery = JsQuery.JQuery(src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
+      self._jquery = JsQuery.JQuery(
+        component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode))
     return self._jquery
 
   @property
-  def jquery_ui(self):
+  def jquery_ui(self) -> JsQueryUi.JQueryUI:
     """
     Description:
     ------------
@@ -830,7 +833,8 @@ class Canvas(JsNodeDom.JsDoms):
     :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
-      self._jquery_ui = JsQueryUi.JQueryUI(self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode))
+      self._jquery_ui = JsQueryUi.JQueryUI(
+        self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode))
     return self._jquery_ui
 
   def toDataURL(self, format: str = 'image/jpeg'):

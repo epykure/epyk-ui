@@ -12,8 +12,8 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedC3(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
-    pass
+  def x_format(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     self.component.options.axis.x.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
@@ -44,8 +44,8 @@ class OptionsChartSharedC3(OptChart.OptionsChartShared):
     self.component.options.axis.x.tick.count = num
     return self
 
-  def y_format(self, jsFncs, profile=None):
-    pass
+  def y_format(self, js_funcs, profile=None):
+    raise NotImplementedError()
 
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     self.component.options.axis.y.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
@@ -2652,7 +2652,7 @@ class C3(OptChart.OptionsChart):
     self._config(cols)
 
   @property
-  def axis(self):
+  def axis(self) -> OptionAxis:
     """
     Description:
     ------------
@@ -2662,7 +2662,7 @@ class C3(OptChart.OptionsChart):
     return self._config_sub_data("axis", OptionAxis)
 
   @property
-  def legend(self):
+  def legend(self) -> OptionsLegend:
     """
     Description:
     ------------
@@ -2677,7 +2677,7 @@ class C3(OptChart.OptionsChart):
     return self._config_sub_data("legend", OptionsLegend)
 
   @property
-  def point(self):
+  def point(self) -> OptionsPoints:
     """
     Description:
     ------------
@@ -3374,7 +3374,7 @@ class OptionsLevel(Options):
     self._config(num)
 
   @property
-  def text(self):
+  def text(self) -> OptionsText:
     return self._config_sub_data("text", OptionsText)
 
   @property
@@ -3393,8 +3393,8 @@ class OptionsLevel(Options):
   def show(self, flag):
     self._config(flag)
 
-  def format(self, jsFunc, profile=None):
-    pass
+  def format(self, js_func, profile=None):
+    raise NotImplementedError()
 
 
 class OptionsDirection(Options):
@@ -3419,7 +3419,7 @@ class OptionsDirection(Options):
 class C3Radar(C3):
 
   @property
-  def radar(self):
+  def radar(self) -> OptionsRadar:
     """
     Description:
     ------------
@@ -3433,7 +3433,7 @@ class C3Radar(C3):
     return self._config_sub_data("radar", OptionsRadar)
 
   @property
-  def level(self):
+  def level(self) -> OptionsLevel:
     """
     Description:
     ------------
@@ -3447,7 +3447,7 @@ class C3Radar(C3):
     return self._config_sub_data("level", OptionsLevel)
 
   @property
-  def direction(self):
+  def direction(self) -> OptionsDirection:
     """
     Description:
     ------------
@@ -3484,7 +3484,7 @@ class OptionsArea(Options):
 class C3Area(C3):
 
   @property
-  def area(self):
+  def area(self) -> OptionsArea:
     """
     Description:
     ------------
@@ -3537,7 +3537,7 @@ class OptionsBar(Options):
 class C3Bar(C3):
 
   @property
-  def bar(self):
+  def bar(self) -> OptionsBar:
     """
     Description:
     ------------
@@ -3554,7 +3554,7 @@ class C3Bar(C3):
 class OptionsSpline(Options):
 
   @property
-  def interpolation(self):
+  def interpolation(self) -> OptionStep:
     """
 
     :rtype: OptionStep
@@ -3565,7 +3565,7 @@ class OptionsSpline(Options):
 class C3Spline(C3):
 
   @property
-  def spline(self):
+  def spline(self) -> OptionsSpline:
     """
 
     :rtype: OptionsSpline
@@ -3611,7 +3611,7 @@ class OptionsBubble(Options):
 class C3Bubble(C3):
 
   @property
-  def bubble(self):
+  def bubble(self) -> OptionsBubble:
     """
     Description:
     ------------
@@ -3647,7 +3647,7 @@ class C3StanfordData(OptionsData):
 class C3Stanford(OptChart.OptionsChart):
 
   @property
-  def axis(self):
+  def axis(self) -> OptionAxis:
     """
     Description:
     ------------
@@ -3657,7 +3657,7 @@ class C3Stanford(OptChart.OptionsChart):
     return self._config_sub_data("axis", OptionAxis)
 
   @property
-  def point(self):
+  def point(self) -> OptionsPoints:
     """
     Description:
     ------------
@@ -3667,7 +3667,7 @@ class C3Stanford(OptChart.OptionsChart):
     return self._config_sub_data("point", OptionsPoints)
 
   @property
-  def data(self):
+  def data(self) -> C3StanfordData:
     """
     Description:
     ------------
@@ -3677,7 +3677,7 @@ class C3Stanford(OptChart.OptionsChart):
     return self._config_sub_data("data", C3StanfordData)
 
   @property
-  def grid(self):
+  def grid(self) -> OptionsGrid:
     """
     Description:
     ------------
@@ -3687,7 +3687,7 @@ class C3Stanford(OptChart.OptionsChart):
     return self._config_sub_data("grid", OptionsGrid)
 
   @property
-  def zoom(self):
+  def zoom(self) -> OptionsZoom:
     """
     Description:
     ------------

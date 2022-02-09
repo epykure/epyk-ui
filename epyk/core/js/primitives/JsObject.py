@@ -1,10 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-"""
-Module dedicated to wrap the Javascript Object
-
-"""
 
 from typing import Union, Optional, Any, List
 from epyk.core.py import primitives
@@ -17,7 +13,7 @@ _JSVARS = 0
 
 
 class JsKeyword:
-  def __init__(self, keyword):
+  def __init__(self, keyword: str):
     self.__keyword = keyword
 
   def toStr(self):
@@ -30,7 +26,8 @@ class JsKeyword:
 class JsObject(primitives.JsDataModel):
   _jsClass = "Object"
 
-  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = False, report=None):
+  def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = False,
+               page: primitives.PageModel = None, component: primitives.HtmlModel = None):
     """
     Description:
     ------------
@@ -41,25 +38,29 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[str] varName:
+    :param Optional[str] js_code:
     :param data:
-    :param bool setVar:
-    :param bool isPyData:
-    :param report: The internal report object
+    :param bool set_var:
+    :param bool is_py_data:
+    :param page: The internal report object.
+    :param component:
     """
     global _JSVARS
 
-    self.varName, self.varData, self._js, self._report = varName, str(data), [], report
-    self.page = report
+    self.varName, self.varData, self._js, self.component = js_code, str(data), [], component
+    self.page = page
+    if page is None and component is not None:
+      self.page = component.page
     self._frozen, self._sealed = False, False
-    if varName is None and setVar:
+    if js_code is None and set_var:
       _JSVARS += 1
       self.varName = "%s_%s" % (self.__class__.__name__, _JSVARS)
-    if setVar:
+    if set_var:
       self.setVar(self.varName)
 
   @classmethod
-  def new(cls, data: Optional[Any] = None, varName: Optional[str] = None, isPyData: bool = True, report=None):
+  def new(cls, data: Optional[Any] = None, js_code: Optional[str] = None, is_py_data: bool = True,
+          page: primitives.PageModel = None):
     """
     Description:
     ------------
@@ -75,20 +76,21 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param data: Optional, The object data
-    :param Optional[str] varName: Optional, The object variable name
-    :param bool isPyData: Optional, To specify if it is a Python reference and if it should be converted to Json
-    :param report: The internal report object
+    :param data: Optional, The object data.
+    :param Optional[str] js_code: Optional, The object variable name.
+    :param bool is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json.
+    :param primitives.PageModel page: The internal report object.
 
     :return: The Python Javascript Date primitive
     """
-    if isPyData:
-      return cls(data=JsUtils.jsConvertData(data, None), varName=varName, setVar=True, isPyData=isPyData, report=report)
+    if is_py_data:
+      return cls(
+        data=JsUtils.jsConvertData(data, None), js_code=js_code, set_var=True, is_py_data=is_py_data, page=page)
 
-    return cls(data=data, varName=varName, setVar=True, isPyData=isPyData, report=report)
+    return cls(data=data, js_code=js_code, set_var=True, is_py_data=is_py_data, page=page)
 
   @classmethod
-  def this(cls, report: primitives.PageModel = None):
+  def this(cls, page: primitives.PageModel = None):
     """
     Description:
     ------------
@@ -104,14 +106,14 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[primitives.PageModel] report: The internal report object.
+    :param Optional[primitives.PageModel] page: The internal report object.
 
     :return: The python Javascript object
     """
-    return cls.get("this", report=report)
+    return cls.get("this", page=page)
 
   @classmethod
-  def get(cls, varName: str, report: Optional[primitives.PageModel] = None):
+  def get(cls, js_code: str, page: Optional[primitives.PageModel] = None):
     """
     Description:
     ------------
@@ -128,12 +130,12 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str varName: The Javascript object reference.
-    :param Optional[primitives.PageModel] report: The internal report object.
+    :param str js_code: The Javascript object reference.
+    :param Optional[primitives.PageModel] page: The internal report object.
 
     :return: The python Javascript object
     """
-    return cls(data=None, varName=varName, setVar=False, report=report)
+    return cls(data=None, js_code=js_code, set_var=False, page=page)
 
   @property
   def varId(self):
@@ -146,7 +148,7 @@ class JsObject(primitives.JsDataModel):
     """
     return self.varData if self.varName is None else self.varName
 
-  def setVar(self, varName: str, var_type: str = "var"):
+  def setVar(self, js_code: str, var_type: str = "var"):
     """
     Description:
     ------------
@@ -156,27 +158,27 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str varName: Required, The variable name.
+    :param str js_code: The variable name.
     :param str var_type: The type of variable to be set on the Javascript side.
 
     :return: The Python Javascript Object
     """
-    if varName is None:
+    if js_code is None:
       return self
 
-    if (self.varName is not None and (self.varName.startswith("window.") or self.varName.startswith("window["))) or (varName is not None and (varName.startswith("window.") or varName.startswith("window["))):
+    if (self.varName is not None and (self.varName.startswith("window.") or self.varName.startswith("window["))) or (js_code is not None and (js_code.startswith("window.") or js_code.startswith("window["))):
       var_type = ""
-    if varName != self.varName:
+    if js_code != self.varName:
       if len(self._js) == 1:
         if self._js[0].startswith("var "):
           # Remove the entry used to define by default the javascript object
-          self._js = ["%s %s = %s" % (var_type, varName, self.varData)]
+          self._js = ["%s %s = %s" % (var_type, js_code, self.varData)]
         else:
-          self._js.append("%s %s = %s" % (var_type, varName, self.varName))
+          self._js.append("%s %s = %s" % (var_type, js_code, self.varName))
       else:
-        self._js.append("%s %s = %s" % (var_type, varName, self.varName or self.varData))
+        self._js.append("%s %s = %s" % (var_type, js_code, self.varName or self.varData))
     else:
-      self._js.append("%s %s = %s" % (var_type, varName, self.varData))
+      self._js.append("%s %s = %s" % (var_type, js_code, self.varData))
     return self
 
   def prototype(self, name: str, value: Any):
@@ -203,7 +205,7 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
     Add value to a Javascript Number.
-    The value will be added and it will return a new number object on the Javascript side
+    The value will be added. It will return a new number object on the Javascript side.
 
     Usage::
 
@@ -215,23 +217,23 @@ class JsObject(primitives.JsDataModel):
 
     :return: A new Python Javascript Number
     """
-    jsData = JsUtils.jsConvertData(n, None)
-    return JsObject("%s + %s" % (self.varId, jsData), isPyData=False)
+    data = JsUtils.jsConvertData(n, None)
+    return JsObject("%s + %s" % (self.varId, data), is_py_data=False)
 
   def __add__(self, value: primitives.JsDataModel):
-    return JsObject("%s += %s" % (self.varId, value), isPyData=False)
+    return JsObject("%s += %s" % (self.varId, value), is_py_data=False)
 
   def __sub__(self, value: primitives.JsDataModel):
-    return JsObject("%s -= %s" % (self.varId, value), isPyData=False)
+    return JsObject("%s -= %s" % (self.varId, value), is_py_data=False)
 
   def __mul__(self, value: primitives.JsDataModel):
-    return JsObject("%s *= %s" % (self.varId, value), isPyData=False)
+    return JsObject("%s *= %s" % (self.varId, value), is_py_data=False)
 
   def __truediv__(self, value: primitives.JsDataModel):
-    return JsObject("%s /= %s" % (self.varId, value), isPyData=False)
+    return JsObject("%s /= %s" % (self.varId, value), is_py_data=False)
 
   def __mod__(self, value: primitives.JsDataModel):
-    return JsObject("%s %%= %s" % (self.varId, value), isPyData=False)
+    return JsObject("%s %%= %s" % (self.varId, value), is_py_data=False)
 
   def __pow__(self, value: Union[primitives.JsDataModel, int]):
     from epyk.core.js import JsMaths
@@ -243,6 +245,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -258,6 +262,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -273,6 +279,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -288,6 +296,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -303,6 +313,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -318,6 +330,8 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -349,7 +363,7 @@ class JsObject(primitives.JsDataModel):
       raise ValueError("Cannot freeze an object without variable name")
 
     from epyk.core.js.primitives import JsBoolean
-    return JsBoolean.JsBoolean("Object.isFrozen(%s)" % self.varName, isPyData=False)
+    return JsBoolean.JsBoolean("Object.isFrozen(%s)" % self.varName, is_py_data=False)
 
   def freeze(self):
     """
@@ -375,7 +389,7 @@ class JsObject(primitives.JsDataModel):
       raise ValueError("Cannot freeze an object without variable name")
 
     self._frozen = True
-    return JsObject("Object.freeze(%s)" % self.varName, isPyData=False)
+    return JsObject("Object.freeze(%s)" % self.varName, is_py_data=False)
 
   def isSealed(self):
     """
@@ -399,7 +413,7 @@ class JsObject(primitives.JsDataModel):
     from epyk.core.js.primitives import JsBoolean
 
     self._sealed = True
-    return JsBoolean.JsBoolean("Object.isSealed(%s)" % self.varId, isPyData=False)
+    return JsBoolean.JsBoolean("Object.isSealed(%s)" % self.varId, is_py_data=False)
 
   def defineProperty(self, obj, prop: str, descriptor: str):
     """
@@ -466,7 +480,8 @@ class JsObject(primitives.JsDataModel):
 
     return JsObject("Object.seal(%s)" % self.varName)
 
-  def assign(self, target: Union[primitives.JsDataModel, str], sources: List[Union[primitives.JsDataModel, str]], jsObj=None):
+  def assign(self, target: Union[primitives.JsDataModel, str], sources: List[Union[primitives.JsDataModel, str]],
+             js_obj=None):
     """
     Description:
     ------------
@@ -483,16 +498,16 @@ class JsObject(primitives.JsDataModel):
     ----------
     :param Union[primitives.JsDataModel, str] target: The target object.
     :param List[Union[primitives.JsDataModel, str]] sources: The source object(s).
-    :param jsObj: Optional, The base Python Javascript object to add the polyfill
+    :param js_obj: Optional, The base Python Javascript object to add the polyfill
     """
-    if jsObj is not None:
+    if js_obj is not None:
       # Add a polyfill to ensure the browser compatibility
-      jsObj._addImport("babel-polyfill")
+      js_obj._addImport("babel-polyfill")
 
     if not isinstance(sources, list):
       sources = [sources]
     js_obj = ",".join([JsUtils.jsConvertData(s, None) for s in sources])
-    return JsObject("Object.assign(%s, %s)" % (JsUtils.jsConvertData(target, None), js_obj), isPyData=False)
+    return JsObject("Object.assign(%s, %s)" % (JsUtils.jsConvertData(target, None), js_obj), is_py_data=False)
 
   def create(self, proto=None, propertiesObject=None):
     """
@@ -508,8 +523,10 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param proto: The object which should be the prototype of the newly-created object.
-    :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify property descriptors to be added to the newly-created object, with the corresponding property names.
-                                       These properties correspond to the second argument of Object.defineProperties()
+    :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties
+    (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify
+    property descriptors to be added to the newly-created object, with the corresponding property names.
+    These properties correspond to the second argument of Object.defineProperties()
 
     :return: A Python Javascript object
     """
@@ -552,7 +569,8 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param Union[primitives.JsDataModel, str] key: The key to add to the object.
-    :param Union[primitives.JsDataModel, str] value: The value corresponding to the key. Can be a Python object or a Javascript reference
+    :param Union[primitives.JsDataModel, str] value: The value corresponding to the key. Can be a Python object or a
+    Javascript reference
 
     :return: The Python Javascript object
     """
@@ -563,7 +581,7 @@ class JsObject(primitives.JsDataModel):
       print("Warning, try to change a frozen variable")
 
     return JsObject("%s[%s] = %s" % (
-      self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), setVar=False)
+      self.varName, JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(value, None)), set_var=False)
 
   def addItem(self, key: Union[primitives.JsDataModel, str], value: Union[primitives.JsDataModel, str]):
     """
@@ -625,9 +643,9 @@ class JsObject(primitives.JsDataModel):
     """
     from epyk.core.js.primitives import JsArray
 
-    return JsArray.JsArray("Object.keys(%s)" % self.varId, isPyData=False)
+    return JsArray.JsArray("Object.keys(%s)" % self.varId, is_py_data=False)
 
-  def update(self, dico, jsObj=None):
+  def update(self, dico, js_obj=None):
     """
     Description:
     ------------
@@ -638,11 +656,11 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param dico:
-    :param jsObj: Optional, The base Python Javascript object to add the polyfill
+    :param js_obj: Optional, The base Python Javascript object to add the polyfill
     """
-    if jsObj is not None:
+    if js_obj is not None:
       # Add a polyfill to ensure the browser compatibility
-      jsObj._addImport("babel-polyfill")
+      js_obj._addImport("babel-polyfill")
     return "try{Object.assign({}, %s, %s)} catch(err){console.warn('Assign not supported by the browser')}" % (
       self.varId, dico)
 
@@ -669,9 +687,9 @@ class JsObject(primitives.JsDataModel):
     from epyk.core.js.primitives import JsString
 
     if not explicit:
-      return JsString.JsString("%s" % self.varId, isPyData=False)
+      return JsString.JsString("%s" % self.varId, is_py_data=False)
 
-    return JsString.JsString("%s.toString()" % self.varId, isPyData=False)
+    return JsString.JsString("%s.toString()" % self.varId, is_py_data=False)
 
   def isArray(self):
     """
@@ -691,7 +709,7 @@ class JsObject(primitives.JsDataModel):
     """
     from epyk.core.js.primitives import JsBoolean
 
-    return JsBoolean.JsBoolean("Array.isArray(%s)" % self.varId, isPyData=False, setVar=False)
+    return JsBoolean.JsBoolean("Array.isArray(%s)" % self.varId, is_py_data=False, set_var=False)
 
   def toArray(self):
     """
@@ -702,7 +720,7 @@ class JsObject(primitives.JsDataModel):
     """
     from epyk.core.js.primitives import JsArray
 
-    return JsArray.JsArray("%s.toArray()" % self.varId, isPyData=False, setVar=False)
+    return JsArray.JsArray("%s.toArray()" % self.varId, is_py_data=False, set_var=False)
 
   def toStr(self):
     """
@@ -738,7 +756,7 @@ class JsObject(primitives.JsDataModel):
         data.slice(1).forEach(function(rec){var row = []; rec.forEach(function(r, i){row[header[i]] = r}); 
         results.push(row)}); return results})(%s)''' % self.varName)
 
-  def toRecord(self, header: list, varName: str):
+  def toRecord(self, header: list, js_code: str):
     """
     Description:
     ------------
@@ -746,24 +764,24 @@ class JsObject(primitives.JsDataModel):
     Usage::
 
       d = rptObj.ui.div()
-    d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
+      d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     Attributes:
     ----------
     :param list header:
-    :param str varName:
+    :param str js_code:
     """
     from epyk.core.js.primitives import JsArray
     from epyk.core.js.objects import JsData
     from epyk.core.js.fncs.JsFncs import JsFunctions
 
     funcs = JsFunctions([
-      self.toString().split("\\n").setVar("rows"), JsArray.JsArray.set(varName),
+      self.toString().split("\\n").setVar("rows"), JsArray.JsArray.set(js_code),
       JsArray.JsArray.get("rows").forEach([
         JsArray.JsArray.get(
-          JsData.JsData(self._report).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
-        JsArray.JsArray.get(varName).push(JsObject.get("row"))])])
-    record = JsObject.get(varName)
+          JsData.JsData(self.page).loop().val.toString().split("\t")).toDict(header).setVar("row").r,
+        JsArray.JsArray.get(js_code).push(JsObject.get("row"))])])
+    record = JsObject.get(js_code)
     record._js = [funcs.toStr()] + record._js
     return record
 
@@ -777,7 +795,7 @@ class JsObject(primitives.JsDataModel):
     """
     return self.toStr()
 
-  def clone(self, report: Optional[primitives.PageModel] = None):
+  def clone(self, page: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -790,16 +808,16 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[primitives.PageModel] report: Optional. The report object
+    :param Optional[primitives.PageModel] page: Optional. The report object
     """
-    report = report or self._report
-    report.jsImports.add('underscore')
+    page = page or self.page
+    page.jsImports.add('underscore')
     if self.varName is None:
-      return JsObject("_.clone(%s)" % self.varName, isPyData=False)
+      return JsObject("_.clone(%s)" % self.varName, is_py_data=False)
 
-    return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), isPyData=False)
+    return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), is_py_data=False)
 
-  def defaults(self, attrs: Union[primitives.JsDataModel, dict], report: Optional[primitives.PageModel] = None):
+  def defaults(self, attrs: Union[primitives.JsDataModel, dict], page: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -813,18 +831,18 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param Union[primitives.JsDataModel, dict] attrs:
-    :param Optional[primitives.PageModel] report: Optional. The report object.
+    :param Optional[primitives.PageModel] page: Optional. The report object.
     """
-    report = report or self._report
-    report.jsImports.add('underscore')
+    page = page or self.page
+    page.jsImports.add('underscore')
     attrs = JsUtils.jsConvertData(attrs, None)
     if self.varName is None:
-      return JsObject("_.defaults(%s, %s)" % (self.toStr(), attrs), isPyData=False)
+      return JsObject("_.defaults(%s, %s)" % (self.toStr(), attrs), is_py_data=False)
 
     return JsObject(
-      "(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), isPyData=False)
+      "(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), is_py_data=False)
 
-  def pick(self, keys: Union[primitives.JsDataModel, list], report: Optional[primitives.PageModel] = None):
+  def pick(self, keys: Union[primitives.JsDataModel, list], page: Optional[primitives.PageModel] = None):
     """
     Description:
     -----------
@@ -838,15 +856,16 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param Union[primitives.JsDataModel, list] keys:
-    :param Optional[primitives.PageModel] report: Optional. The report object.
+    :param Optional[primitives.PageModel] page: Optional. The report object.
     """
-    report = report or self._report
-    report.jsImports.add('underscore')
+    page = page or self.page
+    page.jsImports.add('underscore')
     keys = JsUtils.jsConvertData(keys, None)
     if self.varName is None:
-      return JsObject("_.pick(%s, ..%s)" % (self.varName, keys), isPyData=False)
+      return JsObject("_.pick(%s, ..%s)" % (self.varName, keys), is_py_data=False)
 
-    return JsObject("(function(){ %s; return _.pick(%s, ..%s) }()" % (self.toStr(), self.varName, keys), isPyData=False)
+    return JsObject(
+      "(function(){ %s; return _.pick(%s, ..%s) }()" % (self.toStr(), self.varName, keys), is_py_data=False)
 
   def jsonParse(self):
     """

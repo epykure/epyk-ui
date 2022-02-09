@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css.styles.attributes import CssInline
 from epyk.core.html.options import OptChartCss
@@ -13,7 +13,7 @@ class ChartCss(Html.Html):
   _chart__type = "line"
   _option_cls = OptChartCss.ChartCssOptions
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self,  page: primitives.PageModel, width, height, html_code, options, profile):
     super(ChartCss, self).__init__(
       report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.attr["class"].clear()
@@ -21,7 +21,7 @@ class ChartCss(Html.Html):
     self._datasets, self._labels, self.row_style = [], [], CssInline()
 
   @property
-  def options(self):
+  def options(self) -> OptChartCss.ChartCssOptions:
     """
     Description:
     ------------
@@ -44,7 +44,7 @@ class ChartCss(Html.Html):
     """
     self._labels = values
 
-  def dataset(self, i=None):
+  def dataset(self, i: int = None):
     """
     Description:
     -----------
@@ -91,10 +91,11 @@ class ChartCss(Html.Html):
     for series in self._datasets:
       #html_frg_head.append('<th scope="col"> %s </th>' % series[0])
       for i, y in enumerate(series[1:]):
-        html_frg[i].append('<td style="--start: %s; --size: %s"><span class="data"> %s </span></td>' % (i/sections, y/100, y))
+        html_frg[i].append('<td style="--start: %s; --size: %s"><span class="data"> %s </span></td>' % (
+          i/sections, y/100, y))
     html_frg_trs = ["".join(frg) for frg in html_frg]
     return '''<table %s><caption>%s</caption><thead>%s</thead><tbody><tr>%s</tr></tbody></table>
-      ''' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.options.title,
+      ''' % (self.get_attrs(css_class_names=self.style.get_classes()), self.options.title,
              "".join(html_frg_head), "</tr><tr>".join(html_frg_trs))
 
 
@@ -115,7 +116,7 @@ class ChartCssBarStacked(ChartCssBar):
   name = 'ChartCss Stacked Bar'
   _chart__type = "bar"
 
-  def __init__(self, report, width, height, html_code, options, profile):
-    super(ChartCssBar, self).__init__(report, width, height, html_code, options, profile)
+  def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
+    super(ChartCssBar, self).__init__(page, width, height, html_code, options, profile)
     self.options.multiple()
     self.attr["class"].add("stacked")

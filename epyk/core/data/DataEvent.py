@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Any
+from epyk.core.py import primitives
 import json
 
 
@@ -10,13 +12,13 @@ class DataConfig:
     self.keys = {}
     self.docs = {}
 
-  def __getitem__(self, key):
+  def __getitem__(self, key: str):
     from epyk.core.js.primitives import JsObjects
 
     self.keys[key] = ""
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
-  def get(self, key, dfl="", doc=""):
+  def get(self, key: str, dfl: Any = "", doc: str = ""):
     """
     Description:
     ------------
@@ -24,9 +26,9 @@ class DataConfig:
 
     Attributes:
     ----------
-    :param key: String. The key to look up from the JavaScript configuration.
-    :param dfl: Object. Optional. The default value in the configuration.
-    :param doc: String. Optional. The doc for this key in the Json.
+    :param str key: The key to look up from the JavaScript configuration.
+    :param Any dfl: Optional. The default value in the configuration.
+    :param str doc: Optional. The doc for this key in the Json.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -34,7 +36,7 @@ class DataConfig:
     self.docs[key] = doc
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
-  def fromConfig(self, k, default=None, page=None, end_point="/static/configs"):
+  def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None, end_point: str = "/static/configs"):
     """
     Description:
     ------------
@@ -47,12 +49,12 @@ class DataConfig:
     Attributes:
     ----------
     :param k: String. The alias of the cache, variable.
-    :param default: String. Object. Optional. The default value of the cache.
-    :param page: Report. Optional. The page object.
+    :param Any default: Object. Optional. The default value of the cache.
+    :param primitives.PageModel page: Optional. The page object.
     :param end_point: String. Optional. THe static end point for the configurations.
     """
     if page.json_config_file is None:
-      raise Exception("json_config_file must be attached to the page to load the corresponding configuration")
+      raise ValueError("json_config_file must be attached to the page to load the corresponding configuration")
 
     self.keys[k] = default
     return '''
@@ -75,7 +77,7 @@ class DataConfig:
       })(%(key)s)
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
-  def to_json(self, sort_keys=True, indent=4):
+  def to_json(self, sort_keys: bool = True, indent: int = 4):
     """
     Description:
     ------------
@@ -83,8 +85,8 @@ class DataConfig:
 
     Attributes:
     ----------
-    :param sort_keys: Boolean. Optional. Set the order for the keys.
-    :param indent: Integer. Optional. Add number of indent to the Json.
+    :param bool sort_keys: Optional. Set the order for the keys.
+    :param int indent: Optional. Add number of indent to the Json.
     """
     vals = {}
     if sort_keys:
@@ -107,8 +109,7 @@ class TabulatorEvents:
     Get a Tabulator Row object.
     """
     from epyk.core.js.packages import JsTabulator
-
-    return JsTabulator.RowComponent(setVar=False, varName=None)
+    return JsTabulator.RowComponent(set_var=False, js_code=None)
 
   @property
   def cell(self):
@@ -118,8 +119,7 @@ class TabulatorEvents:
     Get a Tabulator cell object.
     """
     from epyk.core.js.packages import JsTabulator
-
-    return JsTabulator.CellComponent(setVar=False, varName=None)
+    return JsTabulator.CellComponent(set_var=False, js_code=None)
 
   @property
   def column(self):
@@ -129,8 +129,7 @@ class TabulatorEvents:
     Get a Tabulator column object.
     """
     from epyk.core.js.packages import JsTabulator
-
-    return JsTabulator.ColumnComponent(setVar=False, varName=None)
+    return JsTabulator.ColumnComponent(set_var=False, js_code=None)
 
 
 class DataEvents:
@@ -280,23 +279,33 @@ class DataEvents:
     """
     from epyk.core.js.packages import JsD3
 
-    return JsD3.D3Select(selector="d3.select(this)", setVar=False)
+    return JsD3.D3Select(selector="d3.select(this)", set_var=False)
 
   @property
   def leaflet(self):
+    """
+    Description:
+    ------------
+
+    """
     from epyk.core.js.packages import JsLeaflet
 
-    return JsLeaflet.LEvent(selector="d3.select(this)", setVar=False)
+    return JsLeaflet.LEvent(selector="d3.select(this)", set_var=False)
 
   @property
   def geolocationPosition(self):
+    """
+    Description:
+    ------------
+
+    """
     return GeolocationCoordinates("navPos")
 
 
 class DataFile:
 
-  def __init__(self, varName="value"):
-    self.varName = varName
+  def __init__(self, js_code: str = "value"):
+    self.varName = js_code
 
   @property
   def name(self):
@@ -383,7 +392,7 @@ class DataLoops:
 
     """
     from epyk.core.js.objects import JsNodeDom
-    return JsNodeDom.JsDoms.new(varName="value", setVar=False)
+    return JsNodeDom.JsDoms.new(js_code="value", set_var=False)
 
   @property
   def dom_list(self):
@@ -393,7 +402,7 @@ class DataLoops:
 
     """
     from epyk.core.js.objects import JsNodeDom
-    return JsNodeDom.JsDoms.new(varName="elt", setVar=False)
+    return JsNodeDom.JsDoms.new(js_code="elt", set_var=False)
 
   @property
   def i(self):
@@ -412,7 +421,7 @@ class DataLoops:
 
 class DataPrimitives:
 
-  def list(self, data=None, name=None):
+  def list(self, data: list = None, name: str = None):
     """
     Description:
     -----------
@@ -420,34 +429,34 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsArray.JsArray(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsArray.JsArray(data, js_code=name, set_var=True if name is not None else False)
 
     return JsObjects.JsArray.JsArray.get(name)
 
-  def dict(self, data=None, name=None):
+  def dict(self, data: list = None, name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsObject.JsObject(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsObject.JsObject(data, js_code=name, set_var=True if name is not None else False)
 
     return JsObjects.JsObject.JsObject.get(name)
 
-  def str(self, data=None, name=None):
+  def str(self, data: list = None, name: str = None):
     """
     Description:
     -----------
@@ -455,75 +464,75 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsString.JsString(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsString.JsString(data, js_code=name, set_var=True if name is not None else False)
 
     return JsObjects.JsString.JsString.get(name)
 
-  def float(self, data=None, name=None):
+  def float(self, data: list = None, name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsNumber.JsNumber(data, js_code=name, set_var=True if name is not None else False)
 
     return JsObjects.JsNumber.JsNumber.get(name)
 
-  def int(self, data=None, name=None):
+  def int(self, data: list = None, name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsNumber.JsNumber(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsNumber.JsNumber(data, js_code=name, set_var=True if name is not None else False)
 
     return JsObjects.JsNumber.JsNumber.get(name)
 
-  def date(self, data=None, name=None):
+  def date(self, data: list = None, name: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param data: List. Optional. The Python object used to feed the list.
-    :param name: String. Optional. The variable name used on the JavaScript.
+    :param list data: Optional. The Python object used to feed the list.
+    :param str name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
     if data is not None:
-      return JsObjects.JsDate.JsDate(data, varName=name, setVar=True if name is not None else False)
+      return JsObjects.JsDate.JsDate(data, js_code=name, set_var=True if name is not None else False)
 
     if data is None and name is None:
-      return JsObjects.JsDate.JsDate(data, varName=name, setVar=False)
+      return JsObjects.JsDate.JsDate(data, js_code=name, set_var=False)
 
     return JsObjects.JsDate.JsDate.get(name)
 
 
 class GeolocationCoordinates:
 
-  def __init__(self, varName):
-    self.varName = varName
+  def __init__(self, js_code: str):
+    self.varName = js_code
 
   @property
   def coords(self):
@@ -579,7 +588,8 @@ class GeolocationCoordinates:
     """
     Description:
     ------------
-    Returns a double representing the direction towards which the device is facing. This value, specified in degrees, indicates how far off from heading true north the device is.
+    Returns a double representing the direction towards which the device is facing. This value, specified in degrees,
+    indicates how far off from heading true north the device is.
 
     Related Pages:
 

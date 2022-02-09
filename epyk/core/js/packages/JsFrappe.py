@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
@@ -9,34 +10,38 @@ from epyk.core.js.packages import JsPackage
 class FrappeCharts(JsPackage):
   lib_alias = {'js': "frappe-charts", 'css': 'frappe-charts'}
 
-  def __init__(self, htmlCode=None, config=None, src=None, varName=None, selector=None, setVar=False):
-    self.src = src if src is not None else self.__internal()
+  def __init__(self, html_code=None, config=None, component=None, js_code=None, selector=None, set_var=False,
+               page = None):
+    self.component, self.page = component, page
+    if page is None and component is not None:
+      self.page = component.page
     if selector is None:
-      self._selector = self.new(htmlCode, config, varName).toStr()
+      self._selector = self.new(html_code, config, js_code).toStr()
     else:
       self._selector = selector
-    self.varName, self.setVar = varName or self._selector, setVar
-    self.src.jsImports.add(self.lib_alias['js'])
-    self.src.cssImport.add(self.lib_alias['css'])
+    self.varName, self.setVar = js_code or self._selector, set_var
+    self.component.jsImports.add(self.lib_alias['js'])
+    self.component.cssImport.add(self.lib_alias['css'])
     self._js = []
 
-  def new(self, htmlCode, options, varName):
+  def new(self, html_code, options, js_code):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param htmlCode: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options:
+    :param js_code:
     """
     options = JsUtils.jsConvertData(options, None)
-    if varName is not None:
-      return JsObjects.JsVoid('%s = new frappe.Chart("#%s", %s)' % (varName, htmlCode, options))
+    if js_code is not None:
+      return JsObjects.JsVoid('%s = new frappe.Chart("#%s", %s)' % (js_code, html_code, options))
 
-    return JsObjects.JsVoid('new frappe.Chart("#%s", %s)' % (htmlCode, options))
+    return JsObjects.JsVoid('new frappe.Chart("#%s", %s)' % (html_code, options))
 
-  def addDataPoint(self, label, valueFromEachDataset, position=None):
+  def addDataPoint(self, label, value_from_each_dataset, position=None):
     """
     Description:
     -----------
@@ -49,15 +54,15 @@ class FrappeCharts(JsPackage):
     Attributes:
     ----------
     :param label:
-    :param valueFromEachDataset:
+    :param value_from_each_dataset:
     :param position:
     """
     label = JsUtils.jsConvertData(label, None)
-    valueFromEachDataset = JsUtils.jsConvertData(valueFromEachDataset, None)
+    value_from_each_dataset = JsUtils.jsConvertData(value_from_each_dataset, None)
     if position is None:
-      return JsObjects.JsVoid("%s.addDataPoint(%s, %s)" % (self.varName, label, valueFromEachDataset))
+      return JsObjects.JsVoid("%s.addDataPoint(%s, %s)" % (self.varName, label, value_from_each_dataset))
 
-    return JsObjects.JsVoid("%s.addDataPoint(%s, %s, %s)" % (self.varName, label, valueFromEachDataset, position))
+    return JsObjects.JsVoid("%s.addDataPoint(%s, %s, %s)" % (self.varName, label, value_from_each_dataset, position))
 
   def removeDataPoint(self, n):
     """

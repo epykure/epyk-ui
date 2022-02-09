@@ -26,7 +26,6 @@ from epyk.core.html import Aria
 from epyk.core.html import Component
 from epyk.core.html import KeyCodes
 from epyk.core.html.options import Options
-from epyk.core.py import OrderedSet
 
 
 try:  # For python 3
@@ -64,10 +63,10 @@ def deprecated(comment: str):
   def decorator(func):
     @functools.wraps(func)
     def new_func(*args, **kwargs):
-      logging.warn('#########################################')
-      logging.warn("Call to deprecated function {}.".format(func.__name__))
-      logging.warn("Action => {}.".format(comment))
-      logging.warn('#########################################')
+      logging.warning('#########################################')
+      logging.warning("Call to deprecated function {}.".format(func.__name__))
+      logging.warning("Action => {}.".format(comment))
+      logging.warning('#########################################')
       return func(*args, **kwargs)
 
     return new_func
@@ -323,18 +322,20 @@ class Components(collections.OrderedDict):
     for component in self.values():
       if hasattr(component, "css"):
         component.css(attrs)
+    return self
 
   def add(self, component: primitives.HtmlModel):
     """
     Description:
     -----------
-    Standard way to add a component to the rondered dictionary.
+    Standard way to add a component to the rendered dictionary.
 
     Attributes:
     ----------
-    :param rimitives.HtmlModel component: HTML component.
+    :param primitives.HtmlModel component: HTML component.
     """
     self[component.htmlCode] = component
+    return self
 
 
 class Html(primitives.HtmlModel):
@@ -349,13 +350,14 @@ class Html(primitives.HtmlModel):
   builder_name, _js__builder__, async_builder = None, None, False
   _option_cls = Options
 
-  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None,
+  def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
                css_attrs: Optional[dict] = None):
     """ Create an python HTML object """
     # Child component for this component
     self.components = Components()
-    self.require = Required(report)
+    self.page = page
+    self.require = Required(page)
     for package in self.requirements or []:
       if isinstance(package, tuple):
         self.require.add(package[0], package[1])
@@ -363,8 +365,6 @@ class Html(primitives.HtmlModel):
         self.require.add(package)
 
     self.profile = profile
-    # Should be renamed by page / and component
-    self._report = report
     self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None
     self._dom, self._sub_htmls, self._js, self.helper, self._styleObj, self.__htmlCode = None, [], None, "", None, None
 
@@ -372,8 +372,8 @@ class Html(primitives.HtmlModel):
                           'page_ready': collections.OrderedDict(), 'keys': collections.OrderedDict()}
 
     # to be deleted - because changed should be done only on the component self.require
-    self.jsImports = report.jsImports
-    self.cssImport = report.cssImport
+    self.jsImports = page.jsImports
+    self.cssImport = page.cssImport
 
     self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles should be renamed
 
@@ -509,17 +509,6 @@ class Html(primitives.HtmlModel):
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
-  def page(self) -> primitives.PageModel:
-    """
-    Description:
-    -----------
-    The unique page on which all the components will be attached to.
-
-    :rtype: primitives.PageModel
-    """
-    return self._report
-
-  @property
   def js(self):
     """
     Description:
@@ -562,7 +551,7 @@ class Html(primitives.HtmlModel):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self, report=self.page)
+      self._dom = JsHtml.JsHtml(component=self, page=self.page)
     return self._dom
 
   @property
@@ -1007,7 +996,7 @@ class Html(primitives.HtmlModel):
     return self._browser_data['keys']['keyup']
 
   @property
-  def aria(self):
+  def aria(self) -> Aria.Aria:
     """
     Description:
     -----------
@@ -1129,6 +1118,7 @@ class Html(primitives.HtmlModel):
         self.attr["class"].add(classname)
     if css_attrs is not None:
       self.css(css_attrs)
+    return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
   def tooltip(self, value: Union[str, primitives.JsDataModel], location: str = 'top', options: Optional[dict] = None):
@@ -1264,6 +1254,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         self.page.js.if_(self.dom.classList.is_missing(cls_name), [
           self.dom.classList.add(cls_name)])])
     ])
+    return self
 
   def add_options(self, options: Optional[dict] = None, name: Optional[str] = None, value: Optional[str] = None):
     """
@@ -1344,19 +1335,20 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           self.attr[k] = v
     return self
 
-  def get_attrs(self, withId: bool = True, pyClassNames: List[str] = None):
+  def get_attrs(self, with_id: bool = True, css_class_names: List[str] = None):
     """
     Description:
     -----------
     Return the string line with all the attributes.
 
-    All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the framework
-    and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will not work
+    All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the
+    framework and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will
+    not work
 
     Attributes:
     ----------
-    :param bool withId: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
-    :param List[str] pyClassNames: Optional. The Python class names.
+    :param bool with_id: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
+    :param List[str] css_class_names: Optional. The Python class names.
 
     :return: A string with the dom attributes
     """
@@ -1366,22 +1358,22 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       if styles:
         css_style = 'style="%s"' % styles
     if 'class' in self.attr and len(self.attr['class']) > 0 and class_data:
-      if pyClassNames is not None:
+      if css_class_names is not None:
         # Need to merge in the class attribute some static classes coming from external CSS Styles sheets
         # and the static python classes defined on demand in the header of your report
         # self.page.cssObj.getClsTag(pyClassNames)[:-1] to remove the ' generated in the module automatically
-        css_class = self.page.style.getClsTag(pyClassNames.clsMap).replace('class="', 'class="%s ')
+        css_class = self.page.style.getClsTag(css_class_names.clsMap).replace('class="', 'class="%s ')
         if css_class:
           css_class %= class_data
         else:
           css_class = 'class="%s"' % class_data
       else:
         css_class = 'class="%s"' % class_data
-    elif pyClassNames is not None:
-      py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in pyClassNames['main']]
+    elif css_class_names is not None:
+      py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in css_class_names['main']]
       css_class = 'class="%s"' % " ".join(py_cls_names) if len(py_cls_names) > 0 else ""
 
-    if withId:
+    if with_id:
       self.attr['id'] = self.htmlCode
     html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in self.attr.items() if key not in ('css', 'class')]
     for tag in [css_style, css_class]:
@@ -1575,7 +1567,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[dict, bool]] profile. Optional. Set to true to get the profile for the function on the console.
+    :param Union[dict, bool] profile: Optional. Set to true to get the profile for the function on the console.
     :param source_event: String. Optional. The source target for the event.
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -1686,7 +1678,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return menu
 
   @property
-  def touch(self):
+  def touch(self) -> EventTouch:
     """
     Description:
     -----------
@@ -1797,7 +1789,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
         self._on_ready_js['sortable'] = JsSortable.Sortable(
-          self, varName="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self.page)
+          self, js_code="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self.page)
         dfl_options = {"group": self.htmlCode}
         dfl_options.update(options or {})
         self._sort_options = dfl_options
@@ -1814,7 +1806,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     raise NotImplementedError('subclasses must override __str__()!')
 
   @property
-  def component(self):
+  def component(self) -> Component.Component:
     """
     Description:
     -----------
@@ -1897,7 +1889,7 @@ class Body(Html):
     :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtml(self, report=self.page)
+      self._dom = JsHtml.JsHtml(self, page=self.page)
       self._dom.varName = "document.body"
     return self._dom
 
@@ -1918,6 +1910,7 @@ class Body(Html):
       js_funcs = [js_funcs]
     self.page.js.onReady(
       self.page.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+    return self
 
   def onReady(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
@@ -2055,6 +2048,7 @@ class Body(Html):
       self.style.css.background = start_color
     self.style.css.background_repeat = "no-repeat"
     self.style.css.background_color = self.page.theme.colors[2]
+    return self
 
   def loading(self, status: bool = True, z_index: int = 500):
     """
@@ -2141,11 +2135,12 @@ class Body(Html):
     if getattr(self, '_template', None) is not None:
       self._template._vals = str(self._html_content)
       return '<body %s>%s%s%s</body>' % (
-        self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self.header.html(), self.template.html(),
+        self.get_attrs(
+          css_class_names=self.style.get_classes(), with_id=False), self.header.html(), self.template.html(),
         self.footer.html())
 
     return '<body %s>%s</body>' % (
-      self.get_attrs(pyClassNames=self.style.get_classes(), withId=False), self._html_content)
+      self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self._html_content)
 
 
 class Component(Html):
@@ -2169,10 +2164,10 @@ class Component(Html):
   str_repr = None
   dyn_repr = None
 
-  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None,
+  def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
                css_attrs: Optional[dict] = None):
-    super(Component, self).__init__(report, vals, html_code, options, profile, css_attrs)
+    super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
     self.style.clear_style()   # Clear all default CSS styles.
     if self.css_classes is not None:
       self.add_style(self.css_classes, clear_first=True)
@@ -2235,7 +2230,7 @@ class Component(Html):
 
   def __str__(self):
     values = self.write_values()
-    values["attrs"] = self.get_attrs(pyClassNames=self.style.get_classes())
+    values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
     values["htmlCode"] = self.htmlCode
     if self.dyn_repr is not None:
       str_frgs = [self.dyn_repr.format(**self.write_item(item)) for item in self.items]
@@ -2264,9 +2259,9 @@ class StructComponent(Html):
   css_classes = None
   str_repr = None
 
-  def __init__(self, report: primitives.PageModel, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
+  def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
                profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
-    super(StructComponent, self).__init__(report, vals, html_code, options, profile, css_attrs)
+    super(StructComponent, self).__init__(page, vals, html_code, options, profile, css_attrs)
     if self.css_classes is not None:
       self.add_style(self.css_classes, clear_first=True)
     self.items = {}
@@ -2275,7 +2270,7 @@ class StructComponent(Html):
     """
     Description:
     -----------
-    Add sub-component to the main component.
+    Add subcomponent to the main component.
 
     Attributes:
     ----------
@@ -2302,7 +2297,7 @@ class StructComponent(Html):
 
   def __str__(self):
     values = self.write_values()
-    values["attrs"] = self.get_attrs(pyClassNames=self.style.get_classes())
+    values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
     values["htmlCode"] = self.htmlCode
     if self._js__builder__ is not None:
       self.page.properties.js.add_builders(self.refresh())

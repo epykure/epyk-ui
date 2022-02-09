@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects

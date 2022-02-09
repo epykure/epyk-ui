@@ -169,7 +169,7 @@ class ColumnFilter(Enums):
     """
     return self._set_value()
 
-  def agSetColumnFilter(self, filterName):
+  def agSetColumnFilter(self, filter_name):
     """
     Description:
     -----------
@@ -179,7 +179,7 @@ class ColumnFilter(Enums):
 
       https://www.ag-grid.com/javascript-grid-filter-component/
     """
-    return self._set_value(value=filterName)
+    return self._set_value(value=filter_name)
 
 
 class ColOrder(Enums):
@@ -733,7 +733,7 @@ class DefaultColDef(Options):
 
   @treeData.setter
   def treeData(self, val):
-    if 'ag-grid-community' in self._report.jsImports and self._report.verbose:
+    if 'ag-grid-community' in self.component.jsImports and self.component.verbose:
       logging.warning("treeData not available in the community version")
 
     self._config(val)
@@ -931,8 +931,8 @@ class TableConfig(Options):
     """
     Description:
     -----------
-    If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent to it.
-    This means the total width for all columns will be constant.
+    If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent to
+    it. This means the total width for all columns will be constant.
 
     You can also change the default behaviour for resizing.
     Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when
@@ -949,7 +949,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def columns(self):
+  def columns(self) -> Column:
     """
     Description:
     -----------
@@ -959,7 +959,7 @@ class TableConfig(Options):
     return self._config_sub_data_enum("columnDefs", Column)
 
   @property
-  def defaultColDef(self):
+  def defaultColDef(self) -> DefaultColDef:
     """
     Description:
     -----------
@@ -1368,7 +1368,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def sideBar(self):
+  def sideBar(self) -> TableSideBar:
     """
     Description:
     -----------
@@ -1377,7 +1377,7 @@ class TableConfig(Options):
     """
     return self._config_sub_data("sideBar", TableSideBar)
 
-  def statusBar(self):
+  def statusBar(self) -> TableStatusBar:
     """
     Description:
     -----------

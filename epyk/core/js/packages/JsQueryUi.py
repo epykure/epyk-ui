@@ -1,12 +1,8 @@
-"""
-Wrapper to the Jquery UI package
-
-Related Pages:
-
-		https://api.jqueryui.com/
-"""
 
 import json
+
+from typing import List, Union
+from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
@@ -18,10 +14,6 @@ class JQueryUI(JsPackage):
   lib_alias = {"js": 'jqueryui', 'css': 'jqueryui'}
   lib_set_var = False
 
-  def __init__(self, component, varName=None, selector=None, setVar=True, report=None):
-    super(JQueryUI, self).__init__(src=component, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
-    self._src = component
-
   def labels(self):
     """
     Description:
@@ -31,7 +23,7 @@ class JQueryUI(JsPackage):
     self.fnc("labels()")
     return self
 
-  def cssClip(self, css=None):
+  def cssClip(self, css: Union[List[dict], primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -43,7 +35,7 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param css:
+    :param Union[List[dict], primitives.JsDataModel] css:
     """
     if css is not None:
       self.fnc("cssClip(%s)" % JsUtils.jsConvertData(css, None))
@@ -51,7 +43,7 @@ class JQueryUI(JsPackage):
       self.fnc("cssClip()")
     return self
 
-  def position(self, options=None):
+  def position(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -71,7 +63,7 @@ class JQueryUI(JsPackage):
       self.fnc("position()")
     return self
 
-  def draggable(self, options=None):
+  def draggable(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -84,14 +76,14 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The draggable definition.
+    :param Union[dict, primitives.JsDataModel] options: Optional. The draggable definition.
     """
     if options is not None:
       return self.fnc("draggable(%s)" % JsUtils.jsConvertData(options, None))
 
     return self.fnc("draggable()")
 
-  def droppable(self, options=None):
+  def droppable(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -103,7 +95,7 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The droppable definition.
+    :param Union[dict, primitives.JsDataModel] options: Optional. The droppable definition.
     """
     if options is not None:
       self._js.append("droppable(%s)" % JsUtils.jsConvertData(options, None))
@@ -111,7 +103,7 @@ class JQueryUI(JsPackage):
       self._js.append("droppable()")
     return self
 
-  def sortable(self, options=None):
+  def sortable(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -125,7 +117,7 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The sortable definition.
+    :param Union[dict, primitives.JsDataModel] options: Optional. The sortable definition.
     """
     if options is not None:
       self._js.append("sortable(%s)" % JsUtils.jsConvertData(options, None))
@@ -133,7 +125,7 @@ class JQueryUI(JsPackage):
       self._js.append("sortable()")
     return self
 
-  def resizable(self, options=None):
+  def resizable(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -146,7 +138,7 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The resizable definition.
+    :param Union[dict, primitives.JsDataModel] options: Optional. The resizable definition.
     """
     if options is not None:
       self._js.append("resizable(%s)" % JsUtils.jsConvertData(options, None))
@@ -154,7 +146,7 @@ class JQueryUI(JsPackage):
       self._js.append("resizable()")
     return self
 
-  def selectable(self, options=None):
+  def selectable(self, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -167,7 +159,7 @@ class JQueryUI(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Optional. The selectable definition.
+    :param Union[dict, primitives.JsDataModel] options: Optional. The selectable definition.
     """
     if options is not None:
       self._js.append("selectable(%s)" % JsUtils.jsConvertData(options, None))
@@ -175,7 +167,7 @@ class JQueryUI(JsPackage):
       self._js.append("selectable()")
     return self
 
-  def addClass(self, cls_name, delay, callback):
+  def addClass(self, cls_name, delay, callback, profile=None):
     """
     Description:
     ------------
@@ -190,11 +182,14 @@ class JQueryUI(JsPackage):
     :param cls_name:
     :param delay:
     :param callback:
+    :param profile:
     """
-    self._js.append("addClass('%s', %s, %s)" % (cls_name, delay, ";".join(JsUtils.jsConvertFncs(callback))))
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    self._js.append("addClass(%s, %s, %s)" % (
+      cls_name, delay, JsUtils.jsConvertFncs(callback, toStr=True, profile=profile)))
     return self
 
-  def removeClass(self, cls_name, delay, callback):
+  def removeClass(self, cls_name, delay, callback, profile=None):
     """
     Description:
     ------------
@@ -209,8 +204,11 @@ class JQueryUI(JsPackage):
     :param cls_name:
     :param delay:
     :param callback:
+    :param profile:
     """
-    self._js.append("removeClass('%s', %s, %s)" % (cls_name, delay, ";".join(JsUtils.jsConvertFncs(callback))))
+    cls_name = JsUtils.jsConvertData(cls_name, None)
+    self._js.append(
+      "removeClass(%s, %s, %s)" % (cls_name, delay, JsUtils.jsConvertFncs(callback, toStr=True, profile=profile)))
     return self
 
   def switchClass(self, cls_name, new_cls_name, delay):
@@ -249,7 +247,7 @@ class JQueryUI(JsPackage):
     self._js.append("toggleClass(%s, %s)" % (cls_name, delay))
     return self
 
-  def show(self, selected_effect=None, options=None, delay=None, callback=None):
+  def show(self, selected_effect=None, options=None, delay=None, callback=None, profile=None):
     """
     Description:
     ------------
@@ -271,11 +269,11 @@ class JQueryUI(JsPackage):
     else:
       selected_effect = JsUtils.jsConvertData(selected_effect, None)
       options = JsUtils.jsConvertData(options, None)
-      callback = ";".join(JsUtils.jsConvertFncs(callback))
+      callback = JsUtils.jsConvertFncs(callback, toStr=True, profile=profile)
       self._js.append("show(%s, %s, %s, %s)" % (selected_effect, options, delay, callback))
     return self
 
-  def hide(self, selected_effect=None, options=None, delay=None, callback=None):
+  def hide(self, selected_effect=None, options=None, delay=None, callback=None, profile=None):
     """
     Description:
     ------------
@@ -291,13 +289,14 @@ class JQueryUI(JsPackage):
     :param options:
     :param delay:
     :param callback:
+    :param profile:
     """
     if selected_effect is None:
       self._js.append("hide()")
     else:
       selected_effect = JsUtils.jsConvertData(selected_effect, None)
       options = JsUtils.jsConvertData(options, None)
-      callback = ";".join(JsUtils.jsConvertFncs(callback))
+      callback = JsUtils.jsConvertFncs(callback, toStr=True, profile=profile)
       self._js.append("hide(%s, %s, %s, %s)" % (selected_effect, options, delay, callback))
     return self
 
@@ -356,13 +355,14 @@ class JQueryUiDatePicker(JQueryUI):
 
     """
 
-  def option(self, name, value):
+  def option(self, name: Union[str, primitives.JsDataModel], value):
     """
     Description:
     ------------
 
     """
-    return "$('#%s input').datepicker( 'option', '%s', %s)" % (self.src.htmlCode, name, json.dumps(value))
+    name = JsUtils.jsConvertData(name, None)
+    return "$('#%s input').datepicker( 'option', %s, %s)" % (self.component.htmlCode, name, json.dumps(value))
 
   def refresh(self):
     """
@@ -384,7 +384,7 @@ class Slider(JQueryUI):
 
       https://api.jqueryui.com/slider/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.slider("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.slider("destroy")' % self.component.dom.jquery.varId)
 
   def disable(self):
     """
@@ -396,7 +396,7 @@ class Slider(JQueryUI):
 
       https://api.jqueryui.com/slider/#method-disable
     """
-    return JsObjects.JsObjects.get('%s.slider("disable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.slider("disable")' % self.component.dom.jquery.varId)
 
   def enable(self):
     """
@@ -408,7 +408,7 @@ class Slider(JQueryUI):
 
       https://api.jqueryui.com/slider/#method-enable
     """
-    return JsObjects.JsObjects.get('%s.slider("enable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.slider("enable")' % self.component.dom.jquery.varId)
 
   def instance(self):
     """
@@ -420,9 +420,9 @@ class Slider(JQueryUI):
 
       https://api.jqueryui.com/slider/#method-instance
     """
-    return JsObjects.JsObjects.get('%s.slider("instance")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.slider("instance")' % self.component.dom.jquery.varId)
 
-  def option(self, jsData=None):
+  def option(self, data=None):
     """
     Description:
     ------------
@@ -434,15 +434,15 @@ class Slider(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.slider("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.slider("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.slider("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.slider("option", %s)' % (self.component.dom.jquery.varId, data))
 
-  def value(self, jsData=None):
+  def value(self, data=None):
     """
     Description:
     ------------
@@ -454,15 +454,15 @@ class Slider(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.slider("value")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.slider("value")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.slider("value", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.slider("value", %s)' % (self.component.dom.jquery.varId, data))
 
-  def values(self, index=0, jsData=None):
+  def values(self, index=0, data=None):
     """
     Description:
     ------------
@@ -475,13 +475,13 @@ class Slider(JQueryUI):
     Attributes:
     ----------
     :param index:
-    :param jsData:
+    :param data:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.slider("values", %s)' % (self._src.dom.jquery.varId, index))
+    if data is None:
+      return JsObjects.JsObjects.get('%s.slider("values", %s)' % (self.component.dom.jquery.varId, index))
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.slider("value", %s, %s)' % (self._src.dom.jquery.varId, index, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.slider("value", %s, %s)' % (self.component.dom.jquery.varId, index, data))
 
   def slide(self, value):
     """
@@ -493,12 +493,12 @@ class Slider(JQueryUI):
     :param value:
     """
     value = JsUtils.jsConvertData(value, None)
-    if self._src.is_range:
+    if self.component.is_range:
       return JsObjects.JsObjects.get('%(id)s.slider("values", %(value)s); %(id)s.slider("option", "slide").call(%(id)s, null, {values: %(value)s})' % {
-                                     "id": self._src.dom.jquery.varId, "value": value})
+                                     "id": self.component.dom.jquery.varId, "value": value})
 
     return JsObjects.JsObjects.get('%(id)s.slider("value", %(value)s); %(id)s.slider("option", "slide").call(%(id)s, null, {value: %(value)s})' % {
-      "id": self._src.dom.jquery.varId, "value": value})
+      "id": self.component.dom.jquery.varId, "value": value})
 
   def inRange(self, value):
     """
@@ -509,22 +509,22 @@ class Slider(JQueryUI):
     ----------
     :param value: Number. The value to compare to the selected range.
     """
-    if self._src.options.range:
-      if self._src.options.range == "max":
+    if self.component.options.range:
+      if self.component.options.range == "max":
         return JsObjects.JsObjects.get(
           '''%(compId)s.slider("value") < %(val)s && %(val)s < %(compId)s.slider("option", "max")''' % {
-            "compId": self._src.dom.jquery.varId, "val": value})
-      if self._src.options.range == "min":
+            "compId": self.component.dom.jquery.varId, "val": value})
+      if self.component.options.range == "min":
         return JsObjects.JsObjects.get(
           '''%(compId)s.slider("option", "min") < %(val)s && %(val)s < %(compId)s.slider("value")''' % {
-            "compId": self._src.dom.jquery.varId, "val": value})
+            "compId": self.component.dom.jquery.varId, "val": value})
       return JsObjects.JsObjects.get(
         '''%(compId)s.slider("values")[0] < %(val)s && %(val)s < %(compId)s.slider("values")[1]''' % {
-          "compId": self._src.dom.jquery.varId, "val": value})
+          "compId": self.component.dom.jquery.varId, "val": value})
 
     return JsObjects.JsObjects.get(
       '''%(compId)s.slider("value") == %(val)s''' % {
-        "compId": self._src.dom.jquery.varId, "val": value})
+        "compId": self.component.dom.jquery.varId, "val": value})
 
 
 class ProgressBar(JQueryUI):
@@ -539,7 +539,7 @@ class ProgressBar(JQueryUI):
 
       https://api.jqueryui.com/progressbar/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.progressbar("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.progressbar("destroy")' % self.component.dom.jquery.varId)
 
   def disable(self):
     """
@@ -551,7 +551,7 @@ class ProgressBar(JQueryUI):
 
       https://api.jqueryui.com/progressbar/#method-disable
     """
-    return JsObjects.JsObjects.get('%s.progressbar("disable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.progressbar("disable")' % self.component.dom.jquery.varId)
 
   def enable(self):
     """
@@ -563,21 +563,22 @@ class ProgressBar(JQueryUI):
 
       https://api.jqueryui.com/progressbar/#method-enable
     """
-    return JsObjects.JsObjects.get('%s.progressbar("enable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.progressbar("enable")' % self.component.dom.jquery.varId)
 
   def instance(self):
     """
     Description:
     ------------
-    Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
+    Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is
+    returned.
 
     Related Pages:
 
       https://api.jqueryui.com/progressbar/#method-instance
     """
-    return JsObjects.JsObjects.get('%s.progressbar("instance")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.progressbar("instance")' % self.component.dom.jquery.varId)
 
-  def option(self, jsData=None, jsValue=None):
+  def option(self, data=None, value=None):
     """
     Description:
     ------------
@@ -591,24 +592,25 @@ class ProgressBar(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsValue:
+    :param data:
+    :param value:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.progressbar("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.progressbar("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.progressbar("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.progressbar("option", %s)' % (self.component.dom.jquery.varId, data))
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.progressbar("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.progressbar("option", %s, %s)' % (self.component.dom.jquery.varId, data, value))
 
-  def value(self, jsValue=None):
+  def value(self, value=None):
     """
     Description:
     ------------
-    Retrieves the progressbar's instance object. If the element does not have an associated instance, undefined is returned.
+    Retrieves the progressbar's instance object. If the element does not have an associated instance,
+    undefined is returned.
 
     Related Pages:
 
@@ -616,15 +618,15 @@ class ProgressBar(JQueryUI):
 
     Attributes:
     ----------
-    :param jsValue:
+    :param value:
     """
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.progressbar("value")' % self._src.dom.jquery.varId)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.progressbar("value")' % self.component.dom.jquery.varId)
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.progressbar("value", %s)' % (self._src.dom.jquery.varId, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.progressbar("value", %s)' % (self.component.dom.jquery.varId, value))
 
-  def add(self, jsValue=None):
+  def add(self, value=None):
     """
     Description:
     ------------
@@ -632,25 +634,25 @@ class ProgressBar(JQueryUI):
 
     Attributes:
     ----------
-    :param jsValue: Float | JsObject. The value to be added to the current state.
+    :param value: Float | JsObject. The value to be added to the current state.
     """
-    jsValue = JsUtils.jsConvertData(jsValue, None)
+    value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get('%(varId)s.progressbar("value", %(varId)s.progressbar("value") + %(jsValue)s)' % {
-      "varId": self._src.dom.jquery.varId, "jsValue": jsValue})
+      "varId": self.component.dom.jquery.varId, "jsValue": value})
 
-  def tooltip(self, jsValue=None, options=None):
+  def tooltip(self, value=None, options=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsValue:
+    :param value:
     :param options:
     """
     return JsObjects.JsVoid(''' let options = %(options)s;
 %(varId)s.find('div').attr("title", ""+ (%(varId)s.progressbar("value") / options.max * 100).toFixed(2) +"%% ("+ %(varId)s.progressbar("value") +" / "+ options.max +")")
- ''' % {"varId": self._src.dom.jquery.varId, 'options': self._src.options.config_js(options)})
+ ''' % {"varId": self.component.dom.jquery.varId, 'options': self.component.options.config_js(options)})
 
 
 class Menu(JQueryUI):
@@ -665,7 +667,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-blur
     """
-    return JsObjects.JsObjects.get('%s.menu("blur")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("blur")' % self.component.dom.jquery.varId)
 
   def collapse(self):
     """
@@ -677,7 +679,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-collapse
     """
-    return JsObjects.JsObjects.get('%s.menu("collapse")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("collapse")' % self.component.dom.jquery.varId)
 
   def collapseAll(self):
     """
@@ -689,7 +691,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-collapseAll
     """
-    return JsObjects.JsObjects.get('%s.menu("collapseAll", null, true)' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("collapseAll", null, true)' % self.component.dom.jquery.varId)
 
   def destroy(self):
     """
@@ -701,7 +703,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.menu("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("destroy")' % self.component.dom.jquery.varId)
 
   def disable(self):
     """
@@ -713,7 +715,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-disable
     """
-    return JsObjects.JsObjects.get('%s.menu("disable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("disable")' % self.component.dom.jquery.varId)
 
   def enable(self):
     """
@@ -725,7 +727,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-disable
     """
-    return JsObjects.JsObjects.get('%s.menu("enable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("enable")' % self.component.dom.jquery.varId)
 
   def expand(self):
     """
@@ -737,7 +739,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-expand
     """
-    return JsObjects.JsObjects.get('%s.menu("expand")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("expand")' % self.component.dom.jquery.varId)
 
   def instance(self):
     """
@@ -749,7 +751,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-instance
     """
-    return JsObjects.JsObjects.get('%s.menu("instance")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("instance")' % self.component.dom.jquery.varId)
 
   def isFirstItem(self):
     """
@@ -761,7 +763,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-isFirstItem
     """
-    return JsObjects.JsBoolean.JsBoolean('%s.menu("isFirstItem")' % self._src.dom.jquery.varId)
+    return JsObjects.JsBoolean.JsBoolean('%s.menu("isFirstItem")' % self.component.dom.jquery.varId)
 
   def isLastItem(self):
     """
@@ -773,7 +775,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-isLastItem
     """
-    return JsObjects.JsBoolean.JsBoolean('%s.menu("isLastItem")' % self._src.dom.jquery.varId)
+    return JsObjects.JsBoolean.JsBoolean('%s.menu("isLastItem")' % self.component.dom.jquery.varId)
 
   def next(self):
     """
@@ -785,7 +787,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-next
     """
-    return JsObjects.JsObjects.get('%s.menu("next")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("next")' % self.component.dom.jquery.varId)
 
   def nextPage(self):
     """
@@ -797,9 +799,9 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-nextPage
     """
-    return JsObjects.JsObjects.get('%s.menu("nextPage")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("nextPage")' % self.component.dom.jquery.varId)
 
-  def option(self, jsData=None, jsValue=None):
+  def option(self, data=None, value=None):
     """
     Description:
     ------------
@@ -813,18 +815,18 @@ class Menu(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     :param jsValue:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.menu("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.menu("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.menu("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.menu("option", %s)' % (self.component.dom.jquery.varId, data))
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.menu("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.menu("option", %s, %s)' % (self.component.dom.jquery.varId, data, value))
 
   def previous(self):
     """
@@ -836,7 +838,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-previous
     """
-    return JsObjects.JsObjects.get('%s.menu("previous")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("previous")' % self.component.dom.jquery.varId)
 
   def previousPage(self):
     """
@@ -848,20 +850,21 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-previousPage
     """
-    return JsObjects.JsObjects.get('%s.menu("previousPage")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("previousPage")' % self.component.dom.jquery.varId)
 
   def refresh(self):
     """
     Description:
     ------------
     nitializes sub-menus and menu items that have not already been initialized.
-    New menu items, including sub-menus can be added to the menu or all of the contents of the menu can be replaced and then initialized with the refresh() method.
+    New menu items, including sub-menus can be added to the menu or all of the contents of the menu can be replaced
+    and then initialized with the refresh() method.
 
     Related Pages:
 
       https://api.jqueryui.com/menu/#method-refresh
     """
-    return JsObjects.JsObjects.get('%s.menu("refresh")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("refresh")' % self.component.dom.jquery.varId)
 
   def select(self):
     """
@@ -873,7 +876,7 @@ class Menu(JQueryUI):
 
       https://api.jqueryui.com/menu/#method-select
     """
-    return JsObjects.JsObjects.get('%s.menu("select")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.menu("select")' % self.component.dom.jquery.varId)
 
 
 class Dialog(JQueryUI):
@@ -888,7 +891,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-close
     """
-    return JsObjects.JsObjects.get('%s.dialog("close")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("close")' % self.component.dom.jquery.varId)
 
   def destroy(self):
     """
@@ -900,7 +903,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.dialog("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("destroy")' % self.component.dom.jquery.varId)
 
   def instance(self):
     """
@@ -912,7 +915,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-instance
     """
-    return JsObjects.JsObjects.get('%s.dialog("instance")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("instance")' % self.component.dom.jquery.varId)
 
   def isOpen(self):
     """
@@ -924,7 +927,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-isOpen
     """
-    return JsObjects.JsObjects.get('%s.dialog("isOpen")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("isOpen")' % self.component.dom.jquery.varId)
 
   def moveToTop(self):
     """
@@ -936,7 +939,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-moveToTop
     """
-    return JsObjects.JsObjects.get('%s.dialog("moveToTop")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("moveToTop")' % self.component.dom.jquery.varId)
 
   def open(self):
     """
@@ -948,7 +951,7 @@ class Dialog(JQueryUI):
 
       https://api.jqueryui.com/dialog/#method-open
     """
-    return JsObjects.JsObjects.get('%s.dialog("open")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.dialog("open")' % self.component.dom.jquery.varId)
 
   def add(self):
     """
@@ -963,7 +966,7 @@ class Dialog(JQueryUI):
     return JsObjects.JsVoid('''
 var div = $(document.createElement("div")); div.innerHTML = "wegegre";
 div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
-%s.append(div)''' % self._src.dom.jquery.varId)
+%s.append(div)''' % self.component.dom.jquery.varId)
 
   def dialog(self, event):
     """
@@ -976,9 +979,9 @@ div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
     :param event:
     """
     event = JsUtils.jsConvertData(event, None)
-    return JsObjects.JsVoid("%s.dialog(%s)" % (self._src.dom.jquery.varId, event))
+    return JsObjects.JsVoid("%s.dialog(%s)" % (self.component.dom.jquery.varId, event))
 
-  def option(self, jsData=None, jsValue=None):
+  def option(self, data=None, value=None):
     """
     Description:
     ------------
@@ -993,23 +996,23 @@ div.dialog({modal: false, title: "rrrr", autoOpen: false}); div.dialog("open")
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsValue:
+    :param data:
+    :param value:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.dialog("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.dialog("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.dialog("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.dialog("option", %s)' % (self.component.dom.jquery.varId, data))
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.dialog("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.dialog("option", %s, %s)' % (self.component.dom.jquery.varId, data, value))
 
 
 class AutocompleteFormats:
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     self.component = component
 
   def groups(self):
@@ -1034,7 +1037,7 @@ class Autocomplete(JQueryUI):
     ------------
     Empty the content of the HTML component using the innerHTML JavaScript property.
     """
-    return '%s.val("")' % self._src.dom.jquery.varId
+    return '%s.val("")' % self.component.dom.jquery.varId
 
   def close(self):
     """
@@ -1046,7 +1049,7 @@ class Autocomplete(JQueryUI):
 
       https://api.jqueryui.com/autocomplete/#method-close
     """
-    return JsObjects.JsObjects.get('%s.autocomplete("close")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.autocomplete("close")' % self.component.dom.jquery.varId)
 
   def destroy(self):
     """
@@ -1058,7 +1061,7 @@ class Autocomplete(JQueryUI):
 
       https://api.jqueryui.com/autocomplete/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.autocomplete("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.autocomplete("destroy")' % self.component.dom.jquery.varId)
 
   def disable(self):
     """
@@ -1070,7 +1073,7 @@ class Autocomplete(JQueryUI):
 
       https://api.jqueryui.com/autocomplete/#method-disable
     """
-    return JsObjects.JsObjects.get('%s.autocomplete("disable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.autocomplete("disable")' % self.component.dom.jquery.varId)
 
   def enable(self):
     """
@@ -1082,7 +1085,7 @@ class Autocomplete(JQueryUI):
 
       https://api.jqueryui.com/autocomplete/#method-enable
     """
-    return JsObjects.JsObjects.get('%s.autocomplete("enable")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.autocomplete("enable")' % self.component.dom.jquery.varId)
 
   def instance(self):
     """
@@ -1095,9 +1098,9 @@ class Autocomplete(JQueryUI):
 
       https://api.jqueryui.com/autocomplete/#method-enable
     """
-    return JsObjects.JsObjects.get('%s.autocomplete("instance")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.autocomplete("instance")' % self.component.dom.jquery.varId)
 
-  def option(self, jsData=None, jsValue=None):
+  def option(self, data=None, value=None):
     """
     Description:
     ------------
@@ -1112,20 +1115,20 @@ class Autocomplete(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsValue:
+    :param data:
+    :param value:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.autocomplete("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.autocomplete("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.autocomplete("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.autocomplete("option", %s)' % (self.component.dom.jquery.varId, data))
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.autocomplete("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("option", %s, %s)' % (self.component.dom.jquery.varId, data, value))
 
-  def search(self, jsData=None):
+  def search(self, data=None):
     """
     Description:
     ------------
@@ -1140,20 +1143,20 @@ class Autocomplete(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.autocomplete("search", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("search", %s)' % (self.component.dom.jquery.varId, data))
 
-  def source(self, jsData):
+  def source(self, data):
     """
     Description:
     ------------
 
-    :param jsData:
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.autocomplete("option", "source", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.autocomplete("option", "source", %s)' % (self.component.dom.jquery.varId, data))
 
   def ui_item(self, field):
     """
@@ -1174,7 +1177,7 @@ class Autocomplete(JQueryUI):
     ------------
 
     """
-    return AutocompleteFormats(self._src)
+    return AutocompleteFormats(self.component)
 
   def renderItem(self, callback):
     """
@@ -1188,9 +1191,9 @@ class Autocomplete(JQueryUI):
     :param callback:
 
     """
-    return JsUtils.jsWrap('%s.autocomplete("instance")._renderItem = %s' % (self._src.dom.jquery.varId, callback))
+    return JsUtils.jsWrap('%s.autocomplete("instance")._renderItem = %s' % (self.component.dom.jquery.varId, callback))
 
-  def if_(self, jsRule, jsFncs):
+  def if_(self, rule: str, js_funcs: Union[list, str]):
     """
     Description:
     ------------
@@ -1198,12 +1201,12 @@ class Autocomplete(JQueryUI):
 
     Attributes:
     ----------
-    :param jsRule: String.
-    :param jsFncs: List | String. Javascript functions.
+    :param rule:
+    :param Union[list, str] js_funcs: Javascript functions.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return JsIf.JsIf(jsRule, jsFncs)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf(rule, js_funcs)
 
 
 class Datepicker(JQueryUI):
@@ -1219,7 +1222,7 @@ class Datepicker(JQueryUI):
 
       https://api.jqueryui.com/datepicker/#method-destroy
     """
-    return JsObjects.JsObjects.get('%s.datepicker("destroy")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("destroy")' % self.component.dom.jquery.varId)
 
   def getDate(self):
     """
@@ -1231,7 +1234,7 @@ class Datepicker(JQueryUI):
 
       https://api.jqueryui.com/datepicker/#method-getDate
     """
-    return JsObjects.JsObjects.get('%s.datepicker("getDate")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("getDate")' % self.component.dom.jquery.varId)
 
   def hide(self):
     """
@@ -1243,7 +1246,7 @@ class Datepicker(JQueryUI):
 
       https://api.jqueryui.com/datepicker/#method-hide
     """
-    return JsObjects.JsObjects.get('%s.datepicker("hide")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("hide")' % self.component.dom.jquery.varId)
 
   def isDisabled(self):
     """
@@ -1255,7 +1258,7 @@ class Datepicker(JQueryUI):
 
       https://api.jqueryui.com/datepicker/#method-isDisabled
     """
-    return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("isDisabled")' % self.component.dom.jquery.varId)
 
   def disable(self):
     """
@@ -1264,7 +1267,7 @@ class Datepicker(JQueryUI):
     Disable the datepicker component
 
     """
-    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", true )' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", true )' % self.component.dom.jquery.varId)
 
   def enable(self):
     """
@@ -1272,9 +1275,9 @@ class Datepicker(JQueryUI):
     ------------
     Enable the datepciker component
     """
-    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", false )' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("option", "disabled", false )' % self.component.dom.jquery.varId)
 
-  def option(self, jsData=None, jsValue=None):
+  def option(self, data=None, value=None):
     """
     Description:
     ------------
@@ -1289,18 +1292,18 @@ class Datepicker(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
-    :param jsValue:
+    :param data:
+    :param value:
     """
-    if jsData is None:
-      return JsObjects.JsObjects.get('%s.datepicker("option")' % self._src.dom.jquery.varId)
+    if data is None:
+      return JsObjects.JsObjects.get('%s.datepicker("option")' % self.component.dom.jquery.varId)
 
-    jsData = JsUtils.jsConvertData(jsData, None)
-    if jsValue is None:
-      return JsObjects.JsObjects.get('%s.datepicker("option", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    if value is None:
+      return JsObjects.JsObjects.get('%s.datepicker("option", %s)' % (self.component.dom.jquery.varId, data))
 
-    jsValue = JsUtils.jsConvertData(jsValue, None)
-    return JsObjects.JsObjects.get('%s.datepicker("option", %s, %s)' % (self._src.dom.jquery.varId, jsData, jsValue))
+    value = JsUtils.jsConvertData(value, None)
+    return JsObjects.JsObjects.get('%s.datepicker("option", %s, %s)' % (self.component.dom.jquery.varId, data, value))
 
   def format_dates(self, class_name, dts=None, css=None, tooltip=""):
     """
@@ -1318,11 +1321,12 @@ class Datepicker(JQueryUI):
     """
     dts = dts or []
     if css is not None:
-      self._src._report.body.style.custom_class(css, classname="%s a" % class_name)
+      self.page.body.style.custom_class(css, classname="%s a" % class_name)
     return JsObjects.JsObjects.get('''%(varId)s.datepicker("option", "beforeShowDay", function (date) {
-        var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
-        if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
-      })''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name, "varId": self._src.dom.jquery.varId})
+  var utc = date.getTime() - date.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
+  if(dts.includes(newDate.toISOString().split('T')[0])){return [true, '%(class_name)s', '%(tooltip)s']} else {return [true, '', '']}
+})''' % {"dts": JsUtils.jsConvertData(dts, None), 'tooltip': tooltip, "class_name": class_name,
+         "varId": self.component.dom.jquery.varId})
 
   def refresh(self):
     """
@@ -1334,9 +1338,9 @@ class Datepicker(JQueryUI):
 
       https://api.jqueryui.com/datepicker/#method-refresh
     """
-    return JsObjects.JsObjects.get('%s.datepicker("refresh")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("refresh")' % self.component.dom.jquery.varId)
 
-  def setDate(self, jsData=None,):
+  def setDate(self, data=None):
     """
     Description:
     ------------
@@ -1350,19 +1354,20 @@ class Datepicker(JQueryUI):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
-    return JsObjects.JsObjects.get('%s.datepicker("setDate", %s)' % (self._src.dom.jquery.varId, jsData))
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObjects.get('%s.datepicker("setDate", %s)' % (self.component.dom.jquery.varId, data))
 
   def show(self):
     """
     Description:
     ------------
-    Open the date picker. If the datepicker is attached to an input, the input must be visible for the datepicker to be shown.
+    Open the date picker. If the datepicker is attached to an input, the input must be visible for the datepicker
+    to be shown.
 
     Related Pages:
 
       https://api.jqueryui.com/datepicker/#method-show
     """
-    return JsObjects.JsObjects.get('%s.datepicker("show")' % self._src.dom.jquery.varId)
+    return JsObjects.JsObjects.get('%s.datepicker("show")' % self.component.dom.jquery.varId)

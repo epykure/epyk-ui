@@ -10,7 +10,7 @@ class ChartGeoChoropleth(GraphDC.Chart):
   requirements = ('dc', 'crossfilter')
 
   @property
-  def dom(self):
+  def dom(self) -> JsDc.GeoChoropleth:
     """
     Description:
     -----------
@@ -20,5 +20,5 @@ class ChartGeoChoropleth(GraphDC.Chart):
     :rtype: JsDc.GeoChoropleth
     """
     if self._dom is None:
-      self._dom = JsDc.GeoChoropleth(self._report, varName=self.chartId, parent=self)
+      self._dom = JsDc.GeoChoropleth(self.page, js_code=self.chartId, component=self)
     return self._dom

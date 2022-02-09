@@ -1,24 +1,26 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js import JsUtils
-from epyk.core.css import Defaults
 
 from epyk.core.js.primitives import JsObjects
 
 
 class JsItemsDef:
 
-  def __init__(self, component):
-    self._src = component
+  def __init__(self, component: primitives.HtmlModel):
+    self.component = component
 
   def _item(self, item_def):
     return '''%(item_def)s; htmlObj.appendChild(item)
       ''' % {'item_def': item_def}
 
-  def text(self, report):
+  def text(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -26,7 +28,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -53,7 +55,7 @@ class JsItemsDef:
       item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
-  def tweet(self, report):
+  def tweet(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -61,7 +63,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param primitives.PageModel page: Page object. The internal page object
     """
     item_def = '''
     if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
@@ -107,7 +109,7 @@ class JsItemsDef:
     '''
     return self._item(item_def)
 
-  def icon(self, report):
+  def icon(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -115,10 +117,10 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
-    report.jsImports.add('font-awesome')
-    report.cssImport.add('font-awesome')
+    page.jsImports.add('font-awesome')
+    page.cssImport.add('font-awesome')
     item_def = '''
     var item = document.createElement("DIV"); var icon = document.createElement("I"); 
     if(typeof data.icon !== 'undefined') {data.icon.split(" ").forEach(function(s){icon.classList.add(s)})}
@@ -131,7 +133,7 @@ class JsItemsDef:
     item.appendChild(icon); item.appendChild(span)'''
     return self._item(item_def)
 
-  def check(self, report):
+  def check(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -139,7 +141,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -169,7 +171,7 @@ class JsItemsDef:
     '''
     return self._item(item_def)
 
-  def radio(self, report):
+  def radio(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -177,7 +179,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -200,7 +202,7 @@ class JsItemsDef:
     '''
     return self._item(item_def)
 
-  def badge(self, report):
+  def badge(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -208,7 +210,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -219,10 +221,10 @@ class JsItemsDef:
       badge.style.backgroundColor = 'red'; badge.style.color = 'white'; badge.style.borderRadius = '50%%'; 
       badge.style.padding = '0 3px'; badge.style.marginLeft = '5px'; badge.style.fontSize = '%s'; 
       for(const attr in options.badge){badge.style[attr] = options.badge[attr]};
-      item.appendChild(badge)}''' % report.body.style.globals.font.normal(-2)
+      item.appendChild(badge)}''' % page.body.style.globals.font.normal(-2)
     return self._item(item_def)
 
-  def link(self, report):
+  def link(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -230,7 +232,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("div"); var link = document.createElement("a"); item.style.whiteSpace = "nowrap";
@@ -249,7 +251,7 @@ class JsItemsDef:
       img.style.marginRight = "5px"; img.setAttribute('src', data.image); link.prepend(img)}'''
     return self._item(item_def)
 
-  def button(self, report):
+  def button(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -259,7 +261,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV"); var text = document.createElement("div");
@@ -282,7 +284,7 @@ class JsItemsDef:
     }'''
     return self._item(item_def)
 
-  def box(self, report):
+  def box(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -290,10 +292,10 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object.
+    :param primitives.PageModel page: Page object. The internal page object.
     """
-    report.jsImports.add('font-awesome')
-    report.cssImport.add('font-awesome')
+    page.jsImports.add('font-awesome')
+    page.cssImport.add('font-awesome')
     item_def = '''
     var item = document.createElement("DIV"); item.style.borderRadius = "5px"; item.style.padding = "2px";
     item.setAttribute('data-valid', true);
@@ -316,7 +318,7 @@ class JsItemsDef:
     item.appendChild(icons)'''
     return self._item(item_def)
 
-  def period(self, report):
+  def period(self, page: primitives.PageModel):
     """
     Description:
     ------------
@@ -324,7 +326,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param report: Page object. The internal page object
+    :param primitives.PageModel page: Page object. The internal page object
     """
     item_def = '''
     if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
@@ -365,14 +367,14 @@ class JsItemsDef:
     '''
     return self._item(item_def)
 
-  def custom(self, item_def):
+  def custom(self, item_def: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param item_def:
+    :param str item_def:
     """
     return self._item(item_def)
 
@@ -381,7 +383,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    return JsHtml.ContentFormatters(self._report, '''
+    return JsHtml.ContentFormatters(self.page, '''
       (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
           const item = dom.querySelector('[name=value]');
           if (item != null){
@@ -392,7 +394,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
   @property
   def all(self):
-    return JsHtml.ContentFormatters(self._report, '''
+    return JsHtml.ContentFormatters(self.page, '''
         (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
             const item = dom.querySelector('[name=value]');
             if (item != null){
@@ -416,7 +418,7 @@ class JsItem(JsHtml.JsHtmlRich):
     ------------
     Return a list with all the unselected values.
     """
-    return JsHtml.ContentFormatters(self._report, '''
+    return JsHtml.ContentFormatters(self.page, '''
         (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){   
           const item = dom.querySelector('[name=value]');
           if (item != null){
@@ -466,7 +468,7 @@ class JsItem(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsArray.JsArray.get("")
 
-  def getItemByValue(self, value):
+  def getItemByValue(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -474,7 +476,7 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value: String. The value to find in the list.
+    :param Union[str, primitives.JsDataModel] value: The value to find in the list.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsNodeDom.JsDoms.get('''
@@ -483,7 +485,7 @@ class JsItem(JsHtml.JsHtmlRich):
           if(children[i].querySelector('[name=value]').innerHTML == value){ values = children[i]; break} };
         return values })(%s, %s)''' % (self.varName, value))
 
-  def selectAll(self, with_input_box=False):
+  def selectAll(self, with_input_box: bool = False):
     """
     Description:
     ------------
@@ -491,12 +493,12 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param with_input_box: Boolean. If the items have a dedicated input box for the check.
+    :param bool with_input_box: If the items have a dedicated input box for the check.
     """
-    if self._src.options.items_type == "radio":
-      raise Exception("It is not possible to select all radios from a same group, use check instead")
+    if self.component.options.items_type == "radio":
+      raise ValueError("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src.options.items_type == "check" or with_input_box:
+    if self.component.options.items_type == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach( function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
@@ -509,9 +511,9 @@ class JsItem(JsHtml.JsHtmlRich):
       %s.childNodes.forEach( function(dom, k){ 
         dom.querySelector('[name=value]').classList.add('list_%s_selected'); 
         dom.querySelector('[name=value]').setAttribute("data-valid", true);
-      })''' % (self.varName, self._src.options.items_type))
+      })''' % (self.varName, self.component.options.items_type))
 
-  def unSelectAll(self, with_input_box=False):
+  def unSelectAll(self, with_input_box: bool = False):
     """
     Description:
     ------------
@@ -519,12 +521,12 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param with_input_box: Boolean. If the items have a dedicated input box for the check.
+    :param bool with_input_box: If the items have a dedicated input box for the check.
     """
-    if self._src.options.items_type == "radio":
-      raise Exception("It is not possible to select all radios from a same group, use check instead")
+    if self.component.options.items_type == "radio":
+      raise ValueError("It is not possible to select all radios from a same group, use check instead")
 
-    if self._src.options.items_type == "check" or with_input_box:
+    if self.component.options.items_type == "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach(function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
@@ -537,9 +539,9 @@ class JsItem(JsHtml.JsHtmlRich):
       %s.childNodes.forEach( function(dom, k){  
         dom.querySelector('[name=value]').classList.remove('list_%s_selected');
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
-      })''' % (self.varName, self._src.options.items_type))
+      })''' % (self.varName, self.component.options.items_type))
 
-  def add(self, value, css_attrs=None, css_cls=None, before=False, options=None):
+  def add(self, value, css_attrs: dict = None, css_cls=None, before: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -548,8 +550,10 @@ class JsItem(JsHtml.JsHtmlRich):
     Attributes:
     ----------
     :param value: String | Dictionary.
-    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component.
+    :param dict css_attrs: All the CSS attributes to be added to the LI component.
     :param css_cls: String. The CSS class to be added to the LI component.
+    :param bool before:
+    :param dict options:
     """
     if isinstance(value, dict):
       js_values = []
@@ -581,11 +585,11 @@ class JsItem(JsHtml.JsHtmlRich):
         li.lastChild.style.display = 'inline-block'; li.appendChild(close);
         const cls = %(cls)s;
         if (cls != null){li.classList.add(cls)}
-      } ''' % {'comp': self.varName, 'options': self._src.options.config_js(options), 'value': value,
+      } ''' % {'comp': self.varName, 'options': self.component.options.config_js(options), 'value': value,
                'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
-               'shape': "%s%s" % (self._src.options.prefix, self._src.options.items_type)})
+               'shape': "%s%s" % (self.component.options.prefix, self.component.options.items_type)})
 
-  def tags(self, values, css_attrs=None, css_cls=None):
+  def tags(self, values: list, css_attrs: dict = None, css_cls=None):
     """
     Description:
     ------------
@@ -593,8 +597,8 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param values: List. The tags to be added to the current item.
-    :param css_attrs: Dictionary. All the CSS attributes to be added to the LI component.
+    :param list values: The tags to be added to the current item.
+    :param dict css_attrs: All the CSS attributes to be added to the LI component.
     :param css_cls: String. The CSS class to be added to the LI component.
     """
     return JsObjects.JsVoid('''
@@ -617,7 +621,8 @@ class JsItem(JsHtml.JsHtmlRich):
       })}''' % {'comp': self.varName, 'css': JsUtils.jsConvertData(css_attrs, None),
                 'cls': JsUtils.jsConvertData(css_cls, None), 'values': JsUtils.jsConvertData(values, None)})
 
-  def contextMenu(self, menu, jsFncs=None, menuJsFncs=None, profile=False):
+  def contextMenu(self, menu, js_funcs: Union[list, str] = None, menu_funcs: Union[list, str] = None,
+                  profile: Optional[Union[bool, dict]] = False):
     """
     Description:
     ------------
@@ -625,32 +630,31 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param menu:
-    :param jsFncs: List. The Javascript functions.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] menu_funcs:
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
     if not hasattr(menu, 'source'):
-      menu = self._src._report.ui.menus.contextual(menu)
+      menu = self.component.page.ui.menus.contextual(menu)
     for i, item in enumerate(menu):
-      menuFncs = ['''
+      menu_funcs = ['''
         var data = {"action": event.srcElement.innerText};
         if(window.context_menu_source.getAttribute("name")){
           data["source"] = window.context_menu_source.innerHTML} 
         else {data["source"] = window.context_menu_source.querySelector('[name=value]').innerHTML} 
         ''']
-      if menuJsFncs is not None:
-        if not isinstance(menuJsFncs[i], list):
-          menuJsFncs[i] = [menuJsFncs[i]]
-        menuFncs.extend(menuJsFncs[i])
-      menuFncs.append(menu.dom.hide())
-      item.click(menuFncs)
+      if menu_funcs is not None:
+        if not isinstance(menu_funcs[i], list):
+          menu_funcs[i] = [menu_funcs[i]]
+        menu_funcs.extend(menu_funcs[i])
+      menu_funcs.append(menu.dom.hide())
+      item.click(menu_funcs)
     self.context_menu = menu
     menu.source = self
-    new_js_fncs = (jsFncs or []) + [self._report.js.objects.mouseEvent.stopPropagation(),
-                                    self.context_menu.dom.css(
-            {"display": 'block', 'left': self._report.js.objects.mouseEvent.clientX + "'px'",
-             'top': self._report.js.objects.mouseEvent.clientY + "'px'"}),
-          self._report.js.objects.mouseEvent.preventDefault()]
+    new_js_fncs = (js_funcs or []) + [self.page.js.objects.mouseEvent.stopPropagation(), self.context_menu.dom.css(
+            {"display": 'block', 'left': self.page.js.objects.mouseEvent.clientX + "'px'",
+             'top': self.page.js.objects.mouseEvent.clientY + "'px'"}),
+          self.page.js.objects.mouseEvent.preventDefault()]
     return JsObjects.JsVoid('''
       %s.lastChild.addEventListener("contextmenu", function(event){
         window.context_menu_source = this; %s});
@@ -665,7 +669,7 @@ class JsItem(JsHtml.JsHtmlRich):
     return JsObjects.JsVoid(
       "while(%(comp)s.firstChild){%(comp)s.removeChild(%(comp)s.firstChild)}" % {'comp': self.varName})
 
-  def select_item(self, value):
+  def select_item(self, value: Union[str, primitives.JsDataModel]):
     """
     Description:
     ------------
@@ -673,14 +677,14 @@ class JsItem(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param value: String or Js Data. The valeu of the item to be selected.
+    :param Union[str, primitives.JsDataModel] value: The value of the item to be selected.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid('''
       %(varName)s.childNodes.forEach( function(dom, k){ 
         var value = dom.querySelector('[name=value]').innerHTML;
         if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
-      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self._src.options.items_type})
+      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self.component.options.items_type})
 
 
 class Tags(JsHtml.JsHtmlRich):
@@ -692,7 +696,7 @@ class Tags(JsHtml.JsHtmlRich):
     -----------
     Returns the list of data available on the filters panel.
     """
-    return JsHtml.ContentFormatters(self._report, '''
+    return JsHtml.ContentFormatters(self.page, '''
       (function(dom){var content = {}; 
         dom.childNodes.forEach(function(rec){
           var label = rec.getAttribute('data-category');
@@ -702,7 +706,7 @@ class Tags(JsHtml.JsHtmlRich):
         return content})(%s)
       ''' % self.querySelector("div[name=panel]"))
 
-  def is_duplicated(self, text, category=None):
+  def is_duplicated(self, text: str, category: str = None):
     """
     Description:
     ------------
@@ -710,8 +714,8 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param text: String. The item text.
-    :param category: String. The item category.
+    :param str text: The item text.
+    :param str category: The item category.
     """
     return JsObjects.JsObjects.get(''' 
       (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
@@ -719,7 +723,7 @@ class Tags(JsHtml.JsHtmlRich):
             if(children[child].getAttribute('data-category') == %(category)s){ index = count; break; }
         }; count++; }; return index})(%(panel)s)''' % {"tezt": text, "category": category, "panel": self.querySelector("div[name=panel]")})
 
-  def values(self, category=None):
+  def values(self, category: Union[str, primitives.JsDataModel] = None):
     if category is None:
       return JsObjects.JsArray.JsArray.get("(function(dom){var content = []; dom.childNodes.forEach(function(rec){content.push(rec.querySelector('span[name=chip_value]').textContent)}); return content})(%s)" % self.querySelector("div[name=panel]"))
 
@@ -756,7 +760,8 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return self.querySelector("div[name=panel]").toggle()
 
-  def add(self, text, category=None, name=None, fixed=False, no_duplicate=True):
+  def add(self, text: Union[str, primitives.JsDataModel], category: Union[str, primitives.JsDataModel] = None,
+          name: str = None, fixed: bool = False, no_duplicate: bool = True):
     """
     Description:
     ------------
@@ -765,22 +770,22 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param text: String. The value to be added on the filter panel.
-    :param category:
-    :param name:
-    :param fixed:
-    :param no_duplicate:
+    :param Union[str, primitives.JsDataModel] text: The value to be added on the filter panel.
+    :param Union[str, primitives.JsDataModel] category:
+    :param str name:
+    :param bool fixed:
+    :param bool no_duplicate:
     """
     text = JsUtils.jsConvertData(text, None)
     fixed = JsUtils.jsConvertData(fixed, None)
     if category is None:
-      category = name or self._src._jsStyles['category']
+      category = name or self.component._jsStyles['category']
     name = name or category
     category = JsUtils.jsConvertData(category, None)
     name = JsUtils.jsConvertData(name, None)
     # Convert the option to a javascript object
     # TODO move this in a centralised place
-    options, js_options = self._src._jsStyles, []
+    options, js_options = self.component._jsStyles, []
     for k, v in options.items():
       if isinstance(v, dict):
         row = ["'%s': %s" % (s_k, JsUtils.jsConvertData(s_v, None)) for s_k, s_v in v.items()]
@@ -794,7 +799,9 @@ class Tags(JsHtml.JsHtmlRich):
     if no_duplicate:
       return JsObjects.JsObjects.get('''if ((%(duplicated)s == -1) && (%(text)s != '')){ 
         chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s})  }
-      ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category), 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text, 'options': ",".join(js_options)})
+      ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category),
+             'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
+             'options': ",".join(js_options)})
 
     return JsObjects.JsObjects.get('''var itemLabel = %(text)s;
         if(Array.isArray(itemLabel)){
@@ -802,14 +809,14 @@ class Tags(JsHtml.JsHtmlRich):
             chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: item, disabled: false, fixed: %(fixed)s}, {%(options)s})})}
         else {chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: itemLabel, disabled: false, fixed: %(fixed)s}, {%(options)s})}
         ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
-             'options': ",".join(js_options), "maxHeight": self._src._jsStyles["max_height"]})
+               'options': ",".join(js_options), "maxHeight": self.component._jsStyles["max_height"]})
 
   @property
   def input(self):
     """
     Description:
     ------------
-    Clear the content of the fitlers panel.
+    Clear the content of the filters panel.
     """
     return JsObjects.JsObjects.get("%s.value" % self.querySelector("input"))
 
@@ -821,7 +828,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return self.querySelector("div[name=panel]").empty()
 
-  def remove(self, text, category=None):
+  def remove(self, text: Union[str, primitives.JsDataModel], category: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -829,11 +836,11 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param text: String. The test of the items to be removed.
-    :param category: String. The test of the items to be removed.
+    :param Union[str, primitives.JsDataModel] text: The test of the items to be removed.
+    :param Union[str, primitives.JsDataModel] category: The test of the items to be removed.
     """
     if category is None:
-      category = self._src._jsStyles['category']
+      category = self.component._jsStyles['category']
     category = JsUtils.jsConvertData(category, None)
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObjects.get('''var itemPos = %(duplicated)s; if (itemPos >= 0){ %(panel)s.childNodes[itemPos].remove()}
@@ -847,7 +854,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     return self.values().length
 
-  def categoryes(self):
+  def categories(self):
     """
     Description:
     ------------

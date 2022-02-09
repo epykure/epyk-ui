@@ -9,7 +9,7 @@ class ChartGeoD3(GraphD3.Script):
   _option_cls = OptChartD3.ChartGeo
 
   @property
-  def options(self):
+  def options(self) -> OptChartD3.ChartGeo:
     """
     Description:
     -----------
@@ -18,13 +18,15 @@ class ChartGeoD3(GraphD3.Script):
 
     Python can pass some options to the JavaScript layer.
 
+    Related Pages:
+
       https://github.com/markmarkoh/datamaps
 
     :rtype: OptChartD3.ChartGeo
     """
     return super().options
 
-  def loader(self, str_frg):
+  def loader(self, frg: str):
     """
     Description:
     ------------
@@ -32,9 +34,9 @@ class ChartGeoD3(GraphD3.Script):
 
     Attributes:
     ----------
-    :param str_frg: String. The javascript fragments.
+    :param str frg: The javascript fragments.
     """
-    self.builder_name = "D3GeoBuilder%s" % self.page.py.hash(str_frg)
+    self.builder_name = "D3GeoBuilder%s" % self.page.py.hash(frg)
     self._js__builder__ = '''
 var paletteScale = d3.scale.linear()
    .domain([minValue,maxValue])
@@ -42,4 +44,4 @@ var paletteScale = d3.scale.linear()
 
 if (!htmlObj.select("svg").empty()){htmlObj.select("svg").remove()}; 
 var bubble_map = new Datamap()  %s
-''' % str_frg
+''' % frg

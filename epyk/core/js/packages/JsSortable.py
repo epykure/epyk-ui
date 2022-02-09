@@ -10,12 +10,13 @@ class Sortable(JsPackage):
   lib_alias = {"js": 'sortablejs'}
   lib_set_var = True
 
-  def __init__(self, src=None, varName=None, selector=None, setVar=True, parent=None):
-    super(Sortable, self).__init__(src=src, varName=varName, selector=selector, data=None, setVar=setVar, parent=parent)
-    self.__options = OptSortable.OptionsSortable(src)
+  def __init__(self, component=None, js_code=None, selector=None, set_var=True, parent=None):
+    super(Sortable, self).__init__(
+      component=component, js_code=js_code, selector=selector, data=None, set_var=set_var, parent=parent)
+    self.__options = OptSortable.OptionsSortable(component)
 
   @property
-  def options(self):
+  def options(self) -> OptSortable.OptionsSortable:
     """
     Description:
     ------------
@@ -29,7 +30,7 @@ class Sortable(JsPackage):
     """
     return self.__options
 
-  def create(self, htmlElement, options=None):
+  def create(self, htmlElement, options: dict = None):
     """
     Description:
     ------------
@@ -42,7 +43,7 @@ class Sortable(JsPackage):
     Attributes:
     ----------
     :param dom:
-    :param options: Optional. Dictionary with the sortable options
+    :param dict options: Optional. Dictionary with the sortable options
     """
     self.__options.update(options)
     return self
@@ -102,5 +103,5 @@ class Sortable(JsPackage):
 
   def toStr(self):
     if self.setVar:
-      self._selector = "Sortable.create(%s, %s)" % (self._selector, JsUtils.jsConvertData(self.__options, None))
+      self._selector = "Sortable.create(%s, %s)" % (self._selector, JsUtils.jsConvertData(self.options, None))
     return super(Sortable, self).toStr()

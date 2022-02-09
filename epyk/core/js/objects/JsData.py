@@ -29,7 +29,7 @@ class DataLoop:
   index : The index item
   arr   : The full array (only available in case of arrays, map, filter, every  )
   """
-  val, index, arr = JsObject.JsObject("value"), JsNumber.JsNumber("index", isPyData=False), JsArray.JsArray("arr")
+  val, index, arr = JsObject.JsObject("value"), JsNumber.JsNumber("index", is_py_data=False), JsArray.JsArray("arr")
 
 
 class DataReduce:
@@ -41,8 +41,8 @@ class DataReduce:
   val   :
   index :
   """
-  rVal, val = JsObject.JsObject("r"), JsNumber.JsNumber("o", isPyData=False)
-  index = JsNumber.JsNumber("i", isPyData=False)
+  rVal, val = JsObject.JsObject("r"), JsNumber.JsNumber("o", is_py_data=False)
+  index = JsNumber.JsNumber("i", is_py_data=False)
 
 
 class DataSort:
@@ -60,7 +60,7 @@ class DataEach:
   index : index
   data  : element
   """
-  index, data = JsNumber.JsNumber("index", isPyData=False), JsObject.JsObject("data", isPyData=False)
+  index, data = JsNumber.JsNumber("index", is_py_data=False), JsObject.JsObject("data", is_py_data=False)
 
 
 class DataAll:
@@ -72,13 +72,13 @@ class DataAll:
   index : index
   data  : elt
   """
-  index, element = JsNumber.JsNumber("index", isPyData=False), JsNodeDom.JsDoms.get(varName="elt")
+  index, element = JsNumber.JsNumber("index", is_py_data=False), JsNodeDom.JsDoms.get(js_code="elt")
 
 
 class ContainerData:
 
-  def __init__(self, report: primitives.PageModel, schema):
-    self.page, self._schema = report, schema
+  def __init__(self, page: primitives.PageModel, schema: dict = None):
+    self.page, self._schema = page, schema
 
   @property
   def fnc(self):
@@ -110,17 +110,12 @@ class ContainerData:
 
 class RawData(primitives.JsDataModel):
 
-  def __init__(self, report: primitives.PageModel, records=None, profile: bool = False):
-    self.page, self._data_id = report, id(records)
-    if "data" not in self.page._props:
-      self.page._props["data"] = {"sources": {}, "schema": {}}
-    self.page._props["data"]["sources"][self._data_id] = records
-    self.page._props["data"]["schema"][self._data_id] = {'fncs': [], "profile": profile}
-    self._data = self.page._props["data"]["sources"][self._data_id]
-    self._schema = self.page._props["data"]["schema"][self._data_id]
+  def __init__(self, page: primitives.PageModel, records=None, profile: bool = False):
+    self.page = page
+    self._data_id = self.page.properties.data.add(records, [])
 
   @classmethod
-  def get(cls, report: primitives.PageModel, varName: str):
+  def get(cls, page: primitives.PageModel, js_code: str):
     """
     Description:
     -----------
@@ -128,12 +123,12 @@ class RawData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.PageModel report: The main page object.
-    :param str varName: The JavaScript variable name.
+    :param primitives.PageModel page: The main page object.
+    :param str js_code: The JavaScript variable name.
 
     :return: A internal data object
     """
-    return RawData(report, None)
+    return RawData(page, None)
 
   def setId(self, jq_id: str = None):
     """
@@ -150,7 +145,7 @@ class RawData(primitives.JsDataModel):
     self.jqId = jq_id if jq_id is not None else self._jqId
     return self
 
-  def attach(self, html_obj: primitives.HtmlModel, profile: Optional[Union[bool, dict]] = False):
+  def attach(self, component: primitives.HtmlModel, profile: Optional[Union[bool, dict]] = False):
     """
     Description:
     -----------
@@ -161,12 +156,12 @@ class RawData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel html_obj:
+    :param primitives.HtmlModel component:
     :param Optional[Union[bool, dict]] profile: Optional.
     """
-    self._data["schema"][self._data_id].setdefault('containers', {})[html_obj.htmlCode] = {
+    self.page.properties.data.get_schema_containers(self._data_id)[component.htmlCode] = {
       'fncs': [], 'outs': None, "profile": profile}
-    return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][html_obj.htmlCode])
+    return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][component.htmlCode])
 
   def toTsv(self, col_names: list = None, profile: Optional[Union[bool, dict]] = False):
     """
@@ -175,7 +170,7 @@ class RawData(primitives.JsDataModel):
 
     :return: A String with the Javascript function to be used
     """
-    col_names = col_names or list(self._schema['keys'] | self._schema['values'])
+    col_names = col_names or self.page.properties.data.schema.columns
     js_funcs = self.page._props.setdefault('js', {}).setdefault('functions', {})
     if "ToTsv" in js_funcs:
       js_funcs["ToTsv"] = {'content': '''var result = []; var tmp = []; var row = [];
@@ -240,7 +235,7 @@ class Datamap(primitives.JsDataModel):
       for k, v in attrs.items():
         self.attr(k, v)
 
-  def add(self, component: primitives.HtmlModel, htmlCode: str = None):
+  def add(self, component: primitives.HtmlModel, html_code: str = None):
     """
     Description:
     -----------
@@ -250,20 +245,22 @@ class Datamap(primitives.JsDataModel):
     Attributes:
     ----------
     :param primitives.HtmlModel component: The HTML component.
-    :param str htmlCode: Optional. The Html code.
+    :param str html_code: Optional. The Html code.
     """
-    self._data.append((htmlCode or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     return self
 
   def attr(self, k: Union[str, primitives.JsDataModel], v: Any):
     """
     Description:
     -----------
+    Add an key, value to the Datamap object.
+    Keys and value might be JavaScript objects.
 
     Attributes:
     ----------
-    :param k:
-    :param v:
+    :param Union[str, primitives.JsDataModel] k: The key attribute to be added to the object.
+    :param Any v: The value associated to the key.
     """
     self._data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     return self
@@ -272,10 +269,11 @@ class Datamap(primitives.JsDataModel):
     """
     Description:
     -----------
+    Add multiple attributes to the DataMap object.
 
     Attributes:
     ----------
-    :param data:
+    :param dict data: All the attributes to attach
     """
     for k, v in data.items():
       self.attr(k, v)
@@ -299,44 +297,46 @@ class Datamap(primitives.JsDataModel):
 class FormData(primitives.JsDataModel):
   alias = None
 
-  def new(self, varName: str, varType: str = "let"):
+  def new(self, js_code: str, var_type: str = "let"):
     """
     Description:
     ------------
+    Define a JavaScript variable.
 
     Attributes:
     ----------
-    :param varName:
-    :param varType:
+    :param str js_code: The JavaScript variable name.
+    :param str var_type: The JavaScript variable type (let, const, var...)
     """
-    self.alias = varName
-    return "%s %s = new FormData()" % (varType, varName)
+    self.alias = js_code
+    return "%s %s = new FormData()" % (var_type, js_code)
 
-  def get(self, varName: str):
+  def get(self, js_code: str):
     """
     Description:
     ------------
+    Get a JavaScript variable.
 
     Attributes:
     ----------
-    :param varName:
+    :param str js_code: The JavaScript variable name.
     """
-    self.alias = varName
+    self.alias = js_code
     return self
 
-  def append(self, name: str, value: Any):
+  def append(self, name: Union[str, primitives.JsDataModel], value: Any):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name:
-    :param value:
+    :param Union[str, primitives.JsDataModel] name:
+    :param Any value:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
-  def add(self, component: primitives.HtmlModel, htmlCode: str = None):
+  def add(self, component: primitives.HtmlModel, html_code: str = None):
     """
     Description:
     ------------
@@ -346,10 +346,10 @@ class FormData(primitives.JsDataModel):
     Attributes:
     ----------
     :param primitives.HtmlModel component: The HTML component.
-    :param str htmlCode: Optional. The Html code.
+    :param str html_code: Optional. The Html code.
     """
     return "%s.append(%s, %s)" % (
-      self.alias, JsUtils.jsConvertData(htmlCode or component.htmlCode, None),
+      self.alias, JsUtils.jsConvertData(html_code or component.htmlCode, None),
       JsUtils.jsConvertData(component.dom.content, None))
 
   def update(self, attrs: Union[Datamap, dict]):
@@ -376,8 +376,8 @@ class FormData(primitives.JsDataModel):
 
 class JsData:
 
-  def __init__(self, src):
-    self._src = src
+  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel = None):
+    self.page, self.component = page, component
 
   def loop(self):
     return DataLoop()
@@ -395,7 +395,7 @@ class JsData:
   def all(self):
     return DataAll()
 
-  def crossfilter(self, data=None, var_name: str = None, crossDimension=None):
+  def crossfilter(self, data=None, js_code: str = None, cross_dimension=None):
     """
     Description:
     -----------
@@ -411,23 +411,33 @@ class JsData:
     Attributes:
     ----------
     :param data:
+    :param js_code:
+    :param cross_dimension:
     """
     from epyk.core.js.packages.JsCrossFilter import CrossFilter
 
     if data is None:
-      data = "%s.top(Infinity)" % crossDimension.toStr()
+      data = "%s.top(Infinity)" % cross_dimension.toStr()
 
-    if var_name is None:
-      return CrossFilter(self._src, varName=var_name, data=data, setVar=False)
+    if js_code is None:
+      return CrossFilter(page=self.page, data=data, set_var=False)
 
-    return CrossFilter(self._src, varName=JsUtils.getJsValid(var_name), data=data)
+    return CrossFilter(page=self.page, js_code=JsUtils.getJsValid(js_code), data=data)
 
   @property
   def formdata(self):
     """
     Description:
     -----------
+    Create a JavaScript Formdata object.
 
+    The FormData interface provides a way to easily construct a set of key/value pairs representing form fields and
+    their values, which can then be easily sent using the XMLHttpRequest.send() method.
+    It uses the same format a form would use if the encoding type were set to "multipart/form-data".
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/FormData
     """
     return FormData()
 
@@ -435,11 +445,12 @@ class JsData:
     """
     Description:
     -----------
-
+    Create a bespoke data object dedicated to be converted to Json and passed to the JavaScript layer.
+    This is an internal structure to link the HTML component and various object to the JavaScript definition.
     """
     return Datamap(components, attrs)
 
-  def dataset(self, data: Any, var_name: str = None, options: Union[dict, primitives.JsDataModel] = None):
+  def dataset(self, data: Any, js_code: str = None, options: Union[dict, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -453,11 +464,11 @@ class JsData:
 
     Attributes:
     ----------
-    :param data:
-    :param var_name:
-    :param options:
+    :param Any data: The data to be passed to the JavaScript side.
+    :param str js_code: The variable reference to this object on the JavaScript side.
+    :param dict options: The options to be added to this object.
     """
-    vis_obj = VisDataSet(self._src, data=data, varName=JsUtils.getJsValid(var_name))
+    vis_obj = VisDataSet(self.page, data=data, js_code=JsUtils.getJsValid(js_code))
     if options is not None:
       vis_obj.setOptions(options)
     return vis_obj
@@ -482,7 +493,7 @@ class JsData:
     :param options:
     :param var_name:
     """
-    vis_obj = VisDataView(self._src, data=dataset.varId, varName=JsUtils.getJsValid(var_name))
+    vis_obj = VisDataView(self.page, data=dataset.varId, js_code=JsUtils.getJsValid(var_name))
     if options is not None:
       vis_obj.setOptions(options)
     return vis_obj
@@ -496,7 +507,7 @@ class JsData:
     ----------
     :param data:
     """
-    return RawData(self._src, data)
+    return RawData(self.page, data)
 
   @property
   def null(self):
@@ -505,22 +516,22 @@ class JsData:
     -----------
     Javascript null reference
     """
-    return JsObject.JsObject("null", isPyData=False)
+    return JsObject.JsObject("null", is_py_data=False)
 
 
 class JsDataTransfer:
 
-  def __init__(self, varName: str):
-    self.varId = varName
+  def __init__(self, js_code: str):
+    self.varId = js_code
 
   @property
   def text(self):
     """
     Description:
     -----------
-
+    Get text data from a datatransfer object.
     """
-    return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
+    return JsString.JsString("%s.getData('text')" % self.varId, is_py_data=False)
 
   @property
   def files(self):
@@ -576,7 +587,7 @@ class JsDataTransfer:
     flag = JsUtils.jsConvertData(flag, None)
     return JsFncs.JsFunction("%s.effectAllowed = %s" % (self.varId, flag))
 
-  def clearData(self, format: Union[str, primitives.JsDataModel] = None):
+  def clearData(self, data_type: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -589,11 +600,10 @@ class JsDataTransfer:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/clearData
     """
-    if format is None:
+    if data_type is None:
       return JsFncs.JsFunction("%s.clearData()" % self.varId)
 
-    format = JsUtils.jsConvertData(format, None)
-    return JsFncs.JsFunction("%s.clearData(%s)" % (self.varId, format))
+    return JsFncs.JsFunction("%s.clearData(%s)" % (self.varId, JsUtils.jsConvertData(data_type, None)))
 
   def setDragImage(self):
     """
@@ -602,34 +612,39 @@ class JsDataTransfer:
 
     """
 
-  def setData(self, data: Any, format: Union[str, primitives.JsDataModel] = 'text'):
+  def setData(self, data: Any, data_type: Union[str, primitives.JsDataModel] = 'text'):
     """
     Description:
     -----------
 
-    :param data:
-    :param format:
+    Attributes:
+    ----------
+    :param Any data:
+    :param Union[str, primitives.JsDataModel] data_type:
     """
-    format = JsUtils.jsConvertData(format, None)
+    data_type = JsUtils.jsConvertData(data_type, None)
     data = JsUtils.jsConvertData(data, None)
-    return JsFncs.JsFunction("%s.setData(%s, %s)" % (self.varId, format, data))
+    return JsFncs.JsFunction("%s.setData(%s, %s)" % (self.varId, data_type, data))
 
-  def getData(self, format: str = "text"):
+  def getData(self, data_type: Union[str, primitives.JsDataModel] = "text"):
     """
     Description:
     -----------
 
-    :param format:
+    Attributes:
+    ----------
+    :param data_type:
     """
-    return JsString.JsString("%s.getData(%s)" % (self.varId, format), isPyData=False)
+    data_type = JsUtils.jsConvertData(data_type, None)
+    return JsString.JsString("%s.getData(%s)" % (self.varId, data_type), is_py_data=False)
 
 
 class JsClipboardData:
 
-  def __init__(self, varName: str):
-    self.varId = varName
+  def __init__(self, js_code: str):
+    self.varId = js_code
 
-  def src(self, name: str):
+  def src(self, js_code: str):
     """
     Description:
     ------------
@@ -638,9 +653,9 @@ class JsClipboardData:
     
     Attributes:
     ----------
-    :param name: String. Change the event source
+    :param js_code: String. Change the event source
     """
-    self.varId = "%s.clipboardData" % name
+    self.varId = "%s.clipboardData" % js_code
     return self
 
   @property
@@ -655,7 +670,7 @@ class JsClipboardData:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
     """
-    return JsString.JsString("%s.getData('text')" % self.varId, isPyData=False)
+    return JsString.JsString("%s.getData('text')" % self.varId, is_py_data=False)
 
   @property
   def plain(self):
@@ -669,7 +684,7 @@ class JsClipboardData:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
     """
-    return JsString.JsString("%s.getData('text/plain')" % self.varId, isPyData=False)
+    return JsString.JsString("%s.getData('text/plain')" % self.varId, is_py_data=False)
 
   @property
   def uri(self):
@@ -683,9 +698,9 @@ class JsClipboardData:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
     """
-    return JsString.JsString("%s.getData('text/uri-list')" % self.varId, isPyData=False)
+    return JsString.JsString("%s.getData('text/uri-list')" % self.varId, is_py_data=False)
 
-  def getData(self, format: str):
+  def getData(self, data_type: str):
     """
     Description:
     ------------
@@ -700,6 +715,7 @@ class JsClipboardData:
 
     Attributes:
     ----------
-    :param format: The data format
+    :param str data_type: The data format
     """
-    return JsString.JsString("%s.getData('%s')" % (self.varId, format), isPyData=False)
+    data_type = JsUtils.jsConvertData(data_type, None)
+    return JsString.JsString("%s.getData(%s)" % (self.varId, data_type), is_py_data=False)

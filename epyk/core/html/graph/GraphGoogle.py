@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChartGoogle
@@ -12,15 +12,15 @@ class Chart(Html.Html):
   requirements = ('google-charts', )
   _option_cls = OptChartGoogle.OptionGoogle
 
-  def __init__(self,  report, data, width, height, html_code, options, profile):
+  def __init__(self,  page: primitives.PageModel, data, width, height, html_code, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, data, html_code=html_code, profile=profile, options=options,
+    super(Chart, self).__init__(page, data, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._d3, self._chart, self._datasets, self._options, self._data_attrs, self._attrs = None, None, [], None, {}, {}
     self.style.css.margin_top = 10
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartGoogle.OptionsChartSharedGoogle:
     """
     Description:
     -----------
@@ -35,7 +35,7 @@ class Chart(Html.Html):
     return OptChartGoogle.OptionsChartSharedGoogle(self)
 
   @property
-  def options(self):
+  def options(self) -> OptChartGoogle.OptionGoogle:
     """
     Description:
     -----------
@@ -91,16 +91,17 @@ class Chart(Html.Html):
              'data': JsUtils.jsConvertData(data, None), 'type': self.options.type}
 
   def colors(self, colors):
-    pass
+    raise NotImplementedError()
 
-  def labels(self, values):
+  def labels(self, values: list):
     """
     Description:
     -----------
+    Set the chart labels.
 
     Attributes:
     ----------
-    :param values:
+    :param list values: The label values.
     """
     self._vals = {"x": [], "datasets": [], "series": []}
     for v in values:
@@ -126,7 +127,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class ChartLine(Chart):

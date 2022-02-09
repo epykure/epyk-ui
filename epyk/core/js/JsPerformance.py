@@ -23,8 +23,8 @@ from epyk.core.js.primitives import JsArray
 
 
 class JsPerformance:
-  def __init__(self, src=None):
-    self.__src = src
+  def __init__(self, src: primitives.PageModel = None):
+    self.page = src
     self.__marks = set([])
     self.__count = 0
 
@@ -150,9 +150,9 @@ class JsPerformance:
 
     :return: An array of PerformanceEntry objects
     """
-    return JsArray.JsArray("window.performance.getEntries()", isPyData=False)
+    return JsArray.JsArray("window.performance.getEntries()", is_py_data=False)
 
-  def getEntriesByName(self, name: Union[primitives.JsDataModel, str], type: Optional[str] = None):
+  def getEntriesByName(self, name: Union[primitives.JsDataModel, str], entry_type: Optional[str] = None):
     """
     Description:
     ------------
@@ -171,7 +171,7 @@ class JsPerformance:
     Attributes:
     ----------
     :param Union[primitives.JsDataModel, str] name: The name of the entry to retrieve.
-    :param Optional[str] type: Optional. The type of entry to retrieve such as "mark".
+    :param Optional[str] entry_type: Optional. The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified name and type
     """
@@ -179,12 +179,12 @@ class JsPerformance:
       raise ValueError("Mark %s not defined in the performances" % name)
 
     name = JsUtils.jsConvertData(name, None)
-    if type is not None:
-      return JsArray.JsArray("window.performance.getEntriesByName(%s, %s)" % (name, type), isPyData=False)
+    if entry_type is not None:
+      return JsArray.JsArray("window.performance.getEntriesByName(%s, %s)" % (name, entry_type), is_py_data=False)
 
-    return JsArray.JsArray("window.performance.getEntriesByName(%s)" % name, isPyData=False)
+    return JsArray.JsArray("window.performance.getEntriesByName(%s)" % name, is_py_data=False)
 
-  def getEntriesByType(self, type: str):
+  def getEntriesByType(self, entry_type: str):
     """
     Description:
     ------------
@@ -202,11 +202,11 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param str type: The type of entry to retrieve such as "mark".
+    :param str entry_type: The type of entry to retrieve such as "mark".
 
     :return: A list of PerformanceEntry objects that have the specified type.
     """
-    return JsArray.JsArray("window.performance.getEntriesByType('%s')" % type, isPyData=False)
+    return JsArray.JsArray("window.performance.getEntriesByType('%s')" % entry_type, is_py_data=False)
 
   def mark(self, name: Union[primitives.JsDataModel, str]):
     """
@@ -234,8 +234,8 @@ class JsPerformance:
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunction("performance.mark(%s)" % name)
 
-  def measure(self, name: Union[primitives.JsDataModel, str], startMark: Optional[str] = None,
-              endMark: Optional[str] = None):
+  def measure(self, name: Union[primitives.JsDataModel, str], start_mark: Optional[str] = None,
+              end_mark: Optional[str] = None):
     """
     Description:
     ------------
@@ -252,23 +252,23 @@ class JsPerformance:
     Attributes:
     ----------
     :param str name: A DOMString representing the name of the measure.
-    :param Optional[str] startMark: Optional. A DOMString representing the name of the measure's starting mark.
-    :param Optional[str] endMark: Optional, A DOMString representing the name of the measure's ending mark.
+    :param Optional[str] start_mark: Optional. A DOMString representing the name of the measure's starting mark.
+    :param Optional[str] end_mark: Optional, A DOMString representing the name of the measure's ending mark.
 
     :return: Void, The String for the Javascript side
     """
     name = JsUtils.jsConvertData(name, None)
-    if startMark is not None:
-      if startMark not in self.__marks:
-        raise ValueError("Mark %s not defined in the performances" % startMark)
+    if start_mark is not None:
+      if start_mark not in self.__marks:
+        raise ValueError("Mark %s not defined in the performances" % start_mark)
 
-      if endMark is not None:
-        if startMark not in self.__marks:
-          raise ValueError("Mark %s not defined in the performances" % startMark)
+      if end_mark is not None:
+        if start_mark not in self.__marks:
+          raise ValueError("Mark %s not defined in the performances" % start_mark)
 
-        return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, startMark, endMark))
+        return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, start_mark, end_mark))
       else:
-        return JsFncs.JsFunction("performance.measure(%s, '%s')" % (name, startMark))
+        return JsFncs.JsFunction("performance.measure(%s, '%s')" % (name, end_mark))
 
     return JsFncs.JsFunction("performance.measure(%s)" % name)
 
@@ -289,9 +289,9 @@ class JsPerformance:
 
     :return: A Javascript Number
     """
-    return JsNumber.JsNumber("performance.now()", isPyData=False)
+    return JsNumber.JsNumber("performance.now()", is_py_data=False)
 
-  def setResourceTimingBufferSize(self, maxSize: int):
+  def setResourceTimingBufferSize(self, max_size: int):
     """
     Description:
     ------------
@@ -308,11 +308,11 @@ class JsPerformance:
 
     Attributes:
     ----------
-    :param int maxSize: The buffer meximum size.
+    :param int max_size: The buffer maximum size.
 
     :return: Void, the String for the Javascript side.
     """
-    return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % maxSize)
+    return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % max_size)
 
   def toJSON(self):
     """
@@ -331,5 +331,5 @@ class JsPerformance:
 
     :return: A JSON object that is the serialization of the Performance object.
     """
-    return JsObject.JsObject("performance.toJSON()", isPyData=False)
+    return JsObject.JsObject("performance.toJSON()", is_py_data=False)
 

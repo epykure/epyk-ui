@@ -72,7 +72,7 @@ def fromVersion(data: dict):
   return decorator
 
 
-def untilVersion(data: str, newFeature: str):
+def untilVersion(data: dict, new_feature: str):
   """
   Description:
   ------------
@@ -88,8 +88,8 @@ def untilVersion(data: str, newFeature: str):
 
   Attributes:
   ----------
-  :param str data: The maximum version number of a package to use this function.
-  :param str newFeature: The new function name.
+  :param dict data: The maximum version number for a function by packages.
+  :param str new_feature: The new function name.
 
   :return: The decorated function.
   """
@@ -100,7 +100,9 @@ def untilVersion(data: str, newFeature: str):
         if k in Imports.JS_IMPORTS:
           for mod in Imports.JS_IMPORTS[k]['modules']:
             if mod.get('version', Imports.JS_IMPORTS[k]['version']) > v:
-              raise ValueError("Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (func.__name__, k, v, mod['version'], newFeature))
+              raise ValueError(
+                "Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (
+                  func.__name__, k, v, mod['version'], new_feature))
 
       return func(*args, **kwargs)
     return decorated
@@ -123,7 +125,7 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
 
   Attributes:
   ----------
-  :param js_data: The Python Javascript data.
+  :param Union[str, primitives.JsDataModel, float, dict, list] js_data: The Python Javascript data.
   :param Optional[Union[list, str]] js_funcs: Optional. The conversion function (not used).
   :param bool depth: Optional. Set to true of it is a nested object.
   """
@@ -158,7 +160,7 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
   return js_data
 
 
-def jsConvert(jsData: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData: bool, jsFnc: Union[list, str]):
+def jsConvert(data: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData: bool, js_funcs: Union[list, str]):
   """
   Description:
   ------------
@@ -166,30 +168,30 @@ def jsConvert(jsData: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyDa
 
   Attributes:
   ----------
-  :param jsData:
+  :param data:
   :param jsDataKey:
   :param bool isPyData:
-  :param Union[list, str] jsFnc:
+  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
   """
   if isPyData:
-    if hasattr(jsData, 'toStr'):
-      return jsData.toStr()
+    if hasattr(data, 'toStr'):
+      return data.toStr()
 
     else:
       try:
-        return json.dumps(jsData)
+        return json.dumps(data)
 
       except Exception as err:
-        if isinstance(jsData, range):
-          return json.dumps(list(jsData))
+        if isinstance(data, range):
+          return json.dumps(list(data))
 
         raise
 
   if jsDataKey is not None:
-    jsData = "%s[%s]" % (jsData, jsConvertData(jsDataKey, None))
-  if jsFnc is not None:
-    jsData = "%s(%s)" % (jsFnc, jsData)
-  return jsData
+    data = "%s[%s]" % (data, jsConvertData(jsDataKey, None))
+  if js_funcs is not None:
+    data = "%s(%s)" % (js_funcs, data)
+  return data
 
 
 def jsWrap(data: Any):
@@ -248,8 +250,8 @@ def getJsValid(value: str, fail: bool = True):
   return clean_name
 
 
-def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str], isPyData: bool = False, jsFncVal=None,
-                  toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
+def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str], is_py_data: bool = False,
+                  jsFncVal=None, toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
   """
   Description:
   ------------
@@ -258,7 +260,7 @@ def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str]
   Attributes:
   ----------
   :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: The PyJs functions.
-  :param bool isPyData: Optional. A flag to force the Python conversion using json.
+  :param bool is_py_data: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
   :param bool toStr: Optional. A flag to specify if the result should be aggregated.
   :param Optional[Union[bool, dict]] profile. Optional.
@@ -279,7 +281,7 @@ def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str]
         str_func = str_func.replace("trans_val", jsFncVal)
       cnv_funcs.append(str_func)
     else:
-      if isPyData:
+      if is_py_data:
         str_val = json.dumps(f)
         if jsFncVal is not None:
           str_val = str_val.replace("trans_val", jsFncVal)
@@ -343,7 +345,7 @@ def isNotDefined(varName: str):
 class JsFile:
 
   def __init__(self, script_name: Optional[str] = None, path: Optional[str] = None):
-    self.scriptName, self.path = script_name, path
+    self.script_name, self.path = script_name, path
     self.file_path = os.path.join(path, "js") # all the files will be put in a common directory
     if not os.path.exists(self.file_path):
       os.mkdir(self.file_path)
@@ -371,16 +373,16 @@ class JsFile:
     self.__data.extend(jsConvertFncs(js_funcs))
     return self
 
-  def writeReport(self, page):
+  def writeReport(self, page: primitives.PageModel):
     """
     Description:
     ------------
     Write the Javascript content of a report to a structure .js file.
-    This could help on the investigation and can be directly used in Codepen for testing
+    This could help on the investigation and can be directly used in Codepen for testing.
 
     Attributes:
     ----------
-    :param page: The report object
+    :param primitives.PageModel page: The report object
     """
     props = page._src._props if hasattr(page, '_src') else page._props
     for data_id, data in props.get("data", {}).get('sources', {}).items():
@@ -399,14 +401,14 @@ class JsFile:
     for b in props.get('js', {}).get("builders", []):
       self.__data.append(b)
 
-    keyboardShortcuts = props.get('js', {}).get('keyboard', {})
-    if keyboardShortcuts:
+    keyboard_shortcuts = props.get('js', {}).get('keyboard', {})
+    if keyboard_shortcuts:
       self.__data.append("document.addEventListener('keydown', function(e){var code = e.keyCode || e.which")
-      for k, v in keyboardShortcuts.items():
+      for k, v in keyboard_shortcuts.items():
         self.__data.append("if(%s){%s}" % (k, v))
       self.__data.append("})")
 
-  def codepen(self, page, cssObj=None, target: str = '_self'):
+  def codepen(self, js_base: Any, css_obj: primitives.CssClsModel = None, target: str = '_self'):
     """
     Description:
     ------------
@@ -418,31 +420,33 @@ class JsFile:
 
     Attributes:
     ----------
-    :param page: The report object.
-    :param cssObj: The internal CSS object from the page.
+    :param Any js_base: A Js or out Browser object.
+    :param primitives.CssClsModel css_obj: The internal CSS object from the page.
     :param str target: A string flag to specify the target page in the browser.
     """
     import webbrowser
 
-    if hasattr(page, '_to_html_obj'):
-      results = page._to_html_obj(content_only=True)
-      js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
+    if hasattr(js_base, '_to_html_obj'):
+      results = js_base._to_html_obj(content_only=True)
+      js_external = re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>',
+                               results['jsImports'])
       result = {"js": results["jsFrgs"], "js_external": ";".join(js_external)}
     else:
-      self.writeReport(page)
+      self.writeReport(js_base)
       import_obj = Imports.ImportManager()
       import_obj.online = True
-      css_external = import_obj.cssURLs(import_obj.cssResolve(page._src.cssImport))
-      js_external = import_obj.jsURLs(import_obj.jsResolve(page._src.jsImports))
-      result = {"js": ";".join(self.__data), "js_external": ";".join(js_external), "css_external": ";".join(css_external)}
-    if cssObj is not None:
-      result["css"] = cssObj.toCss()
-    data = page.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
-    outFile = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
-    outFile.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
-    webbrowser.open(outFile.name)
+      css_external = import_obj.cssURLs(import_obj.cssResolve(js_base.page.cssImport))
+      js_external = import_obj.jsURLs(import_obj.jsResolve(js_base.page.jsImports))
+      result = {"js": ";".join(self.__data), "js_external": ";".join(js_external),
+                "css_external": ";".join(css_external)}
+    if css_obj is not None:
+      result["css"] = str(css_obj)
+    data = js_base.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
+    out_file = open(os.path.join(self.file_path, "CodePenJsLauncher.html"), "w")
+    out_file.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
+    webbrowser.open(out_file.name)
 
-  def close(self, jsObj=None):
+  def close(self, js_obj=None):
     """
     Description:
     ------------
@@ -450,31 +454,32 @@ class JsFile:
 
     Attributes:
     ----------
-    :param jsObj: The internal JsObject
+    :param js_obj: The internal JsObject
     """
-    src_obj = jsObj._src if hasattr(jsObj, '_src') else jsObj
-    outFile = open(os.path.join(self.file_path, "%s.js" % self.scriptName), "w")
+    src_obj = js_obj.page if hasattr(js_obj, 'page') else js_obj
+    out_file = open(os.path.join(self.file_path, "%s.js" % self.script_name), "w")
     js_external = ""
-    if jsObj is not None:
-      outFile.write("//Javascript Prototype extensions \n\n")
+    if js_obj is not None:
+      out_file.write("//Javascript Prototype extensions \n\n")
       for fnc, details in src_obj._props.get('js', {}).get('prototypes', {}).items():
-        outFile.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
-      outFile.write("\n\n//Javascript Global functions \n\n")
+        out_file.write("%s = function(%s){%s};" % (fnc, ",".join(details.get('pmts', [])), details["content"]))
+      out_file.write("\n\n//Javascript Global functions \n\n")
       for fnc, details in src_obj._props.get('js', {}).get('functions', {}).items():
-        outFile.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
+        out_file.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
       import_obj = Imports.ImportManager()
       import_obj.online = True
       js_external = import_obj.jsResolve(src_obj.jsImports)
-    outFile.write("\n\n")
-    outFile.write("//Javascript Data\n\n")
+    out_file.write("\n\n")
+    out_file.write("//Javascript Data\n\n")
     for data_id, data in src_obj._props.get("data", {}).get('sources', {}).items():
-      outFile.write("var data_%s = %s" % (data_id, json.dumps(data)))
-    outFile.write("\n\n")
-    outFile.write("//Javascript functions\n\n")
+      out_file.write("var data_%s = %s" % (data_id, json.dumps(data)))
+    out_file.write("\n\n")
+    out_file.write("//Javascript functions\n\n")
     if len(src_obj._props.get('js', {}).get('onReady', [])) > 0:
-      outFile.write("%s;" % jsConvertFncs(src_obj._props.get('js', {}).get('onReady', []), toStr=True))
-    outFile.write(";".join(self.__data))
-    outFile.close()
-    with open(r"%s\Launche_%s.html" % (self.path, self.scriptName), "w") as f:
-      f.write('<html><head></head><body></body>%s<script src="js/%s.js"></script></html>' % (js_external, self.scriptName))
-    return r"%s\Launche_%s.html" % (self.path, self.scriptName)
+      out_file.write("%s;" % jsConvertFncs(src_obj._props.get('js', {}).get('onReady', []), toStr=True))
+    out_file.write(";".join(self.__data))
+    out_file.close()
+    with open(r"%s\Launche_%s.html" % (self.path, self.script_name), "w") as f:
+      f.write('<html><head></head><body></body>%s<script src="js/%s.js"></script></html>' % (
+        js_external, self.script_name))
+    return r"%s\Launche_%s.html" % (self.path, self.script_name)

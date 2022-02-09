@@ -8,7 +8,8 @@ class ColReorder(Options):
     """
     Description:
     -----------
-    ColReorder provides the option for end users to reorder columns in a DataTable by click and drag, or for yourself, the developer using DataTable, through the API.
+    ColReorder provides the option for end users to reorder columns in a DataTable by click and drag, or for yourself,
+    the developer using DataTable, through the API.
 
     Related Pages:
 
@@ -22,7 +23,8 @@ class ColReorder(Options):
     """
     Description:
     -----------
-    It can be useful to disable ColReorder's user input controls at certain times, depending on the state of your application. This option provides that ability when the table is initially created, while the colReorder.enable() and colReorder.disable() methods provide the option to enabling the user interaction after the table has been created.
+    It can be useful to disable ColReorder's user input controls at certain times, depending on the state of your
+    application. This option provides that ability when the table is initially created, while the colReorder.enable() and colReorder.disable() methods provide the option to enabling the user interaction after the table has been created.
 
     Related Pages:
 
@@ -39,7 +41,9 @@ class ColReorder(Options):
     """
     Description:
     -----------
-    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns (for example locking an index, select or action column to the start of a table). This option provides that ability, locking columns counting from the left (colReorder.fixedColumnsRight provides the option to count from the right).
+    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
+    (for example locking an index, select or action column to the start of a table). This option provides that ability,
+    locking columns counting from the left (colReorder.fixedColumnsRight provides the option to count from the right).
 
     Related Pages:
 
@@ -56,7 +60,9 @@ class ColReorder(Options):
     """
     Description:
     -----------
-    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns (for example locking an index, select or action column to the start of a table). This option provides that ability, locking columns counting from the right (colReorder.fixedColumnsLeft provides the option to count from the left).
+    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
+    (for example locking an index, select or action column to the start of a table). This option provides that ability,
+    locking columns counting from the right (colReorder.fixedColumnsLeft provides the option to count from the left).
 
     Related Pages:
 
@@ -73,7 +79,9 @@ class ColReorder(Options):
     """
     Description:
     -----------
-    This option provides the option to define a default order for the columns in a table. Typically you will wish to have the columns in the order defined in the HTML, or from state saving (stateSave), but if required, this option can be used to define an initial default order.
+    This option provides the option to define a default order for the columns in a table. Typically you will wish to
+    have the columns in the order defined in the HTML, or from state saving (stateSave), but if required, this option
+    can be used to define an initial default order.
 
     Related Pages:
 

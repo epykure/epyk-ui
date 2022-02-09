@@ -19,27 +19,27 @@ class Stars(JsHtml.JsHtmlRich):
         self.htmlCode, self.varName))
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.dataset.level" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.dataset.level" % self.varName)
 
 
 class Slides(JsHtml.JsHtmlRich):
 
   @property
-  def content(self):
+  def content(self) -> JsHtml.ContentFormatters:
     """
     Description:
     ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component.
     """
-    return JsHtml.ContentFormatters(self._report, "%s.getAttribute('data-current_slide')" % self.varName)
+    return JsHtml.ContentFormatters(self.page, "%s.getAttribute('data-current_slide')" % self.varName)
 
-  def goTo(self, number):
+  def goTo(self, number: int):
     """
     Description:
     ------------
@@ -48,8 +48,8 @@ class Slides(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param number: Integer.
+    :param int number:
     """
     return JsObjects.JsObjects.get('''%s.setAttribute('data-current_slide', Math.min(%s, %s)-2);
-      %s ''' % (self.varName, number, len(self._src.val), self._src.next.dom.events.trigger('click')))
+      %s ''' % (self.varName, number, len(self.component.val), self.component.next.dom.events.trigger('click')))
 

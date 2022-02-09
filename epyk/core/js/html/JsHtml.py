@@ -23,8 +23,8 @@ from epyk.core.js.packages import packageImport
 
 class FmtNumber:
 
-  def __init__(self, report: primitives.PageModel, selector: str, value):
-    self._report, self._val = report, value
+  def __init__(self, page: primitives.PageModel, selector: str, value):
+    self.page, self._val = page, value
     self.selector = selector
 
   def toFixed(self, value: Optional[int] = None):
@@ -80,8 +80,8 @@ class FmtNumber:
 
 class Formatters:
 
-  def __init__(self, report: primitives.PageModel, selector: str):
-    self._report = report
+  def __init__(self, page: primitives.PageModel, selector: str):
+    self.page = page
     self.selector = selector
 
   @property
@@ -95,7 +95,7 @@ class Formatters:
 
       https://www.w3schools.com/jsref/jsref_obj_number.asp
     """
-    return FmtNumber(self._report, self.selector, "parseFloat(%s)" % self.selector)
+    return FmtNumber(self.page, self.selector, "parseFloat(%s)" % self.selector)
 
   @packageImport("accounting")
   def toNumber(self, digit: int = 0, thousand_sep: List[Union[str, primitives.JsDataModel]] = "."):
@@ -144,8 +144,8 @@ class Formatters:
 
 class ContentFormatters:
 
-  def __init__(self, report: primitives.PageModel, selector: str):
-    self._report = report
+  def __init__(self, page: primitives.PageModel, selector: str):
+    self.page = page
     self.selector = selector
 
   def __ge__(self, obj):
@@ -271,7 +271,7 @@ class ContentFormatters:
     ------------
     Standard conversion to string.
     """
-    return JsObjects.JsString.JsString("String(%s)" % self.selector, isPyData=False)
+    return JsObjects.JsString.JsString("String(%s)" % self.selector, is_py_data=False)
 
   @property
   def date(self):
@@ -298,11 +298,11 @@ class ContentFormatters:
 class JsHtml(JsNodeDom.JsDoms):
   display_value = "inline-block"
 
-  def __init__(self, htmlObj, varName: Optional[str] = None, setVar: bool = True, isPyData: bool = True, report=None):
-    self.htmlCode = varName if varName is not None else htmlObj.htmlCode
+  def __init__(self, component: primitives.HtmlModel, js_code: Optional[str] = None, set_var: bool = True,
+               is_py_data: bool = True, page: primitives.PageModel = None):
+    self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
-    self._src, self._report = htmlObj, report
-    self.component, self.page = htmlObj, report
+    self.component, self.page = component, page
     self._js = []
     self._jquery, self._jquery_ui, self._d3 = None, None, None
 
@@ -318,35 +318,35 @@ class JsHtml(JsNodeDom.JsDoms):
         self.htmlCode, self.content.toStr()))
 
   @property
-  def by_name(self):
+  def by_name(self) -> JsNodeDom.JsDomsList:
     """
     Description:
     -----------
 
     :rtype: JsNodeDom.JsDomsList
     """
-    if self._src.attr.get('name') is not None:
+    if self.component.attr.get('name') is not None:
       return JsNodeDom.JsDomsList(
-        None, "document.getElementsByName('%s')" % self._src.attr.get('name'), report=self._report)
+        None, "document.getElementsByName('%s')" % self.component.attr.get('name'), page=self.page)
 
     return self
 
   @property
-  def isInViewPort(self):
+  def isInViewPort(self) -> JsBoolean.JsBoolean:
     """
     Description:
     -----------
-    Check if the component is in the visible part of the page (the viewpport).
+    Check if the component is in the visible part of the page (the viewport).
 
     :rtype: JsObject.JsObject
 
     :return: A Javascript boolean
     """
-    bool = JsBoolean.JsBoolean(
-      "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", varName="visibleFlag", setVar=True, isPyData=False)
-    bool._js.insert(0, self._report.js.viewHeight.setVar('viewHeight'))
-    bool._js.insert(0, self.getBoundingClientRect().setVar("rect"))
-    return JsFncs.JsAnonymous(bool.r).return_("visibleFlag").call()
+    flag = JsBoolean.JsBoolean(
+      "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", js_code="visibleFlag", set_var=True, is_py_data=False)
+    flag._js.insert(0, self.page.js.viewHeight.setVar('viewHeight'))
+    flag._js.insert(0, self.getBoundingClientRect().setVar("rect"))
+    return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
   def onViewPort(self, js_funcs: Union[list, str]):
     """
@@ -358,7 +358,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param Union[list, str] js_funcs: The Javascript events.
     """
-    return self._src.js.if_(self.isInViewPort, js_funcs)
+    return self.page.js.if_(self.isInViewPort, js_funcs)
 
   def copyToClipboard(self, include_html: bool = False):
     """
@@ -376,16 +376,16 @@ class JsHtml(JsNodeDom.JsDoms):
     return self.page.js.clipboard(self.innerText())
 
   @property
-  def content(self):
+  def content(self) -> ContentFormatters:
     """
     Description:
     -----------
 
     """
-    if self._src.attr.get('type') == "number":
-      return ContentFormatters(self._report, "parseFloat(%s.value)" % self.varName)
+    if self.component.attr.get('type') == "number":
+      return ContentFormatters(self.page, "parseFloat(%s.value)" % self.varName)
 
-    return ContentFormatters(self._report, "%s.value" % self.varName)
+    return ContentFormatters(self.page, "%s.value" % self.varName)
 
   def empty(self):
     """
@@ -396,7 +396,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return '%s.value = ""' % self.varName
 
   @property
-  def events(self):
+  def events(self) -> JsNodeDom.JsDomEvents:
     """
     Description:
     -----------
@@ -404,10 +404,10 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :rtype: JsNodeDom.JsDomEvents
     """
-    return JsNodeDom.JsDomEvents(self._src)
+    return JsNodeDom.JsDomEvents(self.component)
 
   @property
-  def jquery(self):
+  def jquery(self) -> JsQuery.JQuery:
     """
     Description:
     -----------
@@ -417,11 +417,11 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(
-        src=self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
+        component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
     return self._jquery
 
   @property
-  def d3(self):
+  def d3(self) -> JsD3.D3Select:
     """
     Description:
     -----------
@@ -430,11 +430,12 @@ class JsHtml(JsNodeDom.JsDoms):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(src=self._src, selector="d3.select('#%s')" % self._src.htmlCode)
+      self._d3 = JsD3.D3Select(component=self.component, page=self.page,
+                               selector="d3.select('#%s')" % self.component.htmlCode)
     return self._d3
 
   @property
-  def jquery_ui(self):
+  def jquery_ui(self) ->  JsQueryUi.JQueryUI:
     """
     Description:
     -----------
@@ -444,7 +445,8 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(
-        self._src, selector=JsQuery.decorate_var("#%s" % self._src.htmlCode), setVar=False)
+        component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False,
+        page=self.page)
     return self._jquery_ui
 
   @property
@@ -454,7 +456,7 @@ class JsHtml(JsNodeDom.JsDoms):
     -----------
     Interface to the main Javascript Classes and Primitives.
     """
-    return JsObjects.JsObjects(self)
+    return JsObjects.JsObjects(page=self.page, component=self.component)
 
   @property
   def crossfilter(self):
@@ -470,13 +472,13 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsCrossFilter.CrossFilter
 
   @property
-  def format(self):
+  def format(self) -> Formatters:
     """
     Description:
     ------------
     Specific formatters for the HTML components.
     """
-    return Formatters(self._report, self.content.toStr())
+    return Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
     """
@@ -503,7 +505,7 @@ class JsHtml(JsNodeDom.JsDoms):
         split_css = k.split("-")
         k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
-    return ";".join(styles)
+    return JsUtils.jsConvertFncs(styles, toStr=True)
 
   def registerFunction(self, fnc_name: str, js_funcs: Union[list, str], pmts: Optional[list] = None,
                        profile: Optional[Union[dict, bool]] = None):
@@ -524,9 +526,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     :return: The JsObject
     """
-    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    self._src._props.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
-      'content': js_funcs, 'pmt': pmts}
+    self.page.properties.js.add_function(fnc_name, js_funcs, pmts)
     return self
 
   def hide(self):
@@ -565,7 +565,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param Optional[str] inline: Optional. Set the CSS display attribute to inline-block instead of block.
     :param Optional[int] duration: Optional. A time in second for the component display.
-    :param Optional[str] display_value: Optional. The display value. Default inline-block.
+    :param Optional[str] display_value: Optional. The value to display. Default inline-block.
     """
     display_value = display_value or self.display_value
     if duration is not None:
@@ -587,7 +587,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param bool flag: A flag to specify the display type show or None.
     :param Optional[str] inline: Optional. Set the CSS display attribute to inline-block instead of block.
-    :param Optional[str] display_value:  Optional. The default CSS attribute for this component.
+    :param Optional[str] display_value: Optional. The default CSS attribute for this component.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsVoid("if(%s){%s} else{%s}" % (
@@ -654,7 +654,7 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
-  def toggle(self, attr: str = "display", jsVal1: Optional[str] = None, jsVal2: str = "none"):
+  def toggle(self, attr: str = "display", val_1: Optional[str] = None, val_2: str = "none"):
     """
     Description:
     ------------
@@ -672,14 +672,14 @@ class JsHtml(JsNodeDom.JsDoms):
     Attributes:
     ----------
     :param str attr:
-    :param Optional[str] jsVal1:
-    :param str jsVal2:
+    :param Optional[str] val_1:
+    :param str val_2:
 
     :return: A Javascript if statement
     """
-    if attr == 'display' and jsVal1 is None:
-      jsVal1 = self.display_value
-    return JsIf.JsIf(self.css(attr) == jsVal2, [self.css(attr, jsVal1)]).else_([self.css(attr, jsVal2)])
+    if attr == 'display' and val_1 is None:
+      val_1 = self.display_value
+    return JsIf.JsIf(self.css(attr) == val_2, [self.css(attr, val_1)]).else_([self.css(attr, val_2)])
 
   def highlight(self, css_attrs: Optional[dict] = None, time_event: int = 1000):
     """
@@ -702,24 +702,25 @@ class JsHtml(JsNodeDom.JsDoms):
         if isinstance(v, dict):
           dyn_attrs, dyn_attrs_orign = {}, {}
           if 'color' in v:
-            dyn_attrs['color'] = getattr(self._report.theme, *v['color'])
-            dyn_attrs_orign['color'] = self._report.theme.greys[0]
+            dyn_attrs['color'] = getattr(self.page.theme, *v['color'])
+            dyn_attrs_orign['color'] = self.page.theme.greys[0]
           css_attrs[k] = v['attr'] % dyn_attrs
-          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else v['attr'] % dyn_attrs_orign
+          css_attrs_origin[k] = self.component.attr[k] if k in self.component.attr else v['attr'] % dyn_attrs_orign
         else:
           css_attrs[k] = v
-          css_attrs_origin[k] = self._src.attr[k] if k in self._src.attr else "none"
+          css_attrs_origin[k] = self.component.attr[k] if k in self.component.attr else "none"
     else:
       css_attrs_origin = {}
       for k in css_attrs.keys():
-        if k in self._src.attr:
-          css_attrs_origin[k] = self._src.attr[k]
+        if k in self.component.attr:
+          css_attrs_origin[k] = self.component.attr[k]
         else:
           css_attrs_origin[k] = "none"
     return '''%s; setTimeout(function(){%s}, %s)
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
-  def loadHtml(self, components: list, append: bool = False, profile: Optional[Union[dict, bool]] = None):
+  def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
+               profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     ------------
@@ -739,7 +740,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param list components: The different HTML objects to be added to the component.
+    :param List[primitives.HtmlModel] components: The different HTML objects to be added to the component.
     :param bool append: Mention if the component should replace or append the data.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
 
@@ -751,8 +752,8 @@ class JsHtml(JsNodeDom.JsDoms):
     js_funcs = []
     for i, h in enumerate(components):
       h.options.managed = False
-      js_funcs.append(self._report.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
-      js_funcs.append(self.innerHTML(self._report.js.objects.get("obj_%s" % i), append=append).r)
+      js_funcs.append(self.page.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
+      js_funcs.append(self.innerHTML(self.page.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
   def options(self, options: Optional[dict] = None):
@@ -768,7 +769,7 @@ class JsHtml(JsNodeDom.JsDoms):
     ----------
     :param Optional[dict] options: Optional. The value to be changed.
     """
-    opt = dict(self._src._jsStyles)
+    opt = dict(self.component._jsStyles)
     if options is not None:
       opt.update(options)
     return opt
@@ -799,7 +800,7 @@ class JsHtmlRich(JsHtml):
     -----------
     Return the val object.
     """
-    values = ["'%s': %s" % (k, self._report.components[k].dom.content.toStr()) for k in self._src._internal_components]
+    values = ["'%s': %s" % (k, self.page.components[k].dom.content.toStr()) for k in self.component._internal_components]
     return JsObjects.JsObjects.get(
       "{%s, offset: new Date().getTimezoneOffset()}" % ", ".join(values))
 
@@ -811,12 +812,12 @@ class JsHtmlRich(JsHtml):
 
     """
     if hasattr(self.component.options, "markdown") and self.component.options.markdown:
-      self.page.jsImports.add("showdown") # Add the import in case it is not defined in the component
-      return ContentFormatters(self._report, '''(function(domObl){const converter = new showdown.Converter();
+      self.page.jsImports.add("showdown")    # Add the import in case it is not defined in the component
+      return ContentFormatters(self.page, '''(function(domObl){const converter = new showdown.Converter();
         if(domObl.hasAttribute('data-value')){return converter.makeMarkdown(domObl.getAttribute('data-value'))} 
         else {return converter.makeMarkdown(domObl.innerHTML)}})(%(varName)s)''' % {"varName": self.varName})
     else:
-      return ContentFormatters(self._report, '''(function(domObl){
+      return ContentFormatters(self.page, '''(function(domObl){
         if(domObl.hasAttribute('data-value')){ return domObl.getAttribute('data-value')} 
         else {return domObl.innerHTML}})(%(varName)s)''' % {"varName": self.varName})
 
@@ -827,7 +828,7 @@ class JsHtmlRich(JsHtml):
     ------------
     Specific formatters for the HTML components.
     """
-    return Formatters(self._report, "%s.innerHTML" % self.varName)
+    return Formatters(self.page, "%s.innerHTML" % self.varName)
 
   def toggleContent(self, current_val: str, new_val: str, current_funcs: Optional[list] = None,
                     new_funcs: Optional[list] = None, profile: Optional[Union[dict, bool]] = None):
@@ -882,7 +883,7 @@ class JsHtmlRich(JsHtml):
     """
     value = JsUtils.jsConvertData(value, None)
     if options is not None and options.get('showdown') is not None:
-      self._report.jsImports.add("showdown")
+      self.page.jsImports.add("showdown")
       value = '''(function(d){ var conv = new showdown.Converter(%s); 
                     let frag = document.createRange().createContextualFragment(conv.makeHtml(d)); 
                     frag.firstChild.style.display = 'inline-block';frag.firstChild.style.margin = 0;  
@@ -911,7 +912,7 @@ class JsHtmlImg(JsHtml):
     -----------
 
     """
-    return ContentFormatters(self._report, "%s.src" % self.varName)
+    return ContentFormatters(self.page, "%s.src" % self.varName)
 
   def src(self, image: str):
     """
@@ -946,7 +947,7 @@ class JsHtmlButton(JsHtml):
     -----------
 
     """
-    return ContentFormatters(self._report, "%s.innerHTML" % self.varName)
+    return ContentFormatters(self.page, "%s.innerHTML" % self.varName)
 
   def loading(self, flag: bool, multiple: bool = False):
     """
@@ -987,7 +988,9 @@ class JsHtmlButton(JsHtml):
     :param int time:
     :param str color: Optional.
     """
-    return JsFncs.JsFunction("var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; setTimeout(function() {%s.style.borderColor = bgColor}, %s)" % (self.varName, self.varName, color, self.varName, time))
+    return JsFncs.JsFunction('''var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; 
+setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
+      self.varName, self.varName, color, self.varName, time))
 
   def disable(self, flag: bool = True):
     """
@@ -1011,16 +1014,16 @@ class JsHtmlButton(JsHtml):
     :param bool by_name: Optional.
     """
     if by_name:
-      fncs = JsFncs.JsFunctions(self.by_name.css("color", ''))
-      fncs.append(self.by_name.css("background-color", ''))
-      fncs.append(self.by_name.css("cursor", "pointer"))
-      fncs.append(self.by_name.attr('data-locked', False))
+      funcs = JsFncs.JsFunctions(self.by_name.css("color", ''))
+      funcs.append(self.by_name.css("background-color", ''))
+      funcs.append(self.by_name.css("cursor", "pointer"))
+      funcs.append(self.by_name.attr('data-locked', False))
     else:
-      fncs = JsFncs.JsFunctions(self.css("color", ''))
-      fncs.append(self.css("background-color", ''))
-      fncs.append(self.css("cursor", "pointer"))
-      fncs.append(self.attr('data-locked', False))
-    return fncs
+      funcs = JsFncs.JsFunctions(self.css("color", ''))
+      funcs.append(self.css("background-color", ''))
+      funcs.append(self.css("cursor", "pointer"))
+      funcs.append(self.attr('data-locked', False))
+    return funcs
 
   def lock(self, not_allowed: bool = True):
     """
@@ -1031,15 +1034,15 @@ class JsHtmlButton(JsHtml):
     ----------
     :param bool not_allowed: Optional.
     """
-    fncs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
-    fncs.append(self.css("background-color", self.getComputedStyle('background-color')))
+    funcs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
+    funcs.append(self.css("background-color", self.getComputedStyle('background-color')))
     if not_allowed:
-      fncs.append(self.css("cursor", "not-allowed"))
-      fncs.append(self.attr('data-locked', True))
+      funcs.append(self.css("cursor", "not-allowed"))
+      funcs.append(self.attr('data-locked', True))
     else:
-      fncs.append(self.css("cursor", "default"))
-      fncs.append(self.attr('data-locked', True))
-    return fncs
+      funcs.append(self.css("cursor", "default"))
+      funcs.append(self.attr('data-locked', True))
+    return funcs
 
   def empty(self):
     """
@@ -1084,7 +1087,8 @@ class JsHtmlButtonChecks(JsHtml):
     return JsObjects.JsObjects.get('''
       ''')
 
-  def add(self, jsData, is_unique: bool = True, css_style: Optional[dict] = None, position: str = "bottom"):
+  def add(self, data: Union[str, primitives.JsDataModel, float, dict, list], is_unique: bool = True,
+          css_style: Optional[dict] = None, position: str = "bottom"):
     """
     Description:
     -----------
@@ -1095,14 +1099,14 @@ class JsHtmlButtonChecks(JsHtml):
 
     Attributes:
     ----------
-    :param jsData: List of dict | JsObj.
+    :param Union[str, primitives.JsDataModel, float, dict, list] data: The Python Javascript data.
     :param bool is_unique: Optional. Flag to specify if only distinct values should be added (no duplicates).
     :param Optional[dict] css_style: Optional. The CSS style of the added item.
     :param str position: Optional. The position of the new item in the list (bottom or top).
     """
     css_style = css_style or {'margin': 0, 'display': 'block', 'position': 'relative', 'cursor': 'pointer'}
     is_unique = JsUtils.jsConvertData(is_unique, None)
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     css_style = JsUtils.jsConvertData(css_style, None)
     return JsObjects.JsObjects.get('''
       var existingCols = {}; var options = %(options)s;
@@ -1117,7 +1121,7 @@ class JsHtmlButtonChecks(JsHtml):
           if (rec.checked){var checkData = '<i class="'+ options.icon + '" style="margin:2px"></i>'};
           var spanContent = '<span data-content="'+ rec.value + '" style="width:16px;display:inline-block;float:left;margin:0">'+ checkData +'</span><p style="margin:0" title="'+ rec.dsc + '">' + rec.name + '</p>';
           %(jqId)s.append($('<label style="' + strCss.join(";") + '">'+ spanContent +'</label>'))}
-      }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": jsData})
+      }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": data})
 
   def empty(self):
     """
@@ -1127,33 +1131,33 @@ class JsHtmlButtonChecks(JsHtml):
     """
     return '%s.empty()' % self.jquery.varId
 
-  def delete(self, jsData):
+  def delete(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param Union[str, primitives.JsDataModel, float, dict, list] data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
       var compData = %(jsData)s;
       if (compData === true) {%(jqId)s.empty()}
       else {%(jqId)s.find('span').each(function(){
           if (compData.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
-      })}''' % {"jsData": jsData, "jqId": self.jquery.varId})
+      })}''' % {"jsData": data, "jqId": self.jquery.varId})
 
-  def check(self, jsData):
+  def check(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param Union[str, primitives.JsDataModel, float, dict, list] data:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
       var compData = %(jsData)s;
       %(jqId)s.find('span').each(function(){
@@ -1162,7 +1166,7 @@ class JsHtmlButtonChecks(JsHtml):
           if (compData === true && $(this).find("i").attr("class") === undefined){$(this).trigger("click")}
           if (!compData && $(this).find("i").attr("class") !== undefined){$(this).trigger("click")}}
         else if (compData.indexOf(itemCode) > -1){if ($(this).find("i").attr("class") === undefined){$(this).trigger("click")}}
-      })''' % {"jsData": jsData, "jqId": self.jquery.varId})
+      })''' % {"jsData": data, "jqId": self.jquery.varId})
 
   @property
   def current(self):
@@ -1173,24 +1177,24 @@ class JsHtmlButtonChecks(JsHtml):
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
 
-  def css_label(self, jsData, attrs: dict):
+  def css_label(self, data: Union[str, primitives.JsDataModel, float, dict, list], attrs: dict):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param Union[str, primitives.JsDataModel, float, dict, list] data:
     :param dict attrs:
     """
-    jsData = JsUtils.jsConvertData(jsData, None)
+    data = JsUtils.jsConvertData(data, None)
     attrs = JsUtils.jsConvertData(attrs, None)
     return JsObjects.JsObjects.get('''
       var compData = %(jsData)s; var compAttrs = %(attrs)s;
       %(jqId)s.find('span').each(function(){
         var itemCode = $(this).data('content');
         if (compData.indexOf(itemCode) > -1){$(this).parent().find("p").css(compAttrs)}
-      }) ''' % {"jsData": jsData, "jqId": self.jquery.varId, "attrs": attrs})
+      }) ''' % {"jsData": data, "jqId": self.jquery.varId, "attrs": attrs})
 
 
 class JsHtmlButtonMenu(JsHtmlButton):
@@ -1204,7 +1208,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
     """
     return JsObjects.JsObjects.get('''
         {%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s.innerHTML, name: %s}}
-        ''' % (self.htmlCode, self.content.toStr(), self._src.label.dom.varName, self.getAttribute('name')))
+        ''' % (self.htmlCode, self.content.toStr(), self.component.label.dom.varName, self.getAttribute('name')))
 
   @property
   def content(self):
@@ -1213,8 +1217,8 @@ class JsHtmlButtonMenu(JsHtmlButton):
     -----------
 
     """
-    check = self._src.options.icon_check.split(" ")[-1]
-    return ContentFormatters(self._report, "%s.querySelector('i').classList.contains('%s')" % (self.varName, check))
+    check = self.component.options.icon_check.split(" ")[-1]
+    return ContentFormatters(self.page, "%s.querySelector('i').classList.contains('%s')" % (self.varName, check))
 
 
 class JsHtmlIcon(JsHtml):
@@ -1228,7 +1232,7 @@ class JsHtmlIcon(JsHtml):
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self._src.dom.getAttribute("class")))
+        self.htmlCode, self.component.dom.getAttribute("class")))
 
   @property
   def content(self):
@@ -1237,7 +1241,7 @@ class JsHtmlIcon(JsHtml):
     -----------
 
     """
-    return self._src.dom.getAttribute("class")
+    return self.component.dom.getAttribute("class")
 
   def spin(self, status: bool = True):
     """
@@ -1250,9 +1254,9 @@ class JsHtmlIcon(JsHtml):
     :param bool status: Optional. The spin status.
     """
     if status:
-      return self._src.dom.classList.add("fa-spin")
+      return self.component.dom.classList.add("fa-spin")
 
-    return self._src.dom.classList.remove("fa-spin")
+    return self.component.dom.classList.remove("fa-spin")
 
   def pulse(self, status: bool = True):
     """
@@ -1265,9 +1269,9 @@ class JsHtmlIcon(JsHtml):
     :param bool status: Optional. The spin status.
     """
     if status:
-      return self._src.dom.classList.add("fa-pulse")
+      return self.component.dom.classList.add("fa-pulse")
 
-    return self._src.dom.classList.remove("fa-pulse")
+    return self.component.dom.classList.remove("fa-pulse")
 
 
 class JsHtmlList(JsHtml):
@@ -1294,7 +1298,7 @@ class JsHtmlList(JsHtml):
       (function(){
          var values = []; %(component)s.querySelectorAll("%(item)s").forEach(function(dom){values.push(dom.innerText)});
          return values
-      })()''' % {"component": self._src.dom.varName, "item": self._src.options.item_type})
+      })()''' % {"component": self.component.dom.varName, "item": self.component.options.item_type})
 
   @property
   def classList(self):
@@ -1303,7 +1307,7 @@ class JsHtmlList(JsHtml):
     ------------
     Return the class name of the list item.
     """
-    return self._src.dom.getAttribute("class")
+    return self.component.dom.getAttribute("class")
 
   def add(self, item: str, unique: bool = True, draggable: bool = False):
     """
@@ -1322,7 +1326,7 @@ class JsHtmlList(JsHtml):
     item = JsUtils.jsConvertData(item, None)
     unique = JsUtils.jsConvertData(unique, None)
     draggable = JsUtils.jsConvertData(draggable, None)
-    options = JsUtils.jsConvertData(self._src.options, None)
+    options = JsUtils.jsConvertData(self.component.options, None)
     return JsObjects.JsVoid('''
       var listItems = %(item)s; 
       var listItemOptions = %(options)s; 
@@ -1348,7 +1352,8 @@ class JsHtmlList(JsHtml):
             li.appendChild(document.createTextNode(item)); li.style.cursor = "pointer"; li.style['text-align'] = "left";
             li.addEventListener("dblclick", function(){this.remove()}); %(component)s.appendChild(li)
           }
-      })}''' % {"item": item, "component": self._src.dom.varName, 'unique': unique, 'draggable': draggable, "options": options})
+      })}''' % {"item": item, "component": self.component.dom.varName, 'unique': unique, 'draggable': draggable,
+                "options": options})
 
   def clear(self):
     """
@@ -1356,7 +1361,7 @@ class JsHtmlList(JsHtml):
     ------------
     Clear all the items in the list.
     """
-    return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
+    return JsObjects.JsVoid("%s.innerHTML = ''" % self.component.dom.varName)
 
   @property
   def dropped_value(self):
@@ -1387,7 +1392,7 @@ class JsHtmlList(JsHtml):
     return JsObjects.JsVoid('''
 let list_items = %(comp)s.children; for (var i = 0; i < list_items.length; i++) { 
   if (list_items[i].classList.contains('active') && (i != %(current_index)s)){list_items[i].classList.remove('active')}
-}''' % {"comp": self._src.dom.varName, "current_index": current_index})
+}''' % {"comp": self.component.dom.varName, "current_index": current_index})
 
 
 class JsHtmlBackground(JsHtml):
@@ -1409,7 +1414,7 @@ class JsHtmlBackground(JsHtml):
     -----------
 
     """
-    return ContentFormatters(self._report, self._src.dom.querySelector("div").css("backgroundColor").toStr())
+    return ContentFormatters(self.page, self.component.dom.querySelector("div").css("backgroundColor").toStr())
 
 
 class JsHtmlNumeric(JsHtmlRich):
@@ -1426,15 +1431,15 @@ class JsHtmlNumeric(JsHtmlRich):
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsUtils.jsConvertFncs([
-      self._report.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
-      self._report.js.window.setInterval([
-        self._report.js.if_(
-          self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
-            self._report.js.objects.number(
-              self._report.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
+      self.page.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.window.setInterval([
+        self.page.js.if_(
+          self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+            self.page.js.objects.number(
+              self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
               varName="window.%s_counter" % self.htmlCode, setVar=True),
-            self._src.build(self._report.js.objects.number.get("window.%s_counter" % self.htmlCode))
-          ]).else_(self._report.js.window.clearInterval("%s_interval" % self.htmlCode))
+            self.component.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
+          ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
     ], toStr=True, profile=profile)
 
@@ -1450,7 +1455,7 @@ class JsHtmlNumeric(JsHtmlRich):
     """
     return JsObjects.JsVoid('''
       %(component)s.innerText = parseFloat(%(component)s.innerText) + %(value)s
-      ''' % {'value': item, 'component': self._src.dom.varName})
+      ''' % {'value': item, 'component': self.component.dom.varName})
 
 
 class JsHtmlLink(JsHtml):
@@ -1462,7 +1467,7 @@ class JsHtmlLink(JsHtml):
     -----------
 
     """
-    return ContentFormatters(self._report, "%s.innerText" % self.varName)
+    return ContentFormatters(self.page, "%s.innerText" % self.varName)
 
   def url(self, url: str):
     """
@@ -1648,13 +1653,13 @@ class JsHtmlButtonFilter(JsHtml):
     """
     if self.component.options.is_number:
       return ContentFormatters(
-        self._report, "{filter: %s, input: parseFloat(%s), radio: %s, filter2: %s, input2: parseFloat(%s)}" % (
+        self.page, "{filter: %s, input: parseFloat(%s), radio: %s, filter2: %s, input2: parseFloat(%s)}" % (
           self.component.select.dom.content.toStr(),
           self.component.input.dom.content.toStr(),
           self.component.radios.dom.content.toStr(),
           self.component.select2.dom.content.toStr(),
           self.component.input2.dom.content.toStr()))
-    return ContentFormatters(self._report, "{filter: %s, input: %s, radio: %s, filter2: %s, input2: %s}" % (
+    return ContentFormatters(self.page, "{filter: %s, input: %s, radio: %s, filter2: %s, input2: %s}" % (
       self.component.select.dom.content.toStr(),
       self.component.input.dom.content.toStr(),
       self.component.radios.dom.content.toStr(),
@@ -1672,7 +1677,7 @@ class JsHtmlTable(JsHtml):
          %(component)s.querySelectorAll("tr").forEach(function(row){
             var rec = []; row.childNodes.forEach(function(cell){
               rec.push(cell.innerText)}); values.push(rec)
-         });return values })()''' % {"component": self._src.dom.varName})
+         });return values })()''' % {"component": self.component.dom.varName})
 
 
 class JsHtmlLi(JsHtmlRich):
@@ -1690,7 +1695,7 @@ class JsHtmlLi(JsHtmlRich):
     :param Union[list, str] js_funcs: The function to run if the state is defined.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    return self._src.js.if_("%s.classList.contains(%s)" % (
+    return self.component.js.if_("%s.classList.contains(%s)" % (
       self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
 
   def is_active(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):

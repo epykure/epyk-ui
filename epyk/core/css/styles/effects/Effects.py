@@ -1,11 +1,14 @@
 
 from typing import Optional
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
 
 class Effects:
+  attrs = None
 
-  def __init__(self, page, component=None, ovrs_attrs: Optional[dict] = None):
+  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel = None,
+               ovrs_attrs: Optional[dict] = None):
     """
     Description:
     ------------
@@ -16,13 +19,15 @@ class Effects:
     :param component:
     :param Optional[dict] ovrs_attrs:
     """
-    self._report, self._htmlObj = page, component
-    self.component = component
+    self.page, self.component = page, component
+    if self.attrs is None:
+      raise ValueError("attrs property needs to be defined in a child class! ")
+
     if ovrs_attrs is not None:
       self.attrs = dict(self.attrs)
       self.attrs.update(ovrs_attrs)
 
-  def get_attrs(self):
+  def get_attrs(self) -> dict:
     """
     Description:
     ------------
@@ -30,8 +35,9 @@ class Effects:
     """
     return self.attrs
 
-  def glow(self, color, radius: int = 50, duration: int = 1, timing_fnc: str = "ease-in-out",
-           delay: int = 0, iteration_count: str = "infinite", direction: str = "alternate", fill_mode: str = 'forwards'):
+  def glow(self, color: str, radius: int = 50, duration: int = 1, timing_fnc: str = "ease-in-out",
+           delay: int = 0, iteration_count: str = "infinite", direction: str = "alternate",
+           fill_mode: str = 'forwards') -> str:
     """
     Description:
     ------------
@@ -45,14 +51,16 @@ class Effects:
 
     Attributes:
     ----------
-    :param color: String. The color to use fin the effect
-    :param radius: Integer. The length of the radius to display in the animate
-    :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
-    :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
-    :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
-    :param iteration_count: String. The animation-iteration-count property specifies the number of times an animation should run.
-    :param direction: String. The animation-direction property specifies whether an animation should be played forwards, backwards or in alternate cycles.
-    :param fill_mode:
+    :param str color: The color to use fin the effect
+    :param int radius: The length of the radius to display in the animate
+    :param int duration: The animation-duration property defines how long time an animation should take to complete.
+    :param str timing_fnc: The animation-timing-function property specifies the speed curve of the animation.
+    :param int delay: The animation-delay property specifies a delay for the start of an animation.
+    :param str iteration_count: The animation-iteration-count property specifies the number of times an animation
+    should run.
+    :param str direction: The animation-direction property specifies whether an animation should be played forwards,
+    backwards or in alternate cycles.
+    :param str fill_mode:
 
     :return: The classname of the animation keyframes
     """
@@ -63,13 +71,13 @@ class Effects:
     color_effects = ["0 0 %s0px %s" % (i, color) for i in range(1, int(radius / 10)+1)]
     if not color_effects:
       color_effects.append("0 0 %spx %s" % (radius, color))
-    self._report.body.style.css_class.keyframes(name, {
+    self.page.body.style.css_class.keyframes(name, {
       "from": {"text-shadow": color_effects}, "to": {"text-shadow": color_effects}})
     return name
 
   def blink(self, duration: int = 1, timing_fnc: str = "ease-in-out", delay: int = 0,
             iteration_count="infinite", direction="alternate",
-            fill_mode='forwards'):
+            fill_mode='forwards') -> str:
     """
     Description:
     ------------
@@ -80,12 +88,14 @@ class Effects:
 
     Attributes:
     ----------
-    :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
-    :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
-    :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
-    :param iteration_count: String. The animation-iteration-count property specifies the number of times an animation should run.
-    :param direction: String. The animation-direction property specifies whether an animation should be played forwards, backwards or in alternate cycles.
-    :param fill_mode:
+    :param int duration: The animation-duration property defines how long time an animation should take to complete.
+    :param str timing_fnc: The animation-timing-function property specifies the speed curve of the animation.
+    :param int delay: The animation-delay property specifies a delay for the start of an animation.
+    :param str iteration_count: The animation-iteration-count property specifies the number of times an animation
+    should run.
+    :param str direction: The animation-direction property specifies whether an animation should be played forwards,
+    backwards or in alternate cycles.
+    :param str fill_mode:
 
     :return: The classname of the animation keyframes
     """
@@ -93,7 +103,7 @@ class Effects:
     if self.component is not None:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    self._report.body.style.css_class.keyframes(name, {"from": {"opacity": 0}, "to": {"opacity": 1}})
+    self.page.body.style.css_class.keyframes(name, {"from": {"opacity": 0}, "to": {"opacity": 1}})
     return name
 
   def shiny_text(self, color, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -101,7 +111,8 @@ class Effects:
     """
     Description:
     ------------
-    Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add the repeatedly glowing effect
+    Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add
+    the repeatedly glowing effect
 
     Related Pages:
 
@@ -124,7 +135,7 @@ class Effects:
     if self.component is not None:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
-    self._report.body.style.css_class.keyframes(name, {"from": {"color": color}, "to": {"color": "none"}})
+    self.page.body.style.css_class.keyframes(name, {"from": {"color": color}, "to": {"color": "none"}})
     return name
 
   def shiny_border(self, color, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -157,7 +168,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"from": {"border": "1px solid %s" % color}, "to": {"border": "1px solid %s" % color}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def spin(self, degree=360, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -188,7 +199,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"from": {"transform": "rotate(0deg)"}, "to": {"transform": "rotate(%sdeg)" % degree}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def translate(self, start=-100, end=0, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -219,7 +230,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"from": {"transform": "translateY(%s%%)" % start}, "to": {"transform": "translateY(%s)" % end}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def down(self, start=-100, end=0, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -251,7 +262,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"from": {"transform": "translateY(%s%%)" % start}, "to": {"transform": "translateY(0)"}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def up(self, bottom=(20, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -282,7 +293,7 @@ class Effects:
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"0%": {"bottom": "-%s%s" % (bottom[0], bottom[1]), 'position': 'relative', 'opacity': 0},
              "100%": {"bottom": 0, 'position': 'relative', 'opacity': 1}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def left(self, left=(100, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -308,7 +319,7 @@ class Effects:
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"0%": {"left": "-%s%s" % (left[0], left[1]), 'position': 'relative', 'opacity': 0},
              "100%": {"left": 0, 'position': 'relative', 'opacity': 1}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def right(self, right=(100, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
@@ -334,7 +345,7 @@ class Effects:
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"0%": {"right": "-%s%s" % (right[0], right[1]), 'position': 'relative', 'opacity': 0},
              "100%": {"right": 0, 'position': 'relative', 'opacity': 1}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def appear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
@@ -356,7 +367,7 @@ class Effects:
     if self.component is not None:
       self.component.style.css.animation = "%s %ss %s %ss %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction)
-    self._report.body.style.css_class.keyframes(name, {"0%": {'opacity': 0}, "100%": {'opacity': 1}})
+    self.page.body.style.css_class.keyframes(name, {"0%": {'opacity': 0}, "100%": {'opacity': 1}})
     return name
 
   def fade_out(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
@@ -379,7 +390,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
       self.component.style.css.animation_fill_mode = "forwards"
-    self._report.body.style.css_class.keyframes(name, {"0%": {'opacity': 1}, "100%": {'opacity': 0}})
+    self.page.body.style.css_class.keyframes(name, {"0%": {'opacity': 1}, "100%": {'opacity': 0}})
     return name
 
   def fade_in(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
@@ -403,7 +414,7 @@ class Effects:
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
       self.component.style.css.animation_fill_mode = "forwards"
     attrs = {"0%": {'opacity': 0}, "100%": {'opacity': 1}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def reduce(self):
@@ -415,11 +426,15 @@ class Effects:
     self.component.style.add_classes.layout.hover_reduce()
     return self
 
-  def zoom(self, large=False):
+  def zoom(self, large: bool = False):
     """
     Description:
     ------------
     Zoom on the component when the mouse is hover.
+
+    Attributes:
+    ----------
+    :param bool large:
     """
     if large:
       self.component.style.add_classes.layout.hover_large_zoom()
@@ -445,8 +460,8 @@ class Effects:
     self.component.style.add_classes.layout.hover_colored()
     return self
 
-  def disappear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
-                fill_mode='forwards'):
+  def disappear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
+                direction="alternate", fill_mode='forwards'):
     """
     Description:
     ------------
@@ -466,7 +481,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction, fill_mode)
     attrs = {"0%": {'opacity': 1}, "100%": {'opacity': 0}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def sliding(self, duration=15, timing_fnc="linear", delay=0, iteration_count="infinite", direction=None,
@@ -492,7 +507,7 @@ class Effects:
       self.component.style.css.animation = "%s %ss %s %ss %s %s %s" % (
         name, duration, timing_fnc, delay, iteration_count, direction or "", fill_mode or "")
     attrs = {"0%": {'transform': "translate3d(0,0,0)"}, "100%": {'transform': "translate3d(-100%,0,0)"}}
-    self._report.body.style.css_class.keyframes(name, attrs)
+    self.page.body.style.css_class.keyframes(name, attrs)
     return name
 
   def animate(self, name, targ_css_attrs, orig_css_attrs=None, delay=0, duration=1, timing_fnc="ease-in-out",
@@ -530,5 +545,5 @@ class Effects:
       attrs = {"to": targ_css_attrs}
     else:
       attrs = {"from": orig_css_attrs, "to": targ_css_attrs}
-    self._report.body.style.css_class.keyframes(keyframe_name, attrs)
+    self.page.body.style.css_class.keyframes(keyframe_name, attrs)
     return name

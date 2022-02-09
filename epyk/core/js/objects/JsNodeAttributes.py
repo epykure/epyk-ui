@@ -72,13 +72,15 @@ class JsAttributes(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/met_namednodemap_item.asp
 
+    Attributes:
+    ----------
     :param Union[int, primitives.JsDataModel] i: The index of the node in the NamedNodeMap you want to return
 
     :return: A Node object, representing the attribute node at the specified index.
     """
     return "item(%s)" % i
 
-  def removeNamedItem(self, type: str):
+  def removeNamedItem(self, name: str):
     """
     Description:
     ------------
@@ -88,11 +90,13 @@ class JsAttributes(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
 
-    :param str type: The name of the node in the namedNodeMap you want to remove.
+    Attributes:
+    ----------
+    :param str name: The name of the node in the namedNodeMap you want to remove.
 
     :return: 	A Node object, representing the removed attribute node
     """
-    return "removeNamedItem(%s)" % type
+    return "removeNamedItem(%s)" % name
 
   def setNamedItem(self, attrs: Union[str, primitives.JsDataModel]):
     """
@@ -107,10 +111,13 @@ class JsAttributes(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
 
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] attrs:
+
     :return: A Node object, representing the replaced node (if any), otherwise null.
     """
-    attrs = JsUtils.jsConvertData(attrs, None)
-    return "setNamedItem(%s)" % attrs
+    return "setNamedItem(%s)" % JsUtils.jsConvertData(attrs, None)
 
   def getNamedItem(self, node_name: Union[str, primitives.JsDataModel]):
     """
@@ -122,9 +129,10 @@ class JsAttributes(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
 
-    :param node_name: The name of the node in the namedNodeMap you want to return.
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] node_name: The name of the node in the namedNodeMap you want to return.
 
     :return: A Node object, representing the attribute node with the specified name.
     """
-    node_name = JsUtils.jsConvertData(node_name, None)
-    return "getNamedItem(%s)" % node_name
+    return "getNamedItem(%s)" % JsUtils.jsConvertData(node_name, None)

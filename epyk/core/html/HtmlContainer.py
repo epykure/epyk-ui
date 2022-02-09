@@ -26,7 +26,7 @@ from epyk.core.css.styles import GrpClsContainer
 class Panel(Html.Html):
   name = 'Panel'
 
-  def __init__(self, report: primitives.PageModel, components: Union[List[Html.Html], Html.Html],
+  def __init__(self, page: primitives.PageModel, components: Union[List[Html.Html], Html.Html],
                title: Optional[str], color: Optional[str], width: Optional[tuple], height: Optional[tuple],
                html_code: Optional[str], helper: Optional[str], options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
@@ -38,14 +38,14 @@ class Panel(Html.Html):
       components.options.managed = False
     component, self.menu = [], None
     if title is not None:
-      self.title = report.ui.title(title)
+      self.title = page.ui.title(title)
       self.title.options.managed = False
       component.append(self.title)
-    container = report.ui.div(components)
+    container = page.ui.div(components)
     container.options.managed = False
     component.append(container)
     self.add_helper(helper)
-    super(Panel, self).__init__(report, component, html_code=html_code, profile=profile, options=options,
+    super(Panel, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"color": color, "width": width, "height": height})
     container.set_attrs(name="name", value="panel_%s" % self.htmlCode)
 
@@ -75,7 +75,7 @@ class Panel(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlPanel(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlPanel(self, page=self.page)
     return self._dom
 
   def extend(self, components: List[Html.Html]):
@@ -149,24 +149,24 @@ class Panel(Html.Html):
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     if self.menu is None:
-      return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+      return "<div %s>%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
     menu_width = "100%"
     if self.style.css.width.endswith('px'):
       menu_width = self.style.css.width
       self.style.css.width = None
     return "<div %s>%s<div style='width:%s' name='panel'>%s</div></div>%s" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), self.menu.html(), menu_width, str_div, self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), self.menu.html(), menu_width, str_div, self.helper)
 
 
 class PanelSplit(Html.Html):
   requirements = ('jqueryui', )
   name = 'Panel Split'
 
-  def __init__(self, report: primitives.PageModel, width: Optional[tuple], height: Optional[tuple],
+  def __init__(self, page: primitives.PageModel, width: Optional[tuple], height: Optional[tuple],
                left_width: Optional[tuple], left_obj, right_obj, resizable: bool, helper,
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(PanelSplit, self).__init__(report, None, profile=profile, options=options,
+    super(PanelSplit, self).__init__(page, None, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
     self.left_width, self.resizable = left_width, resizable
     self.html_left, self.html_right = None, None
@@ -231,7 +231,7 @@ class PanelSplit(Html.Html):
         <div style="%(css_left)s" id="%(htmlCode)s_left" class="panel-left">%(left)s</div>
         <div style="%(css_right)s" id="%(htmlCode)s_right" class="panel-right">%(right)s</div>
       </div>%(helper)s
-      ''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes()), "htmlCode": self.htmlCode,
+      ''' % {"attrs": self.get_attrs(css_class_names=self.style.get_classes()), "htmlCode": self.htmlCode,
              'left': self.html_left.html(), 'right': self.html_right.html(), "helper": self.helper,
              'css_left': cssDefaults.inline(self.css_left), 'css_right': cssDefaults.inline(self.css_right)}
 
@@ -240,13 +240,13 @@ class PanelSlide(Panel):
   name = 'Slide Panel'
   _option_cls = OptPanel.OptionPanelSliding
 
-  def __init__(self, report: primitives.PageModel, components: Optional[List[Html.Html]],
+  def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
                title: Union[Html.Html, str], color: Optional[str], width: Optional[tuple],
                height: Optional[tuple], html_code: Optional[str], helper,
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
     self.requirements = (cssDefaults.ICON_FAMILY, )
     super(PanelSlide, self).__init__(
-      report, components, None, color, width, height, html_code, helper, options, profile)
+      page, components, None, color, width, height, html_code, helper, options, profile)
     self.add_helper(helper)
     self.icon = self.page.ui.icon("").css(
       {"display": 'inline-block', 'margin': '0 5px 5px 0', 'line-height': "%spx" % Defaults.LINE_HEIGHT,
@@ -297,7 +297,7 @@ class PanelSlide(Panel):
     :rtype: JsHtmlPanels.JsHtmlSlidingPanel
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlSlidingPanel(self, page=self.page)
     return self._dom
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -364,24 +364,24 @@ class PanelSlide(Panel):
     elif self.options.click_type == 'icon':
       self.icon.click(self.__clicks + click_frg + self.__clicks_open)
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    return "<div %s>%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
 
 class Div(Html.Html):
   name = 'Simple Container'
   _option_cls = OptPanel.OptionsDiv
 
-  def __init__(self, report: primitives.PageModel, components: List[Html.Html], label: Optional[str],
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], label: Optional[str],
                color: Optional[str], width: Optional[tuple], icon: Optional[str], height: Optional[tuple],
                editable: bool, align: str, padding: Optional[str], html_code: Optional[str],
                tag: str, helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Div, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Div, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                               css_attrs={"color": color, "width": width, "height": height})
     if not isinstance(components, list):
       components = [components]
     for obj in components:
       if isinstance(obj, list) and obj:
-        component = report.ui.div(
+        component = page.ui.div(
           obj, label, color, width, icon, height, editable, align, padding, html_code, tag, helper, profile,
           position=options.get("position", None))
       else:
@@ -454,7 +454,7 @@ class Div(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def __add__(self, component: Html.Html):
@@ -577,19 +577,19 @@ class Div(Html.Html):
         rows.append(str(component))
 
     return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(helper)s" % {
-      'tag': self.tag or 'div', 'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+      'tag': self.tag or 'div', 'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
       "content": "".join(rows), "helper": self.helper}
 
 
 class Td(Html.Html):
   name = 'Cell'
 
-  def __init__(self, report: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
+  def __init__(self, page: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
                header: bool, position: Optional[str], width: Optional[tuple],
                height: Optional[tuple], align: Optional[str], options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
-    super(Td, self).__init__(report, [], profile=profile,
+    super(Td, self).__init__(page, [], profile=profile,
                              css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
     self.__options = options
     self.attr["align"] = options.cell_align or align
@@ -634,21 +634,20 @@ class Td(Html.Html):
   def __str__(self):
     content = [htmlObj.html() if hasattr(htmlObj, 'options') else str(htmlObj) for htmlObj in self.val]
     if self.header:
-      return '<th %s>%s</th>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
+      return '<th %s>%s</th>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(content))
 
-    return '<td %s>%s</td>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
+    return '<td %s>%s</td>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(content))
 
 
 class Tr(Html.Html):
   name = 'Column'
 
-  def __init__(self, report: primitives.PageModel,
-               components: Optional[List[Html.Html]],
+  def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
                header, position, width: Optional[tuple], height: Optional[tuple],
                align: Optional[str], options: Optional[dict], profile):
     self.position, self.header = position, header
-    super(Tr, self).__init__(report, [], profile=profile,
-                             css_attrs={"width": width, "height": height, 'text-align': align})
+    super(Tr, self).__init__(
+      page, [], profile=profile, css_attrs={"width": width, "height": height, 'text-align': align})
     self.__options = options
     if components is not None:
       for component in components:
@@ -686,22 +685,22 @@ class Tr(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlTr
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlTr(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlTr(self, page=self.page)
     return self._dom
 
   def __str__(self):
     cols = [htmlObj.html() for i, htmlObj in enumerate(self.val)]
-    return '<tr %s>%s</tr>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
+    return '<tr %s>%s</tr>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(cols))
 
 
 class Caption(Html.Html):
   name = 'Table Caption'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, text: Optional[str], color: Optional[str], align: Optional[str],
+  def __init__(self, page: primitives.PageModel, text: Optional[str], color: Optional[str], align: Optional[str],
                width: Optional[tuple], height: Optional[tuple], html_code: Optional[str],
                tooltip: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Caption, self).__init__(report, text, html_code=html_code, profile=profile, options=options,
+    super(Caption, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -719,16 +718,16 @@ class Caption(Html.Html):
 
   def __str__(self):
     val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
-    return '<caption %s>%s</caption>' % (self.get_attrs(pyClassNames=self.style.get_classes()), val)
+    return '<caption %s>%s</caption>' % (self.get_attrs(css_class_names=self.style.get_classes()), val)
 
 
 class TSection(Html.Html):
   name = 'Table Section'
   _option_cls = OptPanel.OptionPanelTable
 
-  def __init__(self, report: primitives.PageModel, type: str, rows: Optional[list] = None,
+  def __init__(self, page: primitives.PageModel, type: str, rows: Optional[list] = None,
                options:  Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
-    super(TSection, self).__init__(report, [], options=options, profile=profile)
+    super(TSection, self).__init__(page, [], options=options, profile=profile)
     self.__section = type
     if rows is not None:
       for row in rows:
@@ -764,16 +763,17 @@ class TSection(Html.Html):
         component.sortable(self._sort_options)
       cols.append(component.html())
     return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {
-      'section': self.__section, 'cols': "".join(cols), 'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
+      'section': self.__section, 'cols': "".join(cols),
+      'attr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Table(Html.Html):
   name = 'Table'
   _option_cls = OptPanel.OptionPanelTable
 
-  def __init__(self, report: primitives.PageModel, rows, width: Optional[tuple], height: Optional[tuple],
+  def __init__(self, page: primitives.PageModel, rows, width: Optional[tuple], height: Optional[tuple],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Table, self).__init__(report, [], css_attrs={
+    super(Table, self).__init__(page, [], css_attrs={
       "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap', 'border-collapse': 'collapse',
       'box-sizing': 'border-box'}, profile=profile, options=options)
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
@@ -841,8 +841,6 @@ class Table(Html.Html):
     """
     Description:
     ------------
-
-    Usage::
 
     Attributes:
     ----------
@@ -944,7 +942,7 @@ class Table(Html.Html):
 
   def __str__(self):
     caption = "" if self.caption is None else self.caption.html()
-    return '<table %s>%s%s%s%s</table>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), caption,
+    return '<table %s>%s%s%s%s</table>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), caption,
                                              self.header.html(), self.body.html(), self.footer.html(), self.helper)
 
 
@@ -953,9 +951,9 @@ class Col(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, report, components, position, width, height, align, helper, options, profile):
+  def __init__(self, page, components, position, width, height, align, helper, options, profile):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
-    super(Col, self).__init__(report, [], profile=profile, options=options)
+    super(Col, self).__init__(page, [], profile=profile, options=options)
     self.__set_size = None
     self.style.clear_all(no_default=True)
     self.css({"width": width, "height": height})
@@ -1059,7 +1057,7 @@ class Col(Html.Html):
 
   def __str__(self):
     content = [htmlObj.html() for htmlObj in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(content))
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(content))
 
 
 class Row(Html.Html):
@@ -1067,9 +1065,9 @@ class Row(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, report, components, position, width, height, align, helper, options, profile):
+  def __init__(self, page, components, position, width, height, align, helper, options, profile):
     self.position, self.align = position, align
-    super(Row, self).__init__(report, [], css_attrs={"width": width, "height": height},
+    super(Row, self).__init__(page, [], css_attrs={"width": width, "height": height},
                               options=options, profile=profile)
     if components is not None:
       for component in components:
@@ -1116,7 +1114,7 @@ class Row(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlRow
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlRow(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlRow(self, page=self.page)
     return self._dom
 
   def set_size_cols(self, *args):
@@ -1185,7 +1183,7 @@ class Row(Html.Html):
       if hasattr(component, 'set_size') and self.options.autoSize:
         component.set_size(12.0 / len(self.val))
       cols.append(component.html() if hasattr(component, 'options') else str(component))
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(cols))
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(cols))
 
 
 class Grid(Html.Html):
@@ -1193,9 +1191,9 @@ class Grid(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, report: primitives.PageModel, rows, width, height, align, position, options, profile):
+  def __init__(self, page: primitives.PageModel, rows, width, height, align, position, options, profile):
     super(Grid, self).__init__(
-      report, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
+      page, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.position = position
     self.style.clear(no_default=True)
     self.css({'overflow-x': 'hidden', 'padding': 0})
@@ -1259,21 +1257,8 @@ class Grid(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlGrid
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlGrid(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlGrid(self, page=self.page)
     return self._dom
-
-  def resize(self):
-    """
-    Description:
-    ------------
-    For the resizing of the space for the containers.
-
-    This will rescale based on the number of items and the fact that the max per row is 12.
-    It will update the colsDim list.
-    """
-    max_size = int(12 / len(self.colsDim))
-    self.colsDim = [max_size] * len(self.colsDim)
-    return self
 
   def __str__(self):
     rows = []
@@ -1281,15 +1266,15 @@ class Grid(Html.Html):
       if self._sort_propagate:
         component.sortable(self._sort_options)
       rows.append(component.html())
-    return '<div %s>%s</div>' % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(rows))
+    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows))
 
 
 class Tabs(Html.Html):
   name = 'Tabs'
   _option_cls = OptPanel.OptionPanelTabs
 
-  def __init__(self, report, color, width, height, html_code, helper, options, profile):
-    super(Tabs, self).__init__(report, "", html_code=html_code, profile=profile, options=options,
+  def __init__(self, page, color, width, height, html_code, helper, options, profile):
+    super(Tabs, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height, 'color': color})
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
     self.tabs_name, self.panels_name = "button_%s" % self.htmlCode, "panel_%s" % self.htmlCode
@@ -1324,7 +1309,7 @@ class Tabs(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlTabs
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlTabs(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlTabs(self, page=self.page)
     return self._dom
 
   def __getitem__(self, name):
@@ -1474,7 +1459,7 @@ class Tabs(Html.Html):
     for p in self.__panels:
       self.tabs_container.add(self.__panel_objs[p]["tab"])
       content.append(self.__panel_objs[p]["content"].html())
-    return "<div %s>%s%s</div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()),
+    return "<div %s>%s%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()),
                                      self.tabs_container.html(), "".join(content), self.helper)
 
 
@@ -1519,7 +1504,7 @@ class IFrame(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlIFrame
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlIFrame(self, report=self.page)
+      self._dom = JsHtmlPanels.JsHtmlIFrame(self, page=self.page)
     return self._dom
 
   def scrolling(self, flag: bool = True):
@@ -1594,21 +1579,21 @@ class IFrame(Html.Html):
 
   def __str__(self):
     return "<iframe src='%s' %s frameborder='0' scrolling='no'></iframe>%s" % (
-      self.val, self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+      self.val, self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class IconsMenu(Html.Html):
   name = 'Icons Menu'
   requirements = ('font-awesome', )
 
-  def __init__(self, icon_names, report: primitives.PageModel, width, height, html_code, helper, profile):
-    super(IconsMenu, self).__init__(report, None, css_attrs={"width": width, "height": height}, html_code=html_code,
-                                    profile=profile)
+  def __init__(self, icon_names: list, page: primitives.PageModel, width, height, html_code, helper, profile):
+    super(IconsMenu, self).__init__(
+      page, None, css_attrs={"width": width, "height": height}, html_code=html_code, profile=profile)
     self._jsActions, self._definedActions = {}, []
     self._icons, self.icon = [], None
     self.css({"margin": "5px 0"})
-    for i in icon_names:
-      self.add_icon(i)
+    for icon_name in icon_names:
+      self.add_icon(icon_name)
 
   def __getitem__(self, i):
     return self._icons[i]
@@ -1667,14 +1652,14 @@ class IconsMenu(Html.Html):
 
   def __str__(self):
     html_icons = [htmlDef for action, htmlDef in self._jsActions.items()]
-    return "<div %s>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), "".join(html_icons))
+    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(html_icons))
 
 
 class Form(Html.Html):
   name = 'Generic Form'
 
-  def __init__(self, report: primitives.PageModel, components: List[Html.Html], helper: Optional[str]):
-    super(Form, self).__init__(report, [])
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], helper: Optional[str]):
+    super(Form, self).__init__(page, [])
     self.style.css.padding = "5px"
     self.method, self.action, self.label = None, None, None
     self.add_helper(helper)
@@ -1735,13 +1720,13 @@ class Form(Html.Html):
 
     str_vals = "".join([i.html() for i in self.val]) if self.val is not None else ""
     return '<form %s>%s%s</form>%s' % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.__submit.html(), self.helper)
+      self.get_attrs(css_class_names=self.style.get_classes()), str_vals, self.__submit.html(), self.helper)
 
 
 class Modal(Html.Html):
   name = 'Modal Popup'
 
-  def __init__(self, report, components, header, footer, submit, helper):
+  def __init__(self, page: primitives.PageModel, components: List[Html.Html], header, footer, submit, helper):
     """
     Description:
     -----------
@@ -1750,17 +1735,17 @@ class Modal(Html.Html):
     which is a row they all accept collections of html objects and are configurable just like the normal rows and
     column objects.
     """
-    super(Modal, self).__init__(report, [])
+    super(Modal, self).__init__(page, [])
     self.add_helper(helper)
     self.doSubmit = submit
     if self.doSubmit:
-      self.submit = report.ui.buttons.important("Submit").set_attrs({"type": 'submit'})
+      self.submit = page.ui.buttons.important("Submit").set_attrs({"type": 'submit'})
       self.submit.options.managed = False
-    self.closeBtn = report.ui.texts.span('&times', width='auto')
+    self.closeBtn = page.ui.texts.span('&times', width='auto')
     self.closeBtn.css(None, reset=True)
     self.closeBtn.style.add_classes.div.span_close()
-    self.closeBtn.click(report.js.getElementById(self.htmlCode).css({'display': "none"}))
-    self.__header = report.ui.row([])
+    self.closeBtn.click(page.js.getElementById(self.htmlCode).css({'display': "none"}))
+    self.__header = page.ui.row([])
     self.__header.options.managed = False
     if header:
       for obj in header:
@@ -1769,11 +1754,11 @@ class Modal(Html.Html):
     if footer:
       for obj in footer:
         self.__footer + obj
-    self.__footer = report.ui.row([])
+    self.__footer = page.ui.row([])
     self.__footer.options.managed = False
-    self.__body = report.ui.col([]).css({'position': 'relative',  'overflow-y': 'scroll'})
+    self.__body = page.ui.col([]).css({'position': 'relative',  'overflow-y': 'scroll'})
     self.__body.options.managed = False
-    self.col = report.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
+    self.col = page.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
     self.col.style.add_classes.div.modal_content()
     self.col.options.managed = False
     self.val.append(self.col)
@@ -1844,7 +1829,7 @@ class Modal(Html.Html):
     self.set_attrs({'css': self.style.css.attrs})
     if self.doSubmit:
       self.col += self.submit
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), str_vals, self.helper)
 
 
 class Indices(Html.Html):
@@ -1852,8 +1837,9 @@ class Indices(Html.Html):
   requirements = ('font-awesome', )
   _option_cls = OptPanel.OptionsPanelPoints
 
-  def __init__(self, report, count, width, height, html_code, options, profile):
-    super(Indices, self).__init__(report, count, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, count: int, width: tuple, height: tuple, html_code: str,
+               options: dict, profile: Optional[Union[dict, bool]]):
+    super(Indices, self).__init__(page, count, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height})
     self.items = []
     for i in range(count):
@@ -1889,7 +1875,7 @@ class Indices(Html.Html):
     """
     return super().options
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Html.Html:
     return self.items[i]
 
   def click_item(self, i: int, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
@@ -1913,15 +1899,16 @@ class Indices(Html.Html):
   def __str__(self):
     str_vals = "".join([self.first.html(), self.prev.html()] + [i.html() for i in self.items] + [
       self.next.html(), self.last.html()])
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), str_vals, self.helper)
 
 
 class Points(Html.Html):
   name = 'Index'
   _option_cls = OptPanel.OptionsPanelPoints
 
-  def __init__(self, report, count, width, height, html_code, options, profile):
-    super(Points, self).__init__(report, count, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, count: int, width: tuple, height: tuple, html_code: str,
+               options: dict, profile: Union[dict, bool]):
+    super(Points, self).__init__(page, count, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     self.items = []
     self.css({"text-align": "center"})
@@ -1994,7 +1981,8 @@ class Points(Html.Html):
     :param int i: The item index in the container.
     :param Union[list, str] event: The Javascript event type from the dom_obj_event.asp.
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+    Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -2022,22 +2010,24 @@ class Points(Html.Html):
     return self.items[i].click([
       'var data = {position: this.getAttribute("data-position")}',
       self.items[i].dom.by_name.css({"background-color": ""}).r,
-      self.items[i].dom.css({"background-color": self.options.background_color})] + js_funcs, profile, on_ready=on_ready)
+      self.items[i].dom.css(
+        {"background-color": self.options.background_color})] + js_funcs, profile, on_ready=on_ready)
 
-  def __getitem__(self, i: int):
+  def __getitem__(self, i: int) -> Html.Html:
     return self.items[i]
 
   def __str__(self):
     str_vals = "".join([i.html() for i in self.items])
-    return '<div %s>%s</div>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), str_vals, self.helper)
+    return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), str_vals, self.helper)
 
 
 class Header(Html.Html):
   name = 'Header'
   _option_cls = OptPanel.OptionsDiv
 
-  def __init__(self, report, component, width, height, html_code, helper, options, profile):
-    super(Header, self).__init__(report, component, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel, width: tuple, height: tuple,
+               html_code: str, helper: str, options: dict, profile: Union[dict, bool]):
+    super(Header, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     self.add_helper(helper)
 
@@ -2066,15 +2056,16 @@ class Header(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<header %s>%s</header>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    return "<header %s>%s</header>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
 
 class Section(Html.Html):
   name = 'Section'
   _option_cls = OptPanel.OptionsDiv
 
-  def __init__(self, report, component, width, height, html_code, helper, options, profile):
-    super(Section, self).__init__(report, component, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel, width: tuple, height: tuple,
+               html_code: str, helper: str, options: dict, profile: Union[dict, bool]):
+    super(Section, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height})
     self.add_helper(helper)
 
@@ -2101,4 +2092,5 @@ class Section(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<section %s>%s</section>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_div, self.helper)
+    return "<section %s>%s</section>%s" % (
+      self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)

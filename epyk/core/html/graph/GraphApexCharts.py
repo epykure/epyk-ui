@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.css import Colors
 from epyk.core.html import Html
 from epyk.core.html.options import OptChartApex
@@ -10,7 +11,7 @@ from epyk.core.js import JsUtils
 
 class ApexActivePoints:
 
-  def __init__(self, chart_id, i, page):
+  def __init__(self, chart_id: str, i: int, page: primitives.PageModel):
     self.chartId = chart_id
     self._report = page
     self.num = i or self.index
@@ -152,16 +153,16 @@ class Chart(Html.Html):
   requirements = ('apexcharts', )
   _option_cls = OptChartApex.OptionsLine
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self,  page: primitives.PageModel, width, height, html_code, options, profile):
     self.height = height[0]
-    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self.options.chart.height = height[0]
     self.options.yaxis.labels.formatters.toNumber()
     self.style.css.margin_top = 10
     self.chartId = "%s_obj" % self.htmlCode
 
-  def activePoints(self, i=None):
+  def activePoints(self, i: int = None):
     """
     Description:
     -----------
@@ -183,12 +184,12 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. Optional. The series index. Default it is the series clicked.
+    :param int i: Optional. The series index. Default it is the series clicked.
     """
     return ApexActivePoints(self.chartId, i, self.page)
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartApex.OptionsChartSharedApex:
     """
     Description:
     -----------
@@ -224,7 +225,7 @@ class Chart(Html.Html):
     self.options.chart.events.click(js_funcs)
     return self
 
-  def zoomable(self, flag=True):
+  def zoomable(self, flag: bool = True):
     """
     Description:
     -----------
@@ -232,7 +233,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. Add the zoom option to the chart.
+    :param bool flag: Optional. Add the zoom option to the chart.
     """
     if flag:
       self.options.chart.zoom.type = "x"
@@ -241,7 +242,7 @@ class Chart(Html.Html):
     else:
       self.options.chart.zoom.enabled = False
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """
     Description:
     -----------
@@ -257,7 +258,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param list hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -280,7 +281,7 @@ class Chart(Html.Html):
         rec.borderWidth = 1
 
   @property
-  def js(self):
+  def js(self) -> JsApexChart.ApexChart:
     """
     Description:
     -----------
@@ -294,11 +295,11 @@ class Chart(Html.Html):
     :rtype: JsApexChart.ApexChart
     """
     if self._js is None:
-      self._js = JsApexChart.ApexChart(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsApexChart.ApexChart(selector="window['%s']" % self.chartId, component=self, page=self.page)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsLine:
     """
     Description:
     -----------
@@ -415,7 +416,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Bar(Chart):
@@ -423,7 +424,7 @@ class Bar(Chart):
   name = 'ApexCharts'
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsBar:
     """
     Description:
     -----------
@@ -441,7 +442,7 @@ class Area(Chart):
   _option_cls = OptChartApex.OptionsArea
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsArea:
     """
     Description:
     -----------
@@ -459,7 +460,7 @@ class Pie(Chart):
   _option_cls = OptChartApex.OptionsPie
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsPie:
     """
     Description:
     -----------
@@ -486,7 +487,7 @@ class RadialBar(Chart):
     return result'''
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsPie:
     """
     Description:
     -----------
@@ -539,7 +540,7 @@ class Bubble(Chart):
        '''
 
   @property
-  def options(self):
+  def options(self) -> OptChartApex.OptionsArea:
     """
     Description:
     -----------

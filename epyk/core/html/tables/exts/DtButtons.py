@@ -9,7 +9,9 @@ class InnerButtons(Options):
     """
     Description:
     -----------
-    Being able to let your users know what will happen when they activate a button is obviously fundamentally important to the Buttons extension and this option provides exactly that ability.
+    Being able to let your users know what will happen when they activate a button is obviously fundamentally important
+    to the Buttons extension and this option provides exactly that ability.
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.text
@@ -26,7 +28,9 @@ class InnerButtons(Options):
     Description:
     -----------
     This function defined the action that the button will take when activated by the end user.
-    This will normally be to perform some operation on the DataTable, but can be absolutely anything since the function can be defined by yourself.
+    This will normally be to perform some operation on the DataTable, but can be absolutely anything since the
+    function can be defined by yourself.
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.action
@@ -43,7 +47,9 @@ class InnerButtons(Options):
     Description:
     -----------
     This option provides the ability to set any arbitrary attribute on the button's HTML element in the document.
-    This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom id for selection / styling, custom data parameters, etc.
+    This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom id for
+    selection / styling, custom data parameters, etc.
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.attr
@@ -92,7 +98,9 @@ class InnerButtons(Options):
     Description:
     -----------
     This option provides the ability to set the initial enabled state of a button using a boolean value.
-    It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
+    It is most likely to be of use when using the API methods that can control the button's enabled state after
+    initialisation:
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.enabled
@@ -177,7 +185,8 @@ class InnerButtons(Options):
     Description:
     -----------
     This option provides the ability to set the title attribute for the button.
-    This can be used to provide a detailed description of the button, or a simple text name if you choose to display an icon in the button rather than text (using the buttons.buttons.text option).
+    This can be used to provide a detailed description of the button, or a simple text name if you choose to display
+    an icon in the button rather than text (using the buttons.buttons.text option).
 
     Related Pages:
 
@@ -227,7 +236,6 @@ class Buttons(Options):
       @className.setter
       def className(self, val):
         self._config(val)
-
 
     class Collection(Options):
       @property
@@ -288,9 +296,10 @@ class Buttons(Options):
       This option provides the ability for each button to be wrapped in another element.
       This can be useful for cases where the styling framework requires a list of buttons,
       where the list element is just a container and not the button itself (Zurb Foundation requires this for example).
+
       Related Pages:
 
-      https://datatables.net/reference/option/buttons.buttons.buttonContainer
+         https://datatables.net/reference/option/buttons.buttons.buttonContainer
 
       :rtype:
       """
@@ -304,9 +313,10 @@ class Buttons(Options):
       This option controls the HTML tag that is used as the liner for each button.
       This can be particularly useful for adding complex styling rules to buttons.
       It can also be disabled if you wish to have minimal markup in your document.
+
       Related Pages:
 
-      https://datatables.net/reference/option/buttons.buttons.buttonLiner
+        https://datatables.net/reference/option/buttons.buttons.buttonLiner
       """
       return self._config_sub_data('buttonLiner', self.ButtonLiner)
 
@@ -315,11 +325,12 @@ class Buttons(Options):
       """
       Description:
       -----------
-      This option controls the HTML tag that is used for the element that is displayed when a collection button is triggered.
-      It in turn contains the sub-buttons of the collection.
+      This option controls the HTML tag that is used for the element that is displayed when a collection button is
+      triggered. It in turn contains the sub-buttons of the collection.
+
       Related Pages:
 
-      https://datatables.net/reference/option/buttons.buttons.collection
+        https://datatables.net/reference/option/buttons.buttons.collection
       """
       return self._config_sub_data('collection', self.Collection)
 
@@ -329,10 +340,12 @@ class Buttons(Options):
       Description:
       -----------
       This option controls the HTML tag that is used to create each individual button.
-      With this option the tag type and class name can be specified using the tag and className properties of this object.
+      With this option the tag type and class name can be specified using the tag and className properties of this
+      object.
+
       Related Pages:
 
-      https://datatables.net/reference/option/buttons.buttons.button
+        https://datatables.net/reference/option/buttons.buttons.button
       """
       return self._config_sub_data('button', self.DomButton)
 
@@ -343,7 +356,9 @@ class Buttons(Options):
     Description:
     -----------
     This option provides the ability to set the initial enabled state of a button using a boolean value.
-    It is most likely to be of use when using the API methods that can control the button's enabled state after initialisation:
+    It is most likely to be of use when using the API methods that can control the button's enabled state after
+    initialisation:
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.enabled
@@ -355,7 +370,7 @@ class Buttons(Options):
     self._config(val)
 
   @property
-  def buttons(self):
+  def buttons(self) -> InnerButtons:
     """
 
     :rtype: InnerButtons
@@ -372,6 +387,7 @@ class Buttons(Options):
     Description:
     -----------
     Set a name for the instance for the group selector.
+
     Related Pages:
 
       https://datatables.net/reference/option/buttons.name

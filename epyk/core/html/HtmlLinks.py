@@ -13,9 +13,9 @@ class ExternalLink(Html.Html):
   name = 'External link'
   _option_cls = OptText.OptionsLink
 
-  def __init__(self, report: primitives.PageModel, text: str, url: str, icon: str, helper: str, height: tuple,
+  def __init__(self, page: primitives.PageModel, text: str, url: str, icon: str, helper: str, height: tuple,
                decoration: bool, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(ExternalLink, self).__init__(report, {"text": text, "url": url}, html_code=html_code, options=options,
+    super(ExternalLink, self).__init__(page, {"text": text, "url": url}, html_code=html_code, options=options,
                                        css_attrs={'height': height}, profile=profile)
     # Add the internal components icon and helper
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
@@ -39,7 +39,7 @@ class ExternalLink(Html.Html):
     :rtype: JsHtml.JsHtmlLink
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlLink(self, report=self.page)
+      self._dom = JsHtml.JsHtmlLink(self, page=self.page)
     return self._dom
 
   @property
@@ -122,16 +122,16 @@ class ExternalLink(Html.Html):
     return super(ExternalLink, self).build(data, options, profile, component_id)
 
   def __str__(self):
-    return '<a %s>%s</a>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val['text'], self.helper)
+    return '<a %s>%s</a>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val['text'], self.helper)
 
 
 class DataLink(Html.Html):
   name = 'Data link'
   filename = "Download"
 
-  def __init__(self, report: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,
+  def __init__(self, page: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,
                options: Optional[str], profile: Optional[Union[bool, dict]]):
-    super(DataLink, self).__init__(report, {"text": text, 'value': value}, profile=profile, options=options,
+    super(DataLink, self).__init__(page, {"text": text, 'value': value}, profile=profile, options=options,
                                    css_attrs={"width": width, 'height': height})
     self.format = fmt
 
@@ -152,5 +152,5 @@ class DataLink(Html.Html):
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return '<a %(attr)s href="#" download="%(filename)s.%(format)s" type="text/%(format)s">%(val)s</a>' % {
-      "filename": self.filename, 'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'val': self.val['text'],
+      "filename": self.filename, 'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val['text'],
       'format': self.format}

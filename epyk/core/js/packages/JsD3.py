@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union, Optional
+from epyk.core.py import primitives
+
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
@@ -66,7 +69,7 @@ class D3ScaleLinear:
 class D3Select(JsPackage):
   lib_alias = {"js": 'd3'}
 
-  def data(self, datasets=None):
+  def data(self, datasets: Union[list, primitives.JsDataModel] = None):
     """
     Description:
     -----------
@@ -83,7 +86,7 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param datasets: List. The data set object.
+    :param Union[list, primitives.JsDataModel] datasets: The data set object.
     """
     if datasets is None:
       self.fnc("data()")
@@ -92,11 +95,11 @@ class D3Select(JsPackage):
       self.fnc("data(%s)" % datasets)
     return self
 
-  def dataRecord(self, columns):
+  def dataRecord(self, columns: Union[list, primitives.JsDataModel]):
     """
     Description:
     -----------
-    Convert a list of dictionaries to an iteractor which will return ordered arrays based on the columns definition
+    Convert a list of dictionaries to an iterator which will return ordered arrays based on the columns definition.
 
     Related Pages:
 
@@ -104,7 +107,7 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param columns: List. The columns to be retrieve for each row
+    :param Union[list, primitives.JsDataModel] columns: The columns to be retrieved for each row.
     """
     return self.fnc('''data(function(row, i) { var cell = []; %s.forEach(function(k) { cell.push(row[k]);
         }); return cell; }) ''' % JsUtils.jsConvertData(columns, None))
@@ -121,18 +124,21 @@ class D3Select(JsPackage):
     self.fnc("data(function(row) {return %s.map(function(c, i) {return {column: c, value: row[i]}; }); })" % columns)
     return self
 
-  def datum(self, datasets=None):
+  def datum(self, datasets: Union[list, primitives.JsDataModel] = None):
     """
     Description:
     -----------
     Gets or sets the bound data for each selected element.
-    Unlike selection.data, this method does not compute a join and does not affect indexes or the enter and exit selections.
+    Unlike selection.data, this method does not compute a join and does not affect indexes or the enter and
+    exit selections.
 
     Related Pages:
 
       https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
 
-    :param datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
+    Attributes:
+    ----------
+    :param Union[list, primitives.JsDataModel] datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
     """
     if datasets is None:
       self.fnc("datum()")
@@ -140,7 +146,7 @@ class D3Select(JsPackage):
       self.fnc("datum(%s)" % JsUtils.jsConvertData(datasets, None))
     return self
 
-  def filter(self, jsFncs, profile=False):
+  def filter(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -154,13 +160,13 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Union[list, str] js_funcs: The Javascript events when the DatePicker selection changes.
+    :param Union[dict, bool] profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return self.fnc("filter(function(d, i) {%s} )" % (
-      JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
-  def sort(self, jsFncs, profile=False):
+  def sort(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -171,18 +177,18 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return self.fnc("sort(function(a, b) {%s} )" % (
-      JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def enter(self):
     """
     Description:
     -----------
-    Returns the enter selection: placeholder nodes for each datum that had no corresponding DOM element in the selection.
-    (The enter selection is empty for selections not returned by selection.data.)
+    Returns the enter selection: placeholder nodes for each datum that had no corresponding DOM element in the
+    selection. (The enter selection is empty for selections not returned by selection.data.)
 
     Related Pages:
 
@@ -203,7 +209,7 @@ class D3Select(JsPackage):
     """
     return self.fnc("exit()")
 
-  def append(self, htmlType, setVar=True):
+  def append(self, html_type, set_var=True):
     """
     Description:
     -----------
@@ -216,12 +222,12 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param htmlType:
-    :param setVar:
+    :param html_type:
+    :param bool set_var:
     """
-    return self.fnc("append(%s)" % JsUtils.jsConvertData(htmlType, None))
+    return self.fnc("append(%s)" % JsUtils.jsConvertData(html_type, None))
 
-  def rappend(self, htmlType):
+  def rappend(self, html_type):
     """
     Description:
     -----------
@@ -229,11 +235,11 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param htmlType:
+    :param html_type:
     """
-    return self.append(htmlType, setVar=False)
+    return self.append(html_type, set_var=False)
 
-  def insert(self, htmlType, id):
+  def insert(self, html_type, id):
     pass
 
   def style(self, key, val=None, callback=None):
@@ -253,7 +259,7 @@ class D3Select(JsPackage):
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
     """
     if val is None and callback is None:
-      raise Exception("Either val or callback must be defined")
+      raise ValueError("Either val or callback must be defined")
 
     if callback is not None:
       return self.fnc("style(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
@@ -277,7 +283,7 @@ class D3Select(JsPackage):
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
     """
     if val is None and callback is None:
-      raise Exception("Either val or callback must be defined")
+      raise ValueError("Either val or callback must be defined")
 
     if callback is not None:
       return self.fnc("property(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
@@ -302,7 +308,7 @@ class D3Select(JsPackage):
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
     """
     if val is None and callback is None:
-      raise Exception("Either val or callback must be defined")
+      raise ValueError("Either val or callback must be defined")
 
     if callback is not None:
       return self.fnc("attr(%s, function(d, i){return %s})" % (JsUtils.jsConvertData(key, None), callback))
@@ -350,19 +356,19 @@ class D3Select(JsPackage):
 
     return self.fnc("transition().duration(%s)" % duration)
 
-  def html(self, jsData=None):
+  def html(self, data=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
-    if jsData is None:
+    if data is None:
       return self.fnc("html(function(d) { return d; })")
 
-    return self.fnc("html(function(d) { return %s; })" % jsData)
+    return self.fnc("html(function(d) { return %s; })" % data)
 
   def htmlByKey(self, data):
     """
@@ -387,7 +393,7 @@ class D3Select(JsPackage):
     """
     return self.fnc("call(%s)" % fnc_name)
 
-  def on(self, eventType, jsFncs, profile=False):
+  def on(self, event_type, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -395,15 +401,15 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param eventType: String. The event name.
-    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param event_type: String. The event name.
+    :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     self.style("cursor", "pointer")
     return self.fnc("on(%s, function(data) {%s} )" % (
-      JsUtils.jsConvertData(eventType, None), JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile)))
+      JsUtils.jsConvertData(event_type, None), JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
-  def hover(self, jsFncs, profile=False):
+  def hover(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -416,12 +422,12 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    return self.on("mouseover", jsFncs, profile)
+    return self.on("mouseover", js_funcs, profile)
 
-  def click(self, jsFncs, profile=False):
+  def click(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -434,10 +440,10 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs: String | List. The Javascript events when the DatePicker selection changes.
+    :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
-    return self.on("click", jsFncs, profile)
+    return self.on("click", js_funcs, profile)
 
   def remove(self):
     """
@@ -454,7 +460,7 @@ class D3Select(JsPackage):
     """
     return self.fnc("remove()")
 
-  def clone(self, deep=False):
+  def clone(self, deep: bool = False):
     """
     Description:
     -----------
@@ -467,7 +473,7 @@ class D3Select(JsPackage):
 
     Attributes:
     ----------
-    :param deep: Boolean. Optional. If deep is truthy, the descendant nodes of the selected elements will be cloned as well
+    :param bool deep: Optional. If deep is truthy, the descendant nodes of the selected elements will be cloned as well.
     """
     return self.fnc("clone(%s)" % JsUtils.jsConvertData(deep, None))
 
@@ -487,33 +493,33 @@ class D3Select(JsPackage):
   # def select(self, id):
   #   return 'd3.select("%s")' % id
 
-  def selectAll(self, d3Type):
+  def selectAll(self, d3_type):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param d3Type:
+    :param d3_type:
     """
-    return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3Type, None))
+    return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3_type, None))
 
 
 class D3ForceSimulation:
   _package = ['d3-force']
 
-  def __init__(self, id=None, d3Type=None):
+  def __init__(self, id=None, d3_type=None):
     """
 
     Documentation:
       - https://github.com/d3/d3-force
 
     :param id:
-    :param d3Type:
+    :param d3_type:
     """
     pass
 
-  def force(self, forceType, fnc):
+  def force(self, force_type, fnc):
     pass
 
   def restart(self):
@@ -574,7 +580,7 @@ class D3ForceCollide:
     """
     pass
 
-  def radius(self, fnc):
+  def radius(self, func):
     """
     Description:
     -----------
@@ -588,7 +594,7 @@ class D3ForceCollide:
 
     Attributes:
     ----------
-    :param fnc:
+    :param func:
     """
     pass
 
@@ -613,7 +619,8 @@ class D3ForceCollide:
     """
     Description:
     -----------
-    If iterations is specified, sets the number of iterations per application to the specified number and returns this force
+    If iterations is specified, sets the number of iterations per application to the specified number and returns this
+    force.
 
     Related Pages:
 
@@ -623,7 +630,7 @@ class D3ForceCollide:
     ----------
     :param iterations:
     """
-    pass
+    raise NotImplementedError()
 
 
 class D3ForceCenter:
@@ -697,39 +704,45 @@ class D3Pack:
 
   def padding(self, number):
     """
-    If padding is specified, sets this pack layout’s padding accessor to the specified number or function and returns this pack layout. If padding is not specified, returns the current padding accessor, which defaults to the constant zero
+    Description:
+    -----------
+    If padding is specified, sets this pack layout’s padding accessor to the specified number or function and returns
+    this pack layout. If padding is not specified, returns the current padding accessor, which defaults to the constant
+    zero.
 
     Documentation:
       - https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
 
     :param number:
-    :return:
     """
     pass
 
   def packSiblings(self, circles):
     """
-    Packs the specified array of circles, each of which must have a circle.r property specifying the circle’s radius
+    Description:
+    -----------
+    Packs the specified array of circles, each of which must have a circle.r property specifying the circle’s radius.
 
     Documentation:
       - https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
 
     :param circles:
-    :return:
     """
     pass
 
   def packEnclose(self, circles):
     """
-    Computes the smallest circle that encloses the specified array of circles, each of which must have a circle.r property specifying the circle’s radius, and circle.x and circle.y properties specifying the circle’s center
+    Description:
+    -----------
+    Computes the smallest circle that encloses the specified array of circles, each of which must have a circle.r
+    property specifying the circle’s radius, and circle.x and circle.y properties specifying the circle’s center
 
     Documentation:
       - https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
 
     :param circles:
-    :return:
     """
-    pass
+    raise NotImplementedError()
 
 
 class D3Band:
@@ -790,14 +803,14 @@ class D3Band:
     :return: Return the Javascript String
     """
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     if len(self._js) == 0:
       return self._selector
 
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
+    data = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return strData
+    return data
 
 
 class D3File:
@@ -806,33 +819,33 @@ class D3File:
     self._f, self.src, self._selector = filename, src, selector
     self._js_frg, self._js_ids, self._js_thens, self.profile = [], set(), [], None
 
-  def records(self, jsId):
+  def records(self, js_code):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsId: String. The variable id to store the records.
+    :param str js_code: The variable id to store the records.
     """
-    self._js_frg.append("%s.push(row)" % jsId)
+    self._js_frg.append("%s.push(row)" % js_code)
     return self
 
-  def unpack(self, jsId, column=None):
+  def unpack(self, js_code, column=None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsId: String. The variable id to store the records.
+    :param js_code: The variable id to store the records.
     :param column: String | Js Object. The column name.
     """
-    if jsId not in self._js_ids:
+    if js_code not in self._js_ids:
       column = JsUtils.jsConvertData(column, None)
-      self._js_frg.append("%s.push(row[%s])" % (jsId, column))
-      self._js_ids.add(jsId)
-    return JsObject.JsObject(jsId, isPyData=False)
+      self._js_frg.append("%s.push(row[%s])" % (js_code, column))
+      self._js_ids.add(js_code)
+    return JsObject.JsObject(js_code, is_py_data=False)
 
   def filter(self, rules, keep=True):
     """
@@ -886,23 +899,21 @@ class D3File:
       self._js_frg.append("if(!(row[%s] %s %s)){ return; }" % (column, operator, value))
     return self
 
-  def callback(self, jsFnc, profile=None):
+  def callback(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
     Description:
     -----------
 
-    Usage::
-
     Attributes:
     ----------
-    :param jsFnc: String. Javascript function.
+    :param js_funcs: String. Javascript function.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._js_frg.append(jsFnc)
+    self._js_frg.append(js_funcs)
     self.profile = profile
     return self
 
-  def then(self, jsFncs, profile=False):
+  def then(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
     Description:
     -----------
@@ -923,13 +934,13 @@ class D3File:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     self._js_thens.append(
-      "then(function(data) {%s; return data})" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+      "then(function(data) {%s; return data})" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
   def cast(self, columns, to="float", profile=None):
@@ -952,22 +963,22 @@ class D3File:
           "row['%(col)s'] = parseInt(row['%(col)s'])" % {"col": column}, toStr=True, profile=profile))
     return self
 
-  def row(self, jsFncs, profile=False):
+  def row(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    self._js_frg.append(JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._js_frg.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def get(self, jsFncs, profile=None):
+  def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -986,10 +997,10 @@ class D3File:
 
     Attributes:
     ----------
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[list, str] js_funcs: Javascript functions.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
-    return self.then(jsFncs, profile)
+    return self.then(js_funcs, profile)
 
   def toStr(self):
     file = JsUtils.jsConvertData(self._f, None)
@@ -1012,9 +1023,9 @@ class D3File:
 
 
 class D3Svg:
-  def __init__(self, src, selector, varName=None, setVar=None, parent=None):
-    self.src, self._selector, self.varName = src, selector, varName
-    self._js, self.setVar, self.component = [], setVar, parent
+  def __init__(self, src, selector, js_code=None, set_var=None, parent=None):
+    self.src, self._selector, self.varName = src, selector, js_code
+    self._js, self.setVar, self.component = [], set_var, parent
 
   def line(self):
     self._js.append("line()")
@@ -1038,7 +1049,7 @@ class D3Svg:
     :param tag:
     """
     self._js.append("selectAll(%s)" % JsUtils.jsConvertData(tag, None))
-    return D3Select(self.src, selector=self.toStr(), setVar=self.setVar, parent=self.component)
+    return D3Select(self.src, selector=self.toStr(), set_var=self.setVar, parent=self.component)
 
   def toStr(self):
     content = [self._selector] + self._js
@@ -1104,7 +1115,7 @@ class D3Request(JsPackage):
     mine_type = JsUtils.jsConvertData(mine_type, None)
     return self.fnc('mimeType(%s)' % mine_type)
 
-  def response(self, jsFncs, profile=False):
+  def response(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -1117,16 +1128,16 @@ class D3Request(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     return self.fnc(
       'response(function(xhr) {var data = xhr.responseTex; %s})' % JsUtils.jsConvertFncs(
-        jsFncs, toStr=True, profile=profile))
+        js_funcs, toStr=True, profile=profile))
 
-  def get(self, jsFncs, profile=False):
+  def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -1139,12 +1150,12 @@ class D3Request(JsPackage):
 
     Attributes:
     ----------
-    :param jsFncs:
+    :param js_funcs:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    if not isinstance(jsFncs, list):
-      jsFncs = [jsFncs]
-    return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile))
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return self.fnc('get(function(data) {%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
 
 class D3GeoProjection(JsPackage):
@@ -1201,7 +1212,7 @@ class JsD3(JsPackage):
 
   @property
   def svg(self):
-    return D3Svg(self.src, selector="%s.svg" % self._selector)
+    return D3Svg(self.component, selector="%s.svg" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def csv(self, url):
@@ -1219,7 +1230,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.csv" % self._selector)
+    return D3File(self.component, url, selector="%s.csv" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def tsv(self, url):
@@ -1237,7 +1248,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.tsv" % self._selector)
+    return D3File(self.component, url, selector="%s.tsv" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def xml(self, url):
@@ -1256,7 +1267,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.tsv" % self._selector)
+    return D3File(self.component, url, selector="%s.tsv" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def json(self, url):
@@ -1274,7 +1285,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.json" % self._selector)
+    return D3File(self.component, url, selector="%s.json" % self._selector)
 
   def text(self, url):
     """
@@ -1291,7 +1302,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.text" % self._selector)
+    return D3File(self.component, url, selector="%s.text" % self._selector)
 
   def blob(self, url):
     """
@@ -1308,7 +1319,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.blob" % self._selector)
+    return D3File(self.component, url, selector="%s.blob" % self._selector)
 
   def html(self, url):
     """
@@ -1325,7 +1336,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.html" % self._selector)
+    return D3File(self.component, url, selector="%s.html" % self._selector)
 
   def image(self, url):
     """
@@ -1342,7 +1353,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.image" % self._selector)
+    return D3File(self.component, url, selector="%s.image" % self._selector)
 
   def dsv(self, url):
     """
@@ -1361,27 +1372,28 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.src, url, selector="%s.tsv" % self._selector)
+    return D3File(self.component, url, selector="%s.tsv" % self._selector)
 
-  def min(self, dataset, jsFnc):
-    return JsNumber.JsNumber("d3.min(%s, %s)" % (dataset, jsFnc))
+  def min(self, dataset, js_funcs):
+    return JsNumber.JsNumber("d3.min(%s, %s)" % (dataset, js_funcs))
 
-  def max(self, dataset, jsFnc):
-    return JsNumber.JsNumber("d3.max(%s, %s)" % (dataset, jsFnc))
+  def max(self, dataset, js_funcs):
+    return JsNumber.JsNumber("d3.max(%s, %s)" % (dataset, js_funcs))
 
-  def select(self, id, varName=None):
-    if varName is not None:
-      return D3Select(self.src, selector="d3.select('%s')" % id, varName=varName, setVar=True)
+  def select(self, tag, js_code: str = None):
+    tag = JsUtils.jsConvertData(tag, None)
+    if js_code is not None:
+      return D3Select(self.component, selector="d3.select(%s)" % tag, js_code=js_code, set_var=True)
 
-    return D3Select(self.src, selector="d3.select('%s')" % id, setVar=False)
+    return D3Select(self.component, selector="d3.select(%s)" % tag, set_var=False)
 
-  def selectAll(self, d3Type, setVar=False):
-    return D3Select(d3Type=d3Type, setVar=setVar)
+  def selectAll(self, d3_type, set_var=False) -> D3Select:
+    return D3Select(d3_type=d3_type, set_var=set_var)
 
-  def scaleLinear(self, range):
+  def scaleLinear(self, range) -> D3ScaleLinear:
     return D3ScaleLinear(range)
 
-  def scaleBand(self, range=None):
+  def scaleBand(self, range=None) -> D3Band:
     """
     Description:
     -----------
@@ -1424,11 +1436,11 @@ class JsD3(JsPackage):
     :return: Return the Javascript String
     """
     if self._selector is None:
-      raise Exception("Selector not defined, use this() or new() first")
+      raise ValueError("Selector not defined, use this() or new() first")
 
     if len(self._js) == 0:
       return self._selector
 
-    strData = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
+    data = "%(jqId)s.%(items)s" % {'jqId': self._selector, 'items': ".".join(self._js)}
     self._js = [] # empty the stack
-    return strData
+    return data

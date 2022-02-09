@@ -23,9 +23,9 @@ class Console(Html.Html):
   name = 'Console'
   _option_cls = OptText.OptionsConsole
 
-  def __init__(self, report: primitives.PageModel, data: list, width: tuple, height: tuple, html_code: Optional[str],
+  def __init__(self, page: primitives.PageModel, data: Union[str, list], width: tuple, height: tuple, html_code: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Console, self).__init__(report, data, html_code=html_code, options=options,
+    super(Console, self).__init__(page, data, html_code=html_code, options=options,
                                   css_attrs={"width": width, "height": height}, profile=profile)
     self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self.page.theme.greys[-1],
               'background': self.page.theme.colors[0]})
@@ -44,7 +44,7 @@ class Console(Html.Html):
     :rtype: JsHtmlEditor.Console
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.Console(self, report=self.page)
+      self._dom = JsHtmlEditor.Console(self, page=self.page)
     return self._dom
 
   @property
@@ -69,15 +69,15 @@ class Console(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s></div>%s" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return "<div %s></div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class Editor(Html.Html):
   name = 'Code Editor'
   requirements = ('codemirror', )
 
-  def __init__(self, report, vals, language, width, height, html_code, options, profile):
-    super(Editor, self).__init__(report, vals, html_code=html_code, profile=profile,
+  def __init__(self, page: primitives.PageModel, vals, language, width, height, html_code, options, profile):
+    super(Editor, self).__init__(page, vals, html_code=html_code, profile=profile,
                                  css_attrs={"width": width, "height": height, 'box-sizing': 'border-box',
                                             'margin': '5px 0'})
     self.textarea = self.page.ui.texts.code(vals, height=height, language=language, options=options)
@@ -97,7 +97,7 @@ class Editor(Html.Html):
     :rtype: JsHtmlEditor.Editor
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.Editor(self, report=self.page)
+      self._dom = JsHtmlEditor.Editor(self, page=self.page)
     return self._dom
 
   def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
@@ -205,7 +205,7 @@ class Editor(Html.Html):
         <div %(attr)s>%(actions)s
           <span style="display:inline-block;float:right;margin-right:5px;font-style:italic">%(timestamp)s</span>
         </div> 
-        %(textarea)s''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes()), 'timestamp': timestamp,
+        %(textarea)s''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'timestamp': timestamp,
                            "textarea": self.textarea.html(), 'actions': actions}
 
 
@@ -213,9 +213,9 @@ class Cell(Html.Html):
   name = 'Python Cell Runner'
   requirements = ('codemirror', )
 
-  def __init__(self, report: primitives.PageModel, vals: list, language: str, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, vals: Union[list, str], language: str, width: tuple, height: tuple,
                html_code: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(Cell, self).__init__(report, vals, html_code=html_code, options=options,
+    super(Cell, self).__init__(page, vals, html_code=html_code, options=options,
                                css_attrs={"width": width, "height": height}, profile=profile)
     self.textarea = self.page.ui.texts.code(vals, language, height=height, options=options)
     self.textarea.options.managed = False
@@ -280,7 +280,7 @@ class Cell(Html.Html):
             In [ <span data=count=0 style="display:inline-block;margin-bottom:5px">0</span> ]<br/>%(actions)s
           </div>
           %(textarea)s
-      </div>''' % {'attrs': self.get_attrs(pyClassNames=self.style.get_classes()),
+      </div>''' % {'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
                    'actions': actions, "textarea": self.textarea.html()}
 
 
@@ -289,9 +289,9 @@ class Code(Html.Html):
   requirements = ('codemirror', )
   _option_cls = OptCodeMirror.OptionsCode
 
-  def __init__(self, report: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
                html_code: Optional[str], options: Optional[dict], helper: str, profile: Optional[Union[dict, bool]]):
-    super(Code, self).__init__(report, vals, html_code=html_code, options=options,
+    super(Code, self).__init__(page, vals, html_code=html_code, options=options,
                                css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
     self.css({'display': 'block', 'margin': '5px 0'})
@@ -335,7 +335,7 @@ class Code(Html.Html):
     :rtype: JsCodeMirror.CM
     """
     if self._js is None:
-      self._js = JsCodeMirror.CM(self, report=self.page)
+      self._js = JsCodeMirror.CM(self, page=self.page)
     return self._js
 
   @property
@@ -351,7 +351,7 @@ class Code(Html.Html):
     :rtype: JsHtmlEditor.CodeMirror
     """
     if self._dom is None:
-      self._dom = JsHtmlEditor.CodeMirror(self, report=self.page)
+      self._dom = JsHtmlEditor.CodeMirror(self, page=self.page)
     return self._dom
 
   @property
@@ -382,7 +382,8 @@ class Code(Html.Html):
     self.attr["placeholder"] = text
     return self
 
-  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
+  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
+            component_id: Optional[str] = None):
     """
     Description:
     ------------
@@ -442,19 +443,19 @@ class Code(Html.Html):
     self.page.body.onReady(
       'window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()' % {
         "editor": self.editorId, "width": self.css("width"), "height": self.css("height")})
-    return '<textarea %s></textarea>%s' % (self.get_attrs(pyClassNames=self.style.get_classes()), self.helper)
+    return '<textarea %s></textarea>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 
 class Tags(Html.Html):
   name = 'Tags'
 
-  def __init__(self, report: primitives.PageModel, vals: list, title: str, icon: str, size: tuple, width: tuple,
+  def __init__(self, page: primitives.PageModel, vals: list, title: str, icon: str, size: tuple, width: tuple,
                height: tuple, html_code: Optional[str], profile: Optional[Union[bool, dict]]):
-    super(Tags, self).__init__(report, vals, css_attrs={"width": width, "height": height},
+    super(Tags, self).__init__(page, vals, css_attrs={"width": width, "height": height},
                                html_code=html_code, profile=profile)
     self.title, self.icon = title, icon
     self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]),
-              "font-family": report.style.defaults.font.family})
+              "font-family": page.style.defaults.font.family})
 
   @property
   def val(self):
@@ -487,7 +488,7 @@ class Tags(Html.Html):
     data = JsUtils.jsConvertData(data, None)
     icon_details = cssDefaults.get_icon("close")
     self.page.properties.js.add_builders('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
-       fncDsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
+       func_dsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''
       $('#%(htmlCode)s_tags').append("<span style='margin:2px;background:%(baseColor)s;color:%(whiteColor)s;border-radius:8px;1em;vertical-align:middle;display:inline-block;padding:0 2px 1px 10px;cursor:pointer'>"+ %(jsData)s +"<i onclick='RemoveSelection($(this), \\\"%(htmlCode)s\\\")' style='margin-left:10px' class='%(close)s'></i></span>")
       ''' % {"htmlCode": self.htmlCode, "jsData": data, 'whiteColor': self.page.theme.greys[0],
@@ -499,7 +500,7 @@ class Tags(Html.Html):
         <div style='margin:0;display:inline-block;vertical-align:middle;width:90px;float:left;padding:2px 5px 0 5px;height:30px;border:1px solid %(greyColor)s'>
           <i class="%(icon)s" style="margin-right:10px"></i>%(title)s</div>
         <div id='%(htmlCode)s_tags' style='padding:2px 5px 0 5px;border:1px solid %(greyColor)s;height:30px'></div>
-      </div>''' % {"attr": self.get_attrs(pyClassNames=self.style.get_classes()), "title": self.title,
+      </div>''' % {"attr": self.get_attrs(css_class_names=self.style.get_classes()), "title": self.title,
                    'icon': self.icon, 'htmlCode': self.htmlCode, 'greyColor': self.page.theme.greys[2]}
 
 
@@ -508,9 +509,9 @@ class MarkdownReader(Html.Html):
   requirements = ('highlight.js', 'showdown')
   _option_cls = OptText.OptionsText
 
-  def __init__(self, report: primitives.PageModel, vals: list, width: tuple, height: tuple, html_code: Optional[str],
+  def __init__(self, page: primitives.PageModel, vals: Union[str, list], width: tuple, height: tuple, html_code: Optional[str],
                options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(MarkdownReader, self).__init__(report, vals, html_code=html_code, profile=profile, options=options,
+    super(MarkdownReader, self).__init__(page, vals, html_code=html_code, profile=profile, options=options,
                                          css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.actions = []
 
@@ -532,7 +533,7 @@ class MarkdownReader(Html.Html):
     :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlRich(self, report=self.page)
+      self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   @property
@@ -589,4 +590,4 @@ class MarkdownReader(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '''<div %(attr)s></div> ''' % {'attr': self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '''<div %(attr)s></div> ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes())}

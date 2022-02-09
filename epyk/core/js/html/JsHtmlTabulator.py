@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
+
 from epyk.core.js.html import JsHtml
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
@@ -8,9 +10,11 @@ from epyk.core.js.primitives import JsObjects
 
 class JsHtmlTabulatorCell(JsHtml.JsHtml):
 
-  def _init__(self, tableId, page):
-    self.tableId = tableId
+  def _init__(self, js_code: str, page: primitives.PageModel, component: primitives.HtmlModel = None):
+    self.tableId = js_code
+    self.js_code = js_code
     self.page = page
+    self.component = component
 
   def getElement(self):
     """
@@ -81,7 +85,7 @@ class JsHtmlTabulator(JsHtml.JsHtml):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self._report, "%s.getData()" % self._src.tableId)
+    return JsHtml.ContentFormatters(self.page, "%s.getData()" % self.component.tableId)
 
   @property
   def headers(self):
@@ -90,7 +94,7 @@ class JsHtmlTabulator(JsHtml.JsHtml):
     -----------
 
     """
-    return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self._src.tableId)
+    return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self.component.tableId)
 
   def empty(self):
-    return  self._src.js.clearData()
+    return self.component.js.clearData()

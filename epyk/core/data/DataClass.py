@@ -2,28 +2,31 @@
 # -*- coding: utf-8 -*-
 
 import sys
-
+from typing import Any, Union
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
 
 class DataClass:
 
-  def __init__(self, component, attrs=None, options=None):
-    self._report, self.options, self._attrs = component, options, dict(attrs or {})
-    self.component = self._report
+  def __init__(self, component: primitives.HtmlModel = None, attrs: dict = None, options: dict = None,
+               page: primitives.PageModel = None):
+    self.component, self.options, self._attrs, self.page = component, options, dict(attrs or {}), page
+    if component is not None:
+      self.page = component.page
     self.__sub_levels, self.__sub__enum_levels = set(), set()
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     return self._attrs[i]
 
-  def update(self, vals):
+  def update(self, vals: dict):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param vals: Dictionary. All the attributes to be added to the component.
+    :param dict vals: All the attributes to be added to the component.
     """
     self._attrs.update(vals)
 
@@ -70,7 +73,7 @@ class DataClass:
     self._attrs[name] = value
     return self
 
-  def has_attribute(self, clsObj):
+  def has_attribute(self, cls_obj):
     """
     Description:
     ------------
@@ -79,24 +82,24 @@ class DataClass:
 
     Attributes:
     ----------
-    :param clsObj: Class. The sub data class used in the structure definition
+    :param cls_obj: Class. The sub data class used in the structure definition
     """
-    return self.sub_data(sys._getframe().f_back.f_code.co_name, clsObj)
+    return self.sub_data(sys._getframe().f_back.f_code.co_name, cls_obj)
 
-  def get(self, dflt=None, name=None):
+  def get(self, dfl: Union[str, bool, int, dict, list, float] = None, name: str = None):
     """
     Description:
     ------------
-    Get tje attribute to the underlying attributes dictionary.
+    Get the attribute to the underlying attributes dictionary.
 
     Attributes:
     ----------
-    :param dflt: string. Optional. The default value of this attribute.
-    :param name: String. Optional. The attribute name. default the name of the function.
+    :param str dfl: Optional. The default value of this attribute.
+    :param str name: Optional. The attribute name. default the name of the function.
     """
-    return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dflt)
+    return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dfl)
 
-  def set(self, value, name=None):
+  def set(self, value: Any, name: str = None):
     """
     Description:
     ------------
@@ -104,14 +107,14 @@ class DataClass:
 
     Attributes:
     ----------
-    :param value: Object. The attribute value.
-    :param name: String. Optional. The attribute name. default the name of the function.
+    :param Any value: The attribute value.
+    :param str name: Optional. The attribute name. default the name of the function.
 
     :return: "Self" to allow the chains on the Python side
     """
     return self.attr(name or sys._getframe().f_back.f_code.co_name, value)
 
-  def sub_data(self, name, clsObj):
+  def sub_data(self, name: str, cls_obj):
     """
     Description:
     ------------
@@ -122,17 +125,17 @@ class DataClass:
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary.
-    :param clsObj: Class. Object. The object which will be added to the nested data structure.
+    :param str name: The key to be added to the internal data dictionary.
+    :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     if name in self._attrs:
       return self._attrs[name]
 
     self.__sub_levels.add(name)
-    self._attrs[name] = clsObj(self._report)
+    self._attrs[name] = cls_obj(self._report)
     return self._attrs[name]
 
-  def add(self, name, value):
+  def add(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -140,14 +143,14 @@ class DataClass:
 
     Attributes:
     ----------
-    :param name: String. The key in the final data dictionary.
-    :param value: Object. The value in the final data dictionary.
+    :param str name: The key in the final data dictionary.
+    :param Any value: The value in the final data dictionary.
     """
     self.__sub_levels.add(name)
     self._attrs[name] = JsUtils.jsConvertData(value, None)
     return self
 
-  def sub_data_enum(self, name, clsObj):
+  def sub_data_enum(self, name: str, cls_obj):
     """
     Description:
     ------------
@@ -156,11 +159,11 @@ class DataClass:
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the internal data dictionary.
-    :param clsObj: Class. Object. The object which will be added to the nested data structure.
+    :param str name: The key to be added to the internal data dictionary.
+    :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__sub__enum_levels.add(name)
-    enum_data = clsObj(self._report)
+    enum_data = cls_obj(self._report)
     self._attrs.setdefault(name, []).append(enum_data)
     return enum_data
 
@@ -181,7 +184,7 @@ class DataEnum:
     self._report, self.__value = component, value or self.dflt
     self.component = self._report
 
-  def set(self, value=None):
+  def set(self, value: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     ------------
@@ -190,7 +193,7 @@ class DataEnum:
 
     Attributes:
     ----------
-    :param value: String. Optional. The value to be set (default is the function name).
+    :param Union[str, primitives.JsDataModel] value: Optional. The value to be set (default is the function name).
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name

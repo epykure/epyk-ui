@@ -3,6 +3,7 @@
 
 # https://bl.ocks.org/ctufts/f38ef0187f98c537d791d24fda4a6ef9
 
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js.packages import JsD3
@@ -14,15 +15,15 @@ class Script(Html.Html):
   _option_cls = OptChart.OptionsChart
   requirements = ('d3', )
 
-  def __init__(self, report, data, width, height, html_code, options, profile):
-    super(Script, self).__init__(report, data, html_code=html_code, profile=profile, options=options,
+  def __init__(self, page: primitives.PageModel, data, width, height, html_code, options, profile):
+    super(Script, self).__init__(page, data, html_code=html_code, profile=profile, options=options,
                                  css_attrs={"width": width, "height": height})
     self._js__builder__ = ""
     self.style.css.padding = 5
     self.options.height = height[0]
 
   @property
-  def options(self):
+  def options(self) -> OptChart.OptionsChart:
     """
     Description:
     -----------
@@ -107,8 +108,8 @@ class Script(Html.Html):
     -----------
 
     """
-    return JsD3.D3Svg(self.page, "%s.select('svg')" % self.dom.d3.varId, setVar=False)
+    return JsD3.D3Svg(self.page, "%s.select('svg')" % self.dom.d3.varId, set_var=False)
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

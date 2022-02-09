@@ -1,15 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
-"""
-Module dedicated to wrap the Javascript Boolean
-
-Related Pages:
-
-		https://www.w3schools.com/jsref/jsref_valueof_boolean.asp
-"""
-
 from typing import Optional
 from epyk.core.py import primitives
 
@@ -21,12 +12,12 @@ from epyk.core.js.primitives import JsObject
 class JsBoolean(JsObject.JsObject):
   _jsClass = "Boolean"
 
-  def __init__(self, data, varName: Optional[str] = None, setVar: bool = False, isPyData: bool = True,
-               report: Optional[primitives.PageModel] = None):
-    if not hasattr(data, 'varName') and isPyData:
-      isPyData = True
+  def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = True,
+               page: Optional[primitives.PageModel] = None):
+    if not hasattr(data, 'varName') and is_py_data:
+      is_py_data = True
       data = json.dumps(data)
-    super(JsBoolean, self).__init__(data, varName, setVar, isPyData, report)
+    super(JsBoolean, self).__init__(data, js_code, set_var, is_py_data, page)
 
   @property
   def not_(self):
@@ -66,4 +57,4 @@ class JsBoolean(JsObject.JsObject):
 
     :return: A Boolean, either "true" or "false"
     """
-    return JsBoolean("%s.valueOf()" % self.varId, isPyData=False)
+    return JsBoolean("%s.valueOf()" % self.varId, is_py_data=False)

@@ -8,9 +8,9 @@ from epyk.core.js import JsUtils
 
 class Charts(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self.page = component, page
     self._js, self._jquery = [], None
 
   def addData(self, data, category=None):
@@ -29,7 +29,7 @@ class Charts(JsPackage):
     :param category: String. Optional. The data type.
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsUtils.jsWrap("%s.addData(%s)" % (self._src.var, data))
+    return JsUtils.jsWrap("%s.addData(%s)" % (self.component.var, data))
 
   def addSeries(self, data):
     """
@@ -46,7 +46,7 @@ class Charts(JsPackage):
     :param data: String. Data to be added.
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsUtils.jsWrap("%s.addSeries(%s)" % (self._src.var, data))
+    return JsUtils.jsWrap("%s.addSeries(%s)" % (self.component.var, data))
 
   def hideTooltip(self):
     """
@@ -58,7 +58,7 @@ class Charts(JsPackage):
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#hideTooltip
     """
-    return JsUtils.jsWrap("%s.hideTooltip(%s)" % self._src.var)
+    return JsUtils.jsWrap("%s.hideTooltip(%s)" % self.component.var)
 
   def setData(self, data):
     """
@@ -75,7 +75,7 @@ class Charts(JsPackage):
     :param data: Array. Data to be set.
     """
     data = JsUtils.jsConvertData(data, None)
-    return JsUtils.jsWrap("%s.setData(%s)" % (self._src.var, data))
+    return JsUtils.jsWrap("%s.setData(%s)" % (self.component.var, data))
 
   def setOptions(self, options):
     """
@@ -92,7 +92,7 @@ class Charts(JsPackage):
     :param options: Dictionary. Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
-    return JsUtils.jsWrap("%s.setOptions(%s)" % (self._src.var, options))
+    return JsUtils.jsWrap("%s.setOptions(%s)" % (self.component.var, options))
 
   def showTooltip(self, seriesInfo):
     """
@@ -109,7 +109,7 @@ class Charts(JsPackage):
     :param seriesInfo: Dictionary. Information of the series for the tooltip to be displayed.
     """
     seriesInfo = JsUtils.jsConvertData(seriesInfo, None)
-    return JsUtils.jsWrap("%s.showTooltip(%s)" % (self._src.var, seriesInfo))
+    return JsUtils.jsWrap("%s.showTooltip(%s)" % (self.component.var, seriesInfo))
 
   def updateOptions(self, options):
     """
@@ -126,7 +126,7 @@ class Charts(JsPackage):
     :param options: Dictionary. Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
-    return JsUtils.jsWrap("%s.updateOptions(%s)" % (self._src.var, options))
+    return JsUtils.jsWrap("%s.updateOptions(%s)" % (self.component.var, options))
 
   def destroy(self):
     """
@@ -138,4 +138,4 @@ class Charts(JsPackage):
 
       https://nhn.github.io/tui.chart/latest/Chart#destroy
     """
-    return JsUtils.jsWrap("%s.destroy()" % self._src.var)
+    return JsUtils.jsWrap("%s.destroy()" % self.component.var)

@@ -1,7 +1,9 @@
 
 import time
 import datetime
-from typing import Union, Optional, List
+from typing import Optional
+
+from epyk.core.py import primitives
 
 
 DFL_DATE_FORMAT = '%Y-%m-%d'
@@ -20,11 +22,8 @@ class PyDates:
   All the tests in this module are using doctest.
   """
 
-  class __internal:
-    _props, _context = {}, {}
-
-  def __init__(self, src=None):
-    self.__src = src if src else self.__internal()
+  def __init__(self, src: primitives.PageModel = None):
+    self.page = src
 
   @property
   def today(self):
@@ -68,14 +67,13 @@ class PyDates:
     """
     return datetime.datetime.fromtimestamp(time.time()).strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def path(self, with_time: bool = False):
+  @staticmethod
+  def path(with_time: bool = False):
     """
     Description:
     ------------
     Return a predefined format for date in a file path.
     Using this method will ensure a consistency in the naming convention of the various files in the project.
-
-    Usage::
 
     Attributes:
     ----------
@@ -186,7 +184,7 @@ class PyDates:
     else:
       f_type, f_count = alias, 0
     if f_type == 'T':
-      for i in range(0, int(f_count) + 1):
+      for _ in range(0, int(f_count) + 1):
         if len(alias) > 1:
           if alias[1] == '+':
             cob_date = cob_date + datetime.timedelta(days=1)
@@ -230,7 +228,8 @@ class PyDates:
 
     return alias
 
-  def date_from_excel(self, xl_date: int):
+  @staticmethod
+  def date_from_excel(xl_date: int):
     """
     Description:
     ------------
@@ -328,7 +327,8 @@ class PyDates:
         dates.append(dt.strftime(DFL_DATE_FORMAT))
     return dates
 
-  def from_timestamp(self, timestamp: int, offset: int = 0, reference: int = 60, factor: int = 1000):
+  @staticmethod
+  def from_timestamp(timestamp: int, offset: int = 0, reference: int = 60, factor: int = 1000):
     """
     Description:
     ------------
@@ -336,13 +336,13 @@ class PyDates:
 
     Usage::
 
-      timestamp_s = rptObj.py.dates.from_timestamp(1573074335010, 0)
+      timestamp_s = page.py.dates.from_timestamp(1573074335010, 0)
 
     Attributes:
     ----------
     :param int timestamp: The timestamp in milliseconds.
     :param int offset: Optional. The time zone.
-    :param int reference:  Optional. The reference shift in minutes.
+    :param int reference: Optional. The reference shift in minutes.
     :param int factor:
 
     :return: The server timestamp string
@@ -351,7 +351,8 @@ class PyDates:
     date = date + datetime.timedelta(minutes=(int(offset) + reference))
     return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def to_server_time(self, timestamp: str, offset: int = 0, reference: int = 60):
+  @staticmethod
+  def to_server_time(timestamp: str, offset: int = 0, reference: int = 60):
     """
     Description:
     ------------
@@ -375,7 +376,8 @@ class PyDates:
     date = date + datetime.timedelta(minutes=(int(offset) + reference))
     return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
-  def to_user_time(self, timestamp: str, offset: int, reference: int = 60):
+  @staticmethod
+  def to_user_time(timestamp: str, offset: int, reference: int = 60):
     """
     Description:
     ------------
@@ -400,6 +402,22 @@ class PyDates:
     return date.strftime(DFL_DATE_FORMAT + ' %H:%M:%S')
 
   @staticmethod
+  def delta(from_dt: str, to_dt: str, format_dt: str = "%Y-%m-%d"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param from_dt:
+    :param to_dt:
+    :param format_dt:
+    """
+    from_dt = datetime.datetime.strptime(from_dt, format_dt)
+    to_dt = datetime.datetime.strptime(to_dt, format_dt)
+    return to_dt - from_dt
+
+  @staticmethod
   def elapsed(delta_time, with_time: bool = False):
     """
     Description:
@@ -407,14 +425,16 @@ class PyDates:
     Get the time between two dates.
     This function will only format the result of a delta time object.
 
+    # TODO: Fix this method
+
     Attributes:
     ----------
     :param delta_time: delta_time. The delta time between two python dates.
     :param bool with_time: Optional. A flag to mention if the time should be computed.
     """
     year = delta_time.days // 365
-    months = (delta_time.days - year * 365) // 12
-    days = delta_time.days - year * 365 - months * 12
+    months = (delta_time.days - year * 365) // 30
+    days = delta_time.days - year * 365 - months * 30
     if not with_time:
       return {"year": year, 'months': months, 'days': days}
 

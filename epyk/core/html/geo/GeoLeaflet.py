@@ -12,9 +12,9 @@ class GeoLeaflet(Html.Html):
   requirements = ('leaflet', )
   _option_cls = OptionsLeaflet.Leaflet
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self,  page, width, height, html_code, options, profile):
     self.height = height[0]
-    super(GeoLeaflet, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(GeoLeaflet, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height})
     self.chartId = "%s_obj" % self.htmlCode
     self.style.css.display = "inline-block"
@@ -47,7 +47,7 @@ class GeoLeaflet(Html.Html):
     return self
 
   @property
-  def js(self):
+  def js(self) -> JsLeaflet.LeafLet:
     """
     Description:
     -----------
@@ -58,14 +58,14 @@ class GeoLeaflet(Html.Html):
 
     :return: A Javascript Dom object functions.
 
-    :rtype: JsApexChart.ApexChart
+    :rtype: JsLeaflet.LeafLet
     """
     if self._js is None:
       self._js = JsLeaflet.LeafLet(selector="window['%s']" % self.chartId, src=self)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptionsLeaflet.Leaflet:
     """
     Description:
     -----------
@@ -74,7 +74,7 @@ class GeoLeaflet(Html.Html):
 
     Python can pass some options to the JavaScript layer.
 
-    :rtype: OptJqvM.OptionsLeaflet
+    :rtype: OptionsLeaflet.Leaflet
     """
     return super().options
 
@@ -186,4 +186,4 @@ class GeoLeaflet(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

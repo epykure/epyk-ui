@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional
+from epyk.core.py import primitives
 
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
@@ -16,9 +17,11 @@ from epyk.fwk.bs import CssClasses as BsCssClasses
 
 
 class ClassPage:
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None):
     self._css_struct, self._css_class = None, None
-    self.component = component
+    self.component, self.page = component, page
+    if component is not None:
+      self.page = component.page
     self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection = 4 * [None]
     self.__contenteditable, self.__global_styles, self.__moz_selection = None, None, None
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
@@ -33,7 +36,7 @@ class ClassPage:
     :rtype: Body
     """
     if self._css_struct is None:
-      self._css_struct = Body(self.component)
+      self._css_struct = Body(self.component, page=self.page)
     return self._css_struct
 
   @property
@@ -48,7 +51,7 @@ class ClassPage:
     """
     if self._css_class is None:
       self._css_class = Classes.CatalogDiv.CatalogDiv(
-        self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
+        self.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
   @property
@@ -66,7 +69,7 @@ class ClassPage:
     :rtype: Defaults_css.GlobalStyle
     """
     if self.__global_styles is None:
-      self.__global_styles = Defaults_css.GlobalStyle(self.component.page)
+      self.__global_styles = Defaults_css.GlobalStyle(self.page)
     return self.__global_styles
 
   @property
@@ -79,7 +82,7 @@ class ClassPage:
     :rtype: CssStyleScrollbar.CssWebkitScrollbar
     """
     if not self.__webkitscrollbar:
-      self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.component.page)
+      self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.page)
     return self.__webkitscrollbar
 
   @property
@@ -92,7 +95,7 @@ class ClassPage:
     :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
     """
     if not self.__webkitscrollbar_thumb:
-      self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.component.page)
+      self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.page)
     return self.__webkitscrollbar_thumb
 
   @property
@@ -105,7 +108,7 @@ class ClassPage:
     :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
     """
     if not self.__webkitscrollbar_track:
-      self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.component.page)
+      self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.page)
     return self.__webkitscrollbar_track
 
   @property
@@ -122,7 +125,7 @@ class ClassPage:
     :rtype: CssStyleScrollbar.CssWebkitSelection
     """
     if not self.__selection:
-      self.__selection = CssStyleScrollbar.CssWebkitSelection(self.component.page)
+      self.__selection = CssStyleScrollbar.CssWebkitSelection(self.page)
     return self.__selection
 
   @property
@@ -139,7 +142,7 @@ class ClassPage:
     :rtype: CssStyleScrollbar.CssWebkitMozSelection
     """
     if not self.__moz_selection:
-      self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.component.page)
+      self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.page)
     return self.__moz_selection
 
   def contenteditable(self) -> CssStylesPage.CssPageContentEditable:
@@ -155,7 +158,7 @@ class ClassPage:
     :rtype: CssStylesPage.CssPageContentEditable
     """
     if not self.__contenteditable:
-      self.__contenteditable = CssStylesPage.CssPageContentEditable(self.component.page)
+      self.__contenteditable = CssStylesPage.CssPageContentEditable(self.page)
       self.classList['other'].add(self.__contenteditable)
     return self.__contenteditable
 
@@ -194,7 +197,7 @@ class ClassPage:
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
@@ -208,7 +211,7 @@ class ClassPage:
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def get_classes(self):
@@ -277,22 +280,24 @@ class ClassPage:
     css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    cls_obj = v_cls(self.component.page)
+    cls_obj = v_cls(self.page)
     self.classList['other'].add(cls_obj)
     return cls_def
 
 
 class ClassHtml:
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None):
     self._css_struct, self._css_class = None, None
-    self.component = component
+    self.component, self.page = component, page
+    if component is not None:
+      self.page = component.page
     self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(), 'other': OrderedSet()}, None, None
     self.__cls_effects, self.__css_virtual = None, {}
     self.classList['main'].add(self.css_class)
 
   @property
-  def varName(self):
+  def varName(self) -> str:
     """
     Description:
     ------------
@@ -325,7 +330,7 @@ class ClassHtml:
     """
     if self._css_class is None:
       self._css_class = Classes.CatalogDiv.CatalogDiv(
-        self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
+        self.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     return self._css_class
 
   def shadows(self, num: int):
@@ -369,7 +374,7 @@ class ClassHtml:
     self.component.css(shadow_styles[num])
 
   @property
-  def configs(self):
+  def configs(self) -> GrpConfigs.ClsConfigs:
     """
     Description:
     ------------
@@ -396,7 +401,7 @@ class ClassHtml:
     :rtype: Effects.Effects
     """
     if self.__cls_effects is None:
-      self.__cls_effects = Effects.Effects(self.component.page, self.component)
+      self.__cls_effects = Effects.Effects(self.page, self.component)
     return self.__cls_effects
 
   @property
@@ -409,7 +414,7 @@ class ClassHtml:
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
@@ -423,7 +428,7 @@ class ClassHtml:
     :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
-      self.__cls_catalog = Classes.Catalog(self.component.page, self.classList)
+      self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def attr(self, key: str, name: str, dflt: Optional[str] = None, suffix: str = "temp"):
@@ -550,7 +555,7 @@ class ClassHtml:
     css_attrs['is_class'] = is_class
     cls_def.update(css_attrs)
     v_cls = type(classname, (CssStyle.Style, ), cls_def)
-    cls_obj = v_cls(self.component.page)
+    cls_obj = v_cls(self.page)
     if to_component:
       self.classList['main'].add(cls_obj)
     else:
@@ -571,7 +576,7 @@ class ClassHtml:
     self._css_class = None
     return self
 
-  def clear_class(self, classname):
+  def clear_class(self, classname: str):
     """
     Description:
     ------------
@@ -579,7 +584,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param classname: String. The CSS class name to be removed for the component.
+    :param str classname: The CSS class name to be removed for the component.
 
     :return: The style property for chaining.
     """
@@ -621,7 +626,7 @@ class ClassHtml:
         self._css_class = ""
       else:
         self._css_class = Classes.CatalogDiv.CatalogDiv(
-          self.component.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
+          self.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
     else:
       self._css_class = Defaults_css.DEFAULT_STYLE
     self.component.attr['class'] = self.classList['main']
@@ -673,7 +678,7 @@ class ClassHtml:
       self.__css_virtual['classname'] = "style_%s" % self.component.htmlCode
       meta_cls = type('Style%s' % self.component.htmlCode, (CssStyle.Style,), self.__css_virtual)
       self.css.attrs = {}
-      self.classList['main'].add(meta_cls(self.component.page))
+      self.classList['main'].add(meta_cls(self.page))
       self.component.attr['css'] = {}
     computed_classlist = {"main": OrderedSet(), 'other': OrderedSet()}
     for css_category, css_cls in self.classList.items():
@@ -684,7 +689,7 @@ class ClassHtml:
             continue
 
           if c.is_page_scope:
-            self.component.page._css[c.get_ref()] = c
+            self.page._css[c.get_ref()] = c
         computed_classlist[css_category].add(c)
     return computed_classlist
 
@@ -717,8 +722,8 @@ class ClassHtml:
 
       https://getbootstrap.com/docs/5.0/getting-started/introduction/
     """
-    self.component.page.jsImports.add("bootstrap")
-    self.component.page.cssImport.add("bootstrap")
+    self.page.jsImports.add("bootstrap")
+    self.page.cssImport.add("bootstrap")
     return BsCssClasses.Style(self.component.attr['class'])
 
 
@@ -734,5 +739,5 @@ class ClassHtmlEmpty(ClassHtml):
     :rtype: Empty
     """
     if self._css_struct is None:
-      self._css_struct = Empty(self.component)
+      self._css_struct = Empty(self.component, page=self.page)
     return self._css_struct

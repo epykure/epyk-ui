@@ -33,10 +33,6 @@ class JQVMap(JsPackage):
   lib_alias = {"js": 'jqvmap', 'css': 'jqvmap'}
   lib_set_var = False
 
-  def __init__(self, htmlObj, varName=None, selector=None, setVar=False, report=None):
-    super(JQVMap, self).__init__(src=htmlObj, varName=varName, selector=selector, data=None, setVar=setVar, parent=report)
-    self._src = htmlObj
-
   def zoomIn(self):
     """
     Description:

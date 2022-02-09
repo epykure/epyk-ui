@@ -22,7 +22,7 @@ class OptionsQrCode(Options):
     return self._config_get(128)
 
   @width.setter
-  def width(self, num):
+  def width(self, num: int):
     self._config(num)
 
   @property
@@ -42,7 +42,7 @@ class OptionsQrCode(Options):
     return self._config_get(128)
 
   @height.setter
-  def height(self, num):
+  def height(self, num: int):
     self._config(num)
 
   @property
@@ -62,7 +62,7 @@ class OptionsQrCode(Options):
     return self.width
 
   @size.setter
-  def size(self, num):
+  def size(self, num: int):
     self.height = num
     self.width = num
 
@@ -83,7 +83,7 @@ class OptionsQrCode(Options):
     return self._config_get("#000000")
 
   @colorDark.setter
-  def colorDark(self, color):
+  def colorDark(self, color: str):
     self._config(color)
 
   @property
@@ -103,5 +103,5 @@ class OptionsQrCode(Options):
     return self._config_get("#ffffff")
 
   @colorLight.setter
-  def colorLight(self, color):
+  def colorLight(self, color: str):
     self._config(color)
