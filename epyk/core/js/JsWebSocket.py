@@ -131,19 +131,19 @@ class WebSocket:
     :param from_config:
     """
     if from_config is not None:
-      self.page._props['js']['builders'].add("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
+      self.page.properties.js.add_builders("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
       self.__connect = "new WebSocket(%s)" % from_config.address
       return JsObjects.JsVoid("var %s = new WebSocket(%s)" % (self._selector, from_config.address))
 
     prefix = "wss" if self.secured else 'ws'
     if protocol is None:
-      self.page._props['js']['builders'].add(
+      self.page.properties.js.add_builders(
         "var %s = new WebSocket('%s://%s:%s')" % (self._selector, prefix, url, port))
       self.__connect = "new WebSocket('%s://%s:%s')" % (prefix, url, port)
       return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s')" % (self._selector, prefix, url, port))
 
     protocol = JsUtils.jsConvertData(protocol, None)
-    self.page._props['js']['builders'].add(
+    self.page.properties.js.add_builders(
       "var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
     self.__connect = "new WebSocket('%s://%s:%s', %s)" % (prefix, url, port, protocol)
     return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
@@ -380,12 +380,12 @@ class Worker:
       else:
         script_content.append('wkScript.textContent = "%s"' % content.strip().replace("\n", ""))
       script_content.append('document.head.appendChild(wkScript)')
-      self.page._props['js']['builders'].add('''
+      self.page.properties.js.add_builders('''
 %(content)s; var blob_%(selector)s = new Blob([document.querySelector('#js_%(selector)s').textContent ], {type: "text/javascript"})
 %(selector)s = new Worker(window.URL.createObjectURL(blob_%(selector)s))''' % {
-  "content": ";".join(script_content), 'selector': self._selector})
+  "content": JsUtils.jsConvertFncs(script_content, toStr=True), 'selector': self._selector})
     else:
-      self.page._props['js']['builders'].add("%s = new Worker('%s')" % (self._selector, script))
+      self.page.properties.js.add_builders("%s = new Worker('%s')" % (self._selector, script))
     return JsObjects.JsVoid("%s = new Worker('%s')" % (self._selector, script))
 
   def postMessage(self, data, components: List[primitives.HtmlModel] = None):
@@ -492,7 +492,7 @@ class ServerSentEvent:
     """
     self.page, self.__server = src, server
     self._selector = html_code or "sse_%s" % id(self)
-    self.page._props['js']['builders'].add("var %s" % self._selector)
+    self.page.properties.js.add_builders("var %s" % self._selector)
 
   @property
   def message(self):
@@ -526,13 +526,14 @@ class ServerSentEvent:
     :param Optional[dict] options:
     """
     if from_config is not None:
-      self.page._props['js']['builders'].add("%s = new EventSource(%s)" % (self._selector, from_config.address))
+      self.page.properties.js.add_builders("%s = new EventSource(%s)" % (self._selector, from_config.address))
       self.__connect = "new EventSource(%s)" % from_config.address
       return JsObjects.JsVoid("%s = new EventSource(%s)" % (self._selector, from_config.address))
 
-    self.page._props['js']['builders'].add("%s = new EventSource('%s:%s')" % (self._selector, url, port))
-    self.__connect = "new EventSource('%s:%s')" % (url, port)
-    return JsObjects.JsVoid("%s = new EventSource('%s:%s')" % (self._selector, url, port))
+    server_root = "%s:%s" % (url, port) if port is not None else url
+    self.page.properties.js.add_builders("%s = new EventSource('%s')" % (self._selector, server_root))
+    self.__connect = "new EventSource('%s')" % server_root
+    return JsObjects.JsVoid("%s = new EventSource('%s')" % (self._selector, server_root))
 
   def onmessage(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
@@ -608,7 +609,8 @@ class ServerSentEvent:
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    return JsObjects.JsVoid("%(varName)s.addEventListener('%(eventType)s', function (event) {%(data)s})" % {
+    event_type = JsUtils.jsConvertData(event_type, None)
+    return JsObjects.JsVoid("%(varName)s.addEventListener(%(eventType)s, function (event) {%(data)s})" % {
       "varName": self._selector, 'eventType': event_type,
       "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 

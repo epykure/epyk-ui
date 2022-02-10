@@ -961,7 +961,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param Union[str, list] js_funcs: The Javascript functions to be added to this section.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
-    self.page._props['js']['onReady'].add(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    self.page.properties.js.add_on_ready(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
   def profile(self, type: Union[str, primitives.JsDataModel], html_code: str, mark: Union[str, primitives.JsDataModel],
