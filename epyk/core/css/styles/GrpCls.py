@@ -712,7 +712,7 @@ class ClassHtml:
     return css_frgs
 
   @property
-  def bs(self):
+  def bs(self) -> BsCssClasses.Style:
     """
     Description:
     ------------

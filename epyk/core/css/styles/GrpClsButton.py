@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.css.styles import GrpCls
 from epyk.core.css.styles.attributes import AttrClsButtons
 
@@ -8,7 +9,7 @@ from epyk.core.css import Classes
 class ClassButton(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsButtons.AttrButton:
     """
     Description:
     -----------
@@ -25,7 +26,7 @@ class ClassButton(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogButton.CatalogButton:
     """
     Description:
     -----------
@@ -51,7 +52,7 @@ class ClassButton(GrpCls.ClassHtml):
 class ClassBadge(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsButtons.AttrBadge:
     """
     Description:
     -----------
@@ -71,7 +72,7 @@ class ClassBadge(GrpCls.ClassHtml):
 class ClassButtonCheckBox(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsButtons.AttrButton:
     """
     Description:
     -----------
@@ -90,14 +91,14 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
 
 class ClassButtonMenu(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(ClassButtonMenu, self).__init__(component)
     self._css_btn_content_hover, self._css_btn_link_hover = None, None
     self.classList['main'].add(self.css_btn_content)
     self.classList['main'].add(self.css_btn_link_hover)
 
   @property
-  def css_btn_content(self):
+  def css_btn_content(self) -> Classes.CatalogButton.CatalogButton:
     """
     Description:
     -----------
@@ -108,11 +109,12 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     """
     if self._css_btn_content_hover is None:
       self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(
-        self.component.page, self.classList['main'], html_id=self.component.htmlCode).content()
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode,
+        component=self.component).content()
     return self._css_btn_content_hover
 
   @property
-  def css_btn_link_hover(self):
+  def css_btn_link_hover(self) -> Classes.CatalogButton.CatalogButton:
     """
     Description:
     -----------
@@ -123,5 +125,6 @@ class ClassButtonMenu(GrpCls.ClassHtml):
     """
     if self._css_btn_link_hover is None:
       self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(
-        self.component.page, self.classList['main'], html_id=self.component.htmlCode).content_link()
+        self.component.page, self.classList['main'], html_id=self.component.htmlCode,
+        component=self.component).content_link()
     return self._css_btn_link_hover

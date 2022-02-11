@@ -36,7 +36,8 @@ class DataConfig:
     self.docs[key] = doc
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
-  def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None, end_point: str = "/static/configs"):
+  def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None,
+                 end_point: str = "/static/configs"):
     """
     Description:
     ------------

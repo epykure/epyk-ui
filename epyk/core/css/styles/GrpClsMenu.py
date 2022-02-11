@@ -26,7 +26,7 @@ class ClassNav(GrpCls.ClassHtml):
 class ClassFooter(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsMenu.Footer:
     """
     Description:
     -----------
@@ -46,7 +46,7 @@ class ClassFooter(GrpCls.ClassHtml):
 class ClassShortcut(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsMenu.Footer:
     """
     Description:
     -----------

@@ -526,9 +526,9 @@ class Style:
   classname, classnames, is_class, is_page_scope = None, None, True, True
 
   def __init__(self, page: primitives.PageModel, css_ovrs: dict = None, selector_ovrs: dict = None,
-               html_id: str = None):
+               html_id: str = None, component: primitives.HtmlModel = None):
     self.html_id, self.cls_ref, self.__has_changed = html_id, None, False
-    self.page = page
+    self.page, self.component = page, component
     css_ovrs = css_ovrs or {}
     self.__keyframes, self.__media = {}, {}
     selector_ids = dict(getattr(self, '_selectors', {}))

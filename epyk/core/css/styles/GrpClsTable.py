@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
 
@@ -130,7 +131,7 @@ class DataTableThemes:
 
 class Datatable(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Datatable, self).__init__(component)
     self._css_datatable, self._css_datatable_header, self._css_datatable_row_odd = None, None, None
     self._css_datatable_row_even, self._css_datatable_footer = None, None
@@ -154,7 +155,7 @@ class Datatable(GrpCls.ClassHtml):
     return DataTableThemes(self.classList['main'])
 
   @property
-  def cls_datatable(self):
+  def cls_datatable(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -162,11 +163,12 @@ class Datatable(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_datatable is None:
-      self._css_datatable = Classes.CatalogTable.CatalogTable(self.component.page, self.classList['main']).datatable()
+      self._css_datatable = Classes.CatalogTable.CatalogTable(
+        self.component.page, self.classList['main'], component=self.component).datatable()
     return self._css_datatable
 
   @property
-  def cls_datatable_header(self):
+  def cls_datatable_header(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -175,11 +177,11 @@ class Datatable(GrpCls.ClassHtml):
     """
     if self._css_datatable_header is None:
       self._css_datatable_header = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).datatable_header()
+        self.component.page, self.classList['main'], component=self.component).datatable_header()
     return self._css_datatable_header
 
   @property
-  def cls_datatable_odd(self):
+  def cls_datatable_odd(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -188,11 +190,11 @@ class Datatable(GrpCls.ClassHtml):
     """
     if self._css_datatable_row_odd is None:
       self._css_datatable_row_odd = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).datatable_odd()
+        self.component.page, self.classList['main'], component=self.component).datatable_odd()
     return self._css_datatable_row_odd
 
   @property
-  def cls_datatable_even(self):
+  def cls_datatable_even(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -201,11 +203,11 @@ class Datatable(GrpCls.ClassHtml):
     """
     if self._css_datatable_row_even is None:
       self._css_datatable_row_even = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).datatable_even()
+        self.component.page, self.classList['main'], component=self.component).datatable_even()
     return self._css_datatable_row_even
 
   @property
-  def cls_datatable_footer(self):
+  def cls_datatable_footer(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -214,13 +216,13 @@ class Datatable(GrpCls.ClassHtml):
     """
     if self._css_datatable_footer is None:
       self._css_datatable_footer = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).datatable_footer()
+        self.component.page, self.classList['main'], component=self.component).datatable_footer()
     return self._css_datatable_footer
 
 
 class Tabulator(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Tabulator, self).__init__(component)
     self._css_tabulator, self._css_tabulator_row, self._css_tabulator_header = None, None, None
     self._css_tabulator_even_row, self._css_tabulator_cell, self._css_tabulator_headers = None, None, None
@@ -262,7 +264,7 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['main'].add(self.cls_tabulator_even_row)
 
   @property
-  def cls_tabulator(self):
+  def cls_tabulator(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -271,11 +273,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator is None:
       self._css_tabulator = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator()
+        self.component.page, self.classList['main'], component=self.component).tabulator()
     return self._css_tabulator
 
   @property
-  def cls_sorter_asc(self):
+  def cls_sorter_asc(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -284,11 +286,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_sorter_asc is None:
       self._css_sorter_asc = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator_sorter_asc()
+        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_asc()
     return self._css_sorter_asc
 
   @property
-  def cls_sorter_desc(self):
+  def cls_sorter_desc(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -297,11 +299,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_sorter_desc is None:
       self._css_sorter_desc = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator_sorter_desc()
+        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_desc()
     return self._css_sorter_desc
 
   @property
-  def cls_sorter_none(self):
+  def cls_sorter_none(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -310,11 +312,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_sorter_none is None:
       self._css_sorter_none = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator_sorter_none()
+        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_none()
     return self._css_sorter_none
 
   @property
-  def cls_tabulator_row(self):
+  def cls_tabulator_row(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -323,11 +325,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_row is None:
       self._css_tabulator_row = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_rows()
+        self.component.page, self.classList['other'], component=self.component).tabulator_rows()
     return self._css_tabulator_row
 
   @property
-  def cls_tabulator_cell(self):
+  def cls_tabulator_cell(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -336,11 +338,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_cell is None:
       self._css_tabulator_cell = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_cell()
+        self.component.page, self.classList['other'], component=self.component).tabulator_cell()
     return self._css_tabulator_cell
 
   @property
-  def cls_tabulator_col(self):
+  def cls_tabulator_col(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -349,11 +351,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_col is None:
       self._css_tabulator_col = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_col()
+        self.component.page, self.classList['other'], component=self.component).tabulator_col()
     return self._css_tabulator_col
 
   @property
-  def cls_tabulator_col_content(self):
+  def cls_tabulator_col_content(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -362,11 +364,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_col_content is None:
       self._css_tabulator_col_content = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_col_content()
+        self.component.page, self.classList['other'], component=self.component).tabulator_col_content()
     return self._css_tabulator_col_content
 
   @property
-  def cls_tabulator_menu(self):
+  def cls_tabulator_menu(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -375,11 +377,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_menu is None:
       self._css_tabulator_menu = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_menu()
+        self.component.page, self.classList['other'], component=self.component).tabulator_menu()
     return self._css_tabulator_menu
 
   @property
-  def cls_tabulator_menu_item(self):
+  def cls_tabulator_menu_item(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -388,11 +390,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_menu_item is None:
       self._css_tabulator_menu_item = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_menu_item()
+        self.component.page, self.classList['other'], component=self.component).tabulator_menu_item()
     return self._css_tabulator_menu_item
 
   @property
-  def cls_tabulator_selected(self):
+  def cls_tabulator_selected(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -401,11 +403,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_selected is None:
       self._css_tabulator_selected = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_selected()
+        self.component.page, self.classList['other'], component=self.component).tabulator_selected()
     return self._css_tabulator_selected
 
   @property
-  def cls_tabulator_even_row(self):
+  def cls_tabulator_even_row(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -414,11 +416,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_even_row is None:
       self._css_tabulator_even_row = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator_even_rows()
+        self.component.page, self.classList['main'], component=self.component).tabulator_even_rows()
     return self._css_tabulator_even_row
 
   @property
-  def cls_tabulator_even_row_no_strip(self):
+  def cls_tabulator_even_row_no_strip(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -427,11 +429,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_even_row_no_strip is None:
       self._css_tabulator_even_row_no_strip = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).tabulator_even_rows_no_strop()
+        self.component.page, self.classList['main'], component=self.component).tabulator_even_rows_no_strop()
     return self._css_tabulator_even_row_no_strip
 
   @property
-  def cls_tb_even_row(self):
+  def cls_tb_even_row(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -440,11 +442,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_odd_row is None:
       self._css_tb_odd_row = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_odd_rows()
+        self.component.page, self.classList['other'], component=self.component).tabulator_odd_rows()
     return self._css_tb_odd_row
 
   @property
-  def cls_tb_groups(self):
+  def cls_tb_groups(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -453,11 +455,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_groups is None:
       self._css_tb_groups = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_groups()
+        self.component.page, self.classList['other'], component=self.component).tabulator_groups()
     return self._css_tb_groups
 
   @property
-  def cls_tb_footer(self):
+  def cls_tb_footer(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -466,11 +468,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_footer is None:
       self._css_tb_footer = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_footer()
+        self.component.page, self.classList['other'], component=self.component).tabulator_footer()
     return self._css_tb_footer
 
   @property
-  def cls_tb_footer_pg(self):
+  def cls_tb_footer_pg(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -479,11 +481,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_footer_pg is None:
       self._css_tb_footer_pg = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_footer_pagination()
+        self.component.page, self.classList['other'], component=self.component).tabulator_footer_pagination()
     return self._css_tb_footer_pg
 
   @property
-  def cls_tb_tree(self):
+  def cls_tb_tree(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -492,11 +494,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_tree is None:
       self._css_tb_tree = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_tree_control()
+        self.component.page, self.classList['other'], component=self.component).tabulator_tree_control()
     return self._css_tb_tree
 
   @property
-  def cls_tb_tree_exp(self):
+  def cls_tb_tree_exp(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -505,11 +507,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tb_tree_exp is None:
       self._css_tb_tree_exp = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_tree_control_expand()
+        self.component.page, self.classList['other'], component=self.component).tabulator_tree_control_expand()
     return self._css_tb_tree_exp
 
   @property
-  def cls_tabulator_header(self):
+  def cls_tabulator_header(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -518,11 +520,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_header is None:
       self._css_tabulator_header = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_header()
+        self.component.page, self.classList['other'], component=self.component).tabulator_header()
     return self._css_tabulator_header
 
   @property
-  def cls_tabulator_editing(self):
+  def cls_tabulator_editing(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -531,11 +533,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_editing is None:
       self._css_tabulator_editing = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_editing()
+        self.component.page, self.classList['other'], component=self.component).tabulator_editing()
     return self._css_tabulator_editing
 
   @property
-  def cls_tabulator_cell_editing(self):
+  def cls_tabulator_cell_editing(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -544,11 +546,11 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_cell_editing is None:
       self._css_tabulator_cell_editing = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_cell_editing()
+        self.component.page, self.classList['other'], component=self.component).tabulator_cell_editing()
     return self._css_tabulator_cell_editing
 
   @property
-  def cls_tabulator_headers(self):
+  def cls_tabulator_headers(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -557,7 +559,7 @@ class Tabulator(GrpCls.ClassHtml):
     """
     if self._css_tabulator_headers is None:
       self._css_tabulator_headers = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).tabulator_headers()
+        self.component.page, self.classList['other'], component=self.component).tabulator_headers()
     return self._css_tabulator_headers
 
   def get_classes_css(self):
@@ -574,7 +576,7 @@ class Tabulator(GrpCls.ClassHtml):
 
 class Pivot(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Pivot, self).__init__(component)
     self._css_pt_head, self._css_pt_cell, self._css_pt_axis = 3 * [None]
     self._css_pt_box, self._css_pt_pop, self._css_pt_val, self._css_pt_label = 4 * [None]
@@ -593,7 +595,7 @@ class Pivot(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_pt_popup_checks_label)
 
   @property
-  def cls_pt_popup_checks_label(self):
+  def cls_pt_popup_checks_label(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -602,11 +604,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_pop_checks_label is None:
       self._css_pt_pop_checks_label = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_popup_checks_label()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_popup_checks_label()
     return self._css_pt_pop_checks_label
 
   @property
-  def cls_pt_popup_checks(self):
+  def cls_pt_popup_checks(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -615,11 +617,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_pop_checks is None:
       self._css_pt_pop_checks = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_popup_checks()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_popup_checks()
     return self._css_pt_pop_checks
 
   @property
-  def cls_pt_head(self):
+  def cls_pt_head(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -628,11 +630,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_head is None:
       self._css_pt_head = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main']).pivot_head()
+        self.component.page, self.classList['main'], component=self.component).pivot_head()
     return self._css_pt_head
 
   @property
-  def cls_pt_cell(self):
+  def cls_pt_cell(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -641,11 +643,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_cell is None:
       self._css_pt_cell = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_cell()
+        self.component.page, self.classList['other'], component=self.component).pivot_cell()
     return self._css_pt_cell
 
   @property
-  def cls_pt_axis(self):
+  def cls_pt_axis(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -654,11 +656,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_axis is None:
       self._css_pt_axis = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_axis()
+        self.component.page, self.classList['other'], component=self.component).pivot_axis()
     return self._css_pt_axis
 
   @property
-  def cls_pt_filter_box(self):
+  def cls_pt_filter_box(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -667,11 +669,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_box is None:
       self._css_pt_box = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_box()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_box()
     return self._css_pt_box
 
   @property
-  def cls_pt_popup_header(self):
+  def cls_pt_popup_header(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -680,11 +682,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_pop_header is None:
       self._css_pt_pop_header = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_popup_header()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_popup_header()
     return self._css_pt_pop_header
 
   @property
-  def cls_pt_popup_button(self):
+  def cls_pt_popup_button(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -693,11 +695,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_pop_button is None:
       self._css_pt_pop_button = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_popup_button()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_popup_button()
     return self._css_pt_pop_button
 
   @property
-  def cls_pt_popup(self):
+  def cls_pt_popup(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -706,11 +708,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_pop is None:
       self._css_pt_pop = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_popup()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_popup()
     return self._css_pt_pop
 
   @property
-  def cls_pt_val(self):
+  def cls_pt_val(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -719,11 +721,11 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_val is None:
       self._css_pt_val = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_val()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_val()
     return self._css_pt_val
 
   @property
-  def cls_pt_label(self):
+  def cls_pt_label(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
@@ -732,13 +734,13 @@ class Pivot(GrpCls.ClassHtml):
     """
     if self._css_pt_label is None:
       self._css_pt_label = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).pivot_filter_label()
+        self.component.page, self.classList['other'], component=self.component).pivot_filter_label()
     return self._css_pt_label
 
 
 class Aggrid(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(Aggrid, self).__init__(component)
     self.classList['main'].clear()
     self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
@@ -754,7 +756,7 @@ class Aggrid(GrpCls.ClassHtml):
     self.classList['other'].add(self.css_popup)
 
   @property
-  def css_popup(self):
+  def css_popup(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -764,11 +766,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_popup is None:
       self._css_popup = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_popup()
+        self.component.page, self.classList['other'], component=self.component).ag_popup()
     return self._css_popup
 
   @property
-  def css_menu(self):
+  def css_menu(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -778,11 +780,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_menu is None:
       self._css_menu = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_menu()
+        self.component.page, self.classList['other'], component=self.component).ag_menu()
     return self._css_menu
 
   @property
-  def css_filter(self):
+  def css_filter(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -792,11 +794,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_filter is None:
       self._css_filter = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_filter()
+        self.component.page, self.classList['other'], component=self.component).ag_filter()
     return self._css_filter
 
   @property
-  def cls_head(self):
+  def cls_head(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -806,11 +808,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_head is None:
       self._css_head = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_head()
+        self.component.page, self.classList['other'], component=self.component).ag_head()
     return self._css_head
 
   @property
-  def cls_row_even(self):
+  def cls_row_even(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -820,11 +822,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_row_even is None:
       self._css_row_even = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_row_even()
+        self.component.page, self.classList['other'], component=self.component).ag_row_even()
     return self._css_row_even
 
   @property
-  def cls_row(self):
+  def cls_row(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -834,11 +836,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_row is None:
       self._css_row = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_row()
+        self.component.page, self.classList['other'], component=self.component).ag_row()
     return self._css_row
 
   @property
-  def cls_row_odd(self):
+  def cls_row_odd(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -848,11 +850,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_row_odd is None:
       self._css_row_odd = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_row_odd()
+        self.component.page, self.classList['other'], component=self.component).ag_row_odd()
     return self._css_row_odd
 
   @property
-  def cls_cell_focus(self):
+  def cls_cell_focus(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -862,11 +864,11 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_cell_focus is None:
       self._css_cell_focus = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_cell_focus()
+        self.component.page, self.classList['other'], component=self.component).ag_cell_focus()
     return self._css_cell_focus
 
   @property
-  def cls_cell(self):
+  def cls_cell(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -876,5 +878,5 @@ class Aggrid(GrpCls.ClassHtml):
     """
     if self._css_cell is None:
       self._css_cell = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['other']).ag_cell()
+        self.component.page, self.classList['other'], component=self.component).ag_cell()
     return self._css_cell

@@ -132,7 +132,7 @@ class DataClass:
       return self._attrs[name]
 
     self.__sub_levels.add(name)
-    self._attrs[name] = cls_obj(self._report)
+    self._attrs[name] = cls_obj(self.component)
     return self._attrs[name]
 
   def add(self, name: str, value: Any):
@@ -163,7 +163,7 @@ class DataClass:
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__sub__enum_levels.add(name)
-    enum_data = cls_obj(self._report)
+    enum_data = cls_obj(self.component)
     self._attrs.setdefault(name, []).append(enum_data)
     return enum_data
 

@@ -84,5 +84,6 @@ class ClsFormula(GrpCls.ClassHtml):
     :rtype: Classes.CatalogText.CatalogFormulas
     """
     if self._css_mjx is None:
-      self._css_mjx = Classes.CatalogText.CatalogFormulas(self.component.page, self.classList['other']).mjx()
+      self._css_mjx = Classes.CatalogText.CatalogFormulas(
+        self.component.page, self.classList['other']).mjx()
     return self._css_mjx

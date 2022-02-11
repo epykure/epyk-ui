@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
 from epyk.core.css.styles.attributes import AttrInput
@@ -6,7 +7,7 @@ from epyk.core.css.styles.attributes import AttrInput
 
 class ClassSlider(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(ClassSlider, self).__init__(component)
     self._css_ui_active, self._css_ui_header, self._css_ui_slider = 3 * [None]
     self.classList['other'].add(self.cls_ui_active)
@@ -14,7 +15,7 @@ class ClassSlider(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_ui_slider)
 
   @property
-  def css(self):
+  def css(self) -> AttrInput.AttrInput:
     """
     Description:
     -----------
@@ -31,7 +32,7 @@ class ClassSlider(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogInput.CatalogInput:
     """
     Description:
     -----------
@@ -41,11 +42,12 @@ class ClassSlider(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).basic()
+      self._css_class = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main'], component=self.component).basic()
     return self._css_class
 
   @property
-  def cls_ui_slider(self):
+  def cls_ui_slider(self) -> Classes.CatalogInput.CatalogInput:
     """
     Description:
     -----------
@@ -55,11 +57,12 @@ class ClassSlider(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_ui_slider is None:
-      self._css_ui_slider = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).slider()
+      self._css_ui_slider = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main'], component=self.component).slider()
     return self._css_ui_slider
 
   @property
-  def cls_ui_active(self):
+  def cls_ui_active(self) -> Classes.CatalogInput.CatalogInput:
     """
     Description:
     -----------
@@ -69,11 +72,12 @@ class ClassSlider(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_ui_active is None:
-      self._css_ui_active = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).active()
+      self._css_ui_active = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main'], component=self.component).active()
     return self._css_ui_active
 
   @property
-  def cls_ui_header(self):
+  def cls_ui_header(self) -> Classes.CatalogInput.CatalogInput:
     """
     Description:
     -----------
@@ -83,19 +87,20 @@ class ClassSlider(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._css_ui_header is None:
-      self._css_ui_header = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['main']).widget_header()
+      self._css_ui_header = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['main'], component=self.component).widget_header()
     return self._css_ui_header
 
 
 class ClassMenu(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(ClassMenu, self).__init__(component)
     self._cls_ui = None
     self.classList['other'].add(self.cls_ui)
 
   @property
-  def cls_ui(self):
+  def cls_ui(self) -> Classes.CatalogInput.CatalogInput:
     """
     Description:
     -----------
@@ -104,5 +109,6 @@ class ClassMenu(GrpCls.ClassHtml):
     :rtype: Classes.CatalogInput.CatalogInput
     """
     if self._cls_ui is None:
-      self._cls_ui = Classes.CatalogInput.CatalogInput(self.component.page, self.classList['other']).menu()
+      self._cls_ui = Classes.CatalogInput.CatalogInput(
+        self.component.page, self.classList['other'], component=self.component).menu()
     return self._cls_ui

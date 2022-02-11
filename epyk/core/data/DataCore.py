@@ -140,12 +140,11 @@ class DataAggregators:
     :param dst_key: Dictionary. Optional.
     :param cast_vals: Boolean. Optional.
     """
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     keys = JsUtils.jsConvertData(keys, None)
     dst_key = JsUtils.jsConvertData(dst_key, None)
     columns = JsUtils.jsConvertData(columns, None)
     name = "AggSumBy"
-    constructors[name] = '''
+    self.page.properties.js.add_constructor(name, '''
       function %s(rs, cs, sks, dk){var result = []; var tmpResults = {}; if(sks == ''){return rs}; var rdk = dk === null ? sks :  dk;
         if (!Array.isArray(sks)) {sks = [sks]}
         rs.forEach(function(r){
@@ -154,7 +153,7 @@ class DataAggregators:
              cs.forEach(function(c){tmpResults[skKey][c] = 0})}
           cs.forEach(function(c){tmpResults[skKey][c] += %s})
         }); for(var v in tmpResults){result.push(tmpResults[v])}; return result}''' % (
-      name, "parseFloat(r[c])" if cast_vals else 'r[c]')
+      name, "parseFloat(r[c])" if cast_vals else 'r[c]'))
     return JsObjects.JsArray.JsRecordSet('%s(%s, %s, %s, %s)' % (
       name, self.varName, columns, keys, dst_key), page=self.page)
 
@@ -206,12 +205,11 @@ class DataFilters:
     :param Union[dict, primitives.JsDataModel] data: The keys, values to be filtered.
     :param bool case_sensitive: Optional. To make sure algorithm case sensitive.
     """
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     data = JsUtils.jsConvertData(data, None)
     name = "filterMatch"
-    constructors[name] = '''
+    self.page.properties.js.add_constructor(name, '''
        function %s(r, v){if(typeof r === 'undefined'){ return []}; if(v.length == 0){return r}; var n=[];r.forEach(function(e){var isValid = true;
-           for(var a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n.push(e)}}); return n}''' % name
+           for(var a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n.push(e)}}); return n}''' % name)
     self.__filters.add("%s(%%s, %s)" % (name, data))
     return self
 
@@ -229,13 +227,11 @@ class DataFilters:
     :param value: Object. The value to keep.
     :param keys: List. Optional. The list of keys to check.
     """
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     value = JsUtils.jsConvertData(value, None)
     keys = JsUtils.jsConvertData(keys, None)
     name = "AnyMatch"
-    constructors[
-      name] = "function %s(r, v, ks){if (v == ''){return r}; v = v.toUpperCase(); var n=[];r.forEach(function(e){ for(const k in e){ if(String(e[k]).toUpperCase().includes(v)){n.push(e); break;} } });return n}" % name
-
+    self.page.properties.js.add_constructor(name,
+      "function %s(r, v, ks){if (v == ''){return r}; v = v.toUpperCase(); var n=[];r.forEach(function(e){ for(const k in e){ if(String(e[k]).toUpperCase().includes(v)){n.push(e); break;} } });return n}" % name)
     self.__filters.add("%s(%%s, %s, %s)" % (name, value, keys))
     return self
 
@@ -251,15 +247,14 @@ class DataFilters:
     :param value: Object. The value to keep.
     :param bool case_sensitive: Optional. To make sure algorithm case sensitive.
     """
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
     if not case_sensitive:
       name = "filterEqualUpper"
-      constructors[name] = "function %s(r, k, v){if (v == ''){return r}; var n=[];v = v.toUpperCase(); r.forEach(function(e){if(e[k].toUpperCase()==v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){if (v == ''){return r}; var n=[];v = v.toUpperCase(); r.forEach(function(e){if(e[k].toUpperCase()==v){n.push(e)}});return n}" % name)
     else:
       name = "filterEqual"
-      constructors[name] = "function %s(r, k, v){if (v == ''){return r}; var n=[];r.forEach(function(e){if(e[k]==v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){if (v == ''){return r}; var n=[];r.forEach(function(e){if(e[k]==v){n.push(e)}});return n}" % name)
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
@@ -276,18 +271,18 @@ class DataFilters:
     :param case_sensitive: Boolean. Optional. To make sure algorithm case sensitive.
     :param empty_all: Boolean. Optional. To specify how to consider the empty case.
     """
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(values, None)
     if not case_sensitive:
       name = "filterContainUpper"
-      constructors[name] = '''function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; 
+      self.page.properties.js.add_constructor(name, '''function %s(r, k, v){if (v.length == 0){if(%s){return r} 
+          else {return []}}; 
           var vUp = []; v.forEach(function(t){vUp.push(t.toUpperCase())}); 
           var n=[];r.forEach(function(e){if(vUp.includes(e[k].toUpperCase())){n.push(e)}});return n}''' % (
-        name, json.dumps(empty_all))
+        name, json.dumps(empty_all)))
     else:
       name = "filterContain"
-      constructors[name] = "function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % (name, json.dumps(empty_all))
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){if (v.length == 0){if(%s){return r} else {return []}}; var n=[];r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}" % (name, json.dumps(empty_all)))
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
@@ -305,8 +300,7 @@ class DataFilters:
     name = "filterStartsWith"
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
-    constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k].startsWith(v)){n.push(e)}});return n}" % name
+    self.page.properties.js.add_constructor(name, "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k].startsWith(v)){n.push(e)}});return n}" % name)
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
@@ -324,13 +318,12 @@ class DataFilters:
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if strict:
       name = "filterSup"
-      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] > v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] > v){n.push(e)}});return n}" % name)
     else:
       name = "filterSupEq"
-      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] >= v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] >= v){n.push(e)}});return n}" % name)
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
@@ -349,13 +342,12 @@ class DataFilters:
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if strict:
       name = "filterInf"
-      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] < v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] < v){n.push(e)}});return n}" % name)
     else:
       name = "filterInfEq"
-      constructors[name] = "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] <= v){n.push(e)}});return n}" % name
+      self.page.properties.js.add_constructor(name, "function %s(r, k, v){var n=[];r.forEach(function(e){if(e[k] <= v){n.push(e)}});return n}" % name)
     self.__filters.add("%s(%%s, %s, %s)" % (name, key, value))
     return self
 
@@ -411,18 +403,17 @@ class DataFilters:
     value = JsUtils.jsConvertData(value, None)
     column = JsUtils.jsConvertData(column, None)
     p = JsUtils.jsConvertData(p, None)
-    constructors = self.page._props.setdefault("js", {}).setdefault("constructors", {})
     if type is not None:
       groups = {"int": ["parseInt", "Integer"], "float": ["parseFloat", "Float"]}.get(type, type)
       fnc_name = "SimplePivot%s" % groups[1]
       val_fmt = "%s(t[v])" % groups[0]
     else:
       fnc_name, val_fmt = "SimplePivot", "t[v]"
-    constructors[fnc_name] = '''
+    self.page.properties.js.add_constructor(fnc_name, '''
 function %(fnc_name)s(r, k, v, p){
 var s = {}; r.forEach(function(t){if (t[p] in s){s[t[p]][t[k]] = %(vFmt)s} else {s[t[p]] = {[t[k]]: %(vFmt)s}}});
 var result = []; for (const [key, values] of Object.entries(s)) {result.push(Object.assign(values, {[p]: key}))}
-return result}''' % {"fnc_name": fnc_name, "vFmt": val_fmt}
+return result}''' % {"fnc_name": fnc_name, "vFmt": val_fmt})
     self.__filters.add("%s(%%s, %s, %s, %s)" % (fnc_name, column, value, p))
     return self
 

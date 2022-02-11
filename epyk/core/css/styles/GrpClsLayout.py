@@ -8,7 +8,7 @@ from epyk.core.css import Classes
 class ClassStandard(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> Attrs:
     """
     Description:
     -----------
@@ -25,7 +25,7 @@ class ClassStandard(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
     Description:
     -----------
@@ -35,14 +35,15 @@ class ClassStandard(GrpCls.ClassHtml):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.component.page, self.classList['main']).margin_vertical()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], component=self.component).margin_vertical()
     return self._css_class
 
 
 class ClassHelp(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> AttrClsLayout.AttrHelp:
     """
     Description:
     -----------
@@ -59,7 +60,7 @@ class ClassHelp(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
     Description:
     -----------
@@ -69,5 +70,6 @@ class ClassHelp(GrpCls.ClassHtml):
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(self.component.page, self.classList['main']).margin_vertical()
+      self._css_class = Classes.CatalogDiv.CatalogDiv(
+        self.component.page, self.classList['main'], component=self.component).margin_vertical()
     return self._css_class

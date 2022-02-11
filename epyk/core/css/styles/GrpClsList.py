@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Classes
 from epyk.core.css.styles.classes import CssStylesList
@@ -7,7 +8,7 @@ from epyk.core.css.styles.attributes import Attrs
 
 class AttrSelect(Attrs):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(AttrSelect, self).__init__(component)
     self.font_size = 'inherit'
     self.font_family = 'inherit'
@@ -75,7 +76,7 @@ class AttrSelect(Attrs):
 
 class ClassSelect(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(ClassSelect, self).__init__(component)
     self._css_class_dt, self._css_class_dt_ui, self._css_select = None, None, None
     self._css_select_input, self._css_item_option, self._css_item_options, self._css_item_selected = 4 * [None]
@@ -89,7 +90,7 @@ class ClassSelect(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_item_selected)
 
   @property
-  def css(self):
+  def css(self) -> AttrSelect:
     """
     Description:
     ------------
@@ -106,7 +107,7 @@ class ClassSelect(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def cls_item_selected(self):
+  def cls_item_selected(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -115,11 +116,11 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_item_selected is None:
       self._css_item_selected = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['other']).selected()
+        self.component.page, self.classList['other'], component=self.component).selected()
     return self._css_item_selected
 
   @property
-  def cls_select(self):
+  def cls_select(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -128,11 +129,11 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_select is None:
       self._css_select = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['main']).base()
+        self.component.page, self.classList['main'], component=self.component).base()
     return self._css_select
 
   @property
-  def cls_select_button(self):
+  def cls_select_button(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -140,11 +141,12 @@ class ClassSelect(GrpCls.ClassHtml):
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_class_dt is None:
-      self._css_class_dt = Classes.CatalogSelect.CatalogSelect(self.component.page, self.classList['main']).button()
+      self._css_class_dt = Classes.CatalogSelect.CatalogSelect(
+        self.component.page, self.classList['main'], component=self.component).button()
     return self._css_class_dt
 
   @property
-  def cls_select_outline(self):
+  def cls_select_outline(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -153,11 +155,11 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_class_dt_ui is None:
       self._css_class_dt_ui = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['main']).outline()
+        self.component.page, self.classList['main'], component=self.component).outline()
     return self._css_class_dt_ui
 
   @property
-  def cls_item_options(self):
+  def cls_item_options(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -166,11 +168,11 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_item_options is None:
       self._css_item_options = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['other']).option()
+        self.component.page, self.classList['other'], component=self.component).option()
     return self._css_item_options
 
   @property
-  def cls_item_option(self):
+  def cls_item_option(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -179,11 +181,11 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_item_option is None:
       self._css_item_option = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['other']).item()
+        self.component.page, self.classList['other'], component=self.component).item()
     return self._css_item_option
 
   @property
-  def cls_select_input(self):
+  def cls_select_input(self) -> Classes.CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -192,13 +194,13 @@ class ClassSelect(GrpCls.ClassHtml):
     """
     if self._css_select_input is None:
       self._css_select_input = Classes.CatalogSelect.CatalogSelect(
-        self.component.page, self.classList['other']).search_box_input()
+        self.component.page, self.classList['other'], component=self.component).search_box_input()
     return self._css_select_input
 
 
 class ClassDropDown(GrpCls.ClassHtml):
 
-  def __init__(self, component):
+  def __init__(self, component: primitives.HtmlModel):
     super(ClassDropDown, self).__init__(component)
     self._css_base, self._css_menu, self._css_menu_after, self._css_menu_link = 4 * [None]
     self._css_menu_hover, self._css_menu_pull_left, self._css_menu_li, self._css_caret = 4 * [None]
@@ -211,7 +213,7 @@ class ClassDropDown(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_caret)
 
   @property
-  def cls_base(self):
+  def cls_base(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -219,11 +221,12 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_base is None:
-      self._css_base = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).base()
+      self._css_base = Classes.CatalogTree.CatalogDropDown(
+        self.component.page, self.classList['other'], component=self.component).base()
     return self._css_base
 
   @property
-  def cls_menu(self):
+  def cls_menu(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -231,11 +234,12 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_menu is None:
-      self._css_menu = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).menu()
+      self._css_menu = Classes.CatalogTree.CatalogDropDown(
+        self.component.page, self.classList['other'], component=self.component).menu()
     return self._css_menu
 
   @property
-  def cls_menu_li(self):
+  def cls_menu_li(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -243,11 +247,12 @@ class ClassDropDown(GrpCls.ClassHtml):
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
     if self._css_menu_li is None:
-      self._css_menu_li = Classes.CatalogTree.CatalogDropDown(self.component.page, self.classList['other']).menu_li()
+      self._css_menu_li = Classes.CatalogTree.CatalogDropDown(
+        self.component.page, self.classList['other'], component=self.component).menu_li()
     return self._css_menu_li
 
   @property
-  def cls_menu_after(self):
+  def cls_menu_after(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -256,11 +261,11 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_after is None:
       self._css_menu_after = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['other']).menu_after()
+        self.component.page, self.classList['other'], component=self.component).menu_after()
     return self._css_menu_after
 
   @property
-  def cls_menu_hover(self):
+  def cls_menu_hover(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -269,11 +274,11 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_hover is None:
       self._css_menu_hover = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['other']).menu_hover()
+        self.component.page, self.classList['other'], component=self.component).menu_hover()
     return self._css_menu_hover
 
   @property
-  def cls_menu_pull_left(self):
+  def cls_menu_pull_left(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -282,11 +287,11 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_menu_pull_left is None:
       self._css_menu_pull_left = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['other']).menu_pull_left()
+        self.component.page, self.classList['other'], component=self.component).menu_pull_left()
     return self._css_menu_pull_left
 
   @property
-  def cls_caret(self):
+  def cls_caret(self) -> Classes.CatalogTree.CatalogDropDown:
     """
     Description:
     ------------
@@ -295,14 +300,14 @@ class ClassDropDown(GrpCls.ClassHtml):
     """
     if self._css_caret is None:
       self._css_caret = Classes.CatalogTree.CatalogDropDown(
-        self.component.page, self.classList['other']).menu_caret()
+        self.component.page, self.classList['other'], component=self.component).menu_caret()
     return self._css_caret
 
 
 class DefinedStyleItems:
 
-  def __init__(self, page):
-    self.page = page
+  def __init__(self, page: primitives.HtmlModel, component: primitives.HtmlModel = None):
+    self.page, self.component = page, component
 
   def selected_text_background_color(self, background=None, color=None):
     """
@@ -328,7 +333,7 @@ class ClassItems(GrpCls.ClassHtml):
     ------------
     Shortcut property to pre defined CSS configurations for list of items.
     """
-    return DefinedStyleItems(self.component.page)
+    return DefinedStyleItems(self.component.page, component=self.component)
 
   def hover_border(self):
     """
@@ -337,15 +342,15 @@ class ClassItems(GrpCls.ClassHtml):
 
     :return: self to allow the chaining.
     """
-    self.classList['main'].add(CssStylesList.CssListItemsBorder(self.component.page))
+    self.classList['main'].add(CssStylesList.CssListItemsBorder(self.component.page, component=self.component))
     return self
 
-  def hover_background(self):
+  def hover_background(self) -> CssStylesList.CssListItemsBackground:
     """
     Description:
     ------------
 
     :return: self to allow the chaining.
     """
-    self.classList['main'].add(CssStylesList.CssListItemsBackground(self.component.page))
+    self.classList['main'].add(CssStylesList.CssListItemsBackground(self.component.page, component=self.component))
     return self
