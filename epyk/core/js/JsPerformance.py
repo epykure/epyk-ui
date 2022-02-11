@@ -23,8 +23,8 @@ from epyk.core.js.primitives import JsArray
 
 
 class JsPerformance:
-  def __init__(self, src: primitives.PageModel = None):
-    self.page = src
+  def __init__(self, page: primitives.PageModel = None):
+    self.page = page
     self.__marks = set([])
     self.__count = 0
 

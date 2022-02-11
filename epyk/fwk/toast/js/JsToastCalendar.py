@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
@@ -8,12 +9,12 @@ from epyk.core.js import JsUtils
 
 class Calendar(JsPackage):
 
-  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page: primitives.PageModel = None):
     self.varName, self.varData, self.__var_def = js_code, "", None
     self.component, self.page = component, page
     self._js, self._jquery = [], None
 
-  def changeView(self, newViewName, force):
+  def changeView(self, new_view_name: str, force):
     """
     Description:
     -----------
@@ -25,12 +26,12 @@ class Calendar(JsPackage):
 
     Attributes:
     ----------
-    :param newViewName: String. The New view name to render.
+    :param str new_view_name: The New view name to render.
     :param force: Boolean. Force render despite of current view and new view are equal.
     """
-    newViewName = JsUtils.jsConvertData(newViewName, None)
+    new_view_name = JsUtils.jsConvertData(new_view_name, None)
     force = JsUtils.jsConvertData(force, None)
-    return JsUtils.jsWrap("%s.changeView(%s, %s)" % (self.component.var, newViewName, force))
+    return JsUtils.jsWrap("%s.changeView(%s, %s)" % (self.component.var, new_view_name, force))
 
   def clear(self, immediately=False):
     """
@@ -69,7 +70,7 @@ class Calendar(JsPackage):
     silent = JsUtils.jsConvertData(silent, None)
     return JsUtils.jsWrap("%s.createSchedules(%s, %s)" % (self.component.var, schedules, silent))
 
-  def deleteSchedule(self, scheduleId, calendarId, silent=False):
+  def deleteSchedule(self, schedule_id: str, calendar_id: str, silent: bool = False):
     """
     Description:
     -----------
@@ -81,14 +82,14 @@ class Calendar(JsPackage):
 
     Attributes:
     ----------
-    :param scheduleId: String. ID of schedule to delete.
-    :param calendarId: String. The CalendarId of the schedule to delete.
-    :param silent: Boolean. Optional. No auto render after creation when set true.
+    :param str schedule_id: ID of schedule to delete.
+    :param str calendar_id: The CalendarId of the schedule to delete.
+    :param bool silent: Optional. No auto render after creation when set true.
     """
-    scheduleId = JsUtils.jsConvertData(scheduleId, None)
-    calendarId = JsUtils.jsConvertData(calendarId, None)
+    schedule_id = JsUtils.jsConvertData(schedule_id, None)
+    calendar_id = JsUtils.jsConvertData(calendar_id, None)
     silent = JsUtils.jsConvertData(silent, None)
-    return JsUtils.jsWrap("%s.deleteSchedule(%s, %s, %s)" % (self.component.var, scheduleId, calendarId, silent))
+    return JsUtils.jsWrap("%s.deleteSchedule(%s, %s, %s)" % (self.component.var, schedule_id, calendar_id, silent))
 
   def destroy(self):
     """
@@ -138,7 +139,7 @@ class Calendar(JsPackage):
     """
     return JsUtils.jsWrap("%s.getDateRangeStart()" % self.component.var)
 
-  def getElement(self, scheduleId, calendarId):
+  def getElement(self, schedule_id: str, calendar_id: str):
     """
     Description:
     -----------
@@ -149,12 +150,12 @@ class Calendar(JsPackage):
 
     Attributes:
     ----------
-    :param scheduleId: String. ID of schedule.
-    :param calendarId: String. calendarId of schedule.
+    :param str schedule_id: ID of schedule.
+    :param str calendar_id: calendarId of schedule.
     """
-    scheduleId = JsUtils.jsConvertData(scheduleId, None)
-    calendarId = JsUtils.jsConvertData(calendarId, None)
-    return JsUtils.jsWrap("%s.getElement(%s, %s)" % (self.component.var, scheduleId, calendarId))
+    schedule_id = JsUtils.jsConvertData(schedule_id, None)
+    calendar_id = JsUtils.jsConvertData(calendar_id, None)
+    return JsUtils.jsWrap("%s.getElement(%s, %s)" % (self.component.var, schedule_id, calendar_id))
 
   def getOptions(self):
     """
@@ -168,7 +169,7 @@ class Calendar(JsPackage):
     """
     return JsUtils.jsWrap("%s.getOptions()" % self.component.var)
 
-  def getSchedule(self, scheduleId, calendarI):
+  def getSchedule(self, schedule_id: str, calendar_id: str):
     """
     Description:
     -----------
@@ -180,12 +181,12 @@ class Calendar(JsPackage):
 
     Attributes:
     ----------
-    :param scheduleId: String. ID of schedule.
-    :param calendarI: String. calendarId of the schedule.
+    :param str schedule_id: ID of schedule.
+    :param str calendar_id: calendarId of the schedule.
     """
-    scheduleId = JsUtils.jsConvertData(scheduleId, None)
-    calendarI = JsUtils.jsConvertData(calendarI, None)
-    return JsUtils.jsWrap("%s.getSchedule(%s, %s)" % (self.component.var, scheduleId, calendarI))
+    schedule_id = JsUtils.jsConvertData(schedule_id, None)
+    calendar_id = JsUtils.jsConvertData(calendar_id, None)
+    return JsUtils.jsWrap("%s.getSchedule(%s, %s)" % (self.component.var, schedule_id, calendar_id))
 
   def getViewName(self):
     """

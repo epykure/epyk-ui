@@ -141,7 +141,7 @@ class Datatable(GrpCls.ClassHtml):
     self.classList['main'].add(self.cls_datatable_footer)
 
   @property
-  def themes(self):
+  def themes(self) -> DataTableThemes:
     """
     Description:
     -----------

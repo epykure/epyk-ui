@@ -24,7 +24,7 @@ class BsDatePicker(Component):
   _js__builder__ = '''%(jqId)s.datetimepicker(options)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
-  def options(self):
+  def options(self) -> OptBsDT.DT:
     """
     Description:
     -----------
@@ -35,7 +35,7 @@ class BsDatePicker(Component):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> DomBsDatePicker.DomDate:
     """
     Description:
     -----------
@@ -44,5 +44,5 @@ class BsDatePicker(Component):
     :rtype: DomBsDatePicker.DomDate
     """
     if self._dom is None:
-      self._dom = DomBsDatePicker.DomDate(self, report=self.page)
+      self._dom = DomBsDatePicker.DomDate(component=self, page=self.page)
     return self._dom

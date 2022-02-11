@@ -73,7 +73,7 @@ class Button(Html.Html):
     :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
-      self._dom = JsHtml.JsHtmlButton(self, page=self.page)
+      self._dom = JsHtml.JsHtmlButton(component=self, page=self.page)
     return self._dom
 
   _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
@@ -728,7 +728,7 @@ class ButtonMenuItem:
     :rtype: JsComponents.Menu
     """
     if self._js is None:
-      self._js = JsComponents.Menu(self.container, js_code=self.component, page=self.page)
+      self._js = JsComponents.Menu(self.container, js_code=self.component.htmlCode, page=self.page)
     return self._js
 
   def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -1012,8 +1012,9 @@ class ButtonFilter(Html.Html):
       events.extend(comp._events)
     self.onReady(events)
     return '<div %s>%s%s%s%s</div>' % (
-      self.get_attrs(css_class_names=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
-      self.menu.html())
+      self.get_attrs(
+        css_class_names=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
+        self.menu.html())
 
 
 class ButtonData(Button):

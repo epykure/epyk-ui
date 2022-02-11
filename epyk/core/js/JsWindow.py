@@ -354,8 +354,8 @@ class JsHistory:
     https://www.w3schools.com/js/js_window_history.asp
   """
 
-  def __init__(self, context):
-    self.__jsObj = context
+  def __init__(self, page: primitives.PageModel):
+    self.page = page
 
   @property
   def length(self):
@@ -501,27 +501,27 @@ class JsHistory:
 
     :return: The Javascript String for the method.
     """
-    self.__jsObj.registerFunction("updateUrl", [
-      self.__jsObj.objects.new([], varName="newPmts"),
-      self.__jsObj.location.search.substr(1).split("&").forEach([
-        self.__jsObj.if_(self.__jsObj.data.loop().val.toString(explicit=False).includes("=", jsObj=self.__jsObj), [
-          self.__jsObj.objects.array.new(self.__jsObj.data.loop().val.toString().split("="), varName="urlPmts"),
-          self.__jsObj.objects.array.get("urlPmts")[0].toString(),
-          self.__jsObj.objects.get("newPmts").addItem(
-            self.__jsObj.objects.array.get("urlPmts")[0], self.__jsObj.objects.array.get("urlPmts")[1])
+    self.page.js.registerFunction("updateUrl", [
+      self.page.js.objects.new([], varName="newPmts"),
+      self.page.js.location.search.substr(1).split("&").forEach([
+        self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", jsObj=self.page.js), [
+          self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), varName="urlPmts"),
+          self.page.js.objects.array.get("urlPmts")[0].toString(),
+          self.page.js.objects.get("newPmts").addItem(
+            self.page.js.objects.array.get("urlPmts")[0], self.page.js.objects.array.get("urlPmts")[1])
         ])
       ]),
 
-      self.__jsObj.objects.get("newPmts").addItem(
-        self.__jsObj.objects.get("urlKey"), self.__jsObj.objects.get("urlValue")),
+      self.page.js.objects.get("newPmts").addItem(
+        self.page.js.objects.get("urlKey"), self.page.js.objects.get("urlValue")),
       # Then we concatenate the URL
-      self.__jsObj.objects.array.new([], varName="pmts"),
-      self.__jsObj.objects.get("newPmts").entries().forEach([
-        self.__jsObj.objects.array.get("pmts").push(
-          self.__jsObj.data.loop().val[0].toString(explicit=False).add("=").add(self.__jsObj.data.loop().val[1]))
+      self.page.js.objects.array.new([], varName="pmts"),
+      self.page.js.objects.get("newPmts").entries().forEach([
+        self.page.js.objects.array.get("pmts").push(
+          self.page.js.data.loop().val[0].toString(explicit=False).add("=").add(self.page.js.data.loop().val[1]))
       ]),
-      self.__jsObj.return_(
-        self.__jsObj.location.origin + self.__jsObj.location.pathname + "?" + self.__jsObj.objects.array.get(
+      self.page.js.return_(
+        self.page.js.location.origin + self.page.js.location.pathname + "?" + self.page.js.objects.array.get(
           "pmts").join("&"))
       ], ["urlKey", "urlValue"])
     return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (

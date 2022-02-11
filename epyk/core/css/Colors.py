@@ -173,8 +173,8 @@ def getHexToRgb(hex_color: str):
   Usage:
   -----
 
-      ColorMaker().getHexToRgb('#213B68')
-  [33, 59, 104]
+      >>> getHexToRgb('#213B68')
+      [33, 59, 104]
 
   Related Pages:
 
@@ -199,7 +199,7 @@ def getHexToRgb(hex_color: str):
   return [int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)]
 
 
-def rgba(red: int, green: int, blue: int, alpha: int):
+def rgba(red: int, green: int, blue: int, alpha: float):
   """
   Description:
   -----------
@@ -211,6 +211,9 @@ def rgba(red: int, green: int, blue: int, alpha: int):
 
   Usage::
 
+      >>> rgba(33, 59, 104, 0.5)
+      'rgba(33, 59, 104, 0.5)'
+
   Related Pages:
 
       https://www.w3schools.com/cssref/css_colors_legal.asp
@@ -220,7 +223,7 @@ def rgba(red: int, green: int, blue: int, alpha: int):
   :param int red: The red RGB color number.
   :param int green: The green RGB color number.
   :param int blue: The blue RGB color number.
-  :param int alpha: The alpha number.
+  :param float alpha: The alpha number.
   """
   return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
@@ -233,8 +236,8 @@ def getRgbToHex(rgb_color: List[int]):
 
   Usage::
 
-      >>> ColorMaker().getRgbToHex([255, 0, 0])
-  '#ff0000'
+      >>> getRgbToHex([255, 0, 0])
+      '#ff0000'
 
   Attributes:
   ----------
@@ -260,8 +263,8 @@ def randColor(seed_no: int = None):
 
   Usage::
 
-      >>> ColorMaker.randColor(10)
-  '#9693DD'
+      >>> randColor(10)
+      '#9693DD'
 
   Attributes:
   ----------
@@ -289,8 +292,8 @@ def gradient(start: str, end: str, factor: float):
 
   Usage::
 
-      >>> ColorMaker().gradient("#ffffff", "#FF0000", 0.2)
-  '#ffcccc'
+      >>> gradient("#ffffff", "#FF0000", 0.2)
+      '#ffcccc'
 
   Attributes:
   ----------
@@ -317,7 +320,7 @@ def colors(start: str, end: str, steps: int):
   Usage::
 
       >>> colors("#ffffff", "#FF0000", 10)
-  ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
+      ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
   Attributes:
   ----------
@@ -624,6 +627,8 @@ class DefinedColors:
 
     Usage::
 
+      Colors.DefinedColors().hex.CYAN
+
     Related Pages:
 
       https://www.rapidtables.com/web/color/RGB_Color.html
@@ -638,6 +643,8 @@ class DefinedColors:
     Returns the RGB predefined color codes.
 
     Usage::
+
+      Colors.DefinedColors().rgb.CYAN
 
     Related Pages:
 

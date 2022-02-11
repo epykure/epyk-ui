@@ -9,7 +9,7 @@ class CatalogButton(Catalog.CatalogGroup):
   Pre defined classes for all the Button components.
   """
 
-  def basic(self):
+  def basic(self) -> CssStylesButton.CssButtonBasic:
     """
     Description:
     -----------
@@ -19,7 +19,7 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonBasic)
 
-  def important(self):
+  def important(self) -> CssStylesButton.CssButtonImportant:
     """
     Description:
     -----------
@@ -29,7 +29,7 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonImportant)
 
-  def reset(self):
+  def reset(self) -> CssStylesButton.CssButtonReset:
     """
     Description:
     -----------
@@ -38,7 +38,7 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonReset)
 
-  def success(self):
+  def success(self) -> CssStylesButton.CssButtonSuccess:
     """
     Description:
     -----------
@@ -47,7 +47,7 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonSuccess)
 
-  def content(self):
+  def content(self) -> CssStylesButton.CssButtonContentHover:
     """
     Description:
     -----------
@@ -58,7 +58,7 @@ class CatalogButton(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesButton.CssButtonContentHover)
 
-  def content_link(self):
+  def content_link(self) -> CssStylesButton.CssButtonContentAHover:
     """
     Description:
     -----------

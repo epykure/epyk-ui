@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.html.Html import Component
 from epyk.core.html.HtmlSelect import Option
 from epyk.core.html.HtmlInput import Input
@@ -11,13 +12,13 @@ from epyk.fwk.bs.css import BsStyleForms
 
 class BsInput(Input):
 
-  def __init__(self, report, text, placeholder, width, height, html_code, options, attrs, profile):
-    super(BsInput, self).__init__(report, text, placeholder, width, height, html_code, options, attrs, profile)
+  def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code, options, attrs, profile):
+    super(BsInput, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
     self.attr["class"].clear()
     self.attr["class"].add("form-control")
 
   @property
-  def style(self):
+  def style(self) -> BsStyleForms.BsClsInput:
     """
     Description:
     ------------
@@ -51,7 +52,7 @@ class BsCheck(Component):
             "for": self.htmlCode, "type": self._vals['type']}
 
   @property
-  def dom(self):
+  def dom(self) -> DomBsForms.DomCheck:
     """
     Description:
     -----------
@@ -60,11 +61,11 @@ class BsCheck(Component):
     :rtype: DomBsForms.DomCheck
     """
     if self._dom is None:
-      self._dom = DomBsForms.DomCheck(self, report=self.page)
+      self._dom = DomBsForms.DomCheck(component=self, page=self.page)
     return self._dom
 
   @property
-  def options(self):
+  def options(self) -> OptBsForms.Check:
     """
     Description:
     -----------
@@ -114,7 +115,7 @@ class BsSelect(Component):
       self.add_option(rec["value"], rec.get("name", rec["value"]), selected=rec.get("selected", False))
 
   @property
-  def style(self):
+  def style(self) -> BsStyleForms.BsClsSelect:
     """
     Description:
     ------------

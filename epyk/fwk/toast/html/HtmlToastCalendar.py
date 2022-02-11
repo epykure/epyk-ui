@@ -9,10 +9,10 @@ class Calendar(Html.Html):
   requirements = ('tui-calendar', )
   _option_cls = OptToastCalendar.OptionCalendar
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     self.height = height[0]
     super(Calendar, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.options.height = height[0]
 
   @property
@@ -25,7 +25,7 @@ class Calendar(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastCalendar.OptionCalendar:
     """
     Description:
     -----------
@@ -40,7 +40,7 @@ class Calendar(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsToastCalendar.Calendar:
     """
     Description:
     -----------
@@ -53,11 +53,11 @@ class Calendar(Html.Html):
     :rtype: JsToastCalendar.Calendar
     """
     if self._js is None:
-      self._js = JsToastCalendar.Calendar(self, varName=self.var, report=self.page)
+      self._js = JsToastCalendar.Calendar(component=self, js_code=self.var, page=self.page)
     return self._js
 
   _js__builder__ = '''window[htmlObj.id] = new tui.Calendar(htmlObj, options)'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '''<div %(attrs)s></div>''' % {"attrs": self.get_attrs(pyClassNames=self.style.get_classes())}
+    return '''<div %(attrs)s></div>''' % {"attrs": self.get_attrs(css_class_names=self.style.get_classes())}

@@ -9,9 +9,9 @@ class Grid(Html.Html):
   name = 'Tabulator Table'
   _option_cls = OptToastGrid.GridConfig
 
-  def __init__(self, report, records, width, height, html_code, options, profile):
+  def __init__(self, page, records, width, height, html_code, options, profile):
     data, columns, self._json_config = [], [], {}
-    super(Grid, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Grid, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height})
     if records is not None:
       self.options.data = records
@@ -29,7 +29,7 @@ class Grid(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def js(self):
+  def js(self) -> JsToastGrid.JsGrid:
     """
     Description:
     -----------
@@ -38,11 +38,11 @@ class Grid(Html.Html):
     :rtype: JsToastGrid.JsGrid
     """
     if self._js is None:
-      self._js = JsToastGrid.JsGrid(self, varName=self.var, report=self.page)
+      self._js = JsToastGrid.JsGrid(component=self, js_code=self.var, page=self.page)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptToastGrid.GridConfig:
     """
     Description:
     -----------
@@ -67,4 +67,4 @@ class Grid(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '''<div %s></div>''' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '''<div %s></div>''' % self.get_attrs(css_class_names=self.style.get_classes())

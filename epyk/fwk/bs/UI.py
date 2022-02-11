@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.fwk.bs.html import HtmlBsDate
 from epyk.fwk.bs.html import HtmlBsWidgets
 
@@ -10,7 +11,7 @@ from epyk.core.css import Defaults as Defaults_css
 
 class Components:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
     if self.page.ext_packages is None:
       self.page.ext_packages = {}

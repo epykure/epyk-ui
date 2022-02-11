@@ -1,9 +1,9 @@
 
 from epyk.core.html.options import Options
-from epyk.core.html.options import Enums
 
 
 class Column(Options):
+
   @property
   def header(self):
     """
@@ -112,7 +112,7 @@ class GridConfig(Options):
   def scrollY(self, flag):
     self._config(flag)
 
-  def add_column(self, field, title=None):
+  def add_column(self, field, title=None) -> Column:
     """
     Description:
     ------------

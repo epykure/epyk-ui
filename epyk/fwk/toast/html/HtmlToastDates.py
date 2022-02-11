@@ -11,9 +11,9 @@ class DatePicker(Html.Html):
   requirements = ('tui-date-picker', )
   _option_cls = OptToastCalendar.OptionDate
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     super(DatePicker, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.options.timePicker = False
     self.options.usageStatistics = False
     self.options.input.format = 'yyyy-MM-dd'
@@ -24,7 +24,7 @@ class DatePicker(Html.Html):
 htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
-  def style(self):
+  def style(self) -> GrpClsToastDates.ClassDatePicker:
     """
     Description:
     -----------
@@ -46,7 +46,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
     :rtype: DomToastDatePicker.DomDate
     """
     if self._dom is None:
-      self._dom = DomToastDatePicker.DomDate(self, report=self.page)
+      self._dom = DomToastDatePicker.DomDate(component=self, page=self.page)
     return self._dom
 
   @property
@@ -59,7 +59,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastCalendar.OptionDate:
     """
     Description:
     -----------
@@ -70,7 +70,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsToastDates.DatePicker:
     """
     Description:
     -----------
@@ -79,7 +79,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
     :rtype: JsToastDates.DatePicker
     """
     if self._js is None:
-      self._js = JsToastDates.DatePicker(self, varName=self.var, report=self.page)
+      self._js = JsToastDates.DatePicker(component=self, js_code=self.var, page=self.page)
     return self._js
 
   def __str__(self):
@@ -91,7 +91,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
       <span class="tui-ico-date"></span>
   </div>
   <div %s></div>
-</div>''' % (self.htmlCode, self.get_attrs(pyClassNames=self.style.get_classes()))
+</div>''' % (self.htmlCode, self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class DateCalendar(Html.Html):
@@ -109,7 +109,7 @@ class DateCalendar(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastCalendar.OptionCalendar:
     """
     Description:
     -----------
@@ -124,7 +124,7 @@ class DateCalendar(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsToastDates.Calendar:
     """
     Description:
     -----------
@@ -137,7 +137,7 @@ class DateCalendar(Html.Html):
     :rtype: JsToastDates.Calendar
     """
     if self._js is None:
-      self._js = JsToastDates.Calendar(self, varName=self.var, report=self.page)
+      self._js = JsToastDates.Calendar(component=self, js_code=self.var, page=self.page)
     return self._js
 
 
@@ -146,8 +146,8 @@ class DatePickerRange(Html.Html):
   requirements = ('tui-date-picker', )
   _option_cls = OptToastCalendar.OptionDateRange
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
-    super(DatePickerRange, self).__init__(report, vals, html_code, options, profile, css_attrs)
+  def __init__(self, page, vals, html_code=None, options=None, profile=None, css_attrs=None):
+    super(DatePickerRange, self).__init__(page, vals, html_code, options, profile, css_attrs)
     self.options.startpicker.input = ""
     self.options.startpicker.container = ""
     self.options.startpicker.dates.today()
@@ -165,7 +165,7 @@ class DatePickerRange(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastCalendar.OptionDateRange:
     """
     Description:
     -----------
@@ -176,7 +176,7 @@ class DatePickerRange(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsToastDates.DatePickerRange:
     """
     Description:
     -----------
@@ -185,7 +185,7 @@ class DatePickerRange(Html.Html):
     :rtype: JsToastDates.DatePickerRange
     """
     if self._js is None:
-      self._js = JsToastDates.DatePickerRange(self, varName=self.var, report=self.page)
+      self._js = JsToastDates.DatePickerRange(component=self, js_code=self.var, page=self.page)
     return self._js
 
   _js__builder__ = '''window[htmlObj.id] = new tui.DatePicker.createRangePicker(options)'''
@@ -203,7 +203,7 @@ class DatePickerRange(Html.Html):
     <span class="tui-ico-date"></span>
     <div id="endpicker-container" style="margin-left: -1px;"></div>
 </div>
-''' % self.get_attrs(pyClassNames=self.style.get_classes())
+''' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class TimePicker(Html.Html):
@@ -211,15 +211,15 @@ class TimePicker(Html.Html):
   requirements = ('tui-time-picker', )
   _option_cls = OptToastTime.OptionTime
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     super(TimePicker, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.options.usageStatistics = False
     self.style.css.margin_top = 2
     self.style.css.padding = "0 !IMPORTANT"
 
   @property
-  def style(self):
+  def style(self) -> GrpClsToastDates.ClassTimePicker:
     """
     Description:
     -----------
@@ -241,7 +241,7 @@ class TimePicker(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastTime.OptionTime:
     """
     Description:
     -----------
@@ -252,7 +252,7 @@ class TimePicker(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> DomToastDatePicker.DomTime:
     """
     Description:
     -----------
@@ -261,11 +261,11 @@ class TimePicker(Html.Html):
     :rtype: DomToastDatePicker.DomTime
     """
     if self._dom is None:
-      self._dom = DomToastDatePicker.DomTime(self, report=self.page)
+      self._dom = DomToastDatePicker.DomTime(component=self, page=self.page)
     return self._dom
 
   @property
-  def js(self):
+  def js(self) -> JsToastDates.TimePicker:
     """
     Description:
     -----------
@@ -274,7 +274,7 @@ class TimePicker(Html.Html):
     :rtype: JsToastDates.TimePicker
     """
     if self._js is None:
-      self._js = JsToastDates.TimePicker(self, varName=self.var, report=self.page)
+      self._js = JsToastDates.TimePicker(component=self, js_code=self.var, page=self.page)
     return self._js
 
   _js__builder__ = '''window[htmlObj.id] = new tui.TimePicker('#'+ htmlObj.id, options)'''
@@ -285,6 +285,4 @@ class TimePicker(Html.Html):
 <div %(attrs)s>ghjg
   <div id="%(htmlCode)s"></div>
   <div id="%(htmlCode)s-meridiem"></div>
-</div>''' % {
-      "attrs": self.get_attrs(pyClassNames=self.style.get_classes()),
-      "htmlCode": self.htmlCode}
+</div>''' % {"attrs": self.get_attrs(css_class_names=self.style.get_classes()), "htmlCode": self.htmlCode}

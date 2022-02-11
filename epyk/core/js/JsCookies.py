@@ -10,8 +10,8 @@ from epyk.core.js import JsUtils
 
 class JsCookies:
 
-  def __init__(self, src: Optional[primitives.PageModel]):
-    self.page = src
+  def __init__(self, page: Optional[primitives.PageModel]):
+    self.page = page
 
   def set(self, key: str, data, data_key: str = None, python_data=True, js_funcs: Optional[Union[list, str]] = None):
     """

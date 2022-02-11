@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.html import Defaults
 from epyk.core.css.styles import GrpCls
 from epyk.core.css.styles.classes import CssStyle
@@ -30,10 +31,10 @@ class CssToastTimePickerSelect(CssStyle.Style):
 
 class ClassTimePicker(GrpCls.ClassHtml):
 
-  def __init__(self, component):
-    super(ClassTimePicker, self).__init__(component)
-    self.classList['main'].add(CssToastTimePicker(self.component.page))
-    self.classList['main'].add(CssToastTimePickerSelect(self.component.page))
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None):
+    super(ClassTimePicker, self).__init__(component=component, page=page)
+    self.classList['main'].add(CssToastTimePicker(self.page))
+    self.classList['main'].add(CssToastTimePickerSelect(self.page))
 
 
 class CssToastDatePickerInput(CssStyle.Style):
@@ -60,7 +61,7 @@ class CssToastDatePickerFocus(CssStyle.Style):
 
 class ClassDatePicker(GrpCls.ClassHtml):
 
-  def __init__(self, component):
-    super(ClassDatePicker, self).__init__(component)
-    self.classList['main'].add(CssToastDatePickerInput(self.component.page))
-    self.classList['main'].add(CssToastDatePickerFocus(self.component.page))
+  def __init__(self, component: primitives.HtmlModel = None, page: primitives.PageModel = None):
+    super(ClassDatePicker, self).__init__(component=component, page=page)
+    self.classList['main'].add(CssToastDatePickerInput(self.page))
+    self.classList['main'].add(CssToastDatePickerFocus(self.page))

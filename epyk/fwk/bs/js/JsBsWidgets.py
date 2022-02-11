@@ -6,7 +6,7 @@ from epyk.core.js import JsUtils
 class Modal(JsPackage):
 
   def hide(self):
-    return JsUtils.jsWrap("%s.checked = true" % self._src.dom.varName)
+    return JsUtils.jsWrap("%s.checked = true" % self.component.dom.varName)
 
 
 class OffCanvas(JsPackage):

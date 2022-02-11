@@ -1,19 +1,21 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.py import primitives
 from epyk.core.js.packages import JsPackage
-from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 
 
 class Charts(JsPackage):
 
-  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+  def __init__(self, component, js_code: str = None, set_var: bool = True, is_py_data: bool = True,
+               page: primitives.PageModel = None):
     self.varName, self.varData, self.__var_def = js_code, "", None
     self.component, self.page = component, page
     self._js, self._jquery = [], None
 
-  def addData(self, data, category=None):
+  def addData(self, data: Union[list, primitives.JsDataModel], category: str = None):
     """
     Description:
     -----------
@@ -25,13 +27,13 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param data: Array. Array of data to be added.
-    :param category: String. Optional. The data type.
+    :param Union[list, primitives.JsDataModel] data: Array of data to be added.
+    :param str category: Optional. The data type.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.addData(%s)" % (self.component.var, data))
 
-  def addSeries(self, data):
+  def addSeries(self, data: Union[str, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -43,7 +45,7 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param data: String. Data to be added.
+    :param Union[str, primitives.JsDataModel] data: Data to be added.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.addSeries(%s)" % (self.component.var, data))
@@ -60,7 +62,7 @@ class Charts(JsPackage):
     """
     return JsUtils.jsWrap("%s.hideTooltip(%s)" % self.component.var)
 
-  def setData(self, data):
+  def setData(self, data: Union[list, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -72,12 +74,12 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param data: Array. Data to be set.
+    :param Union[list, primitives.JsDataModel] data: Data to be set.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.setData(%s)" % (self.component.var, data))
 
-  def setOptions(self, options):
+  def setOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -89,12 +91,12 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Chart options.
+    :param Union[dict, primitives.JsDataModel] options: Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
     return JsUtils.jsWrap("%s.setOptions(%s)" % (self.component.var, options))
 
-  def showTooltip(self, seriesInfo):
+  def showTooltip(self, series_info: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -106,12 +108,12 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param seriesInfo: Dictionary. Information of the series for the tooltip to be displayed.
+    :param Union[dict, primitives.JsDataModel] series_info: Information of the series for the tooltip to be displayed.
     """
-    seriesInfo = JsUtils.jsConvertData(seriesInfo, None)
-    return JsUtils.jsWrap("%s.showTooltip(%s)" % (self.component.var, seriesInfo))
+    series_info = JsUtils.jsConvertData(series_info, None)
+    return JsUtils.jsWrap("%s.showTooltip(%s)" % (self.component.var, series_info))
 
-  def updateOptions(self, options):
+  def updateOptions(self, options: Union[dict, primitives.JsDataModel]):
     """
     Description:
     -----------
@@ -123,7 +125,7 @@ class Charts(JsPackage):
 
     Attributes:
     ----------
-    :param options: Dictionary. Chart options.
+    :param Union[dict, primitives.JsDataModel] options: Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
     return JsUtils.jsWrap("%s.updateOptions(%s)" % (self.component.var, options))

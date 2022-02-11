@@ -8,7 +8,7 @@ from epyk.core.css.styles.attributes import Commons
 class ContentTable(GrpCls.ClassHtml):
 
   @property
-  def css(self):
+  def css(self) -> Commons:
     """
     Description:
     ------------
@@ -25,7 +25,7 @@ class ContentTable(GrpCls.ClassHtml):
     return self._css_struct
 
   @property
-  def css_class(self):
+  def css_class(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -50,7 +50,7 @@ class ClsFormula(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_display)
 
   @property
-  def cls_display(self):
+  def cls_display(self) -> Classes.CatalogText.CatalogFormulas:
     """
     Description:
     -----------
@@ -63,7 +63,7 @@ class ClsFormula(GrpCls.ClassHtml):
     return self._css_display
 
   @property
-  def cls_container(self):
+  def cls_container(self) -> Classes.CatalogText.CatalogFormulas:
     """
     Description:
     -----------
@@ -76,7 +76,7 @@ class ClsFormula(GrpCls.ClassHtml):
     return self._css_container
 
   @property
-  def cls_mjx(self):
+  def cls_mjx(self) -> Classes.CatalogText.CatalogFormulas:
     """
     Description:
     -----------

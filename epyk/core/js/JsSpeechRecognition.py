@@ -71,8 +71,8 @@ class SpeechRecognition:
     interimResults: bool = False
     maxAlternatives: int = 1
 
-    def __init__(self, js_code, src: primitives.PageModel = None):
-      self.src = src
+    def __init__(self, js_code: str, page: primitives.PageModel = None):
+      self.page = page
       self.js_code = js_code
       self._js = [
         "var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition",

@@ -751,8 +751,8 @@ class Html(primitives.HtmlModel):
         self.label.css(css)
     return self
 
-  def add_span(self, text: str, css: Optional[Union[dict, bool]] = None, position: str = "before", html_code: Optional[str] = None,
-               i: Optional[int] = None):
+  def add_span(self, text: str, css: Optional[Union[dict, bool]] = None, position: str = "before",
+               html_code: Optional[str] = None, i: Optional[int] = None):
     """
     Description:
     -----------
@@ -898,7 +898,8 @@ class Html(primitives.HtmlModel):
         self.input.set_attrs(attrs=attrs)
     return self
 
-  def add_checkbox(self, flag: bool, css: Optional[dict] = None, attrs: Optional[dict] = None, position: str = "before"):
+  def add_checkbox(self, flag: bool, css: Optional[dict] = None, attrs: Optional[dict] = None,
+                   position: str = "before"):
     """
     Description:
     -----------
@@ -1516,7 +1517,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
+      Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -1545,7 +1547,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function in the console.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function in the
+      console.
     :param Optional[str] source_event: Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
@@ -1589,7 +1592,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the
+      Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     """
     return self.on("scroll", js_funcs, profile, source_event)
@@ -1970,8 +1974,10 @@ class Body(Html):
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: Optional. The various transformations to be triggered from the configuration data.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. The various HTML Components to be updated from the configuration file.
+    :param Optional[Union[list, str]] js_funcs: Optional. The various transformations to be triggered from the
+      configuration data.
+    :param Optional[List[primitives.HtmlModel]] components: Optional. The various HTML Components to be updated from
+      the configuration file.
     :param str lang: Optional. The default lang for the configuration.
     :param str end_point: Optional. The url for the configuration files.
     :param bool sync: Optional. Specify if the type of loading event.
@@ -2078,7 +2084,8 @@ class Body(Html):
           document.body.appendChild(window['popup_loading_body'])
         } ''' % (z_index, self.page.theme.notch())
 
-    return '''if (typeof window['popup_loading_body'] !== 'undefined'){document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
+    return '''if (typeof window['popup_loading_body'] !== 'undefined'){
+document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
 
   def add_template(self, css: Optional[dict] = None, defined_style: Optional[str] = None):
     """

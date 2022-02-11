@@ -220,7 +220,8 @@ class CssAutocomplete(CssStyle.Style):
   classname = "ui-autocomplete"
 
   def customize(self):
-    self.css({"z-index": 220, 'background-color': self.page.theme.colors[0], 'color': self.page.theme.greys[5]}, important=True)
+    self.css({
+      "z-index": 220, 'background-color': self.page.theme.colors[0], 'color': self.page.theme.greys[5]}, important=True)
 
 
 class CssAutocompleteMenu(CssStyle.Style):

@@ -49,7 +49,7 @@ class Accordion(JsPackage):
     """
     return JsUtils.jsWrap("%s.accordion('enable')" % self.component.var)
 
-  def options(self, optionName=None):
+  def options(self, option_name=None):
     """
     Description:
     -----------
@@ -62,15 +62,15 @@ class Accordion(JsPackage):
 
     Attributes:
     ----------
-    :param optionName: String. Optional. The name of the option to set.
+    :param option_name: String. Optional. The name of the option to set.
     """
-    if optionName is None:
+    if option_name is None:
       return JsObjects.JsObjects.get("%s.accordion('option')" % self.component.var)
 
-    optionName = JsUtils.jsConvertData(optionName, None)
-    return JsObjects.JsObjects.get("%s.accordion('option', %s)" % (self.component.var, optionName))
+    option_name = JsUtils.jsConvertData(option_name, None)
+    return JsObjects.JsObjects.get("%s.accordion('option', %s)" % (self.component.var, option_name))
 
-  def set_options(self, optionName, value):
+  def set_options(self, option_name, value):
     """
     Description:
     -----------
@@ -82,12 +82,12 @@ class Accordion(JsPackage):
 
     Attributes:
     ----------
-    :param optionName: String. The name of the option to set.
+    :param option_name: String. The name of the option to set.
     :param value: Object. A value to set for the option.
     """
-    optionName = JsUtils.jsConvertData(optionName, None)
+    option_name = JsUtils.jsConvertData(option_name, None)
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get("%s.accordion('option', %s, %s)" % (self.component.var, optionName, value))
+    return JsObjects.JsObjects.get("%s.accordion('option', %s, %s)" % (self.component.var, option_name, value))
 
   def refresh(self):
     """
@@ -247,7 +247,7 @@ class Tabs(JsPackage):
     value = JsUtils.jsConvertData(value, None)
     return JsUtils.jsWrap("%s.tabs('load', %s)" % (self.component.var, value))
 
-  def options(self, optionName=None):
+  def options(self, option_name=None):
     """
     Description:
     -----------
@@ -260,15 +260,15 @@ class Tabs(JsPackage):
 
     Attributes:
     ----------
-    :param optionName: String. Optional. The name of the option to set.
+    :param option_name: String. Optional. The name of the option to set.
     """
-    if optionName is None:
+    if option_name is None:
       return JsObjects.JsObjects.get("%s.tabs('option')" % self.component.var)
 
-    optionName = JsUtils.jsConvertData(optionName, None)
-    return JsObjects.JsObjects.get("%s.tabs('option', %s)" % (self.component.var, optionName))
+    option_name = JsUtils.jsConvertData(option_name, None)
+    return JsObjects.JsObjects.get("%s.tabs('option', %s)" % (self.component.var, option_name))
 
-  def set_options(self, optionName, value):
+  def set_options(self, option_name, value):
     """
     Description:
     -----------
@@ -280,12 +280,12 @@ class Tabs(JsPackage):
 
     Attributes:
     ----------
-    :param optionName: String. The name of the option to set.
+    :param option_name: String. The name of the option to set.
     :param value: Object. A value to set for the option.
     """
-    optionName = JsUtils.jsConvertData(optionName, None)
+    option_name = JsUtils.jsConvertData(option_name, None)
     value = JsUtils.jsConvertData(value, None)
-    return JsObjects.JsObjects.get("%s.tabs('option', %s, %s)" % (self.component.var, optionName, value))
+    return JsObjects.JsObjects.get("%s.tabs('option', %s, %s)" % (self.component.var, option_name, value))
 
   def refresh(self):
     """

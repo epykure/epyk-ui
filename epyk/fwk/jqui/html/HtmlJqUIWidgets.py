@@ -25,7 +25,7 @@ class JqAccordion(Component):
     return JsQuery.decorate_var("#%s" % self.htmlCode)
 
   @property
-  def options(self):
+  def options(self) -> OptJqWiidgets.OptAccordion:
     """
     Description:
     -----------
@@ -40,7 +40,7 @@ class JqAccordion(Component):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsJqWidgets.Accordion:
     """
     Description:
     -----------
@@ -53,11 +53,11 @@ class JqAccordion(Component):
     :rtype: JsJqWidgets.Accordion
     """
     if self._js is None:
-      self._js = JsJqWidgets.Accordion(self, varName=self.var, report=self.page)
+      self._js = JsJqWidgets.Accordion(component=self, js_code=self.var, page=self.page)
     return self._js
 
   @property
-  def style(self):
+  def style(self) -> JqStyleWidget.Accordion:
     """
     Description:
     ------------
@@ -81,7 +81,7 @@ class JqAccordion(Component):
     """
     return self.items[n]["header"]
 
-  def panel(self, n):
+  def panel(self, n: int):
     """
     Description:
     -----------
@@ -132,7 +132,7 @@ class JqAccordion(Component):
     return {"header": item["header"].html(), "content": item["content"].html()}
 
   def add_item(self, component):
-    raise Exception("Not available for this class")
+    raise ValueError("Not available for this class")
 
 
 class JqTabs(Component):
@@ -152,7 +152,7 @@ class JqTabs(Component):
     return JsQuery.decorate_var("#%s" % self.htmlCode)
 
   @property
-  def style(self):
+  def style(self) -> JqStyleWidget.Accordion:
     """
     Description:
     ------------
@@ -165,7 +165,7 @@ class JqTabs(Component):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptJqWiidgets.OptTabs:
     """
     Description:
     -----------
@@ -180,7 +180,7 @@ class JqTabs(Component):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsJqWidgets.Tabs:
     """
     Description:
     -----------
@@ -193,7 +193,7 @@ class JqTabs(Component):
     :rtype: JsJqWidgets.Tabs
     """
     if self._js is None:
-      self._js = JsJqWidgets.Tabs(self, varName=self.var, report=self.page)
+      self._js = JsJqWidgets.Tabs(component=self, js_code=self.var, page=self.page)
     return self._js
 
   def tab(self, n):
@@ -208,7 +208,7 @@ class JqTabs(Component):
     """
     return self.items[n]["header"]
 
-  def panel(self, n):
+  def panel(self, n: int):
     """
     Description:
     -----------
@@ -263,4 +263,4 @@ class JqTabs(Component):
     return {"sub_items_tabs": "".join(tabs), "sub_items_panels": "".join(panels)}
 
   def add_item(self, component):
-    raise Exception("Not available for this class")
+    raise ValueError("Not available for this class")

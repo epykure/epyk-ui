@@ -43,7 +43,7 @@ def get_report_path(project_path, raise_error=True, report=None):
 
   if not os.path.exists(reports_path):
     if raise_error:
-      raise Exception("Cannot find ui or reports path in this project")
+      raise ValueError("Cannot find ui or reports path in this project")
 
     return project_path
 

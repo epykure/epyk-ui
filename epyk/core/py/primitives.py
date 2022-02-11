@@ -1,7 +1,8 @@
 """
 Module dedicated to help on the type hinting
 """
-from typing import Optional, Union
+
+from typing import Optional, Union, Any
 from abc import ABC, abstractmethod
 
 
@@ -36,12 +37,18 @@ class DomModel:
     ...
 
 
+class OptionModel:
+  verbose = False
+  config_default = None
+
+
 class HtmlModel:
   htmlCode = None
   style = None
   name = None
   options = None
   _browser_data = None
+  var = None
 
   @property
   @abstractmethod
@@ -50,7 +57,7 @@ class HtmlModel:
 
   @property
   @abstractmethod
-  def options(self):
+  def options(self) -> OptionModel:
     ...
 
   @abstractmethod
@@ -61,7 +68,7 @@ class HtmlModel:
   def html(self):
     ...
 
-  def set_attrs(self):
+  def set_attrs(self, attrs: Optional[dict] = None, name: Optional[str] = None, value: Optional[Any] = None):
     ...
 
   jsImports = None

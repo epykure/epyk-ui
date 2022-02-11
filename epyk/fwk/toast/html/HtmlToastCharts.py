@@ -12,10 +12,10 @@ class Chart(Html.Html):
   requirements = ('@toast-ui/chart', )
   _option_cls = OptToastCharts.OptionsCharts
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     self.height = height[0]
     super(Chart, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.config.usageStatistics = False
     self.style.css.position = "relative"
     self.config.responsive.animation.duration = 300
@@ -35,7 +35,7 @@ class Chart(Html.Html):
     return SelectionBox
 
   @property
-  def shared(self):
+  def shared(self) -> OptToastCharts.OptToastChartsShared:
     """
     Description:
     -----------
@@ -88,7 +88,7 @@ class Chart(Html.Html):
     return self.options.config
 
   @property
-  def js(self):
+  def js(self) -> JsToastCharts.Charts:
     """
     Description:
     -----------
@@ -97,11 +97,11 @@ class Chart(Html.Html):
     :rtype: JsToastCharts.Charts
     """
     if self._js is None:
-      self._js = JsToastCharts.Charts(self, varName=self.var, report=self.page)
+      self._js = JsToastCharts.Charts(component=self, js_code=self.var, page=self.page)
     return self._js
 
   @property
-  def options(self):
+  def options(self) -> OptToastCharts.OptionsCharts:
     """
     Description:
     -----------
@@ -125,7 +125,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class ChartArea(Chart):

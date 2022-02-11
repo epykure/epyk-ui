@@ -774,17 +774,17 @@ class OptionsCalMonth(Options):
   def grid(self, value):
     self._config(value)
 
-  def scheduleFilter(self, jsFuncs, profile):
+  def scheduleFilter(self, js_funcs, profile):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class OptionCalendars(Options):
@@ -1097,7 +1097,7 @@ class OptionCalendar(Options):
   def usageStatistics(self, flag):
     self._config(flag)
 
-  def add_calendars(self, name, bgColor='#ffbb3b'):
+  def add_calendars(self, name, bg_color='#ffbb3b'):
     """
     Description:
     -----------
@@ -1105,11 +1105,11 @@ class OptionCalendar(Options):
     Attributes:
     ----------
     :param name: String.
-    :param bgColor: String. Optional.
+    :param bg_color: String. Optional.
 
     :rtype: OptionCalendars
     """
     calendar = self._config_sub_data_enum("calendars", OptionCalendars)
     calendar.name = name
-    calendar.bgColor = bgColor
+    calendar.bgColor = bg_color
     return calendar

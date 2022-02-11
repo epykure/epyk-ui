@@ -1191,7 +1191,8 @@ class Grid(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, page: primitives.PageModel, rows, width, height, align, position, options, profile):
+  def __init__(self, page: primitives.PageModel, rows: list, width: tuple, height: tuple, align: str, position: str,
+               options: Optional[dict], profile: Optional[Union[bool, dict]]):
     super(Grid, self).__init__(
       page, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.position = position
@@ -1273,7 +1274,8 @@ class Tabs(Html.Html):
   name = 'Tabs'
   _option_cls = OptPanel.OptionPanelTabs
 
-  def __init__(self, page, color, width, height, html_code, helper, options, profile):
+  def __init__(self, page: primitives.PageModel, color: str, width: tuple, height: tuple, html_code: Optional[str],
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
     super(Tabs, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height, 'color': color})
     self.__panels, self.__panel_objs, self.__selected = [], {}, None
@@ -1312,7 +1314,7 @@ class Tabs(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlTabs(self, page=self.page)
     return self._dom
 
-  def __getitem__(self, name):
+  def __getitem__(self, name: str):
     return self.__panel_objs[name]
 
   def select(self, name: str):
@@ -1466,7 +1468,7 @@ class Tabs(Html.Html):
 class TabsArrowsDown(Tabs):
   name = 'Tabs Arrow Down'
 
-  def add_panel(self, name, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None):
+  def add_panel(self, name: str, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None):
     super(TabsArrowsDown, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked, width)
     self.tab_holder(name).style.add_classes.layout.panel_arrow_down()
     return self
@@ -1634,7 +1636,7 @@ class IconsMenu(Html.Html):
         self.icon.css(css)
     return self
 
-  def add_select(self, action, data, width: int = 150):
+  def add_select(self, action: str, data, width: int = 150):
     """
     Description:
     -----------
@@ -1703,7 +1705,7 @@ class Form(Html.Html):
     Attributes:
     ----------
     :param str method: Optional. The method used to transfer data.
-    :param str action: Optional. The end point for the submit.
+    :param str action: Optional. The end point for submitting.
     :param str text: Optional. The text on the submit button.
     """
     self.attr.update({"action": action or self.action, "method": method or self.method})

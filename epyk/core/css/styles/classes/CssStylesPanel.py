@@ -19,8 +19,8 @@ from epyk.core.css.styles.classes import CssStyle
 
 class CssPanelArrowDown(CssStyle.Style):
   _after = {"content": '" "', "border-left": "50px solid transparent",
-         "border-right": "50px solid transparent", "position": "relative",
-         "width": 0, "margin": "auto", "display": "block", "bottom": "2px"}
+            "border-right": "50px solid transparent", "position": "relative",
+            "width": 0, "margin": "auto", "display": "block", "bottom": "2px"}
 
   def customize(self):
     self.after.css({"border-top": "15px solid %s" % self.page.theme.success[1]})

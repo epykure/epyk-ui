@@ -1,5 +1,7 @@
 import json
 
+from epyk.core.py import primitives
+
 from epyk.core.html import Html
 from epyk.core.html import HtmlSelect
 from epyk.core.html.options import OptSelect
@@ -21,7 +23,7 @@ class Select(Html.Html):
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
-  def __init__(self, page, records, html_code, width, height, profile, multiple, options):
+  def __init__(self, page: primitives.PageModel, records, html_code, width, height, profile, multiple, options):
     super(Select, self).__init__(page, records, html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
     self._vals, self.button_css = records, None
@@ -74,7 +76,7 @@ class Select(Html.Html):
     :rtype: JsHtmlSelect.DomSelect
     """
     if self._dom is None:
-      self._dom = JsHtmlSelect.DomSelect(self, page=self.page)
+      self._dom = JsHtmlSelect.DomSelect(component=self, page=self.page)
     return self._dom
 
   @property
@@ -96,7 +98,7 @@ class Select(Html.Html):
     :rtype: JsSelect.JSelect
     """
     if self._js is None:
-      self._js = JsSelect.JSelect(self, page=self.page)
+      self._js = JsSelect.JSelect(component=self, page=self.page)
     return self._js
 
   @property
@@ -255,5 +257,5 @@ class Lookup(Select):
   def __str__(self):
     self.page.properties.js.add_builders(
       "%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
-    data_cls = self.get_attrs(pyClassNames=self.style.get_classes()).replace('class="', 'data-style="')
+    data_cls = self.get_attrs(css_class_names=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s></select>" % data_cls

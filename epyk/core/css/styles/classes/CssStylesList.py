@@ -40,7 +40,7 @@ class CssSquareList(CssStyle.Style):
   _selectors = {'child': 'li'}
 
   def customize(self):
-    self.before.cess({"color": self.page.theme.notch(2)})
+    self.before.css({"color": self.page.theme.notch(2)})
 
 
 class CssListBase(CssStyle.Style):

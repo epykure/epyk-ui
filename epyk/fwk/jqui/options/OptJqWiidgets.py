@@ -208,7 +208,7 @@ class OptAccordion(Options):
   def icons(self, values):
     self._config(values)
 
-  def activate(self, jsFuncs, profile):
+  def activate(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -220,12 +220,13 @@ class OptAccordion(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def beforeActivate(self, jsFuncs, profile):
+  def beforeActivate(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -237,12 +238,13 @@ class OptAccordion(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def create(self, jsFuncs, profile):
+  def create(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -254,10 +256,11 @@ class OptAccordion(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class OptTabs(Options):
@@ -412,7 +415,7 @@ class OptTabs(Options):
     """
     self._config({"effect": effect, "duration": duration})
 
-  def activate(self, jsFuncs, profile):
+  def activate(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -424,12 +427,13 @@ class OptTabs(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def beforeActivate(self, jsFuncs, profile):
+  def beforeActivate(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -441,12 +445,13 @@ class OptTabs(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def beforeLoad(self, jsFuncs, profile):
+  def beforeLoad(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -458,12 +463,13 @@ class OptTabs(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def create(self, jsFuncs, profile):
+  def create(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -475,12 +481,13 @@ class OptTabs(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def load(self, jsFuncs, profile):
+  def load(self, js_funcs, profile):
     """
     Description:
     ------------
@@ -492,7 +499,8 @@ class OptTabs(Options):
 
     Attributes:
     ----------
-    :param jsFuncs: String | List. The Javascript functions.
+    :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
+      js_funcs, toStr=True, profile=profile), js_type=True)

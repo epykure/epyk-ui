@@ -168,7 +168,7 @@ def requirements(args):
     else:
       mod_name = script
       script = "%s.py" % script
-    report_path = utils.get_report_path(project_path, args.exception=="Y", report=script)
+    report_path = utils.get_report_path(project_path, args.exception == "Y", report=script)
     sys.path.append(report_path)
     mod = __import__(mod_name, fromlist=['object'])
     page = utils.get_page(mod)

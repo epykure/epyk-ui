@@ -4470,7 +4470,7 @@ class ImportManager:
       self.addPackage("google-%s" % p, GOOGLE_EXTENSIONS[p])
       JS_IMPORTS["google-%s" % p] = GOOGLE_EXTENSIONS[p]
       if 'launcher' in GOOGLE_EXTENSIONS[p]:
-        self.page._props.setdefault('js', {}).setdefault("builders", []).append(GOOGLE_EXTENSIONS[p]['launcher'])
+        self.page.properties.js.add_builders(GOOGLE_EXTENSIONS[p]['launcher'])
     self.page._with_google_imports = True
 
   def locals(self, aliases: List[str], end_points: Optional[str] = None):

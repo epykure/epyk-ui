@@ -8,9 +8,9 @@ from epyk.core.js import JsUtils
 
 class Editor(JsPackage):
 
-  def __init__(self, htmlObj, varName=None, setVar=True, isPyData=True, report=None):
-    self.varName, self.varData, self.__var_def = varName, "", None
-    self._src, self._report = htmlObj, report
+  def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
+    self.varName, self.varData, self.__var_def = js_code, "", None
+    self.component, self._report = component, page
     self._js, self._jquery = [], None
 
   def blur(self):
@@ -23,9 +23,9 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#blur
     """
-    return JsUtils.jsWrap("%s.blur()" % self._src.var)
+    return JsUtils.jsWrap("%s.blur()" % self.component.var)
 
-  def changeMode(self, mode, withoutFocus=True):
+  def changeMode(self, mode, without_focus: bool = True):
     """
     Description:
     -----------
@@ -38,11 +38,11 @@ class Editor(JsPackage):
     Attributes:
     ----------
     :param mode: String. Editor mode name of want to change.
-    :param withoutFocus: String. Optional. Change mode without focus.
+    :param without_focus: String. Optional. Change mode without focus.
     """
     mode = JsUtils.jsConvertData(mode, None)
-    withoutFocus = JsUtils.jsConvertData(withoutFocus, None)
-    return JsUtils.jsWrap("%s.changeMode(%s, %s)" % (self._src.var, mode, withoutFocus))
+    without_focus = JsUtils.jsConvertData(without_focus, None)
+    return JsUtils.jsWrap("%s.changeMode(%s, %s)" % (self.component.var, mode, without_focus))
 
   def changePreviewStyle(self, style):
     """
@@ -59,7 +59,7 @@ class Editor(JsPackage):
     :param style: String. 'tab'|'vertical'.
     """
     style = JsUtils.jsConvertData(style, None)
-    return JsUtils.jsWrap("%s.changePreviewStyle(%s)" % (self._src.var, style))
+    return JsUtils.jsWrap("%s.changePreviewStyle(%s)" % (self.component.var, style))
 
   def deleteSelection(self, start, end):
     """
@@ -78,7 +78,7 @@ class Editor(JsPackage):
     """
     start = JsUtils.jsConvertData(start, None)
     end = JsUtils.jsConvertData(end, None)
-    return JsUtils.jsWrap("%s.deleteSelection(%s, %s)" % (self._src.var, start, end))
+    return JsUtils.jsWrap("%s.deleteSelection(%s, %s)" % (self.component.var, start, end))
 
   def destroy(self):
     """
@@ -90,7 +90,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#destroy
     """
-    return JsUtils.jsWrap("%s.destroy()" % self._src.var)
+    return JsUtils.jsWrap("%s.destroy()" % self.component.var)
 
   def exec(self, name, payload=None):
     """
@@ -109,10 +109,10 @@ class Editor(JsPackage):
     """
     name = JsUtils.jsConvertData(name, None)
     if payload is None:
-      return JsUtils.jsWrap("%s.exec(%s)" % (self._src.var, name))
+      return JsUtils.jsWrap("%s.exec(%s)" % (self.component.var, name))
 
     payload = JsUtils.jsConvertData(payload, None)
-    return JsUtils.jsWrap("%s.exec(%s, %s)" % (self._src.var, name, payload))
+    return JsUtils.jsWrap("%s.exec(%s, %s)" % (self.component.var, name, payload))
 
   def focus(self):
     """
@@ -124,7 +124,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#focus
     """
-    return JsUtils.jsWrap("%s.focus()" % self._src.var)
+    return JsUtils.jsWrap("%s.focus()" % self.component.var)
 
   def getCurrentPreviewStyle(self):
     """
@@ -136,7 +136,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getCurrentPreviewStyle
     """
-    return JsObjects.JsString.JsString.get("%s.getCurrentPreviewStyle()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getCurrentPreviewStyle()" % self.component.var)
 
   def getHeight(self):
     """
@@ -148,7 +148,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getHeight
     """
-    return JsObjects.JsString.JsString.get("%s.getHeight()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getHeight()" % self.component.var)
 
   def getHTML(self):
     """
@@ -160,7 +160,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getHTML
     """
-    return JsObjects.JsString.JsString.get("%s.getHTML()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getHTML()" % self.component.var)
 
   def getMarkdown(self):
     """
@@ -172,7 +172,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getMarkdown
     """
-    return JsObjects.JsString.JsString.get("%s.getMarkdown()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getMarkdown()" % self.component.var)
 
   def getMinHeight(self):
     """
@@ -184,7 +184,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getMinHeight
     """
-    return JsObjects.JsString.JsString.get("%s.getMinHeight()" % self._src.var)
+    return JsObjects.JsString.JsString.get("%s.getMinHeight()" % self.component.var)
 
   def getScrollTop(self):
     """
@@ -196,7 +196,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getScrollTop
     """
-    return JsObjects.JsNumber.JsNumber.get("%s.getScrollTop()" % self._src.var)
+    return JsObjects.JsNumber.JsNumber.get("%s.getScrollTop()" % self.component.var)
 
   def getSelectedText(self, start, end):
     """
@@ -215,7 +215,7 @@ class Editor(JsPackage):
     """
     start = JsUtils.jsConvertData(start, None)
     end = JsUtils.jsConvertData(end, None)
-    return JsObjects.JsString.JsString.get("%s.getSelectedText(%s, %s)" % (self._src.var, start, end))
+    return JsObjects.JsString.JsString.get("%s.getSelectedText(%s, %s)" % (self.component.var, start, end))
 
   def getSelection(self):
     """
@@ -227,7 +227,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#getSelection
     """
-    return JsUtils.jsWrap("%s.getSelection()" % self._src.var)
+    return JsUtils.jsWrap("%s.getSelection()" % self.component.var)
 
   def hide(self):
     """
@@ -239,7 +239,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#hide
     """
-    return JsUtils.jsWrap("%s.hide()" % self._src.var)
+    return JsUtils.jsWrap("%s.hide()" % self.component.var)
 
   def insertText(self, text):
     """
@@ -256,7 +256,7 @@ class Editor(JsPackage):
     :param text: String. text content.
     """
     text = JsUtils.jsConvertData(text, None)
-    return JsUtils.jsWrap("%s.insertText(%s)" % (self._src.var, text))
+    return JsUtils.jsWrap("%s.insertText(%s)" % (self.component.var, text))
 
   def isMarkdownMode(self):
     """
@@ -268,7 +268,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#isMarkdownMode
     """
-    return JsObjects.JsBoolean.JsBoolean.get("%s.isMarkdownMode()" % self._src.var)
+    return JsObjects.JsBoolean.JsBoolean.get("%s.isMarkdownMode()" % self.component.var)
 
   def isViewer(self):
     """
@@ -280,7 +280,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#isViewer
     """
-    return JsObjects.JsBoolean.JsBoolean.get("%s.isViewer()" % self._src.var)
+    return JsObjects.JsBoolean.JsBoolean.get("%s.isViewer()" % self.component.var)
 
   def isWysiwygMode(self):
     """
@@ -292,7 +292,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#isWysiwygMode
     """
-    return JsObjects.JsBoolean.JsBoolean.get("%s.isWysiwygMode()" % self._src.var)
+    return JsObjects.JsBoolean.JsBoolean.get("%s.isWysiwygMode()" % self.component.var)
 
   def moveCursorToEnd(self):
     """
@@ -304,7 +304,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#moveCursorToEnd
     """
-    return JsUtils.jsWrap("%s.moveCursorToEnd()" % self._src.var)
+    return JsUtils.jsWrap("%s.moveCursorToEnd()" % self.component.var)
 
   def moveCursorToStart(self):
     """
@@ -316,7 +316,7 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#moveCursorToStart
     """
-    return JsUtils.jsWrap("%s.moveCursorToStart()" % self._src.var)
+    return JsUtils.jsWrap("%s.moveCursorToStart()" % self.component.var)
 
   def off(self, event):
     """
@@ -329,7 +329,7 @@ class Editor(JsPackage):
     :param event: String. Event type.
     """
     event = JsUtils.jsConvertData(event, None)
-    return JsUtils.jsWrap("%s.off(%s)" % (self._src.var, event))
+    return JsUtils.jsWrap("%s.off(%s)" % (self.component.var, event))
 
   def on(self, event, js_funcs, profile=None):
     """
@@ -351,7 +351,7 @@ class Editor(JsPackage):
       js_funcs = [js_funcs]
     event = JsUtils.jsConvertData(event, None)
     return JsUtils.jsWrap("%s.on(%s, function(){%s})" % (
-      self._src.var, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      self.component.var, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def removeHook(self, event):
     """
@@ -368,7 +368,7 @@ class Editor(JsPackage):
     :param event: String. Event type.
     """
     event = JsUtils.jsConvertData(event, None)
-    return JsUtils.jsWrap("%s.removeHook(%s)" % (self._src.var, event))
+    return JsUtils.jsWrap("%s.removeHook(%s)" % (self.component.var, event))
 
   def replaceSelection(self, text, start, end):
     """
@@ -389,7 +389,7 @@ class Editor(JsPackage):
     text = JsUtils.jsConvertData(text, None)
     start = JsUtils.jsConvertData(start, None)
     end = JsUtils.jsConvertData(end, None)
-    return JsUtils.jsWrap("%s.replaceSelection(%s, %s, %s)" % (self._src.var, text, start, end))
+    return JsUtils.jsWrap("%s.replaceSelection(%s, %s, %s)" % (self.component.var, text, start, end))
 
   def reset(self):
     """
@@ -397,7 +397,7 @@ class Editor(JsPackage):
     -----------
     Reset TUIEditor.
     """
-    return JsUtils.jsWrap("%s.reset()" % self._src.var)
+    return JsUtils.jsWrap("%s.reset()" % self.component.var)
 
   def setHeight(self, height):
     """
@@ -414,7 +414,7 @@ class Editor(JsPackage):
     :param height: String. editor height in pixel.
     """
     height = JsUtils.jsConvertData(height, None)
-    return JsUtils.jsWrap("%s.setHeight(%s)" % (self._src.var, height))
+    return JsUtils.jsWrap("%s.setHeight(%s)" % (self.component.var, height))
 
   def setHTML(self, html, cursorToEnd=True):
     """
@@ -433,7 +433,7 @@ class Editor(JsPackage):
     """
     html = JsUtils.jsConvertData(html, None)
     cursorToEnd = JsUtils.jsConvertData(cursorToEnd, None)
-    return JsUtils.jsWrap("%s.setHTML(%s, %s)" % (self._src.var, html, cursorToEnd))
+    return JsUtils.jsWrap("%s.setHTML(%s, %s)" % (self.component.var, html, cursorToEnd))
 
   def setMarkdown(self, markdown, cursorToEnd=True):
     """
@@ -452,7 +452,7 @@ class Editor(JsPackage):
     """
     markdown = JsUtils.jsConvertData(markdown, None)
     cursorToEnd = JsUtils.jsConvertData(cursorToEnd, None)
-    return JsUtils.jsWrap("%s.setMarkdown(%s, %s)" % (self._src.var, markdown, cursorToEnd))
+    return JsUtils.jsWrap("%s.setMarkdown(%s, %s)" % (self.component.var, markdown, cursorToEnd))
 
   def setMinHeight(self, minHeight):
     """
@@ -469,7 +469,7 @@ class Editor(JsPackage):
     :param minHeight: String. min content height in pixel.
     """
     minHeight = JsUtils.jsConvertData(minHeight, None)
-    return JsUtils.jsWrap("%s.setMinHeight(%s)" % (self._src.var, minHeight))
+    return JsUtils.jsWrap("%s.setMinHeight(%s)" % (self.component.var, minHeight))
 
   def setPlaceholder(self, placeholder):
     """
@@ -486,7 +486,7 @@ class Editor(JsPackage):
     :param placeholder: String. placeholder to set.
     """
     placeholder = JsUtils.jsConvertData(placeholder, None)
-    return JsUtils.jsWrap("%s.setPlaceholder(%s)" % (self._src.var, placeholder))
+    return JsUtils.jsWrap("%s.setPlaceholder(%s)" % (self.component.var, placeholder))
 
   def setScrollTop(self, value):
     """
@@ -503,7 +503,7 @@ class Editor(JsPackage):
     :param value: Number. scrollTop value of editor container.
     """
     value = JsUtils.jsConvertData(value, None)
-    return JsUtils.jsWrap("%s.setScrollTop(%s)" % (self._src.var, value))
+    return JsUtils.jsWrap("%s.setScrollTop(%s)" % (self.component.var, value))
 
   def setSelection(self, start, end):
     """
@@ -522,7 +522,7 @@ class Editor(JsPackage):
     """
     start = JsUtils.jsConvertData(start, None)
     end = JsUtils.jsConvertData(end, None)
-    return JsUtils.jsWrap("%s.setSelection(%s, %s)" % (self._src.var, start, end))
+    return JsUtils.jsWrap("%s.setSelection(%s, %s)" % (self.component.var, start, end))
 
   def show(self):
     """
@@ -534,4 +534,4 @@ class Editor(JsPackage):
 
       https://nhn.github.io/tui.editor/latest/ToastUIEditorCore#show
     """
-    return JsUtils.jsWrap("%s.show()" % self._src.var)
+    return JsUtils.jsWrap("%s.show()" % self.component.var)

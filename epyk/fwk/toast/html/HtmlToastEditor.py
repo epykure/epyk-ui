@@ -9,10 +9,10 @@ class Editor(Html.Html):
   requirements = ('@toast-ui/editor', )
   _option_cls = OptToastEditor.OptionsEditor
 
-  def __init__(self, report, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     self.height = height[0]
     super(Editor, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.options.height = height[0]
 
   @property
@@ -25,7 +25,7 @@ class Editor(Html.Html):
     return "window['%s']" % self.htmlCode
 
   @property
-  def options(self):
+  def options(self) -> OptToastEditor.OptionsEditor:
     """
     Description:
     -----------
@@ -40,7 +40,7 @@ class Editor(Html.Html):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsToastEditor.Editor:
     """
     Description:
     -----------
@@ -53,11 +53,11 @@ class Editor(Html.Html):
     :rtype: JsToastEditor.Editor
     """
     if self._js is None:
-      self._js = JsToastEditor.Editor(self, varName=self.var, report=self.page)
+      self._js = JsToastEditor.Editor(component=self, js_code=self.var, page=self.page)
     return self._js
 
   _js__builder__ = '''options.el = htmlObj; window[htmlObj.id] = new toastui.Editor(options)'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

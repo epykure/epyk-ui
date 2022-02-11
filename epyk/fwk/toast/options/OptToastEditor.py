@@ -83,7 +83,7 @@ class OptionsEditor(Options):
     return self._config_get("en-US")
 
   @language.setter
-  def language(self, val):
+  def language(self, val: str):
     self._config(val)
 
   @property
@@ -129,7 +129,7 @@ class OptionsEditor(Options):
     return self._config_get(None)
 
   @viewer.setter
-  def viewer(self, flag):
+  def viewer(self, flag: bool):
     self._config(flag)
 
   @property
@@ -146,7 +146,7 @@ class OptionsEditor(Options):
     return self._config_get("markdown")
 
   @initialEditType.setter
-  def initialEditType(self, val):
+  def initialEditType(self, val: str):
     self._config(val)
 
   @property
@@ -163,11 +163,11 @@ class OptionsEditor(Options):
     return self._config_get("vertical")
 
   @previewStyle.setter
-  def previewStyle(self, val):
+  def previewStyle(self, val: str):
     self._config(val)
 
   @property
-  def previewStyles(self):
+  def previewStyles(self) -> EnumStyleOptions:
     """
     Description:
     ------------

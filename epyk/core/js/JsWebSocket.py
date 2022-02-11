@@ -495,6 +495,46 @@ class ServerSentEvent:
     self.page.properties.js.add_builders("var %s" % self._selector)
 
   @property
+  def readyState(self):
+    """
+    Description:
+    ------------
+    A number representing the state of the connection. Possible values are CONNECTING (0), OPEN (1), or CLOSED (2).
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/EventSource
+    """
+    return JsObjects.JsObject.JsObject.get("%s.readyState" % self._selector)
+
+  @property
+  def url(self):
+    """
+    Description:
+    ------------
+    A DOMString representing the URL of the source.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/EventSource
+    """
+    return JsObjects.JsObject.JsObject.get("%s.url" % self._selector)
+
+  @property
+  def withCredentials(self):
+    """
+    Description:
+    ------------
+    A boolean value indicating whether the EventSource object was instantiated with cross-origin (CORS) credentials
+    set (true), or not (false, the default).
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/EventSource
+    """
+    return JsObjects.JsObject.JsObject.get("%s.url" % self._selector)
+
+  @property
   def message(self):
     """
     Description:
@@ -504,8 +544,7 @@ class ServerSentEvent:
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
-  def connect(self, url: Optional[str] = None, port: Optional[int] = None, from_config=None,
-              options: Optional[dict] = None):
+  def connect(self, url: Optional[str] = None, port: Optional[int] = None, from_config=None, options: dict = None):
     """
     Description:
     ------------
@@ -523,17 +562,18 @@ class ServerSentEvent:
       ws:// for local connections.
     :param Optional[int] port:
     :param from_config:
-    :param Optional[dict] options:
+    :param dict options:
     """
     if from_config is not None:
-      self.page.properties.js.add_builders("%s = new EventSource(%s)" % (self._selector, from_config.address))
       self.__connect = "new EventSource(%s)" % from_config.address
-      return JsObjects.JsVoid("%s = new EventSource(%s)" % (self._selector, from_config.address))
+      self.page.properties.js.add_builders("%s = %s" % (self._selector, self.__connect))
+      return JsObjects.JsVoid("%s = %s" % (self._selector, self.__connect))
 
     server_root = "%s:%s" % (url, port) if port is not None else url
-    self.page.properties.js.add_builders("%s = new EventSource('%s')" % (self._selector, server_root))
-    self.__connect = "new EventSource('%s')" % server_root
-    return JsObjects.JsVoid("%s = new EventSource('%s')" % (self._selector, server_root))
+    self.__connect = "new EventSource('%s')" % server_root if options is None else "new EventSource('%s', %s)" % (
+      server_root, JsUtils.jsConvertData(options, None))
+    self.page.properties.js.add_builders("%s = %s" % (self._selector, self.__connect))
+    return JsObjects.JsVoid("%s = %s" % (self._selector, self.__connect))
 
   def onmessage(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """

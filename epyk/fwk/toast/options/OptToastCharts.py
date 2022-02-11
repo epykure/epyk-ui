@@ -6,7 +6,7 @@ from epyk.core.html.options import OptChart
 
 class OptToastChartsShared(OptChart.OptionsChartShared):
 
-  def x_format(self, jsFncs, profile=None):
+  def x_format(self, js_funcs, profile=None):
     return self
 
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -23,7 +23,7 @@ class OptToastChartsShared(OptChart.OptionsChartShared):
     self.component.config.xAxis.title.text = value
     return self
 
-  def y_format(self, jsFncs, profile=None):
+  def y_format(self, js_funcs, profile=None):
     return self
 
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
@@ -173,7 +173,7 @@ class OptionsChartData(Options):
   def categories(self, values):
     self._config(values)
 
-  def add_series(self, name, data):
+  def add_series(self, name, data) -> OptionsChartDataSeries:
     """
     Description:
     -----------
@@ -349,7 +349,7 @@ class OptionsScale(Options):
 class OptionsAxis(Options):
 
   @property
-  def label(self):
+  def label(self) -> OptionsAxisLabel:
     """
     Description:
     ------------
@@ -363,7 +363,7 @@ class OptionsAxis(Options):
     return self._config_sub_data("label", OptionsAxisLabel)
 
   @property
-  def tick(self):
+  def tick(self) -> OptionsAxisLabel:
     """
     Description:
     ------------
@@ -377,7 +377,7 @@ class OptionsAxis(Options):
     return self._config_sub_data("tick", OptionsAxisLabel)
 
   @property
-  def scale(self):
+  def scale(self) -> OptionsScale:
     """
     Description:
     ------------
@@ -391,7 +391,7 @@ class OptionsAxis(Options):
     return self._config_sub_data("scale", OptionsScale)
 
   @property
-  def title(self):
+  def title(self) -> OptionsTitle:
     """
     Description:
     ------------
@@ -403,7 +403,7 @@ class OptionsAxis(Options):
     """
     return self._config_sub_data("title", OptionsTitle)
 
-  def add_title(self, text):
+  def add_title(self, text: str) -> OptionsTitle:
     """
     Description:
     ------------
@@ -412,7 +412,7 @@ class OptionsAxis(Options):
 
     Attributes:
     ----------
-    :param text: String.
+    :param str text:
 
     :rtype: OptionsTitle
     """
@@ -520,7 +520,7 @@ class OptionsChartSeries(Options):
 
 
   @property
-  def dataLabels(self):
+  def dataLabels(self) -> OptionsDataLabels:
     """
 
     Related Pages:
@@ -593,7 +593,7 @@ class OptionsChartSeries(Options):
     self._config(flag)
 
   @property
-  def stack(self):
+  def stack(self) -> OptionsChartStack:
     """
     Description:
     ------------
@@ -786,7 +786,7 @@ class OptionsThemeSeries(Options):
     self._config(values)
 
   @property
-  def dot(self):
+  def dot(self) -> OptionsDot:
     """
 
     Related Pages:
@@ -801,7 +801,7 @@ class OptionsThemeSeries(Options):
 class OptionsTheme(Options):
 
   @property
-  def series(self):
+  def series(self) -> OptionsThemeSeries:
     """
     Description:
     ------------
@@ -869,7 +869,7 @@ class OptionsLegend(Options):
     self._config(text)
 
   @property
-  def item(self):
+  def item(self) -> OptionsLegendItem:
     """
     Description:
     ------------
@@ -1060,7 +1060,7 @@ class OptionsChartPlot(Options):
     line.color = color
     return line
 
-  def add_band(self, values, color='#ff5722', opacity=0.1):
+  def add_band(self, values, color: str = '#ff5722', opacity: float = 0.1) -> OptionsChartPlotBand:
     """
     Description:
     -----------
@@ -1102,7 +1102,7 @@ class OptionsAnimation(Options):
 class OptionsResponsive(Options):
 
   @property
-  def animation(self):
+  def animation(self) -> OptionsAnimation:
     """
     Description:
     ------------
@@ -1115,7 +1115,7 @@ class OptionsResponsive(Options):
 class OptionsChartOpts(Options):
 
   @property
-  def chart(self):
+  def chart(self) -> OptionsChartAttrs:
     """
     Description:
     ------------
@@ -1128,7 +1128,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("chart", OptionsChartAttrs)
 
   @property
-  def legend(self):
+  def legend(self) -> OptionsLegend:
     """
     Description:
     ------------
@@ -1141,7 +1141,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("legend", OptionsLegend)
 
   @property
-  def tooltip(self):
+  def tooltip(self) -> OptionsTooltip:
     """
     Description:
     ------------
@@ -1154,7 +1154,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("tooltip", OptionsTooltip)
 
   @property
-  def theme(self):
+  def theme(self) -> OptionsTheme:
     """
     Description:
     ------------
@@ -1167,7 +1167,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("theme", OptionsTheme)
 
   @property
-  def series(self):
+  def series(self) -> OptionsChartSeries:
     """
     Description:
     ------------
@@ -1180,7 +1180,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("series", OptionsChartSeries)
 
   @property
-  def plot(self):
+  def plot(self) -> OptionsChartPlot:
     """
     Description:
     ------------
@@ -1190,7 +1190,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("plot", OptionsChartPlot)
 
   @property
-  def xAxis(self):
+  def xAxis(self) -> OptionsAxis:
     """
     Related Pages:
 
@@ -1200,7 +1200,7 @@ class OptionsChartOpts(Options):
     return self._config_sub_data("xAxis", OptionsAxis)
 
   @property
-  def yAxis(self):
+  def yAxis(self) -> OptionsAxis:
     """
     Description:
     ------------
@@ -1226,7 +1226,7 @@ class OptionsChartOpts(Options):
     self._config(flag)
 
   @property
-  def responsive(self):
+  def responsive(self) -> OptionsResponsive:
     """
     Description:
     ------------
@@ -1269,7 +1269,7 @@ class OptionsCharts(Options):
     self._config(col)
 
   @property
-  def config(self):
+  def config(self) -> OptionsChartOpts:
     """
     Description:
     ------------
@@ -1282,7 +1282,7 @@ class OptionsCharts(Options):
     return self._config_sub_data("options", OptionsChartOpts)
 
   @property
-  def data(self):
+  def data(self) -> OptionsChartData:
     """
     Description:
     ------------
@@ -1327,7 +1327,7 @@ class OptionsChartRadiusRange(Options):
 class OptionsChartSeriesPie(Options):
 
   @property
-  def radiusRange(self):
+  def radiusRange(self) -> OptionsChartRadiusRange:
     """
     Description:
     ------------
@@ -1343,7 +1343,7 @@ class OptionsChartSeriesPie(Options):
 class OptionsChartPieOpts(OptionsChartOpts):
 
   @property
-  def series(self):
+  def series(self) -> OptionsChartSeriesPie:
     """
     Description:
     ------------
@@ -1359,7 +1359,7 @@ class OptionsChartPieOpts(OptionsChartOpts):
 class OptionsChartsPie(OptionsCharts):
 
   @property
-  def config(self):
+  def config(self) -> OptionsChartPieOpts:
     """
     Description:
     ------------

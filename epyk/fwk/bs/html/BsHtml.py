@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from epyk.core.py import primitives
 from epyk.core import html
 from epyk.fwk.bs.js.html import BsDom
 
@@ -35,14 +36,14 @@ class BsComposite(html.HtmlTextComp.Composite):
 class Section(html.Html.Html):
   name = "Bootstrap Section"
 
-  def __init__(self, report, type, data=None, options=None, profile=None):
-    super(Section, self).__init__(report, [])
+  def __init__(self, page: primitives.PageModel, type, data=None, options=None, profile=None):
+    super(Section, self).__init__(page, [])
     self.style.clear_all()
     self.__section = type
     if data is not None:
       self.__add__(data)
 
-  def __getitem__(self, i):
+  def __getitem__(self, i: int):
     """
     Description:
     ------------
@@ -58,12 +59,12 @@ class Section(html.Html.Html):
     """
     return self.val[i]
 
-  def __add__(self, component):
+  def __add__(self, component: html.Html.Html):
     """ Add items to a container """
     self.val.append(component)
     return self
 
-  def insert(self, i, comp):
+  def insert(self, i: int, comp: html.Html.Html):
     """
     Description:
     ------------
@@ -81,8 +82,8 @@ class Section(html.Html.Html):
 
   def __str__(self):
     cols = "".join([htmlObj.html() if hasattr(htmlObj, 'html') else str(htmlObj) for i, htmlObj in enumerate(self.val)])
-    return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {'section': self.__section, 'cols': cols,
-                  'attr': self.get_attrs(css_class_names=self.style.get_classes())}
+    return '<%(section)s %(attr)s>%(cols)s</%(section)s>' % {
+      'section': self.__section, 'cols': cols, 'attr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class BsToasts(html.Html.Html):

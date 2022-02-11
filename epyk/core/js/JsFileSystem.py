@@ -11,8 +11,8 @@ from epyk.core.py import primitives
 
 class JsFileSystem:
 
-  def __init__(self, src: Optional[primitives.PageModel] = None):
-    self.page = src
+  def __init__(self, page: Optional[primitives.PageModel] = None):
+    self.page = page
     self._js = []
 
   def toStr(self):

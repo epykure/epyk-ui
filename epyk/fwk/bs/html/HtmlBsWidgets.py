@@ -1,4 +1,5 @@
 
+from epyk.core.py import primitives
 from epyk.core.html.Html import Component, StructComponent
 from epyk.core.html import HtmlList
 from epyk.fwk.bs.js import JsBsWidgets
@@ -66,7 +67,7 @@ class BsAccordion(Component):
   str_repr = '''<div {attrs}>{sub_items}</div>'''
   dyn_repr = '''{sub_item}'''
 
-  def header(self, n):
+  def header(self, n: int):
     """
     Description:
     -----------
@@ -78,7 +79,7 @@ class BsAccordion(Component):
     """
     return self.items[n]["header"]
 
-  def panel(self, n):
+  def panel(self, n: int):
     """
     Description:
     -----------
@@ -131,7 +132,7 @@ class BsAccordion(Component):
 
     Attributes:
     ----------
-    :param item: Dictionary. A sub item to the accrdion object.
+    :param item: Dictionary. A sub item to the accordion object.
     """
     content = self.page.web.std.div([item["header"], item["content"]])
     content.attr["class"].add("accordion-item")
@@ -144,11 +145,11 @@ class BsDropdown(Component):
   name = "Bootstrap Dropdown"
   str_repr = '''<div {attrs}>{buttons}<ul class="dropdown-menu">{sub_items}<ul></div>'''
 
-  def __init__(self, report, vals, html_code=None, options=None, profile=None, css_attrs=None):
-    super(BsDropdown, self).__init__(report, vals, html_code, options, profile, css_attrs)
+  def __init__(self, page: primitives.PageModel, vals, html_code=None, options=None, profile=None, css_attrs=None):
+    super(BsDropdown, self).__init__(page, vals, html_code, options, profile, css_attrs)
     self.items = {"buttons": [], "options": []}
 
-  def button(self, n=0):
+  def button(self, n: int = 0):
     """
     Description:
     -----------
@@ -161,7 +162,7 @@ class BsDropdown(Component):
     """
     return self.items[n]
 
-  def item(self, n):
+  def item(self, n: int):
     """
     Description:
     -----------
@@ -229,7 +230,7 @@ class BsModal(StructComponent):
   str_repr = '''<div {attrs}><div class="modal-dialog"><div class="modal-content border-danger">{content}</div></div></div>'''
 
   @property
-  def options(self):
+  def options(self) -> OptBsWidget.Modal:
     """
     Description:
     -----------
@@ -293,7 +294,7 @@ class BsOffCanvas(StructComponent):
   _js__builder__ = '''var carousel = new bootstrap.Offcanvas(htmlObj, options)'''
 
   @property
-  def options(self):
+  def options(self) -> OptBsWidget.OffCanvas:
     """
     Description:
     -----------
@@ -304,7 +305,7 @@ class BsOffCanvas(StructComponent):
     return super().options
 
   @property
-  def js(self):
+  def js(self) -> JsBsWidgets.OffCanvas:
     """
     Description:
     -----------
@@ -312,7 +313,7 @@ class BsOffCanvas(StructComponent):
     :rtype: JsBsWidgets.OffCanvas
     """
     if self._js is None:
-      self._js = JsBsWidgets.OffCanvas(self, report=self.page)
+      self._js = JsBsWidgets.OffCanvas(component=self, page=self.page)
     return self._js
 
   def add_to_header(self, content):
@@ -386,7 +387,7 @@ class BsCarousel(Component):
   _js__builder__ = '''var carousel = new bootstrap.Carousel(htmlObj, options)'''
 
   @property
-  def options(self):
+  def options(self) -> OptBsWidget.Carousel:
     """
     Description:
     -----------
@@ -512,7 +513,7 @@ class BsToast(StructComponent):
     return "window['%s']" % self.htmlCode
 
   @property
-  def js(self):
+  def js(self) -> JsBsWidgets.OffCanvas:
     """
     Description:
     -----------
@@ -520,7 +521,7 @@ class BsToast(StructComponent):
     :rtype: JsBsWidgets.OffCanvas
     """
     if self._js is None:
-      self._js = JsBsWidgets.OffCanvas(self, varName=self.var)
+      self._js = JsBsWidgets.OffCanvas(component=self, js_code=self.var)
     return self._js
 
   def add_to_header(self, content):

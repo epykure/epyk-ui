@@ -6,7 +6,7 @@ from epyk.core.js.primitives import JsObjects
 class JsDebounce:
 
   @staticmethod
-  def set(jsFuncs, delay, varName, profile=None):
+  def set(js_funcs, delay, js_code: str, profile=None):
     """
     Description:
     ------------
@@ -20,17 +20,17 @@ class JsDebounce:
 
     Attributes:
     ----------
-    :param jsFuncs: List | String. Javascript functions.
+    :param js_funcs: List | String. Javascript functions.
     :param delay: Integer. The delay to run the function.
-    :param varName: String. the variable reference.
+    :param str js_code: the variable reference.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     delay = JsUtils.jsConvertData(delay, None)
     return JsUtils.jsWrap("window['%s'] = tui.util.debounce(function(){%s}, %s)" % (
-      varName, JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), delay))
+      js_code, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), delay))
 
   @staticmethod
-  def run(varName):
+  def run(js_code: str):
     """
     Description:
     ------------
@@ -38,15 +38,15 @@ class JsDebounce:
 
     Attributes:
     ----------
-    :param varName: String. the variable reference.
+    :param str js_code: the variable reference.
     """
-    return JsUtils.jsWrap("%s()" % varName)
+    return JsUtils.jsWrap("%s()" % js_code)
 
 
 class JsThrottle:
 
   @staticmethod
-  def set(jsFuncs, interval, varName, profile=None):
+  def set(js_funcs, interval: int, js_code: str, profile=None):
     """
     Description:
     ------------
@@ -60,17 +60,17 @@ class JsThrottle:
 
     Attributes:
     ----------
-    :param jsFuncs: List | String. Javascript functions.
-    :param interval: Integer. The interval between two function trigger.
-    :param varName: String. the variable reference.
+    :param js_funcs: List | String. Javascript functions.
+    :param int interval: The interval between two function trigger.
+    :param str js_code: the variable reference.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     interval = JsUtils.jsConvertData(interval, None)
     return JsUtils.jsWrap("window['%s'] = tui.util.throttle(function(){%s}, %s)" % (
-      varName, JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), interval))
+      js_code, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), interval))
 
   @staticmethod
-  def run(varName):
+  def run(js_code: str):
     """
     Description:
     ------------
@@ -78,26 +78,25 @@ class JsThrottle:
 
     Attributes:
     ----------
-    :param varName: String. The variable reference.
+    :param str js_code: The variable reference.
     """
-    return JsUtils.jsWrap("%s()" % varName)
+    return JsUtils.jsWrap("%s()" % js_code)
 
   @staticmethod
-  def reset(varName):
+  def reset(js_code: str):
     """
     Attributes:
     ----------
-    :param varName: String. The variable reference.
+    :param str js_code: The variable reference.
     """
-    return JsUtils.jsWrap("%s.reset()" % varName)
+    return JsUtils.jsWrap("%s.reset()" % js_code)
 
 
 class Js:
 
-  def __init__(self, src=None, component=None):
+  def __init__(self, page=None, component=None):
     # The underlying source object is not supposed to be touched in the underlying classes
-    self._src = src
-    self.component, self.page = component, src
+    self.component, self.page = component, page
 
   def util(self):
     return JsObjects.JsObjects.get("tui.util")
@@ -132,7 +131,7 @@ class Js:
     """
     return JsObjects.JsArray.JsArray.get("tui.util.range(%s, %s, %s)" % (start, end, step))
 
-  def inArray(self, searchElement, array, startIndex=0):
+  def inArray(self, search_element, array, start_index=0):
     """
     Description:
     ------------
@@ -147,14 +146,14 @@ class Js:
 
     Attributes:
     ----------
-    :param searchElement: String. Element to locate in the array.
+    :param search_element: String. Element to locate in the array.
     :param array: Array. Array that will be traversed.
-    :param startIndex: Number. Optional. Start index in array for searching (default 0)
+    :param start_index: Number. Optional. Start index in array for searching (default 0)
     """
-    searchElement = JsUtils.jsConvertData(searchElement, None)
+    search_element = JsUtils.jsConvertData(search_element, None)
     array = JsUtils.jsConvertData(array, None)
-    startIndex = JsUtils.jsConvertData(startIndex, None)
-    return JsObjects.JsArray.JsArray.get("tui.util.inArray(%s, %s, %s)" % (searchElement, array, startIndex))
+    start_index = JsUtils.jsConvertData(start_index, None)
+    return JsObjects.JsArray.JsArray.get("tui.util.inArray(%s, %s, %s)" % (search_element, array, start_index))
 
   def extend(self, target, objects):
     """
