@@ -75,7 +75,7 @@ class Table(Html.Html):
     :rtype: OptTableAgGrid.TableConfig
     """
     if self.__config is None:
-      self.__config = OptTableAgGrid.TableConfig(self.page)
+      self.__config = OptTableAgGrid.TableConfig(component=self, page=self.page)
     return self.__config
 
   @property
@@ -92,10 +92,10 @@ class Table(Html.Html):
     :rtype: JsAgGrid.AgGrid
     """
     if self._js is None:
-      self._js = JsAgGrid.AgGrid(self.page, selector=self.tableId, set_var=False, parent=self)
+      self._js = JsAgGrid.AgGrid(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
 
-  def add_column(self, field, title=None):
+  def add_column(self, field: str, title: str = None):
     """
     Description:
     -----------
@@ -104,14 +104,13 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param field:
-    :param title:
+    :param str field:
+    :param str title:
     """
     col_def = self.options.columns
     col_def.field = field
     col_def.colId = field
     col_def.headerName = field if title is None else title
-    # col_def.filter = True
     return col_def
 
   @property
@@ -137,6 +136,7 @@ class Table(Html.Html):
     :param data:
     :param options:
     :param profile:
+    :param component_id:
     """
     if data:
       return self.js.setRowData(data)
