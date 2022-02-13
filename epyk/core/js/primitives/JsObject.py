@@ -113,7 +113,7 @@ class JsObject(primitives.JsDataModel):
     return cls.get("this", page=page)
 
   @classmethod
-  def get(cls, js_code: str, page: Optional[primitives.PageModel] = None):
+  def get(cls, js_code: str, page: Optional[primitives.PageModel] = None, component: primitives.HtmlModel = None):
     """
     Description:
     ------------
@@ -135,7 +135,7 @@ class JsObject(primitives.JsDataModel):
 
     :return: The python Javascript object
     """
-    return cls(data=None, js_code=js_code, set_var=False, page=page)
+    return cls(data=None, js_code=js_code, set_var=False, page=page, component=component)
 
   @property
   def varId(self):

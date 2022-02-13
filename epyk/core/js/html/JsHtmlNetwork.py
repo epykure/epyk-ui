@@ -108,7 +108,8 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
     ------------
     Return the values of the items in the list.
     """
-    return JsObjects.JsArray.JsArray.get("(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {"htmlCode": self._src.htmlCode})
+    return JsObjects.JsArray.JsArray.get("(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {
+      "htmlCode": self.component.htmlCode})
 
   def store(self, delimiter: str = None, data_type: str = None, js_code: Union[str, primitives.JsDataModel] = None):
     """

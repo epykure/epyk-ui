@@ -75,7 +75,7 @@ class Panel(Html.Html):
     :rtype: JsHtmlPanels.JsHtmlPanel
     """
     if self._dom is None:
-      self._dom = JsHtmlPanels.JsHtmlPanel(self, page=self.page)
+      self._dom = JsHtmlPanels.JsHtmlPanel(component=self, page=self.page)
     return self._dom
 
   def extend(self, components: List[Html.Html]):

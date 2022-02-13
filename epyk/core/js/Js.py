@@ -336,7 +336,7 @@ class JsBase:
       https://d3js.org/
     """
     from epyk.core.js.packages import JsD3
-    return JsD3.JsD3(page=self.page)
+    return JsD3.JsD3(page=self.page, component=self.component)
 
   def not_(self, data, js_conv_func: Optional[Union[str, list]] = None):
     """

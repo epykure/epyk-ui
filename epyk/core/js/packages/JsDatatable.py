@@ -659,10 +659,10 @@ class RowAPI(JsPackage):
       if isinstance(data, list):
         rows = []
         for r in data:
-          rows.append([r.get(h["title"], '') for h in self._parent.vals['columns']])
+          rows.append([r.get(h["title"], '') for h in self.component.vals['columns']])
         data = rows
       else:
-        data = [data.get(h["title"], '') for h in self._parent.vals['columns']]
+        data = [data.get(h["title"], '') for h in self.component.vals['columns']]
     data = JsUtils.jsConvertData(data, None)
     self.fnc("add(%s)" % data)
     if update:
@@ -703,10 +703,10 @@ class RowAPI(JsPackage):
     """
     if namespace:
       return RowChildAPI(
-        component=self.component, selector="%s.child" % self.getStr(), set_var=False, parent=self._parent)
+        component=self.component, selector="%s.child" % self.getStr(), set_var=False, page=self.page)
 
     return RowChildAPI(
-      component=self.component, selector="%s.child()" % self.getStr(), set_var=False, parent=self._parent)
+      component=self.component, selector="%s.child()" % self.getStr(), set_var=False, page=self.page)
 
 
 class DatatableAPI(JsPackage):
@@ -745,7 +745,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/row()
     """
-    return RowAPI(self.component, selector="%s.row()" % self.varId, set_var=False, parent=self._parent)
+    return RowAPI(self.component, selector="%s.row()" % self.varId, set_var=False, page=self.page)
 
   @property
   def rows(self):
@@ -758,7 +758,7 @@ class DatatableAPI(JsPackage):
 
       https://datatables.net/reference/api/rows()
     """
-    return RowAPI(self.component, selector="%s.rows()" % self.varId, set_var=False, parent=self._parent)
+    return RowAPI(self.component, selector="%s.rows()" % self.varId, set_var=False, page=self.page)
 
   def adjust(self):
     """

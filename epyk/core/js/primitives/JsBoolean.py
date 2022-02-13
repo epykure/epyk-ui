@@ -13,11 +13,11 @@ class JsBoolean(JsObject.JsObject):
   _jsClass = "Boolean"
 
   def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = True,
-               page: Optional[primitives.PageModel] = None):
+               page: Optional[primitives.PageModel] = None, component: primitives.HtmlModel = None):
     if not hasattr(data, 'varName') and is_py_data:
       is_py_data = True
       data = json.dumps(data)
-    super(JsBoolean, self).__init__(data, js_code, set_var, is_py_data, page)
+    super(JsBoolean, self).__init__(data, js_code, set_var, is_py_data, page=page, component=component)
 
   @property
   def not_(self):

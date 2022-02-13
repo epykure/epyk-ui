@@ -271,7 +271,7 @@ class Radio(JsHtml.JsHtmlRich):
     Get the selected content from the Select component.
     """
     # the option variable is coming from the Tick class to get the icon details
-    return JsHtml.ContentFormatters(self.page, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self._src.dom.varName)
+    return JsHtml.ContentFormatters(self.page, "(function(c){var comp = c.querySelector('input:checked'); if(comp !== null){return comp.getAttribute('data-content')} else{ return ''}})(%s)" % self.component.dom.varName)
 
   @property
   def checked(self):

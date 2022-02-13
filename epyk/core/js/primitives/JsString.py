@@ -34,12 +34,13 @@ from epyk.core.js.primitives import JsObject
 class JsString(JsObject.JsObject):
   _jsClass = "String"
 
-  def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = True, page=None):
+  def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = True,
+               page: primitives.PageModel = None, component: primitives.HtmlModel = None):
     if not hasattr(data, 'varName') and is_py_data:
       is_py_data = True
       data = json.dumps(data)
     self.is_py_data = is_py_data
-    super(JsString, self).__init__(data, js_code, set_var, is_py_data, page=page)
+    super(JsString, self).__init__(data, js_code, set_var, is_py_data, page=page, component=component)
 
   def __add__(self, value: Union[primitives.JsDataModel, str, float]):
     return JsString("%s + %s" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)

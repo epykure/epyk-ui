@@ -516,49 +516,6 @@ class DataGlobal:
     return self
 
 
-class ServerNameSpaceConfig:
-  def __init__(self, config, name: str, alias: str, end_points: list):
-    self.__config, self.end_points, self.name, self.alias = config, {}, name, alias
-    if end_points is not None:
-      self.endPoints(end_points)
-
-  @property
-  def address(self):
-    """
-    Description:
-    ------------
-
-
-    """
-    return JsObjects.JsObject.JsObject.get(self.__config.varId)[self.alias]['u']
-
-  def endPoint(self, name: str):
-    """
-    Description:
-    ------------
-
-
-    Attributes:
-    ----------
-    :param str name:
-    """
-    self.end_points[name] = "http://%s:%s/%s/%s" % (self.__config.hostname, self.name, self.__config.port, name)
-    return self
-
-  def endPoints(self, names: list):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param list names:
-    """
-    for name in names:
-      self.endPoint(name)
-    return self
-
-
 class ServerConfig:
 
   def __init__(self, hostname: str, port: int, page: primitives.PageModel = None):
@@ -651,3 +608,46 @@ class ServerConfig:
 
   def __str__(self):
     return self.toStr()
+
+
+class ServerNameSpaceConfig:
+  def __init__(self, config: ServerConfig, name: str, alias: str, end_points: list):
+    self.__config, self.end_points, self.name, self.alias = config, {}, name, alias
+    if end_points is not None:
+      self.endPoints(end_points)
+
+  @property
+  def address(self):
+    """
+    Description:
+    ------------
+
+
+    """
+    return JsObjects.JsObject.JsObject.get(self.__config.js_code)[self.alias]['u']
+
+  def endPoint(self, name: str):
+    """
+    Description:
+    ------------
+
+
+    Attributes:
+    ----------
+    :param str name:
+    """
+    self.end_points[name] = "http://%s:%s/%s/%s" % (self.__config.host, self.name, self.__config.port, name)
+    return self
+
+  def endPoints(self, names: list):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param list names:
+    """
+    for name in names:
+      self.endPoint(name)
+    return self

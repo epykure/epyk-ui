@@ -10,7 +10,7 @@ from epyk.core.js import JsUtils
 
 class JsHtmlPanel(JsHtml.JsHtml):
 
-  def __init__(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = False,
+  def __init__(self, js_code: str = None, set_var: bool = False, is_py_data: bool = False,
                page: primitives.PageModel = None, component=None):
     super(JsHtmlPanel, self).__init__(component, js_code, set_var, is_py_data, page)
     if js_code is not None:

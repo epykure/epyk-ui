@@ -283,7 +283,7 @@ class Chat(JsPackage):
     return JsObjects.JsVoid('''
       %(builder)s; %(counter)s
       ''' % {"builder": self.component.build(message),
-             'counter': self.component.dom.querySelector(' [name=count]').innerText(1, append=True, valType=int).r})
+             'counter': self.component.dom.querySelector(' [name=count]').innerText(1, append=True, val_type=int).r})
 
 
 class Room(JsPackage):
