@@ -10,9 +10,9 @@ class Sortable(JsPackage):
   lib_alias = {"js": 'sortablejs'}
   lib_set_var = True
 
-  def __init__(self, component=None, js_code=None, selector=None, set_var=True, parent=None):
+  def __init__(self, component=None, js_code=None, selector=None, set_var=True, page=None):
     super(Sortable, self).__init__(
-      component=component, js_code=js_code, selector=selector, data=None, set_var=set_var, parent=parent)
+      component=component, js_code=js_code, selector=selector, data=None, set_var=set_var, page=page)
     self.__options = OptSortable.OptionsSortable(component)
 
   @property

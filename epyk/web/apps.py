@@ -2,6 +2,7 @@
 import sys
 import os
 
+from epyk.core.py import primitives
 from epyk.web import angular
 from epyk.web import vue
 from epyk.web import react
@@ -10,10 +11,10 @@ from epyk.web import jupyter
 
 class AppRoute:
 
-  def __init__(self, page):
+  def __init__(self, page: primitives.PageModel):
     self.page = page
 
-  def angular(self, server, app, selector=None, name=None):
+  def angular(self, server, app, selector: str = None, name: str = None):
     """
     Description:
     ------------
@@ -24,12 +25,12 @@ class AppRoute:
     ----------
     :param server:
     :param app:
-    :param selector:
-    :param name:
+    :param str selector:
+    :param str name:
     """
     name = name or os.path.split(sys.argv[0])[1][:-3]
     selector = selector or os.path.split(sys.argv[0])[1][:-3]
-    return angular.Angular(server, app).page(selector, name, report=self.page)
+    return angular.Angular(server, app).page(selector, name, page=self.page)
 
   def react(self, server, app, selector=None, name=None):
     """

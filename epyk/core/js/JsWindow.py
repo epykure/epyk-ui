@@ -502,10 +502,10 @@ class JsHistory:
     :return: The Javascript String for the method.
     """
     self.page.js.registerFunction("updateUrl", [
-      self.page.js.objects.new([], varName="newPmts"),
+      self.page.js.objects.new([], js_code="newPmts"),
       self.page.js.location.search.substr(1).split("&").forEach([
         self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", jsObj=self.page.js), [
-          self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), varName="urlPmts"),
+          self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), js_code="urlPmts"),
           self.page.js.objects.array.get("urlPmts")[0].toString(),
           self.page.js.objects.get("newPmts").addItem(
             self.page.js.objects.array.get("urlPmts")[0], self.page.js.objects.array.get("urlPmts")[1])
@@ -515,7 +515,7 @@ class JsHistory:
       self.page.js.objects.get("newPmts").addItem(
         self.page.js.objects.get("urlKey"), self.page.js.objects.get("urlValue")),
       # Then we concatenate the URL
-      self.page.js.objects.array.new([], varName="pmts"),
+      self.page.js.objects.array.new([], js_code="pmts"),
       self.page.js.objects.get("newPmts").entries().forEach([
         self.page.js.objects.array.get("pmts").push(
           self.page.js.data.loop().val[0].toString(explicit=False).add("=").add(self.page.js.data.loop().val[1]))
@@ -834,7 +834,7 @@ class JsWindow:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsFncs.JsFunction(JsUtils.jsConvertFncs([
-      self.page.js.createElement("a", varName="a_temp").setAttribute("download", file_name).setAttribute(
+      self.page.js.createElement("a", js_code="a_temp").setAttribute("download", file_name).setAttribute(
         "href", JsFncs.JsFunction("'data:text/csv;base64,'+ %s" % data)),
       self.page.js.body.appendChild(self.page.js.objects.get("a_temp")),
       self.page.js.objects.dom.get("a_temp").click(),

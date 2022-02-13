@@ -263,7 +263,7 @@ def get_icon(alias: Optional[str], family: str = None):
   """
   icon = ICON_MAPPINGS[family or ICON_FAMILY].get(alias, alias)
   if icon is None:
-    return {"icon": ICON_MAPPINGS['font-awesome'], "icon_family": 'font-awesome'}
+    return {"icon": ICON_MAPPINGS['font-awesome'].get(alias, alias), "icon_family": 'font-awesome'}
 
   return {"icon": icon, "icon_family": ICON_FAMILY}
 

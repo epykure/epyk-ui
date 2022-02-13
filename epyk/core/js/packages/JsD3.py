@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, Any
 from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
@@ -815,11 +815,13 @@ class D3Band:
 
 class D3File:
 
-  def __init__(self, src, filename, selector):
-    self._f, self.src, self._selector = filename, src, selector
+  def __init__(self, component: primitives.HtmlModel, filename: str, selector: str, page: primitives.PageModel = None):
+    self._f, self.component, self._selector, self.page = filename, component, selector, page
     self._js_frg, self._js_ids, self._js_thens, self.profile = [], set(), [], None
+    if page is None and self.component is not None:
+      self.page = self.component.page
 
-  def records(self, js_code):
+  def records(self, js_code: str):
     """
     Description:
     -----------
@@ -831,15 +833,15 @@ class D3File:
     self._js_frg.append("%s.push(row)" % js_code)
     return self
 
-  def unpack(self, js_code, column=None):
+  def unpack(self, js_code: str, column: Union[str, primitives.JsDataModel] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_code: The variable id to store the records.
-    :param column: String | Js Object. The column name.
+    :param str js_code: The variable id to store the records.
+    :param Union[str, primitives.JsDataModel] column: The column name.
     """
     if js_code not in self._js_ids:
       column = JsUtils.jsConvertData(column, None)
@@ -847,7 +849,7 @@ class D3File:
       self._js_ids.add(js_code)
     return JsObject.JsObject(js_code, is_py_data=False)
 
-  def filter(self, rules, keep=True):
+  def filter(self, rules: list, keep: bool = True):
     """
     Description:
     -----------
@@ -859,8 +861,8 @@ class D3File:
 
     Attributes:
     ----------
-    :param rules:
-    :param keep: Boolean. Optional.
+    :param list rules: The javascript if expressions.
+    :param bool keep: Boolean. Optional.
     """
     if not isinstance(rules, list):
       rules = [rules]
@@ -870,7 +872,7 @@ class D3File:
       self._js_frg.append("if(!(%s)){ return; }" % "&&".join(rules))
     return self
 
-  def filterCol(self, column, value, operator="==", keep=True):
+  def filterCol(self, column: Union[str, primitives.JsDataModel], value: Any, operator: str = "==", keep: bool = True):
     """
     Description:
     -----------
@@ -886,10 +888,10 @@ class D3File:
 
     Attributes:
     ----------
-    :param column: String | JsObject. The column name.
-    :param value: String | JsObject. The column value.
-    :param operator: String. Optional. The comparison operator.
-    :param keep: Boolean. Optional.
+    :param Union[str, primitives.JsDataModel] column: The column name.
+    :param Any value: The column value.
+    :param str operator: Optional. The comparison operator.
+    :param bool keep: Optional.
     """
     column = JsUtils.jsConvertData(column, None)
     value = JsUtils.jsConvertData(value, None)
@@ -943,16 +945,16 @@ class D3File:
       "then(function(data) {%s; return data})" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def cast(self, columns, to="float", profile=None):
+  def cast(self, columns: list, to: str = "float", profile: Union[bool, dict] = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param columns:
-    :param to:
-    :param profile:
+    :param list columns:
+    :param str to:
+    :param Union[dict, bool] profile:
     """
     for column in columns:
       if to == "float":
@@ -1016,16 +1018,18 @@ class D3File:
 
     if self._js_thens:
       return "%s(%s, function(row, err){%s; return row}).%s" % (
-        self._selector, file, JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile), ".".join(self._js_thens))
+        self._selector, file, JsUtils.jsConvertFncs(
+          self._js_frg, toStr=True, profile=self.profile), ".".join(self._js_thens))
 
     return "%s(%s, function(row, err){%s; return row})" % (
       self._selector, file, JsUtils.jsConvertFncs(self._js_frg, toStr=True, profile=self.profile))
 
 
 class D3Svg:
-  def __init__(self, src, selector, js_code=None, set_var=None, parent=None):
-    self.src, self._selector, self.varName = src, selector, js_code
-    self._js, self.setVar, self.component = [], set_var, parent
+  def __init__(self, component: primitives.HtmlModel, selector: str, js_code: str = None, set_var: bool = None,
+               page: primitives.PageModel = None, container: primitives.HtmlModel = None):
+    self.component, self._selector, self.varName = component, selector, js_code
+    self._js, self.setVar, self.page, self.container = [], set_var, page, container
 
   def line(self):
     self._js.append("line()")
@@ -1049,7 +1053,7 @@ class D3Svg:
     :param tag:
     """
     self._js.append("selectAll(%s)" % JsUtils.jsConvertData(tag, None))
-    return D3Select(self.src, selector=self.toStr(), set_var=self.setVar, parent=self.component)
+    return D3Select(self.component, selector=self.toStr(), set_var=self.setVar, page=self.page)
 
   def toStr(self):
     content = [self._selector] + self._js
@@ -1212,7 +1216,7 @@ class JsD3(JsPackage):
 
   @property
   def svg(self):
-    return D3Svg(self.component, selector="%s.svg" % self._selector)
+    return D3Svg(component=self.component, selector="%s.svg" % self._selector, page=self.page)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def csv(self, url):
@@ -1230,7 +1234,7 @@ class JsD3(JsPackage):
     ----------
     :param url: String. The url path of the file.
     """
-    return D3File(self.component, url, selector="%s.csv" % self._selector)
+    return D3File(component=self.component, filename=url, selector="%s.csv" % self._selector, page=self.page)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def tsv(self, url):

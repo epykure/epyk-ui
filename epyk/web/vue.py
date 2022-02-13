@@ -21,7 +21,7 @@ import 'jquery-ui-dist/jquery-ui.min.js';
 }
 
 
-class VueCli(object):
+class VueCli:
   def __init__(self, vue_app_path, env):
     self._vue_app_path, self.envs = vue_app_path, env
 
@@ -88,11 +88,11 @@ class VueCli(object):
     subprocess.run('vue add router', shell=True, cwd=self._vue_app_path)
 
 
-class App(object):
+class App:
 
-  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="components"):
+  def __init__(self, app_path, app_name, alias, name, page=None, target_folder="components"):
     self.imports = {}
-    self.vars, self.__map_var_names, self._report = {}, {}, report
+    self.vars, self.__map_var_names, self.page = {}, {}, page
     self._app_path, self._app_name = app_path, app_name
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.comps, self.module_path = {}, None
@@ -129,7 +129,7 @@ class App(object):
     """
     index_router = os.path.join(self._app_path, 'src', 'router', "index.js")
     if not os.path.exists(index_router):
-      raise Exception("Router is not installed, run: vue add router in the Vue app")
+      raise ValueError("Router is not installed, run: vue add router in the Vue app")
 
     with open(index_router) as f:
       route = f.read()  # .split("\n\n")
@@ -162,7 +162,7 @@ class App(object):
     self.module_path = os.path.join(self._app_path, *target_path)
     if not os.path.exists(self.module_path):
       os.makedirs(self.module_path)
-    page = self._report.outs.web()
+    page = self.page.outs.web()
     page['alias'] = self.alias
     page['js_module'] = self.alias.replace("-", "_")
     page['builders'] = ", ".join(list(page['jsFrgsCommon'].keys()))
@@ -192,7 +192,7 @@ export default {
 
     with open(os.path.join(self.module_path, "%s.js" % page['js_module']), "w") as f:
       for js_dep in JS_MODULES_IMPORTS:
-        if js_dep in self._report.jsImports:
+        if js_dep in self.page.jsImports:
           f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
       for buider in page['jsFrgsCommon'].values():
         f.write("export %s;\n" % buider)
@@ -295,7 +295,7 @@ class VueJs(node.Node):
       if selector is None:
         selector = script.replace("_", "-")
     report = report or Page.Report()
-    self._page = App(self._app_path, self._app_name, selector, name, report=report, target_folder=target_folder)
+    self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
     self.__route = auto_route
     return self._page
 
@@ -312,6 +312,6 @@ class VueJs(node.Node):
     """
     if self._page is not None:
       self._page.export(target_path=target_path)
-    node.requirements(self._page._report, self._page.module_path)
+    node.requirements(self._page.page, self._page.module_path)
     if self.__route:
       self._page.route(self._page.name, self._page.alias, self._page.path)

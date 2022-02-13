@@ -20,16 +20,16 @@ class Sparklines(Html.Html):
   name = 'Sparkline'
   _option_cls = OptSparkline.OptionsSparkLine
 
-  def __init__(self, report, data, title, width, height, options, profile):
-    super(Sparklines, self).__init__(report, data, css_attrs={'width': width, 'height': height},
+  def __init__(self, page, data, title, width, height, options, profile):
+    super(Sparklines, self).__init__(page, data, css_attrs={'width': width, 'height': height},
                                      options=options, profile=profile)
     self.title = None
     if title is not None:
-      self.title = self._report.ui.title(title, level=4)
+      self.title = self.page.ui.title(title, level=4)
       self.title.options.managed = False
 
   @property
-  def style(self):
+  def style(self) -> GrpClsChart.ClassBSpartlines:
     """
     Description:
     ------------
@@ -45,7 +45,7 @@ class Sparklines(Html.Html):
     return self._styleObj
 
   @property
-  def options(self):
+  def options(self) -> OptSparkline.OptionsSparkLine:
     """
     Description:
     -----------
@@ -58,7 +58,7 @@ class Sparklines(Html.Html):
     return super().options
 
   @property
-  def dom(self):
+  def dom(self) -> JsHtmlJqueryUI.JsHtmlSparkline:
     """
     Description:
     -----------
@@ -72,7 +72,7 @@ class Sparklines(Html.Html):
     :rtype: JsHtmlJqueryUI.JsHtmlSparkline
     """
     if self._dom is None:
-      self._dom = JsHtmlJqueryUI.JsHtmlSparkline(self, report=self._report)
+      self._dom = JsHtmlJqueryUI.JsHtmlSparkline(component=self, page=self.page)
     return self._dom
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
@@ -154,9 +154,9 @@ class Sparklines(Html.Html):
     self.page.properties.js.add_builders(self.refresh())
     if self.title is not None:
       return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (
-        self.title, self.get_attrs(pyClassNames=self.style.get_classes()))
+        self.title, self.get_attrs(css_class_names=self.style.get_classes()))
 
-    return "<span %s>Loading..</span>" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<span %s>Loading..</span>" % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class SparklinesBar(Sparklines):

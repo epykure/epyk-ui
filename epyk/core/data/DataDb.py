@@ -10,6 +10,8 @@ from epyk.core.py import primitives
 from epyk.core.js.Imports import requires
 from epyk.core.py import PySql
 
+MISSING_PACKAGE = 'Missing Package'
+
 
 class NoSql:
 
@@ -33,7 +35,7 @@ class NoSql:
     :param is_secured: Boolean. Optional.
     """
     py_mongo = requires(
-      "pyMongo", reason='Missing Package', install="pyMongo", source_script=__file__, raise_sxcept=True)
+      "pyMongo", reason=MISSING_PACKAGE, install="pyMongo", source_script=__file__, raise_except=True)
     return py_mongo.MongoClient("mongodb://%s:%s/" % (host, port))
 
   def neo4j(self, host="localhost", port=5000, is_secured=False):
@@ -55,7 +57,7 @@ class NoSql:
     :return: A Python SQL connection for Neo4J
     """
     if 'neo4j' not in self.pkgs:
-      requires("neo4j", reason='Missing Package', install='neo4j-driver', source_script=__file__, raise_sxcept=True)
+      requires("neo4j", reason=MISSING_PACKAGE, install='neo4j-driver', source_script=__file__, raise_except=True)
     return PySql.SqlConnNeo4j(host, port)
 
 
@@ -214,7 +216,7 @@ class DataDb:
       self._db_bindings[database] = db
     return self._db_bindings[database]
 
-  def reflect(self, table_names):
+  def reflect(self, table_names: list):
     """
     Description:
     -----------
@@ -293,7 +295,7 @@ class DataDb:
       self._db_bindings[database] = PySql.SqlConn('oracle', database=database, tables_scope=tables_scope, **db_settings)
     return self._db_bindings[database]
 
-  def mssql(self, name, host="localhost", driverName="{ODBC Driver 17 for SQL Server}",
+  def mssql(self, name, host="localhost", driver_name="{ODBC Driver 17 for SQL Server}",
             model_path=None, tables_scope=None):
     """
     Description:
@@ -303,8 +305,8 @@ class DataDb:
     ----------
     :param name: The database name
     :param host: The database host name
-    :param driverName: Optional, The
-    :param model_path: Optinal, The databse model path
+    :param driver_name: Optional, The
+    :param model_path: Optinal, The database model path
 
     :rtype: epyk.core.py.PySql.SqlConn
     """
@@ -316,7 +318,7 @@ class DataDb:
         name, reason='Missing Package', install="pyodbc", source_script=__file__, raise_except=True)
     database = name
     data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "driver": 'mssql+pyodbc', "driverName": driverName, 'host': host}
+                     "driver": 'mssql+pyodbc', "driverName": driver_name, 'host': host}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
         'mssql+pyodbc', database=database, tables_scope=tables_scope, **data_settings)
@@ -340,7 +342,7 @@ class DataDb:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
     database = "%s/%s.mdb" % (db_path, name)
     data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
+                     "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **data_settings)
     return self._db_bindings[database]
@@ -367,7 +369,7 @@ class DataDb:
       self.pkgs[name] = requires(name, reason='Missing Package', install="pyodbc", source_script=__file__)
     database = "%s/%s.accdb" % (db_path, name)
     data_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
+                     "driver": "{Microsoft Access Driver (*.mdb, *.accdb)}"}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConnOdbc(database=database, **data_settings)
     return self._db_bindings[database]
@@ -402,7 +404,7 @@ class DataDb:
         name, reason='Missing Package', install="psycopg2", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "username": "postgres", "password": "240985", "host": host, "port": port}
+                   "username": "postgres", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
         'postgresql+psycopg2', database=database, tables_scope=tables_scope, **db_settings)
@@ -437,7 +439,7 @@ class DataDb:
         name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "username": "root", "password": "240985", "host": host, "port": port}
+                   "username": "root", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
         'mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)
@@ -464,6 +466,7 @@ class DataDb:
     :param port: Optional, Database port. Default 3306
     :param model_path: Optional, Database model path with the python scripts of the tables
     :param is_secured: If credentials required. Default False
+    :param tables_scope:
 
     :rtype: epyk.core.py.PySql.SqlConn
     """
@@ -472,7 +475,7 @@ class DataDb:
         name, reason='Missing Package', install="pymysql", source_script=__file__, raise_except=True)
     database = name
     db_settings = {"loadModel": model_path is not None, 'model_path': model_path or False,
-                    "username": "root", "password": "240985", "host": host, "port": port}
+                   "username": "root", "password": "240985", "host": host, "port": port}
     if database not in self._db_bindings:
       self._db_bindings[database] = PySql.SqlConn(
         'mysql+pymysql', database=database, tables_scope=tables_scope, **db_settings)

@@ -12,15 +12,15 @@ class RoughViz(Html.Html):
   _chart__type = 'Line'
   _option_cls = OptChartRoughViz.RoughVizLine
 
-  def __init__(self,  report, width, height, html_code, options, profile):
+  def __init__(self,  page, width, height, html_code, options, profile):
     super(RoughViz, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self._d3, self._chart, self._datasets, self._data_attrs, self._attrs = None, None, [], {}, {}
     self.chartId = "%s_obj" % self.htmlCode
     self.options.element = "#%s" % self.htmlCode
 
   @property
-  def shared(self):
+  def shared(self) -> OptChartRoughViz.OptionsChartSharedRoughViz:
     """
     Description:
     -----------
@@ -36,7 +36,7 @@ class RoughViz(Html.Html):
     return OptChartRoughViz.OptionsChartSharedRoughViz(self)
 
   @property
-  def options(self):
+  def options(self) -> OptChartRoughViz.RoughVizLine:
     """
     Description:
     -----------
@@ -56,7 +56,7 @@ class RoughViz(Html.Html):
     return self._datasets
 
   @property
-  def d3(self):
+  def d3(self) -> JsD3.D3Select:
     """
     Description:
     -----------
@@ -65,7 +65,7 @@ class RoughViz(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
+      self._d3 = JsD3.D3Select(page=self.page, component=self, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
   def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
@@ -119,7 +119,7 @@ class RoughViz(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class RoughVizBar(RoughViz):

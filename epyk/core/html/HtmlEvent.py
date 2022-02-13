@@ -65,13 +65,13 @@ class ProgressBar(Html.Html):
     :param int timer: Optional. the appended of the increase in millisecond.
     """
     self.page.body.onReady([
-      self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.objects.number(self.val, js_code="%s_counter" % self.htmlCode, set_var=True),
       self.page.js.window.setInterval([
         self.page.js.if_(
           self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
             self.page.js.objects.number(
               self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-              varName="window.%s_counter" % self.htmlCode, setVar=True),
+              js_code="window.%s_counter" % self.htmlCode, set_var=True),
             self.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
           ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)

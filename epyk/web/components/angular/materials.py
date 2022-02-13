@@ -2,14 +2,15 @@
 import os
 import subprocess
 
+from epyk.core.py import primitives
 from epyk.web.components.angular.assets import mat
 
 MODULE = "@angular/material"
 
 
-class Package(object):
+class Package:
 
-  def __init__(self, page, app):
+  def __init__(self, page: primitives.PageModel, app):
     self.page, self.app = page, app
     self.path = os.path.join(self.app._node_path, self.app._app_name)
 
@@ -21,7 +22,9 @@ class Package(object):
 
     This will trigger the automatic install defined on the official website.
 
-    https://material.angular.io/guide/getting-started
+    Related Pages:
+
+      https://material.angular.io/guide/getting-started
     """
     subprocess.run('npm add %s' % MODULE, shell=True, cwd=self.path)
 
@@ -33,7 +36,9 @@ class Package(object):
 
     This will trigger the automatic install defined on the official website.
 
-    https://material.angular.io/guide/getting-started
+    Related Pages:
+
+      https://material.angular.io/guide/getting-started
     """
     subprocess.run('npm update %s' % MODULE, shell=True, cwd=self.path)
 
@@ -42,9 +47,9 @@ class Package(object):
     return Components(self.page, self.app)
 
 
-class Components(object):
+class Components:
 
-  def __init__(self, page, app):
+  def __init__(self, page: primitives.PageModel, app):
     self.page, self.app = page, app
     self.path = os.path.join(self.app._node_path, self.app._app_name)
     self.check()
@@ -54,11 +59,9 @@ class Components(object):
     Description:
     ------------
     Check if the package is installed on the server
-
-    :return:
     """
     if not os.path.exists(os.path.join(self.path, 'node_modules', MODULE)):
-      raise Exception("Components package missing on the target server, please run install() first")
+      raise ValueError("Components package missing on the target server, please run install() first")
 
   def autocomplete(self):
     """

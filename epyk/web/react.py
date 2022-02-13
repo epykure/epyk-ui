@@ -18,7 +18,7 @@ var showdown = Showdown;
 }
 
 
-class NpxCli(object):
+class NpxCli:
   def __init__(self, app_path, app_name, env):
     self._react_app_path, self.envs = os.path.join(app_path, app_name), env
 
@@ -97,11 +97,11 @@ class NpxCli(object):
     subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._react_app_path)
 
 
-class App(object):
+class App:
 
-  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="views"):
+  def __init__(self, app_path, app_name, alias, name, page=None, target_folder="views"):
     self.imports = {}
-    self.vars, self.__map_var_names, self._report = {}, {}, report
+    self.vars, self.__map_var_names, self.page = {}, {}, page
     self._app_path, self._app_name = app_path, app_name
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.comps = {}
@@ -139,12 +139,12 @@ class App(object):
     """
     index_router = os.path.join(self._app_path, 'src', "index.js")
     if not os.path.exists(index_router):
-      raise Exception("Problem with the React app")
+      raise ValueError("Problem with the React app")
 
     with open(index_router) as f:
       route = f.read()  # .split("\n\n")
 
-    if not component in route:
+    if component not in route:
       routes = route.split("import { Route, Link, BrowserRouter as Router } from 'react-router-dom';")
       routes[0] = "%s\nimport %s from '%s';\n" % (routes[0].strip(), component, path.replace("./src", "."))
       dis_route = routes[1].split("\n")
@@ -153,12 +153,12 @@ class App(object):
           break
 
       else:
-        raise Exception("Issue with file, please udpate the index.js manually")
+        raise ValueError("Issue with file, please udpate the index.js manually")
 
       route_end = dis_route[:i] + ['      <Route path="/%s" component={%s} />' % (alias, component)] + dis_route[i:]
-
       with open(index_router, "w") as f:
-        f.write("\n".join([routes[0]] + ["import { Route, Link, BrowserRouter as Router } from 'react-router-dom';"] + route_end))
+        f.write("\n".join([routes[0]] + [
+          "import { Route, Link, BrowserRouter as Router } from 'react-router-dom';"] + route_end))
 
   def export(self, path=None, target_path=None):
     """
@@ -178,7 +178,7 @@ class App(object):
     if not os.path.exists(module_path):
       os.makedirs(module_path)
 
-    page = self._report.outs.web()
+    page = self.page.outs.web()
     page['alias'] = self.alias
     page['name'] = self.name
     page['js_module'] = self.alias.replace("-", "_")
@@ -205,7 +205,7 @@ ReactDOM.render(<%(alias)s />, document.getElementById('root'); %(jsFrgs)s);
 
     with open(os.path.join(module_path, "%s_modules.js" % page['js_module']), "w") as f:
       for js_dep in JS_MODULES_IMPORTS:
-        if js_dep in self._report.jsImports:
+        if js_dep in self.page.jsImports:
           f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
       for buider in page['jsFrgsCommon'].values():
         f.write("export %s;\n" % buider)
@@ -288,7 +288,6 @@ class React(node.Node):
     with open(path) as f:
       content = f.read()
     if 'react-router-dom' not in content:
-      pass
       new_files, with_router = [], False
       for line in content.split("\n"):
         if line.strip() and not line.startswith("import") and not with_router:
@@ -313,7 +312,7 @@ ReactDOM.render(
       with open(path, "w") as f:
         f.write("\n".join(new_files))
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
+  def page(self, selector=None, name=None, page=None, auto_route=False, target_folder="apps"):
     """
     Description:
     ------------
@@ -323,7 +322,7 @@ ReactDOM.render(
 
     Description:
     ------------
-    :param report: Object. A report object
+    :param page: Object. A report object
     :param selector: String. The url route for this report in the Angular app
     :param name: String. The component classname in the Angular framework
     """
@@ -332,8 +331,8 @@ ReactDOM.render(
       name = "".join([s.capitalize() for s in script.split("_")])
       if selector is None:
         selector = script.replace("_", "-")
-    report = report or Page.Report()
-    self._page = App(self._app_path, self._app_name, selector, name, report=report, target_folder=target_folder)
+    page = page or Page.Report()
+    self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
     self.__route = auto_route
     return self._page
 
@@ -353,7 +352,7 @@ ReactDOM.render(
     if self.__route:
       self._page.route(self._page.name, self._page.alias, self._page.path)
 
-  def home_page(self, report, app_name=None, with_router=False):
+  def home_page(self, page, app_name=None, with_router=False):
     """
     Description:
     ------------
@@ -361,7 +360,7 @@ ReactDOM.render(
 
     Attributes:
     ----------
-    :param report:
+    :param page:
     :param app_name:
     :param with_router:
     """

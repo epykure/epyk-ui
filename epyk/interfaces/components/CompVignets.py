@@ -126,15 +126,15 @@ class Vignets:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.', 'type_number': 'number'}
+    dfl_options = {"digits": 0, "thousand_sep": ',', "decimal_sep": '.', 'type_number': 'number'}
     if options is not None:
-      dflt_options.update(options)
-    if 'symbol' in dflt_options:
-      dflt_options['type_number'] = 'money'
+      dfl_options.update(options)
+    if 'symbol' in dfl_options:
+      dfl_options['type_number'] = 'money'
       number = self.page.py.format_money(
-        number, digits=dflt_options.get('digits', 0), symbol=dflt_options.get('symbol'))
+        number, digits=dfl_options.get('digits', 0), symbol=dfl_options.get('symbol'))
     else:
-      number = self.page.py.format_number(number, digits=dflt_options.get('digits', 0))
+      number = self.page.py.format_number(number, digits=dfl_options.get('digits', 0))
     pre_components = []
     if title is not None:
       if not hasattr(title, 'options'):
@@ -143,10 +143,12 @@ class Vignets:
         title.style.css.text_align = align
       pre_components.append(title)
     pre_components.append(html.HtmlTextComp.Number(
-      self.page, number, components, label, width, ("auto", ""), profile, dflt_options, helper))
+      self.page, number, components, label, width, ("auto", ""), profile, dfl_options, helper))
 
-    container = self.page.ui.div([pre_components], align=align, height=height, width=width, profile=profile, options=options)
+    container = self.page.ui.div(
+      [pre_components], align=align, height=height, width=width, profile=profile, options=options)
     container.number = pre_components[-1]
+    container.span = pre_components[-1].span
     container.build = pre_components[-1].build
     if title is not None:
       container.title = title

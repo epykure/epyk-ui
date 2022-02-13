@@ -243,7 +243,7 @@ class Chart(Html.Html):
 class ChartLine(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Line:
     """
     Description:
     ------------
@@ -253,7 +253,7 @@ class ChartLine(Chart):
     :rtype: JsNvd3.JsNvd3Line
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Line(page=self.page, setVar=self.chartId)
+      self._dom = JsNvd3.JsNvd3Line(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   _js__builder__ = '''
@@ -284,7 +284,7 @@ class ChartLine(Chart):
 class ChartScatter(ChartLine):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Scatter:
     """
     Description:
     ------------
@@ -294,7 +294,7 @@ class ChartScatter(ChartLine):
     :rtype: JsNvd3.JsNvd3Scatter
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Scatter(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Scatter(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
@@ -319,7 +319,7 @@ class ChartScatter(ChartLine):
 class ChartCumulativeLine(ChartLine):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3CumulativeLine:
     """
     Description:
     ------------
@@ -329,14 +329,14 @@ class ChartCumulativeLine(ChartLine):
     :rtype: JsNvd3.JsNvd3CumulativeLine
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3CumulativeLine(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3CumulativeLine(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartFocusLine(ChartLine):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3LineWithFocus:
     """
     Description:
     ------------
@@ -346,14 +346,14 @@ class ChartFocusLine(ChartLine):
     :rtype: JsNvd3.JsNvd3LineWithFocus
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3LineWithFocus(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3LineWithFocus(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartBar(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Bar:
     """
     Description:
     ------------
@@ -363,10 +363,10 @@ class ChartBar(Chart):
     :rtype: JsNvd3.JsNvd3Bar
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Bar(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Bar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """
     Description:
     -----------
@@ -448,7 +448,7 @@ class ChartBar(Chart):
 class ChartHorizontalBar(ChartBar):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3MultiBarHorizontal:
     """
     Description:
     ------------
@@ -458,7 +458,7 @@ class ChartHorizontalBar(ChartBar):
     :rtype: JsNvd3.JsNvd3MultiBarHorizontal
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3MultiBarHorizontal(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3MultiBarHorizontal(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
@@ -468,7 +468,7 @@ class ChartHorizontalBar(ChartBar):
 class ChartMultiBar(ChartBar):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3MultiBar:
     """
     Description:
     ------------
@@ -478,7 +478,7 @@ class ChartMultiBar(ChartBar):
     :rtype: JsNvd3.JsNvd3MultiBar
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3MultiBar(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3MultiBar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def colors(self, hex_values):
@@ -521,7 +521,7 @@ class ChartMultiBar(ChartBar):
 class ChartPie(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Pie:
     """
     Description:
     ------------
@@ -531,7 +531,7 @@ class ChartPie(Chart):
     :rtype: JsNvd3.JsNvd3Pie
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Pie(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Pie(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   _js__builder__ = '''
@@ -594,7 +594,7 @@ class ChartPie(Chart):
 class ChartArea(ChartBar):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Area:
     """
     Description:
     ------------
@@ -604,14 +604,14 @@ class ChartArea(ChartBar):
     :rtype: JsNvd3.JsNvd3Area
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Area(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Area(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartHistoBar(ChartBar):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3HistoricalBar:
     """
     Description:
     ------------
@@ -621,14 +621,14 @@ class ChartHistoBar(ChartBar):
     :rtype: JsNvd3.JsNvd3HistoricalBar
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3HistoricalBar(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3HistoricalBar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartParallelCoord(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3ParallelCoordinates:
     """
     Description:
     ------------
@@ -638,7 +638,7 @@ class ChartParallelCoord(Chart):
     :rtype: JsNvd3.JsNvd3ParallelCoordinates
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3ParallelCoordinates(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3ParallelCoordinates(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def set_dimension_names(self, dimensions):
@@ -675,7 +675,7 @@ class ChartParallelCoord(Chart):
 class ChartSunbrust(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3Sunburst:
     """
     Description:
     ------------
@@ -685,7 +685,7 @@ class ChartSunbrust(Chart):
     :rtype: JsNvd3.JsNvd3Sunburst
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3Sunburst(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3Sunburst(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def set_rcolors(self, color, data):
@@ -718,7 +718,7 @@ class ChartSunbrust(Chart):
     :param name: String. Optional.
     """
     for i, rec in enumerate(data):
-      rec['color'] = self._report.theme.colors[i+1]
+      rec['color'] = self.page.theme.colors[i+1]
       self.set_rcolors(rec['color'], rec['children'])
     self._datasets = [{'name': name, 'children': data, 'color': self.options.colors[0]}]
     return self
@@ -744,7 +744,7 @@ class ChartSunbrust(Chart):
 class ChartBoxPlot(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3BoxPlot:
     """
     Description:
     ------------
@@ -754,7 +754,7 @@ class ChartBoxPlot(Chart):
     :rtype: JsNvd3.JsNvd3BoxPlot
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3BoxPlot(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3BoxPlot(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
   def add_box(self, q1, q3=None, outliers=None, maxRegularValue=None, mean=None, median=None, minRegularValue=None,
@@ -811,7 +811,7 @@ class ChartBoxPlot(Chart):
 class ChartCandlestick(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3CandlestickBar:
     """
     Description:
     ------------
@@ -821,14 +821,14 @@ class ChartCandlestick(Chart):
     :rtype: JsNvd3.JsNvd3CandlestickBar
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3CandlestickBar(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3CandlestickBar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartOhlcBar(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3OhlcBar:
     """
     Description:
     ------------
@@ -838,14 +838,14 @@ class ChartOhlcBar(Chart):
     :rtype: JsNvd3.JsNvd3OhlcBar
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3OhlcBar(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3OhlcBar(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
 
 class ChartForceDirected(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsNvd3.JsNvd3ForceDirectedGraph:
     """
     Description:
     ------------
@@ -855,10 +855,10 @@ class ChartForceDirected(Chart):
     :rtype: JsNvd3.JsNvd3ForceDirectedGraph
     """
     if self._dom is None:
-      self._dom = JsNvd3.JsNvd3ForceDirectedGraph(self._report, varName=self.chartId)
+      self._dom = JsNvd3.JsNvd3ForceDirectedGraph(page=self.page, js_code=self.chartId, component=self)
     return self._dom
 
-  def add_trace(self, data, name=""):
+  def add_trace(self, data: dict, name: str = ""):
     """
     Description:
     ------------
@@ -867,8 +867,8 @@ class ChartForceDirected(Chart):
 
     Attributes:
     ----------
-    :param data:
-    :param name:
+    :param dict data:
+    :param str name:
     """
     for d in data.get('nodes', []):
       d['color'] = self.options.colors[d.get('group', 1)]

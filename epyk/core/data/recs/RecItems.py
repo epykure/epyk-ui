@@ -1,9 +1,11 @@
 
+from typing import Callable
+
 
 class ItemsLinkRec:
 
   @staticmethod
-  def from_records(records, column, text=None, url=None, dsc=None, image=None, target=None, icon=None):
+  def from_records(records, column, text: Callable = None, url=None, dsc=None, image=None, target=None, icon=None):
     """
     Description:
     ------------
@@ -15,7 +17,7 @@ class ItemsLinkRec:
     ----------
     :param records:
     :param column:
-    :param text:
+    :param text: A Python function to transform the text displayed.
     """
     if text is None:
       text = column

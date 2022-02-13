@@ -308,7 +308,7 @@ class HtmlJson(Html.Html):
     :rtype: JsJsonFormatter.Json
     """
     if self._js is None:
-      self._js = JsJsonFormatter.Json(self.page, js_code=self.jsonId, set_var=False, parent=self)
+      self._js = JsJsonFormatter.Json(page=self.page, js_code=self.jsonId, set_var=False, component=self)
     return self._js
 
   def __str__(self):
@@ -531,7 +531,7 @@ class Slides(Html.Html):
     :rtype: JsHtmlStars.Slides
     """
     if self._dom is None:
-      self._dom = JsHtmlStars.Slides(self, page=self.page)
+      self._dom = JsHtmlStars.Slides(component=self, page=self.page)
     return self._dom
 
   def add(self, component: Union[Html.Html, str]):
@@ -663,7 +663,7 @@ class HtmlQRCode(Html.Html):
     :rtype: JsQrCode.QrCode
     """
     if self._js is None:
-      self._js = JsQrCode.QrCode(self.page, js_code=self.jsonId, set_var=False, parent=self, page=self.page)
+      self._js = JsQrCode.QrCode(js_code=self.jsonId, set_var=False, component=self, page=self.page)
     return self._js
 
   def __str__(self):

@@ -380,7 +380,7 @@ class JsNvd3(JsPackage):
     raise NotImplementedError()
 
   def color(self, colors):
-    raise NotImplementedError()
+    pass
 
 
 class JsNvd3Area(JsNvd3):

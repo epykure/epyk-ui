@@ -27,7 +27,7 @@ class Canvas(Html.Html):
     :rtype: JsCanvas.Canvas
     """
     if self._dom is None:
-      self._dom = JsCanvas.Canvas(self, page=self.page, component=self)
+      self._dom = JsCanvas.Canvas(page=self.page, component=self)
     return self._dom
 
   @property
@@ -42,7 +42,7 @@ class Canvas(Html.Html):
     :rtype: JsCanvas.Canvas
     """
     if self.__ctx is None:
-      self._dom = JsCanvas.Canvas(self, page=self.page, component=self)
+      self._dom = JsCanvas.Canvas(page=self.page, component=self)
       self.__ctx = self._dom.getContext2D
     return self.__ctx
 

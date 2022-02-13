@@ -351,7 +351,7 @@ class Texts:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     if type not in ['success', 'warning', 'danger']:
-      raise Exception("This type %s is not recognised" % type)
+      raise ValueError("This type %s is not recognised" % type)
 
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -507,7 +507,7 @@ class Texts:
     html.Html.set_component_skin(html_paragraph)
     return html_paragraph
 
-  def preformat(self, text=None, color=None, width=(90, '%'), height=(None, 'px'), html_code=None, options=None,
+  def preformat(self, text: str = None, color=None, width=(90, '%'), height=(None, 'px'), html_code=None, options=None,
                 helper=None, profile=None):
     """
     Description:
@@ -546,12 +546,12 @@ class Texts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"reset": True, 'markdown': False}
+    dfl_options = {"reset": True, 'markdown': False}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     text = self.page.py.encode_html(text)
     html_pre = html.HtmlText.Pre(
-      self.page, text, color, width, height, html_code, dflt_options, helper, profile)
+      self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(html_pre)
     return html_pre
 

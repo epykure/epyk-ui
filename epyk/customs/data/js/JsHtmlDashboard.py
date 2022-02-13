@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlNetwork
 from epyk.core.js.primitives import JsObjects
@@ -16,16 +17,16 @@ class JsHtmlPivot(JsHtml.JsHtml):
     ------------
     Return the values of the items in the list.
     """
-    if self._src.sub_rows is None:
+    if self.component.sub_rows is None:
       return JsObjects.JsObjects.get(
-        "{rows: %s, columns: %s}" % (self._src.rows.dom.content, self._src.columns.dom.content))
+        "{rows: %s, columns: %s}" % (self.component.rows.dom.content, self.component.columns.dom.content))
     return JsObjects.JsObjects.get(
       "{rows: %s, columns: %s, sub_rows: %s}" % (
-        self._src.rows.dom.content,
-        self._src.columns.dom.content,
-        self._src.sub_rows.dom.content))
+        self.component.rows.dom.content,
+        self.component.columns.dom.content,
+        self.component.sub_rows.dom.content))
 
-  def clear(self, profile=None):
+  def clear(self, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -37,15 +38,15 @@ class JsHtmlPivot(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param profile: Boolean. Optional. Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
     """
-    if self._src.sub_rows is not None:
+    if self.component.sub_rows is not None:
       return JsUtils.jsConvertFncs([
-        self._src.sub_rows.dom.clear(), self._src.rows.dom.clear(),
-        self._src.columns.dom.clear()], toStr=True, profile=profile)
+        self.component.sub_rows.dom.clear(), self.component.rows.dom.clear(),
+        self.component.columns.dom.clear()], toStr=True, profile=profile)
 
     return JsUtils.jsConvertFncs([
-      self._src.rows.dom.clear(), self._src.columns.dom.clear()], toStr=True, profile=profile)
+      self.component.rows.dom.clear(), self.component.columns.dom.clear()], toStr=True, profile=profile)
 
 
 class JsHtmlColumns(JsHtml.JsHtml):
@@ -57,8 +58,8 @@ class JsHtmlColumns(JsHtml.JsHtml):
     ------------
     Return the standard value object with the fields (value, timestamp, offset).
     """
-    return JsObjects.JsObjects.get(
-      "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (self.htmlCode, self.varName))
+    return JsObjects.JsObjects.get('''{%s: {value: %s.querySelector('[data-select=true]').innerHTML, 
+timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlCode, self.varName))
 
   @property
   def content(self):
@@ -68,10 +69,10 @@ class JsHtmlColumns(JsHtml.JsHtml):
     Return the values of the items in the list.
     """
     return JsObjects.JsArray.JsArray.get('''
-      (function(){
-         var values = []; %(component)s.querySelectorAll("li").forEach(function(dom){values.push(dom.innerText)});
-         return values
-      })()''' % {"component": self._src.dom.varName})
+(function(){
+   var values = []; %(component)s.querySelectorAll("li").forEach(function(dom){values.push(dom.innerText)});
+   return values
+})()''' % {"component": self.component.dom.varName})
 
   @property
   def classList(self):
@@ -80,9 +81,9 @@ class JsHtmlColumns(JsHtml.JsHtml):
     ------------
     Return the class name of the list item.
     """
-    return self._src.dom.getAttribute("class")
+    return self.component.dom.getAttribute("class")
 
-  def add(self, item, unique=True, draggable=True):
+  def add(self, item, unique: bool = True, draggable: bool = True):
     """
     Description:
     ------------
@@ -94,15 +95,15 @@ class JsHtmlColumns(JsHtml.JsHtml):
     Attributes:
     ----------
     :param item: String. The Item to be added to the list.
-    :param unique: Boolean. Optional. Only add the item if it is not already in the list.
-    :param draggable: Boolean. Optional. Set the new entry as draggable.
+    :param bool unique: Optional. Only add the item if it is not already in the list.
+    :param bool draggable: Optional. Set the new entry as draggable.
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
     item = JsUtils.jsConvertData(item, None)
     unique = JsUtils.jsConvertData(unique, None)
     draggable = JsUtils.jsConvertData(draggable, None)
-    options = JsUtils.jsConvertData(self._src.options, None)
+    options = JsUtils.jsConvertData(self.component.options, None)
     return JsObjects.JsVoid('''
       var listItems = %(item)s; 
       if(!Array.isArray(listItems)){listItems = [listItems]};
@@ -163,7 +164,8 @@ class JsHtmlColumns(JsHtml.JsHtml):
           li.appendChild(div); li.style.cursor = "pointer"; li.style['text-align'] = "left";
           %(component)s.appendChild(li)
         }
-      })''' % {"item": item, "component": self._src.dom.varName, 'unique': unique, 'draggable': draggable, "options": options})
+      })''' % {"item": item, "component": self.component.dom.varName, 'unique': unique, 'draggable': draggable,
+               "options": options})
 
   def clear(self):
     """
@@ -171,9 +173,9 @@ class JsHtmlColumns(JsHtml.JsHtml):
     ------------
     Clear all the items in the list.
     """
-    return JsObjects.JsVoid("%s.innerHTML = ''" % self._src.dom.varName)
+    return JsObjects.JsVoid("%s.innerHTML = ''" % self.component.dom.varName)
 
-  def loading(self, label="Processing data"):
+  def loading(self, label: str = "Processing data"):
     """
     Description:
     ------------
@@ -183,14 +185,15 @@ class JsHtmlColumns(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param label: String. Optional. The processing message.
+    :param str label: Optional. The processing message.
     """
-    return JsObjects.JsVoid("%s.innerHTML = '<i style=\"margin-right:5px\" class=\"fas fa-spinner fa-spin\"></i>%s'" % (self._src.dom.varName, label))
+    return JsObjects.JsVoid("%s.innerHTML = '<i style=\"margin-right:5px\" class=\"fas fa-spinner fa-spin\"></i>%s'" % (
+      self.component.dom.varName, label))
 
 
 class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
 
-  def store(self, delimiter=None, format=None):
+  def store(self, delimiter: str = None, format: str = None):
     """
     Description:
     ------------
@@ -205,9 +208,9 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
     :param delimiter:
     :param format:
     """
-    raise Exception("Not available use load instead")
+    raise ValueError("Not available use load instead")
 
-  def load(self, jsData):
+  def load(self, data):
     """
     Description:
     ------------
@@ -217,8 +220,8 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
 
     Attributes:
     ----------
-    :param jsData:
+    :param data:
     """
     return JsObjects.JsVoid('''window['%s_data'] = %s; %s
-      ''' % (self._src.htmlCode, JsUtils.jsConvertData(jsData, None),
-             self._src.text.dom.setAttribute("title", self.content.length.toString().add(" rows")).r))
+      ''' % (self.component.htmlCode, JsUtils.jsConvertData(data, None),
+             self.component.text.dom.setAttribute("title", self.content.length.toString().add(" rows")).r))

@@ -6,11 +6,12 @@ import logging
 import collections
 import subprocess
 
+from epyk.core.py import primitives
 from epyk.core import Page
 from epyk.core.js import Imports
 
 
-def requirements(report, app_path=None):
+def requirements(page: primitives.PageModel, app_path: str = None):
   """
   Description:
   ------------
@@ -21,11 +22,13 @@ def requirements(report, app_path=None):
 
   Attributes:
   ----------
-  :param report: Python object. The report object
+  :param primitives.PageModel page: Python object. The report object
+  :param str app_path:
   """
   npms = []
-  importMng = Imports.ImportManager(online=True, report=report)
-  for req in importMng.cleanImports(report.jsImports, Imports.JS_IMPORTS):
+  import_mng = Imports.ImportManager(page=page)
+  import_mng.online = True
+  for req in import_mng.cleanImports(page.jsImports, Imports.JS_IMPORTS):
     if 'register' in Imports.JS_IMPORTS[req]:
       if 'npm' in Imports.JS_IMPORTS[req]['register']:
         npm_name = Imports.JS_IMPORTS[req]['register']['npm']
@@ -41,7 +44,7 @@ def requirements(report, app_path=None):
   return npms
 
 
-def npm_packages(packages):
+def npm_packages(packages: list):
   """
   Description:
   ------------
@@ -51,7 +54,7 @@ def npm_packages(packages):
 
   Attributes:
   ----------
-  :param packages: List. All the packages
+  :param list packages: All the packages
   """
   mapped_packages = []
   for p in packages:
@@ -62,17 +65,18 @@ def npm_packages(packages):
   return mapped_packages
 
 
-class App(object):
+class App:
 
-  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="views"):
+  def __init__(self, app_path: str, app_name: str, alias: str, name: str, page: primitives.PageModel = None,
+               target_folder: str = "views"):
     self.imports = collections.OrderedDict({"http": 'http', 'url': 'url', 'fs': 'fs'})
     self.import_launchers = []
-    self.vars, self.__map_var_names, self._report = {}, {}, report
+    self.vars, self.__map_var_names, self.page = {}, {}, page
     self._app_path, self._app_name = app_path, app_name
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.comps = {}
 
-  def require(self, module, alias=None, launcher=""):
+  def require(self, module: str, alias: str = None, launcher: str = ""):
     """
     Description:
     ------------
@@ -84,9 +88,9 @@ class App(object):
 
     Attributes:
     ----------
-    :param module: String. The module name.
-    :param alias: String. Optional. The alias name for the JavaScript Variable name
-    :param launcher: String. Optional. The JavasCript String to be added to the page just after the imports
+    :param str module: The module name.
+    :param str alias: Optional. The alias name for the JavaScript Variable name
+    :param str launcher: Optional. The JavasCript String to be added to the page just after the imports
     """
     self.imports[module] = alias or module
     if launcher:
@@ -110,7 +114,7 @@ class App(object):
     """
     return os.path.join("./", self.__path, self.name).replace("\\", "/")
 
-  def checkImports(self, app_path=None):
+  def checkImports(self, app_path: str = None):
     """
     Description:
     ------------
@@ -118,7 +122,7 @@ class App(object):
 
     Attributes:
     ----------
-    :param app_path: String. Optional. the Path of the NodeJs application
+    :param str app_path: Optional. the Path of the NodeJs application
     """
     app_path = app_path or self._app_path
     node_modules = os.path.join(app_path, "node_modules")
@@ -129,7 +133,7 @@ class App(object):
           if not os.path.exists(os.path.join(node_modules, Imports.JS_IMPORTS[imp]['register'].get('npm', imp))):
             logging.warning("Missing module - %s - on the nodeJsServer" % imp)
 
-  def export(self, path=None, target_path=None):
+  def export(self, path: str = None, target_path: str = None):
     """
     Description:
     ------------
@@ -137,8 +141,8 @@ class App(object):
 
     Attributes:
     ----------
-    :param path: String. The NodeJs server path
-    :param target_path: String. The folder location on the server. for example ['src', 'app']
+    :param str path: The NodeJs server path
+    :param str target_path: The folder location on the server. for example ['src', 'app']
     """
     self.__path = path or self.__path
     if target_path is None:
@@ -147,7 +151,7 @@ class App(object):
     module_path = os.path.join(self._app_path, *target_path)
     if not os.path.exists(module_path):
       os.makedirs(module_path)
-    self._report.outs.html_file(path=module_path, name=self.name)
+    self.page.outs.html_file(path=module_path, name=self.name)
     requirements = []
     for imp, alias in self.imports.items():
       if imp in Imports.JS_IMPORTS:
@@ -174,7 +178,7 @@ fs.readFile('./%s.html', function (err, html) {
 
 class Cli(object):
 
-  def __init__(self, app_path, env):
+  def __init__(self, app_path: str, env: str):
     self._app_path, self.envs = app_path, env
 
   def angular(self):
@@ -211,7 +215,8 @@ class Cli(object):
     Description:
     ------------
     react.cli is ReactJS command line interface.
-    Using this cli you can generate modules and components very easily. This cli was created for React-Redux-Boilerplate.
+    Using this cli you can generate modules and components very easily. This cli was created for
+    React-Redux-Boilerplate.
     If your project does not have a similar architecture, you can not use this tool.
 
     Related Pages:
@@ -224,15 +229,15 @@ class Cli(object):
     subprocess.run('npm install react.cli -g', shell=True, cwd=self._app_path)
 
 
-class Node(object):
+class Node:
 
-  def __init__(self, app_path, name=None):
+  def __init__(self, app_path: str, name: str = None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
     self._page, self.envs = None, None
 
   @property
-  def clis(self):
+  def clis(self) -> Cli:
     """
     Description:
     ------------
@@ -244,7 +249,7 @@ class Node(object):
       path = self._app_path
     return Cli(path, self.envs)
 
-  def proxy(self, username, password, proxy_host, proxy_port, protocols=None):
+  def proxy(self, username: str, password: str, proxy_host: str, proxy_port: int, protocols: list = None):
     """
     Description:
     ------------
@@ -252,11 +257,11 @@ class Node(object):
 
     Attributes:
     ----------
-    :param username:
-    :param password:
-    :param proxy_host:
-    :param proxy_port:
-    :param protocols:
+    :param str username:
+    :param str password:
+    :param str proxy_host:
+    :param int proxy_port:
+    :param list protocols:
     """
     if self.envs is None:
       self.envs = []
@@ -264,9 +269,10 @@ class Node(object):
     if protocols is None:
       protocols = ["https-proxy", "proxy"]
     for protocol in protocols:
-      self.envs.append('npm config set %s "http://%s:%s@%s:%s"' % (protocol, username, password, proxy_host, proxy_port))
+      self.envs.append('npm config set %s "http://%s:%s@%s:%s"' % (
+        protocol, username, password, proxy_host, proxy_port))
 
-  def npm(self, packages):
+  def npm(self, packages: list):
     """
     Description:
     ------------
@@ -276,12 +282,12 @@ class Node(object):
 
     Attributes:
     ----------
-    :param packages: List. The list of packages to install retrieved from requirements()
+    :param list packages: The list of packages to install retrieved from requirements()
     """
     if self.envs is not None:
       for env in self.envs:
         subprocess.run(env, shell=True, cwd=self._app_path)
-    packages = node.npm_packages(packages)
+    packages = npm_packages(packages)
     subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages installed" % len(packages))
 
@@ -293,7 +299,7 @@ class Node(object):
     """
     subprocess.run('npm ls', shell=True, cwd=self._app_path)
 
-  def launcher(self, app_name, target_path, port=3000):
+  def launcher(self, app_name: str, target_path: str, port: int = 3000):
     """
     Description:
     ------------
@@ -301,8 +307,9 @@ class Node(object):
 
     Attributes:
     ----------
-    :param app_name: String. The deno path (This should contain the deno.exe file)
-    :param target_path: String. The target path for the views
+    :param str app_name: String. The deno path (This should contain the deno.exe file)
+    :param str target_path: String. The target path for the views
+    :param int port:
     """
     out_path = os.path.join(self._app_path, "launchers")
     if not os.path.exists(out_path):
@@ -325,16 +332,16 @@ fs.readFile('./%s/%s.html', function (err, html) {
     }).listen(%s);
 }); ''' % (target_path, app_name, port))
 
-  def launch(self, app_name, target_folder=None, port=3000):
+  def launch(self, app_name: str, target_folder: str = None, port: int = 3000):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param app_name: String
-    :param target_folder: String.
-    :param port: Integer.
+    :param str app_name:
+    :param str target_folder:
+    :param int port:
     """
     out_path = os.path.join(self._app_path, "launchers")
     router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
@@ -343,7 +350,7 @@ fs.readFile('./%s/%s.html', function (err, html) {
       self.launcher(app_name, target_folder, port)
     self.run(name="./launchers/launcher_%s.js" % app_name)
 
-  def router(self, target_folder, port=3000):
+  def router(self, target_folder: str, port: int = 3000):
     """
     Description:
     ------------
@@ -351,8 +358,8 @@ fs.readFile('./%s/%s.html', function (err, html) {
 
     Attributes:
     ----------
-    :param target_folder: String. The target path where the views are stored
-    :param port: Integer.
+    :param str target_folder: The target path where the views are stored
+    :param int port:
     """
     router_path = os.path.join(self._app_path, "server.js")
     with open(router_path, "w") as f:
@@ -372,7 +379,7 @@ http.createServer(function(request, response) {
 }).listen(%s);
  ''' % (target_folder, port))
 
-  def run(self, name, port=3000):
+  def run(self, name: str, port: int = 3000):
     """
     Description:
     ------------
@@ -384,15 +391,19 @@ http.createServer(function(request, response) {
 
     Attributes:
     ----------
-    :param name: String. The script name
-    :param port: Integer. The port number for the node server
+    :param str name: The script name
+    :param int port: The port number for the node server
     """
     print("Node server url: 127.0.0.1:%s" % port)
     subprocess.run('node %s --port %s' % (name, port), shell=True, cwd=self._app_path)
 
-  def inspect(self, name, from_launcher=False):
+  def inspect(self, name: str, from_launcher: bool = False):
     """
+    Description:
+    ------------
 
+    Attributes:
+    ----------
     :param name:
     :param from_launcher:
     """
@@ -401,7 +412,7 @@ http.createServer(function(request, response) {
     else:
       subprocess.run('node --inspect %s ' % name, shell=True, cwd=self._app_path)
 
-  def docs(self, package):
+  def docs(self, package: str):
     """
     Description:
     ------------
@@ -409,11 +420,11 @@ http.createServer(function(request, response) {
 
     Attributes:
     ----------
-    :param package: String. The package alias
+    :param str package: The package alias
     """
     subprocess.run('npm docs %s' % package, shell=True, cwd=self._app_path)
 
-  def update(self, packages):
+  def update(self, packages: list):
     """
     Description:
     ------------
@@ -421,7 +432,7 @@ http.createServer(function(request, response) {
 
     Attributes:
     ----------
-    :param packages: List. The list of packages to be installed
+    :param list packages: The list of packages to be installed
     """
     if self.envs is not None:
       for env in self.envs:
@@ -429,7 +440,7 @@ http.createServer(function(request, response) {
     subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages updated" % len(packages))
 
-  def uninstall(self, packages):
+  def uninstall(self, packages: list):
     """
     Description:
     ------------
@@ -437,12 +448,13 @@ http.createServer(function(request, response) {
 
     Attributes:
     ----------
-    :param packages: List. The list of packages to be installed
+    :param list packages: The list of packages to be installed
     """
     subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages uninstalled" % len(packages))
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="views"):
+  def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
+           target_folder: str = "views"):
     """
     Description:
     ------------
@@ -452,22 +464,24 @@ http.createServer(function(request, response) {
 
     Description:
     ------------
-    :param report: Object. A report object
-    :param selector: String. The url route for this report in the Angular app
-    :param name: String. The component classname in the Angular framework
+    :param primitives.PageModel page: A report object
+    :param str selector: The url route for this report in the Angular app
+    :param str name: The component classname in the Angular framework
+    :param bool auto_route:
+    :param str target_folder:
     """
     if name is None:
       script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
       if selector is None:
         selector = script.replace("_", "-")
-    report = report or Page.Report()
-    report.framework("NODE")
-    self._page = App(self._app_path, self._app_name, selector, name, report=report)
+    page = page or Page.Report()
+    page.framework("NODE")
+    self._page = App(self._app_path, self._app_name, selector, name, page=page)
     self.auto_route = auto_route
     self.target_folder = target_folder
     return self._page
 
-  def publish(self, target_folder=None):
+  def publish(self, target_folder: str = None):
     """
     Description:
     ------------
@@ -475,7 +489,7 @@ http.createServer(function(request, response) {
 
     Attributes:
     ----------
-    :param target_folder: String. The target path for the transpiled views
+    :param str target_folder: The target path for the transpiled views
     """
     out_path = os.path.join(self._app_path, target_folder or self.target_folder)
     if self._page is not None:

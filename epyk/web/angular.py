@@ -3,7 +3,9 @@ Draft version
 
 """
 
+from epyk.core.py import primitives
 from epyk.core import Page
+from epyk.core.js import JsUtils
 
 from epyk.web import node
 
@@ -14,15 +16,15 @@ import json
 import subprocess
 
 
-def app(path, name=None):
+def app(path: str, name: str = None):
   """
   Description:
   ------------
 
   Attributes:
   ----------
-  :param path: String. The server path
-  :param name: String. Optional. The application name on the server
+  :param str path: The server path
+  :param str name: Optional. The application name on the server
   """
   return Angular(path, name)
 
@@ -37,12 +39,12 @@ var showdown = Showdown;
 COMPONENT_NAME_TEMPLATE = "app.%s.component"
 
 
-class NGModule(object):
+class NGModule:
 
-  def __init__(self, ang_app_path):
+  def __init__(self, ang_app_path: str):
     self._ang_app_path = ang_app_path
 
-  def class_(self, name):
+  def class_(self, name: str):
     """
     Description:
     ------------
@@ -54,11 +56,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
     """
     subprocess.run('ng generate class %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def component(self, name):
+  def component(self, name: str):
     """
     Description:
     ------------
@@ -70,11 +72,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
     """
     subprocess.run('ng generate component %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def directive(self, name):
+  def directive(self, name: str):
     """
     Description:
     ------------
@@ -86,11 +88,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
     """
     subprocess.run('ng generate directive %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def enum(self, name):
+  def enum(self, name: str):
     """
     Description:
     ------------
@@ -102,11 +104,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
     """
     subprocess.run('ng generate enum %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def guard(self, name):
+  def guard(self, name: str):
     """
     Description:
     ------------
@@ -118,11 +120,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the new route guard.
+    :param str name: The name of the new route guard.
     """
     subprocess.run('ng generate guard %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def interceptor(self, name):
+  def interceptor(self, name: str):
     """
     Description:
     ------------
@@ -134,11 +136,11 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interceptor.
+    :param str name: The name of the interceptor.
     """
     subprocess.run('ng generate interceptor %s' % name, shell=True, cwd=self._ang_app_path)
 
-  def interface(self, name, type):
+  def interface(self, name: str, type: str):
     """
     Description:
     ------------
@@ -150,12 +152,12 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
-    :param type: String. Adds a developer-defined type to the filename, in the format "name.type.ts".
+    :param str name: The name of the interface
+    :param str type: Adds a developer-defined type to the filename, in the format "name.type.ts".
     """
     subprocess.run('ng generate interface %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
-  def library(self, name, type):
+  def library(self, name: str, type: str):
     """
     Description:
     ------------
@@ -167,11 +169,12 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
+    :param str type:
     """
     subprocess.run('ng generate library %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
-  def module(self, name, type):
+  def module(self, name: str, type: str):
     """
     Description:
     ------------
@@ -183,11 +186,12 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
+    :param str type:
     """
     subprocess.run('ng generate module %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
-  def service(self, name, type):
+  def service(self, name: str, type: str):
     """
     Description:
     ------------
@@ -199,16 +203,17 @@ class NGModule(object):
 
     Attributes:
     ----------
-    :param name: String. The name of the interface
+    :param str name: The name of the interface
+    :param str type:
     """
     subprocess.run('ng generate service %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
 
-class NG(object):
-  def __init__(self, app_path, app_name=None, env=None):
-    self._app_path, self._app_name, self.envs  = app_path, app_name, env
+class NG:
+  def __init__(self, app_path: str, app_name: str = None, env: str = None):
+    self._app_path, self._app_name, self.envs = app_path, app_name, env
 
-  def e2e(self, app_name=None):
+  def e2e(self, app_name: str = None):
     """
     Description:
     ------------
@@ -220,15 +225,15 @@ class NG(object):
 
     Attributes:
     ----------
-    :param app_name: String. The application name
+    :param str app_name: The application name
     """
     app_name = app_name or self._app_name
     if app_name is None:
-      raise Exception("An Angular aplication name is required!")
+      raise ValueError("An Angular aplication name is required!")
 
     subprocess.run('ng e2e %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
-  def lint(self, app_name=None):
+  def lint(self, app_name: str = None):
     """
     Description:
     ------------
@@ -238,17 +243,17 @@ class NG(object):
 
       https://angular.io/cli/lint
 
-		Attributes:
+    Attributes:
     ----------
-    :param app_name: String. The application name
+    :param str app_name: The application name
     """
     app_name = app_name or self._app_name
     if app_name is None:
-      raise Exception("An Angular aplication name is required!")
+      raise ValueError("An Angular aplication name is required!")
 
     subprocess.run('ng lint %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
-  def new(self, name, path=None):
+  def new(self, name: str, path: str = None):
     """
     Description:
     ------------
@@ -258,10 +263,10 @@ class NG(object):
 
       https://angular.io/cli/new
 
-		Attributes:
+    Attributes:
     ----------
-    :param name: String. The application name
-    :param path: String. The server path
+    :param str name: The application name
+    :param str path: The server path
     """
     if path is not None:
       subprocess.run('ng new %s --directory %s' % (name, path), shell=True, cwd=self._app_path)
@@ -269,7 +274,7 @@ class NG(object):
       subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
     print('ng new %s' % name)
 
-  def doc(self, keyword):
+  def doc(self, keyword: str):
     """
     Description:
     ------------
@@ -279,13 +284,13 @@ class NG(object):
 
       https://angular.io/cli
 
-		Attributes:
+    Attributes:
     ----------
-    :param keyword:
+    :param str keyword:
     """
     subprocess.run('ng doc %s' % keyword, shell=True, cwd=self._app_path)
 
-  def add(self, package):
+  def add(self, package: str):
     """
     Description:
     ------------
@@ -295,9 +300,9 @@ class NG(object):
 
       https://angular.io/cli
 
-		Attributes:
+    Attributes:
     ----------
-    :param package: String. The package name
+    :param str package: The package name
     """
     if self.envs is not None:
       for env in self.envs:
@@ -311,7 +316,7 @@ class NG(object):
     """
     pass
 
-  def help(self, options=None):
+  def help(self, options: dict = None):
     """
     Description:
     ------------
@@ -321,16 +326,16 @@ class NG(object):
 
       https://angular.io/cli
 
-		Attributes:
+    Attributes:
     ----------
-    :param options:
+    :param dict options:
     """
     if options is None:
       subprocess.run('ng help', shell=True, cwd=self._app_path)
     else:
       subprocess.run('ng help %s' % options, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
-  def test(self, app_name=None):
+  def test(self, app_name: str = None):
     """
     Description:
     ------------
@@ -341,19 +346,20 @@ class NG(object):
 
     Attributes:
     ----------
-    :param app_name:
+    :param str app_name:
     """
     app_name = app_name or self._app_name
     if app_name is None:
-      raise Exception("An Angular aplication name is required!")
+      raise ValueError("An Angular aplication name is required!")
 
     subprocess.run('ng test %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
-  def build(self, app_name=None):
+  def build(self, app_name: str = None):
     """
     Description:
     ------------
-    Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed from within a workspace directory.
+    Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed from within
+    a workspace directory.
 
     Related Pages:
 
@@ -361,11 +367,11 @@ class NG(object):
 
     Attributes:
     ----------
-    :param app_name:
+    :param str app_name:
     """
     app_name = app_name or self._app_name
     if app_name is None:
-      raise Exception("An Angular aplication name is required!")
+      raise ValueError("An Angular application name is required!")
 
     subprocess.run('ng build %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
@@ -377,7 +383,7 @@ class NG(object):
     """
     subprocess.run('ng version', shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
-  def serve(self, host="localhost", port=8081):
+  def serve(self, host: str = "localhost", port: int = 8081):
     """
     Description:
     ------------
@@ -389,12 +395,13 @@ class NG(object):
 
     Attributes:
     ----------
-    :param host: String. The server url
-    :param port: Integer. The server port
+    :param str host: The server url
+    :param int port: The server port
     """
-    subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=os.path.join(self._app_path, self._app_name))
+    subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True,
+                   cwd=os.path.join(self._app_path, self._app_name))
 
-  def npm(self, packages):
+  def npm(self, packages: list):
     """
     Description:
     ------------
@@ -405,7 +412,7 @@ class NG(object):
 
     Attributes:
     ----------
-    :param packages: List. The packages names to install
+    :param list packages: The packages names to install
     """
     if self.envs is not None:
       for env in self.envs:
@@ -432,7 +439,7 @@ class NG(object):
         json.dump(angular_conf, f, indent=2)
 
   @property
-  def create(self):
+  def create(self) -> NGModule:
     """
     Description:
     ------------
@@ -440,7 +447,7 @@ class NG(object):
     """
     return NGModule(os.path.join(self._app_path, self._app_name))
 
-  def generate(self, schematic, name):
+  def generate(self, schematic: str, name: str):
     """
     Description:
     ------------
@@ -452,15 +459,16 @@ class NG(object):
 
     Attributes:
     ----------
-    :param schematic:
-    :param name:
+    :param str schematic:
+    :param str name:
     """
-    subprocess.run('ng generate %s %s' % (schematic, name), shell=True, cwd=os.path.join(self._app_path, self._app_name))
+    subprocess.run(
+      'ng generate %s %s' % (schematic, name), shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
 
-class RouteModule(object):
+class RouteModule:
 
-  def __init__(self, app_path, app_name, file_name=None):
+  def __init__(self, app_path: str, app_name: str, file_name: str = None):
     self._app_path, self._app_name = app_path, app_name
     self.file_name = file_name or 'app-routing.module.ts'
     self.modules, self.routes, self.ng_modules = {}, {}, None
@@ -480,7 +488,7 @@ class RouteModule(object):
         self.routes[component] = alias
       self.ngModule = "%s%s" % (self.ngModule, split_content[1])
 
-  def add(self, component, alias, path):
+  def add(self, component: str, alias: str, path: str):
     """
     Description:
     ------------
@@ -488,9 +496,9 @@ class RouteModule(object):
 
     Attributes:
     ----------
-    :param component: String. String the Component module name
-    :param alias: String. The url shortcut
-    :param path: String. The component relative path
+    :param str component: String the Component module name
+    :param str alias: The url shortcut
+    :param str path: The component relative path
     """
     if self.ng_modules is None:
       self.ng_modules = NgModules(self._app_path, self._app_name)
@@ -498,7 +506,7 @@ class RouteModule(object):
     self.modules[component] = "../../%s/%s" % (path.replace("\\", "/"), COMPONENT_NAME_TEMPLATE % alias)
     self.routes[component] = alias
 
-  def export(self, file_name=None, target_path=None):
+  def export(self, file_name=None, target_path: str = None):
     """
     Description:
     ------------
@@ -507,7 +515,7 @@ class RouteModule(object):
     Attributes:
     ----------
     :param file_name: String. Optional. The filename
-    :param target_path: String. Optional. The new routing file
+    :param str target_path: Optional. The new routing file
     """
     file_name = 'app-routing.module.ts' or self.file_name
     if target_path is None:
@@ -526,9 +534,9 @@ class RouteModule(object):
     self.ng_modules.export(file_name)
 
 
-class NgModules(object):
+class NgModules:
 
-  def __init__(self, app_path, app_name, file_name=None):
+  def __init__(self, app_path: str, app_name: str, file_name: str = None):
     self._app_path, self._app_name = app_path, app_name
     self.file_name = file_name or 'app.module.ts'
     self.modules, self.imports, self.declarations, self.providers, self.bootstrap = {}, [], [], [], []
@@ -552,37 +560,42 @@ class NgModules(object):
     # Add mandatory core modules
     self.add_import("HttpClientModule", '@angular/common/http')
 
-  def add(self, component, path):
+  def add(self, component: str, path: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param component: String. The component name
-    :param path: String. The component path
+    :param str component: The component name
+    :param str path: The component path
     """
     self.modules[component] = path
 
-  def add_import(self, component, path):
+  def add_import(self, component: str, path: str):
     """
+    Description:
+    ------------
 
-    :param component:
-    :param path:
+    Attributes:
+    ----------
+    :param str component:
+    :param str path:
     """
     self.modules[component] = path
 
     if component not in self.imports:
       self.imports.append(component)
 
-  def export(self, file_name=None, target_path=None):
+  def export(self, file_name: str = None, target_path: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param file_name: String. Optional. The filename
+    :param str file_name: Optional. The filename
+    :param str target_path:
     """
     file_name = 'app.module.ts' or self.file_name
     if target_path is None:
@@ -593,7 +606,9 @@ class NgModules(object):
         f.write("import { %s } from '%s';\n" % (k, v))
       f.write("\n\n")
       f.write("@NgModule({\n")
-      for name, vars in [("declarations", self.declarations), ('imports', self.imports), ('providers', self.providers), ('bootstrap', self.bootstrap)]:
+      for name, vars in [
+        ("declarations", self.declarations), ('imports', self.imports), ('providers', self.providers),
+        ('bootstrap', self.bootstrap)]:
         f.write("  %s: [\n" % name)
         for d in vars:
           f.write("    %s,\n" % d)
@@ -602,15 +617,15 @@ class NgModules(object):
       f.write("export class AppModule { }")
 
 
-class ComponentSpec(object):
+class ComponentSpec:
 
-  def __init__(self, app_path, app_name, alias, name):
+  def __init__(self, app_path: str, app_name: str, alias: str, name: str):
     self.imports, self.vars = {}, {}
     self._app_path, self._app_name, self.__path = app_path, app_name, 'apps'
     self.alias, self.name = alias, name
     self.__comp_structure = {}
 
-  def export(self, path=None, target_path=None):
+  def export(self, path: str = None, target_path: str = None):
     """
     Description:
     ------------
@@ -620,8 +635,8 @@ class ComponentSpec(object):
 
     Attributes:
     ----------
-    :param path: String.
-    :param target_path: for example ['src', 'app']
+    :param str path: String.
+    :param str target_path: for example ['src', 'app']
     """
     self.__path = path or self.__path
     if target_path is None:
@@ -671,10 +686,10 @@ describe('%(name)s', () => {
 ''' % {"path": module_path, 'name': self.name, 'alias': self.alias})
 
 
-class Components(object):
+class Components:
 
-  def __init__(self, app, count=0, report=None):
-    self._app, self.count_comp, self._report = app, count, report
+  def __init__(self, app: str, count: int = 0, page: primitives.PageModel = None):
+    self._app, self.count_comp, self.page = app, count, page
 
   def router(self):
     """
@@ -684,7 +699,7 @@ class Components(object):
     """
     from epyk.web.components.angular import standards
 
-    return standards.Router(self._report, None)
+    return standards.Router(self.page, None)
 
   @property
   def materials(self):
@@ -695,7 +710,7 @@ class Components(object):
     """
     from epyk.web.components.angular import materials
 
-    return materials.Components(self._report)
+    return materials.Components(app=self._app, page=self.page)
 
   @property
   def primeng(self):
@@ -706,18 +721,19 @@ class Components(object):
     """
     from epyk.web.components.angular import primeng
 
-    return primeng.Components(self._report)
+    return primeng.Components(self.page)
 
 
-class App(object):
+class App:
 
-  def __init__(self, app_path, app_name, alias, name, report=None, target_folder="views"):
+  def __init__(self, app_path: str, app_name: str, alias: str, name: str,
+               page: primitives.PageModel = None, target_folder: str = "views"):
     self.imports = {'Component': '@angular/core',
                     #'HttpClient': '@angular/common/http',
                     #'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
                     #'ViewChild': '@angular/core'
                     }
-    self.vars, self.__map_var_names, self._report, self.file_name = {}, {}, report, None
+    self.vars, self.__map_var_names, self.page, self.file_name = {}, {}, page, None
     self._app_path, self._app_name, self._node_path = app_path, app_name, app_path
     self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
     self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
@@ -733,7 +749,7 @@ class App(object):
     """
     from epyk.web.components.angular import clarity
 
-    return clarity.Package(self._report, self)
+    return clarity.Package(self.page, self)
 
   @property
   def bootstrap(self):
@@ -744,9 +760,9 @@ class App(object):
     """
     from epyk.web.components.angular import bootstrap
 
-    return bootstrap.Package(self._report, self)
+    return bootstrap.Package(self.page, self)
 
-  def add_var(self, name, value=None):
+  def add_var(self, name: str, value=None):
     """
     Description:
     ------------
@@ -762,7 +778,7 @@ class App(object):
       self.__comp_structure['constructor'].append("this.%s = %s" % (name, json.dumps(value)))
     self.vars[name] = value
 
-  def add_fnc(self, name, fncs):
+  def add_fnc(self, name: str, funcs):
     """
     Description:
     ------------
@@ -770,31 +786,31 @@ class App(object):
     Attributes:
     ----------
     :param name:
-    :param fncs:
+    :param funcs:
     """
-    self.__fncs[name] = fncs
+    self.__fncs[name] = funcs
 
-  def add_imports(self, name, path):
+  def add_imports(self, name: str, path: str):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param name:
-    :param path:
+    :param str name:
+    :param str path:
     """
     pass
 
   @property
-  def components(self):
+  def components(self) -> Components:
     """
     Description:
     ------------
 
     """
     if self.__components is None:
-      self.__components = Components(self, report=self._report)
+      self.__components = Components(self, page=self.page)
     return self.__components
 
   def constructor(self):
@@ -815,18 +831,23 @@ class App(object):
     """
     return self.file_name or COMPONENT_NAME_TEMPLATE % self.alias
 
-  def http(self, end_point, jsFncs):
+  def http(self, end_point: str, js_funcs, profile):
     """
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param end_point:
-    :param jsFncs:
+    :param js_funcs:
+    :param profile:
     """
-    return "this.httpClient.post('http://127.0.0.1:5000/%s', {}).subscribe((data)=>{ %s });" % (end_point, ";".join(jsFncs))
+    js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    end_point = JsUtils.jsConvertData(end_point, None)
+    return "this.httpClient.post('http://127.0.0.1:5000/' + %s, {}).subscribe((data)=>{ %s });" % (end_point, js_funcs)
 
   @property
-  def path(self):
+  def path(self) -> str:
     """
     Description:
     ------------
@@ -834,15 +855,15 @@ class App(object):
     """
     return os.path.join("../../", self.__path, self.name).replace("\\", "/")
 
-  def export(self, path=None, target_path=None):
+  def export(self, path: str = None, target_path: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param path:
-    :param target_path: for example ['src', 'app']
+    :param str path:
+    :param str target_path: for example ['src', 'app']
     """
     self.__path = path or self.__path
     if target_path is None:
@@ -852,19 +873,20 @@ class App(object):
     print("export  to: %s" % self.module_path)
     if not os.path.exists(self.module_path):
       os.makedirs(self.module_path)
-    page = self._report.outs.web()
+    page = self.page.outs.web()
     self.spec.export(path=self.module_path, target_path=None)
     self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
     with open(os.path.join(self.module_path, "%s.ts" % self.name), "w") as f:
       for comp, path in self.imports.items():
         f.write("import { %s } from '%s';\n" % (comp, path))
-      for path, classNames in self._report._props.get('web', {}).get('modules', {}).items():
+      for path, classNames in self.page._props.get('web', {}).get('modules', {}).items():
         f.write("import { %s } from '%s';\n" % (",".join(classNames), path))
       if page['jsFrgsCommon']:
-        f.write("import { %s } from './module_%s.js';" % (", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
+        f.write("import { %s } from './module_%s.js';" % (
+          ", ".join(list(page['jsFrgsCommon'].keys())),  self.alias.replace("-", "_")))
       f.write("\n")
-      if 'jquery' in self._report.jsImports:
+      if 'jquery' in self.page.jsImports:
         f.write("\ndeclare var $: any;")
         f.write("\n")
       # All the applicatops need this as they will interact with a Flask backend
@@ -900,7 +922,7 @@ class App(object):
     if page['jsFrgsCommon']:
       with open(os.path.join(self.module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
         for js_dep in JS_MODULES_IMPORTS:
-          if js_dep in self._report.jsImports:
+          if js_dep in self.page.jsImports:
             f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
         for buider in page['jsFrgsCommon'].values():
           f.write("export %s;\n" % buider)
@@ -914,7 +936,7 @@ class App(object):
 
 class Angular(node.Node):
 
-  def create(self, name):
+  def create(self, name: str):
     """
     Description:
     ------------
@@ -926,11 +948,11 @@ class Angular(node.Node):
 
     Attributes:
     ----------
-    :param name: String. The application name
+    :param str name: The application name
     """
     subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
 
-  def serve(self, app_name, host="localhost", port=8081):
+  def serve(self, app_name: str, host: str = "localhost", port: int = 8081):
     """
     Description:
     ------------
@@ -939,11 +961,17 @@ class Angular(node.Node):
     Related Pages:
 
       https://angular.io/cli/serve
+
+    Attributes:
+    ----------
+    :param str app_name:
+    :param str host:
+    :param int port:
     """
     path = os.path.join(self._app_path, app_name)
     subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=path)
 
-  def router(self, app_name):
+  def router(self, app_name: str):
     """
     Description:
     ------------
@@ -954,7 +982,7 @@ class Angular(node.Node):
 
     Attributes:
     ----------
-    :param app_name:
+    :param str app_name:
     """
     path = os.path.join(self._app_path, app_name)
     subprocess.run('ng generate module app-routing --module app --flat', shell=True, cwd=path)
@@ -976,7 +1004,7 @@ export class AppRoutingModule { }
 
 ''')
 
-  def ng(self, app_name=None):
+  def ng(self, app_name: str = None):
     """
     Description:
     ------------
@@ -988,12 +1016,12 @@ export class AppRoutingModule { }
 
     Attributes:
     ----------
-    :param app_name: String. The angular application name
+    :param str app_name: The angular application name
     """
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name, self.envs)
 
-  def cli(self, app_name):
+  def cli(self, app_name: str):
     """
     Description:
     ------------
@@ -1005,12 +1033,13 @@ export class AppRoutingModule { }
 
     Attributes:
     ----------
-    :param app_name: String. The angular application name
+    :param str app_name: The angular application name
     """
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name, self.envs)
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
+  def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
+           target_folder: str = "apps"):
     """
     Description:
     ------------
@@ -1020,22 +1049,24 @@ export class AppRoutingModule { }
 
     Description:
     ------------
-    :param report: Object. A report object
-    :param selector: String. The url route for this report in the Angular app
-    :param name: String. The component classname in the Angular framework
+    :param primitives.PageModel page: A report object
+    :param str selector: The url route for this report in the Angular app
+    :param str name: The component classname in the Angular framework
+    :param bool auto_route:
+    :param bool target_folder:
     """
     if name is None:
       script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
       name = "".join([s.capitalize() for s in script.split("_")])
       if selector is None:
         selector = script.replace("_", "-")
-    report = report or Page.Report()
-    self._page = App(self._app_path, self._app_name, selector, name, report=report, target_folder=target_folder)
+    page = page or Page.Report()
+    self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
     if auto_route:
       self.route().add(self._app_name, self._page.alias, self._page.path)
     return self._page
 
-  def ng_modules(self, app_name=None, file_name=None):
+  def ng_modules(self, app_name: str = None, file_name: str = None) -> NgModules:
     """
     Description:
     ------------
@@ -1043,7 +1074,8 @@ export class AppRoutingModule { }
 
     Attributes:
     ----------
-    :param app_name: String. Optinal. THe Angular application name
+    :param str app_name: Optional. THe Angular application name
+    :param str file_name:
 
     :rtype: NgModules
     """
@@ -1054,7 +1086,7 @@ export class AppRoutingModule { }
         self._fmw_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
     return self._fmw_modules
 
-  def route(self, app_name=None, file_name=None):
+  def route(self, app_name: str = None, file_name: str = None) -> RouteModule:
     """
     Description:
     ------------
@@ -1063,8 +1095,8 @@ export class AppRoutingModule { }
 
     Attributes:
     ----------
-    :param app_name: String. Optional. THe Angular application name
-    :param file_name: String. Optional.
+    :param str app_name: Optional. THe Angular application name
+    :param str file_name: Optional.
 
     :rtype: RouteModule
     """
@@ -1073,23 +1105,23 @@ export class AppRoutingModule { }
       self._route = RouteModule(path, name, file_name)
     return self._route
 
-  def publish(self, app_name=None, target_path=None):
+  def publish(self, app_name: str = None, target_path: list = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param app_name: String.
-    :param target_path: List  for example ['src', 'app']
+    :param str app_name:
+    :param list target_path: List for example ['src', 'app']
     """
     if self._page is not None:
       self._page.export(target_path=target_path)
-    node.requirements(self._page._report, self._page.module_path)
+    node.requirements(self._page.page, self._page.module_path)
     if self._route is not None:
       self._route.export()
 
-  def home_page(self, report, app_name=None, with_router=False):
+  def home_page(self, page, app_name: str = None, with_router: bool = False):
     """
     Description:
     ------------
@@ -1097,17 +1129,17 @@ export class AppRoutingModule { }
 
     Attributes:
     ----------
-    :param report:
+    :param page:
     :param app_name:
     :param with_router:
     """
     with open(os.path.join(self._app_path, app_name, "src", "app", "app.component.html")) as f:
       html_home = f.read()
     self._app_name = app_name
-    with_router = "<router-outlet></router-outlet>" in html_home
+    router_outlet = "<router-outlet></router-outlet>" in html_home
     self._app_path = os.path.join(self._app_path, self._app_name)
-    home = self.page("app-root", name="AppComponent", report=report, target_folder="src/app")
-    if with_router or with_router:
+    home = self.page("app-root", name="AppComponent", page=page, target_folder="src/app")
+    if with_router:
       home.components.router()
     home.file_name = "app.component"
     home.export()

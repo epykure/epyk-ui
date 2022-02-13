@@ -97,7 +97,7 @@ class Chart(Html.Html):
     :rtype: JsC3.C3
     """
     if self._js is None:
-      self._js = JsC3.C3(self, js_code=self.chartId, page=self.page, component=self)
+      self._js = JsC3.C3(js_code=self.chartId, page=self.page, component=self)
     return self._js
 
   def colors(self, hex_values: list):

@@ -8,7 +8,7 @@ from epyk.core.js.primitives import JsObjects
 class Timepicker(JsPackage):
 
   def __init__(self, component, js_code=None, set_var=True, is_py_data=True, page=None):
-    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.component.htmlCode, "", None
+    self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % component.htmlCode, "", None
     self.component, self.page = component, page
     self._js, self._jquery = [], None
 

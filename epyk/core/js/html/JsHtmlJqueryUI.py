@@ -90,13 +90,13 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
     :param int timer: Optional. the speed of the increase in millisecond.
     """
     return JsUtils.jsConvertFncs([
-      self.page.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.objects.number(self.content.unformat(), js_code="%s_counter" % self.htmlCode, set_var=True),
       self.page.js.window.setInterval([
         self.page.js.if_(
           self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
             self.page.js.objects.number(
               self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-              varName="window.%s_counter" % self.htmlCode, setVar=True),
+              js_code="window.%s_counter" % self.htmlCode, set_var=True),
             self.component.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
           ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)

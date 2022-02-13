@@ -362,22 +362,22 @@ class Series(DC):
   chartFnc = "SeriesChart"
 
   def line(self):
-    self._sub_chart = Line(js_code=self.page, set_var=False)
+    self._sub_chart = Line(page=self.page, set_var=False, component=self.component)
     self._sub_chart._selector = "new dc.LineChart(c)"
     return self
 
   def scatter(self):
-    self._sub_chart = Scatter(js_code=self.page, set_var=False)
+    self._sub_chart = Scatter(page=self.page, set_var=False, component=self.component)
     self._sub_chart._selector = "new dc.ScatterPlot(c)"
     return self
 
   def bubble(self):
-    self._sub_chart = Bubble(js_code=self.page, set_var=False)
+    self._sub_chart = Bubble(page=self.page, set_var=False, component=self.component)
     self._sub_chart._selector = "new dc.BubbleChart(c)"
     return self
 
   def bar(self):
-    self._sub_chart = Bar(js_code=self.page, set_var=False)
+    self._sub_chart = Bar(page=self.page, set_var=False, component=self.component)
     self._sub_chart._selector = "new dc.BarChart(c)"
     return self
 

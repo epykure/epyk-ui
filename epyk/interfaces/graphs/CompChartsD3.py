@@ -45,6 +45,7 @@ class D3:
     if scripts is not None:
       scripts = [os.path.split(script) for script in scripts]
 
+      options = options or {}
       dependencies = dependencies or []
       self.page.ext_packages = self.page.ext_packages or {}
       dependencies.append({'alias': 'd3', 'version': d3_version} if d3_version is not None else "d3")
@@ -94,7 +95,8 @@ class D3:
     options = options or {}
     options["init_fnc"] = "d3.layout.cloud = clouds"
     chart = self.script(
-      'clouds', scripts, None, "3.5.17", profile=profile, options=options, width=width, height=height, html_code=html_code)
+      'clouds', scripts, None, "3.5.17", profile=profile, options=options, width=width, height=height,
+      html_code=html_code)
     chart.colors(self.page.theme.charts)
     chart.loader(''' 
 var layout = d3.layout.cloud().size([options.get_width(htmlObj.node()), options.get_height(htmlObj.node())])

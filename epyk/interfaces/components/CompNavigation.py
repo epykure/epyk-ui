@@ -365,7 +365,8 @@ class Navigation:
     html.Html.set_component_skin(div)
     return div
 
-  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False) -> html.HtmlMenu.HtmlNavBar:
+  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None,
+          profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
     Description:
     ------------
@@ -1367,7 +1368,7 @@ class NavBars:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    bar = self.page.ui.navbar(logo, title, width, height, options, profile)
+    bar = self.page.ui.navbar(logo=logo, title=title, width=width, height=height, options=options, profile=profile)
     html.Html.set_component_skin(bar)
     return bar
 
@@ -1390,7 +1391,7 @@ class NavBars:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    bar = self.page.ui.navbar(logo, title, width, height, options, profile)
+    bar = self.page.ui.navbar(logo=logo, title=title, width=width, height=height, options=options, profile=profile)
     bar.style.css.position = False
     html.Html.set_component_skin(bar)
     return bar
@@ -1414,7 +1415,7 @@ class NavBars:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    bar = self.page.ui.navbar(logo, title, width, height, options, profile)
+    bar = self.page.ui.navbar(logo=logo, title=title, width=width, height=height, options=options, profile=profile)
     bar.style.css.position = "absolute"
     bar.style.css.top = 0
     bar.no_background()
@@ -1440,7 +1441,7 @@ class NavBars:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    bar = self.page.ui.navbar(logo, title, width, height, options, profile)
+    bar = self.page.ui.navbar(logo=logo, title=title, width=width, height=height, options=options, profile=profile)
     bar.style.css.position = "absolute"
     bar.style.css.top = 0
     bar.no_background()

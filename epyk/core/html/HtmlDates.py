@@ -558,7 +558,8 @@ class Calendar(Html.Html):
       body.append("<tr>%s</tr>" % "".join(row))
     #self.page.properties.js.add_on_ready(
     #  "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
-    return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {'strAttr': self.get_attrs(pyClassNames=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
+    return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'caption': self.caption, 'header': "".join(header), 'content': "".join(body)}
 
 
 class Timer(Html.Html):

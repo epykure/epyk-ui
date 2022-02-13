@@ -55,9 +55,12 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon(icon)
     options = options or {}
-    options["icon_family"] = icon_details["icon_family"]
+    if "icon_family" not in options:
+      icon_details = Defaults_css.get_icon(icon)
+      options["icon_family"] = icon_details["icon_family"]
+    else:
+      icon_details = {"icon": icon, "icon_family": options["icon_family"]}
     html_edit = html.HtmlButton.IconEdit(
       self.page, position, icon_details["icon"], text, tooltip, width, height, html_code, options, profile)
     html_edit.css({"margin": 0, 'cursor': 'pointer'})

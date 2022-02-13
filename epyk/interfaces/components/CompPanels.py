@@ -138,12 +138,12 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
+    dfl_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
                                 'color': self.page.theme.greys[-1]}}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
-      self.page, color, width, height, html_code, helper, dflt_options, profile)
+      self.page, color, width, height, html_code, helper, dfl_options, profile)
     html_tabs.options.css_tab_clicked = {
       'color': html_tabs.page.theme.greys[0],
       'background': html_tabs.page.theme.colors[-1]}
@@ -190,12 +190,12 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                                'margin': '0 2px 5px 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+    dfl_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
+                               'margin': '0 2px 5px 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
-      self.page, color, width, height, html_code, helper, dflt_options, profile)
+      self.page, color, width, height, html_code, helper, dfl_options, profile)
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
@@ -231,12 +231,12 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                                'margin': '0 2px 0 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+    dfl_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
+                               'margin': '0 2px 0 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     html_tabs = html.HtmlContainer.TabsArrowsUp(
-      self.page, color, width, height, html_code, helper, dflt_options, profile)
+      self.page, color, width, height, html_code, helper, dfl_options, profile)
     for t in html_tabs.tabs():
       t.style.add_classes.layout.panel_arrow_up()
     html_tabs.options.css_tab["color"] = html_tabs.page.theme.greys[-1]
@@ -469,16 +469,17 @@ class Panels:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    options = options or {}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"item_css": {'border': '1px solid %s' % self.page.theme.success[0],
-                                 'border-radius': '5px', "padding": "0 4px",
-                                 "margin-left": "5px", "width": 'auto', 'display': 'inline-block',
-                                 'background': options.get("colored", 'inherit'), 'white-space': 'nowrap'}}
+    dfl_options = {"item_css": {'border': '1px solid %s' % self.page.theme.success[0],
+                                'border-radius': '5px', "padding": "0 4px",
+                                "margin-left": "5px", "width": 'auto', 'display': 'inline-block',
+                                'background': options.get("colored", 'inherit'), 'white-space': 'nowrap'}}
     if options:
-      dflt_options.update(options)
+      dfl_options.update(options)
     chip = self.page.ui.chips(
-      items, category, width=width, height=height, html_code=html_code, helper=helper, options=dflt_options,
+      items, category, width=width, height=height, html_code=html_code, helper=helper, options=dfl_options,
       profile=profile)
     chip.input.style.css.display = False
     html.Html.set_component_skin(chip)

@@ -38,7 +38,8 @@ class Radio(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsHtml.ContentFormatters(self.page, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self._src.input.dom.getAttribute('name'))
+    return JsHtml.ContentFormatters(
+      self.page, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute('name'))
 
 
 class Check(JsHtml.JsHtmlRich):

@@ -15,7 +15,8 @@ GEO_US_CITIES = 'https://raw.githubusercontent.com/plotly/datasets/master/2014_u
 GEO_US_RAINS = 'https://raw.githubusercontent.com/plotly/datasets/master/2015_06_30_precipitation.csv'
 GEO_EARTHQUAKES = 'https://raw.githubusercontent.com/plotly/datasets/master/earthquakes-23k.csv'
 
-GEO_COVID19_COUNTRIES = "'https://covid.ourworldindata.org/data/total_cases.csv'"
+# https://github.com/owid
+GEO_COVID19_COUNTRIES = "https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv"
 
 AIRPORT_TRAFFIC = 'https://raw.githubusercontent.com/plotly/datasets/master/2011_february_us_airport_traffic.csv'
 PLOTLY_WEBGL_POLAR = 'https://raw.githubusercontent.com/plotly/datasets/master/hobbs-pearson-trials.csv'
@@ -89,4 +90,5 @@ NETFLIX_TITLE = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Scien
 
 
 #
-C02_DATA = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+CO2_DATA = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
+ENERGY_DATA = "https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv"

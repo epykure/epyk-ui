@@ -89,7 +89,7 @@ class Chart(Html.Html):
     :rtype: JsBillboard.Billboard
     """
     if self._js is None:
-      self._js = JsBillboard.Billboard(self, js_code=self.chartId, page=self.page, component=self)
+      self._js = JsBillboard.Billboard(js_code=self.chartId, page=self.page, component=self)
     return self._js
 
   @property

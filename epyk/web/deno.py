@@ -2,14 +2,14 @@
 import os
 
 
-class Deno(object):
+class Deno:
 
-  def __init__(self, app_path, name=None):
+  def __init__(self, app_path: str, name: str = None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
     self._page = None
 
-  def router(self, target_path):
+  def router(self, target_path: str):
     """
     Description:
     ------------
@@ -17,7 +17,7 @@ class Deno(object):
 
     Attributes:
     ----------
-    :param target_path: String. The target path where the views are stored
+    :param str target_path: The target path where the views are stored
     """
     router_path = os.path.join(self._app_path, "server.ts")
     with open(router_path, "w") as f:
@@ -39,7 +39,7 @@ for await (const req of server) {
   req.respond({ body: text });    
 }''' % target_path)
 
-  def launcher(self, app_name, target_path):
+  def launcher(self, app_name: str, target_path: str):
     """
     Description:
     ------------
@@ -47,8 +47,8 @@ for await (const req of server) {
 
     Attributes:
     ----------
-    :param app_name: String. The deno path (This should contain the deno.exe file)
-    :param target_path: String. The target path for the views
+    :param str app_name: The deno path (This should contain the deno.exe file)
+    :param str target_path: The target path for the views
     """
     out_path = os.path.join(self._app_path, "launchers")
     if not os.path.exists(out_path):
@@ -75,7 +75,7 @@ for await (const req of server) {
   req.respond({ body: text });    
 } ''' % (target_path, app_name))
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="views"):
+  def page(self, selector=None, name=None, page=None, auto_route=False, target_folder="views"):
     """
     Description:
     ------------
@@ -86,17 +86,17 @@ for await (const req of server) {
     ----------
     :param selector:
     :param name:
-    :param report:
+    :param page:
     :param auto_route:
     :param target_folder:
     """
-    self._report = report
+    self.page = page
     self.target_folder = target_folder
     self.name = name
     self.selector = selector
     self.auto_route = auto_route
 
-  def publish(self, target_path=None):
+  def publish(self, target_path: str = None):
     """
     Description:
     ------------
@@ -104,11 +104,11 @@ for await (const req of server) {
 
     Attributes:
     ----------
-    :param target_path: String. The target path for the transpiled views
+    :param str target_path: The target path for the transpiled views
     """
     out_path = os.path.join(self._app_path, target_path or self.target_folder)
     if not os.path.exists(out_path):
       os.makedirs(out_path)
-    self._report.outs.html_file(path=out_path, name=self.name)
+    self.page.outs.html_file(path=out_path, name=self.name)
     if self.auto_route:
       self.launcher(self.name, out_path)

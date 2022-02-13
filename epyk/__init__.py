@@ -1,5 +1,6 @@
 import json
 
+from typing import List
 from epyk.core import Page as Rpt
 from epyk._version import __version__
 from epyk.core.data import events
@@ -30,7 +31,7 @@ Page = Rpt.Report
 LOG_SERVICE = None
 
 
-def rename_css_cls(mappings):
+def rename_css_cls(mappings: dict):
   """
   Description:
   ------------
@@ -38,26 +39,26 @@ def rename_css_cls(mappings):
   This function need to be used before the creation of any component in the page.
 
   This will not change the content. it will only rename them.
-  To remove a CSS classe or to change it in a component type have a look at components_skin
+  To remove a CSS class or to change it in a component type have a look at components_skin
 
   Attributes:
   ----------
-  :param mappings: Dictionary. The CSS class names to be renamed.
+  :param dict mappings: The CSS class names to be renamed
   """
   from epyk.core.css import Classes
 
   Classes.OVERRIDES = mappings
 
 
-def packages_black_list(pkgs_alias, raise_exception=True):
+def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
   """
   All packages in this list will be considered as forbidden.
   The other packages will be authorised.
 
   Attributes:
   ----------
-  :param pkgs_alias: List<String>. A list of packages reference.
-  :param raise_exception: Boolean. Optional. The kind of error triggered.
+  :param List[str] pkgs_alias: A list of packages reference
+  :param bool raise_exception: Optional. The kind of error triggered
   """
   global PACKAGE_STATUS
 
@@ -68,7 +69,7 @@ def packages_black_list(pkgs_alias, raise_exception=True):
       PACKAGE_STATUS[pkg] = {"allowed": True, "info": "Package in Black list"}
 
 
-def packages_white_list(pkgs_alias, raise_exception=True):
+def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
   """
   Description:
   -----------
@@ -76,8 +77,8 @@ def packages_white_list(pkgs_alias, raise_exception=True):
 
   Attributes:
   ----------
-  :param pkgs_alias: List<String>. A list of packages reference.
-  :param raise_exception: Boolean. Optional. The kind of error triggered.
+  :param List[str] pkgs_alias: A list of packages reference
+  :param bool raise_exception: Optional. The kind of error triggered
   """
   global PACKAGE_STATUS
 

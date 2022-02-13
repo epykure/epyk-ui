@@ -19,9 +19,9 @@ class Chart(Html.Html):
   requirements = ('plotly.js', )
   _option_cls = OptPlotly.OptionConfig
 
-  def __init__(self,  report, width, height, options, html_code, profile):
+  def __init__(self,  page, width, height, options, html_code, profile):
     self.seriesProperties, self.__chartJsEvents, self.height = {'static': {}, 'dynamic': {}}, {}, height[0]
-    super(Chart, self).__init__(report, [], html_code=html_code, profile=profile, options=options,
+    super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height})
     self._d3, self._attrs, self._traces, self._layout, self._options = None, None, [], None, None
     self.layout.autosize, self._labels = True, None
@@ -29,7 +29,7 @@ class Chart(Html.Html):
       self.layout.height = height[0]
 
   @property
-  def shared(self):
+  def shared(self) -> OptPlotly.OptionsChartSharedPlotly:
     """
     Description:
     -----------
@@ -158,14 +158,14 @@ class Chart(Html.Html):
     Description:
     ------------
 
-    :rtype: JsChartJs.DataSetPie
+    :rtype: DataChart
     """
     if not self._traces:
       self.add_trace([])
     return self._traces[-1]
 
   @property
-  def options(self):
+  def options(self) -> OptPlotly.OptionConfig:
     """
     Description:
     ------------
@@ -178,7 +178,7 @@ class Chart(Html.Html):
     """
     return super().options
 
-  def traces(self, i=None):
+  def traces(self, i: int = None):
     """
     Description:
     ------------
@@ -270,7 +270,7 @@ class Chart(Html.Html):
       rec.marker.color = self.options.colors[i]
 
   @property
-  def js(self):
+  def js(self) -> JsPlotly.JsPlotly:
     """
     Description:
     -----------
@@ -284,7 +284,7 @@ class Chart(Html.Html):
     :rtype: JsPlotly.JsPlotly
     """
     if self._js is None:
-      self._js = JsPlotly.JsPlotly(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsPlotly.JsPlotly(selector="window['%s']" % self.chartId, component=self, page=self.page)
     return self._js
 
   @property
@@ -296,7 +296,7 @@ class Chart(Html.Html):
     :rtype: Layout
     """
     if self._layout is None:
-      self._layout = Layout(self._report)
+      self._layout = Layout(page=self.page, component=self)
     return self._layout
 
   @property
@@ -308,7 +308,7 @@ class Chart(Html.Html):
     :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(self._report, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
+      self._d3 = JsD3.D3Select(self.page, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
 
   def add_trace(self, data, type=None, mode=None):
@@ -327,7 +327,7 @@ class Chart(Html.Html):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataChart(self._report, attrs=c_data))
+    self._traces.append(DataChart(component=self, page=self.page, attrs=c_data))
     return self
 
   def build(self, data=None, options=None, profile=None, component_id=None):
@@ -354,7 +354,7 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 class Line(Chart):
@@ -365,7 +365,7 @@ class Line(Chart):
     :rtype: JsPlotly.Line
     """
     if self._dom is None:
-      self._dom = JsPlotly.Line(self, varName=self.chartId, report=self._report)
+      self._dom = JsPlotly.Line(component=self, js_code=self.chartId, page=self.page)
     return self._dom
 
   def trace(self, data, type=None, mode='lines+markers'):
@@ -374,7 +374,7 @@ class Line(Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    return DataXY(self._report, attrs=c_data)
+    return DataXY(page=self.page, attrs=c_data, component=self)
 
   def add_trace(self, data, type=None, mode='lines+markers'):
     """
@@ -392,18 +392,18 @@ class Line(Chart):
 class Bar(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Bar:
     """
     :rtype: JsPlotly.Bar
     """
     if self._chart is None:
-      self._chart = JsPlotly.Bar(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Bar(page=self.page, js_code=self.chartId, component=self)
     return self._chart
 
   @property
   def layout(self):
     if self._layout is None:
-      self._layout = LayoutBar(self._report)
+      self._layout = LayoutBar(page=self.page, component=self)
     return self._layout
 
   def trace(self, data, type='bar', mode=None):
@@ -412,7 +412,7 @@ class Bar(Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    return DataXY(self._report, attrs=c_data)
+    return DataXY(component=self, page=self.page, attrs=c_data)
 
   def add_trace(self, data, type='bar', mode=None):
     self._traces.append(self.trace(data, type, mode))
@@ -516,15 +516,16 @@ class LayoutAnnotation(DataClass):
 
 class LayoutShape(DataClass):
 
-  def add_path(self, points, color=None):
+  def add_path(self, points, color: str = None):
     """
 
     https://plot.ly/javascript/shapes/
 
     :param points:
+    :param color:
     """
     self._attrs.update({'type': 'path', 'path': points})
-    self.fillcolor = color or self._report.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning[0]
     return self
 
   def add_line(self, x, y, x1, y1, opacity=0.2, color=None):
@@ -540,7 +541,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'line', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.line.color = color or self._report.theme.warning[0]
+    self.line.color = color or self.page.theme.warning[0]
     self.line.dash = 'dot'
     self.opacity = opacity
     return self
@@ -556,7 +557,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'circle', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.fillcolor = color or self._report.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning[0]
     self.line.width = 0
     self.opacity = opacity
     return self
@@ -572,7 +573,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'rect', 'xref': 'x', 'yref': 'paper', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.fillcolor = color or self._report.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning[0]
     self.line.width = 0
     self.opacity = opacity
     return self
@@ -767,7 +768,7 @@ class LayoutButtons(DataClass):
 class LayoutRangeSelector(DataClass):
 
   @property
-  def buttons(self):
+  def buttons(self) -> LayoutButtons:
     """
 
     https://plot.ly/javascript/time-series/
@@ -845,7 +846,7 @@ class LayoutAxis(DataClass):
     self._attrs["tickangle"] = val
 
   @property
-  def titlefont(self):
+  def titlefont(self) -> LayoutFont:
     """
 
     :rtype: LayoutFont
@@ -855,7 +856,7 @@ class LayoutAxis(DataClass):
     return self.sub_data("titlefont", LayoutFont)
 
   @property
-  def tickfont(self):
+  def tickfont(self) -> LayoutFont:
     """
 
     :rtype: LayoutFont
@@ -1010,7 +1011,7 @@ class LayoutAxis(DataClass):
     self._attrs["showticklabels"] = val
 
   @property
-  def rangeselector(self):
+  def rangeselector(self) -> LayoutRangeSelector:
     """
 
     https://plot.ly/javascript/time-series/
@@ -1020,7 +1021,7 @@ class LayoutAxis(DataClass):
     return self.sub_data("rangeselector", LayoutRangeSelector)
 
   @property
-  def rangeslider(self):
+  def rangeslider(self) -> LayoutRangeSlider:
     """
 
     https://plot.ly/javascript/time-series/
@@ -1101,7 +1102,7 @@ class LayoutEye(DataClass):
 class LayoutCamera(DataClass):
 
   @property
-  def eye(self):
+  def eye(self) -> LayoutEye:
     """
 
     :rtype: LayoutEye
@@ -1114,7 +1115,7 @@ class LayoutCamera(DataClass):
 class LayoutScene(DataClass):
 
   @property
-  def camera(self):
+  def camera(self) -> LayoutCamera:
     """
 
     :rtype: LayoutCamera
@@ -1124,7 +1125,7 @@ class LayoutScene(DataClass):
     return self.sub_data("scene", LayoutCamera)
 
   @property
-  def xaxis(self):
+  def xaxis(self) -> LayoutAxis:
     """
 
     :rtype: LayoutAxis
@@ -1134,7 +1135,7 @@ class LayoutScene(DataClass):
     return self.sub_data("xaxis", LayoutAxis)
 
   @property
-  def yaxis(self):
+  def yaxis(self) -> LayoutAxis:
     """
 
     :rtype: LayoutAxis
@@ -1144,7 +1145,7 @@ class LayoutScene(DataClass):
     return self.sub_data("yaxis", LayoutAxis)
 
   @property
-  def zaxis(self):
+  def zaxis(self) -> LayoutAxis:
     """
 
     :rtype: LayoutAxis
@@ -1221,7 +1222,7 @@ class LayoutLegend(DataClass):
     self._attrs["xanchor"] = val
 
   @property
-  def font(self):
+  def font(self) -> LayoutFont:
     """
 
     :rtype: LayoutFont
@@ -2327,7 +2328,7 @@ class DataCandle(DataChart):
 class Pie(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2335,11 +2336,11 @@ class Pie(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
     return self._chart
 
   @property
-  def data(self):
+  def data(self) -> DataPie:
     """
     Description:
     ------------
@@ -2349,7 +2350,7 @@ class Pie(Chart):
     :return:
     """
     if not self._traces:
-      self._traces.append(DataPie(self._report))
+      self._traces.append(DataPie(page=self.page, component=self))
     return self._traces[-1]
 
   def add_trace(self, data, type='pie', mode=None):
@@ -2358,7 +2359,7 @@ class Pie(Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    self._traces.append(DataPie(self._report, attrs=c_data))
+    self._traces.append(DataPie(component=self, page=self.page, attrs=c_data))
     return self
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind="pie"):
@@ -2405,7 +2406,7 @@ class Pie(Chart):
 class Surface(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2413,7 +2414,7 @@ class Surface(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
     return self._chart
 
   @property
@@ -2426,7 +2427,7 @@ class Surface(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataSurface(self._report, attrs=c_data))
+    self._traces.append(DataSurface(page=self.page, component=self, attrs=c_data))
     return self
 
   _js__builder__ = '''
@@ -2446,7 +2447,7 @@ class Surface(Chart):
 class Scatter3D(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2454,13 +2455,13 @@ class Scatter3D(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> Layout3D:
     if self._layout is None:
-      self._layout = Layout3D(self._report)
+      self._layout = Layout3D(page=self.page, component=self)
     return self._layout
 
   @property
@@ -2473,7 +2474,7 @@ class Scatter3D(Chart):
       c_data['type'] = self.options.type
     if mode is not None:
       c_data['mode'] = self.options.mode or mode
-    self._traces.append(DataSurface(self._report, attrs=c_data))
+    self._traces.append(DataSurface(component=self, page=self.page, attrs=c_data))
     return self
 
   _js__builder__ = '''
@@ -2504,7 +2505,7 @@ class Scatter3D(Chart):
 class Mesh3d(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2512,7 +2513,7 @@ class Mesh3d(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
 
   @property
@@ -2525,14 +2526,14 @@ class Mesh3d(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataSurface(self._report, attrs=c_data))
+    self._traces.append(DataSurface(component=self, page=self.page, attrs=c_data))
     return self
 
 
 class Indicator(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2540,7 +2541,7 @@ class Indicator(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
 
   def add_trace(self, data, type='indicator', mode=None):
@@ -2549,7 +2550,7 @@ class Indicator(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataIndicator(self._report, attrs=c_data))
+    self._traces.append(DataIndicator(page=self.page, component=self, attrs=c_data))
     return self
 
   _js__builder__ = '''
@@ -2562,7 +2563,7 @@ class Indicator(Chart):
 class ScatterPolar(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2570,7 +2571,7 @@ class ScatterPolar(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
 
   def add_trace(self, data, type='scatterpolar', mode=None):
@@ -2579,7 +2580,7 @@ class ScatterPolar(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataChart(self._report, attrs=c_data))
+    self._traces.append(DataChart(page=self.page, component=self, attrs=c_data))
     self.data.fill = 'toself'
     return self
 
@@ -2587,7 +2588,7 @@ class ScatterPolar(Chart):
 class Box(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2595,11 +2596,11 @@ class Box(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutBox:
     """
     Description:
     ------------
@@ -2607,7 +2608,7 @@ class Box(Chart):
     :rtype: LayoutBox
     """
     if self._layout is None:
-      self._layout = LayoutBox(self._report)
+      self._layout = LayoutBox(page=self.page, component=self)
     return self._layout
 
   def add_trace(self, data, type='box', mode=None):
@@ -2616,7 +2617,7 @@ class Box(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataBox(self._report, attrs=c_data))
+    self._traces.append(DataBox(page=self.page, component=self, attrs=c_data))
     return self
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind="pie"):
@@ -2626,7 +2627,7 @@ class Box(Chart):
 class CandleStick(Chart):
 
   @property
-  def chart(self):
+  def chart(self) -> JsPlotly.Pie:
     """
     Description:
     ------------
@@ -2634,11 +2635,11 @@ class CandleStick(Chart):
     :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self._report, varName=self.chartId)
+      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
     return self._chart
 
   @property
-  def layout(self):
+  def layout(self) -> LayoutBox:
     """
     Description:
     ------------
@@ -2646,7 +2647,7 @@ class CandleStick(Chart):
     :rtype: LayoutBox
     """
     if self._layout is None:
-      self._layout = LayoutBox(self._report)
+      self._layout = LayoutBox(component=self, page=self.page)
     return self._layout
 
   def add_trace(self, data, type='candlestick', mode=None):
@@ -2655,5 +2656,5 @@ class CandleStick(Chart):
       c_data['type'] = type
     if mode is not None:
       c_data['mode'] = mode
-    self._traces.append(DataCandle(self._report, attrs=c_data))
+    self._traces.append(DataCandle(page=self.page, component=self, attrs=c_data))
     return self

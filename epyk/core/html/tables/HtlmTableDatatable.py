@@ -98,7 +98,7 @@ class Table(Html.Html):
     :rtype: JsDatatable.DatatableAPI
     """
     if self._js is None:
-      self._js = JsDatatable.DatatableAPI(self.page, selector=self.tableId, set_var=False, parent=self)
+      self._js = JsDatatable.DatatableAPI(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
 
   def build(self, data=None, options=None, profile=None, component_id=None):

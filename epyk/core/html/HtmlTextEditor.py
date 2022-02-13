@@ -254,7 +254,7 @@ class Cell(Html.Html):
     :param Union[list, str] js_funcs: Optional. The Javascript functions.
     :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
     """
-    js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, valType=int))
+    js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, val_type=int))
     return self.action(icon, js_funcs, tooltip)
 
   def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):

@@ -23,7 +23,7 @@ from epyk.core.css.styles import GrpCls
 from epyk.core.css import Defaults as Defaults_css
 
 from epyk.core.html import Aria
-from epyk.core.html import Component
+from epyk.core.html import WebComponents
 from epyk.core.html import KeyCodes
 from epyk.core.html.options import Options
 
@@ -103,8 +103,6 @@ def set_component_skin(component: primitives.HtmlModel):
     Attributes:
     ----------
     :param primitives.HtmlModel component:
-
-    :return:
     """
     if component.page.ui.components_skin is not None:
       shortcuts = {"button": "buttons.button", "title": "texts.title"}
@@ -379,7 +377,7 @@ class Html(primitives.HtmlModel):
 
     self.innerPyHTML = None  # to be reviewed - not sure this is still useful
 
-    self.__options = self._option_cls(self, options)
+    self.__options = self._option_cls(component=self, attrs=options, page=self.page)
 
     self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
     if css_attrs is not None:
@@ -484,6 +482,13 @@ class Html(primitives.HtmlModel):
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtml(self)
     return self._styleObj
+
+  @property
+  def html_code(self) -> str:
+    if self.__htmlCode is not None:
+      return self.__htmlCode
+
+    return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
   def htmlCode(self) -> str:
@@ -846,7 +851,7 @@ class Html(primitives.HtmlModel):
     self.title = ""
     if text is not None:
       self.title = self.page.ui.texts.title(text, level=level, options=options)
-      if options.get('managed', True):
+      if options is not None and options.get('managed', True):
         if position == "before":
           self.prepend_child(self.title)
         else:
@@ -1793,7 +1798,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     if not propagate_only:
       if 'sortable' not in self._on_ready_js:
         self._on_ready_js['sortable'] = JsSortable.Sortable(
-          self, js_code="%s_sortable" % self.htmlCode, selector=self.dom.varId, parent=self.page)
+          self, js_code="%s_sortable" % self.htmlCode, selector=self.dom.varId, page=self.page)
         dfl_options = {"group": self.htmlCode}
         dfl_options.update(options or {})
         self._sort_options = dfl_options
@@ -1810,7 +1815,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     raise NotImplementedError('subclasses must override __str__()!')
 
   @property
-  def component(self) -> Component.Component:
+  def component(self) -> WebComponents.Component:
     """
     Description:
     -----------
@@ -1819,7 +1824,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     This will be then used by the different framework to define the elementary bricks on which the complex component
     will be based on.
     """
-    return Component.Component(self)
+    return WebComponents.Component(self)
 
   def html(self):
     """

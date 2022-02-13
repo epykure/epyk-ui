@@ -76,7 +76,7 @@ class JqueryVectorMap(Html.Html):
     """
     if self._js is None:
       self._js = JsQueryVectorMap.JQVMap(
-        self, js_code=JsQuery.decorate_var(self.htmlCode, convert_var=False), report=self.page)
+        component=self, js_code=JsQuery.decorate_var(self.htmlCode, convert_var=False), page=self.page)
     return self._js
 
   @property

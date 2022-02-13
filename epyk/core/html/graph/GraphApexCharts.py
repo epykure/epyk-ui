@@ -13,7 +13,7 @@ class ApexActivePoints:
 
   def __init__(self, chart_id: str, i: int, page: primitives.PageModel):
     self.chartId = chart_id
-    self._report = page
+    self.page = page
     self.num = i or self.index
 
   @property

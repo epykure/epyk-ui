@@ -21,8 +21,7 @@ class Effects:
     """
     self.page, self.component = page, component
     if self.attrs is None:
-      raise ValueError("attrs property needs to be defined in a child class! ")
-
+      self.attrs = {}
     if ovrs_attrs is not None:
       self.attrs = dict(self.attrs)
       self.attrs.update(ovrs_attrs)

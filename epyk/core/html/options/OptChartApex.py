@@ -1006,7 +1006,7 @@ class OptionTotal(Options):
 class OptionFormatters:
   def __init__(self, options, name):
     self.__option = options
-    self.component = options.component
+    self.component, self.page = options.component, options.page
     self.__name = name
 
   @packageImport("accounting")

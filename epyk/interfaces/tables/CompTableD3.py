@@ -28,9 +28,8 @@ class D3:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
-    table = self.page.ui.div(width=width, height=height, html_code=html_code, options=options,
-                                              profile=profile)
-    d3_table = table.js.d3.select("#%s" % table.htmlCode, varName='d3Table').rappend('table')
+    table = self.page.ui.div(width=width, height=height, html_code=html_code, options=options, profile=profile)
+    d3_table = table.js.d3.select("#%s" % table.htmlCode, js_code='d3Table').rappend('table')
     if header is None and records is not None:
       header = list(records[0].keys())
     table.onReady(

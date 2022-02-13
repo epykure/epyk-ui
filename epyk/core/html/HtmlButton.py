@@ -712,8 +712,8 @@ class Buttons(Html.Html):
 class ButtonMenuItem:
   name = 'Button Menu Item'
 
-  def __init__(self, page: primitives.PageModel, component: Html.Html, container: Html.Html):
-    self.component, self.page = component, page
+  def __init__(self, page: primitives.PageModel, component_id: str, container: Html.Html):
+    self.component_id, self.page = component_id, page
     self.container, self._js, self._events = container, None, []
 
   @property
@@ -728,7 +728,7 @@ class ButtonMenuItem:
     :rtype: JsComponents.Menu
     """
     if self._js is None:
-      self._js = JsComponents.Menu(self.container, js_code=self.component.htmlCode, page=self.page)
+      self._js = JsComponents.Menu(self.container, js_code=self.component_id, page=self.page)
     return self._js
 
   def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -749,9 +749,9 @@ class ButtonMenuItem:
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._events.append("%s.addEventListener('%s', function (event) {%s})" % (
-      source_event or self.component, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+      source_event or self.component_id, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     if on_ready:
-      self.page.body.onReady([self.component.dom.events.trigger(event)])
+      self.page.body.onReady([self.page.js.getElementById(self.component_id).dom.events.trigger(event)])
     return self.container
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,

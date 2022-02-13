@@ -61,7 +61,7 @@ class GeoLeaflet(Html.Html):
     :rtype: JsLeaflet.LeafLet
     """
     if self._js is None:
-      self._js = JsLeaflet.LeafLet(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsLeaflet.LeafLet(selector="window['%s']" % self.chartId, component=self, page=self.page)
     return self._js
 
   @property

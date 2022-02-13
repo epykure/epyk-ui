@@ -1815,7 +1815,7 @@ class Modal(Html.Html):
     """
     modal = self.page.js.getElementById(self.htmlCode)
     self.page.js.onReady(self.page.js.window.events.addClickListener(
-      self.page.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), subEvents=['event']))
+      self.page.js.if_('event.target == %s' % modal, modal.css({'display': 'none'})), sub_events=['event']))
 
   def __add__(self, component: Html.Html):
     """ Add items to a container """

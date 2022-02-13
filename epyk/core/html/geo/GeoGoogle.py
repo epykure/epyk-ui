@@ -43,7 +43,7 @@ class ChartGeoGoogle(Html.Html):
     :rtype: JsGoogleAPI.GoogleMapsAPI
     """
     if self._js is None:
-      self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.chartId, src=self)
+      self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.chartId, component=self, page=self.page)
     return self._js
 
   @property

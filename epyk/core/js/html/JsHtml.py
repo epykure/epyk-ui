@@ -752,7 +752,7 @@ class JsHtml(JsNodeDom.JsDoms):
     js_funcs = []
     for i, h in enumerate(components):
       h.options.managed = False
-      js_funcs.append(self.page.js.objects.new(str(h), isPyData=True, varName="obj_%s" % i))
+      js_funcs.append(self.page.js.objects.new(str(h), is_py_data=True, js_code="obj_%s" % i))
       js_funcs.append(self.innerHTML(self.page.js.objects.get("obj_%s" % i), append=append).r)
     return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
@@ -1431,13 +1431,13 @@ class JsHtmlNumeric(JsHtmlRich):
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
     return JsUtils.jsConvertFncs([
-      self.page.js.objects.number(self.content.unformat(), varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.objects.number(self.content.unformat(), js_code="%s_counter" % self.htmlCode, set_var=True),
       self.page.js.window.setInterval([
         self.page.js.if_(
           self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
             self.page.js.objects.number(
               self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-              varName="window.%s_counter" % self.htmlCode, setVar=True),
+              js_code="window.%s_counter" % self.htmlCode, set_var=True),
             self.component.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
           ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)

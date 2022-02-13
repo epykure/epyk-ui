@@ -447,14 +447,17 @@ class Network:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
+    options = options or {}
     mapped_file = {
       "excel": Defaults_css.get_icon("excel"), 'pdf': Defaults_css.get_icon("pdf"), 'code':
       Defaults_css.get_icon("code"), 'csv': Defaults_css.get_icon("csv"), 'word': Defaults_css.get_icon("word")}
     extension = name.split(".")[-1]
     if extension in mapped_file:
-      icon = mapped_file[extension]
+      icon = mapped_file[extension]["icon"]
+      options["icon_family"] = mapped_file[extension]["icon_family"]
     if icon is None:
-      icon = Defaults_css.get_icon("upload")
+      icon = Defaults_css.get_icon("upload")["icon"]
+      options["icon_family"] = Defaults_css.get_icon("upload")["icon_family"]
     file = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})

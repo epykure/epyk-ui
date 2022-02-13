@@ -148,15 +148,16 @@ class Label(Html.Html):
           res.append(self.page.py.markdown.all(self.val))
         else:
           res.append(str(v))
-    return '<label %s>%s</label>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(res), self.helper)
+    return '<label %s>%s</label>%s' % (
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(res), self.helper)
 
 
 class Span(Html.Html):
   name = 'Span'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, page: primitives.PageModel, text="", color=None, align=None, width=None, height=None, html_code=None, tooltip=None,
-               options=None, profile=None):
+  def __init__(self, page: primitives.PageModel, text="", color=None, align=None, width=None,
+               height=None, html_code=None, tooltip=None, options=None, profile=None):
     super(Span, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
     self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block',
@@ -454,8 +455,8 @@ class Text(Html.Html):
     value = self.val
     self.val = ""
     self.page.body.onReady([
-      self.page.js.objects.string(value, varName="%s_writer" % self.htmlCode, setVar=True),
-      self.page.js.objects.number(0, varName="%s_pos" % self.htmlCode, setVar=True),
+      self.page.js.objects.string(value, js_code="%s_writer" % self.htmlCode, set_var=True),
+      self.page.js.objects.number(0, js_code="%s_pos" % self.htmlCode, set_var=True),
       self.build(""),
       self.page.js.window.setInterval([
         self.page.js.if_(
@@ -464,7 +465,7 @@ class Text(Html.Html):
             "window.%s_writer" % self.htmlCode).length, [
             self.page.js.objects.number(
               self.page.js.objects.number.get(
-                "window.%s_pos" % self.htmlCode) + 1, varName="window.%s_pos" % self.htmlCode, setVar=True),
+                "window.%s_pos" % self.htmlCode) + 1, js_code="window.%s_pos" % self.htmlCode, set_var=True),
             self.dom.append(
               self.page.js.objects.string.get(
                 "window.%s_writer" % self.htmlCode).charAt(
@@ -891,13 +892,13 @@ class Numeric(Html.Html):
     :param int timer: Integer. the append of the increase in millisecond
     """
     self.page.body.onReady([
-      self.page.js.objects.number(self.val, varName="%s_counter" % self.htmlCode, setVar=True),
+      self.page.js.objects.number(self.val, js_code="%s_counter" % self.htmlCode, set_var=True),
       self.page.js.window.setInterval([
         self.page.js.if_(
           self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
             self.page.js.objects.number(
               self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-              varName="window.%s_counter" % self.htmlCode, setVar=True),
+              js_code="window.%s_counter" % self.htmlCode, set_var=True),
             self.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
           ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
       ], "%s_interval" % self.htmlCode, timer)
@@ -943,7 +944,7 @@ class Numeric(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s><font style='vertical-align:middle;height:100%%;padding:0;margin:0;display:inline-block'>%s</font>%s</div>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, self.helper)
+    return "<div %s><font style='vertical-align:middle;height:100%%;padding:0;margin:0;display:inline-block'>%s</font>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.helper)
 
 
 class Highlights(Html.Html):
@@ -951,7 +952,8 @@ class Highlights(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptText.OptionsHighlights
 
-  def __init__(self, page: primitives.PageModel, text, title, icon, type, color, width, height, html_code, helper, options, profile):
+  def __init__(self, page: primitives.PageModel, text, title, icon, type, color, width, height, html_code,
+               helper, options, profile):
     super(Highlights, self).__init__(page, text, css_attrs={"width": width, "height": height},
                                      html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)

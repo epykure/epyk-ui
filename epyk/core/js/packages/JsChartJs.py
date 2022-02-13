@@ -338,7 +338,8 @@ class ChartJs(JsPackage):
     -----------
 
     """
-    return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {'htmlCode': self.src.htmlCode, "chart": self.varName}, isPyData=False)
+    return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {
+      'htmlCode': self.component.htmlCode, "chart": self.varName}, is_py_data=False)
 
   def update(self, config: Union[dict, primitives.JsDataModel] = None):
     """

@@ -7,9 +7,9 @@ from epyk.core.html import Html
 class SVG(Html.Html):
   name = 'SVG'
 
-  def __init__(self, report, width, height, html_code=None, options=None, profile=None):
+  def __init__(self, page, width, height, html_code=None, options=None, profile=None):
     super(SVG, self).__init__(
-      report, "", html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
+      page, "", html_code=html_code, options=options, profile=profile, css_attrs={"width": width, "height": height})
     self.origine = None
     if width is not None:
       self.set_attrs({"viewBox": "0 0 %s %s" % (width[0], height[0]), "version": '1.1',
@@ -58,7 +58,7 @@ class SVG(Html.Html):
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
     """
-    self.html_objs.append(Defs(self._report))
+    self.html_objs.append(Defs(self.page))
     return self.html_objs[-1]
 
   def text(self, text, x, y, fill=None):
@@ -83,8 +83,8 @@ class SVG(Html.Html):
 
     :rtype: Text
     """
-    fill = fill or self._report.theme.greys[-1]
-    self.html_objs.append(Text(self._report, text, x, y, fill=fill))
+    fill = fill or self.page.theme.greys[-1]
+    self.html_objs.append(Text(self.page, text, x, y, fill=fill))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -112,7 +112,7 @@ class SVG(Html.Html):
 
     :rtype: Rectangle
     """
-    self.html_objs.append(Rectangle(self._report, x, y, width, height, fill, rx, ry))
+    self.html_objs.append(Rectangle(self.page, x, y, width, height, fill, rx, ry))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -139,7 +139,7 @@ class SVG(Html.Html):
 
     :rtype: Line
     """
-    line = Line(self._report, x1, y1, x2, y2)
+    line = Line(self.page, x1, y1, x2, y2)
     line.options.managed = False
     self.html_objs.append(line)
     if stroke is not None:
@@ -169,7 +169,7 @@ class SVG(Html.Html):
 
     :rtype: Circle
     """
-    circle = Circle(self._report, x, y, r, fill)
+    circle = Circle(self.page, x, y, r, fill)
     circle.options.managed = False
     self.html_objs.append(circle)
     if stroke is not None:
@@ -197,7 +197,7 @@ class SVG(Html.Html):
 
     :rtype: Ellipse
     """
-    self.html_objs.append(Ellipse(self._report, cx, cy, rx, ry))
+    self.html_objs.append(Ellipse(self.page, cx, cy, rx, ry))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -220,7 +220,7 @@ class SVG(Html.Html):
 
     :rtype: Polygone
     """
-    self.html_objs.append(Polygone(self._report, points, fill))
+    self.html_objs.append(Polygone(self.page, points, fill))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -244,7 +244,7 @@ class SVG(Html.Html):
 
     :rtype: Polyline
     """
-    polygone = Polyline(self._report, points, height=None, width=None, fill=fill, options={})
+    polygone = Polyline(self.page, points, height=None, width=None, fill=fill, options={})
     polygone.options.managed = False
     self.html_objs.append(polygone)
     return polygone
@@ -269,7 +269,7 @@ class SVG(Html.Html):
 
     :rtpye: Polyline
     """
-    self.html_objs.append(Polyline(self._report, points, None, None, fill, options or {}))
+    self.html_objs.append(Polyline(self.page, points, None, None, fill, options or {}))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -293,7 +293,7 @@ class SVG(Html.Html):
 
     :rtype: G
     """
-    self.html_objs.append(G(self._report, fill, stroke, stroke_width))
+    self.html_objs.append(G(self.page, fill, stroke, stroke_width))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
@@ -322,7 +322,7 @@ class SVG(Html.Html):
     if from_origin:
       x += self.origine[0]
       y += self.origine[1]
-    path = Path(self._report, x, y, fill, self.origine, bespoke_path, stroke=stroke)
+    path = Path(self.page, x, y, fill, self.origine, bespoke_path, stroke=stroke)
     path.options.managed = False
     self.html_objs.append(path)
     return self.html_objs[-1]
@@ -349,18 +349,18 @@ class SVG(Html.Html):
 
     :rtype: ForeignObject
     """
-    self.html_objs.append(ForeignObject(self._report, x, y, width, height))
+    self.html_objs.append(ForeignObject(self.page, x, y, width, height))
     self.html_objs[-1].options.managed = False
     return self.html_objs[-1]
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<svg %s>%s</svg>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<svg %s>%s</svg>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class LinearGradient(Html.Html):
-  def __init__(self, report, html_code, x1, y1, x2, y2, gradient_transform):
-    super(LinearGradient, self).__init__(report, "", html_code=html_code)
+  def __init__(self, page, html_code, x1, y1, x2, y2, gradient_transform):
+    super(LinearGradient, self).__init__(page, "", html_code=html_code)
     self.set_attrs({'gradientTransform': gradient_transform, "x1": x1, "y1": y1, "x2": x2, "y2": y2})
     self.items = []
 
@@ -391,14 +391,14 @@ class LinearGradient(Html.Html):
 
   def __str__(self):
     return "<linearGradient %s>%s</linearGradient>" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(self.items))
 
 
 class RadialGradient(Html.Html):
   name = "SVG RadialGradient"
 
-  def __init__(self, report, html_code):
-    super(RadialGradient, self).__init__(report, "", html_code=html_code)
+  def __init__(self, page, html_code):
+    super(RadialGradient, self).__init__(page, "", html_code=html_code)
     self.items = []
 
   @property
@@ -428,13 +428,13 @@ class RadialGradient(Html.Html):
 
   def __str__(self):
     return "<radialGradient %s>%s</radialGradient>" % (
-      self.get_attrs(pyClassNames=self.style.get_classes()), "".join(self.items))
+      self.get_attrs(css_class_names=self.style.get_classes()), "".join(self.items))
 
 
 class Marker(SVG):
 
-  def __init__(self, report, html_code, viewBox, refX, refY):
-    super(Marker, self).__init__(report, None, None, html_code=html_code)
+  def __init__(self, page, html_code, viewBox, refX, refY):
+    super(Marker, self).__init__(page, None, None, html_code=html_code)
     self.set_attrs({'id': html_code, "viewBox": viewBox, "refX": refX, "refY": refY})
     self.html_objs = []
 
@@ -508,14 +508,14 @@ class Marker(SVG):
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<marker %s>%s</marker>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<marker %s>%s</marker>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Defs(Html.Html):
   name = 'SVG Defs'
 
-  def __init__(self, report):
-    super(Defs, self).__init__(report, "")
+  def __init__(self, page):
+    super(Defs, self).__init__(page, "")
     self.html_objs = []
 
   def linearGradient(self, html_code, x1="0%", y1="0%", x2="100%", y2="0%", gradient_transform=None):
@@ -540,7 +540,7 @@ class Defs(Html.Html):
 
     :rtype: LinearGradient
     """
-    self.html_objs.append(LinearGradient(self._report, html_code, x1, y1, x2, y2, gradient_transform))
+    self.html_objs.append(LinearGradient(self.page, html_code, x1, y1, x2, y2, gradient_transform))
     return self.html_objs[-1]
 
   def radialGradient(self, html_code):
@@ -560,7 +560,7 @@ class Defs(Html.Html):
 
     :rtype: radialGradient
     """
-    self.html_objs.append(RadialGradient(self._report, html_code))
+    self.html_objs.append(RadialGradient(self.page, html_code))
     return self.html_objs[-1]
 
   def marker(self, html_code, viewBox, refX, refY):
@@ -583,17 +583,17 @@ class Defs(Html.Html):
 
     :rtype: Marker
     """
-    self.html_objs.append(Marker(self._report, html_code, viewBox, refX, refY))
+    self.html_objs.append(Marker(self.page, html_code, viewBox, refX, refY))
     return self.html_objs[-1]
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<defs %s>%s</defs>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<defs %s>%s</defs>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class ForeignObject(SVG):
-  def __init__(self, report, x, y, width, height):
-    super(ForeignObject, self).__init__(report, None, None)
+  def __init__(self, page, x, y, width, height):
+    super(ForeignObject, self).__init__(page, None, None)
     self.set_attrs({"x": x, "y": y, "width": width, "height": height})
     self.html_objs = []
 
@@ -614,18 +614,18 @@ class ForeignObject(SVG):
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<foreignObject %s>%s</foreignObject>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<foreignObject %s>%s</foreignObject>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class G(SVG):
-  def __init__(self, report, fill, stroke, stroke_width):
-    super(G, self).__init__(report, None, None)
+  def __init__(self, page, fill, stroke, stroke_width):
+    super(G, self).__init__(page, None, None)
     self.set_attrs({"fill": fill, "stroke": stroke, "stroke-width": stroke_width})
     self.html_objs = []
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<g %s>%s</g>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<g %s>%s</g>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class SVGItem(Html.Html):
@@ -658,45 +658,45 @@ class SVGItem(Html.Html):
     :param repeat_count:
     """
     self.html_objs.append(AnimateTransform(
-      self._report, attribute_name, type, from_pos, to_pos, duration, repeat_count))
+      self.page, attribute_name, type, from_pos, to_pos, duration, repeat_count))
     return self
 
 
 class Polygone(SVGItem):
   name = 'SVG Polygone'
 
-  def __init__(self, report, points, fill):
-    super(Polygone, self).__init__(report, points)
+  def __init__(self, page, points, fill):
+    super(Polygone, self).__init__(page, points)
     self.set_attrs(({"points": " ".join(["%s,%s" % (x, y) for x, y in self.val]), "fill": fill}))
-    self.css({'stroke': report.theme.greys[-1], 'stroke-width': 1})
+    self.css({'stroke': page.theme.greys[-1], 'stroke-width': 1})
     self.html_objs = []
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<polygon %s>%s</polygon>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<polygon %s>%s</polygon>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Ellipse(SVGItem):
   name = 'SVG Epplipse'
 
-  def __init__(self, report, cx, cy, rx, ry):
-    super(Ellipse, self).__init__(report, "")
+  def __init__(self, page, cx, cy, rx, ry):
+    super(Ellipse, self).__init__(page, "")
     self.set_attrs({"cx": cx, "cy": cy, "rx": rx, "ry": ry})
-    self.css({'stroke': report.theme.success[1], 'stroke-width': 1, 'fill': 'none'})
+    self.css({'stroke': page.theme.success[1], 'stroke-width': 1, 'fill': 'none'})
     self.html_objs = []
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<ellipse %s>%s</ellipse>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<ellipse %s>%s</ellipse>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Line(SVGItem):
   name = 'SVG Line'
 
-  def __init__(self, report, x1, y1, x2, y2):
-    super(Line, self).__init__(report, "")
+  def __init__(self, page, x1, y1, x2, y2):
+    super(Line, self).__init__(page, "")
     self.set_attrs({"x1": x1, "y1": y1, "x2": x2, "y2": y2})
-    self.css({"stroke": report.theme.greys[-1], "stroke-width": 1})
+    self.css({"stroke": page.theme.greys[-1], "stroke-width": 1})
     self.html_objs = []
 
   def markers(self, marker_code):
@@ -748,20 +748,20 @@ class Line(SVGItem):
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<line %s>%s</line>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<line %s>%s</line>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Polyline(SVGItem):
   name = 'SVG Polyline'
 
-  def __init__(self, report, points, height, width, fill, options):
-    super(Polyline, self).__init__(report, points, css_attrs={"width": width, "height": height})
+  def __init__(self, page, points, height, width, fill, options):
+    super(Polyline, self).__init__(page, points, css_attrs={"width": width, "height": height})
     self.set_attrs({"fill": fill, "points": " ".join(["%s,%s" % (x, y) for x, y in self.val])})
     self.html_objs = []
     if options is not None:
       self._jsStyles.update(options)
     self.css({"display": 'inline-block', "fill": options.get('fill', ''),
-              'stroke': options.get('stroke', report.theme.success[1]), 'stroke-width': options.get('stroke-width', 1)})
+              'stroke': options.get('stroke', page.theme.success[1]), 'stroke-width': options.get('stroke-width', 1)})
 
   def markers(self, marker_code):
     """
@@ -810,21 +810,21 @@ class Polyline(SVGItem):
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<polyline %s>%s</polyline>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<polyline %s>%s</polyline>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Rectangle(SVGItem):
   name = 'SVG Rectangle'
 
-  def __init__(self, report, x, y, width, height, fill, rx, ry):
-    super(Rectangle, self).__init__(report, "", css_attrs={"width": width, "height": height})
+  def __init__(self, page, x, y, width, height, fill, rx, ry):
+    super(Rectangle, self).__init__(page, "", css_attrs={"width": width, "height": height})
     self.set_attrs({"x": x, "y": y, "fill": fill, "rx": rx, "ry": ry})
     self.css({"display": 'inline-block'})
     self.html_objs = []
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<rect %s>%s</rect>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<rect %s>%s</rect>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Circle(SVGItem):
@@ -837,14 +837,14 @@ class Circle(SVGItem):
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<circle %s>%s</circle>" % (self.get_attrs(pyClassNames=self.style.get_classes()), str_c)
+    return "<circle %s>%s</circle>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
 
 
 class Text(SVGItem):
   name = 'SVG Text'
 
-  def __init__(self, report, text, x, y, fill):
-    super(Text, self).__init__(report, text)
+  def __init__(self, page, text, x, y, fill):
+    super(Text, self).__init__(page, text)
     self.set_attrs({"x": x, "y": y, 'fill': fill})
     self.html_objs = []
 
@@ -867,32 +867,32 @@ class Text(SVGItem):
 
     :rtype: TSpan
     """
-    self.html_objs.append(TSpan(self._report, text, x, y))
+    self.html_objs.append(TSpan(self.page, text, x, y))
     return self.html_objs[-1]
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<text %s>%s%s</text>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
+    return "<text %s>%s%s</text>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
 
 
 class TSpan(SVGItem):
   name = 'SVG TSpan'
 
-  def __init__(self, report, text, x, y):
-    super(TSpan, self).__init__(report, text)
+  def __init__(self, page, text, x, y):
+    super(TSpan, self).__init__(page, text)
     self.set_attrs({"x": x, "y": y, 'fill': 'black'})
     self.html_objs = []
 
   def __str__(self):
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<tspan %s>%s%s</tspan>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
+    return "<tspan %s>%s%s</tspan>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
 
 
 class Path(SVGItem):
   name = 'SVG Path'
 
-  def __init__(self, report, x, y, fill, origin, bespoke_path, stroke=None, options=None, profile=None):
-    super(Path, self).__init__(report, "", options=options, profile=profile)
+  def __init__(self, page, x, y, fill, origin, bespoke_path, stroke=None, options=None, profile=None):
+    super(Path, self).__init__(page, "", options=options, profile=profile)
     self.set_attrs({'fill': fill})
     if stroke is not None:
       self.set_attrs({"stroke": stroke, "stroke-width": 1})
@@ -1084,19 +1084,19 @@ class Path(SVGItem):
   def __str__(self):
     self.set_attrs(name="d", value="".join(self.__path))
     str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-    return "<path %s>%s%s</path>" % (self.get_attrs(pyClassNames=self.style.get_classes()), self.val, str_c)
+    return "<path %s>%s%s</path>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
 
 
 class AnimateTransform(Html.Html):
   name = "SVG AnimateTransform"
 
-  def __init__(self, report, attribute_name, type,  from_pos, to_pos, duration, repeat_count):
-    super(AnimateTransform, self).__init__(report, "")
+  def __init__(self, page, attribute_name, type, from_pos, to_pos, duration, repeat_count):
+    super(AnimateTransform, self).__init__(page, "")
     self.set_attrs({"attributeName": attribute_name, "type": type, "from": from_pos, "to": to_pos,
                     "dur": "%ss" % duration, "repeatCount": repeat_count})
 
   def __str__(self):
-    return "<animateTransform %s />" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<animateTransform %s />" % self.get_attrs(css_class_names=self.style.get_classes())
 
 
 # https://stackoverflow.com/questions/6725288/svg-text-inside-rect
@@ -1106,10 +1106,10 @@ class Animate(Html.Html):
   name = "SVG Animate"
   # https://css-tricks.com/guide-svg-animations-smil/
 
-  def __init__(self, report, attribute_name, type, from_pos, to_pos, duration, repeat_count):
-    super(Animate, self).__init__(report, "")
+  def __init__(self, page, attribute_name, type, from_pos, to_pos, duration, repeat_count):
+    super(Animate, self).__init__(page, "")
     self.set_attrs({"attributeName": attribute_name, "type": type, "from": from_pos, "to": to_pos,
                     "dur": "%ss" % duration, "repeatCount": repeat_count})
 
   def __str__(self):
-    return "<animateTransform %s />" % self.get_attrs(pyClassNames=self.style.get_classes())
+    return "<animateTransform %s />" % self.get_attrs(css_class_names=self.style.get_classes())
