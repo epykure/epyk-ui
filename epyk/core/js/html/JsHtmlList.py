@@ -637,7 +637,7 @@ class JsItem(JsHtml.JsHtmlRich):
     if not hasattr(menu, 'source'):
       menu = self.component.page.ui.menus.contextual(menu)
     for i, item in enumerate(menu):
-      menu_funcs = ['''
+      funcs = ['''
         var data = {"action": event.srcElement.innerText};
         if(window.context_menu_source.getAttribute("name")){
           data["source"] = window.context_menu_source.innerHTML} 
@@ -646,19 +646,19 @@ class JsItem(JsHtml.JsHtmlRich):
       if menu_funcs is not None:
         if not isinstance(menu_funcs[i], list):
           menu_funcs[i] = [menu_funcs[i]]
-        menu_funcs.extend(menu_funcs[i])
-      menu_funcs.append(menu.dom.hide())
-      item.click(menu_funcs)
+        funcs.extend(menu_funcs[i])
+      funcs.append(menu.dom.hide())
+      item.click(funcs)
     self.context_menu = menu
     menu.source = self
-    new_js_fncs = (js_funcs or []) + [self.page.js.objects.mouseEvent.stopPropagation(), self.context_menu.dom.css(
+    new_js_funcs = (js_funcs or []) + [self.page.js.objects.mouseEvent.stopPropagation(), self.context_menu.dom.css(
             {"display": 'block', 'left': self.page.js.objects.mouseEvent.clientX + "'px'",
              'top': self.page.js.objects.mouseEvent.clientY + "'px'"}),
           self.page.js.objects.mouseEvent.preventDefault()]
     return JsObjects.JsVoid('''
       %s.lastChild.addEventListener("contextmenu", function(event){
         window.context_menu_source = this; %s});
-      ''' % (self.varName, JsUtils.jsConvertFncs(new_js_fncs, toStr=True, profile=profile)))
+      ''' % (self.varName, JsUtils.jsConvertFncs(new_js_funcs, toStr=True, profile=profile)))
 
   def clear(self):
     """
