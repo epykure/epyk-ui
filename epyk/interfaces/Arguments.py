@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Any
 
-def size(value, unit="%"):
+
+def size(value: Any, unit: str = "%"):
   """
   Description:
   ------------

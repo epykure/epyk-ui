@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 from epyk.core.data import tree as data_tree
 from epyk.interfaces import Arguments
@@ -11,8 +12,8 @@ class Trees:
   def __init__(self, ui):
     self.page = ui.page
 
-  def tree(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile=None):
+  def tree(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
+           html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -46,8 +47,8 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def inputs(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
-             profile=None):
+  def inputs(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
+             html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -75,8 +76,8 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def menu(self, data=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile=None):
+  def menu(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
+           html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -105,8 +106,9 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def dropdown(self, record=None, text="", width=(100, "%"), height=(None, 'px'), html_code=None, helper=None,
-               options=None, profile=None):
+  def dropdown(self, record=None, text: str = "", width: Union[tuple, int] = (100, "%"),
+               height: Union[tuple, int] = (None, 'px'), html_code: str = None, helper: str = None,
+               options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -147,8 +149,8 @@ class Trees:
     html.Html.set_component_skin(html_d)
     return html_d
 
-  def folder(self, folder=None, width=(100, "%"), height=(None, 'px'), html_code=None, helper=None, options=None,
-             profile=None):
+  def folder(self, folder: str = None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
+             html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     options = options or {}
     if folder is not None:
       data = data_tree.folders(

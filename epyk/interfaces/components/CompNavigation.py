@@ -15,8 +15,9 @@ class Navigation:
   def __init__(self, ui):
     self.page = ui.page
 
-  def up(self, icon="fas fa-arrow-up", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'), height=(25, 'px'),
-         options=None, profile=False):
+  def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom=None, tooltip: str = None,
+         width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
+         options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------

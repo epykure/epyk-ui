@@ -736,7 +736,7 @@ class Buttons:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     component = html.HtmlButton.Button(self.page, text, 'fas fa-phone', width, height, html_code=html_code,
-                                         tooltip=tooltip, profile=profile, options=options)
+                                       tooltip=tooltip, profile=profile, options=options)
     self.__align(component, align)
     html.Html.set_component_skin(component)
     return component
@@ -1259,7 +1259,7 @@ class Buttons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     component = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
-                      profile=profile, options=options, align=align)
+                            profile=profile, options=options, align=align)
     component.style.css.background = self.page.theme.danger[1]
     component.style.css.border_color = self.page.theme.danger[1]
     component.style.css.padding = "0 10px"

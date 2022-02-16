@@ -4,6 +4,8 @@
 import os
 import logging
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
@@ -14,7 +16,8 @@ class Network:
   def __init__(self, ui):
     self.page = ui.page
 
-  def comments(self, html_code, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
+  def comments(self, html_code, record=None, width: Union[tuple, int] = (100, '%'),
+               height: Union[tuple, int] = (200, 'px'), profile: Union[dict, bool] = None, options: dict = None):
     """
     Description:
     ------------
@@ -53,7 +56,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def chat(self, html_code, record=None, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
+  def chat(self, html_code, record=None, width: Union[tuple, int] = (100, '%'),
+           height: Union[tuple, int] = (200, 'px'), profile=None, options=None):
     """
     Description:
     ------------
@@ -118,7 +122,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def alert(self, type, value="", width=(320, 'px'), height=(None, None), html_code=None, options=None, profile=False):
+  def alert(self, type, value="", width: Union[tuple, int] = (320, 'px'), height: Union[tuple, int] = (None, None),
+            html_code: str = None, options: dict = None, profile=False):
     """
     Description:
     ------------
@@ -170,7 +175,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def danger(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
+  def danger(self, value="", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
+             height: Union[tuple, int] = (None, None), options=None, profile=False):
     """
     Description:
     ------------
@@ -207,7 +213,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def info(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
+  def info(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
+           height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -240,7 +247,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def success(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
+  def success(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
+              height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -273,7 +281,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def warning(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
+  def warning(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
+              height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -306,7 +315,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def news(self, value="", html_code=None, width=(320, 'px'), height=(None, None), options=None, profile=False):
+  def news(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
+           height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -343,7 +353,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def room(self, img, html_code=None, width=(60, 'px'), height=(60, 'px'), options=None, profile=False):
+  def room(self, img: str, html_code: str = None, width: Union[tuple, int] = (60, 'px'),
+           height: Union[tuple, int] = (60, 'px'), options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -369,8 +380,9 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def dropfile(self, placeholder='', delimiter="TAB", width=(100, '%'), height=('auto', ''), tooltip=None,
-               html_code=None, options=None, profile=None):
+  def dropfile(self, placeholder: str = '', delimiter: str = "TAB", width: Union[tuple, int] = (100, '%'),
+               height: Union[tuple, int] = ('auto', ''), tooltip: str = None,
+               html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -407,7 +419,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def upload(self, icon=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None, profile=None):
+  def upload(self, icon: str = None, width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
+             html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -428,8 +441,9 @@ class Network:
     html.Html.set_component_skin(file)
     return file
 
-  def download(self, name, icon=None, path=None, width=(25, 'px'), height=(25, 'px'), html_code=None, options=None,
-               profile=None):
+  def download(self, name: str, icon: str = None, path: str = None, width: Union[tuple, int] = (25, 'px'),
+               height: Union[tuple, int] = (25, 'px'), html_code: str = None, options: dict = None,
+               profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -474,7 +488,8 @@ class Network:
     html.Html.set_component_skin(file)
     return file
 
-  def assistant(self, image, name="", path=None, html_code=None, size=(50, 'px'), profile=None, options=None):
+  def assistant(self, image, name: str = "", path: str = None, html_code: str = None,
+                size: Union[tuple, int] = (50, 'px'), profile: Union[dict, bool] = None, options: dict = None):
     """
     Description:
     ------------

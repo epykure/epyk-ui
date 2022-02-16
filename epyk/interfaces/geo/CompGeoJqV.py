@@ -1,8 +1,10 @@
 
 import logging
 
+from typing import Union
 from epyk.core.html import geo
 from epyk.core.html.geo import mappings
+from epyk.core.html import Defaults_html
 
 
 class JqueryVertorMap:
@@ -11,7 +13,7 @@ class JqueryVertorMap:
     self.page = ui.page
     self.chartFamily = "JqV"
 
-  def add_map(self, name, continent=False):
+  def add_map(self, name: str, continent: bool = False):
     """
     Description:
     ------------
@@ -36,8 +38,9 @@ class JqueryVertorMap:
          'path': 'jqvmap/%(version)s/maps/continents/' if continent else 'jqvmap/%(version)s/maps/'}]})
     self.page.jsImports.add("jqvm-%s" % name)
 
-  def asia(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def asia(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           options: dict = None, width: Union[int, tuple] = (100, "%"),
+           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -84,8 +87,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def australia(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def australia(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+                options: dict = None, width: Union[int, tuple] = (100, "%"),
+                height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -132,8 +136,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def north_america(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def north_america(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+                    options: dict = None, width: Union[int, tuple] = (100, "%"),
+                    height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -180,8 +185,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def south_america(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def south_america(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+                    options: dict = None, width: Union[int, tuple] = (100, "%"),
+                    height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -227,8 +233,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def africa(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def africa(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             options: dict = None, width: Union[int, tuple] = (100, "%"),
+             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -275,8 +282,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def france(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def france(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             options: dict = None, width: Union[int, tuple] = (100, "%"),
+             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -323,8 +331,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def germany(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def germany(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              options: dict = None, width: Union[int, tuple] = (100, "%"),
+              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -371,8 +380,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def europe(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def europe(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             options: dict = None, width: Union[int, tuple] = (100, "%"),
+             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -419,8 +429,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def world(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def world(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            options: dict = None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -466,8 +477,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def usa(self, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def usa(self, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          options: dict = None, width: Union[int, tuple] = (100, "%"),
+          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -511,8 +523,9 @@ class JqueryVertorMap:
     chart.options.values = data
     return chart
 
-  def map(self, name, record=None, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def map(self, name: str, record=None, y_column: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          options: dict = None, width: Union[int, tuple] = (100, "%"),
+          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------

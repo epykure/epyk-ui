@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 
 from epyk.core import html
 from epyk.interfaces import Arguments
@@ -12,7 +12,7 @@ class Menus:
   def __init__(self, ui):
     self.page = ui.page
 
-  def top(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+  def top(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (30, 'px'), html_code: str = None,
           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -42,7 +42,7 @@ class Menus:
     ----------
     :param data:
     :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: String. Optional. A tooltip helper
@@ -100,7 +100,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def bottom(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+  def bottom(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+             height: Union[tuple, int] = (30, 'px'), html_code: str = None,
              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -187,7 +188,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def menu(self, data=None, color: str = None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
+  def menu(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+           height: Union[tuple, int] = (None, 'px'), html_code: str = None,
            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -262,8 +264,9 @@ class Menus:
     html.Html.set_component_skin(col)
     return col
 
-  def bar(self, data=None, align: str = "left", position: str = "top", color=None, width=(350, "px"),
-          height=(None, 'px'), options: dict = None, profile: Union[bool, dict] = None):
+  def bar(self, data=None, align: str = "left", position: str = "top", color: str = None,
+          width: Union[tuple, int] = (350, "px"), height: Union[tuple, int] = (None, 'px'), options: dict = None,
+          profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -337,8 +340,8 @@ class Menus:
     html.Html.set_component_skin(row)
     return row
 
-  def icons(self, data, width=(100, '%'), height=(None, 'px'), align: str = "center", options: dict = None,
-            profile: Union[bool, dict] = False):
+  def icons(self, data, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
+            options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -367,7 +370,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def buttons(self, data=None, color: str = None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
+  def buttons(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+              height: Union[tuple, int] = (None, 'px'), html_code: str = None,
               helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -406,7 +410,8 @@ class Menus:
     html.Html.set_component_skin(component)
     return component
 
-  def images(self, data, path: str = None, width=(100, '%'), height=(None, 'px'), align: str = "center",
+  def images(self, data, path: str = None, width: Union[tuple, int] = (100, '%'),
+             height: Union[tuple, int] = (None, 'px'), align: str = "center",
              options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
@@ -451,7 +456,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def right(self, data=None, color: str = None, width=(100, "%"), height=(30, 'px'), html_code: str = None,
+  def right(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+            height: Union[tuple, int] = (30, 'px'), html_code: str = None,
             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -522,7 +528,8 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def divisor(self, data, divider: bool = None, width=(100, '%'), height=(None, 'px'), options: dict = None,
+  def divisor(self, data, divider: bool = None, width: Union[tuple, int] = (100, '%'),
+              height: Union[tuple, int] = (None, 'px'), options: dict = None,
               profile: Union[bool, dict] = False):
     """
     Description:
@@ -565,7 +572,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def button(self, value, components, symbol: str = None, width=("auto", ''), height=(None, 'px'), options: dict = None,
+  def button(self, value, components: Union[html.Html.Html, List[html.Html.Html]], symbol: str = None,
+             width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'), options: dict = None,
              profile: Union[bool, dict] = False):
     """
     Description:
@@ -609,8 +617,8 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def toolbar(self, data, width=("auto", ''), height=(None, 'px'), options: dict = None,
-              profile: Union[bool, dict] = False):
+  def toolbar(self, data, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'),
+              options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:
     ------------
@@ -710,8 +718,8 @@ class Menus:
     html.Html.set_component_skin(html_pr)
     return html_pr
 
-  def contextual(self, record=None, width=(None, '%'), height=(None, 'px'), visible: bool = False,
-                 options: dict = None, profile: Union[bool, dict] = None):
+  def contextual(self, record=None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'),
+                 visible: bool = False, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -743,7 +751,8 @@ class Menus:
     html.Html.set_component_skin(html_menu)
     return html_menu
 
-  def pills(self, data, width=(100, '%'), height=(50, 'px'), html_code: str = None, helper: str = None,
+  def pills(self, data, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (50, 'px'),
+            html_code: str = None, helper: str = None,
             options: dict = None, profile: Union[bool, dict] = False):
     """
     Description:

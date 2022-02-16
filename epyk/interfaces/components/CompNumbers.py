@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 from epyk.core.html import graph
 
@@ -13,7 +14,8 @@ class Numbers:
   def __init__(self, ui):
     self.page = ui.page
 
-  def digits(self, text=None, color=None, align='center', width=None, height=None, html_code=None, tooltip=None,
+  def digits(self, text=None, color: str = None, align: str = 'center', width: Union[tuple, int] = None,
+             height=None, html_code=None, tooltip=None,
              options=None, profile=None):
     """
     Description:
@@ -67,8 +69,10 @@ class Numbers:
     html.Html.set_component_skin(html_label)
     return html_label
 
-  def number(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  def number(self, number: float = 0, title: str = None, label: str = None, icon: int = None, color: str = None,
+             tooltip: str = '', html_code: str = None, options: dict = None, helper: str = None,
+             width: Union[tuple, int] = (100, '%'), align: str = "center",
+             profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -109,8 +113,10 @@ class Numbers:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def percent(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
-              helper=None, width=(100, '%'), align="center", profile=None):
+  def percent(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
+              tooltip: str = '', html_code: str = None, options: str = None,
+              helper: str = None, width: Union[tuple, int] = (100, '%'), align: str = "center",
+              profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -147,8 +153,9 @@ class Numbers:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def pound(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
-            options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  def pound(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
+            tooltip: str = '', html_code: str = None, options: dict = None, helper: str = None,
+            width: Union[tuple, int] = (100, '%'), align: str = "center", profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -185,8 +192,9 @@ class Numbers:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def euro(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None, options=None,
-           helper=None, width=(100, '%'), align="center", profile=None):
+  def euro(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
+           tooltip: str = '', html_code: str = None,  options: dict = None, helper: str = None,
+           width: Union[tuple, int] = (100, '%'), align: str = "center", profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -223,8 +231,10 @@ class Numbers:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def dollar(self, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
-             options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  def dollar(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
+             tooltip: str = '', html_code: str = None, options: dict = None, helper: str = None,
+             width: Union[tuple, int] = (100, '%'), align: str = "center",
+             profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -261,8 +271,10 @@ class Numbers:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def money(self, symbol, number=0, title=None, label=None, icon=None, color=None, tooltip='', html_code=None,
-            options=None, helper=None, width=(100, '%'), align="center", profile=None):
+  def money(self, symbol: str, number: float = 0, title: str = None, label: str = None, icon: str = None,
+            color: str = None, tooltip: str = '', html_code: str = None,
+            options: dict = None, helper: str = None, width: Union[tuple, int] = (100, '%'),
+            align: str = "center", profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -294,14 +306,15 @@ class Numbers:
     :param align: String. The text-align property within this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    html_number = self.number(number, title, label, icon, color, tooltip, html_code, options, helper, width, align,
-                              profile)
+    html_number = self.number(
+      number, title, label, icon, color, tooltip, html_code, options, helper, width, align, profile)
     html_number.money(symbol, fmt="%v %s")
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def plotly(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"),
-             html_code=None):
+  def plotly(self, value, profile: Union[dict, bool] = None, options: dict = None,
+             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
+             html_code: str = None):
     """
     Description:
     ------------
@@ -329,8 +342,9 @@ class Numbers:
     html.Html.set_component_skin(ind)
     return ind
 
-  def plotly_with_delta(self, value, profile=None, options=None, width=(100, "%"),
-                        height=(330, "px"), html_code=None):
+  def plotly_with_delta(self, value, profile: Union[bool, dict] = None, options: dict = None,
+                        width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
+                        html_code: str = None):
     """
     Description:
     ------------
@@ -359,8 +373,9 @@ class Numbers:
     html.Html.set_component_skin(ind)
     return ind
 
-  def move(self, current, previous=None, components=None, title=None, align="center", width=(100, '%'),
-           height=(None, "px"), color=None, label=None, options=None, helper=None, profile=None):
+  def move(self, current, previous=None, components=None, title: str = None, align: str = "center",
+           width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), color: str = None,
+           label: str = None, options: dict = None, helper: str = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------

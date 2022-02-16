@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 
 
@@ -9,8 +10,9 @@ class Tabulators:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            options=None, profile=None):
+  def table(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -31,15 +33,6 @@ class Tabulators:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
-    #self.page.jsImports.add('tabulator-numbers')
-    #self.page.jsImports.add('tabulator-icons')
-    #self.page.jsImports.add('tabulator-inputs')
-    #self.page.jsImports.add('tabulator-drop')
-    #self.page.jsImports.add('tabulator-mutators-inputs')
-    #self.page.jsImports.add('editors-inputs')
-    #self.page.jsImports.add('editors-dates')
-    #self.page.jsImports.add('editors-selects')
-
     cols = cols or []
     rows = rows or []
     if records is not None and not cols and not rows:
@@ -59,8 +52,8 @@ class Tabulators:
       json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
       del table_options_dflts["json"]
 
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.Table(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
     table.options.layouts.fitColumns()
     for c in cols + rows:
@@ -69,8 +62,9 @@ class Tabulators:
       table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
     return table
 
-  def hierarchy(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-                options=None, profile=None):
+  def hierarchy(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -119,8 +113,9 @@ class Tabulators:
       'css': {"background": "white"}, "symbol": "", "format": "%v"}})
     return table
 
-  def multi(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            options=None, profile=None):
+  def multi(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -171,8 +166,8 @@ class Tabulators:
       json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
       del table_options_dflts["json"]
 
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.Table(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
     for c in rows + cols:
       table.add_column(c)
@@ -180,8 +175,9 @@ class Tabulators:
       table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
     return table
 
-  def trafficlights(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-                    options=None, profile=None):
+  def trafficlights(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                    height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                    options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -218,8 +214,8 @@ class Tabulators:
     if options is not None:
       table_options_dflts.update(options)
 
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.Table(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     for c in rows:
       table.add_column(c)
       table.get_column(c).exts.formatters.style(css={"background": self.page.theme.colors[0]})
@@ -238,8 +234,9 @@ class Tabulators:
        'red': self.page.theme.danger[1], 'orange': self.page.theme.warning[1]}})
     return table
 
-  def figures(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-              options=None, profile=None):
+  def figures(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+              height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+              options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -287,8 +284,8 @@ class Tabulators:
       json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
       del table_options_dflts["json"]
 
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.Table(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     table._json_config = json
     for c in rows:
       table.add_column(c)
@@ -304,8 +301,9 @@ class Tabulators:
       'css': {"background": "white"}, "symbol": "", "format": "%v"}})
     return table
 
-  def intensity(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-                options=None, profile=None):
+  def intensity(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -342,8 +340,8 @@ class Tabulators:
     if options is not None:
       table_options_dflts.update(options)
 
-    table = html_tables.HtmlTableTabulator.Table(self.page, records, width, height, html_code,
-                                                 table_options_dflts, profile)
+    table = html_tables.HtmlTableTabulator.Table(
+      self.page, records, width, height, html_code, table_options_dflts, profile)
     for c in rows:
       table.add_column(c)
       table.get_column(c).exts.formatters.style(css={"background": self.page.theme.colors[0]})

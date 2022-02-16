@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,7 +11,8 @@ class Steppers:
   def __init__(self, ui):
     self.page = ui.page
 
-  def stepper(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=False):
+  def stepper(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
+              color: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -48,7 +50,8 @@ class Steppers:
     html.Html.set_component_skin(st)
     return st
 
-  def arrow(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
+  def arrow(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
+            color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -71,7 +74,8 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def rectangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
+  def rectangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
+                color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -94,7 +98,8 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def triangle(self, records, width=("auto", ''), height=(70, 'px'), color=None, options=None, profile=None):
+  def triangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
+               color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -117,8 +122,9 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def vertical(self, records, shape='circle', width=("auto", ''), height=(70, 'px'), color=None, options=None,
-               profile=None):
+  def vertical(self, records, shape: str = 'circle', width: Union[tuple, int] = ("auto", ''),
+               height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+               profile: Union[dict, bool] = None):
     """
     Description:
     ------------

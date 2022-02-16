@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -21,8 +23,9 @@ class Sliders:
   def __init__(self, ui):
     self.page = ui.page
 
-  def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), html_code=None,
-             helper=None, options=None, profile=None):
+  def slider(self, number: float = 0, minimum: float = 0, maximum: float = 100, width: Union[tuple, int] = (100, '%'),
+             height: Union[tuple, int] = (None, 'px'), html_code: str = None,
+             helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -63,8 +66,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def date(self, value=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'), html_code=None,
-           helper=None, options=None, profile=None):
+  def date(self, value=None, minimum: float = None, maximum: float = None, width: Union[tuple, int] = (100, '%'),
+           height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None, options: dict = None,
+           profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -97,8 +101,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def date_range(self, value1=None, value2=None, minimum=None, maximum=None, width=(100, '%'), height=(20, 'px'),
-                 html_code=None, helper=None, options=None, profile=None):
+  def date_range(self, value1=None, value2=None, minimum: float = None, maximum: float = None,
+                 width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (20, 'px'),
+                 html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -133,8 +138,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def range(self, values=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
-            options=None, profile=None):
+  def range(self, values=None, minimum: float = 0, maximum: float = 100, width: Union[tuple, int] = (100, '%'),
+            height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None,
+            options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -165,8 +171,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def upper(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
-            options=None, profile=None):
+  def upper(self, value=None, minimum: float = 0, maximum: float = 100, width: Union[tuple, int] = (100, '%'),
+            height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -198,8 +205,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def lower(self, value=None, minimum=0, maximum=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
-            options=None, profile=None):
+  def lower(self, value=None, minimum: float = 0, maximum: float = 100, width: Union[tuple, int] = (100, '%'),
+            height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None,
+            options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -229,8 +237,9 @@ class Sliders:
     html.Html.set_component_skin(html_slider)
     return html_slider
 
-  def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
-                  options=None, profile=None):
+  def progressbar(self, number: float = 0, total: float = 100, width: Union[tuple, int] = (100, '%'),
+                  height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None,
+                  options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -266,8 +275,9 @@ class Sliders:
     html.Html.set_component_skin(html_pr)
     return html_pr
 
-  def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
-               options=None, profile=None):
+  def progress(self, number: float = 0, total: float = 100, width: Union[tuple, int] = (100, '%'),
+               height: Union[tuple, int] = (20, 'px'), html_code: str = None, helper: str = None,
+               options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------

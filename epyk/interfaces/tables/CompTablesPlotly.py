@@ -1,4 +1,5 @@
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 
 
@@ -7,8 +8,9 @@ class Plotly:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records, cols=None, rows=None, header=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            options=None, profile=None):
+  def table(self, records, cols: list = None, rows: list = None, header: list = None,
+            width: Union[int, tuple] = (100, '%'), height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------

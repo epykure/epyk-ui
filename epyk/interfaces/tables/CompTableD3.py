@@ -1,14 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 
 class D3:
 
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, header=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
-            profile=None):
+  def table(self, records=None, header: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None, options: dict = None,
+            profile: Union[dict, bool] = None):
     """
     Description:
     -----------

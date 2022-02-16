@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import graph
+from epyk.core.html import Defaults_html
 
 
 class Billboard:

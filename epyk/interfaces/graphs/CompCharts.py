@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-
+from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.html import Defaults_html
 
 from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
@@ -34,8 +35,10 @@ class Graphs:
     self.bar = dflt_chart_fam.bar
     self.line = dflt_chart_fam.line
 
-  def plot(self, pkg="apex", record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"),
-           height=(330, "px"), options=None, html_code=None):
+  def plot(self, pkg: str = "apex", record=None, y: list = None, x: str = None, kind: str = "line",
+           profile: Union[dict, bool] = None, width: Union[int, tuple] = (100, "%"),
+           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -63,8 +66,9 @@ class Graphs:
     return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                     options=options, html_code=html_code)
 
-  def skillbars(self, records=None, y_column=None, x_axis=None, title=None, width=(100, '%'),
-                height=(None, 'px'), html_code=None, options=None, profile=False):
+  def skillbars(self, records=None, y_column: list = None, x_axis: str = None, title: str = None,
+                width: Union[int, tuple] = (100, '%'), height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -107,8 +111,9 @@ class Graphs:
     html.Html.set_component_skin(html_skillbar)
     return html_skillbar
 
-  def sparkline(self, chart_type, data, title=None, options=None, width=(None, "%"), height=(None, "px"),
-                profile=False):
+  def sparkline(self, chart_type: str, data, title: str = None, options: dict = None,
+                width: Union[int, tuple] = (None, "%"), height: Union[int, tuple] = (None, "px"),
+                profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -147,7 +152,7 @@ class Graphs:
     return html_chart
 
   @property
-  def sparklines(self):
+  def sparklines(self) -> CompChartsSparkline.Sparkline:
     """
     Description:
     ------------
@@ -169,7 +174,7 @@ class Graphs:
     return CompChartsSparkline.Sparkline(self)
 
   @property
-  def plotly(self):
+  def plotly(self) -> CompChartsPlotly.Plotly:
     """
     Description:
     ------------
@@ -189,7 +194,7 @@ class Graphs:
     return CompChartsPlotly.Plotly(self)
 
   @property
-  def chartJs(self):
+  def chartJs(self) -> CompChartsChartJs.ChartJs:
     """
     Description:
     ------------
@@ -208,7 +213,7 @@ class Graphs:
     return CompChartsChartJs.ChartJs(self)
 
   @property
-  def apex(self):
+  def apex(self) -> CompChartsApex.ApexChart:
     """
     Description:
     ------------
@@ -227,7 +232,7 @@ class Graphs:
     return CompChartsApex.ApexChart(self)
 
   @property
-  def c3(self):
+  def c3(self) -> CompChartsC3.C3:
     """
     Description:
     ------------
@@ -249,7 +254,7 @@ class Graphs:
     return CompChartsC3.C3(self)
 
   @property
-  def bb(self):
+  def bb(self) -> CompChartsBillboard.Billboard:
     """
     Description:
     ------------
@@ -278,7 +283,7 @@ class Graphs:
     return CompChartsBillboard.Billboard(self)
 
   @property
-  def billboard(self):
+  def billboard(self) -> CompChartsBillboard.Billboard:
     """
     Description:
     ------------
@@ -303,7 +308,7 @@ class Graphs:
     return CompChartsBillboard.Billboard(self)
 
   @property
-  def vis(self):
+  def vis(self) -> CompChartsVis.Vis:
     """
     Description:
     ------------
@@ -322,7 +327,7 @@ class Graphs:
     return CompChartsVis.Vis(self)
 
   @property
-  def nvd3(self):
+  def nvd3(self) -> CompChartsNvd3.Nvd3:
     """
     Description:
     ------------
@@ -341,7 +346,7 @@ class Graphs:
     return CompChartsNvd3.Nvd3(self)
 
   @property
-  def dc(self):
+  def dc(self) -> CompChartsDc.DC:
     """
     Description:
     ------------
@@ -359,7 +364,7 @@ class Graphs:
     return CompChartsDc.DC(self)
 
   @property
-  def d3(self):
+  def d3(self) -> CompChartsD3.D3:
     """
     Description:
     ------------
@@ -376,7 +381,7 @@ class Graphs:
     return CompChartsD3.D3(self)
 
   @property
-  def google(self):
+  def google(self) -> CompChartsGoogle.ChartGoogle:
     """
     Description:
     ------------
@@ -392,12 +397,12 @@ class Graphs:
       https://developers.google.com/chart
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example page.imports.google_products(['charts'])")
+      raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
 
     return CompChartsGoogle.ChartGoogle(self)
 
   @property
-  def svg(self):
+  def svg(self) -> CompChartsSvg.SVG:
     """
     Description:
     ------------
@@ -412,7 +417,7 @@ class Graphs:
     return CompChartsSvg.SVG(self)
 
   @property
-  def canvas(self):
+  def canvas(self) -> CompChartsCanvas.Canvas:
     """
     Description:
     ------------
@@ -430,7 +435,7 @@ class Graphs:
     return CompChartsCanvas.Canvas(self)
 
   @property
-  def roughviz(self):
+  def roughviz(self) -> CompChartsRoughViz.CompRoughViz:
     """
     Description:
     ------------
@@ -445,7 +450,7 @@ class Graphs:
     return CompChartsRoughViz.CompRoughViz(self)
 
   @property
-  def frappe(self):
+  def frappe(self) -> CompChartsFrappe.CompChartFrappe:
     """
     Description:
     ------------
@@ -460,7 +465,7 @@ class Graphs:
     return CompChartsFrappe.CompChartFrappe(self)
 
   @property
-  def chartCss(self):
+  def chartCss(self) -> CompChartsChartCss.CompChartCss:
     """
     Description:
     ------------
@@ -475,7 +480,7 @@ class Graphs:
     return CompChartsChartCss.CompChartCss(self)
 
   @property
-  def vega(self):
+  def vega(self) -> CompChartsVega.VegaEmbedded:
     """
     Description:
     ------------
@@ -493,7 +498,8 @@ class Graphs:
     """
     return CompChartsVega.VegaEmbedded(self)
 
-  def menu(self, chart, height=(18, 'px'), options=None, post=None, profile=None):
+  def menu(self, chart: html.Html.Html, height: Union[int, tuple] = (18, 'px'), options: dict = None,
+           post: Union[list, str] = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -501,11 +507,11 @@ class Graphs:
 
     Attributes:
     ----------
-    :param chart: Component. The chart component.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param chart: The chart component.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
     :param post:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     # ("Csv", "fas fa-file-csv")
     commands = [("Clear", "fas fa-trash-alt")]
@@ -537,7 +543,7 @@ class Chart2d:
     self.page = ui.page
 
   @property
-  def plotly(self):
+  def plotly(self) -> CompChartsPlotly.Plotly2D:
     """
     Description:
     ------------
@@ -557,7 +563,7 @@ class Chart2d:
     return CompChartsPlotly.Plotly2D(self)
 
   @property
-  def nvd3(self):
+  def nvd3(self) -> CompChartsNvd3.Nvd3:
     """
     Description:
     ------------
@@ -577,7 +583,7 @@ class Chart2d:
     return CompChartsNvd3.Nvd3(self)
 
   @property
-  def dc(self):
+  def dc(self) -> CompChartsDc.DC:
     """
     Description:
     ------------
@@ -595,7 +601,7 @@ class Chart2d:
     return CompChartsDc.DC(self)
 
   @property
-  def d3(self):
+  def d3(self) -> CompChartsD3.D3:
     """
     Description:
     ------------
@@ -612,7 +618,7 @@ class Chart2d:
     return CompChartsD3.D3(self)
 
   @property
-  def svg(self):
+  def svg(self) -> CompChartsSvg.SVG:
     """
     Description:
     ------------
@@ -629,7 +635,7 @@ class Chart2d:
     return CompChartsSvg.SVG(self)
 
   @property
-  def canvas(self):
+  def canvas(self) -> CompChartsCanvas.Canvas:
     """
     Description:
     ------------
@@ -647,7 +653,7 @@ class Chart2d:
     return CompChartsCanvas.Canvas(self)
 
   @property
-  def chartJs(self):
+  def chartJs(self) -> CompChartsChartJs.ChartJs:
     """
     Description:
     ------------
@@ -666,7 +672,7 @@ class Chart2d:
     return CompChartsChartJs.ChartJs(self)
 
   @property
-  def apex(self):
+  def apex(self) -> CompChartsApex.ApexChart:
     """
     Description:
     ------------
@@ -685,7 +691,7 @@ class Chart2d:
     return CompChartsApex.ApexChart(self)
 
   @property
-  def c3(self):
+  def c3(self) -> CompChartsC3.C3:
     """
     Description:
     ------------
@@ -704,7 +710,7 @@ class Chart2d:
     return CompChartsC3.C3(self)
 
   @property
-  def billboard(self):
+  def billboard(self) -> CompChartsBillboard.Billboard:
     """
     Description:
     ------------
@@ -726,7 +732,7 @@ class Chart2d:
     return CompChartsBillboard.Billboard(self)
 
   @property
-  def vis(self):
+  def vis(self) -> CompChartsVis.Vis2D:
     """
     Description:
     ------------
@@ -751,7 +757,7 @@ class Chart3d:
     self.page = ui.page
 
   @property
-  def plotly(self):
+  def plotly(self) -> CompChartsPlotly.Plotly3D:
     """
     Description:
     ------------
@@ -771,7 +777,7 @@ class Chart3d:
     return CompChartsPlotly.Plotly3D(self)
 
   @property
-  def vis(self):
+  def vis(self) -> CompChartsVis.Vis3D:
     """
     Description:
     ------------

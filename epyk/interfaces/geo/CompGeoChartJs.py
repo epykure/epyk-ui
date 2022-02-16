@@ -1,6 +1,8 @@
 
+from typing import Union
 from epyk.core.html import geo
 from epyk.interfaces import Arguments
+from epyk.core.html import Defaults_html
 
 
 class ChartJs:
@@ -24,8 +26,9 @@ class BubbleMaps:
     self.page = ui.page
     self.chartFamily = "ChartJs"
 
-  def world(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def world(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            options: dict = None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -57,8 +60,9 @@ class BubbleMaps:
     geo_chart.options.showGraticule = True
     return geo_chart
 
-  def us(self, record=None, y_columns=None, x_axis=None,  profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def us(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+         options: dict = None, width: Union[int, tuple] = (100, "%"),
+         height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -98,8 +102,9 @@ class Choropleth:
     self.page = ui.page
     self.chartFamily = "ChartJs"
 
-  def us(self, record=None, y_columns=None, x_axis=None,  profile=None, options=None, width=(100, "%"),
-         height=(330, "px"), html_code=None):
+  def us(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+         options: dict = None, width: Union[int, tuple] = (100, "%"),
+         height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -133,8 +138,9 @@ class Choropleth:
     geo_chart.options.showGraticule = True
     return geo_chart
 
-  def world(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def world(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            options: dict = None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -167,8 +173,9 @@ class Choropleth:
     geo_chart.options.showGraticule = True
     return geo_chart
 
-  def country(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def country(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              options: dict = None, width: Union[int, tuple] = (100, "%"),
+              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -205,27 +212,31 @@ class Choropleth:
     geo_chart.options.showGraticule = False
     return geo_chart
 
-  def fr(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def fr(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+         options: dict = None, width: Union[int, tuple] = (100, "%"),
+         height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
     chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/fra.json"
     return chart
 
-  def uk(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def uk(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+         options: dict = None, width: Union[int, tuple] = (100, "%"),
+         height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
     chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/ita.json"
     return chart
 
-  def italy(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def italy(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            options: dict = None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
     chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/ita.json"
     chart.options.center = [78.9629, 23.5937]
     return chart
 
-  def india(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def india(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            options: dict = None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
     chart.geo_map = "https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json"
     return chart

@@ -3,6 +3,7 @@
 
 import datetime
 
+from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -12,8 +13,9 @@ class Calendar:
   def __init__(self, ui):
     self.page = ui.page
 
-  def days(self, month=None, content=None, year=None, width=(None, "%"), height=(None, "px"), align=None, options=None,
-           html_code=None, profile=None):
+  def days(self, month: int = None, content=None, year: int = None, width: tuple = (None, "%"),
+           height: tuple = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
+           profile: Union[bool, dict] = None):
     """
     Description:
     ------------
@@ -43,15 +45,15 @@ class Calendar:
 
     Attributes:
     ----------
-    :param month: Integer. Optional. The month number.
+    :param int month: Optional. The month number.
     :param content:
-    :param year:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param int year:
+    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
+    :param str align: Optional. The text-align property within this component.
+    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -96,8 +98,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def timer(self, minutes, text="", width=(None, "%"), height=(None, "px"), align=None, options=None, html_code=None,
-            profile=None):
+  def timer(self, minutes: int, text: str = "", width: tuple = (None, "%"), height: tuple = (None, "px"),
+            align: str = None, options: dict = None, html_code: str = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -111,14 +113,14 @@ class Calendar:
 
     Attributes:
     ----------
-    :param minutes:
-    :param text: String. Optional. The value to be displayed to the timer
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. The text-align property within this component
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param int minutes:
+    :param str text: Optional. The value to be displayed to the timer
+    :param tuple width: Optional. A tuple with the integer for the component width and its unit
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit
+    :param str align: The text-align property within this component
+    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -126,8 +128,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def months(self, content=None, width=(None, "%"), height=(None, "px"), align=None, options=None,
-             html_code=None, profile=None):
+  def months(self, content: dict = None, width: tuple = (None, "%"), height: tuple = (None, "px"), align: str = None,
+             options: dict = None, html_code: str = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -157,13 +159,13 @@ class Calendar:
 
     Attributes:
     ----------
-    :param content: Dictionary. Optional. The Pie charts values.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param dict content: Optional. The Pie charts values.
+    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
+    :param str align: Optional. A string with the horizontal position of the component.
+    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     content = content or {}
@@ -193,7 +195,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def legend(self, record, width=(None, "%"), height=(None, "px"), align=None, options=None, profile=None):
+  def legend(self, record: list, width: tuple = (None, "%"), height: tuple = (None, "px"), align: str = None,
+             options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -215,12 +218,12 @@ class Calendar:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param list record: Optional. The list of dictionaries with the input data.
+    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
+    :param str align: Optional. The text-align property within this component.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     data = []
     if isinstance(record, dict):
@@ -244,8 +247,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def forecast(self, month_period, content=None, width=(100, "%"), height=(None, "px"), position="top", options=None,
-               profile=None):
+  def forecast(self, month_period: int, content: str = None, width: tuple = (100, "%"), height: tuple = (None, "px"),
+               position: str = "top", options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -264,13 +267,13 @@ class Calendar:
 
     Attributes:
     ----------
-    :param month_period: Integer. Number of months of forecast.
-    :param content: String. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param position: String. Optional. The position compared to the main component tag.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param int month_period: Number of months of forecast.
+    :param str content: Optional.
+    :param tuple width: Optional. A tuple with the integer for the component width and its unit
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit
+    :param str position: Optional. The position compared to the main component tag.
+    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     year = today.year
@@ -291,8 +294,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def google(self, task, start, end, details=None, location=None, icon="google_plus",
-             text="Add to Google Calendar", options=None, profile=None):
+  def google(self, task, start: str, end: str, details=None, location=None, icon: str = "google_plus",
+             text: str = "Add to Google Calendar", options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -332,7 +335,10 @@ class Calendar:
     icon.options.managed = False
     google_url = "http://www.google.com/calendar/event?action=TEMPLATE"
     component = self.page.ui.link("%s %s" % (icon.html(), text),
-      self.page.js.objects.get("%(url)s&text=%(task)s&dates=%(start)s/%(end)s&details=%(details)s&location=%(location)s" % {'url': google_url, "task": task, 'start': start, 'end': end, 'details': details or task, 'location': location or ''}))
+      self.page.js.objects.get(
+        "%(url)s&text=%(task)s&dates=%(start)s/%(end)s&details=%(details)s&location=%(location)s" % {
+          'url': google_url, "task": task, 'start': start, 'end': end, 'details': details or task,
+          'location': location or ''}))
     component.style.css.background = self.page.theme.greys[0]
     component.style.css.color = self.page.theme.greys[-1]
     component.style.css.padding = '2px 5px'
@@ -343,8 +349,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def agenda(self, task, start, end, details=None, location=None, icon="calendar", text="Add to Calendar",
-             options=None, profile=None):
+  def agenda(self, task, start, end, details=None, location=None, icon: str = "calendar", text: str = "Add to Calendar",
+             options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -377,10 +383,11 @@ class Calendar:
     """
     # Default options
     calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}
-    events_options = {'DTSTART;VALUE=DATE': start, 'DTEND;VALUE=DATE': end, 'SUMMARY': task or '', 'LOCATION': location or '',
-                      'DESCRIPTION': details or '', 'STATUS': 'CONFIRMED', 'SEQUENCE': 3}
+    events_options = {'DTSTART;VALUE=DATE': start, 'DTEND;VALUE=DATE': end, 'SUMMARY': task or '',
+                      'LOCATION': location or '', 'DESCRIPTION': details or '', 'STATUS': 'CONFIRMED', 'SEQUENCE': 3}
 
-    str_calendar = "BEGIN:VCALENDAR\n%s\n%%s\nEND:VCALENDAR" % "\n".join(["%s:%s" % (k, v) for k, v in calendar_options.items()])
+    str_calendar = "BEGIN:VCALENDAR\n%s\n%%s\nEND:VCALENDAR" % "\n".join([
+      "%s:%s" % (k, v) for k, v in calendar_options.items()])
     str_event = "BEGIN:VEVENT\n%s\nEND:VEVENT" % "\n".join(["%s:%s" % (k, v) for k, v in events_options.items()])
 
     component = self.page.ui.links.data("<i style='font-size:%s;color:%s' class='%s'></i> %s" % (

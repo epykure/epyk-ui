@@ -3,6 +3,7 @@
 
 import sys
 
+from typing import Union
 from epyk.core import html
 
 
@@ -11,8 +12,8 @@ class Tags:
   def __init__(self, ui):
     self.page = ui.page
 
-  def a(self, text, url, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
-        profile=None):
+  def a(self, text: str, url: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -52,8 +53,8 @@ class Tags:
     html.Html.set_component_skin(html_a)
     return html_a
 
-  def aside(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
-            profile=None):
+  def aside(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -85,7 +86,8 @@ class Tags:
     html.Html.set_component_skin(html_a)
     return html_a
 
-  def b(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def b(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -115,7 +117,8 @@ class Tags:
     html.Html.set_component_skin(html_b)
     return html_b
 
-  def h1(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def h1(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -147,7 +150,8 @@ class Tags:
     html.Html.set_component_skin(html_h1)
     return html_h1
 
-  def h2(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def h2(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -179,7 +183,8 @@ class Tags:
     html.Html.set_component_skin(html_h2)
     return html_h2
 
-  def h3(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def h3(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -211,7 +216,8 @@ class Tags:
     html.Html.set_component_skin(html_h3)
     return html_h3
 
-  def hn(self, level, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def hn(self, level: int, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -244,8 +250,8 @@ class Tags:
     html.Html.set_component_skin(html_hn)
     return html_hn
 
-  def delete(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
-             profile=None):
+  def delete(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------

@@ -331,7 +331,7 @@ class Components:
     return CompPictos.Pictogram(self)
 
   @property
-  def rich(self):
+  def rich(self) -> CompRich.Rich:
     """
     Description:
     ------------
@@ -342,7 +342,7 @@ class Components:
     return CompRich.Rich(self)
 
   @property
-  def vignets(self):
+  def vignets(self) -> CompVignets.Vignets:
     """
     Description:
     ------------
@@ -357,7 +357,7 @@ class Components:
     return CompVignets.Vignets(self)
 
   @property
-  def numbers(self):
+  def numbers(self) -> CompNumbers.Numbers:
     """
     Description:
     ------------
@@ -372,7 +372,7 @@ class Components:
     return CompNumbers.Numbers(self)
 
   @property
-  def texts(self):
+  def texts(self) -> CompTexts.Texts:
     """
     Description:
     ------------
@@ -388,7 +388,7 @@ class Components:
     return CompTexts.Texts(self)
 
   @property
-  def images(self):
+  def images(self) -> CompImages.Images:
     """
     Description:
     ------------
@@ -401,7 +401,7 @@ class Components:
     return CompImages.Images(self)
 
   @property
-  def lists(self):
+  def lists(self) -> CompLists.Lists:
     """
     Description:
     ------------
@@ -416,7 +416,7 @@ class Components:
     return CompLists.Lists(self)
 
   @property
-  def trees(self):
+  def trees(self) -> CompTrees.Trees:
     """
     Description:
     ------------
@@ -428,7 +428,7 @@ class Components:
     return CompTrees.Trees(self)
 
   @property
-  def geo(self):
+  def geo(self) -> CompGeo.Geo:
     """
     Description:
     ------------
@@ -440,7 +440,7 @@ class Components:
     return CompGeo.Geo(self)
 
   @property
-  def buttons(self):
+  def buttons(self) -> CompButtons.Buttons:
     """
     Description:
     ------------
@@ -452,7 +452,7 @@ class Components:
     return CompButtons.Buttons(self)
 
   @property
-  def tables(self):
+  def tables(self) -> CompTables.Tables:
     """
     Description:
     ------------
@@ -467,7 +467,7 @@ class Components:
     return CompTables.Tables(self)
 
   @property
-  def steps(self):
+  def steps(self) -> CompSteps.Steppers:
     """
     Description:
     ------------
@@ -479,7 +479,7 @@ class Components:
     return CompSteps.Steppers(self)
 
   @property
-  def drawers(self):
+  def drawers(self) -> CompDrawers.Drawers:
     """
     Description:
     ------------
@@ -492,7 +492,7 @@ class Components:
     return CompDrawers.Drawers(self)
 
   @property
-  def steppers(self):
+  def steppers(self) -> CompSteppers.Steppers:
     """
     Description:
     ------------
@@ -504,7 +504,7 @@ class Components:
     return CompSteppers.Steppers(self)
 
   @property
-  def media(self):
+  def media(self) -> CompMedia.Media:
     """
     Description:
     ------------
@@ -520,7 +520,7 @@ class Components:
     return CompMedia.Media(self)
 
   @property
-  def inputs(self):
+  def inputs(self) -> CompInputs.Inputs:
     """
     Description:
     ------------
@@ -535,7 +535,7 @@ class Components:
     return CompInputs.Inputs(self)
 
   @property
-  def fields(self):
+  def fields(self) -> CompFields.Fields:
     """
     Description:
     ------------
@@ -550,7 +550,7 @@ class Components:
     return CompFields.Fields(self)
 
   @property
-  def timelines(self):
+  def timelines(self) -> CompFields.Timelines:
     """
     Description:
     ------------
@@ -561,7 +561,7 @@ class Components:
     return CompFields.Timelines(self)
 
   @property
-  def icons(self):
+  def icons(self) -> CompIcons.Icons:
     """
     Description:
     ------------
@@ -575,7 +575,7 @@ class Components:
     return CompIcons.Icons(self)
 
   @property
-  def menus(self):
+  def menus(self) -> CompMenus.Menus:
     """
     Description:
     ------------
@@ -587,7 +587,7 @@ class Components:
     return CompMenus.Menus(self)
 
   @property
-  def panels(self):
+  def panels(self) -> CompPanels.Panels:
     """
     Description:
     ------------
@@ -599,7 +599,7 @@ class Components:
     return CompPanels.Panels(self)
 
   @property
-  def layouts(self):
+  def layouts(self) -> CompLayouts.Layouts:
     """
     Description:
     ------------
@@ -615,7 +615,7 @@ class Components:
     return CompLayouts.Layouts(self)
 
   @property
-  def forms(self):
+  def forms(self) -> CompForms.Forms:
     """
     Description:
     ------------
@@ -631,7 +631,7 @@ class Components:
     return CompForms.Forms(self)
 
   @property
-  def modals(self):
+  def modals(self) -> CompModals.Modals:
     """
     Description:
     ------------
@@ -643,7 +643,7 @@ class Components:
     return CompModals.Modals(self)
 
   @property
-  def charts(self):
+  def charts(self) -> CompCharts.Graphs:
     """
     Description:
     ------------
@@ -658,7 +658,7 @@ class Components:
     return CompCharts.Graphs(self)
 
   @property
-  def tags(self):
+  def tags(self) -> CompTags.Tags:
     """
     Description:
     ------------
@@ -672,7 +672,7 @@ class Components:
     return CompTags.Tags(self)
 
   @property
-  def calendars(self):
+  def calendars(self) -> CompCalendars.Calendar:
     """
     Description:
     ------------
@@ -684,7 +684,7 @@ class Components:
     return CompCalendars.Calendar(self)
 
   @property
-  def delimiters(self):
+  def delimiters(self) -> CompLayouts.Delimiter:
     """
     Description:
     ------------
@@ -1092,7 +1092,7 @@ class Components:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, component: html.Html.Html, copy: str ="fas fa-copy",
+  def menu(self, component: html.Html.Html, copy: str = "fas fa-copy",
            editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"), refresh: str = "fas fa-redo-alt",
            visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
            height: tuple = (18, 'px'), save_funcs: list = None, update_funcs: list = None,
@@ -1244,7 +1244,7 @@ class Components:
     return container
 
   @property
-  def pyk(self):
+  def pyk(self) -> pyks.Bespoke:
     return pyks.Bespoke(self)
 
 
@@ -1394,7 +1394,7 @@ class WebComponents:
     return self.fwks["evr"]
 
   @property
-  def ftw(self):
+  def ftw(self) -> FluentUI.Components:
     """
     Description:
     ------------

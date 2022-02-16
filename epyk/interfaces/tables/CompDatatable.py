@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 
 
@@ -9,8 +10,9 @@ class Datatables:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            options=None, profile=None):
+  def table(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -40,8 +42,8 @@ class Datatables:
     for rec in records:
       data.append([rec.get(c) for c in cols + rows])
 
-    table = html_tables.HtlmTableDatatable.Table(self.page, data, width, height, html_code, options,
-                                                 profile)
+    table = html_tables.HtlmTableDatatable.Table(
+      self.page, data, width, height, html_code, options, profile)
     table.options.autoWidth = True
     table.options.scrollCollapse = True
     for c in cols + rows:
@@ -52,20 +54,32 @@ class Datatables:
     table.options.scrollX = True
     return table
 
-  def heatmap(self):
-    pass
+  def heatmap(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+              height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+              options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()
 
-  def intensity(self):
-    pass
+  def intensity(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()
 
-  def hierarchy(self):
-    pass
+  def hierarchy(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()
 
-  def delta_signed(self):
-    pass
+  def delta_signed(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                   height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                   options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()
 
-  def delta_abs(self):
-    pass
+  def delta_abs(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()
 
-  def comments(self):
-    pass
+  def comments(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+               height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+               options: dict = None, profile: Union[dict, bool] = None):
+    raise NotImplementedError()

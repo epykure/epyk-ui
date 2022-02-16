@@ -14,7 +14,7 @@ class Geo:
     self.page = ui.page
 
   @property
-  def plotly_map(self):
+  def plotly_map(self) -> CompGeoPlotly.Plotly:
     """
     Description:
     ------------
@@ -30,7 +30,7 @@ class Geo:
     return CompGeoPlotly.Plotly(self)
 
   @property
-  def dc_choropleth(self):
+  def dc_choropleth(self) -> CompGeoDc.Dc:
     """
     Description:
     ------------
@@ -41,7 +41,7 @@ class Geo:
     return CompGeoDc.Dc(self)
 
   @property
-  def chartJs(self):
+  def chartJs(self) -> CompGeoChartJs.ChartJs:
     """
     Description:
     ------------
@@ -57,7 +57,7 @@ class Geo:
     return CompGeoChartJs.ChartJs(self)
 
   @property
-  def plotly(self):
+  def plotly(self) -> CompGeoPlotly.Plotly:
     """
     Description:
     ------------
@@ -72,7 +72,7 @@ class Geo:
     return CompGeoPlotly.Plotly(self)
 
   @property
-  def google(self):
+  def google(self) -> CompGeoGoogle.GeoGoogle:
     """
     Description:
     ------------
@@ -91,7 +91,7 @@ class Geo:
     return CompGeoGoogle.GeoGoogle(self)
 
   @property
-  def jqv(self):
+  def jqv(self) -> CompGeoJqV.JqueryVertorMap:
     """
     Description:
     ------------
@@ -107,7 +107,7 @@ class Geo:
     return CompGeoJqV.JqueryVertorMap(self)
 
   @property
-  def leaflet(self):
+  def leaflet(self) -> CompGeoLeaflet.GeoLeaflet:
     """
     Description:
     ------------
@@ -123,7 +123,7 @@ class Geo:
     return CompGeoLeaflet.GeoLeaflet(self)
 
   @property
-  def d3(self):
+  def d3(self) -> CompGeoD3.D3:
     """
     Description:
     ------------

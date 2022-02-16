@@ -84,12 +84,12 @@ The below code will create a simple interactive dashboard relying on internal mo
 import epyk as pk
 
 # Just to get mock data to test
-from epyk.tests import mocks
+from epyk.mocks import randoms
 
 page = pk.Page()
 page.headers.dev()
 
-js_data = page.data.js.record(data=mocks.languages)
+js_data = page.data.js.record(data=randoms.languages)
 filter1 = js_data.filterGroup("filter1")
 
 select = page.ui.select([
@@ -97,8 +97,8 @@ select = page.ui.select([
   {"value": 'type', 'name': 'code'},
 ])
 
-bar = page.ui.charts.chartJs.bar(mocks.languages, y_columns=["rating", 'change'], x_axis='name')
-pie = page.ui.charts.chartJs.pie(mocks.languages, y_columns=['change'], x_axis='name')
+bar = page.ui.charts.chartJs.bar(randoms.languages, y_columns=["rating", 'change'], x_axis='name')
+pie = page.ui.charts.chartJs.pie(randoms.languages, y_columns=['change'], x_axis='name')
 page.ui.row([bar, pie])
 
 select.change([
@@ -192,7 +192,9 @@ More examples are available in the []template / interactive](https://github.com/
 
 On the client side
 ```py
-page = Report()
+import epyk as pk
+
+page = pk.Page()
 page.headers.dev()
 
 socket.connect(url="127.0.0.1", port=3000, namespace="/news")

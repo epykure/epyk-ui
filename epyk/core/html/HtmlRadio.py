@@ -143,7 +143,7 @@ class Switch(Html.Html):
 
   def __init__(self, page: primitives.PageModel, records: list, color: str, width: tuple, height: tuple,
                html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    self.width, self.jsChange = width[0], ''
+    self.width = width[0]
     super(Switch, self).__init__(page, records, html_code=html_code, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
     self.style.add_classes.radio.switch_checked()
@@ -168,8 +168,28 @@ class Switch(Html.Html):
     self.switch_text.options.managed = False
 
     self.switch = self.dom.querySelector("label")
-    # data should be stored for this object
-    self.page.properties.js.add_builders("var %s_data = %s" % (self.htmlCode, records))
+
+  @property
+  def on(self):
+    """ Change the value displayed when switch on """
+    return self._vals["on"]
+
+  @on.setter
+  def on(self, value: str):
+    self._vals["on"] = value
+    if self.checkbox.attr.get("checked") is not None:
+      self.switch_text._vals = value
+
+  @property
+  def off(self):
+    """ Change the value displayed when switch off """
+    return self._vals["off"]
+
+  @off.setter
+  def off(self, value: str):
+    self._vals["off"] = value
+    if self.checkbox.attr.get("checked") is None:
+      self.switch_text._vals = value
 
   @property
   def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
@@ -238,7 +258,7 @@ class Switch(Html.Html):
     ----------
     :param Union[list, str] js_funcs: A Javascript Python function.
     :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
+      Javascript console.
     :param Optional[str] source_event: Optional. The source target for the event.
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
@@ -279,6 +299,7 @@ class Switch(Html.Html):
       self._clicks['off'].extend(off_funcs)
 
   def __str__(self):
+    self.page.properties.js.add_builders("var %s_data = %s" % (self.htmlCode, self._vals))
     self.page.properties.js.add_builders(
       self.switch.onclick('''
         var input_check = this.parentNode.querySelector('input');

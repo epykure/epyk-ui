@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+from epyk.core.html import Html
 from epyk.core.html import tables as html_tables
 
 from epyk.interfaces.tables import CompTabulator
@@ -24,7 +26,7 @@ class Tables:
     self.pivot = self.pivots.pivot
 
   @property
-  def aggrids(self):
+  def aggrids(self) -> CompAgGrid.AgGrid:
     """
     Description:
     -----------
@@ -43,7 +45,7 @@ class Tables:
     return CompAgGrid.AgGrid(self)
 
   @property
-  def tabulators(self):
+  def tabulators(self) -> CompTabulator.Tabulators:
     """
     Description:
     -----------
@@ -61,7 +63,7 @@ class Tables:
     return CompTabulator.Tabulators(self)
 
   @property
-  def google(self):
+  def google(self) -> CompTableGoogle.Google:
     """
     Description:
     -----------
@@ -70,12 +72,12 @@ class Tables:
     In order to use it, the Google products need to be specially enabled.
     """
     if not getattr(self.page, '_with_google_imports', False):
-      raise Exception("Google produce must be added using for example page.imports.google_products(['charts'])")
+      raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
 
     return CompTableGoogle.Google(self)
 
   @property
-  def pivots(self):
+  def pivots(self) -> CompPivot.Pivottable:
     """
     Description:
     -----------
@@ -91,7 +93,7 @@ class Tables:
     return CompPivot.Pivottable(self)
 
   @property
-  def d3(self):
+  def d3(self) -> CompTableD3.D3:
     """
     Description:
     -----------
@@ -109,7 +111,7 @@ class Tables:
     return CompTableD3.D3(self)
 
   @property
-  def plotlys(self):
+  def plotlys(self) -> CompTablesPlotly.Plotly:
     """
     Description:
     -----------
@@ -127,7 +129,7 @@ class Tables:
     return CompTablesPlotly.Plotly(self)
 
   @property
-  def datatables(self):
+  def datatables(self) -> CompDatatable.Datatables:
     """
     Description:
     -----------
@@ -144,7 +146,8 @@ class Tables:
     """
     return CompDatatable.Datatables(self)
 
-  def config(self, html_code, visible=False, profile=None):
+  def config(self, html_code: str, visible: bool = False,
+             profile: Union[bool, dict] = None) -> html_tables.HtmlTableConfig.ConfigTable:
     """
     Description:
     -----------
@@ -162,7 +165,8 @@ class Tables:
     """
     return html_tables.HtmlTableConfig.ConfigTable(self.page, html_code, visible, profile)
 
-  def basic(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def basic(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'),
+            html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -192,8 +196,9 @@ class Tables:
       self.page, records, cols or [], rows or [], width, height, html_code, options, profile)
     return table
 
-  def grid(self, records, cols, rows, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,
-           profile=None):
+  def grid(self, records, cols: list, rows: list, width: Union[int, tuple] = (None, '%'),
+           height: Union[int, tuple] = (None, 'px'), html_code: str = None, options: dict = None,
+           profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -236,7 +241,8 @@ class Tables:
     # table.style.add_classes.table.grid_no_header()
     return table
 
-  def menu(self, table=None, height=(18, 'px'), options=None, post=None, profile=None):
+  def menu(self, table: Html.Html = None, height: Union[int, tuple] = (18, 'px'), options: dict = None,
+           post: Union[list, str] = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------

@@ -1,5 +1,7 @@
 
+from typing import Union
 from epyk.core.html import geo
+from epyk.core.html import Defaults_html
 
 
 class Dc:
@@ -8,8 +10,9 @@ class Dc:
     self.page = ui.page
     self.chartFamily = "DC"
 
-  def usa(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def usa(self, record=None, y_columns: list = None, x_axis: str = None, title: str = None,
+          profile: Union[dict, bool] = None, options: dict = None, width: Union[int, tuple] = (100, "%"),
+          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
     Description:
     -----------
@@ -30,6 +33,7 @@ class Dc:
     :param x_axis:
     :param title:
     :param profile:
+    :param options:
     :param width:
     :param height:
     :param html_code:

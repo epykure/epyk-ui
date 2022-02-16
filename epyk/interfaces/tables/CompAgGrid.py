@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 
 
@@ -9,8 +10,9 @@ class AgGrid:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(300, 'px'), html_code=None,
-            options=None, profile=None):
+  def table(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (300, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------

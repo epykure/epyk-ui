@@ -317,7 +317,7 @@ class Slider(Html.Html):
   _option_cls = OptSliders.OptionsSlider
   is_range = False
 
-  def __init__(self, page: primitives.PageModel, number: int, min_val: int, max_val: int,
+  def __init__(self, page: primitives.PageModel, number: int, min_val: float, max_val: float,
                width: tuple, height: tuple, helper: Optional[str], options: Optional[dict],
                html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     options.update({'max': max_val, 'min': min_val})
@@ -514,7 +514,9 @@ class Range(Slider):
 class SliderDate(Slider):
   name = "Slider Date"
 
-  def __init__(self, page: primitives.PageModel, number: Union[float, list], min_val, max_val, width, height, helper, options, html_code, profile):
+  def __init__(self, page: primitives.PageModel, number: Union[float, list], min_val: float, max_val: float,
+               width: Union[tuple, int], height: Union[tuple, int], helper: str, options: dict, html_code: str,
+               profile: Union[dict, bool]):
     super(SliderDate, self).__init__(page, number, min_val, max_val, width, height, helper, options, html_code, profile)
     self.options.min, self.options.max, self.options.step = min_val, max_val, 86400
 

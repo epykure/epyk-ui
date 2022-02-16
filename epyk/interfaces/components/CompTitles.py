@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -10,8 +11,9 @@ class Titles:
   def __init__(self, ui):
     self.page = ui.page
 
-  def head(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-           html_code=None, profile=False):
+  def head(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
+           html_code: str = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -56,8 +58,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def headline(self, text="", options=None, tooltip="", align="left", color=True, width=(None, "px"),
-               height=('auto', ""), html_code=None, profile=False):
+  def headline(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: bool = True,
+               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
+               profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -100,8 +103,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def title(self, text=None, options=None, tooltip="", align="left", color=None, width=(None, "px"),
-            height=('auto', ""), html_code=None, profile=False):
+  def title(self, text: str = None, options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+            width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
+            profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -145,8 +149,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def section(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
-              height=('auto', ""), html_code=None, profile=False):
+  def section(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+              width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
+              profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -186,8 +191,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def rubric(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-             html_code=None, profile=False):
+  def rubric(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+             width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
+             html_code: str = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -229,8 +235,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def category(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
-               height=('auto', ""), html_code=None, profile=False):
+  def category(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
+               profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -277,8 +284,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def caption(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
-              height=('auto', ""), html_code=None, profile=False):
+  def caption(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+              width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
+              profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -319,8 +327,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def underline(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"),
-                height=('auto', ""),  html_code=None, profile=False):
+  def underline(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+                width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
+                html_code: str = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -364,8 +373,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def bold(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-           html_code=None, profile=False):
+  def bold(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
+           html_code: str = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -407,8 +417,10 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def subtitle(self, text="", name=None, contents=None, color=None, picture=None, icon=None, top=5,
-               html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
+  def subtitle(self, text: str = "", name: str = None, contents=None, color: str = None, picture: str = None,
+               icon: str = None, top: int = 5, html_code: str = None, width: Union[tuple, int] = ("auto", ""),
+               height: Union[tuple, int] = (None, "px"), align: str = None, options: dict = None,
+               profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -444,8 +456,9 @@ class Titles:
     html.Html.set_component_skin(title)
     return title
 
-  def upper(self, text="", options=None, tooltip="", align="left", color=None, width=(None, "px"), height=('auto', ""),
-            html_code=None, profile=False):
+  def upper(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+            width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
+            html_code: str = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------

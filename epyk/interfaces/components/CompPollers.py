@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 
 
@@ -9,8 +10,10 @@ class Poller:
   def __init__(self, ui):
     self.page = ui.page
 
-  def toggle(self, time, js_funcs=None, components=None, label=None, color=None, width=(None, '%'), height=(20, 'px'),
-             align="left", html_code=None, options=None, profile=None):
+  def toggle(self, time, js_funcs=None, components=None, label: str = None, color: str = None,
+             width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (20, 'px'),
+             align: str = "left", html_code: str = None, options: dict = None,
+             profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -62,8 +65,9 @@ class Poller:
     html.Html.set_component_skin(container)
     return container
 
-  def live(self, time, js_funcs=None, components=None, icon="circle", width=(15, "px"), height=(15, "px"), align="left",
-           html_code=None, profile=None, options=None):
+  def live(self, time, js_funcs=None, components=None, icon: str = "circle", width: Union[tuple, int] = (15, "px"),
+           height: Union[tuple, int] = (15, "px"), align: str = "left",
+           html_code: str = None, profile: Union[dict, bool] = None, options: dict = None):
     """
     Description:
     ------------

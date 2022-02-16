@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 from epyk.interfaces import Arguments
 
@@ -10,8 +11,9 @@ class Pivottable:
   def __init__(self, ui):
     self.page = ui.page
 
-  def pivot(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            helper=None, options=None, profile=False):
+  def pivot(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -46,8 +48,9 @@ class Pivottable:
                                                   helper, options, profile)
     return table
 
-  def ui(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-         helper=None, options=None, profile=False):
+  def ui(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+         height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+         helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -82,8 +85,9 @@ class Pivottable:
                                                     html_code, helper, options, profile)
     return table
 
-  def sub_total(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-                helper=None, options=None, profile=False):
+  def sub_total(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+                height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+                helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -119,8 +123,9 @@ class Pivottable:
     table.sub_total()
     return table
 
-  def heatmap(self, records=None, rows=None, cols=None, values=None, width=(100, '%'), height=(None, 'px'),
-              html_code=None, helper=None, options=None, profile=False):
+  def heatmap(self, records=None, rows: list = None, cols: list = None, values=None,
+              width: Union[int, tuple] = (100, '%'), height: Union[int, tuple] = (None, 'px'),
+              html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -152,15 +157,16 @@ class Pivottable:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    table = html_tables.HtmlTablePivot.PivotTable(self.page, records, rows, cols, width, height, html_code,
-                                                  helper, options, profile)
+    table = html_tables.HtmlTablePivot.PivotTable(
+      self.page, records, rows, cols, width, height, html_code, helper, options, profile)
     table.renderers.heatmap()
     if values is not None:
       table.aggregators.sumOverSum(values)
     return table
 
-  def c3(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-         helper=None, options=None, profile=False):
+  def c3(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+         height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+         helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -196,8 +202,9 @@ class Pivottable:
     table.renderers.c3.bar()
     return table
 
-  def d3(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-         helper=None, options=None, profile=False):
+  def d3(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+         height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+         helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------
@@ -233,8 +240,9 @@ class Pivottable:
     table.renderers.treemap()
     return table
 
-  def plotly(self, records=None, rows=None, cols=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-             helper=None, options=None, profile=False):
+  def plotly(self, records=None, rows: list = None, cols: list = None, width: Union[int, tuple] = (100, '%'),
+             height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+             helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     -----------

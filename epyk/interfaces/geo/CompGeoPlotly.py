@@ -1,5 +1,7 @@
 
+from typing import Union
 from epyk.core.html import geo
+from epyk.core.html import Defaults_html
 
 
 class Plotly:

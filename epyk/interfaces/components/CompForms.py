@@ -92,10 +92,10 @@ class Forms:
 
     Attributes:
     ----------
-    :param html_code: String. An identifier for the prefix of the date components (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper: String. Optional. A tooltip helper.
+    :param str html_code: An identifier for the prefix of the date components (on both Python and Javascript side).
+    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param str helper: Optional. A tooltip helper.
     """
     date1 = self.page.ui.fields.today(label="%s_current" % html_code, profile=profile, options=options)
     date1.input.set_attrs({"name": date1.htmlCode.upper()})
@@ -127,14 +127,14 @@ class Forms:
 
     Attributes:
     ----------
-    :param html_code: String. An identifier for this component (on both Python and Javascript side).
-    :param value: String. Optional. The value to be displayed to this component. Default empty.
-    :param label: String. Optional. The text of label to be added to the component.
-    :param placeholder: String. Optional. The text to be displayed when the input is empty.
-    :param icon: String. Optional. The component icon content from font-awesome references.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper: String. Optional. A tooltip helper.
+    :param str html_code: An identifier for this component (on both Python and Javascript side).
+    :param str value: Optional. The value to be displayed to this component. Default empty.
+    :param str label: Optional. The text of label to be added to the component.
+    :param str placeholder: Optional. The text to be displayed when the input is empty.
+    :param str icon: Optional. The component icon content from font-awesome references.
+    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param str helper: Optional. A tooltip helper.
     """
     inp = self.page.ui.fields.input(
       value=value, label=label, html_code="%s_input" % html_code, placeholder=placeholder, icon=icon, profile=profile,
@@ -168,11 +168,11 @@ class Forms:
 
     Attributes:
     ----------
-    :param record: List of dict. The Python list of dictionaries.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param List[dict] record: The Python list of dictionaries.
+    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param str helper: Optional. A tooltip helper.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
     components = []
     for i, rec in enumerate(record):
@@ -189,8 +189,9 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def subscribe(self, value: str = "", placeholder: str = "Enter email address", button: str = "Subscribe",
-                width: tuple =(100, '%'), height: tuple = (None, 'px'), options: dict = None,
+  def subscribe(self, value: str = "", placeholder: str = "Enter email address",
+                button: Union[html.Html.Html, str] = "Subscribe",
+                width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, 'px'), options: dict = None,
                 profile: Union[dict, bool] = False):
     """
     Description:
@@ -204,12 +205,12 @@ class Forms:
     Attributes:
     ----------
     :param value: Optional. The value to be displayed to this component. Default empty.
-    :param placeholder: String. Optional. The text to be displayed when the input is empty.
-    :param button: HTML Component | String. The button component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param str placeholder: Optional. The text to be displayed when the input is empty.
+    :param Union[html.Html.Html, str] button: The button component.
+    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
+    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
+    :param dict options: Optional. Specific Python options available for this component.
+    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
     input_component = self.page.ui.input(text=value, placeholder=placeholder)
     input_component.attr["class"].add("form-control")

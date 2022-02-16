@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
+from epyk.core.html import Defaults_html
 
 
 class ApexChart:
@@ -11,36 +13,10 @@ class ApexChart:
     self.page = ui.page
     self.chartFamily = "Apex"
 
-  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
-    """
-    Description:
-    ------------
-
-    :tags:
-    :categories:
-
-    Usage::
-
-    Attributes:
-    ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    """
-    if y is not None and not isinstance(y, list):
-      y = [y]
-    return getattr(self, kind)(records=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
-                               options=options, html_code=html_code)
-
-  def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[int, tuple] = (100, "%"),
+           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),  options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -83,8 +59,40 @@ class ApexChart:
     chart.options.chart.type = "line"
     return chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+  def plot(self, record=None, y: list = None, x: str = None, kind: str = "line", profile: Union[dict, bool] = None,
+           width: Union[int, tuple] = (100, "%"),
+           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
+           html_code: str = None):
+    """
+    Description:
+    ------------
+
+    :tags:
+    :categories:
+
+    Usage::
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The list of dictionaries with the input data.
+    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param kind: String. Optional. The chart type.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    if y is not None and not isinstance(y, list):
+      y = [y]
+    return getattr(self, kind)(records=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+                               options=options, html_code=html_code)
+
+  def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              width: Union[int, tuple] = (100, "%"),
+              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
+              html_code: str = None):
     """
     Description:
     ------------
@@ -129,8 +137,9 @@ class ApexChart:
     chart.options.chart.type = "scatter"
     return chart
 
-  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, html_code=None):
+  def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+          options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -173,8 +182,9 @@ class ApexChart:
     chart.options.chart.type = "bar"
     return chart
 
-  def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+           options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -218,8 +228,9 @@ class ApexChart:
     chart.options.plotOptions.bar.horizontal = True
     return chart
 
-  def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+           options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -262,8 +273,9 @@ class ApexChart:
     chart.options.chart.type = "area"
     return chart
 
-  def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def radar(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+            options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -302,8 +314,9 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def polar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def polar(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+            options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -342,8 +355,9 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, html_code=None):
+  def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+          options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -386,8 +400,9 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+            options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -430,8 +445,9 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def radial(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, html_code=None):
+  def radial(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+             options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -468,8 +484,9 @@ class ApexChart:
     chart.options.chart.type = "radialBar"
     return chart
 
-  def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, html_code=None):
+  def bubble(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+             options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -505,8 +522,9 @@ class ApexChart:
     chart.options.chart.type = "bubble"
     return chart
 
-  def heatmap(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def heatmap(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+              options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -542,8 +560,9 @@ class ApexChart:
     chart.options.chart.type = "heatmap"
     return chart
 
-  def treemap(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+  def treemap(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+              options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -579,8 +598,8 @@ class ApexChart:
     chart.options.chart.type = "treemap"
     return chart
 
-  def gauge(self, values=0, labels="", profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def gauge(self, values: float = 0, labels: str = "", profile=None, width: Union[int, tuple] = (100, "%"),
+            height: Union[int, tuple] = (330, "px"), options: dict = None, html_code: str = None):
     """
     Description:
     ------------

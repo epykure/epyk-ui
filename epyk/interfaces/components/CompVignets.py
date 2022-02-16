@@ -3,6 +3,7 @@
 
 import os
 
+from typing import Union, List
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -12,8 +13,9 @@ class Vignets:
   def __init__(self, ui):
     self.page = ui.page
 
-  def bubble(self, records=None, width=(70, "px"), height=("auto", ''), color=None, background_color=None,
-             helper=None, options=None, profile=None):
+  def bubble(self, records=None, width: Union[tuple, int] =(70, "px"), height: Union[tuple, int] = ("auto", ''),
+             color: str = None, background_color: str = None, helper: str = None, options: dict = None,
+             profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -82,8 +84,10 @@ class Vignets:
     html.Html.set_component_skin(div)
     return div
 
-  def number(self, number, label="", title=None, align="center", components=None, width=('auto', ""),
-             height=(None, "px"), profile=None, options=None, helper=None):
+  def number(self, number: float, label: str = "", title: str = None, align: str = "center",
+             components=None, width: Union[tuple, int] = ('auto', ""),
+             height: Union[tuple, int] = (None, "px"), profile: Union[dict, bool] = None, options: dict = None,
+             helper: str = None):
     """
     Description:
     ------------
@@ -155,8 +159,9 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def block(self, records=None, color=None, border='auto', width=(300, 'px'), height=(None, 'px'),
-            helper=None, options=None, profile=None):
+  def block(self, records=None, color: str = None, border: str = 'auto', width: Union[tuple, int] = (300, 'px'),
+            height: Union[tuple, int] = (None, 'px'), helper: str = None, options: dict = None,
+            profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -195,8 +200,9 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def text(self, records=None, width=(None, '%'), height=(None, "px"), align='center', helper=None, options=None,
-           profile=None):
+  def text(self, records=None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, "px"),
+           align: str = 'center', helper: str = None, options: dict = None,
+           profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -227,8 +233,9 @@ class Vignets:
     html.Html.set_component_skin(html_text)
     return html_text
 
-  def image(self, title=None, content="", image=None, render="row", align="center", width=(90, '%'),
-            height=(None, "px"), options=None, profile=None):
+  def image(self, title: str = None, content: str = "", image: str = None, render: str = "row", align: str = "center",
+            width: Union[tuple, int] = (90, '%'), height: Union[tuple, int] = (None, "px"), options: dict = None,
+            profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -316,8 +323,9 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def video(self, title, content="", video=None, render="row", align="center", width=(90, '%'), height=(None, "px"),
-            options=None, profile=None):
+  def video(self, title: str, content: str = "", video: str = None, render: str = "row", align: str = "center",
+            width: Union[tuple, int] = (90, '%'), height: Union[tuple, int] = (None, "px"),
+            options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -396,8 +404,9 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def background(self, url, width=(90, "%"), height=(450, "px"), size="contain", margin=0, align="center",
-                 position="middle", options=None, profile=None):
+  def background(self, url: str, width: Union[tuple, int] = (90, "%"), height: Union[tuple, int] = (450, "px"),
+                 size: str = "contain", margin: int = 0, align: str = "center",
+                 position: str = "middle", options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -431,8 +440,8 @@ class Vignets:
     html.Html.set_component_skin(div)
     return div
 
-  def vignet(self, title, content, icon=None, render="col", align="center", width=(200, 'px'), options=None,
-             profile=None):
+  def vignet(self, title: str, content: str, icon: str = None, render: str = "col", align: str = "center",
+             width: Union[tuple, int] = (200, 'px'), options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -498,8 +507,10 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def price(self, value, title, items=None, components=None, url=None, align="center", width=(250, 'px'),
-            height=("auto", ''), currency="£", options=None, profile=None, helper=None):
+  def price(self, value, title: str, items: List[html.Html.Html] = None, components: List[html.Html.Html] = None, url: str = None,
+            align: str = "center", width: Union[tuple, int] = (250, 'px'),
+            height: Union[tuple, int] = ("auto", ''), currency: str = "£", options: dict = None,
+            profile: Union[dict, bool] = None, helper: str = None):
     """
     Description:
     ------------
@@ -559,7 +570,8 @@ class Vignets:
     html.Html.set_component_skin(container)
     return container
 
-  def slides(self, start=0, width=(100, '%'), height=(100, "%"), options=None, profile=None):
+  def slides(self, start: int = 0, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, "%"),
+             options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------

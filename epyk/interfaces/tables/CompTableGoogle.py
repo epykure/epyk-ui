@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html import tables as html_tables
 
 
@@ -8,8 +9,9 @@ class Google:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, cols=None, rows=None, width=(100, '%'), height=(None, 'px'), html_code=None,
-            options=None, profile=None):
+  def table(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple] = (100, '%'),
+            height: Union[int, tuple] = (None, 'px'), html_code: str = None,
+            options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
     ------------
