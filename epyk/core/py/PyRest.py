@@ -13,6 +13,7 @@ Modules wrapped as part of this script
 
 from epyk.core.py import primitives
 
+import csv
 import hashlib
 import os
 import json
@@ -219,9 +220,12 @@ class PyRest:
     Attributes:
     ----------
     :param str url: Should be a string containing a valid URL
-    :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such data is needed
-    :param str encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to percent-encode the URL and to convert the body to str (if given as unicode)
-    :param dict headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with each key and value as arguments
+    :param data: Optional. Must be an object specifying additional data to send to the server, or None if no such
+      data is needed
+    :param str encoding: Optional. the encoding of this request (defaults to 'utf-8'). This encoding will be used to
+      percent-encode the URL and to convert the body to str (if given as unicode)
+    :param dict headers: Optional. Should be a dictionary, and will be treated as if add_header() was called with
+      each key and value as arguments
     :param bool unverifiable: Optional. Should indicate whether the request is unverifiable, as defined by RFC 2965
     :param dict proxy: Optional.
 
@@ -244,7 +248,7 @@ class PyRest:
 
   @staticmethod
   def csv(url: str, delimiter: str = ",", encoding: str = 'utf-8', with_header: bool = True,
-          store_location: str = None):
+          store_location: str = None, quotechar: str = '"'):
     """
     Description:
     ------------
@@ -256,8 +260,9 @@ class PyRest:
     :param str delimiter: Optional. The line delimiter.
     :param str encoding: Optional. The encoding format.
     :param bool with_header: Optional. A flag to mention if the header is available. (it will be used for the keys)
-    :param str store_location: Optional. String. The temp folder to cache the data locally. False will cancel the
-    temps data retrievall
+    :param str store_location: Optional. The temp folder to cache the data locally. False will cancel the
+      temps data retrieval
+    :param str quotechar: Optional.
     """
     has_file = str(hashlib.sha1(url.encode()).hexdigest())
     if store_location is None or store_location:
@@ -270,18 +275,19 @@ class PyRest:
       if os.path.isfile(file_path):
         return json.load(open(file_path))
 
-    raw_data = PyRest.webscrapping(url).decode(encoding).splitlines()
     if url.endswith(".tsv"):
       delimiter = "\t"
+    raw_data = list(csv.reader(
+      PyRest.webscrapping(url).decode(encoding).splitlines(), delimiter=delimiter, quotechar=quotechar))
     records = []
     if raw_data:
-      header = raw_data[0].split(delimiter)
+      header = raw_data[0]
       if not with_header:
         line = list(header)
         header = [i for i in range(len(header))]
         records.append(dict(zip(header, line)))
       for line in raw_data[1:]:
-        records.append(dict(zip(header, line.split(delimiter))))
+        records.append(dict(zip(header, line)))
     if store_location is not None:
       file_path = os.path.join(store_location, has_file)
       with open(file_path, "w") as f:

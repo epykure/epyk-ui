@@ -36,8 +36,9 @@ class Plotly:
     """
     return PlotlyBubble(self)
 
-  def scattermapbox(self, record, lon_columns=None, lat_columns=None, text_columns=None,
-                    profile=None, options=None,  width=(100, "%"), height=(430, "px"), html_code=None):
+  def scattermapbox(self, record, lon_columns: list = None, lat_columns: list = None, text_columns: list = None,
+                    profile: Union[dict, bool] = None, options: dict = None,  width: Union[int, tuple] = (100, "%"),
+                    height: Union[int, tuple] = (430, "px"), html_code: str = None):
     """
     Description:
     -----------
@@ -86,8 +87,8 @@ class Plotly:
     # line_chart.layout.mapbox.zoom = 3
     return line_chart
 
-  def density(self, record, y_columns=None, x_axis=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), html_code=None):
+  def density(self, record, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              options: dict = None, width=(100, "%"), height=(330, "px"), html_code=None):
     """
     Description:
     -----------
@@ -123,8 +124,9 @@ class Plotly:
     line_chart.layout.zoom = 3
     return line_chart
 
-  def chorolet(self, record, y_columns=None, x_axis=None, title=None, profile=None, options=None,
-              width=(100, "%"), height=(330, "px"), html_code=None):
+  def chorolet(self, record, y_columns: list = None, x_axis: str = None, title: str = None,
+               options: dict = None, width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (330, "px"),
+               html_code: str = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -160,8 +162,9 @@ class Plotly:
     line_chart.layout.zoom = 3
     return line_chart
 
-  def mapbox(self, record, lon_columns=None, lat_columns=None, text_columns=None, profile=None, options=None,
-             width=(100, "%"), height=(None, "px"), html_code=None):
+  def mapbox(self, record, lon_columns: list = None, lat_columns: list = None, text_columns: list = None,
+             profile: Union[dict, bool] = None, options: dict = None,
+             width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (None, "px"), html_code: str = None):
     series = []
     if lon_columns is not None:
       for i, l in enumerate(lon_columns):
@@ -249,7 +252,7 @@ class PlotlyBubble:
     map_chart.layout.geo.resolution = 150
     return map_chart
 
-  def usa(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, text_columns=None,
+  def usa(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None,
           profile=None, options=None, width=(100, "%"), height=(430, "px"), html_code=None):
     """
     Description:
