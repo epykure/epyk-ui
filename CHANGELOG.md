@@ -1,10 +1,21 @@
 ## [Unreleased]
 
 ### Added
+- Documentation.
+- testing framework.
+- mocks module to test without data.
 
 ### Changed
+- varName argument and property replaced to js_code.
+- HtmlCode replaced by html_code.
+- Remove generic attribute ._src and replaced by component and page.
+- jsData, jsValue replaced by data and value.
+- jsId, varId, varName replaced by js_code.
+- jsFnc replaced by js_funcs.
 
 ### Fixed
+- propagate correctly both component and page in page components.
+
 
 ## [1.7.1] - 2022-01-22
 
