@@ -1,6 +1,14 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## [1.7.2] - 2022-02-23
+
+### Added
 - Documentation.
 - testing framework.
 - mocks module to test without data.
