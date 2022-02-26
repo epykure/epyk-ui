@@ -349,6 +349,7 @@ class OptionsSlider(Options):
 
 
 class OptionsProgBar(Options):
+  component_properties = ("show_percentage", )
 
   @property
   def classes(self):
@@ -441,6 +442,28 @@ class OptionsProgBar(Options):
   @value.setter
   def value(self, val):
     self._config(val)
+
+  @property
+  def rounded(self):
+    """
+    Description:
+    ------------
+    Change the border radius style of the component.
+    """
+    return self.component.style.css.border_radius
+
+  @rounded.setter
+  def rounded(self, val):
+    self.component.style.css.border_radius = val
+    self.css({"border-radius": self.component.style.css.border_radius})
+
+  @property
+  def show_percentage(self):
+    return self._config_get(False)
+
+  @show_percentage.setter
+  def show_percentage(self, flag):
+    self._config(flag)
 
 
 class OptionsMenu(Options):

@@ -5,6 +5,9 @@ from epyk.core.html import Defaults as Defaults_html
 from epyk.core.css.styles.classes import CssStyle
 
 
+BORDER_1PX_EXPR = '1px solid {}'
+
+
 class CssInput(CssStyle.Style):
   """
   Description:
@@ -18,11 +21,11 @@ class CssInput(CssStyle.Style):
     self.attrs.css({'color': 'inherit',
                     'font-family': self.page.body.style.globals.font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-                    'border': '1px solid %s' % self.page.theme.colors[0],
+                    'border': BORDER_1PX_EXPR.format(self.page.theme.colors[0]),
                     'font-size': self.page.body.style.globals.font.normal()})
     self.hover.css({
       'color': self.page.theme.notch(1),
-      'border': '1px solid %s' % self.page.theme.notch(-1),
+      'border': '1px solid %s' % self.page.theme.notch(-3),
     })
 
 
@@ -39,7 +42,7 @@ class CssInputBottom(CssStyle.Style):
     self.attrs.css({'color': 'inherit',
                     'font-family': self.page.body.style.globals.font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-                    'border-bottom': '1px solid %s' % self.page.theme.colors[0],
+                    'border-bottom': BORDER_1PX_EXPR.format(self.page.theme.colors[0]),
                     'font-size': self.page.body.style.globals.font.normal()})
     self.hover.css({
       'color': self.page.theme.notch(1),
@@ -173,7 +176,7 @@ class CssInputTextArea(CssStyle.Style):
 
   def customize(self):
     self.css({"background-color": self.page.theme.colors[0], "color": self.page.theme.greys[-1],
-              'border': '1px solid %s' % self.page.theme.colors[1]})
+              'border': BORDER_1PX_EXPR.format(self.page.theme.colors[1])})
     self.hover.css({'color': self.page.theme.greys[-1]})
 
 
@@ -188,9 +191,9 @@ class CssUIActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.page.theme.notch(),
+    self.css({"border": BORDER_1PX_EXPR.format(self.page.theme.notch(-3)),
               'background-color': self.page.theme.notch()}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.page.theme.notch(),
+    self.hover.css({"border": BORDER_1PX_EXPR.format(self.page.theme.notch(-1)),
                     'background-color': self.page.theme.notch()})
 
 
@@ -210,9 +213,9 @@ class CssUIMenuActive(CssStyle.Style):
   classname = "ui-state-active"
 
   def customize(self):
-    self.css({"border": "1px solid %s" % self.page.theme.notch(),
+    self.css({"border": BORDER_1PX_EXPR.format(self.page.theme.notch()),
               'background-color': self.page.theme.notch()}, important=True)
-    self.hover.css({"border": "1px solid %s" % self.page.theme.notch(),
+    self.hover.css({"border": BORDER_1PX_EXPR.format(self.page.theme.notch()),
                     'background-color': self.page.theme.notch()})
 
 
@@ -236,6 +239,6 @@ class CssAutocompleteItemActive(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'border': "1px solid %s" % self.page.theme.greys[4],
+      'border': BORDER_1PX_EXPR.format(self.page.theme.greys[4]),
       'background': self.page.theme.notch(2),
       "color":  self.page.theme.greys[0]}, important=True)

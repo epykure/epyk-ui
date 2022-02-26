@@ -64,11 +64,7 @@ name: %s}}''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name'))
     return JsHtml.ContentFormatters(self.page, "%s.checked" % self.varName)
 
 
-class InputText:
-
-  def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel):
-    self.component = component
-    self.page = page
+class InputText(JsHtml.JsHtmlRich):
 
   def isEmpty(self, js_funcs: Union[str, list]):
     """

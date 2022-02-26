@@ -81,6 +81,7 @@ class ProgressBar(Html.Html):
   _js__builder__ = '''
 options.value = parseFloat(data);
 %(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
+if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   @property
@@ -121,6 +122,9 @@ options.value = parseFloat(data);
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
+    if self.options.show_percentage:
+      return '<div %s><span style="position: absolute;margin: -1px 0 0 5px; "></span></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+
     return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
 

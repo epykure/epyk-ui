@@ -43,21 +43,21 @@ class OptionsLi(Options):
   def li_css(self):
     """
     """
-    return self.get({})
+    return self._config_get({})
 
   @li_css.setter
   def li_css(self, css):
-    self.set(css)
+    self._config(css)
 
   @property
   def li_class(self):
     """
     """
-    return self.get([])
+    return self._config_get([])
 
   @li_class.setter
   def li_class(self, cls_names):
-    self.set(cls_names)
+    self._config(cls_names)
 
 
 class OptionsItems(Options):

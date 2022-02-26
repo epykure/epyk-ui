@@ -36,6 +36,19 @@ class Aria:
     """
     self.component.attr["aria-%s" % key] = val
 
+  def get(self, key: str, dfl=None):
+    """
+    Description:
+    ------------
+    Get the value of a custom aria.
+
+    Attributes:
+    ----------
+    :param key: The key definition of the aria.
+    :param dfl: The default value.
+    """
+    return self.component.attr.get("aria-%s" % key, dfl)
+
   @property
   def role(self):
     """

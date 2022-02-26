@@ -211,7 +211,7 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def drop(self, data=None, color=None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
+  def drop(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """
     Description:
@@ -234,8 +234,11 @@ class Lists:
     """
     component = self.list(data, color, width, height, html_code, helper, options, profile)
     component.style.css.min_height = 40
-    component.css({"display": "inline-block", "width": '100%', 'text-align': 'center', "margin-top": '5px',
+    component.css({"display": "inline-block", "margin-top": '5px',
                    'border': "1px dashed %s" % self.page.theme.greys[4]})
+    if component.style.css.width.endswith("%") and component.style.css.margin.endswith("px"):
+      component.style.css.width = "calc({} - {}px)".format(
+        component.style.css.width,  2 * int(component.style.css.margin[:-2]))
     component.style.css.padding = 5
     html.Html.set_component_skin(component)
     return component

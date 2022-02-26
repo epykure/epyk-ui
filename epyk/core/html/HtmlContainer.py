@@ -1155,6 +1155,8 @@ class Row(Html.Html):
           self[i].attr["class"].remove("col")
         if 'my-auto' in self[i].attr["class"]:
           self[i].attr["class"].remove("my-auto")
+        self[i].attr["class"].add("col-pixel-width-%s" % val[0])
+        self[i].aria.custom("responsive", False)
     return self
 
   def __len__(self):
@@ -1179,9 +1181,17 @@ class Row(Html.Html):
     cols = []
     if self.options.noGutters:
       self.attr["class"].add('no-gutters')
+    responsive_components = []
+    for component in self.val:
+      if component.aria.get("responsive", True):
+        responsive_components.append(component)
     for i, component in enumerate(self.val):
       if hasattr(component, 'set_size') and self.options.autoSize:
-        component.set_size(12.0 / len(self.val))
+        if component.aria.get("responsive", True):
+          if len(responsive_components) == 1 and len(responsive_components) != len(self.val):
+            component.set_size(None)
+          else:
+            component.set_size(12.0 / len(responsive_components))
       cols.append(component.html() if hasattr(component, 'options') else str(component))
     return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(cols))
 
