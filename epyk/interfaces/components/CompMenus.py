@@ -197,7 +197,11 @@ class Menus:
 
     Usage::
 
-      l = page.ui.lists.list(["A", "B"])
+      page.ui.menus.bar([
+        {"value": "File", "children": [
+          {"url": "Test", "text": "Test"}
+        ]}
+      ])
 
     Underlying HTML Objects:
 
