@@ -22,17 +22,15 @@ class Tree(Html.Html):
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    options['is_root'] = True
     icon_details = cssDefaults.get_icon("folder_open")
-    options['icon_open'] = icon_details["icon"]
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    options['style'] = {"list-style": 'none', 'margin-left': '8px', 'padding-left': 0}
     super(Tree, self).__init__(page, records, profile=profile, options=options,
                                css_attrs={"width": width, 'height': height})
+    self.options.icon_open = icon_details["icon"]
+    self.options.style = {"list-style": 'none', 'margin': '0 5px', 'padding-left': 0}
     self.add_helper(helper)
-    self.css(options['style'])
-    self._jsStyles['click_node'] = None
+    self.css(self.options.style)
 
   @property
   def dom(self) -> JsHtmlTree.JsHtmlTree:
@@ -68,11 +66,13 @@ class Tree(Html.Html):
       data.forEach(function(item, i){
         var li = document.createElement("li");
         var a = document.createElement("a");
+        if(typeof item.css !== "undefined"){for(const attr in item.css){a.style[attr] = item.css[attr]}};
         if(typeof item.items !== 'undefined'){
           var ul = document.createElement("ul"); 
           for(const attr in options.style){ul.style[attr] = options.style[attr]};
           options.builder(ul, item.items, options);
-          var icon = document.createElement("i"); icon.style.marginRight = '5px';
+          var icon = document.createElement("i"); 
+          for(const attr in options.icon_style){icon.style[attr] = options.icon_style[attr]};
           icon.onclick = function(){ 
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
             if(ulDisplay == 'none'){ 
@@ -82,11 +82,13 @@ class Tree(Html.Html):
               this.parentNode.querySelector('ul').style.display = 'none';
               icon.setAttribute("class", options.icon_close)}
           };
-          icon.style.cursor = "pointer";
+          icon.style.cursor = "pointer"; icon.style.color = "grey";
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
           var span = document.createElement("span"); 
           span.innerHTML = item.value;
           span.style.whiteSpace = 'nowrap';
+          if(typeof options.clickNode !== "undefined"){ span.style.cursor = 'pointer';
+            span.onclick = function(event){const value = span.innerText; options.clickNode(event, value)}};
           if (typeof item.tooltip !== "undefined"){span.setAttribute('title', item.tooltip);};
           var badge = document.createElement("span"); 
           if(options.with_badge){
@@ -96,10 +98,15 @@ class Tree(Html.Html):
             badge.style.verticalAlign = "top";
             icon.appendChild(badge);
           };
-          a.appendChild(icon); a.appendChild(span); a.appendChild(ul);
+          a.appendChild(icon); 
+          if (typeof options.with_icon !== "undefined"){
+            var subIcon = document.createElement("i"); subIcon.style.marginRight = "5px";
+            subIcon.setAttribute("class", item[options.with_icon]); a.appendChild(subIcon)};
+          a.appendChild(span); a.appendChild(ul);
         } else {
-          a.innerHTML = item.value;
-          a.style.whiteSpace = 'nowrap';
+          var span = document.createElement("span"); 
+          span.innerHTML = item.value;
+          span.style.whiteSpace = 'nowrap';
           if(item.draggable != false){ 
             a.setAttribute('draggable', true);
             if (typeof item._path !== "undefined"){a.setAttribute("data-path", item._path)};
@@ -109,12 +116,18 @@ class Tree(Html.Html):
               var file_path = this.getAttribute("data-path");
               if (file_path === null){event.dataTransfer.setData("text", value)}
               else{ event.dataTransfer.setData("text", file_path)}}
-          }
+          };
+          if(typeof options.clickLeaf !== "undefined"){a.style.cursor = 'pointer';
+            a.onclick = function(event){const value = a.innerText; options.clickLeaf(event, value)}};
           if (typeof item.url !== "undefined"){
             a.setAttribute("target", item.target || "_blank");
             a.href = item.url}
           a.style.paddingLeft = '18px';
-        }
+          if (typeof options.with_icon !== "undefined"){
+            var subIcon = document.createElement("i"); subIcon.style.marginRight = "5px";
+            subIcon.setAttribute("class", item[options.with_icon]); a.appendChild(subIcon)};
+          a.appendChild(span);
+        };
         li.appendChild(a);
         htmlObj.appendChild(li)
       })'''
@@ -129,10 +142,7 @@ class Tree(Html.Html):
     :param Union[list, str] js_funcs: The Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._jsStyles['click_node'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(
-      js_funcs, toStr=True, profile=profile)
+    self.options.click_node(js_funcs, profile)
     return self
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -148,9 +158,7 @@ class Tree(Html.Html):
     :param Optional[str] source_event: The JavaScript DOM source for the event (can be a sug item).
     :param bool on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    self._jsStyles['click_leaf'] = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True)
+    self.options.click_leaf(js_funcs, profile)
     return self
 
   def __str__(self):
@@ -273,8 +281,8 @@ class DropDown(Html.Html):
           if(typeof rec.url !== "undefined"){a.href= rec.url}; 
           if(typeof options.a !== "undefined"){
             Object.keys(options.a).forEach(function(key){a.style[key] = options.a[key]})}
-          if(typeof options.click !== "undefined"){
-            a.onclick = function(event){const value = a.innerText; options.click(event, value)}};
+          if(typeof options.clickLeaf !== "undefined"){
+            a.onclick = function(event){const value = a.innerText; options.clickLeaf(event, value)}};
           var li = document.createElement("li"); li.style.listStyleType = 'none'; li.style.display = 'list-item';
           li.style.textAlign = '-webkit-match-parent'; li.appendChild(a); htmlObj.appendChild(li)}
       })'''

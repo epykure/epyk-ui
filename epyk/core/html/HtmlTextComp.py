@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# TODO Fix problem context menu in Status
+
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 
@@ -1014,8 +1016,6 @@ class Status(Html.Html):
     self.style.css.line_height = 30
     self.style.css.margin = 2
     self.style.css.padding = '10px auto'
-    self.context = self.page.ui.menus.contextual()
-    self.contextMenu(self.context, js_funcs=[])
 
   @property
   def options(self) -> OptText.OptionsStatus:
@@ -1040,12 +1040,13 @@ class Status(Html.Html):
 
   def __str__(self):
     color_map = self.page.js.data.datamap().attrs(self.options.states)
-    for k, v in self.options.states.items():
-      item = self.context.add(k)
-      item.click([
-        self.context.source.build(item.dom.content),
-        self.context.source.dom.css({"background": color_map.get(item.dom.content)}),
-        self.context.dom.hide()])
-    self.style.css.background = self.options.states.get(self.val, self.options.background)
+    if self.options.change_menu:
+      for k, v in self.options.states.items():
+        item = self.context.add(k)
+        item.click([
+          self.context.source.build(item.dom.content),
+          self.context.source.dom.css({"background": color_map.get(item.dom.content)}),
+          self.context.dom.hide()])
+    self.style.css.background = self.options.states.get(self.val.upper(), self.options.background)
     self.style.css.color = self.options.color
     return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)

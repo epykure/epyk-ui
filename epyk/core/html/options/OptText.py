@@ -546,6 +546,7 @@ class OptionsComposite(Options):
 
 
 class OptionsStatus(Options):
+  component_properties = ("change_menu", )
 
   @property
   def states(self):
@@ -553,11 +554,11 @@ class OptionsStatus(Options):
     Description:
     ------------
     """
-    return self.get(False)
+    return self.get({})
 
   @states.setter
-  def states(self, flag: bool):
-    self.set(flag)
+  def states(self, values: dict):
+    self.set({k.upper(): v for k, v in values.items()})
 
   @property
   def color(self):
@@ -582,6 +583,23 @@ class OptionsStatus(Options):
   @background.setter
   def background(self, color: str):
     self.set(color)
+
+  @property
+  def change_menu(self):
+    """
+    Description:
+    ------------
+    """
+    return self.get(False)
+
+  @change_menu.setter
+  def change_menu(self, flag: bool):
+    self.set(flag)
+    if flag:
+      self.component.context = self.page.ui.menus.contextual(
+        html_code="{}_context".format(
+          self.component.html_code) if self.component.html_code is not None else self.component.html_code)
+      self.component.contextMenu(self.component.context, js_funcs=[])
 
 
 class OptContents(Options):

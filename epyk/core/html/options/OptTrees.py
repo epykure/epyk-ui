@@ -4,7 +4,7 @@ from epyk.core.js import JsUtils
 
 
 class OptionsTree(Options):
-  component_properties = ("icon_close", "with_badge")
+  component_properties = ("icon_close", "with_badge", "is_root", "click_node", "icon_style")
 
   @property
   def is_root(self):
@@ -57,6 +57,25 @@ class OptionsTree(Options):
     self._config(icon)
 
   @property
+  def icon_style(self):
+    """
+    Description:
+    ------------
+    Set the CSS attributes to each node and leaf in the tree.
+
+    Attributes:
+    ----------
+    :prop css: Dictionary. The CSS Style to be used.
+    """
+    return self._config_get({"margin-right": "5px"})
+
+  @icon_style.setter
+  def icon_style(self, css: dict):
+    i_style = dict(self.icon_style)
+    i_style.update(css)
+    self._config(i_style)
+
+  @property
   def expanded(self):
     """
     Description:
@@ -106,6 +125,56 @@ class OptionsTree(Options):
   @with_badge.setter
   def with_badge(self, flag: bool):
     self._config(flag)
+
+  @property
+  def with_icon(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :prop str key: The key in the data used to display an icon.
+    """
+    return self._config_get(None)
+
+  @with_icon.setter
+  def with_icon(self, key: bool):
+    self._config(key)
+
+  def click_node(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+    Add event on the node label.
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+      js_type=True, name="clickNode")
+
+  def click_leaf(self, js_funcs, profile=None):
+    """
+    Description:
+    ------------
+    Add a specific event on the leaf nodes in the hierarchy view.
+
+    Attributes:
+    ----------
+    :param js_funcs: List | String. A Javascript Python function.
+    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+      js_type=True, name="clickLeaf")
 
 
 class OptDropDown(Options):

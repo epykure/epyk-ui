@@ -55,6 +55,60 @@ class JsItemsDef:
       item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
+  def logs(self, page: primitives.PageModel):
+    """
+    Description:
+    ------------
+    Add text items to the list
+
+    Attributes:
+    ----------
+    :param primitives.PageModel page: Page object. The internal page object.
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.style.fontSize = "%(fontSize)s";  
+    var message = document.createElement("DIV"); 
+    message.style.display = "inline-block" ;  
+    if (typeof data.color !== 'undefined'){item.style.borderLeft = "4px solid " + data.color;}
+    else {item.style.borderLeft = "4px solid %(color)s"}
+    item.style.borderBottom = "1px solid white";
+    item.style.borderTop = "1px solid white";
+    var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
+    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "55px" ; 
+    var elapsedTime = "";
+    if (typeof data.d !== 'undefined'){elapsedTime = data.d + "d";}
+    if (typeof data.h !== 'undefined'){elapsedTime = elapsedTime + " "+ data.h + "h";}
+    if (typeof data.m !== 'undefined'){elapsedTime = elapsedTime + " "+ data.m + "m";}
+    if (typeof data.s !== 'undefined'){elapsedTime = elapsedTime + " "+ data.s + "s";}
+    log.innerHTML = elapsedTime;
+    if(options.click != null){ 
+      item.style.cursor = 'pointer';
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
+      message.onclick = function(event){
+         var dataValue = message.getAttribute('data-valid');
+         if(dataValue == 'true'){
+           message.classList.remove('list_text_selected');
+           message.setAttribute('data-valid', false)}
+         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+         var value = this.innerHTML; options.click(event, value)}
+    } else {
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
+    if(options.draggable != false){ 
+      message.setAttribute('draggable', true);
+      message.style.cursor = 'grab';
+      message.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
+    }
+    if(typeof options.style !== 'undefined'){
+      Object.keys(options.style).forEach(function(key){message.style[key] = options.style[key] })}
+    if(typeof data === 'object'){ 
+      message.innerHTML = data.text} else { message.innerHTML = data };
+    item.appendChild(log);
+    item.appendChild(message);
+    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(-5),
+           "color": page.theme.notch()}
+    return self._item(item_def)
+
   def tweet(self, page: primitives.PageModel):
     """
     Description:

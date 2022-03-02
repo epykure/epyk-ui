@@ -11,10 +11,14 @@ def size(value: Any, unit: str = "%"):
   Wrapper to allow size arguments to be more flexible.
   By using this in the interface it is possible to then use float values instead of the usual tuples.
 
+  Related Pages:
+
+    https://www.w3schools.com/cssref/css_units.asp
+
   Attributes:
   ----------
-  :param value: Integer. The value for this argument
-  :param unit: String. Optional. The unit for the argument. Default %.
+  :param value: The value for this argument
+  :param unit: Optional. The unit for the argument. Default %.
   """
   if isinstance(value, tuple):
     return value
@@ -23,9 +27,19 @@ def size(value: Any, unit: str = "%"):
     return value, ''
 
   else:
-    if value is not None and value > 100 and unit == "%":
-      unit = "px"
+    if isinstance(value, str):
+      if value.endswith("%"):
+        unit = value[-1:]
+        value = value[:-1]
+      else:
+        unit = value[-2:]
+        if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:
+          raise ValueError("Unit not recognised {}".format(unit))
 
+        value = int(value[:-2])
+    else:
+      if value is not None and value > 100 and unit == "%":
+        unit = "px"
   return value, unit
 
 

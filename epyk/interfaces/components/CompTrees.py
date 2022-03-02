@@ -23,6 +23,20 @@ class Trees:
       data = [{"value": 'test', 'items': [{"value": 'child 1', 'color': 'red'}]}]
       page.ui.lists.tree(data)
 
+      data = [{"value": 'test', 'icon': "fas fa-check", "css": {'color': 'green'}, 'items': [{
+        "value": 'child 1', "css": {'color': 'red'}, 'icon': "fas fa-times"}]},
+              {"value": 'test 2', 'icon': "fas fa-exclamation-triangle", "css": {'color': 'orange'}, 'items': [{
+                "value": 'child 1', "css": {'color': 'red'}, 'icon': "fas fa-times"}],
+               }]
+
+      hyr = page.ui.tree(data)
+      hyr.options.icon_close = "fas fa-caret-right"
+      hyr.options.icon_open = "fas fa-caret-down"
+      hyr.options.with_badge = True
+      hyr.options.with_icon = "icon"
+      hyr.click_node([page.js.alert(pk.events.value)])
+      hyr.click([page.js.alert(pk.events.value)])
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTrees.Tree`

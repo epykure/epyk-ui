@@ -300,7 +300,7 @@ class Chart(Html.Html):
     self._data_attrs['labels'] = labels
     return self
 
-  def label(self, i, name):
+  def label(self, i: int, name: str):
     """
     Description:
     -----------
@@ -369,8 +369,12 @@ class Chart(Html.Html):
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
     for i, rec in enumerate(self._datasets):
-      rec.backgroundColor = self.options.background_colors[i]
-      rec.borderColor = self.options.colors[i]
+      if self._chart__type in ["pie", "polarArea"]:
+        rec.backgroundColor = self.options.background_colors
+        rec.borderColor = self.options.colors
+      else:
+        rec.backgroundColor = self.options.background_colors[i]
+        rec.borderColor = self.options.colors[i]
       rec.borderWidth = 1
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
@@ -981,9 +985,9 @@ class ChartPolar(Chart):
     else:
       data = JsChartJs.DataSetPolar(self.page, attrs={"data": data})
     data.set_style(
-      background_color=self.options.background_colors[index],
+      background_color=self.options.background_colors,
       fill_opacity=self.options.opacity, border_width=1,
-      border_color=colors or self.options.colors[index])
+      border_color=colors or self.options.colors)
     data.label = label
     return data
 

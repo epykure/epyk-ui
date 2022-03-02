@@ -381,11 +381,11 @@ class OptionsStepper(Options):
     ------------
 
     """
-    return self._config_get(100)
+    return self.svg_style['width']
 
   @width.setter
-  def width(self, num):
-    self._config(num)
+  def width(self, num: int):
+    self.svg_style['width'] = num
 
   @property
   def shape(self):

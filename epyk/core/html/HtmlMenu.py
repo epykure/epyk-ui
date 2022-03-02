@@ -257,10 +257,10 @@ class ContextMenu(Html.Html):
   _option_cls = OptList.OptionsLi
 
   def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: str, height: str,
-               visible: bool, options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    super(ContextMenu, self).__init__(page, [], css_attrs={"width": width, "height": height},
+               visible: bool, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+    super(ContextMenu, self).__init__(page, [], css_attrs={"width": width, "height": height}, html_code=html_code,
                                       profile=profile, options=options)
-    self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 200,
+    self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 400,
               'padding': 0, 'margin': 0, 'background-color': self.page.theme.greys[0],
               'border': '1px solid %s' % self.page.theme.success[0], 'border-radius': '2px'})
     self.style.configs.shadow()
@@ -328,11 +328,19 @@ class ContextMenu(Html.Html):
           i.css({'display': 'inline', 'margin-right': '5px'})
           v = self.page.ui.text(component['value'])
           v.css({'display': 'inline'})
-          component = self.page.ui.div([i, v])
+          component = self.page.ui.div(
+            [i, v], html_code="{}_context_item_{}".format(
+              self.html_code, len(self.val)) if self.html_code is not None else self.html_code)
         else:
-          component = self.page.ui.div(component['value'])
+          component = self.page.ui.div(
+            component['value'],
+            html_code="{}_context_item_{}".format(
+              self.html_code, len(self.val)) if self.html_code is not None else self.html_code)
       else:
-        component = self.page.ui.div(component)
+        component = self.page.ui.div(
+          component,
+          html_code="{}_context_item_{}".format(
+            self.html_code, len(self.val)) if self.html_code is not None else self.html_code)
     li_obj = Li(self.page, component) if not isinstance(component, Li) else component
     li_obj.css({"padding": "5px", 'cursor': 'pointer'})
     li_obj.options.managed = False

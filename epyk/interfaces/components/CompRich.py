@@ -458,12 +458,15 @@ class Rich:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {'states': {"Done": 'green', 'In Progress': 'orange', 'Blocked': 'red'}}
+    dfl_options = {'states': {
+      "Done": 'green', "Success": 'green',
+      'In Progress': 'orange', 'Blocked': 'brown', 'Failed': 'red'}}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     html_help = html.HtmlTextComp.Status(
-      self.page, status, width=width, height=height, html_code=html_code, profile=profile, options=dflt_options)
+      self.page, status, width=width, height=height, html_code=html_code, profile=profile, options=dfl_options)
     html.Html.set_component_skin(html_help)
+    html_help.style.css.inline()
     return html_help
 
   def markdown(self, text="", width=("calc(100% - 10px)", ''), height=("auto", ''), html_code=None, options=None,

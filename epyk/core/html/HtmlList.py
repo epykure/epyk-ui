@@ -31,7 +31,8 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
   name = 'Entries'
 
-  def __init__(self, page: primitives.PageModel, text: str, options: dict = None, html_code: str = None):
+  def __init__(self, page: primitives.PageModel, text: Union[str, Html.Html], options: dict = None,
+               html_code: str = None):
     super(Li, self).__init__(page, text, html_code=html_code)
     if options is not None:
       self.item_type = options.get("item_type", "li")

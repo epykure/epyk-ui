@@ -19,8 +19,8 @@ class Stepper(Html.Html):
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
     dfl_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0] - 20}, 'circle_factor': 2,
                    'text_style': {'display': 'block', 'text-align': 'center'},
-                   'backgrounds': {"success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0',
-                                    'pending': '#FF9200'},
+                   'backgrounds': {
+                     "success": '#37A78C', 'error': '#FF0000', 'waiting': '#A0A0A0', 'pending': '#FF9200'},
                    'success': ["#C9EDE4", "#63CBB2", "#37A78C"],
                    'error': ["#F8CBAD", "#FF5757", "#FF0000"],
                    'pending': ["#FFDEB3", "#FFB047", "#FF9200"],

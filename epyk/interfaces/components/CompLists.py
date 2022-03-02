@@ -276,6 +276,8 @@ class Lists:
       dft_options.update(options)
     html_item = html.HtmlList.Items(self.page, records or [], width, height, dft_options, html_code, profile, helper)
     html_item.css({"list-style-type": 'none'})
+    if height[0] is not None and height[1] == "px":
+      html_item.css({"overflow-y": 'auto'})
     html.Html.set_component_skin(html_item)
     return html_item
 
