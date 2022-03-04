@@ -822,6 +822,7 @@ class Badge(Html.Html):
       self.link = self.page.ui.text(text).css(
         {'display': 'inline-block', "padding": "2px", "width": "auto"})
     self.link.css(self.options.badge_css)
+    self.link.attr["name"] = "badge-value"
     self.link.css(
       {"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
        'background': background_color, 'top': "-5px"})
@@ -829,6 +830,32 @@ class Badge(Html.Html):
     self.attr['class'].add("badge")
     if tooltip is not None:
       self.tooltip(tooltip)
+
+  _js__builder__ = '''
+      htmlObj.innerHTML = data; 
+      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
+
+  @property
+  def dom(self) -> JsHtml.JsHtml:
+    """
+    Description:
+    -----------
+    Return all the Javascript functions defined for an HTML Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage::
+
+      div = page.ui.div(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+
+    :rtype: JsHtml.JsHtml
+    """
+    if self._dom is None:
+      self._dom = JsHtml.JsHtml(component=self, page=self.page)
+      self._dom.varName = "document.getElementById('%s').querySelector('div[name=badge-value]')" % self.htmlCode
+    return self._dom
 
   @property
   def options(self) -> OptButton.OptionsBadge:

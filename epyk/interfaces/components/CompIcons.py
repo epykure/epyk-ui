@@ -1494,10 +1494,12 @@ class Icons:
     if background_color is None:
       background_color = self.page.theme.greys[0]
     if color is None:
-      color = self.page.theme.success[1]
+      color = self.page.theme.white
     container = html.HtmlImage.Badge(
       self.page, text, width, height, None, icon, background_color, color, url, tooltip, options or {}, profile)
     html.Html.set_component_skin(container)
+    container.link.style.css.padding = 5
+    container.link.style.css.font_factor(-7)
     return container
 
   def date(self, value=None, label=None, icon="calendar", color=None, width=(None, "px"), height=(None, "px"),

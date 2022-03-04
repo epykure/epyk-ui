@@ -214,13 +214,14 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
-    dfl_options = {'cutoutPercentage': 50, 'y_columns': y_columns or [], 'x_axis': x_axis,
-                    'commons': {"opacity": self.opacity}}
+    dfl_options = {
+      'cutoutPercentage': 50, 'y_columns': y_columns or [], 'x_axis': x_axis,
+      'commons': {"opacity": self.opacity}}
     if options is not None:
       dfl_options.update()
     pie_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, dfl_options, profile)
     pie_chart.colors(self.page.theme.charts)
-    pie_chart._attrs["type"] = "doughnut"
+    pie_chart.options.type = "doughnut"
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
