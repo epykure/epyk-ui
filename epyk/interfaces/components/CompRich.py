@@ -231,7 +231,7 @@ class Rich:
     html.Html.set_component_skin(html_cd)
     return html_cd
 
-  def update(self, label=None, color=None, align="left", width=(100, "%"), height=(None, "px"), html_code=None,
+  def update(self, label=None, color=None, align: str = None, width=("auto", ""), height=(None, "px"), html_code=None,
              options=None, profile=None):
     """
     Description:
@@ -270,10 +270,15 @@ class Rich:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     component = html.HtmlDates.LastUpdated(self.page, label, color, width, height, html_code, options, profile)
+    component.style.css.font_factor(-5)
     if align in ("center", "right"):
       component.style.css.margin = "auto"
       component.style.css.display = "block"
       component.style.css.text_align = align
+    elif align == "left":
+      component.style.css.display = "block"
+    else:
+      component.style.css.inline()
     html.Html.set_component_skin(component)
     return component
 

@@ -920,3 +920,20 @@ class OptSearchResult(Options):
   @white.setter
   def white(self, color: str):
     self._config(color)
+
+
+class OptionsUpdate(Options):
+
+  @property
+  def icon(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+    """
+    return self._config_get(None)
+
+  @icon.setter
+  def icon(self, text: str):
+    self._config(text)

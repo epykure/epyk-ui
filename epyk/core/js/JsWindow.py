@@ -1021,7 +1021,7 @@ class JsWindow:
     return JsObject.JsObject("%s.btoa(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)), is_py_data=False)
 
   def setInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds: int, window_id: str = "window",
-                  set_var: bool = True, profile=False):
+                  set_var: bool = True, profile=False, run_on_start: bool = False):
     """
     Description:
     ------------
@@ -1048,7 +1048,8 @@ class JsWindow:
     If the value is less than 10, the value 10 is used.
     :param str window_id: The JavaScript window object.
     :param bool set_var: Set the variable on the JavaScript side.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param bool profile: A flag to set the component performance storage.
+    :param bool run_on_start: Flag to start the call at the start.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if set_var:
@@ -1057,9 +1058,16 @@ class JsWindow:
         var_id = "window['%s']" % var_id
       else:
         var_id = "var %s" % var_id
+      if run_on_start:
+        return JsFncs.JsFunction(
+          "%s; %s = %s.setInterval(function(){%s}, %s)" % (
+            JsUtils.jsConvertFncs(js_funcs, toStr=True), var_id, window_id, js_funcs, milliseconds))
 
-      return JsFncs.JsFunction(
-        "%s = %s.setInterval(function(){%s}, %s)" % (var_id, window_id, js_funcs, milliseconds))
+      return JsFncs.JsFunction("%s = %s.setInterval(function(){%s}, %s)" % (var_id, window_id, js_funcs, milliseconds))
+
+    if run_on_start:
+      return JsFncs.JsFunction("%s; %s.setInterval(function(){%s}, %s)" % (
+        JsUtils.jsConvertFncs(js_funcs, toStr=True), window_id, js_funcs, milliseconds))
 
     return JsFncs.JsFunction("%s.setInterval(function(){%s}, %s)" % (window_id, js_funcs, milliseconds))
 

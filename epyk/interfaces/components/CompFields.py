@@ -905,7 +905,7 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def select(self, value: bool = False, label: str = None, icon: str = None, selected=None,
+  def select(self, value: list = None, label: str = None, icon: str = None, selected=None,
              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
              helper: str = None, options: dict = None, multiple: bool = False, profile=None):
     """

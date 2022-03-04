@@ -824,7 +824,7 @@ class Badge(Html.Html):
     self.link.css(self.options.badge_css)
     self.link.attr["name"] = "badge-value"
     self.link.css(
-      {"color": color, "border-radius": "20px", 'margin-left': '2px', 'position': 'relative', 'right': '12px',
+      {"color": color, "border-radius": "20px", 'margin-left': '2px', 'right': '12px',
        'background': background_color, 'top': "-5px"})
     self.link.options.managed = False
     self.attr['class'].add("badge")

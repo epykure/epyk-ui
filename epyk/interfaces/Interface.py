@@ -8,6 +8,7 @@ from epyk.core import html
 
 from epyk.core.css import Defaults_css
 
+from epyk.interfaces.components import CompAnimations
 from epyk.interfaces.components import CompLayouts
 from epyk.interfaces.components import CompCodes
 from epyk.interfaces.components import CompButtons
@@ -1241,16 +1242,22 @@ class Components:
         ] + save_funcs, profile=profile)
       menu_items.append(r)
     if update_funcs is not None:
-      r = self.page.ui.icons.awesome(
-        "fas fa-sync-alt", tooltip="Sync", height=height, width=(15, 'px'), options=options, profile=profile)
-      #r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-5)
-      r.style.css.font_factor(-5)
-      #r.span.style.css.margin = "0 2px -3px -3px"
-      r.click([
-                r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
-                self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
-              ] + update_funcs, profile=profile)
+      if options.get("auto") is None:
+        r = self.page.ui.icons.awesome(
+          "fas fa-sync-alt", tooltip="Sync", height=height, width=(15, 'px'), options=options, profile=profile)
+        #r.span.style.css.line_height = r.style.css.height
+        r.icon.style.css.font_factor(-5)
+        r.style.css.font_factor(-5)
+        #r.span.style.css.margin = "0 2px -3px -3px"
+        r.click([
+                  r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+                  self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+                ] + update_funcs, profile=profile)
+      else:
+        self.page.body.onReady([
+          self.page.js.window.setInterval(
+            update_funcs, "%s_interval" % component.htmlCode, milliseconds=options.get("auto") * 1000,
+            profile=profile, run_on_start=options.get("run_on_start", True))])
       menu_items.append(r)
     trash = self.page.ui.icons.awesome(
       "fas fa-trash", height=height, width=(10, 'px'), options=options, profile=profile)
@@ -1270,6 +1277,10 @@ class Components:
   @property
   def pyk(self) -> pyks.Bespoke:
     return pyks.Bespoke(self)
+
+  @property
+  def animations(self):
+    return CompAnimations.Animations(self)
 
 
 class WebComponents:

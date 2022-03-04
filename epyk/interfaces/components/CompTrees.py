@@ -58,6 +58,7 @@ class Trees:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options or {}, profile)
+    html_tree.style.css.font_factor(-4)
     html.Html.set_component_skin(html_tree)
     return html_tree
 

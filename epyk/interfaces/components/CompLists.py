@@ -640,6 +640,7 @@ class Lists:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options, profile)
+    html_tree.style.css.font_factor(-2)
     html.Html.set_component_skin(html_tree)
     return html_tree
 
@@ -929,8 +930,8 @@ class Lists:
     html.Html.set_component_skin(html_f)
     return html_f
 
-  def menu(self, component, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'), save_funcs=None, update_funcs=None,
-           editable: bool = False, options: dict = None, profile: Union[bool, dict] = None,
+  def menu(self, component, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'), save_funcs=None,
+           update_funcs=None, editable: bool = False, options: dict = None, profile: Union[bool, dict] = None,
            checks: tuple = ("fas fa-check-square", "far fa-square")):
 
     commands = [("Add&nbsp;", "fas fa-plus")] if add else []
@@ -978,24 +979,12 @@ class Lists:
         self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
       ] + save_funcs, profile=profile)
       menu_items.append(r)
-    if update_funcs is not None:
-      r = self.page.ui.icons.awesome(
-        "refresh", tooltip="Sync", height=height, width=(15, 'px'), options=options, profile=profile)
-      #r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-5)
-      r.style.css.font_factor(-5)
-     # r.span.style.css.margin = "0 2px -3px -3px"
-      r.click([
-        r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
-        self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
-      ] + update_funcs, profile=profile)
-      menu_items.append(r)
     if not editable:
-      container = self.page.ui.menu(component, title=title, menu_items=menu_items, editable=editable)
+      container = self.page.ui.menu(component, update_funcs=update_funcs, title=title, menu_items=menu_items, editable=editable, options=options)
     elif editable is True:
-      container = self.page.ui.menu(component, title=title, menu_items=menu_items)
+      container = self.page.ui.menu(component, update_funcs=update_funcs, title=title, menu_items=menu_items, options=options)
     else:
-      container = self.page.ui.menu(component, title=title, menu_items=menu_items, editable=editable)
+      container = self.page.ui.menu(component, update_funcs=update_funcs, title=title, menu_items=menu_items, editable=editable, options=options)
     html.Html.set_component_skin(container)
     return container
 
