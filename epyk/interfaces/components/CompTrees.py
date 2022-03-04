@@ -90,35 +90,57 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def menu(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
-           html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
-
-    Usage::
-
-    Underlying HTML Objects:
-
-      - :class:`epyk.core.html.HtmlEvent.Menu`
-
-    Attributes:
-    ----------
-    :param data:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
-
-    #TODO Ask if this module is still maintained.
-    """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    html_tree = html.HtmlEvent.Menu(self.page, data or [], width, height, html_code, helper, options or {}, profile)
-    html.Html.set_component_skin(html_tree)
-    return html_tree
+  def menu(self, component:  html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'), update_funcs=None,
+           options: dict = None, profile: Union[bool, dict] = None,
+           checks: tuple = ("fas fa-check-square", "far fa-square")):
+    commands = [
+      ("", "fas fa-compress-arrows-alt", "Compress", 15),
+      ("", "fas fa-expand-arrows-alt", "Expand", 15),
+    ]
+    if add:
+      commands.append(("Add&nbsp;", "fas fa-plus", "Add", 15))
+    options = options or {}
+    menu_items = []
+    for typ, icon, tooltip, size in commands:
+      if icon:
+        if isinstance(icon, tuple):
+          icon = icon[0]
+        r = self.page.ui.icons.awesome(
+          icon, tooltip=tooltip, text=typ, height=height, width=(size, 'px'), options=options, profile=profile)
+        r.span.style.css.line_height = r.style.css.height
+        r.icon.style.css.font_factor(-5)
+        r.style.css.font_factor(-5)
+        r.span.style.css.margin = "0 0 -3px -3px"
+        if tooltip == "Add&nbsp;":
+          r.click([
+            component.dom.add(""),
+            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+          ])
+        elif tooltip == "Compress":
+          r.click([
+            component.dom.hide()
+          ])
+        elif tooltip == "Expand":
+          r.click([
+            component.dom.expand()
+          ])
+        menu_items.append(r)
+    if update_funcs is not None:
+      r = self.page.ui.icons.awesome(
+        "refresh", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
+      r.span.style.css.line_height = r.style.css.height
+      r.icon.style.css.font_factor(-5)
+      r.style.css.font_factor(-5)
+      r.span.style.css.margin = "0 2px -3px -3px"
+      r.click([
+                r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+                self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
+              ] + update_funcs, profile=profile)
+      menu_items.append(r)
+    container = self.page.ui.menu(component, title=title, menu_items=menu_items, editable=False)
+    html.Html.set_component_skin(container)
+    return container
 
   def dropdown(self, record=None, text: str = "", width: Union[tuple, int] = (100, "%"),
                height: Union[tuple, int] = (None, 'px'), html_code: str = None, helper: str = None,

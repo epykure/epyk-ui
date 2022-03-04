@@ -401,7 +401,6 @@ class Navigation:
       for component in components:
         nav_bar.add(component)
     html.Html.set_component_skin(nav_bar)
-    html.Html.set_component_skin(nav_bar)
     return nav_bar
 
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
@@ -498,8 +497,6 @@ window.prevScrollpos = currentScrollPos;
 
     :tags:
     :categories:
-
-    Usage::
 
     Underlying HTML Objects:
 

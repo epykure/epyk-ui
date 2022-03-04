@@ -50,6 +50,10 @@ class CssTitle4(CssStyle.Style):
     self.css({"color": self.page.theme.greys[5]})
 
 
+class CssTitle5(CssStyle.Style):
+  _attrs = {'padding': 0, 'margin': '2px 0 0 0', 'font-weight': 'bold', 'width': '100%', 'white-space': 'pre-wrap'}
+
+
 class CssTitle(CssStyle.Style):
   _attrs = {'padding': 0, 'margin-bottom': 0, 'white-space': 'pre-wrap', 'font-weight': 'bold'}
 

@@ -30,6 +30,7 @@ class Tree(Html.Html):
     self.options.icon_open = icon_details["icon"]
     self.options.style = {"list-style": 'none', 'margin': '0 5px', 'padding-left': 0}
     self.add_helper(helper)
+    self.attr["data-depth"] = 1
     self.css(self.options.style)
 
   @property
@@ -69,9 +70,12 @@ class Tree(Html.Html):
         if(typeof item.css !== "undefined"){for(const attr in item.css){a.style[attr] = item.css[attr]}};
         if(typeof item.items !== 'undefined'){
           var ul = document.createElement("ul"); 
+          ul.setAttribute("data-depth", parseInt(htmlObj.getAttribute("data-depth")) + 1);
+          ul.setAttribute("data-parent", item.value);
           for(const attr in options.style){ul.style[attr] = options.style[attr]};
           options.builder(ul, item.items, options);
           var icon = document.createElement("i"); 
+          icon.setAttribute("name", "item_arrow");
           for(const attr in options.icon_style){icon.style[attr] = options.icon_style[attr]};
           icon.onclick = function(){ 
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
@@ -85,10 +89,14 @@ class Tree(Html.Html):
           icon.style.cursor = "pointer"; icon.style.color = "grey";
           options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
           var span = document.createElement("span"); 
-          span.innerHTML = item.value;
+          span.setAttribute("data-value", item.value);
+          if(typeof item.label !== "undefined"){span.innerHTML = item.label;}
+          else {span.innerHTML = item.value};
+          span.setAttribute("name", "item_value");
           span.style.whiteSpace = 'nowrap';
           if(typeof options.clickNode !== "undefined"){ span.style.cursor = 'pointer';
-            span.onclick = function(event){const value = span.innerText; options.clickNode(event, value)}};
+            span.onclick = function(event){const value = span.innerText; const data = span.getAttribute("data-value"); 
+            options.clickNode(event, value, data)}};
           if (typeof item.tooltip !== "undefined"){span.setAttribute('title', item.tooltip);};
           var badge = document.createElement("span"); 
           if(options.with_badge){
@@ -105,7 +113,10 @@ class Tree(Html.Html):
           a.appendChild(span); a.appendChild(ul);
         } else {
           var span = document.createElement("span"); 
-          span.innerHTML = item.value;
+          span.setAttribute("data-value", item.value);
+          if(typeof item.label !== "undefined"){span.innerHTML = item.label;}
+          else {span.innerHTML = item.value};
+          span.setAttribute("name", "item_value");
           span.style.whiteSpace = 'nowrap';
           if(item.draggable != false){ 
             a.setAttribute('draggable', true);
@@ -118,16 +129,18 @@ class Tree(Html.Html):
               else{ event.dataTransfer.setData("text", file_path)}}
           };
           if(typeof options.clickLeaf !== "undefined"){a.style.cursor = 'pointer';
-            a.onclick = function(event){const value = a.innerText; options.clickLeaf(event, value)}};
+            a.onclick = function(event){const value = a.innerText; const data = span.getAttribute("data-value"); 
+            options.clickLeaf(event, value, data)}};
           if (typeof item.url !== "undefined"){
             a.setAttribute("target", item.target || "_blank");
             a.href = item.url}
-          a.style.paddingLeft = '18px';
+          //a.style.paddingLeft = '18px';
           if (typeof options.with_icon !== "undefined"){
             var subIcon = document.createElement("i"); subIcon.style.marginRight = "5px";
             subIcon.setAttribute("class", item[options.with_icon]); a.appendChild(subIcon)};
           a.appendChild(span);
         };
+        a.style.paddingLeft = 20 * (parseInt(htmlObj.getAttribute("data-depth")) - 1) + 'px';
         li.appendChild(a);
         htmlObj.appendChild(li)
       })'''

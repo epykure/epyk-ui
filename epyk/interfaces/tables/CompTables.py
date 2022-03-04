@@ -3,6 +3,7 @@
 
 from typing import Union
 from epyk.core.html import Html
+from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
 
 from epyk.interfaces.tables import CompTabulator
@@ -196,7 +197,7 @@ class Tables:
       self.page, records, cols or [], rows or [], width, height, html_code, options, profile)
     return table
 
-  def grid(self, records, cols: list, rows: list, width: Union[int, tuple] = (None, '%'),
+  def grid(self, records, cols: list = None, rows: list = None, width: Union[int, tuple] = (None, '%'),
            height: Union[int, tuple] = (None, 'px'), html_code: str = None, options: dict = None,
            profile: Union[dict, bool] = None):
     """
@@ -222,8 +223,8 @@ class Tables:
     width_cells, width_rows_header = 50, 100
     for rec in records:
       for c in cols:
-        if c not in rec:
-          rec[c] = 0
+          if c not in rec:
+            rec[c] = 0
     table = html_tables.HtmlTable.Bespoke(
       self.page, records, cols, rows, width, height, html_code, options, profile)
     table.css({"width": "%spx" % (width_rows_header + len(cols) * width_cells)})
@@ -286,3 +287,25 @@ class Tables:
         menu_items.append(r)
     container = self.page.ui.menu(table, menu_items=menu_items, post=post, editable=False)
     return container
+
+  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
+          html_code: str = None, options=None, profile: Union[bool, dict] = None):
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    record, cols = {}, []
+    for i, c in enumerate(components):
+      k = "comp_%s" % i
+      c.options.managed = False
+      cols.append(k)
+      record[k] = c
+    options = options or {}
+    options["with_header"] = False
+    options["with_hover"] = False
+    table = html_tables.HtmlTable.Bespoke(
+      self.page, [record], cols, [], width, height, html_code, options, profile)
+    table.style.clear()
+    # Set the style for the table grid
+    # table.style.add_classes.table.grid_row_header()
+    # table.style.add_classes.table.grid_vals()
+    # table.style.add_classes.table.grid_no_header()
+    return table

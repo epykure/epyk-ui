@@ -127,7 +127,7 @@ class Bespoke(Html.Html):
     for rec in records:
       data.append([rec[c] for c in self._fields])
     super(Bespoke, self).__init__(
-      page, data, html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
+      page, data, html_code=html_code, profile=profile, css_attrs={"width": width, "height": height}, options=options)
     self.items = None
     self.style.add_classes.table.table()
     self.css({"text-align": 'center', 'border-collapse': 'collapse'})
@@ -186,7 +186,7 @@ class Bespoke(Html.Html):
     """
     if self.items is None:
       self.items = []
-    if self._fields is not None:
+    if self._fields is not None and self.options.with_header:
       self._header = Row(self.page, [
         Cell(self.page, d, is_header=True, options={
           "cssClasses": self.options.colCssClasses, "managed": False}) for d in self._fields])
@@ -197,7 +197,8 @@ class Bespoke(Html.Html):
         Cell(self.page, r, is_header=False, options={
           "cssClasses": self.options.rowCssClasses, "managed": False}) for r in rec]))
       self.items[-1].options.managed = False
-      self.items[-1].style.add_classes.table.row_hover()
+      if self.options.with_hover:
+        self.items[-1].style.add_classes.table.row_hover()
     return self
 
   def __getitem__(self, i: int) -> Html.Html:

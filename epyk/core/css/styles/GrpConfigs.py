@@ -10,7 +10,7 @@ class ClsConfigs:
     self.component = component
     self.page = component.page
 
-  def margins(self, h: tuple = (10, '%'), v: tuple = (0, 'px')):
+  def margins(self, h: tuple = (10, '%'), v: tuple = (0, 'px'), background: str = None):
     """
     Description:
     ------------
@@ -26,10 +26,13 @@ class ClsConfigs:
     ----------
     :param tuple h: Optional. The horizontal (left and right) margin.
     :param tuple v: Optional. The vertical (top, bottom) margin.
+    :param str background: Optional. The background color.
     """
     h = Arguments.size(h, unit="%")
     v = Arguments.size(v, unit="px")
     self.component.style.css.margin = "%s%s %s%s" % (v[0], v[1], h[0], h[1])
+    if background is not None:
+      self.component.style.css.background = background
     return self
 
   def box(self, hexa_color: str = None, opacity: float = 0.6, size: int = 5, margin_v: tuple = (10, 'px'),

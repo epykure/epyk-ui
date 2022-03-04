@@ -688,10 +688,10 @@ class Title(Html.Html):
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     if contents is not None:
       self._name = contents.add(text, level or 1, name)
-    if level is not None and level < 5:
+    if level is not None and level < 6:
       getattr(self.style.add_classes.text, "title_%s" % level)()
       self.css({'margin': '%spx 0 5px 0' % marginTop,
-                'font-size': self.page.body.style.globals.font.normal({1: 8, 2: 6, 3: 4, 4: 2}[level])})
+                'font-size': self.page.body.style.globals.font.normal({1: 8, 2: 6, 3: 4, 4: 2, 5: -2}[level])})
     else:
       self.style.add_classes.text.title()
       self.css({'margin': '%spx 0 5px 0' % marginTop, 'font-size': self.page.body.style.globals.font.normal(5)})

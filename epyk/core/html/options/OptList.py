@@ -90,6 +90,21 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def li_height(self):
+    """
+    Description:
+    ------------
+    List Item line height CSS Style
+    """
+    return self.li_style.get("line-height")
+
+  @li_height.setter
+  def li_height(self, value):
+    styles = dict(self.li_style)
+    styles["line-height"] = "%spx" % value
+    self.li_style = styles
+
+  @property
   def badge(self):
     """
     Description:
@@ -153,7 +168,7 @@ class OptionsItems(Options):
   @items_type.setter
   def items_type(self, text):
     self._config(text)
-    self._config(text not in ('link', 'badge', 'text', 'icon', 'check', 'radio', 'logs'), name="items_space")
+    self._config(text not in ('link', 'badge', 'text', 'icon', 'check', 'radio', 'logs', 'status'), name="items_space")
 
   @property
   def items_space(self):
@@ -175,7 +190,7 @@ class OptionsItems(Options):
     ------------
     Set the delete icon
     """
-    return self._config_get("fas fa-info-circle")
+    return self._config_get("fas fa-info-circle fa-xs")
 
   @info_icon.setter
   def info_icon(self, attrs):

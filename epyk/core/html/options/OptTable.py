@@ -207,6 +207,30 @@ class OptionsBasic(Options):
   def colCssClasses(self, values):
     self._config(values)
 
+  @property
+  def with_header(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(True)
+
+  @with_header.setter
+  def with_header(self, flag):
+    self._config(flag)
+
+  @property
+  def with_hover(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(True)
+
+  @with_hover.setter
+  def with_hover(self, flag):
+    self._config(flag)
+
 
 class OptionsPivot(Options):
   component_properties = ('aggregator', 'aggregatorName', 'showUI', 'dataClass')

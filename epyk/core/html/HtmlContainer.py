@@ -967,7 +967,9 @@ class Col(Html.Html):
     self.attr["class"].add('col')
     self.style.justify_content = self.position
     # Bootstrap vertical align middle
-    if self.position == 'middle':
+    if self.style.css.height == '100%':
+      self.attr["class"].add('h-auto')
+    elif self.position == 'middle':
       self.attr["class"].add('my-auto')
 
   def __enter__(self):

@@ -52,6 +52,13 @@ class CatalogText(Catalog.CatalogGroup):
     """
     return self._set_class(CssStylesText.CssTitle4)
 
+  def title_5(self):
+    """
+    Description:
+    ------------
+    """
+    return self._set_class(CssStylesText.CssTitle5)
+
   def title(self):
     """
     Description:

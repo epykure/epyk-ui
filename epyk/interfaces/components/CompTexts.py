@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -694,7 +695,7 @@ class Texts:
     html.Html.set_component_skin(html_number)
     return html_number
 
-  def title(self, text="", level=None, name=None, contents=None, color=None, picture=None, icon=None,
+  def title(self, text: Union[str, dict] = "", level=None, name=None, contents=None, color=None, picture=None, icon=None,
             top=5, html_code=None, width=("auto", ""), height=(None, "px"), align=None, options=None, profile=None):
     """
     Description:
@@ -736,6 +737,15 @@ class Texts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
+    if isinstance(text, dict):
+      sub_title = self.page.ui.div(list(text.values())[0])
+      sub_title.options.managed = False
+      sub_title.style.css.italic()
+      sub_title.style.css.color = self.page.theme.greys[4]
+      sub_title.style.css.text_transform = "lowercase"
+      sub_title.style.css.display = "inline"
+      sub_title.style.css.font_size = self.page.body.style.globals.font.normal(-3)
+      text = "<b>%s</b> %s" % (list(text.keys())[0], sub_title.html())
     dflt_options = {"reset": True, 'markdown': False}
     if options is not None:
       dflt_options.update(options)

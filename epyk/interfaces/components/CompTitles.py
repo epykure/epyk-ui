@@ -11,7 +11,21 @@ class Titles:
   def __init__(self, ui):
     self.page = ui.page
 
-  def head(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def __format_text(self, text: Union[str, dict], size: str = None, italic: bool = True) -> str:
+    if isinstance(text, dict):
+      sub_title = self.page.ui.div(list(text.values())[0])
+      sub_title.options.managed = False
+      if italic:
+        sub_title.style.css.italic()
+      sub_title.style.css.color = self.page.theme.greys[4]
+      sub_title.style.css.text_transform = "lowercase"
+      sub_title.style.css.display = "inline"
+      sub_title.style.css.font_size = size or self.page.body.style.globals.font.normal(-3)
+      return "<b>%s</b> %s" % (list(text.keys())[0], sub_title.html())
+
+    return text
+
+  def head(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
            width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
            html_code: str = None, profile: Union[dict, bool] = False):
     """
@@ -43,6 +57,7 @@ class Titles:
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {'markdown': False}
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(5), italic=False)
     if options is not None:
       dflt_options.update(options)
     html_title = html.HtmlTags.HtmlGeneric(
@@ -58,7 +73,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def headline(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: bool = True,
+  def headline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: bool = True,
                width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
                profile: Union[dict, bool] = False):
     """
@@ -89,6 +104,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(2))
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -103,7 +119,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def title(self, text: str = None, options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def title(self, text: Union[str, dict] = None, options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
             width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
             profile: Union[dict, bool] = False):
     """
@@ -134,6 +150,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(-3))
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -149,7 +166,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def section(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def section(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
               profile: Union[dict, bool] = False):
     """
@@ -175,6 +192,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal())
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -191,7 +209,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def rubric(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def rubric(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
              width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
              html_code: str = None, profile: Union[dict, bool] = False):
     """
@@ -221,6 +239,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(), italic=False)
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -235,7 +254,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def category(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def category(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
                width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
                profile: Union[dict, bool] = False):
     """
@@ -265,6 +284,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal())
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -284,7 +304,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def caption(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def caption(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
               profile: Union[dict, bool] = False):
     """
@@ -314,6 +334,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal())
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -327,7 +348,7 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def underline(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def underline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
                 width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
                 html_code: str = None, profile: Union[dict, bool] = False):
     """
@@ -357,6 +378,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(), italic=False)
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)
@@ -456,7 +478,7 @@ class Titles:
     html.Html.set_component_skin(title)
     return title
 
-  def upper(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
+  def upper(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
             width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
             html_code: str = None, profile: Union[dict, bool] = False):
     """
@@ -490,6 +512,7 @@ class Titles:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
+    text = self.__format_text(text, self.page.body.style.globals.font.normal(3), italic=False)
     dflt_options = {'markdown': False}
     if options is not None:
       dflt_options.update(options)

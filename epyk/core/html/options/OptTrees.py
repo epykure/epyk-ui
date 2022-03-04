@@ -156,7 +156,7 @@ class OptionsTree(Options):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._config(
-      "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+      "function(event, value, data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
       js_type=True, name="clickNode")
 
   def click_leaf(self, js_funcs, profile=None):
@@ -173,7 +173,7 @@ class OptionsTree(Options):
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._config(
-      "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+      "function(event, value, data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
       js_type=True, name="clickLeaf")
 
 

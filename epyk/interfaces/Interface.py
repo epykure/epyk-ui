@@ -1092,7 +1092,7 @@ class Components:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, component: html.Html.Html, copy: str = "fas fa-copy",
+  def menu(self, component: html.Html.Html, title: Union[str, dict] = None, copy: str = "fas fa-copy",
            editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"), refresh: str = "fas fa-redo-alt",
            visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
            height: tuple = (18, 'px'), save_funcs: list = None, update_funcs: list = None,
@@ -1116,6 +1116,7 @@ class Components:
     Attributes:
     ----------
     :param component:
+    :param title:
     :param copy:
     :param editable:
     :param refresh:
@@ -1130,8 +1131,27 @@ class Components:
     """
     options, link = options or {}, None
     menu_items = menu_items or []
+    if title is not None:
+      if isinstance(title, dict):
+        sub_title = self.page.ui.div(list(title.values())[0])
+        sub_title.options.managed = False
+        sub_title.style.css.italic()
+        sub_title.style.css.color = self.page.theme.greys[4]
+        sub_title.style.css.text_transform = "lowercase"
+        sub_title.style.css.display = "inline"
+        sub_title.style.css.font_size = self.page.body.style.globals.font.normal(-3)
+        comp_title = self.page.ui.title("<b>%s</b> %s" % (list(title.keys())[0], sub_title.html()))
+      else:
+        comp_title = self.page.ui.title(title)
+        comp_title.style.css.bold()
+      comp_title.style.css.float = "left"
+      comp_title.style.css.font_size = self.page.body.style.globals.font.normal(-2)
+      comp_title.style.css.color = self.page.theme.greys[-2]
+      menu_items.insert(0, comp_title)
     component.style.css.margin_top = 0
-    commands = [("Copy", copy), ("Edit", editable), ("Hide", visible)]
+    commands = [("Edit", editable, 15), ("Hide", visible, 15)]
+    if hasattr(component.dom, 'copy'):
+      commands.insert(0, ("Copy", copy, 18))
     if post is not None:
       link = "fas fa-link"
       if isinstance(post, dict):
@@ -1139,14 +1159,14 @@ class Components:
       else:
         post_url = post
         post = {}
-      commands.extend([('ReSt', link), ("Build", refresh)])
-    for typ, icon in commands:
+      commands.extend([('ReSt', link, 15), ("Build", refresh, 15)])
+    for typ, icon, size in commands:
       if icon:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
-        r.span.style.css.line_height = r.style.css.height
+          icon, text=typ, tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
+        r.span.style.css.hide()
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)
         r.span.style.css.margin = "0 2px -3px -3px"
@@ -1166,7 +1186,8 @@ class Components:
           ], profile=profile)
         elif typ == "Copy":
           r.click([
-            component.dom.copyToClipboard(options.get("include_html", False)),
+            #component.dom.copyToClipboard(options.get("include_html", False)),
+            component.dom.copy(),
             r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ], profile=profile)
@@ -1221,27 +1242,30 @@ class Components:
       menu_items.append(r)
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "fas fa-sync-alt", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
-      r.span.style.css.line_height = r.style.css.height
+        "fas fa-sync-alt", tooltip="Sync", height=height, width=(15, 'px'), options=options, profile=profile)
+      #r.span.style.css.line_height = r.style.css.height
       r.icon.style.css.font_factor(-5)
       r.style.css.font_factor(-5)
-      r.span.style.css.margin = "0 2px -3px -3px"
+      #r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
                 r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
                 self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
               ] + update_funcs, profile=profile)
       menu_items.append(r)
-    dots = self.page.ui.icons.awesome(
-      "fas fa-ellipsis-v", height=height, width=(10, 'px'), options=options, profile=profile)
-    dots.icon.style.css.font_factor(-5)
-    dots.style.css.font_factor(-5)
-    dots.style.css.margin_left = 10
-    menu_items.append(dots)
+    trash = self.page.ui.icons.awesome(
+      "fas fa-trash", height=height, width=(10, 'px'), options=options, profile=profile)
+    trash.icon.style.css.font_factor(-5)
+    trash.style.css.font_factor(-5)
+    trash.style.css.margin_left = 10
+    menu_items.append(trash)
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
-    dots.click([container.dom.hide()])
-    component.move()
+    container.style.css.border_bottom = "1px solid {}".format(self.page.theme.greys[2])
+    container.style.css.margin_bottom = 4
+    column = self.col([container, component], height=(100, "%"))
+    trash.click([column.dom.hide()])
+    #component.move()
     html.Html.set_component_skin(container)
-    return container
+    return column
 
   @property
   def pyk(self) -> pyks.Bespoke:

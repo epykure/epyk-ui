@@ -1129,6 +1129,16 @@ class OptionLegend(Options):
     return self._config_sub_data("labels", OptionLabels)
 
   @property
+  def title(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("title", OptionTitle)
+
+  @property
   def align(self):
     """
     Description:
@@ -1890,6 +1900,16 @@ class OptionChartJsPlugins(Options):
     """
     from epyk.core.html.graph.exts import ChartJsLabels
     return self._config_sub_data("labels", ChartJsLabels.Labels)
+
+  @property
+  def legend(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLegend
+    """
+    return self._config_sub_data("legend", OptionLegend)
 
   @property
   @packageImport('chartjs-plugin-datalabels')

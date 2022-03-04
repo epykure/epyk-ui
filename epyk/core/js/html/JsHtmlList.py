@@ -77,10 +77,10 @@ class JsItemsDef:
     var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
     log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "55px" ; 
     var elapsedTime = "";
-    if (typeof data.d !== 'undefined'){elapsedTime = data.d + "d";}
-    if (typeof data.h !== 'undefined'){elapsedTime = elapsedTime + " "+ data.h + "h";}
-    if (typeof data.m !== 'undefined'){elapsedTime = elapsedTime + " "+ data.m + "m";}
-    if (typeof data.s !== 'undefined'){elapsedTime = elapsedTime + " "+ data.s + "s";}
+    if ((typeof data.d !== 'undefined') && (data.d != 0)){elapsedTime = data.d + "d";}
+    if ((typeof data.h !== 'undefined') && (data.h != 0)){elapsedTime = elapsedTime + " "+ data.h + "h";}
+    if ((typeof data.m !== 'undefined') && (data.m != 0)){elapsedTime = elapsedTime + " "+ data.m + "m";}
+    if ((typeof data.s !== 'undefined') && (data.s != 0)){elapsedTime = elapsedTime + " "+ data.s + "s";}
     log.innerHTML = elapsedTime;
     if(options.click != null){ 
       item.style.cursor = 'pointer';
@@ -106,6 +106,56 @@ class JsItemsDef:
     item.appendChild(log);
     item.appendChild(message);
     ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(-5),
+           "color": page.theme.notch()}
+    return self._item(item_def)
+
+  def status(self, page: primitives.PageModel):
+    """
+    Description:
+    ------------
+    Add text items to the list
+
+    Attributes:
+    ----------
+    :param primitives.PageModel page: Page object. The internal page object.
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.style.fontSize = "%(fontSize)s";  
+    var message = document.createElement("DIV"); 
+    message.style.display = "inline-block" ;  
+    item.style.borderBottom = "1px solid white";
+    item.style.borderTop = "1px solid white";
+    var log = document.createElement("DIV");
+    if(typeof data.color !== 'undefined'){log.style.color = "white"; log.style.background = data.color;}
+    else {log.style.background = "%(grey)s"} ; 
+    log.style.margin = "0 5px";
+    log.innerHTML = data.status; log.style.display = "inline-block"; log.style.width = "90px"; 
+    log.style.textAlign = "center"; log.style.fontWeight = 900;
+    if(options.click != null){ 
+      item.style.cursor = 'pointer';
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
+      message.onclick = function(event){
+         var dataValue = message.getAttribute('data-valid');
+         if(dataValue == 'true'){
+           message.classList.remove('list_text_selected');
+           message.setAttribute('data-valid', false)}
+         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+         var value = this.innerHTML; options.click(event, value)}
+    } else {
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
+    if(options.draggable != false){ 
+      message.setAttribute('draggable', true);
+      message.style.cursor = 'grab';
+      message.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
+    }
+    if(typeof options.style !== 'undefined'){
+      Object.keys(options.style).forEach(function(key){message.style[key] = options.style[key] })}
+    if(typeof data === 'object'){ 
+      message.innerHTML = data.text} else { message.innerHTML = data };
+    item.appendChild(log);
+    item.appendChild(message);
+    ''' % {"grey": page.theme.greys[3], "fontSize": page.body.style.globals.font.normal(-5),
            "color": page.theme.notch()}
     return self._item(item_def)
 
@@ -449,12 +499,9 @@ class JsItem(JsHtml.JsHtmlRich):
   @property
   def all(self):
     return JsHtml.ContentFormatters(self.page, '''
-        (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
-            const item = dom.querySelector('[name=value]');
-            if (item != null){
-              values.push(dom.querySelector('[name=value]').innerHTML)
-            }
-        }); return values})(%s)''' % self.varName)
+(function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
+  const item = dom.querySelector('[name=value]'); if (item != null){values.push(dom.querySelector('[name=value]').innerHTML)}
+}); return values})(%s)''' % self.varName)
 
   @property
   def selected(self):
@@ -521,6 +568,17 @@ class JsItem(JsHtml.JsHtmlRich):
     Get all the values in the list.
     """
     return JsObjects.JsArray.JsArray.get("")
+
+  def copy(self):
+    return JsObjects.JsVoid('''
+let listData = %s;
+var dummy = document.createElement("textarea");
+document.body.appendChild(dummy);
+dummy.value = JSON.stringify(listData);
+dummy.select();
+document.execCommand("copy");
+document.body.removeChild(dummy);
+''' % self.all.toStr())
 
   def getItemByValue(self, value: Union[str, primitives.JsDataModel]):
     """

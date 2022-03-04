@@ -467,7 +467,7 @@ class Items(Html.Html):
         if(typeof item.tooltip !== 'undefined'){
           var info = document.createElement("i");
           info.classList.add(...options.info_icon.split(" ")); info.style.position = 'absolute';
-          info.style.top = "5px"; info.style.right = "20px";
+          info.style.top = "4px"; info.style.right = "20px";
           li.style.position = "relative";
           
           info.setAttribute('title', item.tooltip); 
