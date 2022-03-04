@@ -6,6 +6,27 @@
 
 ### Fixed
 
+
+## [1.7.3] - 2022-03-04
+
+### Added
+- Add get to retrieve custom Aria.
+- Show percentage in JqueryUI progressBar component.
+- Add network logs interactive component.
+- Add timelines issues interactive component.
+
+### Changed
+- Improve way width and height are defined to accept string with unit.
+- No change menu by default for the status component.
+- Input for title and accept dictionaries.
+
+### Fixed
+- Fix chartJs color definition.
+- Improve way fixed columns width are defined with row & grid components.
+- Bugfix in JavaScript input text components.
+- Improve the menu wrapper for components.
+
+
 ## [1.7.2] - 2022-02-23
 
 ### Added
