@@ -1698,3 +1698,10 @@ class Timelines:
       component.style.css.background = self.page.theme.danger[1]
     html.Html.set_component_skin(component)
     return component
+
+  def issues(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
+           profile: Union[bool, dict] = None, helper: str = None):
+    component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)
+    component.options.items_type = "status"
+    html.Html.set_component_skin(component)
+    return component
