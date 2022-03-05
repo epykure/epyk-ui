@@ -1,4 +1,5 @@
 
+from typing import Union
 from epyk.core.py import primitives
 from epyk.core.css import Colors
 from epyk.interfaces import Arguments
@@ -10,7 +11,7 @@ class ClsConfigs:
     self.component = component
     self.page = component.page
 
-  def margins(self, h: tuple = (10, '%'), v: tuple = (0, 'px'), background: str = None):
+  def margins(self, h: Union[tuple, int, str] = (10, '%'), v: Union[tuple, int, str] = (0, 'px'), background: str = None):
     """
     Description:
     ------------
