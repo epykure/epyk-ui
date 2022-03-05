@@ -1757,7 +1757,7 @@ class OptionChartJsTooltipsCallbacks(Options):
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    if self.component._attrs["type"] == 'horizontalBar':
+    if self.component.options.type == 'horizontalBar':
       self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
       self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
@@ -1778,7 +1778,7 @@ class OptionChartJsTooltipsCallbacks(Options):
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    if self.component._attrs["type"] == 'horizontalBar':
+    if self.component.options.type == 'horizontalBar':
       self._config("function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
       self._config(

@@ -222,6 +222,7 @@ class ChartJs:
     pie_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, dfl_options, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart.options.type = "doughnut"
+    pie_chart._attrs["type"] = "doughnut"
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)

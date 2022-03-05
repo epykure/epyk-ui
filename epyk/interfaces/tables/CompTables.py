@@ -243,7 +243,7 @@ class Tables:
     return table
 
   def menu(self, table: Html.Html = None, height: Union[int, tuple] = (18, 'px'), options: dict = None,
-           post: Union[list, str] = None, profile: Union[dict, bool] = None):
+           update_funcs: list = None, post: Union[list, str] = None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -262,6 +262,7 @@ class Tables:
     :param table: Component. Optional. The HTML table component.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param update_funcs:
     :param post: List | String. The event used to update the table.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -273,11 +274,9 @@ class Tables:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
-        r.span.style.css.line_height = r.style.css.height
+          icon, tooltip=typ, height=height, width=(15, 'px'), options=options, profile=profile)
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)
-        r.span.style.css.margin = "0 2px -3px -3px"
         if typ == "Csv":
           r.click([table.js.download("csv", "data.csv")])
         elif typ == "New":
@@ -285,7 +284,8 @@ class Tables:
         elif typ == "Clear":
           r.click([table.js.clearData()])
         menu_items.append(r)
-    container = self.page.ui.menu(table, menu_items=menu_items, post=post, editable=False)
+    container = self.page.ui.menu(table, update_funcs=update_funcs, menu_items=menu_items, post=post, editable=False,
+                                  options=options, profile=profile)
     return container
 
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,

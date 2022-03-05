@@ -1162,6 +1162,9 @@ class Components:
         post = {}
       commands.extend([('ReSt', link, 15), ("Build", refresh, 15)])
     for typ, icon, size in commands:
+      if typ == "Edit" and getattr(component, '_js__builder__') is None:
+        continue
+
       if icon:
         if isinstance(icon, tuple):
           icon = icon[0]
