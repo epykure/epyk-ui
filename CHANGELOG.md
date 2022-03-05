@@ -6,6 +6,23 @@
 
 ### Fixed
 
+## [1.7.4] - 2022-03-04
+
+### Added
+- New module for loading animations.
+- Add auto option to the menu (test).
+- Add run_on_start option for setInterval function.
+- Bug fixes on the type definition.
+
+### Changed
+- Changes in the menu wrapper for components.
+- Change the badge component with better JavaScript integration.
+- Minor changes on the style of few components.
+
+### Fixed
+- Fix the update component.
+- Fix badge display.
+
 
 ## [1.7.3] - 2022-03-04
 

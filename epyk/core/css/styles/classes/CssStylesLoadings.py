@@ -31,4 +31,3 @@ class CssLoadingLine(CssStyle.Style):
         "50%": {"left": "20%", "width": "80%"},
         "100%": {"left": "100%", "width": "100%"}
     })
-  
