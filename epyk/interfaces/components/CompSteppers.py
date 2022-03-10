@@ -58,6 +58,13 @@ class Steppers:
 
     Usage::
 
+      stepper = page.ui.steppers.arrow([
+        {"value": 'test 1', "status": 'success', 'title': 'test', "label": 'test'},
+        {"value": 'test 2', "status": 'pending'},
+        {"value": 'test 3'},
+        {"value": 'test 4'}], height=70)
+      stepper.options.width = 110
+
     Attributes:
     ----------
     :param records: List. A list with the different steps defined in the workflow.

@@ -1644,9 +1644,10 @@ class JsDoms(JsObject.JsObject):
     :return: A JsObj
     """
     if x is None and y is None:
-      self.css({"position": 'absolute',
-                'top': JsObject.JsObject.get("(event.clientY + window.scrollY + %s) + 'px'" % dy),
-                'left': JsObject.JsObject.get("(event.clientX + window.scrollX + %s) + 'px'" % dx)})
+      self.css({
+        "position": 'absolute',
+        'top': JsObject.JsObject.get("(event.clientY + window.scrollY + %s) + 'px'" % dy),
+        'left': JsObject.JsObject.get("(event.clientX + window.scrollX + %s) + 'px'" % dx)})
     else:
       self.css({"position": 'absolute', 'top': "%spx" % x or 0, 'left': "%spx" % x or 0})
     return self
@@ -1689,7 +1690,8 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def transition(self, attribute: Union[str, list], value: Optional[Union[str, list, primitives.JsDataModel]],
-                 duration: Union[float, List[float]] = 1, delay: int = None, timing_fnc: str = 'ease', reverse: bool = False):
+                 duration: Union[float, List[float]] = 1, delay: int = None, timing_fnc: str = 'ease',
+                 reverse: bool = False):
     """
     Description:
     ------------

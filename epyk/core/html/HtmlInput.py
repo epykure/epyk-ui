@@ -1237,6 +1237,30 @@ class TextArea(Html.Html):
       self.page.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
+  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
+    """
+    Description:
+    -----------
+    Add an javascript action when the key enter is pressed on the keyboard.
+
+    Usage::
+
+      component.enter(" alert() ")
+
+    Attributes:
+    ----------
+    :param Union[list, str] js_funcs: The Javascript functions.
+    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+
+    :return: The python object itself
+    """
+    return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
+        "jsFnc": JsUtils.jsConvertFncs(
+          js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
+
   _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):

@@ -1093,9 +1093,9 @@ class Components:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, component: html.Html.Html, title: Union[str, dict] = None, copy: str = "fas fa-copy",
-           editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"), refresh: str = "fas fa-redo-alt",
-           visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
+  def menu(self, component: Union[html.Html.Html, List[html.Html.Html]], title: Union[str, dict] = None,
+           copy: str = "fas fa-copy", editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"),
+           refresh: str = "fas fa-redo-alt", visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
            height: tuple = (18, 'px'), save_funcs: list = None, update_funcs: list = None,
            menu_items=None, options: dict = None, profile: Union[bool, dict] = None):
     """
@@ -1132,6 +1132,8 @@ class Components:
     """
     options, link = options or {}, None
     menu_items = menu_items or []
+    if isinstance(component, list):
+      component = self.page.ui.div(component)
     if title is not None:
       if isinstance(title, dict):
         sub_title = self.page.ui.div(list(title.values())[0])
@@ -1273,7 +1275,22 @@ class Components:
     container.style.css.margin_bottom = 4
     column = self.col([container, component], height=(100, "%"))
     trash.click([column.dom.hide()])
-    #component.move()
+
+    def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None):
+      comp = self.page.ui.icons.awesome(
+        icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
+      comp.icon.style.css.font_factor(-5)
+      comp.style.css.font_factor(-5)
+      comp.style.css.margin_left = 5
+      comp.style.css.margin_right = 5
+      container.insert(0, comp)
+      if toggle_icon is not None:
+        comp.click([
+          comp.icon.build(toggle_icon)
+        ])
+      return comp
+
+    column.add_command = add_command
     html.Html.set_component_skin(container)
     return column
 

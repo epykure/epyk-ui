@@ -150,3 +150,6 @@ class Textarea(JsHtml.JsHtmlRich):
 
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
+
+  def readonly(self):
+    return "%s.readOnly = true" % self.varName
