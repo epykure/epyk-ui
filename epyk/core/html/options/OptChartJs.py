@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List, Union, Optional
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
@@ -9,7 +10,7 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
 
-  def x_format(self, js_funcs, profile=None):
+  def x_format(self, js_funcs, profile: Union[bool, dict] = None):
     self.component.options.xAxes.ticks.callback(js_funcs, profile)
     return self
 
@@ -21,7 +22,7 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     self.component.options.scales.xAxes.ticks.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def x_label(self, value):
+  def x_label(self, value: str):
     """
     Description:
     -----------
@@ -38,23 +39,24 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
       self.component.options.scales.xAxes.scaleLabel.label(value)
     return self
 
-  def x_tick_count(self, num):
+  def x_tick_count(self, num: int):
     self.component.options.scales.xAxes.ticks.maxTicksLimit = num
     return self
 
-  def y_format(self, js_funcs, profile=None):
+  def y_format(self, js_funcs, profile: Union[bool, dict] = None):
     self.component.options.yAxes.ticks.callback(js_funcs, profile)
     return self
 
-  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def y_format_money(self, symbol: str = "", digit: int = 0, thousand_sep: int = ".", decimal_sep: int = ",",
+                     fmt: str = "%v %s", factor: int = None, alias: str = ""):
     self.component.options.scales.yAxes.ticks.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
     return self
 
-  def y_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+  def y_format_number(self, factor: int = 1, alias=None, digits=0, thousand_sep="."):
     self.component.options.scales.yAxes.ticks.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def y_label(self, value):
+  def y_label(self, value: str):
     """
     Description:
     -----------
@@ -71,9 +73,76 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
       self.component.options.scales.yAxes.scaleLabel.label(value)
     return self
 
-  def y_tick_count(self, num):
+  def y_tick_count(self, num: int):
     self.component.options.scales.yAxes.ticks.maxTicksLimit = num
     return self
+
+
+class OptionLabelFont(Options):
+
+  @property
+  def size(self):
+    """
+    Description:
+    -----------
+    Change the font-size.
+    """
+    return self._config_get()
+
+  @size.setter
+  def size(self, num: int):
+    self._config(num)
+
+  @property
+  def family(self):
+    """
+    Description:
+    -----------
+    Change the font family.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+    """
+    return self._config_get()
+
+  @family.setter
+  def family(self, text: int):
+    self._config(text)
+
+  @property
+  def weight(self):
+    """
+    Description:
+    -----------
+    Change the font weight.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+    """
+    return self._config_get()
+
+  @weight.setter
+  def weight(self, text: int):
+    self._config(text)
+
+  @property
+  def style(self):
+    """
+    Description:
+    -----------
+    Change the CSS font style property.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+    """
+    return self._config_get()
+
+  @style.setter
+  def style(self, text: int):
+    self._config(text)
 
 
 class OptionAxesTicks(Options):
@@ -83,6 +152,7 @@ class OptionAxesTicks(Options):
     """
     Description:
     -----------
+    Change the font color.
 
     Related Pages:
 
@@ -91,7 +161,7 @@ class OptionAxesTicks(Options):
     return self._config_get()
 
   @fontColor.setter
-  def fontColor(self, val):
+  def fontColor(self, val: str):
     self._config(val)
 
   @property
@@ -107,7 +177,7 @@ class OptionAxesTicks(Options):
     return self._config_get()
 
   @fontSize.setter
-  def fontSize(self, val):
+  def fontSize(self, val: int):
     self._config(val)
 
   @property
@@ -123,8 +193,8 @@ class OptionAxesTicks(Options):
     return self._config_get()
 
   @beginAtZero.setter
-  def beginAtZero(self, val):
-    self._config(val)
+  def beginAtZero(self, flag: bool):
+    self._config(flag)
 
   @property
   def max(self):
@@ -228,19 +298,21 @@ class OptionAxesTicks(Options):
     """
     Description:
     -----------
+    Force the step size.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/3.7.0/samples/scales/linear-step-size.html
     """
     return self._config_get()
 
   @stepSize.setter
-  def stepSize(self, val):
+  def stepSize(self, val: int):
     self._config(val)
 
   @packageImport("accounting")
-  def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+  def scale(self, factor: int = 1000, alias: str = None, digits: int = 0, thousand_sep: str = "."):
     """
     Description:
     -----------
@@ -333,14 +405,15 @@ class OptionAxesTicks(Options):
     self._config("function(label, index, labels) {console.log(label); return 1}", js_type=True)
     return self
 
-  def mapTo(self, mapping):
+  def mapTo(self, mapping: dict):
     """
     Description:
     -----------
+    Map the values to a static dictionary.
 
     Attributes:
     ----------
-    :param mapping:
+    :param mapping: The mapping table.
     """
     self._config(
       "function(label, index, labels) {var mapping = %s; if (labels in mapping){return mapping[labels]}; return labels}" % mapping,
@@ -355,11 +428,12 @@ class OptionLabels(Options):
     """
     Description:
     -----------
+    Change the color.
     """
     return self._config_get()
 
   @fontColor.setter
-  def fontColor(self, val):
+  def fontColor(self, val: str):
     self._config(val)
 
 
@@ -379,7 +453,7 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @display.setter
-  def display(self, val):
+  def display(self, val: bool):
     self._config(val)
 
   @property
@@ -414,7 +488,7 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @color.setter
-  def color(self, val):
+  def color(self, val: str):
     self._config(val)
 
   @property
@@ -465,7 +539,7 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @lineWidth.setter
-  def lineWidth(self, val):
+  def lineWidth(self, val: int):
     self._config(val)
 
   @property
@@ -482,8 +556,8 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @drawBorder.setter
-  def drawBorder(self, val):
-    self._config(val)
+  def drawBorder(self, flag: bool):
+    self._config(flag)
 
   @property
   def drawOnChartArea(self):
@@ -568,7 +642,7 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @zeroLineColor.setter
-  def zeroLineColor(self, val):
+  def zeroLineColor(self, val: str):
     self._config(val)
 
   @property
@@ -647,7 +721,7 @@ class OptionAxesScaleLabel(Options):
     return self._config_get()
 
   @display.setter
-  def display(self, val):
+  def display(self, val: bool):
     self._config(val)
 
   @property
@@ -655,7 +729,7 @@ class OptionAxesScaleLabel(Options):
     return self._config_get()
 
   @fontColor.setter
-  def fontColor(self, val):
+  def fontColor(self, val: str):
     self._config(val)
 
   @property
@@ -663,10 +737,10 @@ class OptionAxesScaleLabel(Options):
     return self._config_get()
 
   @labelString.setter
-  def labelString(self, val):
+  def labelString(self, val: str):
     self._config(val)
 
-  def label(self, value):
+  def label(self, value: str):
     """
     Description:
     ------------
@@ -674,7 +748,7 @@ class OptionAxesScaleLabel(Options):
 
     Attributes:
     ----------
-    :param value: String. The label value.
+    :param value: The label value.
     """
     self.labelString = value
     self.display = True
@@ -687,14 +761,14 @@ class OptionDisplayFormats(Options):
     return self._config_get()
 
   @quarter.setter
-  def quarter(self, val):
+  def quarter(self, val: str):
     self._config(val)
 
 
 class OptionAxesTime(Options):
 
   @property
-  def displayFormats(self):
+  def displayFormats(self) -> OptionDisplayFormats:
     """
     Description:
     ------------
@@ -704,6 +778,140 @@ class OptionAxesTime(Options):
     return self._config_sub_data("displayFormats", OptionDisplayFormats)
 
 
+class OptionTitle(Options):
+
+  @property
+  def align(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/title/alignment.html
+    """
+    return self._config_get()
+
+  @align.setter
+  def align(self, text: str):
+    self._config(text)
+
+  @property
+  def display(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/title.html
+      https://www.chartjs.org/docs/latest/samples/other-charts/pie.html
+    """
+    return self._config_get()
+
+  @display.setter
+  def display(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def text(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/other-charts/pie.html
+    """
+    return self._config_get()
+
+  @text.setter
+  def text(self, val: str):
+    self._config(val)
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/other-charts/pie.html
+    """
+    return self._config_get()
+
+  @color.setter
+  def color(self, val: str):
+    self._config(val)
+
+  @property
+  def position(self):
+    return self._config_get()
+
+  @position.setter
+  def position(self, val):
+    self._config(val)
+
+  @property
+  def fontSize(self):
+    return self._config_get()
+
+  @fontSize.setter
+  def fontSize(self, val):
+    self._config(val)
+
+  @property
+  def fontFamily(self):
+    return self._config_get()
+
+  @fontFamily.setter
+  def fontFamily(self, val):
+    self._config(val)
+
+  @property
+  def fontColor(self):
+    return self._config_get()
+
+  @fontColor.setter
+  def fontColor(self, val):
+    self._config(val)
+
+  @property
+  def fontStyle(self):
+    return self._config_get()
+
+  @fontStyle.setter
+  def fontStyle(self, val):
+    self._config(val)
+
+  @property
+  def padding(self):
+    return self._config_get()
+
+  @padding.setter
+  def padding(self, val):
+    self._config(val)
+
+  @property
+  def lineHeight(self):
+    return self._config_get()
+
+  @lineHeight.setter
+  def lineHeight(self, val):
+    self._config(val)
+
+  @property
+  def font(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLabelFont
+    """
+    return self._config_sub_data("font", OptionLabelFont)
+
+
 class OptionAxes(Options):
 
   @property
@@ -711,8 +919,8 @@ class OptionAxes(Options):
     return self._config_get()
 
   @display.setter
-  def display(self, val):
-    self._config(val)
+  def display(self, flag: bool):
+    self._config(flag)
 
   @property
   def distribution(self):
@@ -723,17 +931,33 @@ class OptionAxes(Options):
     self._config(val)
 
   @property
+  def reverse(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+    """
+    return self._config_get()
+
+  @reverse.setter
+  def reverse(self, flag: bool):
+    self._config(flag)
+
+  @property
   def type(self):
     return self._config_get()
 
   @type.setter
-  def type(self, val):
+  def type(self, val: str):
     if val == "time":
       from epyk.core.js import Imports
 
       Imports.JS_IMPORTS["chart.js"]["req"] = [{'alias': 'moment'}]
       # Add the package moment.js is time is used
-      #self._report.jsImports.add("moment")
+      # self._report.jsImports.add("moment")
     self._config(val)
 
   @property
@@ -749,7 +973,7 @@ class OptionAxes(Options):
     return self._config_get()
 
   @stacked.setter
-  def stacked(self, val):
+  def stacked(self, val: bool):
     self._config(val)
 
   @property
@@ -801,6 +1025,38 @@ class OptionAxes(Options):
     self._config(val)
 
   @property
+  def suggestedMin(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @suggestedMin.setter
+  def suggestedMin(self, val: float):
+    self._config(val)
+
+  @property
+  def suggestedMax(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @suggestedMax.setter
+  def suggestedMax(self, val: float):
+    self._config(val)
+
+  @property
   def stepSize(self):
     """
     Description:
@@ -816,11 +1072,11 @@ class OptionAxes(Options):
     return self._config_get()
 
   @stepSize.setter
-  def stepSize(self, val):
+  def stepSize(self, val: int):
     self._config(val)
 
   @property
-  def ticks(self):
+  def ticks(self) -> OptionAxesTicks:
     """
     Description:
     ------------
@@ -830,7 +1086,7 @@ class OptionAxes(Options):
     return self._config_sub_data("ticks", OptionAxesTicks)
 
   @property
-  def time(self):
+  def time(self) -> OptionAxesTime:
     """
     Description:
     ------------
@@ -840,7 +1096,7 @@ class OptionAxes(Options):
     return self._config_sub_data("time", OptionAxesTime)
 
   @property
-  def gridLines(self):
+  def gridLines(self) -> OptionAxesGridLine:
     """
     Description:
     ------------
@@ -850,7 +1106,19 @@ class OptionAxes(Options):
     return self._config_sub_data("gridLines", OptionAxesGridLine)
 
   @property
-  def title(self):
+  def grid(self) -> OptionAxesGridLine:
+    """
+    Description:
+    ------------
+
+    https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+
+    :rtype: OptionAxesGridLine
+    """
+    return self._config_sub_data("grid", OptionAxesGridLine)
+
+  @property
+  def title(self) -> OptionTitle:
     """
     Description:
     ------------
@@ -866,7 +1134,7 @@ class OptionAxes(Options):
     return self._config_sub_data("title", OptionTitle)
 
   @property
-  def scaleLabel(self):
+  def scaleLabel(self) -> OptionAxesScaleLabel:
     """
     Description:
     ------------
@@ -875,7 +1143,7 @@ class OptionAxes(Options):
     """
     return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
-  def add_label(self, text, color=None):
+  def add_label(self, text: str, color: str = None):
     """
     Description:
     ------------
@@ -900,6 +1168,56 @@ class OptionAxes(Options):
     """
     self.type = "category"
     self.labels = vals
+
+
+class OptionScalePointLabels(Options):
+
+  @property
+  def display(self):
+    return self._config_get()
+
+  @display.setter
+  def display(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def centerPointLabels(self):
+    return self._config_get()
+
+  @centerPointLabels.setter
+  def centerPointLabels(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def font(self) -> OptionLabelFont:
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
+
+    :rtype: OptionLabelFont
+    """
+    return self._config_sub_data("font", OptionLabelFont)
+
+
+class OptionScaleR(Options):
+
+  @property
+  def pointLabels(self) -> OptionScalePointLabels:
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
+
+    :rtype: OptionScalePointLabels
+    """
+    return self._config_sub_data("pointLabels", OptionScalePointLabels)
 
 
 class OptionScales(Options):
@@ -935,7 +1253,7 @@ class OptionScales(Options):
     """
     return self._config_sub_data("y", OptionAxes)
 
-  def y_axis(self, i=None):
+  def y_axis(self, i: int = None):
     """
     Description:
     ------------
@@ -967,7 +1285,7 @@ class OptionScales(Options):
     """
     return self._config_sub_data("x", OptionAxes)
 
-  def x_axes(self, i=None):
+  def x_axes(self, i: int = None):
     """
     Description:
     ------------
@@ -989,18 +1307,45 @@ class OptionScales(Options):
 
     return self.js_tree["xAxes"][i]
 
-
-class OptionScalesGeo(Options):
-
   @property
-  def xy(self):
+  def r(self) -> OptionScaleR:
     """
     Description:
     ------------
 
-    :rtype: OptionScaleGeo
+    :rtype: OptionScaleR
     """
-    return self._config_sub_data("xy", OptionScaleGeo)
+    return self._config_sub_data("r", OptionScaleR)
+
+  @property
+  def x(self) -> OptionAxes:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleR
+    """
+    return self._config_sub_data("x", OptionAxes)
+
+  @property
+  def y(self) -> OptionAxes:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleR
+    """
+    return self._config_sub_data("y", OptionAxes)
+
+  @property
+  def y2(self) -> OptionAxes:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleR
+    """
+    return self._config_sub_data("y2", OptionAxes)
 
 
 class OptionScaleGeo(Options):
@@ -1010,7 +1355,7 @@ class OptionScaleGeo(Options):
     return self._config_get()
 
   @projection.setter
-  def projection(self, val):
+  def projection(self, val: str):
     self._config(val)
 
   @property
@@ -1018,10 +1363,10 @@ class OptionScaleGeo(Options):
     return self._config_get()
 
   @projectionScale.setter
-  def projectionScale(self, num):
+  def projectionScale(self, num: int):
     self._config(num)
 
-  def set_projection(self, js_funcs, profile=None):
+  def set_projection(self, js_funcs, profile: Union[bool, dict] = None):
     """
     Description:
     -----------
@@ -1034,6 +1379,19 @@ class OptionScaleGeo(Options):
     self._config(
       "function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
       name="projection", js_type=True)
+
+
+class OptionScalesGeo(Options):
+
+  @property
+  def xy(self) -> OptionScaleGeo:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScaleGeo
+    """
+    return self._config_sub_data("xy", OptionScaleGeo)
 
 
 class OptionPadding(Options):
@@ -1106,7 +1464,7 @@ class OptionPadding(Options):
 class OptionLayout(Options):
 
   @property
-  def padding(self):
+  def padding(self) -> OptionScaleGeo:
     """
     Description:
     ------------
@@ -1119,7 +1477,7 @@ class OptionLayout(Options):
 class OptionLegend(Options):
 
   @property
-  def labels(self):
+  def labels(self) -> OptionLabels:
     """
     Description:
     ------------
@@ -1129,7 +1487,7 @@ class OptionLegend(Options):
     return self._config_sub_data("labels", OptionLabels)
 
   @property
-  def title(self):
+  def title(self) -> OptionTitle:
     """
     Description:
     ------------
@@ -1153,7 +1511,7 @@ class OptionLegend(Options):
     return self._config_get("center")
 
   @align.setter
-  def align(self, val):
+  def align(self, val: str):
     self._config(val)
 
   @property
@@ -1171,7 +1529,7 @@ class OptionLegend(Options):
     return self._config_get(True)
 
   @display.setter
-  def display(self, flag):
+  def display(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1190,7 +1548,7 @@ class OptionLegend(Options):
     return self._config_get()
 
   @position.setter
-  def position(self, val):
+  def position(self, val: str):
     self._config(val)
 
   @property
@@ -1208,7 +1566,7 @@ class OptionLegend(Options):
     return self._config_get(False)
 
   @reverse.setter
-  def reverse(self, flag):
+  def reverse(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1241,7 +1599,7 @@ class OptionPoint(Options):
     return self._config_get(False)
 
   @radius.setter
-  def radius(self, num):
+  def radius(self, num: int):
     self._config(num)
 
 
@@ -1256,14 +1614,31 @@ class OptionLine(Options):
     return self._config_get()
 
   @tension.setter
-  def tension(self, num):
+  def tension(self, num: int):
     self._config(num)
+
+
+class OptionInteractionLine(Options):
+
+  @property
+  def intersect(self):
+    """
+    Description:
+    ------------
+
+    https://www.chartjs.org/docs/latest/samples/line/interpolation.html
+    """
+    return self._config_get(False)
+
+  @intersect.setter
+  def intersect(self, flag: bool):
+    self._config(flag)
 
 
 class OptionElements(Options):
 
   @property
-  def point(self):
+  def point(self) -> OptionPoint:
     """
     Description:
     ------------
@@ -1276,7 +1651,7 @@ class OptionElements(Options):
 class OptionElementsLine(OptionElements):
 
   @property
-  def line(self):
+  def line(self) -> OptionLine:
     """
     Description:
     ------------
@@ -1284,90 +1659,6 @@ class OptionElementsLine(OptionElements):
     :rtype: OptionLine
     """
     return self._config_sub_data("line", OptionLine)
-
-
-class OptionTitle(Options):
-
-  @property
-  def display(self):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/latest/configuration/title.html
-
-    """
-    return self._config_get()
-
-  @display.setter
-  def display(self, val):
-    self._config(val)
-
-  @property
-  def text(self):
-    return self._config_get()
-
-  @text.setter
-  def text(self, val):
-    self._config(val)
-
-  @property
-  def position(self):
-    return self._config_get()
-
-  @position.setter
-  def position(self, val):
-    self._config(val)
-
-  @property
-  def fontSize(self):
-    return self._config_get()
-
-  @fontSize.setter
-  def fontSize(self, val):
-    self._config(val)
-
-  @property
-  def fontFamily(self):
-    return self._config_get()
-
-  @fontFamily.setter
-  def fontFamily(self, val):
-    self._config(val)
-
-  @property
-  def fontColor(self):
-    return self._config_get()
-
-  @fontColor.setter
-  def fontColor(self, val):
-    self._config(val)
-
-  @property
-  def fontStyle(self):
-    return self._config_get()
-
-  @fontStyle.setter
-  def fontStyle(self, val):
-    self._config(val)
-
-  @property
-  def padding(self):
-    return self._config_get()
-
-  @padding.setter
-  def padding(self, val):
-    self._config(val)
-
-  @property
-  def lineHeight(self):
-    return self._config_get()
-
-  @lineHeight.setter
-  def lineHeight(self, val):
-    self._config(val)
 
 
 class OptionChartJsSize(Options):
@@ -1382,7 +1673,7 @@ class OptionChartJsSize(Options):
     return self._config_get()
 
   @height.setter
-  def height(self, val):
+  def height(self, val: int):
     self._config(val)
 
   @property
@@ -1395,491 +1686,142 @@ class OptionChartJsSize(Options):
     return self._config_get()
 
   @width.setter
-  def width(self, val):
+  def width(self, val: int):
     self._config(val)
 
 
-class ChartJsOptions(OptChart.OptionsChart):
+class OptionChartAreaBorder(Options):
 
   @property
-  def indexAxis(self):
-    return self._config_get()
-
-  @indexAxis.setter
-  @JsUtils.fromVersion({"chart.js": "3.0.0"})
-  def indexAxis(self, flag):
-    self._config(flag)
-
-  @property
-  def responsive(self):
-    return self._config_get()
-
-  @responsive.setter
-  def responsive(self, flag):
-    self._config(flag)
-
-  @property
-  def maintainAspectRatio(self):
-    return self._config_get(True)
-
-  @maintainAspectRatio.setter
-  def maintainAspectRatio(self, flag):
-    self._config(flag)
-
-  @property
-  def elements(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionElements
-    """
-    return self._config_sub_data("elements", OptionElements)
-
-  @property
-  def scales(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionScales
-    """
-    return self._config_sub_data("scales", OptionScales)
-
-  @property
-  def layout(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionLayout
-    """
-    return self._config_sub_data("layout", OptionLayout)
-
-  @property
-  def title(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionTitle
-    """
-    return self._config_sub_data("title", OptionTitle)
-
-  @property
-  def legend(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionLegend
-    """
-    return self._config_sub_data("legend", OptionLegend)
-
-  @property
-  def plugins(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionChartJsPlugins
-    """
-    return self._config_sub_data("plugins", OptionChartJsPlugins)
-
-  @property
-  def tooltips(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionChartJsTooltips
-    """
-    return self._config_sub_data("tooltips", OptionChartJsTooltips)
-
-  def add_title(self, text, color=None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param text:
-    :param color:
-    """
-    self.title.display = True
-    self.title.text = text
-    if color is not None:
-      self.title.fontColor = color
-    return self
-
-  @property
-  def size(self):
-    """
-    Description:
-    -----------
-
-    :rtype: OptionChartJsSize
-    """
-    return self._config_sub_data("size", OptionChartJsSize)
-
-
-class OptionPieAnimation(Options):
-
-  @property
-  def animateRotate(self):
+  def borderColor(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
     """
     return self._config_get()
 
-  @animateRotate.setter
-  def animateRotate(self, val):
-    self._config(val)
+  @borderColor.setter
+  def borderColor(self, text: str):
+    self._config(text)
 
   @property
-  def animateScale(self):
+  def borderWidth(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
     """
     return self._config_get()
 
-  @animateScale.setter
-  def animateScale(self, val):
-    self._config(val)
-
-
-class OptionsBar(ChartJsOptions):
+  @borderWidth.setter
+  def borderWidth(self, num: int):
+    self._config(num)
 
   @property
-  def stacked(self):
+  def borderDash(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/samples/latest/charts/bar/stacked.html
+      https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
     """
-    x_stacked = self.scales.x_axes().stacked
-    y_stacked = self.scales.y_axis().stacked
-    return x_stacked, y_stacked
+    return self._config_get()
 
-  @stacked.setter
-  def stacked(self, val):
-    self.scales.x_axes().stacked = val
-    self.scales.y_axis().stacked = val
-
-
-class OptionsPie(ChartJsOptions):
+  @borderDash.setter
+  def borderDash(self, values: List[int]):
+    self._config(values)
 
   @property
-  def tooltips(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionChartJsPieTooltips
-    """
-    return self._config_sub_data("tooltips", OptionChartJsPieTooltips)
-
-  @property
-  def cutoutPercentage(self):
+  def borderDashOffset(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
     """
     return self._config_get()
 
-  @cutoutPercentage.setter
-  def cutoutPercentage(self, val):
-    self._config(val)
+  @borderDashOffset.setter
+  def borderDashOffset(self, num: int):
+    self._config(num)
+
+
+class OptionQuadrants(Options):
 
   @property
-  def rotation(self):
+  def topLeft(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
     """
     return self._config_get()
 
-  @rotation.setter
-  def rotation(self, val):
-    self._config(val)
+  @topLeft.setter
+  def topLeft(self, text: str):
+    self._config(text)
 
   @property
-  def circumference(self):
+  def topRight(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/line.html
+      https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
     """
     return self._config_get()
 
-  @circumference.setter
-  def circumference(self, val):
-    self._config(val)
+  @topRight.setter
+  def topRight(self, text: str):
+    self._config(text)
 
   @property
-  def animation(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionPieAnimation
-    """
-    return self._config_sub_data("animation", OptionPieAnimation)
-
-
-class OptionsLine(ChartJsOptions):
-
-  @property
-  def showLines(self):
+  def bottomRight(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/polar.html
+      https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
     """
     return self._config_get()
 
-  @showLines.setter
-  def showLines(self, val):
-    self._config(val)
+  @bottomRight.setter
+  def bottomRight(self, text: str):
+    self._config(text)
 
   @property
-  def spanGaps(self):
+  def bottomLeft(self):
     """
     Description:
     ------------
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/charts/polar.html
+      https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
     """
     return self._config_get()
 
-  @spanGaps.setter
-  def spanGaps(self, val):
-    self._config(val)
-
-  @property
-  def elements(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionElementsLine
-    """
-    return self._config_sub_data("elements", OptionElementsLine)
-
-
-class OptionsPolar(ChartJsOptions):
-
-  @property
-  def startAngle(self):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._config_get()
-
-  @startAngle.setter
-  def startAngle(self, val):
-    self._config(val)
-
-  @property
-  def animation(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionPieAnimation
-    """
-    return self._config_sub_data("animation", OptionPieAnimation)
-
-
-class OptionChartJsTooltipsCallbacks(Options):
-
-  @property
-  def label(self):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._config_get()
-
-  @label.setter
-  def label(self, val):
-    self._config("function(tooltipItem, data) { return '%s' }" % val, js_type=True)
-
-  @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param digit: String. Optional. Decimal point separator.
-    :param thousand_sep: String. Optional. thousands separator.
-    :param decimal_sep: String. Optional. Decimal point separator.
-    """
-    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    if self.component.options.type == 'horizontalBar':
-      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
-    else:
-      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
-
-  @packageImport("accounting")
-  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param symbol: String. Optional. Default currency symbol is ''.
-    :param digit: String. Optional. Decimal point separator.
-    :param thousand_sep: String. Optional. thousands separator.
-    :param decimal_sep: String. Optional. Decimal point separator.
-    """
-    symbol = JsUtils.jsConvertData(symbol, None)
-    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    if self.component.options.type == 'horizontalBar':
-      self._config("function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
-    else:
-      self._config(
-        "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (
-        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
-
-  @property
-  def value(self):
-    """
-    Description:
-    ------------
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/latest/charts/polar.html
-    """
-    return self._config_get()
-
-  @value.setter
-  def value(self, val):
-    self._config(val)
-
-
-class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
-
-  @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
-    """
-    self._config(
-        "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
-        digit, thousand_sep), name="label", js_type=True)
-
-  @packageImport("accounting")
-  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
-    :param symbol: String. Optional. Default currency symbol is ''
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
-    :param decimal_sep: String. Optional. Decimal point separator
-    """
-    symbol = JsUtils.jsConvertData(symbol, None)
-    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._config(
-        "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
-        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
-
-
-class OptionChartJsTooltips(Options):
-
-  @property
-  def mode(self):
-    return self._config_get()
-
-  @mode.setter
-  def mode(self, value):
-    self._config(value)
-
-  @property
-  def intersect(self):
-    return self._config_get()
-
-  @intersect.setter
-  def intersect(self, flag):
-    self._config(flag)
-
-  @property
-  def callbacks(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionChartJsTooltipsCallbacks
-    """
-    return self._config_sub_data("callbacks", OptionChartJsTooltipsCallbacks)
-
-
-class OptionChartJsPieTooltips(Options):
-
-  @property
-  def callbacks(self):
-    """
-    Description:
-    ------------
-
-    :rtype: OptionChartJsTooltipsPieCallbacks
-    """
-    return self._config_sub_data("callbacks", OptionChartJsTooltipsPieCallbacks)
+  @bottomLeft.setter
+  def bottomLeft(self, text: str):
+    self._config(text)
 
 
 class OptionChartJsPlugins(Options):
@@ -1910,6 +1852,32 @@ class OptionChartJsPlugins(Options):
     :rtype: OptionLegend
     """
     return self._config_sub_data("legend", OptionLegend)
+
+  @property
+  def title(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("title", OptionTitle)
+
+  @property
+  def subtitle(self):
+    """
+    Description:
+    ------------
+
+    https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("subtitle", OptionTitle)
+
+  @property
+  def quadrants(self) -> OptionQuadrants:
+    return self._config_sub_data("quadrants", OptionQuadrants)
 
   @property
   @packageImport('chartjs-plugin-datalabels')
@@ -1984,6 +1952,1164 @@ class OptionChartJsPlugins(Options):
     from epyk.core.html.graph.exts import ChartJsAnnotation
     return self._config_sub_data("annotation", ChartJsAnnotation.Annotation)
 
+  @property
+  def chartAreaBorder(self) -> OptionChartAreaBorder:
+    return self._config_sub_data("chartAreaBorder", OptionChartAreaBorder)
+
+
+class ChartJsOptions(OptChart.OptionsChart):
+
+  @property
+  def data(self):
+    return self.component._data_attrs
+
+  @data.setter
+  def data(self, values: dict):
+    self.component._data_attrs = values
+    for d in values.get("datasets", []):
+      self.component.add_dataset(**d)
+
+  @property
+  def indexAxis(self):
+    return self._config_get()
+
+  @indexAxis.setter
+  @JsUtils.fromVersion({"chart.js": "3.0.0"})
+  def indexAxis(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def responsive(self):
+    return self._config_get()
+
+  @responsive.setter
+  def responsive(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def maintainAspectRatio(self):
+    return self._config_get(True)
+
+  @maintainAspectRatio.setter
+  def maintainAspectRatio(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def elements(self) -> OptionElements:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionElements
+    """
+    return self._config_sub_data("elements", OptionElements)
+
+  @property
+  def scales(self) -> OptionScales:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionScales
+    """
+    return self._config_sub_data("scales", OptionScales)
+
+  @property
+  def layout(self) -> OptionLayout:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLayout
+    """
+    return self._config_sub_data("layout", OptionLayout)
+
+  @property
+  def title(self) -> OptionTitle:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionTitle
+    """
+    return self._config_sub_data("title", OptionTitle)
+
+  @property
+  def legend(self) -> OptionLegend:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionLegend
+    """
+    return self._config_sub_data("legend", OptionLegend)
+
+  @property
+  def plugins(self) -> OptionChartJsPlugins:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsPlugins
+    """
+    return self._config_sub_data("plugins", OptionChartJsPlugins)
+
+  @property
+  def tooltips(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltips
+    """
+    return self._config_sub_data("tooltips", OptionChartJsTooltips)
+
+  def add_title(self, text: str, color: str = None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param text:
+    :param color:
+    """
+    self.title.display = True
+    self.title.text = text
+    if color is not None:
+      self.title.fontColor = color
+    return self
+
+  @property
+  def size(self) -> OptionChartJsSize:
+    """
+    Description:
+    -----------
+
+    :rtype: OptionChartJsSize
+    """
+    return self._config_sub_data("size", OptionChartJsSize)
+
+
+class OptionPieAnimation(Options):
+
+  @property
+  def animateRotate(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @animateRotate.setter
+  def animateRotate(self, val):
+    self._config(val)
+
+  @property
+  def animateScale(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @animateScale.setter
+  def animateScale(self, val):
+    self._config(val)
+
+
+class OptionsBar(ChartJsOptions):
+
+  @property
+  def stacked(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/bar/stacked.html
+    """
+    x_stacked = self.scales.x_axes().stacked
+    y_stacked = self.scales.y_axis().stacked
+    return x_stacked, y_stacked
+
+  @stacked.setter
+  def stacked(self, val: bool):
+    self.scales.x_axes().stacked = val
+    self.scales.y_axis().stacked = val
+
+
+class OptionsPie(ChartJsOptions):
+
+  @property
+  def tooltips(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsPieTooltips
+    """
+    return self._config_sub_data("tooltips", OptionChartJsPieTooltips)
+
+  @property
+  def cutoutPercentage(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @cutoutPercentage.setter
+  def cutoutPercentage(self, val):
+    self._config(val)
+
+  @property
+  def rotation(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @rotation.setter
+  def rotation(self, val: int):
+    self._config(val)
+
+  @property
+  def circumference(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @circumference.setter
+  def circumference(self, val: int):
+    self._config(val)
+
+  @property
+  def animation(self) -> OptionPieAnimation:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPieAnimation
+    """
+    return self._config_sub_data("animation", OptionPieAnimation)
+
+
+class OptionsLine(ChartJsOptions):
+
+  @property
+  def showLines(self):
+    """
+    Description:
+    ------------
+    If false, the line is not drawn for this dataset.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @showLines.setter
+  def showLines(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def spanGaps(self):
+    """
+    Description:
+    ------------
+    If true, lines will be drawn between points with no or null data.
+    If false, points with null data will create a break in the line. Can also be a number specifying the maximum gap
+    length to span. The unit of the value depends on the scale used.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @spanGaps.setter
+  def spanGaps(self, val: Optional[bool]):
+    self._config(val)
+
+  @property
+  def tension(self):
+    """
+    Description:
+    ------------
+    Bezier curve tension of the line.
+    Set to 0 to draw straightlines. This option is ignored if monotone cubic interpolation is used.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @tension.setter
+  def tension(self, val: int):
+    self._config(val)
+
+  @property
+  def backgroundColor(self):
+    """
+    Description:
+    ------------
+    The line fill color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @backgroundColor.setter
+  def backgroundColor(self, val):
+    self._config(val)
+
+  @property
+  def borderCapStyle(self):
+    """
+    Description:
+    ------------
+    Cap style of the line.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderCapStyle.setter
+  def borderCapStyle(self, val):
+    self._config(val)
+
+  @property
+  def borderColor(self):
+    """
+    Description:
+    ------------
+    The line color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderColor.setter
+  def borderColor(self, val: int):
+    self._config(val)
+
+  @property
+  def borderDash(self):
+    """
+    Description:
+    ------------
+    Length and spacing of dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderDash.setter
+  def borderDash(self, val: int):
+    self._config(val)
+
+  @property
+  def borderDashOffset(self):
+    """
+    Description:
+    ------------
+    Offset for line dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderDashOffset.setter
+  def borderDashOffset(self, val: int):
+    self._config(val)
+
+  @property
+  def borderJoinStyle(self):
+    """
+    Description:
+    ------------
+    Line joint style.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderJoinStyle.setter
+  def borderJoinStyle(self, val: str):
+    self._config(val)
+
+  @property
+  def borderWidth(self):
+    """
+    Description:
+    ------------
+    The line width (in pixels).
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @borderWidth.setter
+  def borderWidth(self, val: int):
+    self._config(val)
+
+  @property
+  def interaction(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionInteractionLine
+    """
+    return self._config_sub_data("interaction", OptionInteractionLine)
+
+  @property
+  def fill(self):
+    """
+    Description:
+    ------------
+    How to fill the area under the line.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/charts/line.html
+    """
+    return self._config_get()
+
+  @fill.setter
+  def fill(self, val):
+    self._config(val)
+
+  @property
+  def elements(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionElementsLine
+    """
+    return self._config_sub_data("elements", OptionElementsLine)
+
+
+class OptionsPolar(ChartJsOptions):
+
+  @property
+  def startAngle(self):
+    """
+    Description:
+    ------------
+    Starting angle to draw arcs for the first item in a dataset. In degrees, 0 is at top.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/polar.html
+      https://www.chartjs.org/docs/3.7.0/api/interfaces/PolarAreaControllerChartOptions.html
+    """
+    return self._config_get(0)
+
+  @startAngle.setter
+  def startAngle(self, val: int):
+    self._config(val)
+
+  @property
+  def animation(self) -> OptionPieAnimation:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionPieAnimation
+    """
+    return self._config_sub_data("animation", OptionPieAnimation)
+
+
+class OptionChartJsTooltipsCallbacks(Options):
+
+  @property
+  def label(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @label.setter
+  def label(self, val: str):
+    self._config("function(tooltipItem, data) { return '%s' }" % val, js_type=True)
+
+  @packageImport("accounting")
+  def labelNumber(self, digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param digit: String. Optional. Decimal point separator.
+    :param thousand_sep: String. Optional. thousands separator.
+    :param decimal_sep: String. Optional. Decimal point separator.
+    """
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    if self.component.options.type == 'horizontalBar':
+      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
+    else:
+      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
+
+  @packageImport("accounting")
+  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param symbol: String. Optional. Default currency symbol is ''.
+    :param digit: String. Optional. Decimal point separator.
+    :param thousand_sep: String. Optional. thousands separator.
+    :param decimal_sep: String. Optional. Decimal point separator.
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    if self.component.options.type == 'horizontalBar':
+      self._config("function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+    else:
+      self._config(
+        "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (
+        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+
+  @property
+  def value(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @value.setter
+  def value(self, val):
+    self._config(val)
+
+
+class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
+
+  @packageImport("accounting")
+  def labelNumber(self, digit=0, thousand_sep="."):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    """
+    self._config(
+        "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
+        digit, thousand_sep), name="label", js_type=True)
+
+  @packageImport("accounting")
+  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param symbol: String. Optional. Default currency symbol is ''
+    :param digit: String. Optional. Decimal point separator
+    :param thousand_sep: String. Optional. thousands separator
+    :param decimal_sep: String. Optional. Decimal point separator
+    """
+    symbol = JsUtils.jsConvertData(symbol, None)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    self._config(
+        "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
+        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+
+
+class OptionChartJsTooltips(Options):
+
+  @property
+  def enabled(self):
+    """
+
+    https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @enabled.setter
+  def enabled(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def mode(self):
+    return self._config_get()
+
+  @mode.setter
+  def mode(self, value):
+    self._config(value)
+
+  @property
+  def intersect(self):
+    return self._config_get()
+
+  @intersect.setter
+  def intersect(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def position(self):
+    """
+
+    https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @position.setter
+  def position(self, text: str):
+    self._config(text)
+
+  @property
+  def callbacks(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltipsCallbacks
+    """
+    return self._config_sub_data("callbacks", OptionChartJsTooltipsCallbacks)
+
+  def itemSort(self):
+    ...
+
+  def filter(self):
+    ...
+
+  @property
+  def backgroundColor(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @backgroundColor.setter
+  def backgroundColor(self, code: str):
+    self._config(code)
+
+  @property
+  def titleColor(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('#fff')
+
+  @titleColor.setter
+  def titleColor(self, code: str):
+    self._config(code)
+
+  @property
+  def titleAlign(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('left')
+
+  @titleAlign.setter
+  def titleAlign(self, text: str):
+    self._config(text)
+
+  @property
+  def titleSpacing(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(2)
+
+  @titleSpacing.setter
+  def titleSpacing(self, num: float):
+    self._config(num)
+
+  @property
+  def titleMarginBottom(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(6)
+
+  @titleMarginBottom.setter
+  def titleMarginBottom(self, num: float):
+    self._config(num)
+
+  @property
+  def bodyColor(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('#fff')
+
+  @bodyColor.setter
+  def bodyColor(self, code: str):
+    self._config(code)
+
+  @property
+  def bodyAlign(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('left')
+
+  @bodyAlign.setter
+  def bodyAlign(self, text: str):
+    self._config(text)
+
+  @property
+  def bodySpacing(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(2)
+
+  @bodySpacing.setter
+  def bodySpacing(self, num: float):
+    self._config(num)
+
+  @property
+  def footerColor(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('#fff')
+
+  @footerColor.setter
+  def footerColor(self, code: str):
+    self._config(code)
+
+  @property
+  def footerAlign(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('left')
+
+  @footerAlign.setter
+  def footerAlign(self, text: str):
+    self._config(text)
+
+  @property
+  def footerSpacing(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(2)
+
+  @footerSpacing.setter
+  def footerSpacing(self, num: float):
+    self._config(num)
+
+  @property
+  def footerMarginTop(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(6)
+
+  @footerMarginTop.setter
+  def footerMarginTop(self, num: float):
+    self._config(num)
+
+  @property
+  def caretPadding(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(2)
+
+  @caretPadding.setter
+  def caretPadding(self, num: float):
+    self._config(num)
+
+  @property
+  def caretSize(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(5)
+
+  @caretSize.setter
+  def caretSize(self, num: float):
+    self._config(num)
+
+  @property
+  def cornerRadius(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(6)
+
+  @cornerRadius.setter
+  def cornerRadius(self, num: float):
+    self._config(num)
+
+  @property
+  def multiKeyBackground(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('#fff')
+
+  @multiKeyBackground.setter
+  def multiKeyBackground(self, code: str):
+    self._config(code)
+
+  @property
+  def displayColors(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(True)
+
+  @displayColors.setter
+  def displayColors(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def boxWidth(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @boxWidth.setter
+  def boxWidth(self, num: float):
+    self._config(num)
+
+  @property
+  def boxHeight(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @boxHeight.setter
+  def boxHeight(self, num: float):
+    self._config(num)
+
+  @property
+  def boxPadding(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(1)
+
+  @boxPadding.setter
+  def boxPadding(self, num: float):
+    self._config(num)
+
+  @property
+  def usePointStyle(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(False)
+
+  @usePointStyle.setter
+  def usePointStyle(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def borderColor(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get('rgba(0, 0, 0, 0)')
+
+  @borderColor.setter
+  def borderColor(self, code: str):
+    self._config(code)
+
+  @property
+  def borderWidth(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(0)
+
+  @borderWidth.setter
+  def borderWidth(self, num: float):
+    self._config(num)
+
+  @property
+  def rtl(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @rtl.setter
+  def rtl(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def textDirection(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get()
+
+  @textDirection.setter
+  def textDirection(self, text: str):
+    self._config(text)
+
+  @property
+  def xAlign(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(None)
+
+  @xAlign.setter
+  def xAlign(self, text: str):
+    self._config(text)
+
+  @property
+  def yAlign(self):
+    """
+    Description:
+    ------------
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+    """
+    return self._config_get(None)
+
+  @yAlign.setter
+  def yAlign(self, text: str):
+    self._config(text)
+
+
+class OptionChartJsPieTooltips(Options):
+
+  @property
+  def callbacks(self):
+    """
+    Description:
+    ------------
+
+    :rtype: OptionChartJsTooltipsPieCallbacks
+    """
+    return self._config_sub_data("callbacks", OptionChartJsTooltipsPieCallbacks)
+
 
 class OptionGeoColorScale(Options):
 
@@ -2008,7 +3134,7 @@ class OptionGeoColorScale(Options):
     return self._config_get()
 
   @position.setter
-  def position(self, val):
+  def position(self, val: str):
     self._config(val)
 
   @property
@@ -2067,7 +3193,7 @@ class OptionGeo(Options):
 class OptionPlugins(Options):
 
   @property
-  def legend(self):
+  def legend(self) -> OptionLegend:
     """
     Description:
     ------------
@@ -2126,7 +3252,7 @@ class OptionsGeo(ChartJsOptions):
     return self._config_sub_data("geo", OptionGeo)
 
   @property
-  def plugins(self):
+  def plugins(self) -> OptionPlugins:
     """
     Description:
     ------------

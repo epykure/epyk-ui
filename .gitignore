@@ -41,9 +41,9 @@ Thumbs.db
 
 # Ignore test outs results
 doc/_build/*
-*/tests/outs/*
 /tests/*
 .idea/*
+*\tests*
 
 # Ignore build results
 dist/*

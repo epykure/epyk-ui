@@ -6,7 +6,7 @@ Related Pages:
       https://www.rapidtables.com/web/color/RGB_Color.html
 """
 
-from typing import List
+from typing import List, Union
 import random
 import math
 import re
@@ -344,6 +344,46 @@ def colors(start: str, end: str, steps: int):
     colors_panel.append(gradient(start, end, 1.0 / (steps-1) * (i + 1)))
   colors_panel.append(end)
   return colors_panel
+
+
+def transparentize(color: str, alpha: float, is_hex: bool = False):
+  """
+  Description:
+  ------------
+  Change the color opacity.
+
+  Usage::
+
+    pk.colors.transparentize(pk.colors.HexColors.BLUE_VIOLET, 0.2, True)
+
+  Attributes:
+  ----------
+  :param color: The color code hexa or rgb.
+  :param alpha: The opacity factor.
+  :param is_hex: Flag to specify if the conversion to rgb will be required.
+  """
+  if is_hex:
+    color = getHexToRgb(color)
+  return rgba(color[0], color[1], color[2], alpha)
+
+
+def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
+  """
+  Description:
+  ------------
+  Change the colors opacity.
+
+  Usage::
+
+    pk.colors.transparentize_all(page.theme.charts, 0.2, True)
+
+  Attributes:
+  ----------
+  :param colors: The color codes hexa or rgb.
+  :param alpha: The opacity factor.
+  :param is_hex: Flag to specify if the conversion to rgb will be required.
+  """
+  return [transparentize(c, alpha, is_hex) for c in colors]
 
 
 class HexColors:

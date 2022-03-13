@@ -23,6 +23,7 @@ from epyk.core.js import JsSpeechRecognition
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
+from epyk.core.js.fncs import JsFncsSamples
 from epyk.core.js.objects import JsData
 from epyk.core.js.objects import JsNodeAttributes
 from epyk.core.js.objects import JsNodeDom
@@ -830,11 +831,25 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsFncs.JsRegisteredFunctions(self.page)
 
   @property
+  def samples(self):
+    """
+    Description:
+    ------------
+    JavaScript feature to provide sample of data for a test/demo.
+
+    Usage::
+
+      page.js.samples.months(count_=7)
+      page.js.samples.numbers(count_=7, min_=-100, max_=100)
+    """
+    return JsFncsSamples.Samples(self.page)
+
+  @property
   def breadcrumb(self):
     """
     Description:
     ------------
-    Create a internal Breadcrumb to keep track of the user journey within your page.
+    Create an internal Breadcrumb to keep track of the user journey within your page.
 
     Related Pages:
 

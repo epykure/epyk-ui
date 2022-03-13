@@ -1,22 +1,46 @@
 
 import os
 
+FIELDS = {"default": "", "description": ""}
+COLUMNS = ["label", "types", "default"]
 
 DOC = '''
 
-name	String	Required. A unique name for the data set.
-format	Format	An object that specifies the format for parsing the data file or values. See the format reference for more.
-source	String | String[ ]	The name of one or more data sets to use as the source for this data set. The source property is useful in combination with a transform pipeline to derive new data. If string-valued, indicates the name of the source data set. If array-valued, specifies a collection of data source names that should be merged (unioned) together.
-url	String	A URL from which to load the data set. Use the format property to ensure the loaded data is correctly parsed. If the format property is not specified, the data is assumed to be in a row-oriented JSON format.
-values	Any	The full data set, included inline. The values property allows data to be included directly within the specification itself. While most commonly an array of objects, other data types (such as CSV strings) may be used, subject to the format settings.
-async	Boolean	≥ 5.9 A boolean flag (default false) indicating if dynamic data loading or reformatting should occur asynchronously. If true, dataflow evaluation will complete, data loading will occur in the background, and the dataflow will be re-evaluated when loading is complete. If false, dataflow evaluation will block until loading is complete and then continue within the same evaluation cycle. The use of async can allow multiple dynamic datasets to be loaded simultaneously while still supporting interactivity. However, the use of async can cause datasets to remain empty while the rest of the dataflow is evaluated, potentially affecting downstream computation.
-on	Trigger[ ]	An array of updates to insert, remove, & toggle data values, or clear the data when trigger conditions are met. See the trigger reference for more.
-transform	Transform[ ]	An array of transforms to perform on the input data. The output of the transform pipeline then becomes the value of this data set. See the transform reference for more.
+backgroundColor	Color	'rgba(0, 0, 0, 0.8)'	Background color of the tooltip.
+titleColor	Color	'#fff'	Color of title text.
+titleFont	Font	{weight: 'bold'}	See Fonts.
+titleAlign	string	'left'	Horizontal alignment of the title text lines. more...
+titleSpacing	number	2	Spacing to add to top and bottom of each title line.
+titleMarginBottom	number	6	Margin to add on bottom of title section.
+bodyColor	Color	'#fff'	Color of body text.
+bodyFont	Font	{}	See Fonts.
+bodyAlign	string	'left'	Horizontal alignment of the body text lines. more...
+bodySpacing	number	2	Spacing to add to top and bottom of each tooltip item.
+footerColor	Color	'#fff'	Color of footer text.
+footerFont	Font	{weight: 'bold'}	See Fonts.
+footerAlign	string	'left'	Horizontal alignment of the footer text lines. more...
+footerSpacing	number	2	Spacing to add to top and bottom of each footer line.
+footerMarginTop	number	6	Margin to add before drawing the footer.
+padding	Padding	6	Padding inside the tooltip.
+caretPadding	number	2	Extra distance to move the end of the tooltip arrow away from the tooltip point.
+caretSize	number	5	Size, in px, of the tooltip arrow.
+cornerRadius	number|object	6	Radius of tooltip corner curves.
+multiKeyBackground	Color	'#fff'	Color to draw behind the colored boxes when multiple items are in the tooltip.
+displayColors	boolean	TRUE	If true, color boxes are shown in the tooltip.
+boxWidth	number	bodyFont.size	Width of the color box if displayColors is true.
+boxHeight	number	bodyFont.size	Height of the color box if displayColors is true.
+boxPadding	number	1	Padding between the color box and the text.
+usePointStyle	boolean	FALSE	Use the corresponding point style (from dataset options) instead of color boxes, ex: star, triangle etc. (size is based on the minimum value between boxWidth and boxHeight).
+borderColor	Color	'rgba(0, 0, 0, 0)'	Color of the border.
+borderWidth	number	0	Size of the border.
+rtl	boolean		true for rendering the tooltip from right to left.
+textDirection	string	canvas' default	This will force the text direction 'rtl' or 'ltr on the canvas for rendering the tooltips, regardless of the css specified on the canvas
+xAlign	string	undefined	Position of the tooltip caret in the X direction. more
+yAlign	string	undefined	
 
 '''
 
-URL = "https://vega.github.io/vega/docs/transforms/aggregate/"
-
+URL = "https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html"
 
 DT_PROP = '''
   @property
@@ -33,7 +57,7 @@ DT_PROP = '''
     return self._config_get(%(default)s)
 
   @%(label)s.setter
-  def %(label)s(self, %(value)s):
+  def %(label)s(self, %(value)s: %(type)s):
     self._config(%(value)s)
 '''
 
@@ -59,26 +83,47 @@ OUT_PATH = r"C:\tmps"
 
 with open(os.path.join(OUT_PATH, "DOC.TXT"), "w", encoding='utf-8') as fp:
   for line in DOC.strip().split("\n"):
-    rec = line.split("\t")
-    if len(rec) > 0:
-      types = list(map(lambda x: x.strip(), rec[1].strip().split("|")))
-      rec[2] = rec[2].replace(". ", ". \n    ")
-      if "[\u202f]" in rec[1]:
+    row = line.split("\t")
+    if len(row) > 0:
+      rec = dict(zip(COLUMNS, row))
+      rec["url"] = URL
+      rec["default"] = {"TRUE": "True", "FALSE": "False", "undefined": "None"}.get(rec.get("default", ""), rec.get("default", ""))
+      if "." in rec.get("default"):
+        rec["default"] = ""
+      types = list(map(lambda x: x.strip(), rec["types"].strip().lower().split("|")))
+      rec["description"] = rec.get("description", "").replace(". ", ". \n    ")
+      if "[\u202f]" in rec["types"]:
         pass
         #fp.write(DT_PROP % {"default": "", "value": 'text', 'label': rec[0], "url": URL, "description": rec[2]})
-      if "Expression" in types:
+      for f, dflt in FIELDS.items():
+        if f not in rec:
+          rec[f] = dflt
+      if "expression" in types:
+        rec["value"] = 'text'
         fp.write(DT_JS % {"default": "", "value": 'text', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif 'Array' in types or 'Number[\u202f]' in types or 'Array[\u202f]' in types:
-        fp.write(DT_PROP % {"default": "", "value": 'values', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif "String" in types or "URL" in types:
-        fp.write(DT_PROP % {"default": "", "value": 'text', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif "Color" in types:
-        fp.write(DT_PROP % {"default": "", "value": 'code', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif 'Number' in types:
-        fp.write(DT_PROP % {"default": "", "value": 'num', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif 'Boolean' in types:
-        fp.write(DT_PROP % {"default": "", "value": 'flag', 'label': rec[0], "url": URL, "description": rec[2]})
-      elif 'Any' in types:
-        fp.write(DT_PROP % {"default": "", "value": 'record', 'label': rec[0], "url": URL, "description": rec[2]})
+      elif 'array' in types or 'Number[\u202f]' in types or 'Array[\u202f]' in types:
+        rec["type"] = 'list'
+        rec["value"] = 'values'
+        fp.write(DT_PROP % rec)
+      elif "string" in types or "URL" in types:
+        rec["type"] = 'str'
+        rec["value"] = 'text'
+        fp.write(DT_PROP % rec)
+      elif "color" in types:
+        rec["type"] = 'str'
+        rec["value"] = 'code'
+        fp.write(DT_PROP % rec)
+      elif 'number' in types:
+        rec["type"] = 'float'
+        rec["value"] = 'num'
+        fp.write(DT_PROP % rec)
+      elif 'boolean' in types:
+        rec["type"] = 'bool'
+        rec["value"] = 'flag'
+        fp.write(DT_PROP % rec)
+      elif 'any' in types:
+        rec["type"] = 'Any'
+        rec["value"] = 'record'
+        fp.write(DT_PROP % rec)
       else:
         print(rec)

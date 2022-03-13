@@ -4,6 +4,7 @@
 from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.css import Defaults as default_css
 
 
 class Texts:
@@ -1050,17 +1051,23 @@ class TextReferences:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
+    dfl_options = {"link_css": {
+      "font-style": "italic", "font-size": self.page.body.style.globals.font.normal(-3)}}
+    if options is not None and options.get("link_css") is not None:
+      dfl_options["link_css"] = dict(options.get("link_css"))
     split_url = url.split("/")
     if site is None:
       site = split_url[2]
     if name is None:
       name = split_url[-1]
     if author is not None:
-      text = self.page.ui.text("%s, %s, <a style='font-style:italic' href='%s'>%s</a>" % (
-        author, name, url, site.upper()), align="right", html_code=html_code, options=options, profile=profile)
+      text = self.page.ui.text("%s, %s, <a style='%s' href='%s'>%s</a>" % (
+        author, name, default_css.inline(dfl_options["link_css"]), url, site.upper()),
+                               align="right", html_code=html_code, options=options, profile=profile)
     else:
-      text = self.page.ui.text("%s, <a style='font-style:italic' href='%s'>%s</a>" % (
-         name, url, site.upper()), align="right", html_code=html_code, options=options, profile=profile)
+      text = self.page.ui.text("%s, <a style='%s' href='%s'>%s</a>" % (
+         name, default_css.inline(dfl_options["link_css"]), url, site.upper()),
+                               align="right", html_code=html_code, options=options, profile=profile)
     text.style.css.color = self.page.theme.colors[4]
     html.Html.set_component_skin(text)
     return text

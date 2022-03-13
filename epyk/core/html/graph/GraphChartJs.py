@@ -678,7 +678,7 @@ class ChartLine(Chart):
     """
     return super().options
 
-  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     ------------
@@ -711,9 +711,14 @@ class ChartLine(Chart):
       self.options.props[label] = {"fill": False}
     data.set_style(background_color=self.options.background_colors[index], fill_opacity=opacity or self.options.opacity,
                    border_width=1, border_color=colors or self.options.colors[index])
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
+  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     ------------
@@ -733,7 +738,7 @@ class ChartLine(Chart):
     :param opacity: Float. Optional. The opacity level for the content.
     :param kind: String. Optional. The chart type.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None)
+    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None, **kwargs)
     self._datasets.append(data)
     return data
 
@@ -775,7 +780,7 @@ class ChartLine(Chart):
 class ChartBubble(Chart):
   _chart__type = 'bubble'
 
-  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     ------------
@@ -803,9 +808,14 @@ class ChartBubble(Chart):
     data.set_style(background_color=self.options.background_colors[index],
                    fill_opacity=opacity or self.options.opacity,
                    border_width=1, border_color=colors or self.options.colors[index])
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None):
+  def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
     """
     Description:
     ------------
@@ -824,7 +834,7 @@ class ChartBubble(Chart):
     :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Float. Optional. The opacity level for the content.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity)
+    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, **kwargs)
     self._datasets.append(data)
     return data
 
@@ -876,7 +886,7 @@ class ChartBar(ChartLine):
     """
     return super().options
 
-  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     ------------
@@ -906,9 +916,14 @@ class ChartBar(ChartLine):
     data.label = label
     data.set_style(background_color=self.options.background_colors[index], fill_opacity=opacity or self.options.opacity,
                    border_width=1, border_color=colors or self.options.colors[index])
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None):
+  def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None, **kwargs):
     """
     Description:
     ------------
@@ -929,7 +944,7 @@ class ChartBar(ChartLine):
     :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     :param alias: String. The chart alias name visible in the legend. Default the label.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, kind=kind)
+    data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, kind=kind, **kwargs)
     self._datasets.append(data)
     alias = alias or label
     if alias not in self.options.y_columns:
@@ -961,7 +976,7 @@ class ChartPolar(Chart):
     """
     return super().options
 
-  def new_dataset(self, index, data, label, colors=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
     """
     Description:
     -----------
@@ -989,9 +1004,14 @@ class ChartPolar(Chart):
       fill_opacity=self.options.opacity, border_width=1,
       border_color=colors or self.options.colors)
     data.label = label
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+  def add_dataset(self, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     -----------
@@ -1010,7 +1030,7 @@ class ChartPolar(Chart):
     :param opacity: Number. Optional. The opacity factory from 0 to 1.
     :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors)
+    data = self.new_dataset(len(self._datasets), data, label, colors, **kwargs)
     self._datasets.append(data)
     return data
 
@@ -1066,7 +1086,7 @@ class ChartPie(Chart):
     """
     return super().options
 
-  def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None):
+  def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     ------------
@@ -1088,9 +1108,14 @@ class ChartPie(Chart):
         background_colors=self.options.background_colors,
         fill_opacity=opacity or self.options.opacity, border_width=1,
         border_colors=self.options.colors)
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label="", colors=None, opacity=None):
+  def add_dataset(self, data, label="", colors=None, opacity=None, **kwargs):
     """
     Description:
     -----------
@@ -1104,7 +1129,7 @@ class ChartPie(Chart):
     :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Number. Optional. The opacity factory from 0 to 1.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity)
+    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, **kwargs)
     self._datasets.append(data)
     return data
 
@@ -1143,7 +1168,7 @@ class ChartPie(Chart):
 class ChartRadar(Chart):
   _chart__type = 'radar'
 
-  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """
     Description:
     -----------
@@ -1166,9 +1191,14 @@ class ChartRadar(Chart):
       data.borderColor = self.options.colors[index]
       data.borderWidth = 0.2
       data.fillOpacity = opacity or self.options.props.get("opacity", 0)
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None):
+  def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
     """
     Description:
     -----------
@@ -1182,7 +1212,7 @@ class ChartRadar(Chart):
     :param colors: List. Optional. The color for this series. Default the global definition.
     :param opacity: Number. Optional. The opacity factory from 0 to 1.
     """
-    dataset = self.new_dataset(len(self._datasets), data, label, colors, opacity)
+    dataset = self.new_dataset(len(self._datasets), data, label, colors, opacity, **kwargs)
     self._datasets.append(dataset)
     return dataset
 
@@ -1220,7 +1250,7 @@ class ChartRadar(Chart):
 class ChartScatter(Chart):
   _chart__type = 'scatter'
 
-  def new_dataset(self, index, data, label, colors=None, kind=None):
+  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
     """
     Description:
     -----------
@@ -1241,9 +1271,14 @@ class ChartScatter(Chart):
     if colors is None:
       data.backgroundColor = self.options.colors[index]
       data.borderColor = self.options.colors[index]
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None):
+  def add_dataset(self, data, label, colors=None, **kwargs):
     """
     Description:
     -----------
@@ -1256,7 +1291,7 @@ class ChartScatter(Chart):
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
     """
-    data = self.new_dataset(len(self._datasets), data, label, colors)
+    data = self.new_dataset(len(self._datasets), data, label, colors, **kwargs)
     self._datasets.append(data)
     return data
 
