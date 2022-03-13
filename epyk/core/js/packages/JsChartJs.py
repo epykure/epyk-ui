@@ -281,7 +281,7 @@ class ChartJs(JsPackage):
           %(htmlCode)s_options.commons.borderColor = %(htmlCode)s_options.colors[nextIndex];
           %(htmlCode)s_options.commons.hoverBackgroundColor = %(htmlCode)s_options.background_colors[nextIndex]};
         if (%(htmlCode)s_options.commons.type == "line"){%(htmlCode)s_options.commons.fill = null};
-        if(['polarArea', 'pie'].indexOf(%(varName)s.config._config.type)){%(varName)s.data.labels.push(%(name)s); %(varName)s.data.datasets[0].data.push(%(points)s)}
+        if(['polarArea', 'pie', 'radar', 'doughnut'].indexOf(%(varName)s.config._config.type) > 0){%(varName)s.data.labels.push(%(name)s); %(varName)s.data.datasets[0].data.push(%(points)s)}
         else{%(varName)s.data.datasets.push(Object.assign({label: %(name)s, data: %(points)s}, %(htmlCode)s_options.commons))}
       }''' % {'varName': self.varName, 'name': name, 'points': points, "options": options.toStr(),
               "htmlCode": self.component.htmlCode, "color": color})
