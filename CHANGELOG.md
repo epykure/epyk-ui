@@ -6,6 +6,31 @@
 
 ### Fixed
 
+
+## [1.7.5] - 2022-03-13
+
+### Added
+- Add enter shortcut to textarea
+- Add readonly dom shortcut property for textarea
+- Add add_command function to the menu component to add more icons.
+- Add mouse loading animation.
+- Add JavaScript samples module.
+
+### Changed
+- Extend menu component to accept list of components.
+- Change color module to allow the transparentize and transparentize_all functions.
+- Documentation and examples.
+- Version of ChartJs to the latest.
+- [ChartJs] change new_dataset and add_dataset to accept any optional parameters.
+- [ChartJs] Change option to allow the data definition from a dict.
+- Change page.ui.texts.references.website component default style.
+
+### Fixed
+- Documentation and Types definition.
+- [ChartJs] Add new options for the various charts.
+- [ChartJs] Fix on the load js wrapper for Pie and Polar charts.
+- Fix margin_h shortcut CSS property with components with width in %.
+
 ## [1.7.4] - 2022-03-04
 
 ### Added

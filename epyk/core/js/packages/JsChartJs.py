@@ -245,7 +245,7 @@ class ChartJs(JsPackage):
     return self.component.build(
       JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
-  def load(self, name: str, points: List[dict], options: dict = None, color: str = ""):
+  def load(self, name: str, points: Union[List[dict], primitives.JsDataModel], options: dict = None, color: str = ""):
     """
     Description:
     -----------
@@ -281,7 +281,8 @@ class ChartJs(JsPackage):
           %(htmlCode)s_options.commons.borderColor = %(htmlCode)s_options.colors[nextIndex];
           %(htmlCode)s_options.commons.hoverBackgroundColor = %(htmlCode)s_options.background_colors[nextIndex]};
         if (%(htmlCode)s_options.commons.type == "line"){%(htmlCode)s_options.commons.fill = null};
-        %(varName)s.data.datasets.push(Object.assign({label: %(name)s, data: %(points)s}, %(htmlCode)s_options.commons))
+        if(['polarArea', 'pie'].indexOf(%(varName)s.config._config.type)){%(varName)s.data.labels.push(%(name)s); %(varName)s.data.datasets[0].data.push(%(points)s)}
+        else{%(varName)s.data.datasets.push(Object.assign({label: %(name)s, data: %(points)s}, %(htmlCode)s_options.commons))}
       }''' % {'varName': self.varName, 'name': name, 'points': points, "options": options.toStr(),
               "htmlCode": self.component.htmlCode, "color": color})
 
