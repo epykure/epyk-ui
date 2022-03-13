@@ -148,6 +148,23 @@ class OptionLabelFont(Options):
 class OptionAxesTicks(Options):
 
   @property
+  def color(self):
+    """
+    Description:
+    -----------
+    Change the font color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @color.setter
+  def color(self, val: str):
+    self._config(val)
+
+  @property
   def fontColor(self):
     """
     Description:
