@@ -7,7 +7,7 @@
 ### Fixed
 
 
-## [1.7.5] - 2022-03-13
+## [1.7.6] - 2022-03-13
 
 ### Added
 - Add enter shortcut to textarea
