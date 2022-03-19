@@ -66,7 +66,7 @@ class Select(Html.Html):
     if html_code in self.page.inputs:
       for v in self._vals:
         if v['value'] == self.page.inputs[html_code]:
-          options['selected'] = v['value']
+          self.options.selected = v['value']
     if width[1] == 'px':
       self.attr["data-width"] = "%spx" % width[0]
     if multiple:
