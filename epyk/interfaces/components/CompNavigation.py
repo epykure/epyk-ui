@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from typing import Union
+from typing import Union, Optional
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
@@ -14,6 +14,20 @@ class Navigation:
 
   def __init__(self, ui):
     self.page = ui.page
+
+  def __format_text(self, text: Union[str, dict], size: str = None, italic: bool = True) -> str:
+    if isinstance(text, dict):
+      sub_title = self.page.ui.div(list(text.values())[0])
+      sub_title.options.managed = False
+      if italic:
+        sub_title.style.css.italic()
+      sub_title.style.css.color = self.page.theme.greys[4]
+      sub_title.style.css.text_transform = "lowercase"
+      sub_title.style.css.display = "inline"
+      sub_title.style.css.font_size = size or self.page.body.style.globals.font.normal(-3)
+      return "<b>%s</b> %s" % (list(text.keys())[0], sub_title.html())
+
+    return text
 
   def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom=None, tooltip: str = None,
          width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
@@ -267,6 +281,60 @@ class Navigation:
     html.Html.set_component_skin(html_indices)
     return html_indices
 
+  def more(self, text: str = "See more", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = ('auto', ""),
+           tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
+           align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
+           options: Optional[dict] = None):
+    """
+    Description:
+    -----------
+    Add a see more button to get the number of calls for a pagination on the server side.
+
+    Usage::
+
+      t = page.ui.text("Rewind")
+      btn = page.ui.navigation.more()
+      btn.click([page.js.console.log(btn.dom.next())])
+      t.click([btn.dom.rewind()])
+
+    Attributes:
+    ----------
+    :param text: Optional. The value to be displayed to the button.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Specific Python options available for this component.
+    """
+    btn = self.page.ui.buttons.text(text=text, icon=icon, width=width, tooltip=tooltip, height=height, align=align,
+                                    html_code=html_code, profile=profile, options=options)
+    btn.style.css.font_factor(-3)
+    btn.style.css.cursor = "pointer"
+    btn.attr["click-count"] = 0
+
+    def rewind():
+      return btn.dom.setAttribute("click-count", 0)
+
+    def next():
+      return btn.dom.getAttribute("click-count")
+
+    btn.dom.rewind = rewind
+    btn.dom.next = next
+
+    def click(js_funcs, source_event=None, profile=None, on_ready=False):
+      if on_ready:
+        self.page.body.onReady([btn.dom.events.trigger("click")])
+      extra = [
+        self.page.js.objects.new(btn.dom.getAttribute("click-count").toNumber() + 1, "countClick"),
+        btn.dom.setAttribute("click-count", self.page.js.objects.get("countClick"))]
+      return btn.on("click", extra + js_funcs, profile, source_event)
+
+    btn.click = click
+    return btn
+
   def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
              profile=False):
     """
@@ -450,6 +518,7 @@ class Navigation:
           logo.style.css.background_url(logo_url) #, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
       components.append(logo)
     if title is not None:
+      title = self.__format_text(title, self.page.body.style.globals.font.normal(5), italic=False)
       title = self.page.ui.div(title, height=(100, "%"))
       title.style.css.text_transform = "uppercase"
       title.style.css.margin_left = 5
@@ -559,14 +628,14 @@ window.prevScrollpos = currentScrollPos;
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    footer = html.HtmlMenu.HtmlFooter(
+    component = html.HtmlMenu.HtmlFooter(
       self.page, components, width=width, height=height, options=options, profile=profile)
     if fixed:
       self.page.body.style.css.padding_bottom = height[0]
     else:
-      footer.style.css.position = None
-    html.Html.set_component_skin(footer)
-    return footer
+      component.style.css.position = None
+    html.Html.set_component_skin(component)
+    return component
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
     """

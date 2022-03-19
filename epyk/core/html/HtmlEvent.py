@@ -28,7 +28,7 @@ class ProgressBar(Html.Html):
   name = 'Progress Bar'
   _option_cls = OptSliders.OptionsProgBar
 
-  def __init__(self, page: primitives.PageModel, number: int, total, width: tuple,
+  def __init__(self, page: primitives.PageModel, number: float, total, width: tuple,
                height: tuple, helper: Optional[str], options: Optional[dict], html_code: Optional[str],
                profile: Optional[Union[dict, bool]]):
     options['max'] = total
@@ -80,7 +80,8 @@ class ProgressBar(Html.Html):
 
   _js__builder__ = '''
 options.value = parseFloat(data);
-%(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", ""+ (parseFloat(data) / options.max * 100).toFixed(2) +"%% ("+ parseFloat(data) +" / "+ options.max +")").css(options.css);
+var tooltip_val = ""+ (options.value / options.max * 100).toFixed(options.digits) +"%% ("+ options.value +" / "+ options.max +")";
+%(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", tooltip_val).attr("alt", tooltip_val).css(options.css);
 if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 

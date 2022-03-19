@@ -133,7 +133,7 @@ class Table(Html.Html):
     """
     return self.options.add_column(field, title)
 
-  def get_column(self, by_field: str = None, by_title: str = None):
+  def get_column(self, by_field: str = None, by_title: str = None) -> OptTableTabulator.Column:
     """
     Description:
     ------------
@@ -145,7 +145,7 @@ class Table(Html.Html):
     :param str by_field: Optional. The field reference for the column.
     :param str by_title: Optional. The title reference for the column.
 
-    :rtype: Column
+    :rtype: OptTableTabulator.Column
     """
     return self.options.get_column(by_field, by_title)
 

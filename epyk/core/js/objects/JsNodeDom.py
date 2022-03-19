@@ -1581,7 +1581,8 @@ class JsDoms(JsObject.JsObject):
     """
     return JsClassList("%s.classList" % self.varId, self.component)
 
-  def css(self, attr: Union[dict, str], data: Union[str, primitives.JsDataModel] = None, duration: int = None):
+  def css(self, attr: Union[dict, str, primitives.JsDataModel], data: Union[str, primitives.JsDataModel] = None,
+          duration: int = None):
     """
     Description:
     -----------
@@ -1609,6 +1610,8 @@ class JsDoms(JsObject.JsObject):
           split_css = k.split("-")
           k = "%s%s" % (split_css[0], "".join([c.title() for c in split_css[1:]]))
         self._js.append("%s.style.%s = %s" % (self.varId, k, JsUtils.jsConvertData(v, None)))
+    elif JsUtils.isJsData(attr):
+      self._js.append("Object.entries(%s).forEach(k => {%s.style[k[0]] = k[1]})" % (attr, self.varId))
     elif data is None:
       if "-" in attr:
         split_css = attr.split("-")

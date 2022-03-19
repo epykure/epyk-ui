@@ -112,6 +112,23 @@ def untilVersion(data: dict, new_feature: str):
 # --------------------------------------------------------------------------------------------------------------
 #                                                       FUNCTIONS
 #
+def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
+  """
+  Description:
+  ------------
+  Common function to check if the object exists in Python.
+
+  Usage::
+
+     JsUtils.isJsData(attr)
+
+  Attributes:
+  ----------
+  :param js_data: The Python Javascript data.
+  """
+  return hasattr(js_data, 'toStr')
+
+
 def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list], js_funcs: Optional[Union[list, str]],
                   depth: bool = False) -> str:
   """

@@ -104,7 +104,7 @@ class HtmlNavBar(Html.Html):
     self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
     return self
 
-  def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False):
+  def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False) -> Html.Html:
     """
     Description:
     -----------
@@ -118,7 +118,6 @@ class HtmlNavBar(Html.Html):
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.text(component, width=("auto", ''))
-      component.style.add_classes.div.color_hover()
       component.style.css.margin_left = 5
       component.style.css.user_select = "none"
       component.style.css.margin_right = 5
@@ -126,6 +125,7 @@ class HtmlNavBar(Html.Html):
       component.options.managed = False
       if css is not None:
         component.css(css)
+    component.style.add_classes.div.color_hover()
     if not hasattr(self, '_right'):
       self._right = self.page.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
@@ -138,7 +138,7 @@ class HtmlNavBar(Html.Html):
     else:
       self._right.add(component)
     self.buttons.append(component)
-    return self
+    return component
 
   def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
     """
@@ -204,6 +204,8 @@ class HtmlFooter(Html.Html):
     Description:
     -----------
 
+    Attributes:
+    ----------
     :param col_lst:
     """
     self.__col_lst = col_lst
@@ -246,8 +248,13 @@ class HtmlFooter(Html.Html):
     pass
 
   def __str__(self):
-    str_h = "".join([val.html() for val in self.val])
-    return "<footer %s>%s</footer>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_h)
+    row = []
+    for val in self.val:
+      if hasattr(val, "html"):
+        row.append(val.html())
+      else:
+        row.append(val)
+    return "<footer %s>%s</footer>" % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(row))
 
 
 class ContextMenu(Html.Html):

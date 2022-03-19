@@ -91,8 +91,8 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def menu(self, component:  html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'), update_funcs=None,
-           options: dict = None, profile: Union[bool, dict] = None,
+  def menu(self, component:  html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'),
+           update_funcs=None, options: dict = None, profile: Union[bool, dict] = None,
            checks: tuple = ("fas fa-check-square", "far fa-square")):
     commands = [
       ("", "fas fa-compress-arrows-alt", "Compress", 15),
@@ -107,9 +107,9 @@ class Trees:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, tooltip=tooltip, text=typ, height=height, width=(size, 'px'), options=options, profile=profile)
+          icon, align="center", tooltip=tooltip, text=typ, height=height, width=(size, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-5)
+        r.icon.style.css.font_factor(-6)
         r.style.css.font_factor(-5)
         r.span.style.css.margin = "0 0 -3px -3px"
         if tooltip == "Add&nbsp;":
@@ -129,17 +129,29 @@ class Trees:
         menu_items.append(r)
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "refresh", text="Sync", height=height, width=(35, 'px'), options=options, profile=profile)
-      r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-5)
+        "refresh", align="center", tooltip="Sync", height=height, width=(18, 'px'), options=options, profile=profile)
+      r.icon.style.css.font_factor(-6)
       r.style.css.font_factor(-5)
-      r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
                 r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
                 self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
               ] + update_funcs, profile=profile)
       menu_items.append(r)
     container = self.page.ui.menu(component, title=title, menu_items=menu_items, editable=False)
+    if options.get("filter"):
+      input_hyr_filt = self.page.ui.input(placeholder="filter...")
+      input_hyr_filt.attr["type"] = "search"
+      input_hyr_filt.style.css.background = None
+      input_hyr_filt.style.css.text_align = "left"
+      input_hyr_filt.style.css.padding_left = 5
+      input_hyr_filt.style.css.color = "grey"
+      input_hyr_filt.style.css.font_factor(-4)
+      input_hyr_filt.style.css.italic()
+      input_hyr_filt.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[3]
+      container.insert(1, input_hyr_filt)
+      input_hyr_filt.enter([
+        component.build(self.page.js.objects.get("%s_data" % component.html_code), options={"filter_on": input_hyr_filt.dom.content})
+      ])
     html.Html.set_component_skin(container)
     return container
 

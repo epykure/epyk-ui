@@ -522,7 +522,7 @@ class Graphs:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+          icon, align="center", text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)

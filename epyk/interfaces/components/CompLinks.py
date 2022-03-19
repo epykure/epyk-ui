@@ -144,7 +144,9 @@ class Links:
     if tooltip is not None:
       html_link.tooltip(tooltip)
     if align == "center":
-      self.page.ui.div(html_link, align=align)
+      html_link.style.css.margin = "auto"
+      html_link.style.css.display = "block"
+    html_link.style.css.text_align = align
     html.Html.set_component_skin(html_link)
     return html_link
 

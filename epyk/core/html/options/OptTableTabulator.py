@@ -709,8 +709,8 @@ class Editor(Enums):
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def select(self, values, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
-             verticalNavigation="hybrid", **kwargs):
+  def select(self, values: list, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
+             verticalNavigation: str = "hybrid", **kwargs):
     """
     Description:
     -----------
@@ -733,6 +733,7 @@ class Editor(Enums):
     """
     editor_params = {k: v for k, v in locals().items() if k != 'self'}
     editor_params.update(editor_params.pop('kwargs'))
+    self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
   @property

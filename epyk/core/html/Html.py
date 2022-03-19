@@ -451,6 +451,31 @@ class Html(primitives.HtmlModel):
     """
     return self.__add__(component)
 
+  def insert(self, i: int, component: primitives.HtmlModel):
+    """
+    Description:
+    ------------
+    Add a component to the sub list of components for a container at a defined position.
+    This is a user-friendly shortcut to the self.val feature.
+
+    Usage::
+
+      comp_title.style.css.float = "left"
+      comp_title.style.css.font_size = self.page.body.style.globals.font.normal(-2)
+      comp_title.style.css.color = self.page.theme.greys[-2]
+      menu_items.insert(0, comp_title)
+
+    Attributes:
+    ----------
+    :param i: The position for the component in the container.
+    :param component: Component added to the val main component.
+    """
+    if not hasattr(component, 'options'):
+      component = self.page.ui.div(component)
+    component.options.managed = False
+    self.val.insert(i, component)
+    return self
+
   def __add__(self, component: primitives.HtmlModel):
     """ Add items to a container """
     if hasattr(component, 'options'):

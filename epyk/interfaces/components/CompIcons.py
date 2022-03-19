@@ -21,7 +21,7 @@ class Icons:
 
   def awesome(self, icon: str, text: str = None, tooltip: str = None, position: str = None, width: tuple = (25, 'px'),
               height: tuple = (25, 'px'), html_code: str = None, options: dict = None,
-              profile: Union[dict, bool] = None):
+              profile: Union[dict, bool] = None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -54,6 +54,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
+    size = Arguments.size(size, unit="px")
     height = Arguments.size(height, unit="px")
     options = options or {}
     if "icon_family" not in options:
@@ -61,11 +62,15 @@ class Icons:
       options["icon_family"] = icon_details["icon_family"]
     else:
       icon_details = {"icon": icon, "icon_family": options["icon_family"]}
+    icon_size = size if size[0] is not None else width
     html_edit = html.HtmlButton.IconEdit(
-      self.page, position, icon_details["icon"], text, tooltip, width, height, html_code, options, profile)
+      self.page, position, icon_details["icon"], text, tooltip, icon_size, height, html_code, options, profile)
     html_edit.css({"margin": 0, 'cursor': 'pointer'})
     html_edit.style.css.float = position
     html_edit.style.css.display = "inline-block"
+    html_edit.style.css.text_align = align
+    if width[0] is not None:
+      html_edit.style.css.width = "%s%s" % (width[0], width[1])
     html.Html.set_component_skin(html_edit)
     return html_edit
 
@@ -135,7 +140,7 @@ class Icons:
     return component
 
   def edit(self, text=None, position=None, tooltip="Edit", width=(None, 'px'), height=(None, 'px'), html_code=None,
-           options=None, profile=None):
+           options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -164,12 +169,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('edit', text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome('edit', text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None):
+            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -198,12 +203,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome('clock', text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome('clock', text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-           html_code=None, options=None, profile=None):
+           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -221,13 +226,13 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('next', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('next', text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.icon.style.css.font_factor(10)
     html.Html.set_component_skin(components)
     return components
 
   def previous(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-               html_code=None, options=None, profile=None):
+               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -245,13 +250,13 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('previous', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('previous', text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.icon.style.css.font_factor(10)
     html.Html.set_component_skin(components)
     return components
 
   def play(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-           html_code=None, options=None, profile=None):
+           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -272,12 +277,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('play', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('play', text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(components)
     return components
 
   def stop(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-           html_code=None, options=None, profile=None):
+           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -298,12 +303,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('stop', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('stop', text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(components)
     return components
 
   def zoom_out(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-               html_code=None, options=None, profile=None):
+               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -321,13 +326,13 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('zoom_out', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('zoom_out', text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.greys[-6]
     html.Html.set_component_skin(components)
     return components
 
   def zoom_in(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              html_code=None, options=None, profile=None):
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -346,13 +351,13 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome('zoom_in', text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome('zoom_in', text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.greys[-6]
     html.Html.set_component_skin(components)
     return components
 
   def warning(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-              html_code=None, options=None, profile=None):
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -370,13 +375,14 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome("warning", text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome(
+      "warning", text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.warning[1]
     html.Html.set_component_skin(components)
     return components
 
-  def danger(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-             html_code=None, options=None, profile=None):
+  def success(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -394,13 +400,39 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome("danger", text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome(
+      "success", text, tooltip, position, size or width, height, html_code, options, profile, align, size)
+    components.style.css.color = self.page.theme.success[1]
+    html.Html.set_component_skin(components)
+    return components
+
+  def danger(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+    Attributes:
+    ----------
+    :param text: String. Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    components = self.awesome(
+      "danger", text, tooltip, position, size or width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.danger[1]
     html.Html.set_component_skin(components)
     return components
 
   def error(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None):
+            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -418,13 +450,13 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome("error", text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome("error", text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.danger[1]
     html.Html.set_component_skin(components)
     return components
 
   def info(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), html_code=None,
-           options=None, profile=None):
+           options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -442,12 +474,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    components = self.awesome("info", text, tooltip, position, width, height, html_code, options, profile)
+    components = self.awesome("info", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(components)
     return components
 
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), html_code=None,
-           options=None, profile=None):
+           options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -466,12 +498,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("save", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("save", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
-              html_code=None, options=None, profile=None):
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -497,12 +529,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("refresh", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("refresh", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
-          html_code=None, options=None, profile=None):
+          html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -527,12 +559,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("pdf", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("pdf", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
-           html_code=None, options=None, profile=None):
+           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -557,12 +589,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("plus", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("plus", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None):
+            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -587,12 +619,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("excel", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("excel", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
-               html_code=None, options=None, profile=None):
+               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -617,12 +649,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("download", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("download", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
-  def delete(self, text=None, position=None, align='left', tooltip="Delete Component on the page", width=(None, 'px'),
-             height=(None, 'px'), html_code=None, options=None, profile=None):
+  def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
+             height=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -648,15 +680,14 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("delete", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("delete", text, tooltip, position, width, height, html_code, options, profile, align, size)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
-    component.style.css.margin = align
     html.Html.set_component_skin(component)
     return component
 
   def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'),
-           html_code=None, options=None, profile=None):
+           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -681,12 +712,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("zoom", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("zoom", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
-              html_code=None, options=None, profile=None):
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -711,12 +742,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage
     """
-    component = self.awesome("capture", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("capture", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
-             html_code=None, options=None, profile=None):
+             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -741,14 +772,14 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("remove", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("remove", text, tooltip, position, width, height, html_code, options, profile, align, size)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     html.Html.set_component_skin(component)
     return component
 
-  def clear(self, text=None, align='left', position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None):
+  def clear(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
+            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -775,7 +806,7 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("clear", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("clear", text, tooltip, position, width, height, html_code, options, profile, align, size)
     component.hover_color = 'danger'
     component.style.css.white_space = "nowrap"
     component.style.css.margin = align
@@ -783,7 +814,7 @@ class Icons:
     return component
 
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None):
+            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -808,12 +839,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("table", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("table", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
-             html_code=None, options=None, profile=None):
+             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -838,12 +869,12 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    component = self.awesome("wrench", text, tooltip, position, width, height, html_code, options, profile)
+    component = self.awesome("wrench", text, tooltip, position, width, height, html_code, options, profile, align, size)
     html.Html.set_component_skin(component)
     return component
 
-  def rss(self, text="RSS", position=None, align="left", tooltip="", width=('auto', ''), height=(25, 'px'),
-          html_code=None, options=None, profile=None):
+  def rss(self, text="RSS", position=None, tooltip="", width=('auto', ''), height=(25, 'px'),
+          html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -869,7 +900,7 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("rss", text, tooltip, position, width, height, html_code, options, profile)
+    icon = self.awesome("rss", text, tooltip, position, width, height, html_code, options, profile, align, size)
     icon.style.css.color = "#cc9547"
     icon.style.css.display = "inline-block"
     icon.icon.style.css.font_size = self.page.body.style.globals.font.normal(5)
@@ -883,7 +914,7 @@ class Icons:
     return icon
 
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
-               html_code=None, options=None, profile=None):
+               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -911,7 +942,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome("facebook", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("facebook", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#4267B2', 'padding-bottom': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -920,7 +951,7 @@ class Icons:
     return icon
 
   def messenger(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
-                html_code=None, options=None, profile=None):
+                html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -946,7 +977,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {"target": "_blank", "font-factor": self.page.body.style.globals.font.size - 6}
-    icon = self.awesome("messenger", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("messenger", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0078FF', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -955,7 +986,7 @@ class Icons:
     return icon
 
   def twitter(self, text=None, url="https://twitter.com/Epykure1", position=None, tooltip="", width=(None, 'px'),
-              html_code=None, options=None, profile=None):
+              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -983,7 +1014,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome("twitter", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("twitter", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#1DA1F2', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -992,7 +1023,7 @@ class Icons:
     return icon
 
   def twitch(self, text=None, url="https://www.twitch.tv/epykure1", position=None, tooltip="", width=(None, 'px'),
-             html_code=None, options=None, profile=None):
+             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1020,7 +1051,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome("twitch", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("twitch", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#6441a5', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1029,7 +1060,7 @@ class Icons:
     return icon
 
   def instagram(self, text=None, url="https://www.instagram.com/?hl=en", position=None, tooltip="Twitter",
-                width=(None, 'px'), html_code=None, options=None, profile=None):
+                width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1057,7 +1088,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome("instagram", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("instagram", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#3f729b', 'padding': '0px 3px 5px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1066,7 +1097,7 @@ class Icons:
     return icon
 
   def linkedIn(self, text=None, url="https://www.linkedin.com/in/epykure-python-58278a1b8/", position=None, tooltip="",
-               width=(None, 'px'), html_code=None, options=None, profile=None):
+               width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1095,7 +1126,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 6}
-    icon = self.awesome("linkedIn", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("linkedIn", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#0e76a8', 'padding': '3px 3px 6px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1104,7 +1135,7 @@ class Icons:
     return icon
 
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
-              width=(None, 'px'), html_code=None, options=None, profile=None):
+              width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1132,7 +1163,7 @@ class Icons:
     if width[0] is None:
       width = (self.page.body.style.globals.icon.big, 'px')
     options = options or {"target": "_blank", "font-factor": 8}
-    icon = self.awesome("youtube", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("youtube", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": '#FF0000', 'padding': '3px 3px 8px 3px'})
     icon.style.add_classes.div.background_hover()
@@ -1141,7 +1172,8 @@ class Icons:
     return icon
 
   def github(self, text=None, url="https://github.com/epykure/epyk-ui", position=None,
-             tooltip="Go the the Github project", width=(None, 'px'), html_code=None, options=None, profile=None):
+             tooltip="Go the the Github project", width=(None, 'px'), html_code=None, options=None, profile=None,
+             align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1169,7 +1201,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     options = options or {"target": "_blank", "font-factor": -2}
-    icon = self.awesome("github", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("github", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"text-align": "center", "line-height": '%s%s' % (self.page.body.style.globals.font.size, 'px')})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1177,8 +1209,8 @@ class Icons:
     html.Html.set_component_skin(icon)
     return icon
 
-  def python(self, text=None, url="https://pypi.org/", position=None, tooltip="",
-             width=(25, 'px'), html_code=None, options=None, profile=None):
+  def python(self, text=None, url="https://pypi.org/", position=None, tooltip="", width=(25, 'px'), html_code=None,
+             options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1204,7 +1236,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     icon = self.awesome(
-      "python", text, tooltip, position, width if text is None else "auto", None, html_code, options, profile)
+      "python", text, tooltip, position, width if text is None else "auto", None, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "padding-bottom": "3px", "text-align": "center",
               "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
@@ -1214,7 +1246,8 @@ class Icons:
     return icon
 
   def stackoverflow(self, text=None, url="https://stackoverflow.com/", position=None, tooltip="Share your comments",
-                    width=(25, 'px'), html_code=None, options=None, profile=None):
+                    width=(25, 'px'), html_code=None, options=None, profile=None, align: str = "left",
+                    size=(None, 'px')):
     """
     Description:
     ------------
@@ -1239,7 +1272,7 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("stackoverflow", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("stackoverflow", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", "color": 'blue', 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1248,7 +1281,7 @@ class Icons:
     return icon
 
   def mail(self, text=None, url="", position=None, tooltip="Share by mail", width=(25, 'px'), html_code=None,
-           options=None, profile=None):
+           options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1274,7 +1307,7 @@ class Icons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    icon = self.awesome("envelope", text, tooltip, position, width, width, html_code, options, profile)
+    icon = self.awesome("envelope", text, tooltip, position, width, width, html_code, options, profile, align, size)
     icon.css({"border-radius": "%spx" % width[0], "text-align": "center", "line-height": '%s%s' % (width[0], width[1])})
     icon.icon.css({"margin-right": "auto", "margin": "auto", 'padding': '3px'})
     icon.style.add_classes.div.background_hover()
@@ -1550,7 +1583,8 @@ class Icons:
     html.Html.set_component_skin(html_dt)
     return html_dt
 
-  def timer(self, time, js_funcs, icon="clock", width=(15, "px"), height=(15, "px"), options=None, profile=None):
+  def timer(self, time, js_funcs, icon="clock", width=(15, "px"), height=(15, "px"), options=None, profile=None,
+            align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1564,6 +1598,7 @@ class Icons:
     :param js_funcs: String | List. The Javascript functions.
     :param icon: String. The font awesome icon reference.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param size: Tuple. Optional. A tuple with the integer for the icon size and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1571,7 +1606,7 @@ class Icons:
     dflt_options = {"started": True}
     if options is not None:
       dflt_options.update(options)
-    t = self.awesome(icon, width=width, height=height, profile=profile)
+    t = self.awesome(icon, width=width, height=height, profile=profile, align=align, size=size)
     if dflt_options["started"]:
       t.spin().attr["data-active"] = 1
       self.page.body.onReady(
@@ -1625,7 +1660,8 @@ class Icons:
     html.Html.set_component_skin(icon)
     return icon
 
-  def menu(self, data, width=(100, '%'), height=(None, 'px'), align="left", options=None, profile=False):
+  def menu(self, data, width=(100, '%'), height=(None, 'px'), options=None, profile=False,
+           align: str = "left", size=(None, 'px')):
     """
     Description:
     ------------
@@ -1643,6 +1679,7 @@ class Icons:
     ----------
     :param data: List. The icons definition.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param size: Tuple. Optional. A tuple with the integer for the icon size and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param align: String. Optional. A string with the horizontal position of the component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -1655,7 +1692,7 @@ class Icons:
     for d in data:
       div.add(self.page.ui.icons.awesome(
         icon=d["icon"], tooltip=d.get("tooltip", ""),
-        width=self.page.body.style.globals.icon.normal, options=options, profile=profile))
+        width=self.page.body.style.globals.icon.normal, options=options, profile=profile, size=size))
       div[-1].style.css.margin_right = dfl_options["margin-right"]
       div[-1].style.css.color = self.page.theme.greys[5]
       div[-1].style.add_classes.div.color_hover()

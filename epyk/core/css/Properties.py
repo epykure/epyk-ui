@@ -1628,7 +1628,7 @@ class CssMixin:
   def margin_h(self, val):
     self.margin_left = val
     self.margin_right = val
-    if self.component is not None and isinstance(val, int) and self.component.style.css.width.endswith("%"):
+    if self.component is not None and isinstance(val, int) and self.component.style.css.width is not None and self.component.style.css.width.endswith("%"):
       self.component.style.css.width = "calc(%s - %spx)" % (self.component.style.css.width, 2*val)
 
   @property

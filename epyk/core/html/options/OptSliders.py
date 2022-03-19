@@ -349,7 +349,7 @@ class OptionsSlider(Options):
 
 
 class OptionsProgBar(Options):
-  component_properties = ("show_percentage", )
+  component_properties = ("show_percentage", "digits")
 
   @property
   def classes(self):
@@ -366,6 +366,23 @@ class OptionsProgBar(Options):
 
   @classes.setter
   def classes(self, value):
+    self._config(value)
+
+  @property
+  def digits(self):
+    """
+    Description:
+    ------------
+    Get the number of digit for the value.
+
+    Related Pages:
+
+      https://api.jqueryui.com/progressbar/#option-classes
+    """
+    return self._config_get(2)
+
+  @digits.setter
+  def digits(self, value: int):
     self._config(value)
 
   @property

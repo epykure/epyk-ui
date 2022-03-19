@@ -63,10 +63,34 @@ class Tree(Html.Html):
     """
     return super().options
 
-  _js__builder__ = ''' if(options){htmlObj.innerHTML = ''; options.is_root = false};
+  _js__builder__ = '''if(options){htmlObj.innerHTML = ''; 
+  if(options.is_root){window[htmlObj.id + "_data"] = data};
+	if(options.is_root && options.filter_on){
+      function checFiltBranch(items, branchPath, withFilter){
+        items.forEach(function(item, i){
+          var cloneBranchPath = [...branchPath]; cloneBranchPath.push(i);
+        var filtLabel = item.label;
+        if (typeof item.label === 'undefined'){filtLabel = item.value}
+        if (!withFilter){
+          item._meta = {visible: true}; 
+          if(typeof item.items !== 'undefined'){checFiltBranch(item.items, cloneBranchPath, false)}}
+        else{
+          if(filtLabel.includes(options.filter_on)){
+            var dataPoint = data[cloneBranchPath[0]]; dataPoint._meta = {visible: true};
+            for (let j = 1; j < cloneBranchPath.length; j++){
+              dataPoint = dataPoint.items[cloneBranchPath[j]]; dataPoint._meta = {visible: true}};
+            if(typeof item.items !== 'undefined'){checFiltBranch(item.items, cloneBranchPath, false)}}
+          else {
+            item._meta = {visible: false};
+            if(typeof item.items !== 'undefined'){checFiltBranch(item.items, cloneBranchPath, true)}}}
+		  })
+	  };
+	  var currBranchPath = []; checFiltBranch(data, currBranchPath, true)}; options.is_root = false};
       data.forEach(function(item, i){
+        if((typeof options.filter_on === 'undefined') || (options.filter_on == '') || item._meta.visible){
         var li = document.createElement("li");
         var a = document.createElement("a");
+        a.style["white-space"] = 'nowrap';
         if(typeof item.css !== "undefined"){for(const attr in item.css){a.style[attr] = item.css[attr]}};
         if(typeof item.items !== 'undefined'){
           var ul = document.createElement("ul"); 
@@ -143,6 +167,7 @@ class Tree(Html.Html):
         a.style.paddingLeft = 20 * (parseInt(htmlObj.getAttribute("data-depth")) - 1) + 'px';
         li.appendChild(a);
         htmlObj.appendChild(li)
+        }
       })'''
 
   def click_node(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):

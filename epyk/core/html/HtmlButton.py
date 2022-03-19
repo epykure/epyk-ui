@@ -535,10 +535,10 @@ class IconEdit(Html.Html):
     self.add_span(text)
     notches = options.get("font-factor", 0)
     if width[0] is not None and width[1] == 'px':
-      self.add_icon(icon, {"margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])},
+      self.add_icon(icon, {"margin-right": "None", "margin": "2px", 'font-size': "%s%s" % (width[0]-notches, width[1])},
                     html_code=self.htmlCode, family=options.get("icon_family"))
     else:
-      self.add_icon(icon, {"margin": "2px", 'font-size': self.page.body.style.globals.font.normal(-notches)},
+      self.add_icon(icon, {"margin-right": "None", "margin": "2px", 'font-size': self.page.body.style.globals.font.normal(-notches)},
                     html_code=self.htmlCode, family=options.get("icon_family"))
     self.hover_color = True
 

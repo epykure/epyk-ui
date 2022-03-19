@@ -274,7 +274,7 @@ class Tables:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, tooltip=typ, height=height, width=(15, 'px'), options=options, profile=profile)
+          icon, align="center", tooltip=typ, height=height, width=(15, 'px'), options=options, profile=profile)
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)
         if typ == "Csv":

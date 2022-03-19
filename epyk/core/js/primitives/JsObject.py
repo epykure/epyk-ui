@@ -691,6 +691,15 @@ class JsObject(primitives.JsDataModel):
 
     return JsString.JsString("%s.toString()" % self.varId, is_py_data=False)
 
+  def toNumber(self):
+    """
+    Description:
+    ------------
+    """
+    from epyk.core.js.primitives import JsNumber
+
+    return JsNumber.JsNumber("parseFloat(%s)" % self.varId, is_py_data=False, set_var=False)
+
   def isArray(self):
     """
     Description:

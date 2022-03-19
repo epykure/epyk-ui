@@ -944,7 +944,7 @@ class Lists:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+          icon, text=typ, align="center", height=height, width=(35, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(-5)
         r.style.css.font_factor(-5)
@@ -969,7 +969,7 @@ class Lists:
         menu_items.append(r)
     if save_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "save", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
+        "save", align="center", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
       r.icon.style.css.font_factor(-5)
       r.style.css.font_factor(-5)

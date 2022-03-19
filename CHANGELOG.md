@@ -6,6 +6,26 @@
 
 ### Fixed
 
+## [1.7.7] - 2022-03-20
+
+### Added
+- Add new icon aliases for components.
+- Add insert method for any HTML component.
+- Add new features for the tree component.
+- Add filter_on options for tree.
+- Add isJsData features in the JsUtils toolbox.
+- Add new parameters to the icons.
+- New more component in Navigations.
+
+### Changed
+- Change icon default style for buttons.
+- Change number of digits for percent component.
+
+### Fixed
+- Fix margin_h CSS property.
+- Fix options when JavaScript object added.
+- Fix Tabulator type hints.
+
 
 ## [1.7.6] - 2022-03-13
 

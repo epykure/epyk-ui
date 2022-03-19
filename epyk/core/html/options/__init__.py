@@ -433,7 +433,8 @@ class Options(DataClass):
       return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
     tmp_tree = dict(self.js_tree)
-    tmp_tree.update(attrs)
+    if not JsUtils.isJsData(attrs):
+      tmp_tree.update(attrs)
     for k, v in tmp_tree.items():
       if k in self.js_type:
         js_attrs.append("%s: %s" % (k, v))
@@ -444,6 +445,10 @@ class Options(DataClass):
           js_attrs.append("%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
         else:
           js_attrs.append("%s: %s" % (k, json.dumps(v)))
+
+    if JsUtils.isJsData(attrs):
+      return JsUtils.jsWrap("Object.assign({}, {%s}, %s)" % (", ".join(js_attrs), JsUtils.jsConvertData(attrs, None)))
+
     return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
 
   def config_html(self):

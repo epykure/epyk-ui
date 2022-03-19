@@ -183,7 +183,9 @@ ICON_FAMILY = 'font-awesome'
 ICON_MAPPINGS = {
   "font-awesome": {
     "danger": "fas fa-stop-circle",
-    "error": 'fas fa-exclamation-triangle',
+    "error": 'fas fa-times-circle',
+    "success": 'fas fa-check-circle',
+    "warning": "fas fa-exclamation-triangle",
     "search": "fas fa-search",
     "times": "fas fa-times",
     "close": "fas fa-times-circle",
@@ -205,7 +207,6 @@ ICON_MAPPINGS = {
     "stop": "fas fa-stop",
     "zoom_out": "fas fa-search-minus",
     "zoom_in": "fas fa-search-plus",
-    "warning": "fas fa-exclamation-triangle",
     "save": "fas fa-save",
     "refresh": "fas fa-sync-alt",
     "pdf": "far fa-file-pdf",

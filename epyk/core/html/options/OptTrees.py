@@ -134,13 +134,29 @@ class OptionsTree(Options):
 
     Attributes:
     ----------
-    :prop str key: The key in the data used to display an icon.
+    :prop key: The key in the data used to display an icon.
     """
     return self._config_get(None)
 
   @with_icon.setter
   def with_icon(self, key: bool):
     self._config(key)
+
+  @property
+  def filter_on(self):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :prop str key: The sub string to filter the tree result.
+    """
+    return self._config_get(None)
+
+  @filter_on.setter
+  def filter_on(self, text: str):
+    self._config(text)
 
   def click_node(self, js_funcs, profile=None):
     """
