@@ -58,7 +58,6 @@ class Trees:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options or {}, profile)
-    html_tree.style.css.font_factor(-2)
     html.Html.set_component_skin(html_tree)
     return html_tree
 
@@ -92,8 +91,7 @@ class Trees:
     return html_tree
 
   def menu(self, component:  html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'),
-           update_funcs=None, options: dict = None, profile: Union[bool, dict] = None,
-           checks: tuple = ("fas fa-check-square", "far fa-square")):
+           update_funcs=None, options: dict = None, profile: Union[bool, dict] = None):
     commands = [
       ("", "fas fa-compress-arrows-alt", "Compress", 15),
       ("", "fas fa-expand-arrows-alt", "Expand", 15),
@@ -111,8 +109,6 @@ class Trees:
         r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(-4)
         r.style.css.font_factor(-3)
-        r.style.css.margin_left = 5
-        r.style.css.margin_right = 5
         if tooltip == "Add&nbsp;":
           r.click([
             component.dom.add(""),
@@ -130,7 +126,7 @@ class Trees:
         menu_items.append(r)
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(
-        "refresh", align="center", tooltip="Sync", height=height, width=(18, 'px'), options=options, profile=profile)
+        "refresh", align="center", tooltip="Sync", height=height, width=(15, 'px'), options=options, profile=profile)
       r.icon.style.css.font_factor(-4)
       r.style.css.font_factor(-3)
       r.click([
@@ -151,7 +147,8 @@ class Trees:
       input_hyr_filt.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[3]
       container.insert(1, input_hyr_filt)
       input_hyr_filt.enter([
-        component.build(self.page.js.objects.get("%s_data" % component.html_code), options={"filter_on": input_hyr_filt.dom.content})
+        component.build(
+          self.page.js.objects.get("%s_data" % component.html_code), options={"filter_on": input_hyr_filt.dom.content})
       ])
     html.Html.set_component_skin(container)
     return container

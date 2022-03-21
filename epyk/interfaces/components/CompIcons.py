@@ -67,10 +67,12 @@ class Icons:
       self.page, position, icon_details["icon"], text, tooltip, icon_size, height, html_code, options, profile)
     html_edit.css({"margin": 0, 'cursor': 'pointer'})
     html_edit.style.css.float = position
-    html_edit.style.css.display = "inline-block"
     html_edit.style.css.text_align = align
     if width[0] is not None:
       html_edit.style.css.width = "%s%s" % (width[0], width[1])
+    if width[0] == 100 and width[1] == '%':
+      html_edit.icon.style.css.display = "block"
+    html_edit.style.css.display = "inline-block"
     html.Html.set_component_skin(html_edit)
     return html_edit
 
@@ -401,7 +403,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome(
-      "success", text, tooltip, position, size or width, height, html_code, options, profile, align, size)
+      "success", text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.success[1]
     html.Html.set_component_skin(components)
     return components
@@ -426,7 +428,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome(
-      "danger", text, tooltip, position, size or width, height, html_code, options, profile, align, size)
+      "danger", text, tooltip, position, width, height, html_code, options, profile, align, size)
     components.style.css.color = self.page.theme.danger[1]
     html.Html.set_component_skin(components)
     return components

@@ -7,7 +7,6 @@ from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
-from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlTree
 
 from epyk.core.html.options import OptTrees
@@ -25,7 +24,7 @@ class Tree(Html.Html):
     icon_details = cssDefaults.get_icon("folder_open")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Tree, self).__init__(page, records, profile=profile, options=options,
+    super(Tree, self).__init__(page, records, profile=profile, options=options, html_code=html_code,
                                css_attrs={"width": width, 'height': height})
     self.options.icon_open = icon_details["icon"]
     self.options.style = {"list-style": 'none', 'margin': '0 5px', 'padding-left': 0}
@@ -158,7 +157,6 @@ class Tree(Html.Html):
           if (typeof item.url !== "undefined"){
             a.setAttribute("target", item.target || "_blank");
             a.href = item.url}
-          //a.style.paddingLeft = '18px';
           if (typeof options.with_icon !== "undefined"){
             var subIcon = document.createElement("i"); subIcon.style.marginRight = "5px";
             subIcon.setAttribute("class", item[options.with_icon]); a.appendChild(subIcon)};

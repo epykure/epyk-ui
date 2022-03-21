@@ -159,8 +159,8 @@ class CssTabulatorRow(CssStyle.Style):
       'border': "1px solid %s" % self.page.theme.greys[0]
     })
     self.hover.css({
-      'border-bottom': "1px solid %s" % self.page.theme.success[1],
-      'border-top': "1px solid %s" % self.page.theme.success[1],
+      'border-bottom': "1px solid %s" % self.page.theme.colors[-1],
+      'border-top': "1px solid %s" % self.page.theme.colors[-1],
       'background-color': self.page.theme.colors[1]
     }, important=True)
 

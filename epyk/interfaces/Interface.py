@@ -1273,10 +1273,11 @@ class Components:
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
     container.style.css.border_bottom = "1px solid {}".format(self.page.theme.greys[2])
     container.style.css.margin_bottom = 4
+    container.style.css.white_space = "nowrap"
     column = self.col([container, component], height=(100, "%"))
     trash.click([column.dom.hide()])
 
-    def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None):
+    def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None, default_event: bool = True):
       comp = self.page.ui.icons.awesome(
         icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
       comp.icon.style.css.font_factor(-4)
@@ -1284,7 +1285,7 @@ class Components:
       comp.style.css.margin_left = 5
       comp.style.css.margin_right = 5
       container.insert(0, comp)
-      if toggle_icon is not None:
+      if toggle_icon is not None and default_event:
         comp.click([
           comp.icon.build(toggle_icon)
         ])

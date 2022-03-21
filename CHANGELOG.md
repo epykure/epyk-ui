@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.7.7] - 2022-03-20
+## [1.7.8] - 2022-03-21
 
 ### Added
 - Add new icon aliases for components.

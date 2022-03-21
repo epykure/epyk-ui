@@ -30,7 +30,7 @@ def size(value: Any, unit: str = "%"):
     if isinstance(value, str):
       if value.endswith("%"):
         unit = value[-1:]
-        value = value[:-1]
+        value = int(value[:-1])
       else:
         unit = value[-2:]
         if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:

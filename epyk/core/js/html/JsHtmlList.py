@@ -75,7 +75,7 @@ class JsItemsDef:
     item.style.borderBottom = "1px solid %(white)s";
     item.style.borderTop = "1px solid %(white)s";
     var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
-    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "55px" ; 
+    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "95px" ; 
     var elapsedTime = "";
     if ((typeof data.d !== 'undefined') && (data.d != 0)){elapsedTime = data.d + "d";}
     if ((typeof data.h !== 'undefined') && (data.h != 0)){elapsedTime = elapsedTime + " "+ data.h + "h";}
@@ -105,7 +105,7 @@ class JsItemsDef:
       message.innerHTML = data.text} else { message.innerHTML = data };
     item.appendChild(log);
     item.appendChild(message);
-    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(-2),
+    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(),
            "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white}
     return self._item(item_def)
 
@@ -124,12 +124,15 @@ class JsItemsDef:
     item.style.fontSize = "%(fontSize)s";  
     var message = document.createElement("DIV"); 
     message.style.display = "inline-block" ;  
+    message.style.paddingLeft = "2px" ;  
     item.style.borderBottom = "1px solid %(white)s";
     item.style.borderTop = "1px solid %(white)s";
     var log = document.createElement("DIV");
-    if(typeof data.color !== 'undefined'){log.style.color = "white"; log.style.background = data.color;}
+    log.style.paddingTop = "2px";
+    log.style.paddingBottom = "2px";
+    if(typeof data.color !== 'undefined'){log.style.color = "%(white)s"; log.style.background = data.color;}
     else {log.style.background = "%(grey)s"} ; 
-    log.style.margin = "0 5px";
+    log.style.margin = 0;
     log.innerHTML = data.status; log.style.display = "inline-block"; log.style.width = "90px"; 
     log.style.textAlign = "center"; log.style.fontWeight = 900;
     if(options.click != null){ 
@@ -153,10 +156,13 @@ class JsItemsDef:
       Object.keys(options.style).forEach(function(key){message.style[key] = options.style[key] })}
     if(typeof data === 'object'){ 
       message.innerHTML = data.text} else { message.innerHTML = data };
+      
+    if(typeof data.color !== 'undefined'){
+      message.style.borderLeft = "1px solid "+ data.color;}
     item.appendChild(log);
     item.appendChild(message);
-    ''' % {"grey": page.theme.greys[3], "fontSize": page.body.style.globals.font.normal(-2),
-           "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white}
+    ''' % {"grey": page.theme.greys[3], "fontSize": page.body.style.globals.font.normal(),
+           "white": page.theme.black if page.theme.dark else page.theme.white}
     return self._item(item_def)
 
   def tweet(self, page: primitives.PageModel):

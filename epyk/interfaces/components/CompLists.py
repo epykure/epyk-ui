@@ -640,7 +640,6 @@ class Lists:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options, profile)
-    html_tree.style.css.font_factor(-2)
     html.Html.set_component_skin(html_tree)
     return html_tree
 
