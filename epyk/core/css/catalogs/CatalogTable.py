@@ -206,6 +206,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorCol)
 
+  def tabulator_col_title(self):
+    """  """
+    return self._set_class(CssStylesTabulator.CssTabulatorColTitle)
+
   def tabulator_groups(self):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorGroups)

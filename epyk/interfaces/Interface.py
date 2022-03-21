@@ -1173,8 +1173,8 @@ class Components:
         r = self.page.ui.icons.awesome(
           icon, align="center", text=typ, tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
         r.span.style.css.hide()
-        r.icon.style.css.font_factor(-5)
-        r.style.css.font_factor(-5)
+        r.icon.style.css.font_factor(-4)
+        r.style.css.font_factor(-3)
         r.span.style.css.margin = "0 2px -3px -3px"
         if typ == "Edit":
           r.click([
@@ -1194,13 +1194,13 @@ class Components:
           r.click([
             #component.dom.copyToClipboard(options.get("include_html", False)),
             component.dom.copy(),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ], profile=profile)
         elif typ == "Build":
           r.click([self.page.js.post(**post).onSuccess([
             component.build(self.page.js.objects.data),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ])], profile=profile)
         elif typ == "Hide":
@@ -1212,7 +1212,7 @@ class Components:
               r.span.build("Hide"),
               r.icon.build(visible[0])
             ], profile=profile),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)
           ])
         elif typ == "ReSt":
@@ -1230,7 +1230,7 @@ class Components:
           menu_items.append(input_rest)
           r.click([
             input_rest.dom.toggle(),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": 'none'}).r], 2000)], profile=profile)
           input_rest.enter([r.dom.events.trigger("click")])
         menu_items.append(r)
@@ -1238,11 +1238,11 @@ class Components:
       r = self.page.ui.icons.awesome(
         "fas fa-save", align="center", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-5)
-      r.style.css.font_factor(-5)
+      r.icon.style.css.font_factor(-4)
+      r.style.css.font_factor(-3)
       r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
-          r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+          r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
           self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
         ] + save_funcs, profile=profile)
       menu_items.append(r)
@@ -1251,10 +1251,10 @@ class Components:
         r = self.page.ui.icons.awesome(
           "fas fa-sync-alt", align="center", tooltip="Sync", height=height, width=(15, 'px'), options=options,
           profile=profile)
-        r.icon.style.css.font_factor(-6)
-        r.style.css.font_factor(-5)
+        r.icon.style.css.font_factor(-4)
+        r.style.css.font_factor(-3)
         r.click([
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
           ] + update_funcs, profile=profile)
         menu_items.append(r)
@@ -1266,8 +1266,8 @@ class Components:
             profile=profile, run_on_start=options.get("run_on_start", True))])
     trash = self.page.ui.icons.awesome(
       "fas fa-trash", align="center", height=height, width=(10, 'px'), options=options, profile=profile)
-    trash.icon.style.css.font_factor(-5)
-    trash.style.css.font_factor(-5)
+    trash.icon.style.css.font_factor(-4)
+    trash.style.css.font_factor(-3)
     trash.style.css.margin_left = 10
     menu_items.append(trash)
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
@@ -1279,8 +1279,8 @@ class Components:
     def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None):
       comp = self.page.ui.icons.awesome(
         icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
-      comp.icon.style.css.font_factor(-5)
-      comp.style.css.font_factor(-5)
+      comp.icon.style.css.font_factor(-4)
+      comp.style.css.font_factor(-3)
       comp.style.css.margin_left = 5
       comp.style.css.margin_right = 5
       container.insert(0, comp)

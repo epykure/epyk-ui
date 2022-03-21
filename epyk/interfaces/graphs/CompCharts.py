@@ -514,19 +514,20 @@ class Graphs:
     :param profile: Optional. A flag to set the component performance storage.
     """
     # ("Csv", "fas fa-file-csv")
-    commands = [("Clear", "fas fa-trash-alt")]
+    commands = [("Clear", "fas fa-trash-alt", 15)]
     menu_items = []
     options = options or {}
-    for typ, icon in commands:
+    for typ, icon, size in commands:
       if icon:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, align="center", text=typ, height=height, width=(35, 'px'), options=options, profile=profile)
+          icon, align="center", tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-5)
-        r.style.css.font_factor(-5)
-        r.span.style.css.margin = "0 2px -3px -3px"
+        r.icon.style.css.font_factor(-4)
+        r.style.css.font_factor(-3)
+        r.style.css.margin_left = 5
+        r.style.css.margin_right = 5
         if typ == "Csv":
           r.click([chart.js.download("csv", "data.csv")])
         elif typ == "Clear":

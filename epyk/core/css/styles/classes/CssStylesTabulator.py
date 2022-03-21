@@ -9,7 +9,8 @@ class CssTabulator(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'background-color': self.page.theme.greys[0], 'font-family': self.page.body.style.globals.font.family})
+      "border": "none !IMPORTANT", 'background-color': self.page.theme.greys[0],
+      'font-family': self.page.body.style.globals.font.family})
 
 
 class CssTabulatorFooter(CssStyle.Style):
@@ -57,7 +58,7 @@ class CssTabulatorSelected(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'border': '1px solid %s' % self.page.theme.success[1], 'color': 'black',
+      'border': '1px solid %s' % self.page.theme.success[1], 'color': self.page.theme.black,
       'background': self.page.theme.success[0]}, important=True)
 
 
@@ -69,6 +70,15 @@ class CssTabulatorCol(CssStyle.Style):
               'border': self.page.body.style.globals.table.header_border,
               'background': self.page.body.style.globals.table.header_background, 'padding': '1px 0',
               "text-align": 'center'}, important=True)
+
+
+class CssTabulatorColTitle(CssStyle.Style):
+  classname = 'tabulator-col-title'
+
+  def customize(self):
+    self.css({
+      'color': self.page.body.style.globals.table.header_color, 'font-weight': 900,
+      'font-size': "{}px".format(self.page.body.style.globals.font.header_size)})
 
 
 class CssTabulatorColContent(CssStyle.Style):

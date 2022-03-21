@@ -58,7 +58,7 @@ class Trees:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     html_tree = html.HtmlTrees.Tree(self.page, data or [], width, height, html_code, helper, options or {}, profile)
-    html_tree.style.css.font_factor(-4)
+    html_tree.style.css.font_factor(-2)
     html.Html.set_component_skin(html_tree)
     return html_tree
 
@@ -109,13 +109,14 @@ class Trees:
         r = self.page.ui.icons.awesome(
           icon, align="center", tooltip=tooltip, text=typ, height=height, width=(size, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-6)
-        r.style.css.font_factor(-5)
-        r.span.style.css.margin = "0 0 -3px -3px"
+        r.icon.style.css.font_factor(-4)
+        r.style.css.font_factor(-3)
+        r.style.css.margin_left = 5
+        r.style.css.margin_right = 5
         if tooltip == "Add&nbsp;":
           r.click([
             component.dom.add(""),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
           ])
         elif tooltip == "Compress":
@@ -130,10 +131,10 @@ class Trees:
     if update_funcs is not None:
       r = self.page.ui.icons.awesome(
         "refresh", align="center", tooltip="Sync", height=height, width=(18, 'px'), options=options, profile=profile)
-      r.icon.style.css.font_factor(-6)
-      r.style.css.font_factor(-5)
+      r.icon.style.css.font_factor(-4)
+      r.style.css.font_factor(-3)
       r.click([
-                r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+                r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
                 self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
               ] + update_funcs, profile=profile)
       menu_items.append(r)

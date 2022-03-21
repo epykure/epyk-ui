@@ -946,18 +946,18 @@ class Lists:
         r = self.page.ui.icons.awesome(
           icon, text=typ, align="center", height=height, width=(35, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-5)
-        r.style.css.font_factor(-5)
+        r.icon.style.css.font_factor(-4)
+        r.style.css.font_factor(-3)
         r.span.style.css.margin = "0 0 -3px -3px"
         if typ == "Add&nbsp;":
           r.click([
             component.dom.add(""),
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
           ])
         if typ == "Check":
           r.click([
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
             self.page.js.if_(r.span.dom.innerText() == "Check", [
               r.span.build("None"), component.dom.selectAll(),

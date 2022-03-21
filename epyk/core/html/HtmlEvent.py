@@ -36,6 +36,7 @@ class ProgressBar(Html.Html):
                                       css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.add_helper(helper)
     self.options.background = self.page.theme.success[1]
+    self.style.css.background = self.page.theme.greys[0]
 
   @property
   def options(self) -> OptSliders.OptionsProgBar:

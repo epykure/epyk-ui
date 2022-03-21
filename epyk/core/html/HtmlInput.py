@@ -1163,7 +1163,7 @@ class TextArea(Html.Html):
                html_code, options, profile):
     super(TextArea, self).__init__(page, text, html_code=html_code, profile=profile,
                                    css_attrs={"width": width, 'box-sizing': 'border-box'})
-    self.rows, self.backgroundColor = rows, background_color
+    self.rows, self.background_color = rows, background_color
     self.style.add_classes.input.textarea()
     self.set_attrs({"rows": rows, "placeholder": placeholder or ""})
     self.__options = OptInputs.OptionsTextarea(self, options)

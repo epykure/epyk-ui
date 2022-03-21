@@ -175,8 +175,8 @@ class CssInputTextArea(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({"background-color": self.page.theme.colors[0], "color": self.page.theme.greys[-1],
-              'border': BORDER_1PX_EXPR.format(self.page.theme.colors[1])})
+    self.css({"background-color": self.page.theme.greys[1], "color": self.page.theme.greys[-1],
+              'border': BORDER_1PX_EXPR.format(self.page.theme.colors[4])})
     self.hover.css({'color': self.page.theme.greys[-1]})
 
 

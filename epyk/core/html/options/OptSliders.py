@@ -405,7 +405,7 @@ class OptionsProgBar(Options):
 
     :param attrs:
     """
-    css_attrs = self._config_get('css', {})
+    css_attrs = self._config_get({}, 'css')
     css_attrs.update(attrs)
     self._config(css_attrs)
 

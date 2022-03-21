@@ -10,14 +10,14 @@ class CssWebkitScrollbarTrack(CssStyle.Style):
   classname = "::-webkit-scrollbar-track"
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[0]})
+    self.css({'background-color': self.page.theme.greys[0]})
 
 
 class CssWebkitScrollbarThumb(CssStyle.Style):
   classname = "::-webkit-scrollbar-thumb"
 
   def customize(self):
-    self.css({'background-color': self.page.theme.colors[2]})
+    self.css({'background-color':  self.page.theme.colors[2]})
 
 
 class CssWebkitSelection(CssStyle.Style):

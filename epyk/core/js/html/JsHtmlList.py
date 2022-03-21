@@ -72,8 +72,8 @@ class JsItemsDef:
     message.style.display = "inline-block" ;  
     if (typeof data.color !== 'undefined'){item.style.borderLeft = "4px solid " + data.color;}
     else {item.style.borderLeft = "4px solid %(color)s"}
-    item.style.borderBottom = "1px solid white";
-    item.style.borderTop = "1px solid white";
+    item.style.borderBottom = "1px solid %(white)s";
+    item.style.borderTop = "1px solid %(white)s";
     var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
     log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "55px" ; 
     var elapsedTime = "";
@@ -105,8 +105,8 @@ class JsItemsDef:
       message.innerHTML = data.text} else { message.innerHTML = data };
     item.appendChild(log);
     item.appendChild(message);
-    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(-5),
-           "color": page.theme.notch()}
+    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(-2),
+           "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white}
     return self._item(item_def)
 
   def status(self, page: primitives.PageModel):
@@ -124,8 +124,8 @@ class JsItemsDef:
     item.style.fontSize = "%(fontSize)s";  
     var message = document.createElement("DIV"); 
     message.style.display = "inline-block" ;  
-    item.style.borderBottom = "1px solid white";
-    item.style.borderTop = "1px solid white";
+    item.style.borderBottom = "1px solid %(white)s";
+    item.style.borderTop = "1px solid %(white)s";
     var log = document.createElement("DIV");
     if(typeof data.color !== 'undefined'){log.style.color = "white"; log.style.background = data.color;}
     else {log.style.background = "%(grey)s"} ; 
@@ -155,8 +155,8 @@ class JsItemsDef:
       message.innerHTML = data.text} else { message.innerHTML = data };
     item.appendChild(log);
     item.appendChild(message);
-    ''' % {"grey": page.theme.greys[3], "fontSize": page.body.style.globals.font.normal(-5),
-           "color": page.theme.notch()}
+    ''' % {"grey": page.theme.greys[3], "fontSize": page.body.style.globals.font.normal(-2),
+           "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white}
     return self._item(item_def)
 
   def tweet(self, page: primitives.PageModel):

@@ -75,7 +75,7 @@ class CssSelectOptionItems(CssStyle.Style):
     self.css({
       "z-index": 210,
       'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-      'color': "inherit"}, important=True)
+      'color': self.page.theme.white if self.page.theme.dark else self.page.theme.black}, important=True)
     self.hover.css({
       'color': self.page.theme.colors[0],
       "background-color": self.page.theme.notch(2)}, important=True)

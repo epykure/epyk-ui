@@ -6,7 +6,7 @@ from epyk.core.py import primitives
 
 
 class Font:
-  _size, header_size, unit = 14, 16, "px"
+  _size, header_size, unit = 12, 14, "px"
   family = "Roboto"
 
   def __init__(self, page: primitives.PageModel):
@@ -320,13 +320,13 @@ class GlobalStyle:
     """
     if self._table is None:
       class GlobalTable:
-        header_background = self.page.theme.colors[-1]
-        header_color = "white"
-        header_border = '1px solid white'
+        header_background = self.page.theme.colors[0] if self.page.theme.dark else self.page.theme.colors[-1]
+        header_color = self.page.theme.black if self.page.theme.dark else self.page.theme.white
+        header_border = '1px solid %s' % self.page.theme.black if self.page.theme.dark else self.page.theme.white
         cell_border_bottom = "1px solid %s" % self.page.theme.colors[4]
         cell_border_right = None
         sorter_arrow_selected = self.page.theme.colors[-3]
-        sorter_arrow = "white"
+        sorter_arrow = self.page.theme.black if self.page.theme.dark else self.page.theme.white
       self._table = GlobalTable()
     return self._table
 

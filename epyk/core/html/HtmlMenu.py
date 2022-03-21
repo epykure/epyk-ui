@@ -126,10 +126,13 @@ class HtmlNavBar(Html.Html):
       if css is not None:
         component.css(css)
     component.style.add_classes.div.color_hover()
+    component.style.css.color = self.page.theme.greys[self.page.theme.index]
     if not hasattr(self, '_right'):
       self._right = self.page.ui.div(width=("auto", ''))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
+      self._right.style.css.text_transform = 'uppercase'
+      self._right.style.css.font_weight = 'bold'
       self._right.style.css.font_factor(0)
       self._right.options.managed = False
       self._vals.append(self._right)

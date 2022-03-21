@@ -230,6 +230,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer, self._css_tabulator_menu_item = 4 * [None]
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp, self._css_tabulator_menu = 4 * [None]
     self._css_tabulator_even_row_no_strip, self._css_tabulator_editing, self._css_tabulator_cell_editing = 3 * [None]
+    self._css_tabulator_col_title = None
     self._css_sorter_asc, self._css_sorter_desc, self._css_sorter_none = 3 * [None]
     self.__strip = False
     self.classList['main'].add(self.cls_tabulator)
@@ -238,6 +239,7 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_tabulator_cell)
     self.classList['other'].add(self.cls_tabulator_headers)
     self.classList['other'].add(self.cls_tabulator_col)
+    self.classList['other'].add(self.cls_tabulator_col_title)
     self.classList['other'].add(self.cls_tabulator_col_content)
     self.classList['other'].add(self.cls_tabulator_selected)
     self.classList['other'].add(self.cls_tb_even_row)
@@ -353,6 +355,19 @@ class Tabulator(GrpCls.ClassHtml):
       self._css_tabulator_col = Classes.CatalogTable.CatalogTable(
         self.component.page, self.classList['other'], component=self.component).tabulator_col()
     return self._css_tabulator_col
+
+  @property
+  def cls_tabulator_col_title(self) -> Classes.CatalogTable.CatalogTable:
+    """
+    Description:
+    -----------
+
+    :rtype: Classes.CatalogTable.CatalogTable
+    """
+    if self._css_tabulator_col_title is None:
+      self._css_tabulator_col_title = Classes.CatalogTable.CatalogTable(
+        self.component.page, self.classList['other'], component=self.component).tabulator_col_title()
+    return self._css_tabulator_col_title
 
   @property
   def cls_tabulator_col_content(self) -> Classes.CatalogTable.CatalogTable:
