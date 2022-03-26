@@ -5,6 +5,7 @@ import sys
 
 from typing import Union
 from epyk.core import html
+from epyk.interfaces import Arguments
 
 
 class Tags:
@@ -46,6 +47,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_a = html.HtmlTags.HtmlGenericLInk(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html_a.set_attrs(name="href", value=url)
@@ -80,6 +83,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_a = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_a.style.clear()
@@ -111,6 +116,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_b = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_b.style.clear()
@@ -144,6 +151,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_h1 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h1.style.clear_all()
@@ -177,6 +186,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_h2 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h2.style.clear_all()
@@ -210,6 +221,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_h3 = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                         height, html_code, tooltip, options, profile)
     html_h3.style.clear_all()
@@ -244,6 +257,8 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_hn = html.HtmlTags.HtmlGeneric(self.page, "h%s" % level, text, width,
                                         height, html_code, tooltip, options, profile)
     html_hn.style.clear_all()
@@ -270,13 +285,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_d = html.HtmlTags.HtmlGeneric(self.page, 'del', text, width,  height, html_code, tooltip, options, profile)
     html_d.style.clear()
     html.Html.set_component_skin(html_d)
     return html_d
 
-  def figcaption(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None,
-                 profile=None):
+  def figcaption(self, text: str = "", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='',
+                 options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -302,13 +319,16 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_f = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_f.style.clear()
     html.Html.set_component_skin(html_f)
     return html_f
 
-  def u(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def u(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -333,13 +353,16 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_u = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_u.style.clear()
     html.Html.set_component_skin(html_u)
     return html_u
 
-  def p(self, text, width=(None, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def p(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -364,13 +387,16 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_p = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html_p.style.clear()
     html.Html.set_component_skin(html_p)
     return html_p
 
-  def bdi(self, text, width=(100, "%"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def bdi(self, text, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -401,12 +427,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
     html_bdi = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_bdi)
     return html_bdi
 
-  def bdo(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def bdo(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -435,13 +464,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_bdo = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_bdo)
     return html_bdo
 
-  def ol(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
-         profile=None):
+  def ol(self, text=None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -467,12 +498,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width, height, html_code,
                                          tooltip, options, profile)
     html.Html.set_component_skin(html_sup)
     return html_sup
 
-  def em(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def em(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -496,13 +530,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_em = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_em)
     return html_em
 
-  def strong(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
-             profile=None):
+  def strong(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -526,12 +562,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_strong = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_strong)
     return html_strong
 
-  def samp(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def samp(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -555,12 +594,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_samp = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_samp)
     return html_samp
 
-  def kbd(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def kbd(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -584,12 +626,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_kbd = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_kbd)
     return html_kbd
 
-  def var(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def var(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -613,12 +658,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_var = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_var)
     return html_var
 
-  def sup(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def sup(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -643,12 +691,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_sup = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_sup)
     return html_sup
 
-  def wbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def wbr(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -672,12 +723,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_wbr = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_wbr)
     return html_wbr
 
-  def time(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def time(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -701,12 +755,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_time = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_time)
     return html_time
 
-  def sub(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def sub(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -732,12 +789,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_sub = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_sub)
     return html_sub
 
-  def small(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def small(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -761,12 +821,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_small = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_small)
     return html_small
 
-  def s(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def s(self, text, width=(100, "px"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
+        tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -790,12 +853,15 @@ class Tags:
     :param tooltip: String. The tooltip to be display on the component
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_s = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_s)
     return html_s
 
-  def i(self, text, width=(None, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def i(self, text, width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"),
+        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -820,12 +886,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_i = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_i)
     return html_i
 
-  def q(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def q(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -851,12 +920,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_q = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                        height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_q)
     return html_q
 
-  def mark(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def mark(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -882,13 +954,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_mark)
     return html_mark
 
-  def nav(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
-          profile=None):
+  def nav(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -915,12 +989,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_mark = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_mark)
     return html_mark
 
-  def ins(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def ins(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -944,12 +1021,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_ins = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_ins)
     return html_ins
 
-  def dfn(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def dfn(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -973,12 +1053,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_dfn = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                          height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_dfn)
     return html_dfn
 
-  def cite(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def cite(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -1002,12 +1085,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_cite = html.HtmlTags.HtmlGeneric(self.page, sys._getframe().f_code.co_name, text, width,
                                           height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_cite)
     return html_cite
 
-  def abbr(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def abbr(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -1031,12 +1117,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_abbr = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_abbr)
     return html_abbr
 
-  def meter(self, text, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None, profile=None):
+  def meter(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -1061,12 +1150,14 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_abbr = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_abbr)
     return html_abbr
 
-  def comment(self, text):
+  def comment(self, text: str):
     """
     Description:
     ------------
@@ -1084,8 +1175,8 @@ class Tags:
     html.Html.set_component_skin(html_comm)
     return html_comm
 
-  def span(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
-           profile=None):
+  def span(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -1113,13 +1204,15 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_span = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_span)
     return html_span
 
-  def label(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
-            profile=None):
+  def label(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -1143,7 +1236,31 @@ class Tags:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean flag to set the profiling mode for the component
     """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
     html_span = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html.Html.set_component_skin(html_span)
     return html_span
+
+  def no_tag(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
+    """
+    Description:
+    ------------
+    Dummy HTML without any tag to add this to the list of a container objects.
+
+    Attributes:
+    ----------
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Boolean flag to set the profiling mode for the component
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    return html.HtmlTags.HtmlGeneric(
+      self.page, None, text, width, height, html_code, tooltip, options, profile)

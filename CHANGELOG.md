@@ -6,6 +6,24 @@
 
 ### Fixed
 
+## [1.7.9] - 2022-03-26
+
+### Added
+- New features for the table menu with column filtering.
+- Add filename for the json configuration (template mode).
+- Add js features for popup components.
+- Add no_tag component to .tags property.
+- Add new pyks components (Gauge and Circular progress bar).
+
+### Changed
+- Improve color conversion for the dark mode.
+
+### Fixed
+- Some bugs on colors.
+- Missing documentation or examples.
+- Fix list checks component.
+
+
 ## [1.7.8] - 2022-03-21
 
 ### Added

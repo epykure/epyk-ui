@@ -1657,7 +1657,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsPromise("%s.showColumn(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
-  def showColumns(self, columna):
+  def showColumns(self, columns: list):
     """
     Description:
     ------------
@@ -1675,10 +1675,10 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param columna: List. The column names to be displayed
+    :param columns: The column names to be displayed
     """
     return JsObjects.JsPromise(
-      "%s.forEach(function(c){%s.showColumn(c)})" % (JsUtils.jsConvertData(columna, None), self.varId))
+      "%s.forEach(function(c){%s.showColumn(c)})" % (JsUtils.jsConvertData(columns, None), self.varId))
 
   def setData(self, data):
     """

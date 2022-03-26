@@ -1,7 +1,10 @@
 
 
+from typing import Union
 from epyk.customs.data.html import HtmlDashboard
+from epyk.customs.data.html import HtmlProgress
 from epyk.core.html import Defaults
+from epyk.interfaces import Arguments
 
 
 class Components:
@@ -136,3 +139,34 @@ class Components:
     ])
     container.input.enter(container.button.dom.events.trigger("click"))
     return container
+
+
+class ProgressComponents:
+
+  def __init__(self, ui):
+    self.page = ui.page
+
+  def gauge(self, value: float, width: Union[tuple, int] = (90, 'px'), height: Union[tuple, int] = (45, "px"),
+            html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+    """
+
+    https://codepen.io/jagathish/pen/ZXzbzN
+
+    :param value:
+    :param width:
+    :param height:
+    :param html_code:
+    :param options:
+    :param profile:
+    :return:
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    return HtmlProgress.Gauge(
+      value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
+
+  def circle(self, value: float, width: Union[tuple, int] = (90, 'px'), height: Union[tuple, int] = (90, "px"),
+             html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+    return HtmlProgress.Circle(
+      value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
+

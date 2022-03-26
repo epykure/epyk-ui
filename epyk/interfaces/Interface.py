@@ -1297,10 +1297,19 @@ class Components:
 
   @property
   def pyk(self) -> pyks.Bespoke:
+    """
+    Description:
+    ------------
+    """
     return pyks.Bespoke(self)
 
   @property
-  def animations(self):
+  def animations(self) -> CompAnimations.Animations:
+    """
+    Description:
+    ------------
+
+    """
     return CompAnimations.Animations(self)
 
 

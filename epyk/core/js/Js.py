@@ -370,6 +370,12 @@ class JsBase:
     ------------
     Conditional statements are used to perform different actions based on different conditions.
 
+    Usage::
+
+      page.js.if_(icon.icon.dom.content == "fas fa-lock-open cssicon", [
+        page.js.console.log(icon.icon.dom.content),
+      ])
+
     Related Pages:
 
       https://www.w3schools.com/js/js_if_else.asp

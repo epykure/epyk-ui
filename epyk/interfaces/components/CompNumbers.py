@@ -4,6 +4,7 @@
 from typing import Union
 from epyk.core import html
 from epyk.core.html import graph
+from epyk.customs.data.html import HtmlProgress
 
 from epyk.core.html import Defaults as defaults_html
 from epyk.interfaces import Arguments
@@ -428,3 +429,19 @@ class Numbers:
       html_up_down.title = title
     html.Html.set_component_skin(html_up_down)
     return html_up_down
+
+  def progress(self, value: float = 0, width: Union[tuple, int] = (90, 'px'), height: Union[tuple, int] = (None, "px"),
+               html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    if options.get("half", False):
+      if height[0] is None:
+        height = (width[0] / 2, width[1])
+      return HtmlProgress.Gauge(
+        value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
+
+    if height[0] is None:
+      height = width
+    return HtmlProgress.Circle(
+      value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)

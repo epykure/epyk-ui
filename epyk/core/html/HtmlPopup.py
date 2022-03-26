@@ -5,7 +5,9 @@ from typing import Optional, List, Union
 from epyk.core.py import primitives
 
 from epyk.core.html import Html
+from epyk.core.css import Colors
 from epyk.core.html.options import OptPanel
+from epyk.core.js.html import JsHtmlPopup
 
 
 class Popup(Html.Html):
@@ -16,8 +18,10 @@ class Popup(Html.Html):
     super(Popup, self).__init__(page, [], css_attrs={"width": width, "height": height}, profile=profile)
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
-      self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': 'rgba(0,0,0,0.4)',
-                'left': 0, 'top': 0})
+      bg_color = Colors.rgba(*Colors.getHexToRgb(page.theme.greys[-1]), 0.4)
+      print(bg_color)
+      self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': bg_color, 'left': 0,
+                'top': 0})
       self.css({'display': 'none', 'z-index': self.options.z_index, 'text-align': 'center'})
     else:
       self.css({'position': 'absolute', 'margin': 0, 'padding': 0, 'display': 'none', 'z-index': self.options.z_index})
@@ -31,7 +35,7 @@ class Popup(Html.Html):
     self.window.style.css.left = "50%"
     self.window.style.css.transform = "translate(-50%, -50%)"
     self.window.style.css.position = "fixed"
-    self.window.style.css.background = "white"
+    self.window.style.css.background = page.theme.greys[0]
     self.container = page.ui.div(components, width=(100, '%'), height=(100, '%'))
     self.container.options.managed = False
     self.container.style.css.position = 'relative'
@@ -41,6 +45,21 @@ class Popup(Html.Html):
     self.window.add(self.container)
     if not self.options.background and self.options.draggable:
       page.body.onReady([self.window.dom.jquery_ui.draggable()])
+
+  @property
+  def js(self) -> JsHtmlPopup.JsHtmlPopup:
+    """
+    Description:
+    -----------
+    Specific JavaScript features for the popup component.
+
+    :return: A Javascript object
+
+    :rtype: JsHtmlPopup.JsHtmlPopup
+    """
+    if self._js is None:
+      self._js = JsHtmlPopup.JsHtmlPopup(page=self.page, component=self)
+    return self._js
 
   def add(self, component: Html.Html):
     """
@@ -91,7 +110,7 @@ class Popup(Html.Html):
     """
     return self.__options
 
-  def add_title(self, text: str, align: str = 'center', level: Optional[int] = None, css: Optional[dict] = None,
+  def add_title(self, text: str, align: str = 'center', level: Optional[int] = 5, css: Optional[dict] = None,
                 position: str = "before", options: Optional[dict] = None):
     """
     Description:

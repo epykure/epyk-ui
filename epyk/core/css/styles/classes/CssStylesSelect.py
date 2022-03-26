@@ -15,7 +15,7 @@ class CssSelectStyle(CssStyle.Style):
       "background": 'inherit',
       'font-family': self.page.body.style.globals.font.family,
       'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
-      'font-size': self.page.body.style.globals.font.normal(), #'min-width': '%spx' % Defaults_html.INPUTS_MIN_WIDTH
+      'font-size': self.page.body.style.globals.font.normal(),
     })
     self.css({'display': 'inline-block', 'margin': 0}, important=True)
 

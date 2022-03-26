@@ -200,7 +200,7 @@ class Select(Html.Html):
       js_funcs.append("if (%s === ''){%s}" % (self.dom.content.toStr(), JsUtils.jsConvertFncs(empty_funcs, toStr=True)))
     return self.on("change", js_funcs, profile, source_event, on_ready)
 
-  def ajax(self, url: str, js_data = "function (){return {q: '{{{q}}}'}}", is_json: bool = True,
+  def ajax(self, url: str, js_data="function (){return {q: '{{{q}}}'}}", is_json: bool = True,
            method: str = "POST", options: Optional[dict] = None):
     """
     Description:

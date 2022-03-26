@@ -20,6 +20,9 @@ def size(value: Any, unit: str = "%"):
   :param value: The value for this argument
   :param unit: Optional. The unit for the argument. Default %.
   """
+  if value is False:
+    return None, ""
+
   if isinstance(value, tuple):
     return value
 

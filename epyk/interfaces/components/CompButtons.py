@@ -48,9 +48,10 @@ class Buttons:
     :param str color: The color to set.
     """
     if color is True:
-      component.style.css.background = self.page.theme.notch(4)
-      component.style.css.border = COLOR_EXPR.format(self.page.theme.colors[-1])
-      component.style.css.color = self.page.theme.colors[0]
+      component.style.css.background = self.page.theme.notch(-5) if self.page.theme.dark else self.page.theme.notch(4)
+      component.style.css.border = COLOR_EXPR.format(
+        self.page.theme.notch(-6) if self.page.theme.dark else self.page.theme.colors[-1])
+      component.style.css.color = self.page.theme.colors[-1] if self.page.theme.dark else self.page.theme.colors[0]
     else:
       component.style.css.background = color
       component.style.css.border = color

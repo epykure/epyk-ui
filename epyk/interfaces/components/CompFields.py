@@ -952,7 +952,8 @@ class Fields:
       component.input.attr['multiple'] = None
     component.input.attr['data-width'] = '%spx' % options.get('width', html.Defaults.INPUTS_MIN_WIDTH)
     component.input.button_css = {
-      "background": self.page.theme.notch(4), "color": self.page.theme.white, "border-radius": 0}
+      "background": self.page.theme.notch(-5) if self.page.theme.black else self.page.theme.notch(4),
+      "color": self.page.theme.white, "border-radius": 0}
     if width[0] == "auto":
       component.style.css.display = "inline-block"
     if selected is not None:

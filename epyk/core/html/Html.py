@@ -1986,7 +1986,8 @@ class Body(Html):
 
   def fromConfig(self, js_funcs: Optional[Union[list, str]] = None,
                  components: Optional[List[primitives.HtmlModel]] = None,
-                 lang: str = "eng", end_point: str = "/static/configs", sync: bool = True):
+                 lang: Optional[str] = "eng", end_point: str = "/static/configs", sync: bool = True,
+                 filename: Optional[str] = None):
     """
     Description:
     -----------
@@ -2008,9 +2009,10 @@ class Body(Html):
       configuration data.
     :param Optional[List[primitives.HtmlModel]] components: Optional. The various HTML Components to be updated from
       the configuration file.
-    :param str lang: Optional. The default lang for the configuration.
-    :param str end_point: Optional. The url for the configuration files.
-    :param bool sync: Optional. Specify if the type of loading event.
+    :param lang: Optional. The default lang for the configuration.
+    :param end_point: Optional. The url for the configuration files.
+    :param sync: Optional. Specify if the type of loading event.
+    :param filename: Optional. The filename for the configuration.
     """
     if self.page.json_config_file is None:
       raise ValueError("json_config_file must be attached to the page to load the corresponding configuration")
@@ -2038,7 +2040,7 @@ class Body(Html):
         rawFile.send(null)} 
       else {var data = window['page_config']; %(fncs)s}''' % {
       "sync": JsUtils.jsConvertData(not sync, None), "lang": JsUtils.jsConvertData(lang, None), 'url': end_point,
-      'json': self.page.json_config_file,
+      'json': filename or self.page.json_config_file,
       'fncs': JsUtils.jsConvertFncs(js_funcs + builders, toStr=True)}
 
   def set_content(self, page: primitives.PageModel, page_content: str):
@@ -2176,7 +2178,7 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
           css_class_names=self.style.get_classes(), with_id=False), self.header.html(), self.template.html(),
         self.footer.html())
 
-    return '<body %s>%s</body>' % (
+    return '<body %s>\n%s\n</body>' % (
       self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self._html_content)
 
 

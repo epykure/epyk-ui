@@ -798,11 +798,20 @@ document.body.removeChild(dummy);
     :param Union[str, primitives.JsDataModel] value: The value of the item to be selected.
     """
     value = JsUtils.jsConvertData(value, None)
+    if self.component.options.items_type == "check":
+      return JsObjects.JsVoid('''
+        var select_items = %(value)s;
+        %(varName)s.childNodes.forEach(function(dom, k){ 
+          var value = dom.querySelector('[name=value]').innerHTML;
+          if (((typeof select_items === 'string') && value == select_items) || ((Array.isArray(select_items) && (select_items.includes(value))))){
+            dom.querySelector("span").setAttribute('data-valid', true); dom.querySelector("input").checked = true}
+        })''' % {'value': value, 'varName': self.varName})
+
     return JsObjects.JsVoid('''
-      %(varName)s.childNodes.forEach( function(dom, k){ 
-        var value = dom.querySelector('[name=value]').innerHTML;
-        if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
-      })''' % {'value': value, 'varName': self.varName, 'styleSelect': self.component.options.items_type})
+          %(varName)s.childNodes.forEach(function(dom, k){ 
+            var value = dom.querySelector('[name=value]').innerHTML;
+            if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
+          })''' % {'value': value, 'varName': self.varName, 'styleSelect': self.component.options.items_type})
 
 
 class Tags(JsHtml.JsHtmlRich):

@@ -158,6 +158,21 @@ class Event(primitives.JsDataModel):
     """
     return JsString.JsString("event.preventDefault()", is_py_data=False)
 
+  def __getitem__(self, items):
+    return JsObject.JsObject("event.%s" % items, is_py_data=False)
+
+  def srcElement(self):
+    """
+    Description:
+    ------------
+    The deprecated Event.srcElement is an alias for the Event.target property. Use Event.target instead.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/Event/srcElement
+    """
+    return JsObject.JsObject("event.srcElement()", is_py_data=False)
+
   def stopImmediatePropagation(self):
     """
     Description:
@@ -167,7 +182,7 @@ class Event(primitives.JsDataModel):
 
     Related Pages:
 
-      https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+     https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
     """
     return JsString.JsString("event.stopImmediatePropagation()", is_py_data=False)
 

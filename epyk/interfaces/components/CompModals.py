@@ -289,7 +289,7 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def popup(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def popup(self, components=None, title: str = None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
     Description:
     ------------
@@ -327,6 +327,8 @@ class Modals:
     if options is not None:
       dfl_options.update(options)
     popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+    if title is not None:
+      popup.add_title(title)
     html.Html.set_component_skin(popup)
     return popup
 
