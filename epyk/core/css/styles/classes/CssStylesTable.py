@@ -38,7 +38,7 @@ class CssDataTableEven(CssStyle.Style):
     self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
               'border-top': "1px solid %s !IMPORTANT" % self.page.theme.greys[0]})
     self.hover.css({
-      'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
+      'border': "1px solid %s !IMPORTANT" % self.page.theme.success.base,
       'color': self.page.theme.greys[-1], 'background-color': self.page.theme.notch(-2)})
 
 
@@ -51,7 +51,7 @@ class CssDataTableOdd(CssStyle.Style):
       'background-color': self.page.theme.colors[1],
       'border-top': "1px solid %s !IMPORTANT" % self.page.theme.colors[1]})
     self.hover.css({
-      'border': "1px solid %s !IMPORTANT" % self.page.theme.success[1],
+      'border': "1px solid %s !IMPORTANT" % self.page.theme.success.base,
       'color': self.page.theme.greys[-1],
       'background-color': self.page.theme.notch(-2)})
 
@@ -125,7 +125,7 @@ class CssTdGridVals(CssStyle.Style):
       "background-color": self.page.theme.colors[0],
       "border-bottom": '1px solid %s' % self.page.theme.greys[4]})
     self.focus.css({
-      "border-bottom": '1px solid %s' % self.page.theme.success[1]})
+      "border-bottom": '1px solid %s' % self.page.theme.success.base})
 
 
 class CssTrHover(CssStyle.Style):

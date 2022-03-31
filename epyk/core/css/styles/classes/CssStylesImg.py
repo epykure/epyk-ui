@@ -35,8 +35,8 @@ class CssImgMask(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'background-color': self.page.theme.success[0],
-      'border': '1px solid %s' % self.page.theme.success[1]})
+      'background-color': self.page.theme.success.light,
+      'border': '1px solid %s' % self.page.theme.success.base})
 
 
 class CssImgAInfo(CssStyle.Style):
@@ -67,7 +67,7 @@ class CssView(CssStyle.Style):
 
   def customize(self):
     self.css({'border': '1px solid %s' % self.page.theme.greys[5]})
-    self.hover.css({'border': "1px solid %s" % self.page.theme.success[1]})
+    self.hover.css({'border': "1px solid %s" % self.page.theme.success.base})
 
 
 class CssCarrouselLi(CssStyle.Style):

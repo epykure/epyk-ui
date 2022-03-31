@@ -62,7 +62,7 @@ class Calendar:
     content = content or {}
     dfl_options = {
       'overload': {'font-size': self.page.body.style.globals.font.normal(5), 'text-align': 'center',
-                   'color': self.page.theme.danger[1],
+                   'color': self.page.theme.danger.base,
                    'font-weight': 'bold', 'cursor': 'pointer'},
       'number': {"font-size": self.page.body.style.globals.font.normal(5), "text-align": "center"},
       'today': {"padding": "0 0 5px 0", "border-bottom": "1px solid grey"},

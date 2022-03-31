@@ -19,7 +19,7 @@ class CssDivBottomBorder(CssStyle.Style):
   def customize(self):
     self.css({"border-bottom": '2px solid %s' % self.page.theme.colors[0],
               'font-family': self.page.body.style.globals.font.family})
-    self.hover.css({"border-bottom": '2px solid %s' % self.page.theme.success[-1]})
+    self.hover.css({"border-bottom": '2px solid %s' % self.page.theme.success.base})
 
 
 class CssDivWithBorder(CssStyle.Style):
@@ -112,7 +112,7 @@ class CssDivLabelPoint(CssStyle.Style):
 
   def customize(self):
     self.css({"border": '1px solid %s' % self.page.theme.greys[4], 'background': self.page.theme.greys[0]})
-    self.hover.css({"border": '1px solid %s' % self.page.theme.success[1]})
+    self.hover.css({"border": '1px solid %s' % self.page.theme.success.base})
 
 
 class CssDivCommBubble(CssStyle.Style):
@@ -181,7 +181,7 @@ class CssPanelTitle(CssStyle.Style):
   _attrs = {'padding': '1px 0', 'margin': '0 5px 5px 5px', 'font-weight': 'bold'}
 
   def customize(self):
-    self.css({'border-bottom': "1px solid %s" % self.page.theme.success[1],
+    self.css({'border-bottom': "1px solid %s" % self.page.theme.success.base,
               'font-size': self.page.body.style.globals.font.header(),
               'font-family': self.page.body.style.globals.font.family})
 
@@ -196,7 +196,7 @@ class CssDivFilter(CssStyle.Style):
 class CssDivFilterItems(CssStyle.Style):
   def customize(self):
     self.css({'border': '1px solid %s' % self.page.theme.colors[2]})
-    self.hover.css({'border': '1px solid %s' % self.page.theme.success[1]})
+    self.hover.css({'border': '1px solid %s' % self.page.theme.success.base})
 
 
 class CssDivModal(CssStyle.Style):

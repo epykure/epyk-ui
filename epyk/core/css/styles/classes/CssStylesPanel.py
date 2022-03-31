@@ -23,7 +23,7 @@ class CssPanelArrowDown(CssStyle.Style):
             "width": 0, "margin": "auto", "display": "block", "bottom": "2px"}
 
   def customize(self):
-    self.after.css({"border-top": "15px solid %s" % self.page.theme.success[1]})
+    self.after.css({"border-top": "15px solid %s" % self.page.theme.success.base})
 
 """
 .meow {
@@ -51,4 +51,4 @@ class CssPanelArrowUp(CssStyle.Style):
          "width": 0, "display": "block", "bottom": '45px'}
 
   def customize(self):
-    self.after.css({"border-bottom": "15px solid %s" % self.page.theme.success[1]})
+    self.after.css({"border-bottom": "15px solid %s" % self.page.theme.success.base})

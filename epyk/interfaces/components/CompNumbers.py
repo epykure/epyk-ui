@@ -410,8 +410,8 @@ class Numbers:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
-                    'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
-                    'orange': self.page.theme.warning[1]}
+                    'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
+                    'orange': self.page.theme.warning.base}
     previous = previous or current
     if options is not None:
       dflt_options.update(options)

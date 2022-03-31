@@ -217,12 +217,12 @@ class Buttons:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
-    component.style.css.background = color or self.page.theme.danger[-1]
-    component.style.css.border = COLOR_EXPR.format(color or self.page.theme.danger[-1])
+    component.style.css.background = color or self.page.theme.danger.base
+    component.style.css.border = COLOR_EXPR.format(color or self.page.theme.danger.base)
     component.style.css.color = self.page.theme.colors[0]
     component.style.css.margin_top = 5
     component.style.css.margin_bottom = 5
-    component.style.hover({"background-color": "%s !IMPORTANT" % self.page.theme.danger[0]})
+    component.style.hover({"background-color": "%s !IMPORTANT" % self.page.theme.danger.light})
     html.Html.set_component_skin(component)
     return component
 
@@ -1140,24 +1140,24 @@ class Buttons:
       component.attr["data-active"] = 1
       component.icon.style.css.color = self.page.theme.success[1]
       component.icon.style.effects.blink(2)
-      component.style.css.border = "1px solid %s" % self.page.theme.success[1]
+      component.style.css.border = "1px solid %s" % self.page.theme.success.base
       self.page.body.onReady([
         self.page.js.window.setInterval(js_funcs, "%s_timer" % component.htmlCode, time * 1000)], profile=profile)
     else:
-      component.icon.style.css.color = self.page.theme.danger[1]
-      component.style.css.border = "1px solid %s" % self.page.theme.danger[1]
+      component.icon.style.css.color = self.page.theme.danger.base
+      component.style.css.border = "1px solid %s" % self.page.theme.danger.base
       component.attr["data-active"] = 0
     component.click([
       self.page.js.if_(component.dom.getAttribute("data-active") == 1, [
         component.dom.setAttribute("data-active", 0).r,
-        component.dom.css("border-color", self.page.theme.danger[1]).r,
-        component.icon.dom.css("color", self.page.theme.danger[1]).r,
+        component.dom.css("border-color", self.page.theme.danger.base).r,
+        component.icon.dom.css("color", self.page.theme.danger.base).r,
         component.icon.dom.css("animation", 'none').r,
         self.page.js.window.clearInterval("%s_timer" % component.htmlCode)
       ]).else_([
         component.dom.setAttribute("data-active", 1).r,
-        component.dom.css("border-color", self.page.theme.success[1]).r,
-        component.icon.dom.css("color", self.page.theme.success[1]).r,
+        component.dom.css("border-color", self.page.theme.success.base).r,
+        component.icon.dom.css("color", self.page.theme.success.base).r,
         component.icon.dom.effects.blink(2),
         self.page.js.window.setInterval(js_funcs, "%s_timer" % component.htmlCode, time * 1000, profile=profile)
       ]),

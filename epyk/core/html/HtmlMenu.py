@@ -272,7 +272,7 @@ class ContextMenu(Html.Html):
                                       profile=profile, options=options)
     self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 400,
               'padding': 0, 'margin': 0, 'background-color': self.page.theme.greys[0],
-              'border': '1px solid %s' % self.page.theme.success[0], 'border-radius': '2px'})
+              'border': '1px solid %s' % self.page.theme.success.light, 'border-radius': '2px'})
     self.style.configs.shadow()
     for component in components:
       self.__add__(component)

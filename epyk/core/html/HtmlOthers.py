@@ -88,7 +88,7 @@ class Stars(Html.Html):
     super(Stars, self).__init__(page, val, html_code=html_code, profile=profile, options=options)
     # Add the HTML components
     self._spans = []
-    self._jsStyles = {'color': self.page.theme.success[1] if color is None else color}
+    self._jsStyles = {'color': self.page.theme.success.base if color is None else color}
     for i in range(best):
       self.add_span("", position="after", css=False)
       self._sub_htmls[-1].attr['class'].add(icon_details["icon"])

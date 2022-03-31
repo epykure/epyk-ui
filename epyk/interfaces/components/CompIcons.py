@@ -379,7 +379,7 @@ class Icons:
     """
     components = self.awesome(
       "warning", text, tooltip, position, width, height, html_code, options, profile, align, size)
-    components.style.css.color = self.page.theme.warning[1]
+    components.style.css.color = self.page.theme.warning.base
     html.Html.set_component_skin(components)
     return components
 
@@ -404,7 +404,7 @@ class Icons:
     """
     components = self.awesome(
       "success", text, tooltip, position, width, height, html_code, options, profile, align, size)
-    components.style.css.color = self.page.theme.success[1]
+    components.style.css.color = self.page.theme.success.base
     html.Html.set_component_skin(components)
     return components
 
@@ -429,7 +429,7 @@ class Icons:
     """
     components = self.awesome(
       "danger", text, tooltip, position, width, height, html_code, options, profile, align, size)
-    components.style.css.color = self.page.theme.danger[1]
+    components.style.css.color = self.page.theme.danger.base
     html.Html.set_component_skin(components)
     return components
 
@@ -453,7 +453,7 @@ class Icons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     components = self.awesome("error", text, tooltip, position, width, height, html_code, options, profile, align, size)
-    components.style.css.color = self.page.theme.danger[1]
+    components.style.css.color = self.page.theme.danger.base
     html.Html.set_component_skin(components)
     return components
 
@@ -1351,7 +1351,7 @@ class Icons:
                                width, html_code, dftl_options, profile)
     icon.click([
       icon.icon.dom.switchClass(icons[0] if flag else icons[1], icons[1] if flag else icons[0]),
-      icon.icon.dom.transition('background', self.page.theme.success[0], duration=.2, reverse=True)
+      icon.icon.dom.transition('background', self.page.theme.success.light, duration=.2, reverse=True)
     ])
     html.Html.set_component_skin(icon)
     return icon

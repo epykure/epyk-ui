@@ -274,7 +274,7 @@ class Tables:
     commands = [("Csv", "fas fa-file-csv"), ("Clear", "fas fa-trash-alt")]
     if columns is not None:
       commands.insert(0, ("Columns", "fas fa-columns"))
-    menu_items, checks = [], None
+    menu_items, checks, popup_columns = [], None, None
     options = options or {}
     for typ, icon in commands:
       if icon:
@@ -296,11 +296,14 @@ class Tables:
           popup_columns.window.style.css.border = "1px solid %s" % self.page.theme.greys[3]
           popup_columns.window.style.css.min_width = 120
           popup_columns.window.style.css.background = self.page.theme.greys[0]
+          popup_columns.window[0][1].style.css.max_height = 90
           popup_columns.window[0][1].click([
             self.page.js.if_(events.target["checked"], [
-              table.js.showColumn(events.event["srcElement"]["nextSibling"]["innerHTML"])
+              table.js.showColumn(events.event["srcElement"]["nextSibling"]["innerHTML"]),
+              table.js.redraw(True)
             ]).else_([
-              table.js.hideColumn(events.event["srcElement"]["nextSibling"]["innerHTML"])
+              table.js.hideColumn(events.event["srcElement"]["nextSibling"]["innerHTML"]),
+              table.js.redraw(True)
             ])
           ])
           r.click([
@@ -309,6 +312,8 @@ class Tables:
         menu_items.append(r)
     container = self.page.ui.menu(table, update_funcs=update_funcs, menu_items=menu_items, post=post, editable=False,
                                   options=options, profile=profile, title=title)
+    if popup_columns is not None:
+      container.columns = popup_columns
     if checks is not None:
       container.checks = checks
       def table_set_columns(data):

@@ -1499,7 +1499,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     self.attr["ondrop"] = "(function(event){%s; %s; %s; return false})(event)" % (
       dft_fnc, str_funcs, self.dom.css('box-shadow', 'none').r)
     self.attr["ondragover"] = "(function(event){%s; %s})(event)" % (
-      dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self.page.theme.success[1]).r)
+      dft_fnc, self.dom.css('box-shadow', 'inset 0px 0px 0px 2px %s' % self.page.theme.success.base).r)
     self.attr["ondragleave"] = "(function(event){%s; %s})(event)" % (
       dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self

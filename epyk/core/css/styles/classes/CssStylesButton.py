@@ -49,9 +49,9 @@ class CssButtonReset(CssStyle.Style):
   _focus = {'outline': 0}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.danger[-1], 'color': self.page.theme.danger[-1],
+    self.css({'border': '1px solid %s' % self.page.theme.danger.dark, 'color': self.page.theme.danger.dark,
               'background-color': "white"})
-    self.hover.css({'background-color': self.page.theme.danger[-1], 'color': "white"})
+    self.hover.css({'background-color': self.page.theme.danger.dark, 'color': "white"})
 
 
 class CssButtonSuccess(CssStyle.Style):
@@ -74,4 +74,4 @@ class CssButtonContentAHover(CssStyle.Style):
   _selectors = {'child': ".dropdown-content a"}
 
   def customize(self):
-    self.hover.css({'background-color': self.page.theme.success[0]})
+    self.hover.css({'background-color': self.page.theme.success.light})

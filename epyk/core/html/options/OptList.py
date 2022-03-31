@@ -20,6 +20,16 @@ class OptionsLi(Options):
     self._config(value)
 
   @property
+  def delete(self):
+    """
+    """
+    return self.get(True)
+
+  @delete.setter
+  def delete(self, value):
+    self.set(value)
+
+  @property
   def max(self):
     """
     """
@@ -324,6 +334,19 @@ class OptionsItems(Options):
 
   @prefix.setter
   def prefix(self, value):
+    self._config(value)
+
+  @property
+  def label(self):
+    """
+    Description:
+    ------------
+    A text label use in the design of some components.
+    """
+    return self._config_get("")
+
+  @label.setter
+  def label(self, value: str):
     self._config(value)
 
   @property

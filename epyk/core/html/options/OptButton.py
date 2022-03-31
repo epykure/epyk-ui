@@ -367,7 +367,7 @@ class OptCheck(Options):
     """
 
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @red.setter
   def red(self, values):

@@ -377,7 +377,7 @@ class ExtsFormattors(Enums):
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     """
     if colors is None:
-      colors = [self.component.page.theme.danger[1], self.component.page.theme.greys[-1]]
+      colors = [self.component.page.theme.danger.base, self.component.page.theme.greys[-1]]
     formatter_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     formatter_params.update(formatter_params.pop('kwargs'))
     self._set_value(value=formatter_params, name="formatterParams")
@@ -402,7 +402,7 @@ class ExtsFormattors(Enums):
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     """
     if colors is None:
-      colors = [self.component.page.theme.danger[1], self.component.page.theme.success[1]]
+      colors = [self.component.page.theme.danger.base, self.component.page.theme.success[1]]
     formatter_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
     formatter_params.update(formatter_params.pop('kwargs'))
     self._set_value(value=formatter_params, name="formatterParams")
@@ -543,9 +543,9 @@ class ExtsFormattors(Enums):
     """
     if tooltip is not None:
       self.component.config.tooltips = True
-    formatter_params = {'tooltip': tooltip, 'green': green or self.component.page.theme.success[1],
-                        'red': red or self.component.page.theme.danger[1],
-                        'orange': orange or self.component.pagetheme.warning[1]}
+    formatter_params = {'tooltip': tooltip, 'green': green or self.component.page.theme.success.base,
+                        'red': red or self.component.page.theme.danger.base,
+                        'orange': orange or self.component.pagetheme.warning.base}
     if css is not None:
       formatter_params['css'] = css
     formatter_params.update({k: v for k, v in locals().items() if k != 'self' and v is not None})

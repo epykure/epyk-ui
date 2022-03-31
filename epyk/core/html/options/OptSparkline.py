@@ -155,7 +155,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.component.page.theme.danger[1])
+    return self._config_get(self.component.page.theme.danger.base)
 
   @enableTagOptions.setter
   def enableTagOptions(self, color):
@@ -172,7 +172,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @tagOptionPrefix.setter
   def tagOptionPrefix(self, color):
@@ -189,7 +189,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @tagValuesAttribute.setter
   def tagValuesAttribute(self, color):
@@ -206,7 +206,7 @@ class OptionsSpark(OptChart.OptionsChart):
 
       https://omnipotent.net/jquery.sparkline/#s-docs
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @disableHiddenCheck.setter
   def disableHiddenCheck(self, color):
@@ -555,7 +555,7 @@ class OptionsSparkLineBar(OptionsSpark):
 
       https://omnipotent.net/jquery.sparkline/#s-about
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @negBarColor.setter
   def negBarColor(self, color: str):

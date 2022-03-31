@@ -321,7 +321,7 @@ class GlobalStyle:
     if self._table is None:
       class GlobalTable:
         header_background = self.page.theme.colors[0] if self.page.theme.dark else self.page.theme.colors[-1]
-        header_color = self.page.theme.black if self.page.theme.dark else self.page.theme.white
+        header_color = self.page.theme.white # if self.page.theme.dark else self.page.theme.white
         header_border = '1px solid %s' % self.page.theme.black if self.page.theme.dark else self.page.theme.white
         cell_border_bottom = "1px solid %s" % self.page.theme.colors[4]
         cell_border_right = None

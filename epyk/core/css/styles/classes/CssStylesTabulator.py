@@ -58,8 +58,8 @@ class CssTabulatorSelected(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'border': '1px solid %s' % self.page.theme.success[1], 'color': self.page.theme.black,
-      'background': self.page.theme.success[0]}, important=True)
+      'border': '1px solid %s' % self.page.theme.success.base, 'color': self.page.theme.black,
+      'background': self.page.theme.success.light}, important=True)
 
 
 class CssTabulatorCol(CssStyle.Style):

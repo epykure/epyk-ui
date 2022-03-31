@@ -21,7 +21,7 @@ class CssDivOnDangerHover(CssStyle.Style):
   _hover = {"cursor": 'pointer'}
 
   def customize(self):
-    self.hover.css({"color": self.page.theme.danger[1]}, important=True)
+    self.hover.css({"color": self.page.theme.danger.base}, important=True)
 
 
 class CssDivOnHoverBackgroundLight(CssStyle.Style):

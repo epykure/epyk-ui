@@ -806,7 +806,7 @@ class Inputs:
       button.style.css.margin_left = 10
     container.button = button
     container.clear = self.page.ui.icon("times", options=options)
-    container.clear.style.css.color = self.page.theme.danger[1]
+    container.clear.style.css.color = self.page.theme.danger.base
     container.clear.style.css.margin_left = 20
     container.clear.tooltip("Clear all filters")
     container.add(self.page.ui.div([container.select, container.input, container.button, container.clear]))

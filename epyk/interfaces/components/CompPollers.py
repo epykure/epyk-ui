@@ -53,7 +53,7 @@ class Poller:
     ],
       off_funcs=[
         icon.dom.spin(False),
-      icon.dom.css({"color": self.page.theme.danger[1]}).r,
+      icon.dom.css({"color": self.page.theme.danger.base}).r,
         self.page.js.window.clearInterval("%s_timer" % toggle.htmlCode)]
     )
     container.toggle = toggle

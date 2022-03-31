@@ -75,23 +75,23 @@ class JsItemsDef:
     item.style.borderBottom = "1px solid %(white)s";
     item.style.borderTop = "1px solid %(white)s";
     var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
-    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.width = "95px" ; 
+    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.minWidth = "95px" ; 
     var elapsedTime = "";
     if ((typeof data.d !== 'undefined') && (data.d != 0)){elapsedTime = data.d + "d";}
     if ((typeof data.h !== 'undefined') && (data.h != 0)){elapsedTime = elapsedTime + " "+ data.h + "h";}
     if ((typeof data.m !== 'undefined') && (data.m != 0)){elapsedTime = elapsedTime + " "+ data.m + "m";}
     if ((typeof data.s !== 'undefined') && (data.s != 0)){elapsedTime = elapsedTime + " "+ data.s + "s";}
-    log.innerHTML = elapsedTime;
+    log.innerHTML = elapsedTime + %(label)s;
     if(options.click != null){ 
       item.style.cursor = 'pointer';
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
-      message.onclick = function(event){
+      item.onclick = function(event){
          var dataValue = message.getAttribute('data-valid');
          if(dataValue == 'true'){
            message.classList.remove('list_text_selected');
            message.setAttribute('data-valid', false)}
          else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = this.innerHTML; options.click(event, value)}
+         var value = {"value": message.innerHTML, "timestamp": log.innerHTML}; options.click(event, value)}
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -106,7 +106,8 @@ class JsItemsDef:
     item.appendChild(log);
     item.appendChild(message);
     ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(),
-           "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white}
+           "color": page.theme.notch(), "white": page.theme.black if page.theme.dark else page.theme.white,
+           'label': JsUtils.jsConvertData(self.component.options.label, None)}
     return self._item(item_def)
 
   def status(self, page: primitives.PageModel):
@@ -138,13 +139,13 @@ class JsItemsDef:
     if(options.click != null){ 
       item.style.cursor = 'pointer';
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
-      message.onclick = function(event){
+      item.onclick = function(event){
          var dataValue = message.getAttribute('data-valid');
          if(dataValue == 'true'){
            message.classList.remove('list_text_selected');
            message.setAttribute('data-valid', false)}
          else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = this.innerHTML; options.click(event, value)}
+         var value = {"value": message.innerHTML, "status": log.innerHTML}; options.click(event, value)}
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 

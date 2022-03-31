@@ -193,7 +193,7 @@ class TimePicker(Html.Html):
     if html_code is not None:
       self.input.attr["name"] = "%s_input" % html_code
     self.prepend_child(self.input)
-    self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self.page.theme.success[1]},
+    self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self.page.theme.success.base},
                   position="after", family=options.get("icon_family"))
     if self.icon is not None:
       self.icon.click(self.input.dom.events.trigger("click").toStr())
@@ -324,14 +324,14 @@ class LastUpdated(Html.Html):
   def __init__(self, page: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
                height: tuple, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
     self._label = "Last update: " if label is None else label
-    super(LastUpdated, self).__init__(page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())),
-                                      html_code, profile=profile, options=options,
-                                      css_attrs={"width": width, "height": height, "color": color})
+    super(LastUpdated, self).__init__(
+      page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())), html_code, profile=profile,
+      options=options, css_attrs={"width": width, "height": height, "color": color})
 
   _js__builder__ = '''
       if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
       if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
-      else{htmlObj.innerHTML = data + 'rrr<i class="fas fa-clock"></i>'}'''
+      else{htmlObj.innerHTML = data + '<i class="fas fa-clock"></i>'}'''
 
   @property
   def options(self) -> OptText.OptionsUpdate:
@@ -380,11 +380,13 @@ class LastUpdated(Html.Html):
     """
     if self.options.icon is not None:
       if self.options.icon is True:
-        return self.dom.innerHTML(self.page.js.objects.date().getStrTimeStamp().prepend(self._label).add('&nbsp;<i class="fas fa-clock"></i>'))
+        return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label).add(
+          '&nbsp;<i class="fas fa-clock"></i>'))
 
-      return self.dom.innerHTML(self.page.js.objects.date().getStrTimeStamp().prepend(self._label).add('&nbsp;<i class="%s"></i>' % self.options.icon))
+      return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label).add(
+        '&nbsp;<i class="%s"></i>' % self.options.icon))
 
-    return self.dom.innerHTML(self.page.js.objects.date().getStrTimeStamp().prepend(self._label))
+    return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label))
 
   def __str__(self):
     return '<div %(strAttr)s>%(content)s</div>' % {
@@ -563,7 +565,7 @@ class Calendar(Html.Html):
         tasks = "<div>%s</div>" % "".join(["<div style='width:100%%;height:20px;display:block;vertical-align:middle'><div style='background:%(color)s;width:100%%;height:%(capacity)s%%;display:inline-block' title='%(name)s: %(capacity)s%%'></div></div>" % t for t in day.get("tasks", [])])
         cell_style = Defaults.inline(self.options.today)
         if day.get("today", False):
-          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s;background:%s'>%s%s</td>" % ("".join(tooltip), cell_style, self.page.theme.success[0], numer_day, tasks))
+          row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s;background:%s'>%s%s</td>" % ("".join(tooltip), cell_style, self.page.theme.success.light, numer_day, tasks))
         else:
           row.append("<td data-placement='right' data-toggle='tooltip' data-html='true' title='<div>%s</div>' style='%s'>%s%s</td>" % ("".join(tooltip), cell_style, numer_day, tasks))
       else:

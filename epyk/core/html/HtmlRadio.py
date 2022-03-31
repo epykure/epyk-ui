@@ -106,7 +106,7 @@ class Tick(Html.Html):
       self.tooltip(tooltip)
     # Add the internal components icons and helper
     self.add_span(text, css={"float": 'right'})
-    self.add_icon(icon, {"color": self.page.theme.success[1], "margin": "2px",
+    self.add_icon(icon, {"color": self.page.theme.success.base, "margin": "2px",
                          'font-size': page.body.style.globals.font.normal()},
                   html_code=self.htmlCode, family=options.get("icon_family"))
     self.icon.style.add_classes.div.background_hover()

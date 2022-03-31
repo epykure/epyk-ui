@@ -145,6 +145,25 @@ class OptionLabelFont(Options):
     self._config(text)
 
 
+class OptionAxesTicksMajor(Options):
+  @property
+  def fontColor(self):
+    """
+    Description:
+    -----------
+    Change the font color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @fontColor.setter
+  def fontColor(self, val: str):
+    self._config(val)
+
+
 class OptionAxesTicks(Options):
 
   @property
@@ -182,6 +201,40 @@ class OptionAxesTicks(Options):
     self._config(val)
 
   @property
+  def textStrokeColor(self):
+    """
+    Description:
+    -----------
+    Change the font color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @textStrokeColor.setter
+  def textStrokeColor(self, val: str):
+    self._config(val)
+
+  @property
+  def backdropColor(self):
+    """
+    Description:
+    -----------
+    Change the font color.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._config_get()
+
+  @backdropColor.setter
+  def backdropColor(self, val: str):
+    self._config(val)
+
+  @property
   def fontSize(self):
     """
     Description:
@@ -212,6 +265,26 @@ class OptionAxesTicks(Options):
   @beginAtZero.setter
   def beginAtZero(self, flag: bool):
     self._config(flag)
+
+  @property
+  def major(self) -> OptionAxesTicksMajor:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionAxesTicksMajor
+    """
+    return self._config_sub_data("major", OptionAxesTicksMajor)
+
+  @property
+  def minor(self) -> OptionAxesTicksMajor:
+    """
+    Description:
+    ------------
+
+    :rtype: OptionAxesTicksMajor
+    """
+    return self._config_sub_data("minor", OptionAxesTicksMajor)
 
   @property
   def max(self):
@@ -509,6 +582,24 @@ class OptionAxesGridLine(Options):
     self._config(val)
 
   @property
+  def borderColor(self):
+    """
+    Description:
+    -----------
+    The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
+    to the second grid line and so on.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @borderColor.setter
+  def borderColor(self, val: str):
+    self._config(val)
+
+  @property
   def borderDash(self):
     """
     Description:
@@ -626,6 +717,22 @@ class OptionAxesGridLine(Options):
 
   @tickMarkLength.setter
   def tickMarkLength(self, val):
+    self._config(val)
+
+  @property
+  def tickColor(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html
+    """
+    return self._config_get()
+
+  @tickColor.setter
+  def tickColor(self, val):
     self._config(val)
 
   @property
@@ -1133,6 +1240,18 @@ class OptionAxes(Options):
     :rtype: OptionAxesGridLine
     """
     return self._config_sub_data("grid", OptionAxesGridLine)
+
+  @property
+  def ticks(self):
+    """
+    Description:
+    ------------
+
+    https://www.chartjs.org/docs/latest/axes/styling.html
+
+    :rtype: OptionAxesTicks
+    """
+    return self._config_sub_data("grid", OptionAxesTicks)
 
   @property
   def title(self) -> OptionTitle:

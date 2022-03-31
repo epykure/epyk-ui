@@ -25,7 +25,7 @@ class CssLoadingLine(CssStyle.Style):
   }
 
   def customize(self):
-    self.before.css({"background-color": self.page.theme.success[1]})
+    self.before.css({"background-color": self.page.theme.success.base})
     self.keyframes("lineAnim", {
         "0%": {"left": "-40%"},
         "50%": {"left": "20%", "width": "80%"},

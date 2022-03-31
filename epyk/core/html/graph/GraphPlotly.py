@@ -525,7 +525,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'path', 'path': points})
-    self.fillcolor = color or self.page.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning.light
     return self
 
   def add_line(self, x, y, x1, y1, opacity=0.2, color=None):
@@ -541,7 +541,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'line', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.line.color = color or self.page.theme.warning[0]
+    self.line.color = color or self.page.theme.warning.light
     self.line.dash = 'dot'
     self.opacity = opacity
     return self
@@ -557,7 +557,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'circle', 'xref': 'x', 'yref': 'y', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.fillcolor = color or self.page.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning.light
     self.line.width = 0
     self.opacity = opacity
     return self
@@ -573,7 +573,7 @@ class LayoutShape(DataClass):
     :param color:
     """
     self._attrs.update({'type': 'rect', 'xref': 'x', 'yref': 'paper', 'x0': x, 'y0': y, 'x1': x1, 'y1': y1})
-    self.fillcolor = color or self.page.theme.warning[0]
+    self.fillcolor = color or self.page.theme.warning.light
     self.line.width = 0
     self.opacity = opacity
     return self

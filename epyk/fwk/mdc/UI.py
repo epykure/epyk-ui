@@ -22,7 +22,7 @@ class Components:
     .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {color: var(--mdc-theme-primary);}
     .mdc-select:not(.mdc-select--disabled).mdc-select--focused .mdc-floating-label {color: %(color)s}
     .mdc-snackbar__action:not(:disabled) {color: %(color)s}
-              ''' % {"color": self.page.theme.success[1]})
+              ''' % {"color": self.page.theme.success.base})
 
     self.page.cssImport.add('@cds/core')
     self.page.cssImport.add('@cds/city')

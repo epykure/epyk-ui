@@ -574,7 +574,7 @@ class DropFile(Html.Html):
                                    css_attrs={"width": width, "height": height})
     self.tooltip(tooltip, location='bottom')
     self.container = self.page.ui.div()
-    self.container.css({"display": "inline-block", 'text-align': 'center', "color": self.page.theme.success[0],
+    self.container.css({"display": "inline-block", 'text-align': 'center', "color": self.page.theme.success.light,
                         'border': "1px dashed %s" % page.theme.colors[-1]})
     self.container.style.css.bold()
     self.container.style.css.margin = "0 5px"

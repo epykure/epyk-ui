@@ -71,7 +71,7 @@ class CssMarkRed(CssStyle.Style):
   _attrs = {'background': 'none'}
 
   def customize(self):
-    self.css({"color": self.page.theme.danger[1],
+    self.css({"color": self.page.theme.danger.base,
               'font-size': self.page.body.style.globals.font.normal()})
 
 

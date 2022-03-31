@@ -639,8 +639,8 @@ class Texts:
     height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
                     'font_size': self.page.body.style.globals.font.normal(),
-                    'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
-                    'orange': self.page.theme.warning[1]}
+                    'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
+                    'orange': self.page.theme.warning.base}
     if options is not None:
       dflt_options.update(options)
     html_up_down = html.HtmlTextComp.UpDown(

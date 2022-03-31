@@ -178,7 +178,7 @@ class PanelSplit(Html.Html):
                      'width': "%s%s" % (self.left_width[0], self.left_width[1]), 'white-space': 'nowrap'}
     self.css_right = {'flex': '0 1 auto', 'overflow': 'auto', 'padding': '5px', 'width': '100%',
                       'background': self.page.theme.greys[0],
-                      'border-left': '3px solid %s' % self.page.theme.success[1]}
+                      'border-left': '3px solid %s' % self.page.theme.success.base}
     self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
     self.add_helper(helper)
 
@@ -256,14 +256,13 @@ class PanelSlide(Panel):
       self.text.options.managed = False
       self.text.style.css.display = "inline-block"
     else:
-      self.text = self.page.ui.text(
+      self.text = self.page.ui.title(
         title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
-      self.text.style.css.bold()
-      self.text.style.css.font_factor(2)
+      self.text.style.css.font_size = self.page.body.style.globals.font.normal(-2)
     self.title = self.page.ui.div([self.icon, self.text])
     self.title.options.managed = False
     self.title.style.css.white_space = "nowrap"
-    self.title.style.css.padding = "5px 5px 0 0"
+    self.title.style.css.padding = "0 5px 0 0"
     self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
 
   @property
@@ -344,6 +343,9 @@ class PanelSlide(Panel):
     return self
 
   def __str__(self):
+    self.title.style.css.text_align = self.options.title_align
+    if self.options.title_align == "right":
+      self.text.style.css.margin_right = 5
     if self.options.expanded:
       icon_change = self.options.icon_closed
       icon_current = self.options.icon_expanded

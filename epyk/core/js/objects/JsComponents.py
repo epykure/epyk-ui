@@ -99,7 +99,7 @@ class CheckButton(JsPackage):
     check = self.component.options.icon_check
     return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
       self.component.dom.varName, times, check, self.component.dom.varName,
-      JsUtils.jsConvertData(color, None) or self.page.theme.success[1]))
+      JsUtils.jsConvertData(color, None) or self.page.theme.success.base))
 
   def unchecked(self, color: Union[str, primitives.JsDataModel] = None):
     """
@@ -115,7 +115,7 @@ class CheckButton(JsPackage):
     check = self.component.options.icon_check
     return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
       self.component.dom.varName, check, times, self.component.dom.varName,
-      JsUtils.jsConvertData(color, None) or self.page.theme.danger[1]))
+      JsUtils.jsConvertData(color, None) or self.page.theme.danger.base))
 
 
 class Menu(JsPackage):

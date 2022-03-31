@@ -24,7 +24,7 @@ class CssBody(CssStyle.Style):
 
 class CssTextSelection(CssStyle.Style):
   def customize(self):
-    self.css({"background": self.page.theme.success[0]})
+    self.css({"background": self.page.theme.success.light})
 
 
 class CssBodyContent(CssStyle.Style):

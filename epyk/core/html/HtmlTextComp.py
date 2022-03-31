@@ -445,8 +445,8 @@ class TrafficLight(Html.Html):
               'vertical-align': 'middle'})
     self.set_attrs(name="title", value=tooltip)
     self.set_attrs(name="data-status", value=color)
-    self._jsStyles = {'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
-                      'orange': self.page.theme.warning[1]}
+    self._jsStyles = {'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
+                      'orange': self.page.theme.warning.base}
     self.action = None
     if tooltip is not None:
       self.tooltip(tooltip)
@@ -524,11 +524,11 @@ class TrafficLight(Html.Html):
     :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
     :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    success = Colors.getHexToRgb(self.page.theme.success[1])
+    success = Colors.getHexToRgb(self.page.theme.success.base)
     self.style.css.cursor = "pointer"
     js_funcs = [self.dom.querySelector("div").toggle(
       "background-color", "rgb(%s, %s, %s)" % (
-        success[0], success[1], success[2]), self.page.theme.danger[1])] + js_funcs
+        success[0], success[1], success[2]), self.page.theme.danger.base)] + js_funcs
     return super(TrafficLight, self).click(js_funcs, profile, source_event, on_ready)
 
   _js__builder__ = '''

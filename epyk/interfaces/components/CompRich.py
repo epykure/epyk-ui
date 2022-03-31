@@ -45,8 +45,8 @@ class Rich:
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
     dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
-                    'red': self.page.theme.danger[1], 'green': self.page.theme.success[1],
-                    'orange': self.page.theme.warning[1]}
+                    'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
+                    'orange': self.page.theme.warning.base}
     if options is not None:
       dflt_options.update(options)
     container = self.page.ui.div(align=align, height=height, width=width, profile=profile, options=options)
@@ -140,7 +140,7 @@ class Rich:
     if height is None or height[0] is None:
       height = (self.page.body.style.globals.font.size, "px")
     if isinstance(color, bool):
-      color = self.page.theme.success[1] if color else self.page.theme.danger[1]
+      color = self.page.theme.success.base if color else self.page.theme.danger.base
     html_traffic = html.HtmlTextComp.TrafficLight(self.page, color, label, height, tooltip, helper, options, profile)
     if align == "center":
       html_traffic.style.css.margin = "auto"

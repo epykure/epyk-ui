@@ -1,31 +1,53 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# TODO: improve the color palette definition for charts
-
 from epyk.core.css.themes import palettes
+
+
+class ColorRange:
+
+  def __init__(self, colors: list, index: int = None):
+    self.__colors = colors
+    self.index = index or round(len(colors)/2)
+
+  def reverse(self):
+    self.__colors = self.__colors[::-1]
+
+  @property
+  def light(self):
+    return self.__colors[0]
+
+  @property
+  def dark(self):
+    return self.__colors[-1]
+
+  @property
+  def base(self):
+    return self.__colors[self.index]
 
 
 class Theme:
   dark = False
   _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
             '#212121', '#000000']
+  _info = ["#e3f2fd", "#2196f3", "#0d47a1"]
 
-  def __init__(self, ovr_attrs=None, index=5, step=1):
+  def __init__(self, ovr_attrs: dict = None, index: int = 5, step: int = 1):
     self.__colors = {
       "charts": list(self._charts),
       "colors": list(self._colors),
       "greys": list(self._greys),
-      "warning": list(self._warning),
-      "danger": list(self._danger),
-      "success": list(self._success),
+      "warning": ColorRange(self._warning),
+      "danger": ColorRange(self._danger),
+      "success": ColorRange(self._success),
+      "info": ColorRange(self._info),
     }
     self.index = index
     self.step = step
     if ovr_attrs is not None:
       self.__colors.update(ovr_attrs)
 
-  def notch(self, value=None, step=None):
+  def notch(self, value: int = None, step: int = None):
     """
     Description:
     ------------
@@ -38,8 +60,8 @@ class Theme:
 
     Attributes:
     ----------
-    :param value: Integer. Optional. The number of notch from the centered index.
-    :param step: Integer. Optional The value of a move (default 1).
+    :param value: Optional. The number of notch from the centered index.
+    :param step: Optional The value of a move (default 1).
     """
     step = step or self.step
     if value is not None:
@@ -87,7 +109,7 @@ class Theme:
     return self.__colors["charts"]
 
   @charts.setter
-  def charts(self, colors):
+  def charts(self, colors: list):
     self.__colors["charts"] = colors
 
   @property
@@ -107,7 +129,7 @@ class Theme:
     return self.__colors["colors"]
 
   @colors.setter
-  def colors(self, colors):
+  def colors(self, colors: list):
     self.__colors["colors"] = colors
 
   @property
@@ -127,11 +149,11 @@ class Theme:
     return self.__colors["greys"]
 
   @greys.setter
-  def greys(self, colors):
+  def greys(self, colors: list):
     self.__colors["greys"] = colors
 
   @property
-  def warning(self):
+  def warning(self) -> ColorRange:
     """
     Description:
     ------------
@@ -144,11 +166,11 @@ class Theme:
     return self.__colors["warning"]
 
   @warning.setter
-  def warning(self, colors):
-    self.__colors["warning"] = colors
+  def warning(self, colors: list):
+    self.__colors["warning"] = ColorRange(colors)
 
   @property
-  def danger(self):
+  def danger(self) -> ColorRange:
     """
     Description:
     ------------
@@ -161,11 +183,28 @@ class Theme:
     return self.__colors["danger"]
 
   @danger.setter
-  def danger(self, colors):
-    self.__colors["danger"] = colors
+  def danger(self, colors: list):
+    self.__colors["danger"] = ColorRange(colors)
 
   @property
-  def success(self):
+  def info(self) -> ColorRange:
+    """
+    Description:
+    ------------
+    Get the info colors. It is a tuple (light, dark).
+
+    Usage::
+
+      light, dark = page.theme.danger
+    """
+    return self.__colors["info"]
+
+  @info.setter
+  def info(self, colors: list):
+    self.__colors["info"] = ColorRange(colors)
+
+  @property
+  def success(self) -> ColorRange:
     """
     Description:
     ------------
@@ -178,10 +217,10 @@ class Theme:
     return self.__colors["success"]
 
   @success.setter
-  def success(self, colors):
-    self.__colors["success"] = colors
+  def success(self, colors: list):
+    self.__colors["success"] = ColorRange(colors)
 
-  def color_palette(self, palette=None, n_colors=None, desat=None):
+  def color_palette(self, palette: str = None, n_colors: int = None, desat: float = None):
     """
     Description:
     ------------
@@ -193,9 +232,9 @@ class Theme:
 
     Attributes:
     ----------
-    :param palette: String. Optional. Name of palette or None to set for charts colors.
-    :param n_colors: Integer. Optional. Number of colors in the palette.
-    :param desat: Float. Optional. Proportion to desaturate each color by.
+    :param palette: Optional. Name of palette or None to set for charts colors.
+    :param n_colors: Optional. Number of colors in the palette.
+    :param desat: Optional. Proportion to desaturate each color by.
     """
     if palette is not None and palette.startswith("brewer."):
       self.__colors["charts"] = getattr(palettes.brewer, palette.split(".")[1])
@@ -227,4 +266,4 @@ class ThemeDefault(Theme):
   ]
   _colors = ['#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
              '#37474f', '#263238']
-  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#5DDEAD')
+  _warning, _danger, _success = ['#FFF3CD', '#e2ac00'], ["#F8D7DA", "#C00000"], ['#e8f2ef', '#5DDEAD']

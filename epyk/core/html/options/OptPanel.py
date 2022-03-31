@@ -32,6 +32,7 @@ class OptionsPanelPoints(Options):
 
 
 class OptionPanelSliding(Options):
+  component_properties = ("title_align", )
 
   @property
   def expanded(self):
@@ -96,6 +97,19 @@ class OptionPanelSliding(Options):
 
   @icon_position.setter
   def icon_position(self, value: str):
+    self.set(value)
+
+  @property
+  def title_align(self):
+    """
+    Description:
+    ------------
+    Define the title position.
+    """
+    return self.get("left")
+
+  @title_align.setter
+  def title_align(self, value: str):
     self.set(value)
 
   @property

@@ -1620,7 +1620,7 @@ class Timelines:
         remaining_days += 1
         next_day += datetime.timedelta(days=1)
       component.tooltip("to be completed in {} ({} days left)".format(completion_date.strftime("%b %d"), remaining_days))
-      component.icon.style.css.color = self.page.theme.danger[1]
+      component.icon.style.css.color = self.page.theme.danger.base
     else:
       component.tooltip("Completed in {}".format(completion_date.strftime("%b %d")))
       component.icon.style.css.color = self.page.theme.greys[6]
@@ -1692,11 +1692,11 @@ class Timelines:
     component.style.css.line_height = "{}{}".format(height[0], height[1])
     component.style.css.vertical_align = "middle"
     if value < (dfl_options["working_hours"] - 2):
-      component.style.css.background = self.page.theme.success[1]
+      component.style.css.background = self.page.theme.success.base
     elif value < dfl_options["working_hours"]:
-      component.style.css.background = self.page.theme.warning[1]
+      component.style.css.background = self.page.theme.warning.base
     else:
-      component.style.css.background = self.page.theme.danger[1]
+      component.style.css.background = self.page.theme.danger.base
     html.Html.set_component_skin(component)
     return component
 

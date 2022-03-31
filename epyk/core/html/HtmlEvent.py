@@ -35,8 +35,9 @@ class ProgressBar(Html.Html):
     super(ProgressBar, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
     self.add_helper(helper)
-    self.options.background = self.page.theme.success[1]
+    self.options.background = self.page.theme.success.base
     self.style.css.background = self.page.theme.greys[0]
+    self.options.border_color = self.page.theme.greys[0]
 
   @property
   def options(self) -> OptSliders.OptionsProgBar:
@@ -586,7 +587,7 @@ class SkillBar(Html.Html):
     for rec in data:
       value = page.ui.div(EntHtml4.NO_BREAK_SPACE).css(
         {"width": '%s%s' % (rec[y_column], options.get("unit", '%')), 'margin-left': "2px",
-         "background": options.get("background", page.theme.success[0])})
+         "background": options.get("background", page.theme.success.light)})
       value.options.managed = False
       if options.get("values", False):
         self.innerPyHTML += [rec[x_axis], value, "%s%s" % (int(rec[y_column]), options.get("unit", 'px'))]
@@ -726,7 +727,7 @@ class OptionsBar(Html.Html):
     return self
 
   def draggable(self, options: Optional[dict] = None):
-    self.css({'border-radius': '5px', "border": "1px dotted %s" % self.page.theme.success[1]})
+    self.css({'border-radius': '5px', "border": "1px dotted %s" % self.page.theme.success.base})
     self.page.properties.js.add_builders(self.dom.jquery_ui.draggable(options).toStr())
     return self
 

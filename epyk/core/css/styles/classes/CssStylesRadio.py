@@ -17,7 +17,7 @@ class CssRadioButtonSelected(CssStyle.Style):
   _attrs = {'padding': '2px 5px', 'cursor': 'pointer', 'vertical-align': 'middle'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.success[1], 'color': self.page.theme.success[1],
+    self.css({'border': '1px solid %s' % self.page.theme.success.base, 'color': self.page.theme.success.base,
               'font-size': self.page.body.style.globals.font.normal()})
 
 

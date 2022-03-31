@@ -3017,6 +3017,24 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def layoutColumnsOnNewData(self):
+    """
+    Description:
+    -----------
+    If you would prefer that the column widths adjust to the data each time you load it into the table you can set the
+    layoutColumnsOnNewData property to true.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.1/layout
+    """
+    return self._config_get()
+
+  @layoutColumnsOnNewData.setter
+  def layoutColumnsOnNewData(self, val):
+    self._config(val)
+
+  @property
   def layouts(self):
     """
     Description:

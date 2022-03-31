@@ -15,7 +15,8 @@ MONTHS = [
 class JsDate(JsObject.JsObject):
   _jsClass = "Date"
 
-  def __init__(self, data=None, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = False):
+  def __init__(self, data=None, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = False,
+               local_time: bool = True):
     """
     Description:
     -----------
@@ -31,14 +32,18 @@ class JsDate(JsObject.JsObject):
     :param Optional[str] js_code: Optional.
     :param bool set_var: Optional.
     :param bool is_py_data: Optional.
+    :param local_time: Optional. Flag to return the local time or the ISO date time.
     """
     if set_var:
       if data is not None:
         is_py_data = False
         data = "new Date(%s)" % json.dumps(data) if is_py_data else "new Date(%s)" % data
+    date_expr = ""
+    if local_time:
+      date_expr = "(function(date){return date.getTime() - (date.getTimezoneOffset() * 60000)})(new Date())"
     if data is None:
       is_py_data = False
-      data = "new Date()" if set_var else "(new Date())"
+      data = "new Date(%s)" % date_expr if set_var else "(new Date(%s))" % date_expr
     if not hasattr(data, 'varName') and is_py_data:
       is_py_data = True
       data = "new Date(%s)" % json.dumps(data)

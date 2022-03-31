@@ -128,7 +128,7 @@ class OptionsText(Options):
     Related Pages:
 
     """
-    return self._config_get(self.page.theme.danger[1])
+    return self._config_get(self.page.theme.danger.base)
 
   @red.setter
   def red(self, value):
@@ -158,7 +158,7 @@ class OptionsText(Options):
     Related Pages:
 
     """
-    return self._config_get(self.page.theme.warning[1])
+    return self._config_get(self.page.theme.warning.base)
 
   @orange.setter
   def orange(self, value):
@@ -923,6 +923,7 @@ class OptSearchResult(Options):
 
 
 class OptionsUpdate(Options):
+  component_properties = ("local_time", )
 
   @property
   def icon(self):
@@ -937,3 +938,11 @@ class OptionsUpdate(Options):
   @icon.setter
   def icon(self, text: str):
     self._config(text)
+
+  @property
+  def local_time(self):
+    return self._config_get(True)
+
+  @local_time.setter
+  def local_time(self, flag: bool):
+    self._config(flag)

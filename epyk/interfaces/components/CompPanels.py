@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List, Union
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
@@ -11,8 +12,9 @@ class Panels:
   def __init__(self, ui):
     self.page = ui.page
 
-  def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
-            helper=None, options=None, profile=False):
+  def panel(self, components: List[html.Html.Html] = None, title=None, color=None, width=(100, "%"),
+            height=(None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+            profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -49,8 +51,8 @@ class Panels:
     html.Html.set_component_skin(html_panel)
     return html_panel
 
-  def pills(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", html_code=None, helper=None,
-            options=None, profile=False):
+  def pills(self, color: str = None, width=(100, '%'), height=(None, 'px'), align="left", html_code: str = None,
+            helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -101,8 +103,8 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def boxes(self, color=None, width=(100, '%'), height=(None, 'px'), align="left", html_code=None, helper=None,
-            options=None, profile=False):
+  def boxes(self, color=None, width=(100, '%'), height=(None, 'px'), align: str = "left", html_code: str = None,
+            helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -155,7 +157,7 @@ class Panels:
     return html_tabs
 
   def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile=False):
+           profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -200,7 +202,7 @@ class Panels:
     return html_tabs
 
   def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-                profile=False):
+                profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -247,7 +249,7 @@ class Panels:
     return html_tabs
 
   def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-                  profile=False):
+                  profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -295,7 +297,7 @@ class Panels:
     return html_tabs
 
   def menu(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile=False):
+           profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -341,7 +343,7 @@ class Panels:
     return html_tabs
 
   def sliding(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"),
-              html_code=None, helper=None, options=None, profile=False):
+              html_code=None, helper=None, options=None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -395,7 +397,7 @@ class Panels:
     return html_slide
 
   def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
-            helper=None, options=None, profile=None):
+            helper=None, options=None, profile: Union[dict, bool] = None):
     """
     Description:
     ------------
@@ -437,7 +439,7 @@ class Panels:
     return html_split
 
   def filters(self, items=None, category='group', width=(100, "%"), height=(60, "px"), html_code=None, helper=None,
-              options=None, profile=None):
+              options=None, profile: Union[dict, bool] = None):
     """
     Description:
     -----------
@@ -485,7 +487,7 @@ class Panels:
     html.Html.set_component_skin(chip)
     return chip
 
-  def nav(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
+  def nav(self, width=(100, '%'), height=(100, '%'), options=None, profile: Union[dict, bool] = None, helper=None):
     """
     Description:
     ------------
@@ -516,8 +518,9 @@ class Panels:
     html.Html.set_component_skin(h_drawer)
     return h_drawer
 
-  def hamburger(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"),
-                html_code=None, helper=None, options=None, profile=False):
+  def hamburger(self, components: List[html.Html.Html] = None, title: Union[str, dict] = "", color: str = None,
+                align: str = "center", width=(100, "%"), height=(None, "px"),
+                html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
     Description:
     ------------
@@ -550,7 +553,7 @@ class Panels:
     if components is not None and not isinstance(components, list):
       _components = [components]
     else:
-      _components = components
+      _components = components or []
     components = []
     for component in _components:
       if not hasattr(component, 'options'):
@@ -565,8 +568,8 @@ class Panels:
     html_slide.icon = self.page.ui.icons.hamburger()
     html_slide.icon.options.managed = False
     html_slide.icon.style.css.float = "right"
-    html_slide.icon.style.css.margin_top = 4
-    html_slide.icon.style.css.margin_right = 4
+    html_slide.icon.style.css.margin_top = 3
+    #html_slide.icon.style.css.margin_right = 2
     html_slide.style.css.border = "1px solid %s" % self.page.theme.greys[2]
     html_slide._vals[1].style.css.padding = 5
     html_slide.title.add(html_slide.icon)

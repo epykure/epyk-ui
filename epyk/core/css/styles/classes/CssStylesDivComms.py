@@ -22,7 +22,7 @@ class CssCommInput(CssStyle.Style):
 
   def customize(self):
     self.css({'color': self.page.theme.greys[-1], 'background-color': self.page.theme.greys[0],
-              'border-bottom': '1px solid %s' % self.page.theme.success[1],
+              'border-bottom': '1px solid %s' % self.page.theme.success.base,
               'font-family': self.page.body.style.globals.font.family,
               'font-size': self.page.body.style.globals.font.normal()})
 

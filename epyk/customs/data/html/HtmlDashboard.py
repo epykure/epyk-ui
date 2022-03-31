@@ -4,10 +4,12 @@ from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
 from epyk.customs.data.js import JsHtmlDashboard
+from epyk.customs.data.options import OptDashboard
 
 
 class Pivots(Html.Html):
   name = 'Dashboard Pivots'
+  _option_cls = OptDashboard.OptionsPivot
 
   def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, html_code: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
@@ -17,6 +19,17 @@ class Pivots(Html.Html):
     self.container.options.managed = False
     # Will be defined from the interface
     self.columns, self.rows, self.sub_rows = None, None, None
+
+  @property
+  def options(self) -> OptDashboard.OptionsPivot:
+    """
+    Description:
+    -----------
+    Property to set all the possible object for a button.
+
+    :rtype: OptDashboard.OptionsPivot
+    """
+    return super().options
 
   @property
   def dom(self) -> JsHtmlDashboard.JsHtmlPivot:
@@ -35,7 +48,7 @@ class Pivots(Html.Html):
       self._dom = JsHtmlDashboard.JsHtmlPivot(self, page=self.page)
     return self._dom
 
-  def items_style(self, style: str):
+  def items_style(self, style: str = None, css_attrs: dict = None):
     """
     Description:
     ------------
@@ -46,17 +59,22 @@ class Pivots(Html.Html):
 
     Attributes:
     ----------
-    :param str style: The alias of the style to apply.
+    :param style: The alias of the style to apply.
+    :param css_attrs.
     """
+    li_item_style = {}
     if style == "bullets":
-      bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
-                       'background': self.page.theme.greys[2], 'border-radius': '10px',
-                       'border': '1px solid %s' % self.page.theme.greys[2]}
-      self.columns.options.li_css = bullter_style
-      self.columns.set_items()
-      self.rows.options.li_css = bullter_style
-      if self.sub_rows is not None:
-        self.sub_rows.options.li_css = bullter_style
+      li_item_style = {
+        "display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
+        'background': self.page.theme.greys[2], 'border-radius': '10px',
+        'border': '1px solid %s' % self.page.theme.greys[2]}
+    if css_attrs is not None:
+      li_item_style.update(css_attrs)
+    self.columns.options.li_css = li_item_style
+    self.columns.set_items()
+    self.rows.options.li_css = li_item_style
+    if self.sub_rows is not None:
+      self.sub_rows.options.li_css = li_item_style
     return self
 
   def clear(self, profile: Union[dict, bool] = None):
@@ -75,9 +93,14 @@ class Pivots(Html.Html):
 
   def __str__(self):
     self.container._vals = []
-    if "ondrop" not in self.rows.attr:
+    if self.options.sortable:
+      if not self.options.readonly_rows:
+        self.rows.sortable()
+      if not self.options.readonly_columns:
+        self.columns.sortable()
+    if not self.options.readonly_rows and "ondrop" not in self.rows.attr:
       self.rows.drop()
-    if "ondrop" not in self.columns.attr:
+    if not self.options.readonly_columns and "ondrop" not in self.columns.attr:
       self.columns.drop()
     if self.sub_rows is not None:
       self.container.add([

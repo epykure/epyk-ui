@@ -115,7 +115,7 @@ class Tabulators:
     table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {
       "css": {"background": self.page.theme.colors[0]}}})
     table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams': {
-      'colors': [self.page.theme.danger[1], self.page.theme.greys[-1]],
+      'colors': [self.page.theme.danger.base, self.page.theme.greys[-1]],
       'css': {"background": "white"}, "symbol": "", "format": "%v"}})
     return table
 
@@ -240,8 +240,8 @@ class Tabulators:
         "background": self.page.theme.colors[0]}}})
     table.options.attr("columns_def", {
       "headerSort": False, "headerVertical": 'flip', "formatter": "trafficLight", 'formatterParams':
-      {'css': {"background": "white"}, 'tooltip': None, 'green': self.page.theme.success[1],
-       'red': self.page.theme.danger[1], 'orange': self.page.theme.warning[1]}})
+      {'css': {"background": "white"}, 'tooltip': None, 'green': self.page.theme.success.base,
+       'red': self.page.theme.danger.base, 'orange': self.page.theme.warning.base}})
     return table
 
   def figures(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple, str] = (100, '%'),
@@ -363,11 +363,11 @@ class Tabulators:
     for c in cols:
       table.add_column(c)
       table.get_column(c).exts.formatters.intensity(
-        steps=table_options_dflts["steps"], colors=["white", self.page.theme.danger[1]])
+        steps=table_options_dflts["steps"], colors=["white", self.page.theme.danger.base])
     table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {
       "css": {"background": self.page.theme.colors[0]}}})
     table.options.attr("columns_def", {"formatter": "numbersIntensity", 'formatterParams': {
       "is_number": True, "symbol": "", "format": "%v", "steps": table_options_dflts["steps"], 'colors': [
-        "white", self.page.theme.danger[1]]}
+        "white", self.page.theme.danger.base]}
       })
     return table

@@ -42,6 +42,7 @@ class Components:
     if rows is None:
       row_options = dict(dflt_options)
       row_options["max"] = dflt_options.get("max", {}).get("rows")
+      row_options["delete"] = dflt_options.get("delete_rows", True)
       component.rows = self.page.ui.lists.drop(html_code="%s_rows" % component.htmlCode, options=row_options)
       if row_options["max"] == 1:
         component.rows.style.css.min_height = 20
@@ -61,6 +62,7 @@ class Components:
     if columns is None:
       columns_options = dict(dflt_options)
       columns_options["max"] = dflt_options.get("max", {}).get("columns")
+      columns_options["delete"] = dflt_options.get("delete_columns", True)
       component.columns = self.page.ui.lists.drop(
         html_code="%s_columns" % component.htmlCode, options=columns_options)
       component.columns.style.css.margin_top = 0
@@ -124,7 +126,7 @@ class Components:
       button.style.css.margin_left = 10
     container.button = button
     container.clear = self.page.ui.icon("fas fa-times")
-    container.clear.style.css.color = self.page.theme.danger[1]
+    container.clear.style.css.color = self.page.theme.danger.base
     container.clear.style.css.margin_left = 20
     container.clear.tooltip("Clear all filters")
     container.add(self.page.ui.div([container.select, container.input, container.button, container.clear]))

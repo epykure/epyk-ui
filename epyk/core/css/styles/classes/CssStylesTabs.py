@@ -30,4 +30,4 @@ class CssBorderTab(CssStyle.Style):
 class CssBorderTabSelected(CssStyle.Style):
 
   def customize(self):
-    self.css({'border-bottom': "3px solid %s" % self.page.theme.success[1]}, important=True)
+    self.css({'border-bottom': "3px solid %s" % self.page.theme.success.base}, important=True)

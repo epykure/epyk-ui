@@ -145,7 +145,7 @@ class CssVisItems(CssStyle.Style):
   _attrs = {'box-shadow': '5px 5px 20px rgba(128,128,128, 0.5)'}
 
   def customize(self):
-    self.css({'border-color': self.page.theme.success[1], 'background-color': self.page.theme.colors[2]},
+    self.css({'border-color': self.page.theme.success.base, 'background-color': self.page.theme.colors[2]},
              change=False)
 
 

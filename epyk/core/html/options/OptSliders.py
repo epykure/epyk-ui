@@ -398,6 +398,19 @@ class OptionsProgBar(Options):
   def background(self, value):
     self._config_group('css', value)
 
+  @property
+  def border_color(self):
+    """
+    Description:
+    ------------
+
+    """
+    return self._config_group_get('css', None, name="borderColor")
+
+  @border_color.setter
+  def border_color(self, value):
+    self._config_group('css', value, name="borderColor")
+
   def css(self, attrs):
     """
     Description:
@@ -931,7 +944,7 @@ class OptionsSkillbars(Options):
     Description:
     ------------
     """
-    return self._config_get(self.page.theme.warning[0])
+    return self._config_get(self.page.theme.warning.light)
 
   @warning.setter
   def warning(self, color):
@@ -943,7 +956,7 @@ class OptionsSkillbars(Options):
     Description:
     ------------
     """
-    return self._config_get(self.page.theme.danger[0])
+    return self._config_get(self.page.theme.danger.light)
 
   @danger.setter
   def danger(self, color):

@@ -206,7 +206,7 @@ class List(Html.Html):
       self._dom = JsHtml.JsHtmlList(self, page=self.page)
     return self._dom
 
-  def items_style(self, style_type: str):
+  def items_style(self, style_type: str = None, css_attrs: dict = None):
     """
     Description:
     ------------
@@ -214,16 +214,20 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param str style_type. The alias of the style to apply.
+    :param style_type. The alias of the style to apply.
+    :param css_attrs.
     """
+    li_item_style = {}
     if style_type == "bullets":
-      bullter_style = {"display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
-                       'background': self.page.theme.greys[2],
-                       'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'}
-      self.options.li_css = bullter_style
-      self.set_items()
-      for item in self.items:
-        item.css(self.options.li_css)
+      li_item_style.update({
+        "display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px', 'background': self.page.theme.greys[2],
+        'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'})
+    if css_attrs is not None:
+      li_item_style.update(css_attrs)
+    self.options.li_css = li_item_style
+    self.set_items()
+    for item in self.items:
+      item.css(self.options.li_css)
     return self
 
   def drop(self, js_funcs: Union[list, str] = None, prevent_default: bool = True,
@@ -278,9 +282,7 @@ class List(Html.Html):
 
   _js__builder__ = ''' htmlObj.innerHTML = "";
       data.forEach(function(item, i){
-        var li = document.createElement(options.item_type);
-        li.innerHTML = item; htmlObj.appendChild(li)
-      })'''
+        var li = document.createElement(options.item_type); li.innerHTML = item; htmlObj.appendChild(li)})'''
 
   def item(self, n: int):
     return self.items[n]
@@ -298,14 +300,24 @@ class List(Html.Html):
     self.items = self.items or []
     li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
                 html_code="%s_%s" % (self.htmlCode, len(self.items)))
+    if self.options.delete:
+      li_obj.click(["this.remove()"])
+      li_obj.style.css.cursor = "pointer"
     if self.options.li_class:
       li_obj.style.clear_style()
       li_obj.attr["class"].initialise(self.options.li_class)
     if hasattr(d, 'options'):
       d.options.managed = False
     li_obj.options.managed = False
+    li_obj.css(self.options.li_css)
+    if self.options.li_class:
+      li_obj.attr["class"].add(self.options.li_class)
     self.items.append(li_obj)
-    return self
+    return li_obj
+
+  def add_items(self, components: list):
+    li_objs = [self.add_item(component) for component in components]
+    return li_objs
 
   def set_items(self):
     """
@@ -469,14 +481,12 @@ class Items(Html.Html):
           info.classList.add(...options.info_icon.split(" ")); info.style.position = 'absolute';
           info.style.top = "4px"; info.style.right = "20px";
           li.style.position = "relative";
-          
           info.setAttribute('title', item.tooltip); 
           info.setAttribute('data-html', true); 
           info.setAttribute('data-placement', 'right'); 
           info.setAttribute('data-toggle', 'tooltip'); 
           li.lastChild.style.display = 'inline-block'; li.appendChild(info);
           %s.tooltip();
-          
         }
         if(options.delete){
           var close = document.createElement("i");
@@ -489,6 +499,27 @@ class Items(Html.Html):
           li.lastChild.style.display = 'inline-block'; li.appendChild(close)}
         if(options.items_space){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
         htmlObj.appendChild(li)})''' % JsQuery.decorate_var("info", convert_var=False)
+
+  def items_style(self, style_type: str = None, css_attrs: dict = None):
+    """
+    Description:
+    ------------
+    Function to load a predefined style for the items of the components.
+
+    Attributes:
+    ----------
+    :param style_type. The alias of the style to apply.
+    :param css_attrs.
+    """
+    li_item_style = {}
+    if style_type == "bullets":
+      li_item_style = {
+        "display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px', 'background': self.page.theme.greys[2],
+        'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'}
+    if css_attrs is not None:
+      li_item_style.update(css_attrs)
+    self.options.li_style = li_item_style
+    return self
 
   @property
   def options(self) -> OptList.OptionsItems:
@@ -524,6 +555,15 @@ class Items(Html.Html):
     Description:
     ------------
     The onclick event occurs when the user clicks on an element of the list.
+
+    Tips: Use the pk.events.value to get the item value.
+
+    Usage::
+
+      status = page.ui.timelines.issues(height=150)
+      status.click([
+        page.js.console.log("value", skip_data_convert=True)
+      ])
 
     Attributes:
     ----------

@@ -386,11 +386,11 @@ class Images:
     height = Arguments.size(height, "px")
     options = options or {}
     status_map = {
-      True: self.page.theme.success[1],
-      'available': self.page.theme.success[1],
-      False: self.page.theme.danger[1],
-      'busy': self.page.theme.danger[1],
-      'out': self.page.theme.warning[1]
+      True: self.page.theme.success.base,
+      'available': self.page.theme.success.base,
+      False: self.page.theme.danger.base,
+      'busy': self.page.theme.danger.base,
+      'out': self.page.theme.warning.base
     }
 
     bgcolor, margin_top = None, -5

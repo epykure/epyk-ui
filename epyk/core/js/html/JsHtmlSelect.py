@@ -26,7 +26,8 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
         page.js.console.log(mode_switch.input.dom.val)
       ])
     """
-    values = ["'%s': %s" % (k, self.page.components[k].dom.content.toStr()) for k in self.component._internal_components]
+    values = ["'%s': %s" % (
+      k, self.page.components[k].dom.content.toStr()) for k in self.component._internal_components]
     values.append("'%s_values': %s" % (self.component.htmlCode, self.component._vals))
     return JsObjects.JsObjects.get(
       "{%s, offset: new Date().getTimezoneOffset()}" % ", ".join(values))

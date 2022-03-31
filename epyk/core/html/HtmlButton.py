@@ -402,7 +402,7 @@ class CheckButton(Html.Html):
                                       css_attrs={"width": width, "height": height}, profile=profile)
     self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
       {"width": report.body.style.globals.font.normal()})
-    self.input.style.css.color = self.page.theme.success[1] if flag else self.page.theme.danger[1]
+    self.input.style.css.color = self.page.theme.success.base if flag else self.page.theme.danger.base
     self.input.style.css.middle()
     self.input.options.managed = False
     self.add_label(label, {"width": "none", "float": "none"}, html_code=self.htmlCode, position="after")
@@ -509,8 +509,8 @@ class CheckButton(Html.Html):
     elif not isinstance(js_fnc_false, list):
       js_fnc_false = [js_fnc_false]
     if with_colors:
-      js_fnc_true.append(self.input.dom.css({"color": self.page.theme.success[1]}).r)
-      js_fnc_false.append(self.input.dom.css({"color": self.page.theme.danger[1]}).r)
+      js_fnc_true.append(self.input.dom.css({"color": self.page.theme.success.base}).r)
+      js_fnc_false.append(self.input.dom.css({"color": self.page.theme.danger.base}).r)
     js_fncs = [
       self.input.dom.switchClass(self.options.icon_check.split(" ")[-1],
                                  self.options.icon_not_check.split(" ")[-1]),

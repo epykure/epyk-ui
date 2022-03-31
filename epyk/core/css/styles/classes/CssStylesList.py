@@ -24,7 +24,7 @@ class CssBasicListItems(CssStyle.Style):
 class CssBasicListItemsSelected(CssStyle.Style):
 
   def customize(self):
-    self.css({"color": self.page.theme.success[1]})
+    self.css({"color": self.page.theme.success.base})
 
 
 class CssBasicListItemsDisabled(CssStyle.Style):

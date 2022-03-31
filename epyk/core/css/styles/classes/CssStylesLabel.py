@@ -9,7 +9,7 @@ class CssLabelContainerDisabled(CssStyle.Style):
   _attrs = {'color': 'red', 'cursor': 'not-allowed'}
 
   def customize(self):
-    self.css({'color': self.page.theme.danger[1]})
+    self.css({'color': self.page.theme.danger.base})
 
 
 class CssLabelCheckMarkHover(CssStyle.Style):

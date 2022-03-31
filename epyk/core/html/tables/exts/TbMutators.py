@@ -25,8 +25,8 @@ class ExtsMutators(Enums):
     else:
       mutatorParams = cssMapping
     mutatorParams['threshold'] = threshold
-    mutatorParams[False]['color'] = red or self.component.page.theme.danger[0]
-    mutatorParams[True]['color'] = green or self.component.page.theme.success[0]
+    mutatorParams[False]['color'] = red or self.component.page.theme.danger.light
+    mutatorParams[True]['color'] = green or self.component.page.theme.success.light
     if kwargs:
       mutatorParams.update(kwargs)
     self._set_value(value=mutatorParams, name="mutatorParams")

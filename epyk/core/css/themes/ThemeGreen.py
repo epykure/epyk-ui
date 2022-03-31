@@ -21,7 +21,7 @@ class Green(Theme.Theme):
   ]
   _colors = ["#e8f5e9", '#c8e6c9', '#a5d6a7', '#81c784', '#66bb6a', '#4caf50', '#43a047', '#388e3c',
              '#2e7d32', '#1b5e20']
-  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
+  _warning, _danger, _success = ['#FFF3CD', '#e2ac00'], ["#F8D7DA", "#C00000"], ['#e8f2ef', '#3bb194']
 
 
 class Teal(Theme.Theme):
@@ -40,7 +40,7 @@ class Teal(Theme.Theme):
   ]
   _colors = ["#E0F2F1", '#B2DFDB', '#80CBC4', '#4DB6AC', '#26A69A', '#009688', '#00897B', '#00796B',
              '#00695C', '#004D40']
-  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
+  _warning, _danger, _success = ['#FFF3CD', '#e2ac00'], ["#F8D7DA", "#C00000"], ['#e8f2ef', '#3bb194']
 
 
 class LightGreen(Theme.Theme):
@@ -59,4 +59,4 @@ class LightGreen(Theme.Theme):
   ]
   _colors = ["#F1F8E9", '#DCEDC8', '#C5E1A5', '#AED581', '#9CCC65', '#8BC34A', '#7CB342', '#689F38',
              '#558B2F', '#33691E']
-  _warning, _danger, _success = ('#FFF3CD', '#e2ac00'), ("#F8D7DA", "#C00000"), ('#e8f2ef', '#3bb194')
+  _warning, _danger, _success = ['#FFF3CD', '#e2ac00'], ["#F8D7DA", "#C00000"], ['#e8f2ef', '#3bb194']

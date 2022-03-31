@@ -681,7 +681,7 @@ class Icon(Html.Html):
     :param str color_out: Optional. The color of the icon when mouse out
     """
     if color_out is None:
-      color_out = self.page.theme.success[1]
+      color_out = self.page.theme.success.base
     else:
       self.css({"color": color_out})
     self.set_attrs(name="onmouseover", value="this.style.color='%s'" % color_hover)

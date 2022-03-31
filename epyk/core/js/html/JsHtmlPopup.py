@@ -9,7 +9,7 @@ from epyk.core.js.html import JsHtml
 
 class JsHtmlPopup(JsHtml.JsHtml):
 
-  def event_position(self, top=8, left=0, css_attrs: dict = None):
+  def event_position(self, top: int = 8, left: int = 0, css_attrs: dict = None):
     dfl_attrs = {"position": "absolute",
                  "top": JsObject.JsObject.get('event.pageY + (%s.clientHeight / 2 + %s) + "px"' % (self.varName, top)),
                  'left': JsObject.JsObject.get('event.pageX + (%s.firstChild.clientWidth / 2 + %s) + "px"' % (

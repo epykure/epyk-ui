@@ -368,8 +368,8 @@ class Modals:
       dfl_options.update(options)
     popup = self.icon(components=components, icon="error", width=width, height=height,
                       options=dfl_options, profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.page.theme.danger[0]
-    popup.container[0].style.css.color = self.page.theme.danger[1]
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.danger.light
+    popup.container[0].style.css.color = self.page.theme.danger.base
     html.Html.set_component_skin(popup)
     return popup
 
