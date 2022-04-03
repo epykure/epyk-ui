@@ -27,6 +27,7 @@ class Table(Html.Html):
     if records is not None:
       self.options.data = records
     self.style.css.background = None
+    self.__bespoke_formatters = set()
 
   _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
 
@@ -234,8 +235,10 @@ class Table(Html.Html):
     :param func_name: String. The alias of teh function to be added to the registery.
     :param func_def: String. The function definition to be attached to this fncName.
     """
-    self.page.properties.js.add_builders('Tabulator.prototype.extendModule("%s", "%s", {"%s": %s});' % (
-      category, type, func_name, func_def))
+    if func_name not in self.__bespoke_formatters:
+      self.__bespoke_formatters.add(func_name)
+      self.page.properties.js.add_builders('Tabulator.prototype.extendModule("%s", "%s", {"%s": %s});' % (
+        category, type, func_name, func_def))
     return self
 
   def loading(self, status=True, color=None):

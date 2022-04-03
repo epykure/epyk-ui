@@ -1,6 +1,7 @@
 
 import hashlib
 
+from typing import Union
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
@@ -32,7 +33,7 @@ class EnumTopCalc(Enums):
     """
     return self._set_value()
 
-  def avg(self, precision=None):
+  def avg(self, precision: int = None):
     """
     Description:
     -----------
@@ -54,7 +55,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def max(self, precision=None):
+  def max(self, precision: int = None):
     """
     Description:
     -----------
@@ -76,7 +77,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def min(self, precision=None):
+  def min(self, precision: int = None):
     """
     Description:
     -----------
@@ -98,7 +99,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def sum(self, precision=None):
+  def sum(self, precision: int = None):
     """
     Description:
     -----------
@@ -120,7 +121,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def bespoke(self, js_funcs, profile=None):
+  def bespoke(self, js_funcs, profile: Union[dict, bool] = None):
     return self._set_value(value=JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
@@ -1063,7 +1064,7 @@ class Formattors(Enums):
       self._set_value("%sParams" % self.key, kwargs)
     return self
 
-  def lookup(self, data, **kwargs):
+  def lookup(self, data: dict, **kwargs):
     """
     Description:
     -----------
@@ -1086,7 +1087,7 @@ class Formattors(Enums):
     self._set_value("%sParams" % self.key, format_params)
     return self
 
-  def custom(self, fncName, fncDef=None, formatterParams=None):
+  def custom(self, fncName: str, fncDef: str = None, formatterParams: dict = None):
     """
     Description:
     -----------
@@ -1104,17 +1105,21 @@ class Formattors(Enums):
     if fncDef is None:
       self._set_value(fncName, js_type=True)
     else:
-      self.component.page.extendModule("format", "formatters", fncName, "function(cell, formatterParams){%s}" % fncDef)
-      self._set_value(fncName)
+      self.component.extendModule("format", "formatters", fncName, "function(cell, formatterParams){%s}" % fncDef)
+      self._set_value(value=fncName)
     if formatterParams is not None:
       self._set_value("%sParams" % self.key, formatterParams)
     return self
 
   def css(self, attrs: dict):
-      self.component.page.extendModule("format", "formatters", "FormatterCss", "function(cell, formatterParams){%s}")
-      self._set_value("FormatterCss")
+    self.component.extendModule("format", "formatters", "FormatterPureCss", '''function(cell, formatterParams){   
+Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[key] = formatterParams.css[key] 
+}); return cell.getValue();}''')
+    self._set_value(value="FormatterPureCss")
+    self._set_value("%sParams" % self.key, {"css": attrs})
+    return self
 
-  def wrapper(self, formatter, css_attrs, formatter_params=None):
+  def wrapper(self, formatter: str, css_attrs: dict, formatter_params: dict = None):
     """
     Description:
     -----------
@@ -1133,7 +1138,7 @@ class Formattors(Enums):
     :param css_attrs:
     :param formatter_params:
     """
-    self._set_value('''
+    self._set_value(value='''
       function(cell, formatterParams){const cssAttrs = formatterParams.css;
         var cell = cell.getTable().modules.format.getFormatter('%s').call(cell.getTable().modules.format, cell, formatterParams);
         let frag = document.createRange().createContextualFragment(cell).firstChild;
@@ -3509,7 +3514,7 @@ class TableConfig(Options):
     self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowFormatter(self, js_funcs, profile=None):
+  def rowFormatter(self, js_funcs, profile: Union[dict, bool] = None):
     """
     Description:
     -----------

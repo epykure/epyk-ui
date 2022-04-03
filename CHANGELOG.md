@@ -6,6 +6,22 @@
 
 ### Fixed
 
+## [1.7.10] - 2022-04-03
+
+### Added
+- New chartJs features / plugins.
+- Add tabulator column formatter.
+- Wrap new tabulator options.
+- Add CSS formatter for tabulator columns.
+
+### Changed
+- Add more flexibility to change the loading component.
+- Change the secondary colors definition.
+
+### Fixed
+- Better documentation & type hinting.
+- Bug fix on loading Tabulator extensions.
+
 ## [1.7.9] - 2022-03-26
 
 ### Added
