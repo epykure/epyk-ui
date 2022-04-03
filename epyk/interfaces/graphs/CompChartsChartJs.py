@@ -726,7 +726,7 @@ class ChartJs:
     """
     Description:
     ------------
-    Display a bubble chart from ChartJs.
+    Display a treemap chart from ChartJs.
 
     :tags:
     :categories:
@@ -735,7 +735,7 @@ class ChartJs:
 
     Related Pages:
 
-      https://www.chartjs.org/samples/latest/charts/radar.html
+      https://chartjs-chart-treemap.pages.dev/usage.html
 
     Attributes:
     ----------
