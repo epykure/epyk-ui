@@ -3396,3 +3396,7 @@ class OptionsGeo(ChartJsOptions):
     :rtype: OptionPlugins
     """
     return self._config_sub_data("plugins", OptionPlugins)
+
+
+class OptionsTreeMap(ChartJsOptions):
+  ...

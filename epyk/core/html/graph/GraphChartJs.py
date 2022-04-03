@@ -1323,6 +1323,56 @@ class ChartScatter(Chart):
     return result'''
 
 
+class ChartTreeMap(Chart):
+  requirements = ('chart.js', 'chartjs-chart-treemap')
+  _chart__type = 'treemap'
+  _option_cls = OptChartJs.OptionsTreeMap
+
+  def add_dataset(self, tree, label, colors=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+    Attributes:
+    ----------
+    :param tree: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    """
+    data = self.new_dataset(len(self._datasets), tree, label, colors, **kwargs)
+    self._datasets.append(data)
+    return data
+
+  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+    Attributes:
+    ----------
+    :param index: Integer.
+    :param data: List. The list of points (float).
+    :param label: String. Optional. The series label (visible in the legend).
+    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    """
+    data = JsChartJs.DataSetTreeMap(self.page, attrs={"data": data})
+    data.label = label
+    if colors is None:
+      data.backgroundColor = self.options.colors[index]
+      data.borderColor = self.options.colors[index]
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
+    return data
+
+
 class ChartExts(ChartPie):
 
   def __init__(self, page, width, height, html_code, options, profile):

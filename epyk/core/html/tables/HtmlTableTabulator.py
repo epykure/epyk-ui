@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Generator
+
 from epyk.core.py import primitives
 from epyk.core.html import Html
 
@@ -149,7 +151,7 @@ class Table(Html.Html):
     """
     return self.options.get_column(by_field, by_title)
 
-  def get_columns(self):
+  def get_columns(self) -> Generator[OptTableTabulator.Column, None, None]:
     """
     Description:
     ------------

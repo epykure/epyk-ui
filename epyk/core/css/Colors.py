@@ -386,6 +386,22 @@ def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
   return [transparentize(c, alpha, is_hex) for c in colors]
 
 
+def color_from_raw(color: str, data: list):
+  """
+  Description:
+  ------------
+  Get rgba colors based on the values.
+
+  Attributes:
+  ----------
+  :param color: The base color.
+  :param data: The intensities.
+  """
+  r, g, b = getHexToRgb(defined.get(color.upper(), {}).get("hex", color))
+  total = sum(data)
+  return [rgba(r, g, b, d/total) for d in data]
+
+
 class HexColors:
   MAROON = '#800000'
   DARK_RED = '#8B0000'

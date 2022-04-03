@@ -82,6 +82,18 @@ class Theme:
     """
     return self.__colors["greys"][0]
 
+  def dark_or_white(self, light=True) -> str:
+    """
+    Description:
+    ------------
+    Get the appropriate light or dark color according to the theme.
+    Setting the Light flag to true will point to white in light mode otherwise it will point to black.
+    """
+    if light:
+      return self.black if self.dark else self.white
+
+    return self.white if self.dark else self.black
+
   @property
   def black(self):
     """

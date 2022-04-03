@@ -1249,6 +1249,15 @@ JS_IMPORTS = {
       {'script': 'chartjs-plugin-dragdata.min.js', 'path': 'chartjs-plugin-dragdata@%(version)s/dist/',
        'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
 
+  # ChartJs Treemap
+  'chartjs-chart-treemap': {
+    'website': 'https://github.com/kurkle/chartjs-chart-treemap',
+    'version': '2.0.2',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'chartjs-chart-treemap.min.js', 'path': 'chartjs-chart-treemap@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-annotation': {
     'website': 'https://www.chartjs.org/',

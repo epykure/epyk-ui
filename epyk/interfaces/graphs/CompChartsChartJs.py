@@ -3,9 +3,11 @@
 
 import os
 
+from typing import Union
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.js import Imports
+from epyk.core.css import Colors
 
 
 class ChartJs:
@@ -15,7 +17,7 @@ class ChartJs:
     self.chartFamily = "ChartJs"
     self.opacity = 0.6
 
-  def set_version(self, v):
+  def set_version(self, v: str):
     """
     Description:
     ------------
@@ -43,8 +45,9 @@ class ChartJs:
                                    css=False)
     return self
 
-  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def plot(self, record: list = None, y: list = None, x=None, kind: str = "line", profile: Union[dict, bool] = None,
+           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
+           options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -73,8 +76,9 @@ class ChartJs:
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -113,8 +117,9 @@ class ChartJs:
     line_chart.options.scales.y_axis().ticks.beginAtZero = True
     return line_chart
 
-  def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-                 height=(330, "px"), html_code=None):
+  def timeseries(self, record: list = None, y_columns: list = None, x_axis: str = None,
+                 profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
+                 height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -145,8 +150,9 @@ class ChartJs:
     line = self.line(record, y_columns, x_axis, profile, width, height, options, html_code)
     return line
 
-  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, html_code=None):
+  def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+          html_code: str = None):
     """
     Description:
     ------------
@@ -184,8 +190,9 @@ class ChartJs:
       line_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
     return line_chart
 
-  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def donut(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+            html_code: str = None):
     """
     Description:
     ------------
@@ -228,8 +235,9 @@ class ChartJs:
       pie_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
     return pie_chart
 
-  def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def area(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -268,8 +276,9 @@ class ChartJs:
       line_chart.dataset().fill = True
     return line_chart
 
-  def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def step(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -308,8 +317,9 @@ class ChartJs:
       line_chart.dataset().steppedLine = 'before'
     return line_chart
 
-  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-          options=None, html_code=None):
+  def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+          width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+          html_code: str = None):
     """
     Description:
     ------------
@@ -351,8 +361,9 @@ class ChartJs:
     bar_chart.options.scales.x_axes().offset = True
     return bar_chart
 
-  def custom(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, html_code=None):
+  def custom(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+             html_code: str = None):
     """
     Description:
     ------------
@@ -431,8 +442,9 @@ class ChartJs:
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+           html_code: str = None):
     """
     Description:
     ------------
@@ -475,8 +487,9 @@ class ChartJs:
       bar_chart.add_dataset(d["data"], d['label'])
     return bar_chart
 
-  def multi(self, kind, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def multi(self, kind: str, record: list = None, y_columns: list = None, x_axis: str = None,
+            profile: Union[dict, bool] = None, options: dict = None, width: Union[tuple, int] = (100, "%"),
+            height: Union[tuple, int] = (330, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -517,8 +530,9 @@ class ChartJs:
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+  def scatter(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+              html_code: str = None):
     """
     Description:
     ------------
@@ -556,8 +570,9 @@ class ChartJs:
       line_chart.add_dataset(d["data"], data['series'][i])
     return line_chart
 
-  def bubble(self, record=None, y_columns=None, x_axis=None, r_values=None, profile=None, width=(100, "%"),
-             height=(330, "px"), options=None, html_code=None):
+  def bubble(self, record: list = None, y_columns: list = None, x_axis: str = None, r_values: list = None,
+             profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
+             height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -597,8 +612,9 @@ class ChartJs:
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
-  def polar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def polar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
+            options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -637,8 +653,9 @@ class ChartJs:
       polar_chart.add_dataset(d["data"], d['label'])
     return polar_chart
 
-  def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-            options=None, html_code=None):
+  def radar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+            html_code: str = None):
     """
     Description:
     ------------
@@ -677,7 +694,8 @@ class ChartJs:
       radar_chart.add_dataset(d["data"], d['label'])
     return radar_chart
 
-  def fabric(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
+  def fabric(self, profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
+             height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
     """
     Description:
     ------------
@@ -701,3 +719,47 @@ class ChartJs:
     options.update({'y_columns': [], 'x_axis': "", 'commons': {"opacity": self.opacity}})
     component = graph.GraphChartJs.Fabric(self.page, width, height, html_code, options, profile)
     return component
+
+  def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
+              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+              html_code: str = None):
+    """
+    Description:
+    ------------
+    Display a bubble chart from ChartJs.
+
+    :tags:
+    :categories:
+
+    Usage::
+
+    Related Pages:
+
+      https://www.chartjs.org/samples/latest/charts/radar.html
+
+    Attributes:
+    ----------
+    :param record: List. Optional. The list of dictionaries with the input data.
+    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
+    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
+    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    data = self.page.data.chartJs.y(record, y_columns, x_axis)
+    treemap_chart = graph.GraphChartJs.ChartTreeMap(self.page, width, height, html_code, options, profile)
+    treemap_chart.colors(self.page.theme.charts)
+    treemap_chart.labels(data['labels'])
+    treemap_chart.options.scales.y_axis().display = False
+    for i, d in enumerate(data['datasets']):
+      treemap_chart.add_dataset(d["data"], d['label'])
+      treemap_chart.datasets[-1].labels.display = True
+      treemap_chart.datasets[-1].labels.formatter(data['labels'])
+      treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
+    return treemap_chart

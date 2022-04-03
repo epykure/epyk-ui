@@ -875,7 +875,8 @@ class Formattors(Enums):
       self._set_value("%sParams" % self.key, kwargs)
     return self
 
-  def money(self, decimal=",", thousand=".", precision=False, symbol=None, symbolAfter=None, **kwargs):
+  def money(self, decimal: str = ",", thousand: str = ".", precision: bool = False, symbol: str = None,
+            symbolAfter=None, **kwargs):
     """
     Description:
     -----------
@@ -1109,7 +1110,11 @@ class Formattors(Enums):
       self._set_value("%sParams" % self.key, formatterParams)
     return self
 
-  def wrapper(self, formatter, css_attrs, formatterParams=None):
+  def css(self, attrs: dict):
+      self.component.page.extendModule("format", "formatters", "FormatterCss", "function(cell, formatterParams){%s}")
+      self._set_value("FormatterCss")
+
+  def wrapper(self, formatter, css_attrs, formatter_params=None):
     """
     Description:
     -----------
@@ -1126,7 +1131,7 @@ class Formattors(Enums):
     ----------
     :param formatter:
     :param css_attrs:
-    :param formatterParams:
+    :param formatter_params:
     """
     self._set_value('''
       function(cell, formatterParams){const cssAttrs = formatterParams.css;
@@ -1134,7 +1139,7 @@ class Formattors(Enums):
         let frag = document.createRange().createContextualFragment(cell).firstChild;
         Object.keys(cssAttrs).forEach(function(key){frag.style[key] = cssAttrs[key]}); 
         return frag; }''' % formatter, js_type=True)
-    formatter_params = formatterParams or {}
+    formatter_params = formatter_params or {}
     formatter_params['css'] = css_attrs
     self._set_value("%sParams" % self.key, formatter_params)
     return self
@@ -1488,6 +1493,23 @@ class Column(Options):
     self._config(val)
 
   @property
+  def editableTitle(self):
+    """
+    Description:
+    -----------
+    Allows the user to edit the header titles.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.1/columns
+    """
+    return self._config_get()
+
+  @editableTitle.setter
+  def editableTitle(self, flag: bool):
+    self._config(flag)
+
+  @property
   def exts(self):
     """
     Description:
@@ -1563,8 +1585,8 @@ class Column(Options):
     return self._config_get()
 
   @formatterParams.setter
-  def formatterParams(self, val):
-    self._config(val)
+  def formatterParams(self, values: dict):
+    self._config(values)
 
   @property
   def formatters(self):
@@ -1727,23 +1749,6 @@ class Column(Options):
     :rtype: EnumSorter
     """
     return self.sub_data("sorter", EnumSorter)
-
-  @property
-  def titleFormatter(self):
-    """
-    Description:
-    -----------
-    You can set cell formatters on a per column basis using the formatter option in the column definition object.
-
-    Related Pages:
-
-      http://tabulator.info/docs/5.0/format#format
-    """
-    return self._config_get()
-
-  @titleFormatter.setter
-  def titleFormatter(self, val):
-    self._config(val)
 
   @property
   def width(self):

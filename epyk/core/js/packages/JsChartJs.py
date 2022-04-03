@@ -1249,6 +1249,115 @@ class OptionsTitle(DataAttrs):
     self._attrs["lineHeight"] = val
 
 
+class OptionsLabels(DataAttrs):
+
+  @property
+  def display(self):
+    """
+    Description:
+    ------------
+    Display the labels.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["display"]
+
+  @display.setter
+  def display(self, val):
+    self._attrs["display"] = val
+
+  @property
+  def align(self):
+    """
+    Description:
+    ------------
+    The align property specifies the text horizontal alignment used when drawing the label.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["align"]
+
+  @align.setter
+  def align(self, text: str):
+    self._attrs["align"] = text
+
+  @property
+  def color(self):
+    """
+    Description:
+    ------------
+    The label align position.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["color"]
+
+  @color.setter
+  def color(self, text: str):
+    self._attrs["color"] = text
+
+  @property
+  def hoverColor(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["hoverColor"]
+
+  @hoverColor.setter
+  def hoverColor(self, text: str):
+    self._attrs["hoverColor"] = text
+
+  @property
+  def padding(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["padding"]
+
+  @padding.setter
+  def padding(self, num: str):
+    self._attrs["padding"] = num
+
+  @property
+  def position(self):
+    """
+    Description:
+    ------------
+    The position property specifies the text vertical alignment used when drawing the label.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["position"]
+
+  @position.setter
+  def position(self, text: str):
+    self._attrs["position"] = text
+
+  def formatter(self, labels):
+    self.custom("formatter", JsUtils.jsWrap(
+      "function(ctx){let treeLabels = %(labels)s; return treeLabels[ctx.dataIndex]}" % {
+        "labels": JsUtils.jsConvertData(labels, None)
+      }))
+
+
 class Options(DataAttrs):
 
   def __init__(self, page, attrs=None, options=None):
@@ -2959,6 +3068,124 @@ class DataSetBubble(DataSet):
   def radius(self, val):
     self._attrs["radius"] = val
 
+
+class DataSetTreeMap(DataSet):
+  @property
+  def label(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-optionsl
+    """
+    return self._attrs["label"]
+
+  @label.setter
+  def label(self, val: str):
+    self._attrs["label"] = val
+
+  @property
+  def spacing(self):
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("spacing", 0)
+
+  @spacing.setter
+  def spacing(self, num: int):
+    self._attrs["spacing"] = num
+
+  @property
+  def rtl(self):
+    """
+    Description:
+    ------------
+    If true, the treemap elements are rendering from right to left.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("rtl", False)
+
+  @rtl.setter
+  def rtl(self, flag: bool):
+    self._attrs["rtl"] = flag
+
+  @property
+  def tree(self):
+    """
+    Description:
+    ------------
+    Tree data should be provided in tree property of dataset. data is then automatically build.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("tree")
+
+  @tree.setter
+  def tree(self, values):
+    self._attrs["tree"] = values
+
+  @property
+  def key(self):
+    """
+    Description:
+    ------------
+    Define the key name in data objects to use for value.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("key")
+
+  @key.setter
+  def key(self, value: str):
+    self._attrs["key"] = value
+
+  @property
+  def groups(self):
+    """
+    Description:
+    ------------
+    Define how to display multiple levels of hierarchy. Data is summarized to groups internally.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("groups")
+
+  @groups.setter
+  def groups(self, value: str):
+    self._attrs["groups"] = value
+
+  def backgrounds(self, labels):
+    self.custom("backgroundColor", JsUtils.jsWrap(
+      "function(ctx){let treeLabels = %(labels)s; return treeLabels[ctx.dataIndex]}" % {
+        "labels": JsUtils.jsConvertData(labels, None)
+      }))
+
+  @property
+  def labels(self) -> OptionsLabels:
+    """
+    Description:
+    ------------
+
+    """
+    if self._attrs.get("labels") is None:
+      self._attrs['labels'] = OptionsLabels(self.page)
+    return self._attrs['labels']
 
 # class ChartJsType(object):
 #

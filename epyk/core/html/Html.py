@@ -2088,7 +2088,8 @@ class Body(Html):
     self.style.css.background_color = self.page.theme.colors[2]
     return self
 
-  def loading(self, status: bool = True, z_index: int = 500):
+  def loading(self, status: bool = True, label: str = "Loading...", component=None,
+              z_index: int = 500, attrs: dict = None):
     """
     Description:
     -----------
@@ -2104,17 +2105,34 @@ class Body(Html):
     ----------
     :param bool status: Optional. A flag to specify the status of the loading event.
     :param int z_index: Optional. Specifies the stack order of an element.
+    :param label: Optional.
+    :param component: Optional.
+    :param attrs: Optional.
     """
     if status:
+      attrs = attrs or {"font-size": "50px", "color": self.page.theme.dark_or_white()}
+      if not hasattr(component, 'options'):
+        component = self.page.ui.icon(component or "fas fa-spinner fa-spin")
+        component.options.managed = False
+        component.style.css.margin_right = 5
+        component.style.css.font_size = "inherit"
       return ''' 
         if (typeof window['popup_loading_body'] === 'undefined'){
           window['popup_loading_body'] = document.createElement("div"); 
           window['popup_loading_body'].style.width = '100%%'; window['popup_loading_body'].style.height = '100%%'; window['popup_loading_body'].style.opacity = 0.3;
-          window['popup_loading_body'].style.position = 'fixed'; window['popup_loading_body'].style.top = 0; window['popup_loading_body'].style.left = 0; window['popup_loading_body'].style.zIndex = %s;
-          window['popup_loading_body'].style.background = '%s'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
-          window['popup_loading_body'].innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+          window['popup_loading_body'].style.position = 'fixed'; window['popup_loading_body'].style.top = 0; window['popup_loading_body'].style.left = 0; window['popup_loading_body'].style.zIndex = %(z_index)s;
+          window['popup_loading_body'].style.background = '%(background)s'; window['popup_loading_body'].style.color = 'white'; window['popup_loading_body'].style.textAlign = 'center'; window['popup_loading_body'].style.paddingTop = '50vh';
+          let loadingContainer = document.createElement("div"); 
+          Object.keys(%(attrs)s).forEach(function(cssKey) {loadingContainer.style[cssKey] = %(attrs)s[cssKey]});
+          let loadingLabel = document.createElement("div");
+          loadingLabel.style["display"] = "inline-block";
+          loadingLabel.innerHTML = %(label)s; 
+          loadingContainer.innerHTML = '%(icon)s';
+          loadingContainer.appendChild(loadingLabel);
+          window['popup_loading_body'].appendChild(loadingContainer);
           document.body.appendChild(window['popup_loading_body'])
-        } ''' % (z_index, self.page.theme.notch())
+        } ''' % {"z_index": z_index, "background": self.page.theme.notch(),
+                 "label": JsUtils.jsConvertData(label, None), "attrs": attrs, "icon": component.html()}
 
     return '''if (typeof window['popup_loading_body'] !== 'undefined'){
 document.body.removeChild(window['popup_loading_body']); window['popup_loading_body'] = undefined}'''
