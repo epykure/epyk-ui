@@ -110,6 +110,72 @@ class JsItemsDef:
            'label': JsUtils.jsConvertData(self.component.options.label, None)}
     return self._item(item_def)
 
+  def timeline(self, page: primitives.PageModel):
+    """
+    Description:
+    ------------
+    Add text items to the list
+
+    Attributes:
+    ----------
+    :param primitives.PageModel page: Page object. The internal page object.
+    """
+    item_def = '''
+    var item = document.createElement("DIV");  
+    item.style.fontSize = "%(fontSize)s";  
+    var message = document.createElement("DIV"); 
+    message.style.display = "inline-block" ;  
+    item.style.borderBottom = "1px solid %(white)s";
+    item.style.borderTop = "1px solid %(white)s";
+    var log = document.createElement("DIV"); log.style.background = "%(lightGrey)s" ; log.style.margin = "0 5px";
+    log.style.display = "inline-block" ;  log.style.fontWeight = 900 ; log.style.minWidth = "95px" ; 
+    var elapsedTime = "";
+    if ((typeof data.d !== 'undefined') && (data.d != 0)){elapsedTime = data.d + "d";}
+    if ((typeof data.h !== 'undefined') && (data.h != 0)){elapsedTime = elapsedTime + " "+ data.h + "h";}
+    if ((typeof data.m !== 'undefined') && (data.m != 0)){elapsedTime = elapsedTime + " "+ data.m + "m";}
+    if ((typeof data.s !== 'undefined') && (data.s != 0)){elapsedTime = elapsedTime + " "+ data.s + "s";}
+    log.innerHTML = elapsedTime + %(label)s;
+    if(options.click != null){ 
+      item.style.cursor = 'pointer';
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
+      item.onclick = function(event){
+         var dataValue = message.getAttribute('data-valid');
+         if(dataValue == 'true'){
+           message.classList.remove('list_text_selected');
+           message.setAttribute('data-valid', false)}
+         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+         var value = {"value": message.innerHTML, "timestamp": log.innerHTML}; options.click(event, value)}
+    } else {
+      message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
+    if(options.draggable != false){ 
+      message.setAttribute('draggable', true);
+      message.style.cursor = 'grab';
+      message.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
+    }
+    if(typeof options.style !== 'undefined'){
+      Object.keys(options.style).forEach(function(key){message.style[key] = options.style[key] })}
+    if(typeof data.style !== 'undefined'){
+      Object.keys(data.style).forEach(function(key){message.style[key] = data.style[key] })}
+    if(typeof data === 'object'){ 
+      message.innerHTML = data.text} else { message.innerHTML = data };
+    var balise = document.createElement("DIV"); 
+    var dot = document.createElement("DIV"); dot.style.margin = "4px auto"; dot.style.background = "%(black)s";
+    dot.style.borderRadius = "50px"; dot.style.width = "5px"; dot.style.height = "5px";
+    balise.style.border = "1px solid %(black)s"; balise.style.borderRadius = "50px"; balise.style.width = "15px";
+    balise.style.height = "15px"; balise.style.float = "left"; balise.appendChild(dot); item.appendChild(balise);
+    item.appendChild(log);
+    var msgContainer = document.createElement("DIV"); msgContainer.style.display = "block";
+    msgContainer.style.height = "auto"; msgContainer.style.marginLeft = "7px"; msgContainer.style.marginTop = "2px";
+    msgContainer.style.paddingLeft = "5px";
+    if (typeof data.space !== 'undefined'){msgContainer.style.paddingBottom = ""+ data.space + "px";}
+    else {msgContainer.style.paddingBottom = "10px";}
+    msgContainer.style.borderLeft = "1px solid %(black)s"; msgContainer.style.width = "100%%";
+    msgContainer.appendChild(message); item.appendChild(msgContainer);
+    ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(),
+           "black": page.theme.dark_or_white(False), "white": page.theme.black if page.theme.dark else page.theme.white,
+           'label': JsUtils.jsConvertData(self.component.options.label, None)}
+    return self._item(item_def)
+
   def status(self, page: primitives.PageModel):
     """
     Description:

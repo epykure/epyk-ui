@@ -178,7 +178,7 @@ class OptionsItems(Options):
   @items_type.setter
   def items_type(self, text):
     self._config(text)
-    self._config(text not in ('link', 'badge', 'text', 'icon', 'check', 'radio', 'logs', 'status'), name="items_space")
+    self._config(text not in ('link', 'badge', 'text', 'icon', 'timeline', 'check', 'radio', 'logs', 'status'), name="items_space")
 
   @property
   def items_space(self):
