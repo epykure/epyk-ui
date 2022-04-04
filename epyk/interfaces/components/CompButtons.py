@@ -1138,7 +1138,7 @@ class Buttons:
     component.icon.style.css.padding_bottom = 10
     if dflt_options["started"]:
       component.attr["data-active"] = 1
-      component.icon.style.css.color = self.page.theme.success[1]
+      component.icon.style.css.color = self.page.theme.success.base
       component.icon.style.effects.blink(2)
       component.style.css.border = "1px solid %s" % self.page.theme.success.base
       self.page.body.onReady([
@@ -1227,8 +1227,8 @@ class Buttons:
     """
     component = self.button(icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip,
                       profile=profile, options=options, align=align)
-    component.style.css.background = self.page.theme.success[1]
-    component.style.css.border_color = self.page.theme.success[1]
+    component.style.css.background = self.page.theme.success.base
+    component.style.css.border_color = self.page.theme.success.base
     component.style.css.padding = "0 10px"
     component.icon.style.css.color = "white"
     html.Html.set_component_skin(component)
@@ -1261,8 +1261,8 @@ class Buttons:
     """
     component = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
                             profile=profile, options=options, align=align)
-    component.style.css.background = self.page.theme.danger[1]
-    component.style.css.border_color = self.page.theme.danger[1]
+    component.style.css.background = self.page.theme.danger.base
+    component.style.css.border_color = self.page.theme.danger.base
     component.style.css.padding = "0 10px"
     component.icon.style.css.color = "white"
     html.Html.set_component_skin(component)

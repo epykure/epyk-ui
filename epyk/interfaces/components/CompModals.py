@@ -442,8 +442,8 @@ class Modals:
     """
     popup = self.icon(
       components=components, icon="check", width=width, height=height, options=options, profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
-    popup.container[0].style.css.color = self.page.theme.success[1]
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.success.light
+    popup.container[0].style.css.color = self.page.theme.success.base
     html.Html.set_component_skin(popup)
     return popup
 
@@ -481,8 +481,8 @@ class Modals:
     component = self.page.ui.text(text)
     popup = self.icon(components=[component], icon="fas fa-spinner fa-pulse", width=width, height=height,
                       options=options, profile=profile)
-    popup.window.style.css.border = "3px solid %s" % self.page.theme.success[0]
-    popup.container[0].style.css.color = self.page.theme.success[1]
+    popup.window.style.css.border = "3px solid %s" % self.page.theme.success.light
+    popup.container[0].style.css.color = self.page.theme.success.base
     popup.text = component
 
     def build_text(data=None, options=None, profile=False):

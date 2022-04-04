@@ -48,7 +48,7 @@ class Poller:
     icon = self.page.ui.icon("clock")
     toggle.toggle(on_funcs=[
       icon.dom.spin(),
-      icon.dom.css({"color": self.page.theme.success[1]}).r,
+      icon.dom.css({"color": self.page.theme.success.base}).r,
       self.page.js.window.setInterval(js_funcs, "%s_timer" % toggle.htmlCode, time * 1000, profile=profile)
     ],
       off_funcs=[

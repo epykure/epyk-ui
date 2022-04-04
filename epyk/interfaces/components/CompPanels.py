@@ -474,7 +474,7 @@ class Panels:
     options = options or {}
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"item_css": {'border': '1px solid %s' % self.page.theme.success[0],
+    dfl_options = {"item_css": {'border': '1px solid %s' % self.page.theme.success.light,
                                 'border-radius': '5px', "padding": "0 4px",
                                 "margin-left": "5px", "width": 'auto', 'display': 'inline-block',
                                 'background': options.get("colored", 'inherit'), 'white-space': 'nowrap'}}

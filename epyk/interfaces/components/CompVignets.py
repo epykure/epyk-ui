@@ -556,7 +556,7 @@ class Vignets:
     container.add(value)
     if url is not None:
       button = self.page.ui.button("Subscribe", align="center", profile=profile)
-      button.style.css.background_color = self.page.theme.success[1]
+      button.style.css.background_color = self.page.theme.success.base
       button.style.css.color = 'white'
       button.style.css.margin_top = 10
       button.style.css.margin_bottom = 10

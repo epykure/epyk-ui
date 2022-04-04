@@ -1178,7 +1178,7 @@ class Components:
         r.span.style.css.margin = "0 2px -3px -3px"
         if typ == "Edit":
           r.click([
-            r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+            r.dom.css({"background": self.page.theme.success.light, "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
             self.page.js.if_(r.span.dom.innerText() == "Edit", [
               r.span.build("Lock"),

@@ -265,7 +265,7 @@ class Table(Html.Html):
             divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
             divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
             document.getElementById('%(htmlId)s').appendChild(divLoading)
-          } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success[1],
+          } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success.base,
                    'background': self.page.theme.greys[0],
                    "size": self.page.body.style.globals.font.size + 5}
 

@@ -191,7 +191,7 @@ class Calendar:
     component = self.page.ui.row(rows, width=width, height=height, align=align, options=options, profile=profile)
     component.tasks = tasks
     component.pies = rows
-    component[today.month-1].style.css.border = "1px solid %s" % self.page.theme.success[0]
+    component[today.month-1].style.css.border = "1px solid %s" % self.page.theme.success.light
     html.Html.set_component_skin(component)
     return component
 

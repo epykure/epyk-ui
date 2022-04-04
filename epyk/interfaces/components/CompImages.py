@@ -722,7 +722,7 @@ class Images:
     if background_color is None:
       background_color = self.page.theme.greys[0]
     if color is None:
-      color = self.page.theme.success[1]
+      color = self.page.theme.success.base
     icon_details = Defaults_css.get_icon(icon)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]

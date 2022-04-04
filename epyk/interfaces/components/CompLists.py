@@ -909,7 +909,7 @@ class Lists:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.page.theme.success[0],
+    dfl_options = {"item_css": {"padding": '5px', 'border': '1px solid %s' % self.page.theme.success.light,
                                 'border-radius': '5px', 'margin': '2px', "width": 'auto', 'display': 'inline-block',
                                 'background': 'inherit', 'white-space': 'nowrap'},
                    'category': category, 'visible': True,
@@ -917,7 +917,7 @@ class Lists:
                                  'font-weight': 'bold', 'vertical-align': 'bottom'},
                    'category_css': {'display': 'inline', 'margin-right': '2px', 'vertical-align': 'top',
                                     'font-size': self.page.body.style.globals.font.normal(-3)},
-                   'icon_css': {'color': self.page.theme.success[1], 'margin-left': '5px',
+                   'icon_css': {'color': self.page.theme.success.base, 'margin-left': '5px',
                                 'cursor': 'pointer'}}
     if not hasattr(category, 'toStr') and category == 'group':
       dfl_options['visible'] = False
@@ -974,7 +974,7 @@ class Lists:
       r.style.css.font_factor(-5)
       r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
-        r.dom.css({"background": self.page.theme.success[0], "border-radius": "10px"}).r,
+        r.dom.css({"background": self.page.theme.success.light, "border-radius": "10px"}).r,
         self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
       ] + save_funcs, profile=profile)
       menu_items.append(r)
