@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.7.10] - 2022-04-03
+## [1.7.11] - 2022-04-04
 
 ### Added
 - New chartJs features / plugins.
