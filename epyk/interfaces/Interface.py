@@ -298,6 +298,9 @@ class Components:
 
     Usage::
 
+      nav = page.ui.navigation.nav(height=(30, 'px'), title={"This is an example": "by Epyk"})
+      for component in ["Menu 1", "Menu 2"]:
+        title = nav.add_right(component)
     """
     return CompNavigation.Navigation(self)
 

@@ -472,7 +472,7 @@ class Navigation:
     return nav_bar
 
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
-          profile=False):
+          profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
     Description:
     ------------
