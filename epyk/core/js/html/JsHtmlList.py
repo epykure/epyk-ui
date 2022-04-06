@@ -159,7 +159,9 @@ class JsItemsDef:
     if(typeof data === 'object'){ 
       message.innerHTML = data.text} else { message.innerHTML = data };
     var balise = document.createElement("DIV"); 
-    var dot = document.createElement("DIV"); dot.style.margin = "4px auto"; dot.style.background = "%(black)s";
+    var dot = document.createElement("DIV"); dot.style.margin = "4px auto"; 
+    if (typeof data.color !== 'undefined'){dot.style.background = data.color;}
+    else {dot.style.background = "%(color)s";}
     dot.style.borderRadius = "50px"; dot.style.width = "5px"; dot.style.height = "5px";
     balise.style.border = "1px solid %(black)s"; balise.style.borderRadius = "50px"; balise.style.width = "15px";
     balise.style.height = "15px"; balise.style.float = "left"; balise.appendChild(dot); item.appendChild(balise);
@@ -172,6 +174,7 @@ class JsItemsDef:
     msgContainer.style.borderLeft = "1px solid %(black)s"; msgContainer.style.width = "100%%";
     msgContainer.appendChild(message); item.appendChild(msgContainer);
     ''' % {"lightGrey": page.theme.greys[1], "fontSize": page.body.style.globals.font.normal(),
+           "color": page.theme.notch(),
            "black": page.theme.dark_or_white(False), "white": page.theme.black if page.theme.dark else page.theme.white,
            'label': JsUtils.jsConvertData(self.component.options.label, None)}
     return self._item(item_def)

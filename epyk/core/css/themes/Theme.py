@@ -10,6 +10,14 @@ class ColorRange:
     self.__colors = colors
     self.index = index or round(len(colors)/2)
 
+  def __iter__(self):
+    """ Make the object iterable """
+    yield from self.__colors
+
+  def __getitem__(self, item: int):
+    """ Make the object subscriptable """
+    return self.__colors[item]
+
   def reverse(self):
     self.__colors = self.__colors[::-1]
 
