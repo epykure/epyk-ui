@@ -479,7 +479,7 @@ class Enums:
   def __init__(self, options: Options, name: str):
     self.__option = options
     self.component = options.component
-    self._report = self.component
+    self.page = self.component.page
     self.__name = name
 
   @property

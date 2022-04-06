@@ -1,10 +1,11 @@
 
 import hashlib
 
-from typing import Union
+from typing import Union, List
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
+from epyk.core.py import types
 
 
 class EnumTopCalc(Enums):
@@ -121,7 +122,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def bespoke(self, js_funcs, profile: Union[dict, bool] = None):
+  def bespoke(self, js_funcs, profile: types.PROFILE_TYPE = None):
     return self._set_value(value=JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
@@ -177,7 +178,7 @@ class EnumLayout(Enums):
     """
     return self._set_value()
 
-  def fitDataFill(self, inline=True):
+  def fitDataFill(self, inline: bool = True):
     """
     Description:
     -----------
@@ -287,7 +288,7 @@ class EnumColCss(Enums):
     self.component.body.style.custom_class({'_attrs': {'text-align': 'center'}}, classname="tb-center")
     return self._add_value(value="tb-center")
 
-  def color(self, color):
+  def color(self, color: str):
     """
     Description:
     -----------
@@ -300,7 +301,7 @@ class EnumColCss(Enums):
     self.component.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self._add_value(value="tb-color-%s" % color)
 
-  def background(self, color):
+  def background(self, color: str):
     """
     Description:
     -----------
@@ -313,7 +314,7 @@ class EnumColCss(Enums):
     self.component.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
     return self._add_value(value="tb-background-%s" % color)
 
-  def css(self, css_attrs, css_attrs_hover=None):
+  def css(self, css_attrs: dict, css_attrs_hover: dict = None):
     """
     Description:
     -----------
@@ -344,7 +345,7 @@ class PersistenceGroup(Options):
     return self._config_get()
 
   @groupBy.setter
-  def groupBy(self, val):
+  def groupBy(self, val: str):
     self._config(val)
 
   @property
@@ -520,7 +521,7 @@ class ColumnsGroup(Options):
     return self._config_get()
 
   @title.setter
-  def title(self, val):
+  def title(self, val: str):
     self._config(val)
 
   @property
@@ -1172,7 +1173,7 @@ class Mutators(Enums):
     if fncDef is None:
       self._set_value(fncName, js_type=True)
     else:
-      self.component.page.extendModule(
+      self.component.extendModule(
         "mutator", "mutators", fncName, "function(value, data, type, mutatorParams, component){%s}" % fncDef)
       self._set_value(fncName)
     return self
@@ -1204,7 +1205,7 @@ class Accessors(Enums):
     if fncDef is None:
       self._set_value(fncName, js_type=True)
     else:
-      self.component.page.extendModule(
+      self.component.extendModule(
         "accessor", "accessors", fncName, "function(value, data, type, params, column, row){%s}" % fncDef)
       self._set_value(fncName)
     if accessorParams is not None:
@@ -1318,7 +1319,7 @@ class Validators(Enums):
     self._add_value(value='maxLength:%s' % val)
     return self
 
-  def list(self, vals):
+  def list(self, vals: list):
     """
     Description:
     -----------
@@ -1328,10 +1329,10 @@ class Validators(Enums):
 
       http://tabulator.info/docs/4.5/validate
     """
-    self._add_value(value='in:%s' % "".join(map(lambda x: str(), vals)))
+    self._add_value(value='in:%s' % "".join(map(lambda x: str(x), vals)))
     return self
 
-  def regex(self, val):
+  def regex(self, val: str):
     """
     Description:
     -----------
@@ -1346,6 +1347,10 @@ class Validators(Enums):
 
 
 class Extensions(Options):
+
+  def __init__(self, options: Options, attrs: dict):
+    super(Extensions, self).__init__(options.component, attrs)
+    self.__options = options
 
   @property
   def editors(self):
@@ -1362,7 +1367,7 @@ class Extensions(Options):
     """
     from epyk.core.html.tables.exts import TbEditors
 
-    return TbEditors.ExtsEditors(self, "editor")
+    return TbEditors.ExtsEditors(self.__options, "editor")
 
   @property
   def formatters(self):
@@ -1380,7 +1385,7 @@ class Extensions(Options):
     """
     from epyk.core.html.tables.exts import TbFormatters
 
-    return TbFormatters.ExtsFormattors(self, "formatter")
+    return TbFormatters.ExtsFormattors(self.__options, "formatter")
 
   @property
   def mutators(self):
@@ -1397,7 +1402,7 @@ class Extensions(Options):
     """
     from epyk.core.html.tables.exts import TbMutators
 
-    return TbMutators.ExtsMutators(self, "mutator")
+    return TbMutators.ExtsMutators(self.__options, "mutator")
 
   @property
   def validators(self):
@@ -1414,7 +1419,60 @@ class Extensions(Options):
     """
     from epyk.core.html.tables.exts import TbValidators
 
-    return TbValidators.ExtsValidators(self, "validator")
+    return TbValidators.ExtsValidators(self.__options, "validator")
+
+
+class HeaderMenu(Options):
+
+  def hide(self, label: str = "Hide Column", icon: str = "fas fa-eye-slash", disabled: bool = False):
+    """
+    Description:
+    -----------
+    Hide the selected column.
+
+    Attributes:
+    ----------
+    :param label:
+    :param icon:
+    :param disabled:
+    """
+    if icon is not None:
+      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = "column.hide()"
+    else:
+      self._attrs[label] = "column.hide()"
+    return self
+
+  def separator(self):
+    self._attrs["separator_%s" % len(self._attrs)] = None
+    return self
+
+  def custom(self, label, strFnc, icon=None, disabled=False):
+    """
+    Description:
+    -----------
+    Add a delete entry to the context menu.
+
+    Attributes:
+    ----------
+    :param label:
+    :param strFnc:
+    :param icon:
+    :param disabled:
+    """
+    if icon is not None:
+      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = strFnc
+    else:
+      self._attrs[label] = strFnc
+    return self
+
+  def __str__(self):
+    result = []
+    for k, v in self._attrs.items():
+      if v is None and k.startswith("separator_"):
+        result.append("{'separator': true}")
+      else:
+        result.append("{label: '%s', action: function(e, column){%s}}" % (k, v))
+    return ", ".join(result)
 
 
 class Column(Options):
@@ -1433,7 +1491,7 @@ class Column(Options):
     return self._config_get(name="hozAlign")
 
   @align.setter
-  def align(self, val):
+  def align(self, val: str):
     self._config(val, name="hozAlign")
 
   @property
@@ -1451,7 +1509,7 @@ class Column(Options):
     """
     return Accessors(self, "accessor")
 
-  def add_column(self, field, title=None):
+  def add_column(self, field: str, title: str = None):
     """
     Description:
     ------------
@@ -1467,8 +1525,50 @@ class Column(Options):
     col_def.title = field if title is None else title
     return col_def
 
-  def cellClick(self, js_funcs, profile=None):
+  def cellClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     self._config("function(event, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+
+  def cellEditing(self, js_funcs, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), js_type=True)
+    return self
+
+  def cellEdited(self, js_funcs, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), js_type=True)
+    return self
 
   @property
   def cssClass(self):
@@ -1526,7 +1626,7 @@ class Column(Options):
 
       http://tabulator.info/docs/4.0/modules
     """
-    return Extensions(self.component, self._attrs)
+    return Extensions(self, self._attrs)
 
   @property
   def editors(self):
@@ -1624,7 +1724,7 @@ class Column(Options):
     self._config(val)
 
   @property
-  def headerMenu(self):
+  def headerMenu(self) -> HeaderMenu:
     """
     Description:
     -----------
@@ -1653,7 +1753,7 @@ class Column(Options):
   def headerFilter(self, value):
     self._config(value)
 
-  def headerFilterFunc(self, js_funcs, profile=None):
+  def headerFilterFunc(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2256,59 +2356,6 @@ class RowContextMenu(Options):
     return ", ".join(["{label: '%s', action: function(e, row){%s}}" % (k, v) for k, v in self._attrs.items()])
 
 
-class HeaderMenu(Options):
-
-  def hide(self, label="Hide Column", icon="fas fa-eye-slash", disabled=False):
-    """
-    Description:
-    -----------
-    Hide the selected column.
-
-    Attributes:
-    ----------
-    :param label:
-    :param icon:
-    :param disabled:
-    """
-    if icon is not None:
-      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = "column.hide()"
-    else:
-      self._attrs[label] = "column.hide()"
-    return self
-
-  def separator(self):
-    self._attrs["separator_%s" % len(self._attrs)] = None
-    return self
-
-  def custom(self, label, strFnc, icon=None, disabled=False):
-    """
-    Description:
-    -----------
-    Add a delete entry to the context menu.
-
-    Attributes:
-    ----------
-    :param label:
-    :param strFnc:
-    :param icon:
-    :param disabled:
-    """
-    if icon is not None:
-      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = strFnc
-    else:
-      self._attrs[label] = strFnc
-    return self
-
-  def __str__(self):
-    result = []
-    for k, v in self._attrs.items():
-      if v is None and k.startswith("separator_"):
-        result.append("{'separator': true}")
-      else:
-        result.append("{label: '%s', action: function(e, column){%s}}" % (k, v))
-    return ", ".join(result)
-
-
 class TableConfig(Options):
 
   @property
@@ -2448,7 +2495,7 @@ class TableConfig(Options):
   def columnCalcs(self, val):
     self._config(val)
 
-  def cellClick(self, js_funcs, profile=None):
+  def cellClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2471,7 +2518,28 @@ class TableConfig(Options):
         js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def clipboardPasted(self, js_funcs, profile=None):
+  def cellEditing(self, js_funcs, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks
+
+    Attributes:
+    ----------
+    :param js_funcs: String | List. The Javascript functions.
+    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self._config(
+      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile), js_type=True)
+    return self
+
+  def clipboardPasted(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2493,7 +2561,7 @@ class TableConfig(Options):
         js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellDblClick(self, js_funcs, profile=None):
+  def cellDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2515,7 +2583,7 @@ class TableConfig(Options):
     self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellContext(self, js_funcs, profile=None):
+  def cellContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2536,7 +2604,7 @@ class TableConfig(Options):
     self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellEditCancelled(self, js_funcs, profile=None):
+  def cellEditCancelled(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2556,7 +2624,7 @@ class TableConfig(Options):
     self._config("function(cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def cellEdited(self, js_funcs, profile=None):
+  def cellEdited(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2594,7 +2662,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def columns(self):
+  def columns(self) -> List[Column]:
     """
     Description:
     -----------
@@ -2604,7 +2672,7 @@ class TableConfig(Options):
     """
     return self.js_tree.setdefault("columns", [])
 
-  def add_column(self, field, title=None):
+  def add_column(self, field: str, title: str = None) -> Column:
     """
     Description:
     -----------
@@ -2627,7 +2695,7 @@ class TableConfig(Options):
       column.title = field if title is None else title
     return column
 
-  def get_column(self, by_field=None, by_title=None):
+  def get_column(self, by_field: str = None, by_title: str = None) -> Column:
     """
     Description:
     ------------
@@ -2651,7 +2719,7 @@ class TableConfig(Options):
     return None
 
   @property
-  def columns_group(self):
+  def columns_group(self) -> ColumnsGroup:
     """
     Description:
     -----------
@@ -2826,7 +2894,7 @@ class TableConfig(Options):
   def groupValues(self, val):
     self._config(val)
 
-  def headerClick(self, js_funcs, profile=None):
+  def headerClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2848,7 +2916,7 @@ class TableConfig(Options):
       "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerDblClick(self, js_funcs, profile=None):
+  def headerDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2870,7 +2938,7 @@ class TableConfig(Options):
       "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerContext(self, js_funcs, profile=None):
+  def headerContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2892,7 +2960,7 @@ class TableConfig(Options):
       "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerTap(self, js_funcs, profile=None):
+  def headerTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2914,7 +2982,7 @@ class TableConfig(Options):
       "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def headerDblTap(self, js_funcs, profile=None):
+  def headerDblTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3393,7 +3461,7 @@ class TableConfig(Options):
   def resizableColumns(self, val):
     self._config(val)
 
-  def rowAdded(self, js_funcs, profile=None):
+  def rowAdded(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3429,7 +3497,7 @@ class TableConfig(Options):
     contextMenu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
     return contextMenu
 
-  def rowClick(self, js_funcs, profile=None):
+  def rowClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3450,7 +3518,7 @@ class TableConfig(Options):
     self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowDblClick(self, js_funcs, profile=None):
+  def rowDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3471,7 +3539,7 @@ class TableConfig(Options):
     self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowDelete(self, js_funcs, profile=None):
+  def rowDelete(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3491,7 +3559,7 @@ class TableConfig(Options):
     self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowContext(self, js_funcs, profile=None):
+  def rowContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3535,7 +3603,7 @@ class TableConfig(Options):
     self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowMove(self, js_funcs, profile=None):
+  def rowMove(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3555,7 +3623,7 @@ class TableConfig(Options):
     self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowTap(self, js_funcs, profile=None):
+  def rowTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3575,7 +3643,7 @@ class TableConfig(Options):
     self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     return self
 
-  def rowUpdated(self, js_funcs, profile=None):
+  def rowUpdated(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -3837,7 +3905,7 @@ class TableTreeConfig(TableConfig):
   def dataTreeChildColumnCalcs(self, flag):
     self._config(flag)
 
-  def dataTreeRowExpanded(self, js_funcs, profile=None):
+  def dataTreeRowExpanded(self, js_funcs, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------

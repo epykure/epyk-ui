@@ -5,7 +5,7 @@ from epyk.core.html.options import Enums
 
 class ExtsValidators(Enums):
 
-  def custom(self, validator, moduleAlias):
+  def custom(self, validator, module_alias):
     """
     Description:
     -----------
@@ -17,8 +17,8 @@ class ExtsValidators(Enums):
     Attributes:
     ----------
     :param validator:
-    :param moduleAlias:
+    :param module_alias:
     """
-    self.component.jsImports.add(moduleAlias)
+    self.component.jsImports.add(module_alias)
     self._set_value(value=validator)
     return self

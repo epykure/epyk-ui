@@ -327,11 +327,14 @@ class LastUpdated(Html.Html):
     super(LastUpdated, self).__init__(
       page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())), html_code, profile=profile,
       options=options, css_attrs={"width": width, "height": height, "color": color})
+    self.attr["data-value"] = None
 
   _js__builder__ = '''
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
-      if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
-      else{htmlObj.innerHTML = data + '<i class="fas fa-clock"></i>'}'''
+if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
+if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
+else{if(options.icon){htmlObj.innerHTML = data + '&nbsp;&nbsp;<i class="'+ options.icon +'"></i>'} else {htmlObj.innerHTML = data}};
+htmlObj.setAttribute('data-value', data)
+'''
 
   @property
   def options(self) -> OptText.OptionsUpdate:
@@ -378,15 +381,8 @@ class LastUpdated(Html.Html):
         update.refresh()
       ])
     """
-    if self.options.icon is not None:
-      if self.options.icon is True:
-        return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label).add(
-          '&nbsp;<i class="fas fa-clock"></i>'))
-
-      return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label).add(
-        '&nbsp;<i class="%s"></i>' % self.options.icon))
-
-    return self.dom.innerHTML(self.page.js.objects.date(local_time=self.options.local_time).getStrTimeStamp().prepend(self._label))
+    return self.build(self.page.js.objects.date(
+      local_time=self.options.local_time).getStrTimeStamp().prepend(self._label))
 
   def __str__(self):
     return '<div %(strAttr)s>%(content)s</div>' % {

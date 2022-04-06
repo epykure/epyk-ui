@@ -1355,6 +1355,23 @@ class JsHtmlList(JsHtml):
       })}''' % {"item": item, "component": self.component.dom.varName, 'unique': unique, 'draggable': draggable,
                 "options": options})
 
+  def append(self, items: list, unique: bool = True, draggable: bool = False):
+    """
+    Description:
+    ------------
+    Add new items to the list.
+
+    Attributes:
+    ----------
+    :param items: The Items to be added to the list.
+    :param unique: Optional. Only add the item if it is not already in the list.
+    :param draggable: Optional. Set the new entry as draggable.
+    """
+    items = JsUtils.jsConvertData(items, None)
+    return JsObjects.JsVoid(
+      "%s.forEach(function(newItem){%s})" % (items, self.add(
+        JsUtils.jsWrap("newItem"), unique=unique, draggable=draggable).toStr()))
+
   def clear(self):
     """
     Description:

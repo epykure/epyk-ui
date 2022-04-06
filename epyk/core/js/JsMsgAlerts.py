@@ -22,6 +22,7 @@ class Msg:
     Description:
     ------------
     This function will display a popup message using the key status from the service return.
+    If content.status is empty or False the message won't be triggered.
 
     Usage::
 
@@ -42,19 +43,21 @@ class Msg:
       if 'left' in css_attrs:
         del dfl_attrs["right"]
     return '''
-      (function(event, content, response){
-        var popup = document.createElement("div"); 
-        if (typeof content.background === 'undefined'){
-          if (response.status == 200){
-            popup.style.background = 'green'; popup.style.color = 'white';}
-          else {popup.style.background = 'white'}
-        }
-        if (typeof content.css !== 'undefined'){
-          for (var key in content.css) {popup.style[key] = content.css[key]}}
-        %s
-        popup.innerHTML = content.status; document.body.appendChild(popup);
-        setTimeout(function(){ document.body.removeChild(popup)}, %s);
-      })(event, data, response)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer)
+(function(event, content, response){
+  if(content.status){
+    var popup = document.createElement("div"); 
+    if (typeof content.background === 'undefined'){
+      if (response.status == 200){
+        popup.style.background = 'green'; popup.style.color = 'white';}
+      else {popup.style.background = 'white'}
+    }
+    if (typeof content.css !== 'undefined'){
+      for (var key in content.css) {popup.style[key] = content.css[key]}}
+    %s
+    popup.innerHTML = content.status; document.body.appendChild(popup);
+    setTimeout(function(){document.body.removeChild(popup)}, %s);
+  }
+})(event, data, response)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer)
 
   def mouse(self, content: str, timer: int = 3000, css_attrs: Optional[dict] = None):
     """

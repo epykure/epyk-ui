@@ -258,10 +258,16 @@ class ExtsFormattors(Enums):
     return self._set_value(value="numbersPrevious")
 
   @packageImport('tabulator-numbers')
-  def number(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
+  def number(self, decimal: str = ".", thousand: str = ",", precision: int = 0, symbol: str = "", format: str = "%v",
+             css: dict = None, **kwargs):
     """
     Description:
     -----------
+
+    Usage::
+
+      c = table.get_column("Share")
+      c.exts.formatters.number(symbol="£", format="%v%s", precision=1, css={"color": "blue", "text-align": "center"})
 
     Attributes:
     ----------
@@ -272,16 +278,24 @@ class ExtsFormattors(Enums):
     :param format: String. Optional.
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     """
-    formatter_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
-    formatter_params.update(formatter_params.pop('kwargs'))
+    formatter_params = {"decimal": decimal, "thousand": thousand, "precision": precision, "symbol": symbol,
+                        "format": format, "css": css or {}}
+    if kwargs:
+      formatter_params.update(kwargs)
     self._set_value(value=formatter_params, name="formatterParams")
     return self._set_value(value="numbers")
 
   @packageImport('tabulator-numbers')
-  def trend(self, css=None, **kwargs):
+  def trend(self, css: dict = None, **kwargs):
     """
     Description:
     -----------
+    Add an arrow to illustrate the trend.
+
+    Usage::
+
+      c = table.get_column("Share")
+      c.exts.formatters.trend()
 
     Attributes:
     ----------
@@ -290,7 +304,8 @@ class ExtsFormattors(Enums):
     formatter_params = {}
     if css is not None:
       formatter_params["css"] = css
-    formatter_params.update(formatter_params.pop('kwargs'))
+    if kwargs:
+      formatter_params.update(kwargs)
     self._set_value(value=formatter_params, name="formatterParams")
     return self._set_value(value="trend")
 
@@ -531,25 +546,35 @@ class ExtsFormattors(Enums):
     return self._set_value(value="numbersIntensity")
 
   @packageImport('tabulator-numbers')
-  def trafficlight(self, tooltip=None, green=None, red=None, orange=None, css=None, **kwargs):
+  def trafficlight(self, tooltip: str = None, green: str = None, red: str = None, orange: str = None, css: dict = None,
+                   **kwargs):
     """
     Description:
     -----------
+    Put a traffic light in the cell with the color based on the value.
+
+    Usage::
+
+      c = table.get_column("Share")
+      c.exts.formatters.trafficlight()
 
     Attributes:
     ----------
-    :param tooltip: String. Optional. The column name for the details.
-    :param css: Dictionary. Optional. The CSS attributes.
+    :param tooltip: Optional. The column name for the details.
+    :param green: Optional. The success color definition.
+    :param red: Optional. The danger color definition.
+    :param orange: Optional. The warning color definition.
+    :param css: Optional. The CSS attributes.
     """
     if tooltip is not None:
-      self.component.config.tooltips = True
+      self.component.options.tooltips = True
     formatter_params = {'tooltip': tooltip, 'green': green or self.component.page.theme.success.base,
                         'red': red or self.component.page.theme.danger.base,
-                        'orange': orange or self.component.pagetheme.warning.base}
+                        'orange': orange or self.component.page.theme.warning.base}
     if css is not None:
       formatter_params['css'] = css
-    formatter_params.update({k: v for k, v in locals().items() if k != 'self' and v is not None})
-    formatter_params.update(formatter_params.pop('kwargs'))
+    if kwargs:
+      formatter_params.update(kwargs)
     self._set_value(value=formatter_params, name="formatterParams")
     return self._set_value(value="trafficLight")
 
@@ -648,7 +673,7 @@ class ExtsFormattors(Enums):
     :param valField:
     """
     if css is None and cssField is None:
-      raise Exception("Both CSS and CSSField cannot be empty")
+      raise ValueError("Both CSS and CSSField cannot be empty")
 
     formatter_params = {}
     if css is not None:
@@ -662,25 +687,35 @@ class ExtsFormattors(Enums):
     return self._set_value(value="cssStyle")
 
   @packageImport('tabulator-inputs')
-  def style_pivot(self, cssMapping, pivot=None, **kwargs):
+  def style_pivot(self, css_mapping: dict, pivot: str = None, **kwargs):
     """
     Description:
     -----------
+    Change the CSS style based on the cell value.
+
+    Usage::
+
+      c = table.get_column("Language")
+      c.exts.formatters.style_pivot({"Python": {"background": "green"}, "Java": {"background": "red"}})
+
+      c = table.get_column("Share")
+      c.exts.formatters.style_pivot({"Python": {"background": "green"}, "Java": {"background": "red"}}, pivot="Language")
 
     Attributes:
     ----------
-    :param cssMapping: Dictionary. Optional.
-    :param pivot: Dictionary. Optional.
+    :param css_mapping: Optional. The conditional formatting definition.
+    :param pivot: Optional. The column used for the conditional formatting.
     """
-    formatter_params = {'cssMapping': cssMapping}
+    formatter_params = {'cssMapping': css_mapping}
     if pivot is not None:
       formatter_params['pivot'] = pivot
+      formatter_params['cssField'] = pivot
     if kwargs:
       formatter_params.update(kwargs)
     self._set_value(value=formatter_params, name="formatterParams")
     return self._set_value(value="cssStylePivot")
 
-  def custom(self, formatter, formatterParams, moduleAlias=None):
+  def custom(self, formatter, formatter_params, module_alias=None):
     """
     Description:
     -----------
@@ -688,10 +723,10 @@ class ExtsFormattors(Enums):
     Attributes:
     ----------
     :param formatter:
-    :param formatterParams: Dictionary. Optional.
-    :param moduleAlias: String. Optional.
+    :param formatter_params: Dictionary. Optional.
+    :param module_alias: String. Optional.
     """
-    if moduleAlias is not None:
-      self.component.jsImports.add(moduleAlias)
-    self._set_value(value=formatterParams, name="formatterParams")
+    if module_alias is not None:
+      self.component.jsImports.add(module_alias)
+    self._set_value(value=formatter_params, name="formatterParams")
     return self._set_value(value=formatter)

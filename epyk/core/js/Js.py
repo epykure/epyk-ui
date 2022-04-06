@@ -1589,7 +1589,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsUtils.jsConvertData("mailto:%s?%s" % (";".join(mails), "&".join(mail_data)), None)
 
   @property
-  def msg(self):
+  def msg(self) -> JsMsgAlerts.Msg:
     """
     Description:
     ------------

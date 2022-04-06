@@ -777,6 +777,42 @@ document.body.removeChild(dummy);
                'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
                'shape': "%s%s" % (self.component.options.prefix, self.component.options.items_type)})
 
+  def append(self, items: list, css_attrs: dict = None, css_cls=None, options: dict = None):
+    """
+    Description:
+    ------------
+    Add items to the list.
+
+    Attributes:
+    ----------
+    :param items: The items.
+    :param dict css_attrs: Optional. All the CSS attributes to be added to the LI component.
+    :param css_cls: Optional. The CSS class to be added to the LI component.
+    :param options: Optional.
+    """
+    items = JsUtils.jsConvertData(items, None)
+    return JsObjects.JsVoid(
+      "%s.forEach(function(newItem){%s})" % (items, self.add(
+        JsUtils.jsWrap("newItem"), css_attrs=css_attrs, css_cls=css_cls, before=False, options=options).toStr()))
+
+  def prepend(self, items: str, css_attrs: dict = None, css_cls=None, options: dict = None):
+    """
+    Description:
+    ------------
+    Insert items to the begining of the list.
+
+    Attributes:
+    ----------
+    :param items: The items.
+    :param dict css_attrs: Optional. All the CSS attributes to be added to the LI component.
+    :param css_cls: Optional. The CSS class to be added to the LI component.
+    :param options: Optional.
+    """
+    items = JsUtils.jsConvertData(items, None)
+    return JsObjects.JsVoid(
+      "%s.forEach(function(newItem){%s})" % (items, self.add(
+        JsUtils.jsWrap("newItem"), css_attrs=css_attrs, css_cls=css_cls, before=True, options=options).toStr()))
+
   def tags(self, values: list, css_attrs: dict = None, css_cls=None):
     """
     Description:

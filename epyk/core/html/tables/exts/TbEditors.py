@@ -5,30 +5,32 @@ from epyk.core.html.options import Enums
 
 class ExtsEditors(Enums):
 
-  def text(self, cssMapping, search=True, elementAttributes=None, **kwargs):
+  def text(self, css_mapping: dict, search: bool = True, attrs: dict = None, **kwargs):
     """
     Description:
     -----------
     The input editor allows entering of a single line of plain text.
 
-    Related Pages:
+    Usage::
 
-      http://tabulator.info/docs/4.5/edit#edit-builtin
+      c = table.get_column("Language")
+      c.exts.editors.text({"Python": {"background": "green"}, "Java": {"background": "red"}})
 
     Attributes:
     ----------
-    :param search: Boolean. Optional. use search type input element with clear button.
-    :param elementAttributes: Dictionary. Optional. set attributes directly on the input element.
+    :param css_mapping:
+    :param search: Optional. use search type input element with clear button.
+    :param attrs: Optional. set attributes directly on the input element.
     """
-    elementAttributes = elementAttributes or {}
-    elementAttributes.update({'search': search})
+    attrs = attrs or {}
+    attrs.update({'search': search})
     if kwargs:
-      elementAttributes.update(kwargs)
-    self.item.text(cssMapping)
-    self._set_value(value=elementAttributes, name="editorParams")
-    return self._set_value()
+      attrs.update(kwargs)
+    self.item.exts.mutators.text(css_mapping)
+    self._set_value(value=attrs, name="editorParams")
+    return self._set_value(value="input")
 
-  def number(self, red=None, green=None, search=True, elementAttributes=None, **kwargs):
+  def number(self, red: str = None, green: str = None, search: bool = True, attrs: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -40,31 +42,51 @@ class ExtsEditors(Enums):
 
     Attributes:
     ----------
+    :param red: The color when condition is false.
+    :param green: The color when condition is true.
     :param search: use search type input element with clear button
-    :param elementAttributes: set attributes directly on the input element
+    :param attrs: set attributes directly on the input element
     """
-    elementAttributes = elementAttributes or {}
-    elementAttributes.update({'search': search})
+    attrs = attrs or {}
+    attrs.update({'search': search})
     if kwargs:
-      elementAttributes.update(kwargs)
-    self.item.mutators.number(red, green)
-    self._set_value(value=elementAttributes, name="editorParams")
+      attrs.update(kwargs)
+    self.item.exts.mutators.number(red, green)
+    self._set_value(value=attrs, name="editorParams")
     return self._set_value(value="input")
 
   @packageImport('editors-inputs')
-  def input(self):
+  def input(self, empty_first: bool = True, refresh: bool = True, **kwargs):
     """
     Description:
     -----------
+    Add an input fields to the cell.
+
+    Usage::
+
+      c = table.get_column("Type")
+      c.exts.editors.input(spellcheck=False)
     """
+    props = {"emptyFirst": empty_first, refresh: refresh}
+    if kwargs:
+      props.update(kwargs)
+    self._set_value(value=props, name="editorParams")
     return self._set_value(value="inputPlus")
 
   @packageImport('editors-inputs')
-  def input_excel(self):
+  def input_excel(self, empty_first: bool = True, refresh: bool = True, **kwargs):
     """
     Description:
     -----------
+
+    Usage::
+
+      c = table.get_column("Type")
+      c.exts.editors.input_excel(empty_first=False, refresh=False, style={"background-color": "red"})
     """
+    props = {"emptyFirst": empty_first, refresh: refresh}
+    props.update(kwargs)
+    self._set_value(value=props, name="editorParams")
     return self._set_value(value="inputExcel")
 
   @packageImport('editors-dates')
@@ -72,24 +94,39 @@ class ExtsEditors(Enums):
     """
     Description:
     -----------
+    Add a date input selector.
     """
     return self._set_value(value="datePlus")
 
   @packageImport('editors-selects')
-  def select(self):
+  def select(self, values: list):
     """
     Description:
     -----------
+    Add a select object to the cell.
+
+    Usage::
+
+      c = table.get_column("Type")
+      c.exts.editors.select(["Script", "Code"])
     """
-    return self._set_value(value="datePlus")
+    self._set_value(value=values, name="editorParams")
+    return self._set_value(value="selectPlus")
 
   @packageImport('editors-selects')
-  def select_rule(self):
+  def select_rule(self, key: str, values: dict, default: list = None):
     """
     Description:
     -----------
+    Display selection based on a value of another column in the table.
+
+    Usage::
+
+      c = table.get_column("Type")
+      c.exts.editors.select_rule(key="Language", values={"Python": ["script", "code"]})
     """
-    return self._set_value(value="selectConditiions")
+    self._set_value(value={"key": key, "values": values, "default": default or []}, name="editorParams")
+    return self._set_value(value="selectConditions")
 
   @packageImport('editors-selects')
   def select_multi_rules(self):
@@ -99,7 +136,7 @@ class ExtsEditors(Enums):
     """
     return self._set_value(value="selectMultiConditions")
 
-  def custom(self, formatter, formatterParams, moduleAlias):
+  def custom(self, formatter: str, formatter_params: dict, module_alias):
     """
     Description:
     -----------
@@ -107,9 +144,9 @@ class ExtsEditors(Enums):
     Attributes:
     ----------
     :param formatter:
-    :param formatterParams:
-    :param moduleAlias:
+    :param formatter_params:
+    :param module_alias:
     """
-    self.component.jsImports.add(moduleAlias)
-    self._set_value(value=formatterParams, name='editorParams')
+    self.component.jsImports.add(module_alias)
+    self._set_value(value=formatter_params, name='editorParams')
     return self._set_value(value=formatter)

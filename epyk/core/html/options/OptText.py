@@ -923,7 +923,7 @@ class OptSearchResult(Options):
 
 
 class OptionsUpdate(Options):
-  component_properties = ("local_time", )
+  component_properties = ("local_time", 'icon')
 
   @property
   def icon(self):
@@ -933,7 +933,7 @@ class OptionsUpdate(Options):
 
     Related Pages:
     """
-    return self._config_get(None)
+    return self._config_get("fas fa-clock")
 
   @icon.setter
   def icon(self, text: str):
