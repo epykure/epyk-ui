@@ -6,6 +6,22 @@
 
 ### Fixed
 
+## [1.7.12] - 2022-04-07
+
+### Added
+- Change ColorRange to be iterable and subscriptable
+- Add new List type - timeline.
+- Add new dom functions for list of dynamic items.
+- Create types.py for internal types.
+
+### Changed
+- Change message status behaviour for empty messages.
+- Documentation & type hints
+
+### Fixed
+- Fix external Tabulator Formattor / Editor
+- Fix issue with Update object.
+
 ## [1.7.11] - 2022-04-04
 
 ### Added
