@@ -296,6 +296,8 @@ class Tables:
           popup_columns.window.style.css.border = "1px solid %s" % self.page.theme.greys[3]
           popup_columns.window.style.css.min_width = 120
           popup_columns.window.style.css.background = self.page.theme.greys[0]
+          popup_columns.options.closure = False
+          popup_columns.window.focusout([popup_columns.dom.hide()])
           popup_columns.window[0][1].style.css.max_height = 90
           popup_columns.window[0][1].click([
             self.page.js.if_(events.target["checked"], [
@@ -308,6 +310,7 @@ class Tables:
           ])
           r.click([
             popup_columns.dom.show(),
+            popup_columns.window.dom.focus(prevent_scroll=True),
             popup_columns.js.event_position(left=-5)])
         menu_items.append(r)
     container = self.page.ui.menu(table, update_funcs=update_funcs, menu_items=menu_items, post=post, editable=False,

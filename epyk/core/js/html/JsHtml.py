@@ -654,6 +654,25 @@ class JsHtml(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
+  def focus(self, prevent_scroll: bool = False):
+    """
+    Description:
+    -----------
+    Add focus to the content of the HTMl component.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
+
+    Attributes:
+    ----------
+    :param prevent_scroll: A Boolean value indicating whether or not the browser should scroll the document to bring
+      the newly-focused element into view. A value of false for preventScroll (the default) means that the browser will
+      scroll the element into view after focusing it. If preventScroll is set to true, no scrolling will occur.
+    """
+    return JsObjects.JsObjects.get("%s.focus({preventScroll: %s})" % (
+      self.varName, JsUtils.jsConvertData(prevent_scroll, None)))
+
   def toggle(self, attr: str = "display", val_1: Optional[str] = None, val_2: str = "none"):
     """
     Description:

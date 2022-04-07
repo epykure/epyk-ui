@@ -610,6 +610,10 @@ class OptionPopup(Options):
   def closure(self, icon: str):
     if icon:
       self.component.close = self.page.ui.icon(icon)
+    else:
+      if self.component.close:
+        del self.page.components[self.component.close.htmlCode]
+
     self.set(icon)
 
   @property

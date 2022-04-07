@@ -1,10 +1,16 @@
 ## [Unreleased]
 
 ### Added
+- Add pk.symbols shortcuts.
+- Add dom focus feature.
 
 ### Changed
+- Change popup to add tabIndex on inner window.
+- Change Columns menu's closure for Tables.
+- Change sub title style for menu.
 
 ### Fixed
+- Bugfix on closure for popup.
 
 ## [1.7.12] - 2022-04-07
 

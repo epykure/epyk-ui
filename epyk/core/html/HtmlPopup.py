@@ -19,7 +19,6 @@ class Popup(Html.Html):
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
       bg_color = Colors.rgba(*Colors.getHexToRgb(page.theme.greys[-1]), 0.4)
-      print(bg_color)
       self.css({'width': '100%', 'position': 'fixed', 'height': '100%', 'background-color': bg_color, 'left': 0,
                 'top': 0})
       self.css({'display': 'none', 'z-index': self.options.z_index, 'text-align': 'center'})
@@ -28,6 +27,7 @@ class Popup(Html.Html):
     self.set_attrs(name="name", value="report_popup")
     self.window = self.page.ui.div(width="auto")
     self.window.options.managed = False
+    self.window.set_attrs(name="tabindex", value=0)
     self.window.style.css.padding = 10
     self.window.style.css.border = "3px solid %s" % page.theme.greys[3]
     self.window.style.css.top = "200px"
