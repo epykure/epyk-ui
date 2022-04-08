@@ -8,7 +8,7 @@ from epyk.core.data import configs
 from epyk.core.data import datamap as js_datamap
 from epyk.core.data import components as inputs
 from epyk.core.html import Defaults as settings
-from epyk.core.html import symboles
+from epyk.core.html.symboles import Symboles as symboles
 
 from epyk.core.css import themes
 from epyk.core.css import Defaults as settings_css

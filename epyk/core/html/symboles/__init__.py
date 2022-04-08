@@ -12,13 +12,18 @@ from epyk.core.html.symboles import SymbPunctuations
 from epyk.core.html.symboles import SymbShapes
 
 
-class Symboles(object):
+class Symboles:
+  """ Pre defined HTML symboles.
+
+  """
 
   @property
   def shapes(self):
     """
     Description:
     ------------
+    UTF-8 Geometric Shapes.
+    Range: Decimal 9632-9727. Hex 25A0-25FF.
 
     Related Pages:
 
@@ -31,6 +36,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    UTF-8 General Punctuation.
+    Range: Decimal 8192-8303. Hex 2000-206F.
 
     Related Pages:
 
@@ -43,6 +50,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    UTF-8 Mathematical Operators.
+    Range: Decimal 8704-8959. Hex 2200-22FF.
 
     Related Pages:
 
@@ -55,6 +64,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    Emoji Unicode Reference.
+    Emojis For Web.
 
     Related Pages:
 
@@ -67,6 +78,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    UTF-8 Letterlike Symbols.
+    Range: Decimal 8448-8527. Hex 2100-214F.
 
     Related Pages:
 
@@ -79,6 +92,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    UTF-8 Currency Symbols.
+    Range: Decimal 8352-8399. Hex 20A0-20CF.
 
     Related Pages:
 
@@ -91,6 +106,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    Smiley Emoji.
+    Smiley Emojis For Web.
 
     Related Pages:
 
@@ -103,6 +120,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    HTML Symbols.
+    Symbols that are not present on your keyboard can also be added by using entities.
 
     Related Pages:
 
@@ -116,6 +135,8 @@ class Symboles(object):
     """
     Description:
     ------------
+    UTF-8 Arrows.
+    Range: Decimal 8592-8703. Hex 2190-21FF.
 
     Related Pages:
 
