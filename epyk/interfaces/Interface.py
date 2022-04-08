@@ -1141,7 +1141,6 @@ class Components:
       if isinstance(title, dict):
         sub_title = self.page.ui.div(list(title.values())[0])
         sub_title.options.managed = False
-        sub_title.style.css.italic()
         sub_title.style.css.color = self.page.theme.greys[4]
         sub_title.style.css.text_transform = "lowercase"
         sub_title.style.css.display = "inline"
@@ -1280,7 +1279,20 @@ class Components:
     column = self.col([container, component], height=(100, "%"))
     trash.click([column.dom.hide()])
 
-    def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None, default_event: bool = True):
+    def add_command(icon: str, tooltip: str = "", size: int = 10, toggle_icon: str = None,
+                    default_event: bool = True) -> html.Html.Html:
+      """
+      Description:
+      ------------
+
+      Attributes:
+      ----------
+      :param icon:
+      :param tooltip:
+      :param size:
+      :param toggle_icon:
+      :param default_event:
+      """
       comp = self.page.ui.icons.awesome(
         icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
       comp.icon.style.css.font_factor(-4)
@@ -1294,7 +1306,52 @@ class Components:
         ])
       return comp
 
+    def others(items: Union[List[html.Html.Html], html.Html.Html], icon: str = "fas fa-bars", tooltip: str = "",
+               size: int = 10) -> html.Html.Html:
+      """
+      Description:
+      ------------
+      Add a bespoke popup menu.
+      The menu is empty and items must be passed.
+
+      Usage::
+
+        slider = page.ui.slider()
+        search = page.ui.inputs.search()
+        large = page.ui.buttons.large("Validate", align="center")
+        popup_menu = menu_logs.others([search, slider, large])
+        large.click([popup_menu.dom.hide()])
+
+      Attributes:
+      ----------
+      :param items: The HTML component to put to the menu.
+      :param icon: The icon in the tools bar for this menu.
+      :param tooltip: A tooltip message on the icon.
+      :param size: The icon side.
+      """
+      comp = self.page.ui.icons.awesome(
+        icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
+      comp.icon.style.css.font_factor(-4)
+      comp.style.css.font_factor(-3)
+      comp.style.css.margin_left = 5
+      comp.style.css.margin_right = 5
+      if not isinstance(items, list):
+        items = [items]
+      popup_columns = self.page.ui.modals.popup(items, options={"background": False})
+      popup_columns.window.style.css.border = "1px solid %s" % self.page.theme.greys[3]
+      popup_columns.window.style.css.min_width = 120
+      popup_columns.window.style.css.background = self.page.theme.greys[0]
+      popup_columns.options.closure = False
+      popup_columns.window.focusout([popup_columns.dom.hide()])
+      comp.click([
+        popup_columns.dom.show(),
+        popup_columns.window.dom.focus(prevent_scroll=True),
+        popup_columns.js.event_position(left=-130)])
+      container.insert(-1, comp)
+      return popup_columns
+
     column.add_command = add_command
+    column.others = others
     html.Html.set_component_skin(container)
     return column
 

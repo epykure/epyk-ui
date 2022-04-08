@@ -54,7 +54,8 @@ def parse_folder(path, outpath):
       title_str = '%s Module' % mod_file
       doc_file.write('%s\n%s\n\n' % (title_str, '=' * len(title_str)))
       for member, memclass in inspect.getmembers(mod, inspect.isclass):
-        doc_file.write('.. autoclass:: %s\n\t:members:\n\n' % str(memclass).split("'")[1])
+        if "'" in str(memclass):
+          doc_file.write('.. autoclass:: %s\n\t:members:\n\n' % str(memclass).split("'")[1])
 
 
 if __name__ == '__main__':

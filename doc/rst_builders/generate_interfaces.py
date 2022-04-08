@@ -25,9 +25,10 @@ for fol in ['components', 'geo', 'graphs', 'tables']:
       interfaces.append("    /report/ui/%s/%s" % (fol, member))
       group_interfaces[fol].append("    /report/ui/%s/%s" % (fol, member))
       with open(r'%s\%s\%s.rst' % (output_path, fol, member), 'w') as doc_file:
-        title_str = '%s Interface' % member
-        doc_file.write('%s\n%s\n\n' % (title_str, '=' * len(title_str)))
-        doc_file.write('.. autoclass:: %s\n\t:members:' % str(memclass).split("'")[1])
+        if "'" in str(memclass):
+          title_str = '%s Interface' % member
+          doc_file.write('%s\n%s\n\n' % (title_str, '=' * len(title_str)))
+          doc_file.write('.. autoclass:: %s\n\t:members:' % str(memclass).split("'")[1])
 
 for fol in ['components', 'geo', 'graphs', 'tables']:
   with open(os.path.join(os.path.dirname(__file__), "..", "report", "ui", '%s.rst' % fol), "w") as fp:
