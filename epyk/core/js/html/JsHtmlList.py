@@ -91,7 +91,8 @@ class JsItemsDef:
            message.classList.remove('list_text_selected');
            message.setAttribute('data-valid', false)}
          else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = {"value": message.innerHTML, "timestamp": log.innerHTML}; options.click(event, value)}
+         var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
+         options.click(event, value)}
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -144,7 +145,8 @@ class JsItemsDef:
            message.classList.remove('list_text_selected');
            message.setAttribute('data-valid', false)}
          else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = {"value": message.innerHTML, "timestamp": log.innerHTML}; options.click(event, value)}
+         var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
+         options.click(event, value)}
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -214,7 +216,8 @@ class JsItemsDef:
            message.classList.remove('list_text_selected');
            message.setAttribute('data-valid', false)}
          else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = {"value": message.innerHTML, "status": log.innerHTML}; options.click(event, value)}
+         var value = Object.assign({}, {"value": message.innerHTML, "status": log.innerHTML}); 
+         options.click(event, value)}
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
