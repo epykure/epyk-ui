@@ -5,6 +5,7 @@ import datetime
 
 from typing import Union
 from epyk.core import html
+from epyk.core.py import types
 from epyk.interfaces import Arguments
 
 
@@ -13,9 +14,9 @@ class Calendar:
   def __init__(self, ui):
     self.page = ui.page
 
-  def days(self, month: int = None, content=None, year: int = None, width: tuple = (None, "%"),
-           height: tuple = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
-           profile: Union[bool, dict] = None):
+  def days(self, month: int = None, content=None, year: int = None, width: types.SIZE_TYPE = (None, "%"),
+           height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -45,15 +46,15 @@ class Calendar:
 
     Attributes:
     ----------
-    :param int month: Optional. The month number.
+    :param month: Optional. The month number.
     :param content:
-    :param int year:
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
-    :param str align: Optional. The text-align property within this component.
-    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param year:
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -98,8 +99,9 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def timer(self, minutes: int, text: str = "", width: tuple = (None, "%"), height: tuple = (None, "px"),
-            align: str = None, options: dict = None, html_code: str = None, profile: Union[dict, bool] = None):
+  def timer(self, minutes: int, text: str = "", width: types.SIZE_TYPE = (None, "%"),
+            height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -113,14 +115,14 @@ class Calendar:
 
     Attributes:
     ----------
-    :param int minutes:
-    :param str text: Optional. The value to be displayed to the timer
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit
-    :param str align: The text-align property within this component
-    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param minutes:
+    :param text: Optional. The value to be displayed to the timer
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -128,8 +130,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def months(self, content: dict = None, width: tuple = (None, "%"), height: tuple = (None, "px"), align: str = None,
-             options: dict = None, html_code: str = None, profile: Union[dict, bool] = None):
+  def months(self, content: dict = None, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
+             align: str = None, options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -159,13 +161,13 @@ class Calendar:
 
     Attributes:
     ----------
-    :param dict content: Optional. The Pie charts values.
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
-    :param str align: Optional. A string with the horizontal position of the component.
-    :param str html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param content: Optional. The Pie charts values.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     content = content or {}
@@ -195,8 +197,8 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def legend(self, record: list, width: tuple = (None, "%"), height: tuple = (None, "px"), align: str = None,
-             options: dict = None, profile: Union[dict, bool] = None):
+  def legend(self, record: list, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
+             align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -218,12 +220,12 @@ class Calendar:
 
     Attributes:
     ----------
-    :param list record: Optional. The list of dictionaries with the input data.
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit.
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
-    :param str align: Optional. The text-align property within this component.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param record: Optional. The list of dictionaries with the input data.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     data = []
     if isinstance(record, dict):
@@ -247,8 +249,9 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def forecast(self, month_period: int, content: str = None, width: tuple = (100, "%"), height: tuple = (None, "px"),
-               position: str = "top", options: dict = None, profile: Union[dict, bool] = None):
+  def forecast(self, month_period: int, content: str = None, width: types.SIZE_TYPE = (100, "%"),
+               height: types.SIZE_TYPE = (None, "px"), position: str = "top", options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -267,13 +270,13 @@ class Calendar:
 
     Attributes:
     ----------
-    :param int month_period: Number of months of forecast.
-    :param str content: Optional.
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit
-    :param str position: Optional. The position compared to the main component tag.
-    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param month_period: Number of months of forecast.
+    :param content: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param position: Optional. The position compared to the main component tag.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     today = datetime.date.today()
     year = today.year
@@ -295,7 +298,7 @@ class Calendar:
     return component
 
   def google(self, task, start: str, end: str, details=None, location=None, icon: str = "google_plus",
-             text: str = "Add to Google Calendar", options: dict = None, profile: Union[dict, bool] = None):
+             text: str = "Add to Google Calendar", options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -320,14 +323,14 @@ class Calendar:
     Attributes:
     ----------
     :param task:
-    :param start: String. Date format YYYYMMDD
-    :param end: String. Date format YYYYMMDD
+    :param start: Date format YYYYMMDD
+    :param end: Date format YYYYMMDD
     :param details:
     :param location:
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param text: String. Optional. The value to be displayed to the button.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param text: Optional. The value to be displayed to the button.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     icon = self.page.ui.icons.awesome(icon, options=options, profile=profile)
     icon.icon.style.css.font_factor(5)
@@ -350,7 +353,7 @@ class Calendar:
     return component
 
   def agenda(self, task, start, end, details=None, location=None, icon: str = "calendar", text: str = "Add to Calendar",
-             options: dict = None, profile: Union[dict, bool] = None):
+             options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -376,10 +379,10 @@ class Calendar:
     :param end:
     :param details:
     :param location:
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param text: String. Optional. The value to be displayed to the button.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param text: Optional. The value to be displayed to the button.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     # Default options
     calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}
@@ -404,8 +407,9 @@ class Calendar:
     html.Html.set_component_skin(component)
     return component
 
-  def pill(self, text, value=None, group=None, width=("auto", ""), height=(None, "px"), html_code=None, tooltip=None,
-           profile=None, options=None):
+  def pill(self, text: str, value=None, group=None, width: types.SIZE_TYPE = ("auto", ""),
+           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
+           profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     ------------
@@ -422,15 +426,15 @@ class Calendar:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the button.
+    :param text: Optional. The value to be displayed to the button.
     :param value:
     :param group:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     component = self.page.ui.text(
       text, width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)

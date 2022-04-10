@@ -18,7 +18,7 @@ class Buttons:
     self.page = ui.page
 
   @staticmethod
-  def __align(component, align: str):
+  def __align(component: html.Html.Html, align: str):
     """
     Description:
     ------------
@@ -26,8 +26,8 @@ class Buttons:
 
     Attributes:
     ----------
-    :param component: HTML component. The component to be aligned in the page.
-    :param align: String. The text-align property within this component.
+    :param component: The component to be aligned in the page.
+    :param align: The text-align property within this component.
     """
     if align == "center":
       component.style.css.margin = "auto"
@@ -35,7 +35,7 @@ class Buttons:
     elif align == "right":
       component.style.css.float = "right"
 
-  def __set_color(self, component, color: Union[str, bool]):
+  def __set_color(self, component: html.Html.Html, color: Union[str, bool]):
     """
     Description:
     ------------
@@ -45,7 +45,7 @@ class Buttons:
     Attributes:
     ----------
     :param component: The component to be aligned in the page.
-    :param str color: The color to set.
+    :param color: The color to set.
     """
     if color is True:
       component.style.css.background = self.page.theme.notch(-5) if self.page.theme.dark else self.page.theme.notch(4)

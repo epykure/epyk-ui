@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.py import types
 
 
 class Drawers:
@@ -11,9 +11,9 @@ class Drawers:
   def __init__(self, ui):
     self.page = ui.page
 
-  def drawer(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, '%'),
-             options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
-             helper: Optional[str] = None):
+  def drawer(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
+             options: dict = None, profile: types.PROFILE_TYPE = None,
+             helper: str = None):
     """
     Description:
     ------------
@@ -34,11 +34,11 @@ class Drawers:
 
     Attributes:
     ----------
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
-    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -47,9 +47,9 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def left(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
-           options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
-           helper: Optional[str] = None):
+  def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+           options: dict = None, profile: types.PROFILE_TYPE = None,
+           helper: str = None):
     """
     Description:
     ------------
@@ -62,11 +62,11 @@ class Drawers:
 
     Attributes:
     ----------
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
-    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -77,9 +77,9 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def right(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (200, 'px'),
-            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None,
-            helper: Optional[str] = None):
+  def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+            options: dict = None, profile: types.PROFILE_TYPE = None,
+            helper: str = None):
     """
     Description:
     ------------
@@ -98,11 +98,11 @@ class Drawers:
 
     Attributes:
     ----------
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
-    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -113,9 +113,9 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def multi(self, component: html.Html.Html, width: Union[tuple, int] = (100, '%'),
-            height: Union[tuple, int] = (200, 'px'), options: Optional[Union[dict, bool]] = None,
-            profile: Optional[Union[dict, bool]] = None, helper: Optional[str] = None):
+  def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
+            profile: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -132,11 +132,11 @@ class Drawers:
     Attributes:
     ----------
     :param component: Html component. Object in charge of managing the panel display..
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
-    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -147,9 +147,9 @@ class Drawers:
     html.Html.set_component_skin(drawer)
     return drawer
 
-  def no_handle(self, component: html.Html.Html, width: Union[tuple, int] = (100, '%'),
-                height: Union[tuple, int] = (200, 'px'), options: Optional[Union[dict, bool]] = None,
-                profile: Optional[Union[dict, bool]] = None, helper: Optional[str] = None):
+  def no_handle(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
+                height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
+                profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -166,11 +166,11 @@ class Drawers:
     Attributes:
     ----------
     :param component: Html component. Object in charge of managing the panel display.
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit.
-    :param Union[tuple, int] height: Optional. A tuple with the integer for the component height and its unit.
-    :param Optional[Union[dict, bool]] options: Optional. A dictionary with the components properties.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. A dictionary with the components properties.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
-
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.py import types
 from epyk.core.css import Defaults as Defaults_css
 
 
@@ -15,7 +14,8 @@ class Links:
     self.page = ui.page
 
   def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
-               height=(None, 'px'), decoration=False, html_code: str = None, options: dict = None, profile: Union[bool, dict] = None):
+               height: types.SIZE_TYPE = (None, 'px'), decoration=False, html_code: str = None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -38,16 +38,16 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. Optional. The string url of the link
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
-    :param align: String. Optional. The text-align property within this component.
-    :param helper: String. Optional. A tooltip helper
+    :param text: Optional. The string value to be displayed in the component
+    :param url: Optional. The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param align: Optional. The text-align property within this component.
+    :param helper: Optional. A tooltip helper
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -61,8 +61,9 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None, height=(None, 'px'),
-             decoration: bool = False, html_code: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None,
+             height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
+             options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -81,15 +82,15 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. The destination page when clicked
-    :param icon: String. Optional. The component icon content from font-awesome references
-    :param helper: String. Optional. A tooltip helper
+    :param text: Optional. The string value to be displayed in the component
+    :param url: The destination page when clicked
+    :param icon: Optional. The component icon content from font-awesome references
+    :param helper: Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -103,8 +104,8 @@ class Links:
     return html_link
 
   def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
-           helper: str = None, height=(None, 'px'), decoration: bool = False, html_code: str = None,
-           options: dict = None, profile: Union[bool, dict] = None):
+           helper: str = None, height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
+           options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -123,17 +124,17 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component.
-    :param url: String. Optional. The string url of the link.
-    :param align: String. Optional. The text-align property within this component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param tooltip: String. Optional. The tooltip displayed when the mouse is on the component.
-    :param helper: String. Optional. A tooltip helper.
+    :param text: Optional. The string value to be displayed in the component.
+    :param url: Optional. The string url of the link.
+    :param align: Optional. The text-align property within this component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param tooltip: Optional. The tooltip displayed when the mouse is on the component.
+    :param helper: Optional. A tooltip helper.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param decoration:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     options = options or {}
@@ -150,8 +151,8 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def data(self, text: str, value, width=(None, '%'), height=(None, 'px'), fmt: str = 'txt', options: dict = None,
-           profile: Union[bool, dict] = None):
+  def data(self, text: str, value, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'),
+           fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -172,13 +173,13 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. The string value to be displayed in the component
-    :param value: String. The value to be displayed to this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param fmt: String. Optional. The downloaded data format.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storag.e
+    :param text: The string value to be displayed in the component
+    :param value: The value to be displayed to this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param fmt: Optional. The downloaded data format.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storag.e
     """
     height = Arguments.size(height, unit="px")
     html_data = html.HtmlLinks.DataLink(self.page, text, value, width=width, height=height, fmt=fmt, options=options,
@@ -187,8 +188,8 @@ class Links:
     return html_data
 
   def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
-              height=(None, 'px'), decoration: bool = False, html_code: str = None, options: dict = None,
-              profile: Union[bool, dict] = None):
+              height: types.SIZE_TYPE =(None, 'px'), decoration: bool = False, html_code: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -200,16 +201,16 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component.
-    :param url: String. Optional. The string url of the link.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param helper: String. Optional. A tooltip helper.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param text: Optional. The string value to be displayed in the component.
+    :param url: Optional. The string url of the link.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param helper: Optional. A tooltip helper.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param decoration:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: String. Optional. Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. Optional. A flag to set the component performance storage.
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_blank'}
@@ -230,9 +231,9 @@ class Links:
     html.Html.set_component_skin(html_link)
     return html_link
 
-  def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None, height=(None, 'px'),
-             decoration: bool = False, align: str = "left", html_code: str = None, options: dict = None,
-             profile: Union[bool, dict] = None):
+  def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None,
+             height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
+             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -244,16 +245,16 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. Optional. The string url of the link
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
-    :param helper: String. Optional. A tooltip helper
+    :param text: Optional. The string value to be displayed in the component
+    :param url: Optional. The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param helper: Optional. A tooltip helper
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_self'}
@@ -279,8 +280,8 @@ class Links:
     return html_link
 
   def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
-               height=(None, 'px'), decoration: bool = False, align: str = "left", html_code: str = None,
-               options: dict = None, profile: Union[bool, dict] = None):
+               height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
+               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -292,16 +293,16 @@ class Links:
 
     Attributes:
     ----------
-    :param text: String. Optional. The string value to be displayed in the component
-    :param url: String. Optional. The string url of the link
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome
-    :param helper: String. Optional. A tooltip helper
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param text: Optional. The string value to be displayed in the component
+    :param url: Optional. The string url of the link
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param helper: Optional. A tooltip helper
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param decoration:
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     dft_options = {"target": '_self'}

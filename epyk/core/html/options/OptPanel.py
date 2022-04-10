@@ -611,7 +611,7 @@ class OptionPopup(Options):
     if icon:
       self.component.close = self.page.ui.icon(icon)
     else:
-      if self.component.close:
+      if getattr(self.component, "close", None) is not None:
         del self.page.components[self.component.close.htmlCode]
 
     self.set(icon)

@@ -4,6 +4,7 @@
 from typing import Union
 
 from epyk.core import html
+from epyk.core.py import types
 from epyk.interfaces import Arguments
 
 
@@ -12,9 +13,9 @@ class Media:
   def __init__(self, ui):
     self.page = ui.page
 
-  def video(self, value: str = "", align: str = "center", path: str = None, width: Union[tuple, int] = (100, '%'),
-            height: Union[tuple, int] = (None, 'px'), html_code: str = None,
-            profile: Union[bool, dict] = None, options: dict = None):
+  def video(self, value: str = "", align: str = "center", path: str = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+            profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     -----------
@@ -39,14 +40,14 @@ class Media:
 
     Attributes:
     ----------
-    :param value: String. Optional. The name of the video.
-    :param path: String. Optional. THe path to the video.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param value: Optional. The name of the video.
+    :param path: Optional. THe path to the video.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -60,9 +61,9 @@ class Media:
     html.Html.set_component_skin(html_media)
     return html_media
 
-  def audio(self, value: str = "", path: str = None, width: Union[tuple, int] = (100, '%'),
-            height: Union[tuple, int] = (None, 'px'),
-            html_code: str = None, profile: Union[bool, dict] = None, options: dict = None):
+  def audio(self, value: str = "", path: str = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, profile: types.PROFILE_TYPE = None,
+            options: dict = None):
     """
     Description:
     -----------
@@ -87,13 +88,13 @@ class Media:
 
     Attributes:
     ----------
-    :param value: String. Optional. The name of the audio object.
-    :param path: String. Optional. THe path to the audio object.
-    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param value: Optional. The name of the audio object.
+    :param path: Optional. THe path to the audio object.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -104,9 +105,9 @@ class Media:
     html.Html.set_component_skin(html_audio)
     return html_audio
 
-  def youtube(self, link: str, align: str = "center", width: Union[tuple, int] = (100, '%'),
-              height: Union[tuple, int] = (None, 'px'), html_code: str = None,
-              profile: Union[bool, dict] = None, options: dict = None):
+  def youtube(self, link: str, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+              profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     -----------
@@ -130,13 +131,13 @@ class Media:
 
     Attributes:
     ----------
-    :param link: String. The youtube link.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. A dictionary with the components properties.
+    :param link: The youtube link.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. A dictionary with the components properties.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -150,9 +151,9 @@ class Media:
     html.Html.set_component_skin(html_youtube)
     return html_youtube
 
-  def camera(self, align: str = "center", width: Union[tuple, int] = (100, '%'),
-             height: Union[tuple, int] = (None, 'px'), html_code: str = None,
-             profile: Union[bool, dict] = None, options: dict = None):
+  def camera(self, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
+             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+             profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     -----------
@@ -178,12 +179,12 @@ class Media:
 
     Attributes:
     ----------
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param width: Tuple | Integer. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Integer. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. The component identifier code (for both Python and Javascript).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

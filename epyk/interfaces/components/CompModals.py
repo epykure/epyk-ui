@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import List
 
 from epyk.core import html
+from epyk.core.py import types
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
 
@@ -13,7 +14,8 @@ class Modals:
   def __init__(self, ui):
     self.page = ui.page
 
-  def forms(self, components, action, method, header=None, footer=None, helper=None):
+  def forms(self, components: html.Html.Html, action: str, method: str, header=None, footer=None,
+            helper: types.HELPER_TYPE = None):
     """
     Description:
     ------------
@@ -37,7 +39,7 @@ class Modals:
 
     Attributes:
     ----------
-    :param html_objs components:
+    :param components:
     :param action:
     :param method:
     :param header:
@@ -54,8 +56,8 @@ class Modals:
     html.Html.set_component_skin(modal)
     return modal
 
-  def disclaimer(self, disc_list, header=None, footer=None, submit=True, validation_text='AGREE', action=None,
-                 add_buttons=None, to_html=True, helper=None):
+  def disclaimer(self, disc_list, header=None, footer=None, submit: bool = True, validation_text: str = 'AGREE',
+                 action: str = None, add_buttons=None, helper: types.HELPER_TYPE = None):
     """
     Description:
     ------------
@@ -64,7 +66,9 @@ class Modals:
     Usage::
 
       privacy_title = page.ui.texts.title('A privacy reminder', 2)
-      p1 = page.ui.texts.paragraph('''Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.''' % rptObj.ui.tags.strong('''I agree''', options={'managed': False}))
+      p1 = page.ui.texts.paragraph('''
+        Scroll down and click “%s” when you’re ready to continue, or explore other options on this page.
+        ''' % page.ui.tags.strong('''I agree''', options={'managed': False}))
       disc = page.ui.modals.disclaimer([privacy_title, p1])
 
     Underlying HTML Objects:
@@ -82,28 +86,28 @@ class Modals:
     :param validation_text:
     :param action:
     :param add_buttons:
-    :param to_html:
     :param helper:
     """
     for obj in disc_list:
       obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
-
     modal = html.HtmlContainer.Modal(self.page, disc_list, header, footer, False, helper)
     modal.col.css({'width': '450px', 'height': '700px'})
     if add_buttons or submit:
-      submitRow = self.page.ui.row([]) if not add_buttons else self.page.ui.row(add_buttons)
+      submit_row = self.page.ui.row([]) if not add_buttons else self.page.ui.row(add_buttons)
       if submit:
-        submitBtn = self.page.ui.buttons.important(validation_text)
+        submit_btn = self.page.ui.buttons.important(validation_text)
         if action:
-          submitBtn.click(action)
+          submit_btn.click(action)
         else:
-          submitBtn.click(modal.close())
-        submitRow + submitBtn
-      modal.col + submitRow
+          submit_btn.click(modal.close())
+        submit_row + submit_btn
+      modal.col + submit_row
     html.Html.set_component_skin(modal)
     return modal
 
-  def dialog(self, text, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None, profile=None):
+  def dialog(self, text, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (20, 'px'),
+             html_code: str = None, helper: types.HELPER_TYPE = None, options: dict = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -122,13 +126,13 @@ class Modals:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -136,7 +140,8 @@ class Modals:
     html.Html.set_component_skin(html_pr)
     return html_pr
 
-  def icon(self, components=None, icon=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def icon(self, components: List[html.Html.Html] = None, icon: str = None, width: types.SIZE_TYPE = (100, '%'),
+           height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -161,12 +166,12 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param icon: String. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param icon: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -192,7 +197,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def validation(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def validation(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+                 height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -216,11 +222,11 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -242,7 +248,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def acknowledge(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def acknowledge(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+                  height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -267,11 +274,11 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -289,7 +296,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def popup(self, components=None, title: str = None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def popup(self, components: List[html.Html.Html] = None, title: str = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -314,11 +322,12 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param title:
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -332,7 +341,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def error(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def error(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -340,8 +350,8 @@ class Modals:
 
     Usage::
 
-      popup = page.popup(page.ui.title('Test'), color="red")
-      popup + page.paragraph('Test')
+      popup = page.ui.popup(page.ui.title('Test'), color="red")
+      popup + page.ui.paragraph('Test')
 
     Underlying HTML Objects:
 
@@ -357,11 +367,11 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     dfl_options = {"button": {"category": "delete"}}
     if options is not None:
@@ -373,7 +383,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def info(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def info(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+           height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -381,8 +392,8 @@ class Modals:
 
     Usage::
 
-      popup = page.popup(page.ui.title('Test'), color="red")
-      popup + page.paragraph('Test')
+      popup = page.ui.popup(page.ui.title('Test'), color="red")
+      popup + page.ui.paragraph('Test')
 
     Underlying HTML Objects:
 
@@ -398,18 +409,19 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     popup = self.icon(
       components=components, icon="question", width=width, height=height, options=options, profile=profile)
     html.Html.set_component_skin(popup)
     return popup
 
-  def success(self, components=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def success(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -417,8 +429,8 @@ class Modals:
 
     Usage::
 
-      popup = page.popup(page.ui.title('Test'), color="red")
-      popup + page.paragraph('Test')
+      popup = page.ui.popup(page.ui.title('Test'), color="red")
+      popup + page.ui.paragraph('Test')
 
     Underlying HTML Objects:
 
@@ -434,11 +446,11 @@ class Modals:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     popup = self.icon(
       components=components, icon="check", width=width, height=height, options=options, profile=profile)
@@ -447,7 +459,8 @@ class Modals:
     html.Html.set_component_skin(popup)
     return popup
 
-  def loading(self, text="", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
+  def loading(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -455,8 +468,8 @@ class Modals:
 
     Usage::
 
-      popup = page.popup(page.ui.title('Test'), color="red")
-      popup + page.paragraph('Test')
+      popup = page.ui.popup(page.ui.title('Test'), color="red")
+      popup + page.ui.paragraph('Test')
 
     Underlying HTML Objects:
 
@@ -472,11 +485,11 @@ class Modals:
 
     Attributes:
     ----------
-    :param text: String. Optional. The loading text.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The loading text.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     component = self.page.ui.text(text)
     popup = self.icon(components=[component], icon="fas fa-spinner fa-pulse", width=width, height=height,
@@ -485,15 +498,26 @@ class Modals:
     popup.container[0].style.css.color = self.page.theme.success.base
     popup.text = component
 
-    def build_text(data=None, options=None, profile=False):
+    def build_text(data=None, options: dict = None, profile: types.PROFILE_TYPE = False):
+      """
+      Description:
+      ------------
+
+      Attributes:
+      ----------
+      :param data:
+      :param options:
+      :param profile:
+      """
       return component.build(data, options, profile)
 
     popup.build = build_text
     html.Html.set_component_skin(popup)
     return popup
 
-  def stepper(self, records=None, components=None, shape="arrow", title=None, width=(100, '%'), height=(None, 'px'),
-              options=None, profile=None):
+  def stepper(self, records=None, components: List[html.Html.Html] = None, shape: str = "arrow",
+              title: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
