@@ -1,6 +1,15 @@
 ## [Unreleased]
 
 ### Added
+
+### Changed
+
+### Fixed
+
+
+## [1.7.14] - 2022-04-10
+
+### Added
 - Add pk.symbols shortcuts.
 - Add dom focus feature.
 
@@ -11,6 +20,8 @@
 
 ### Fixed
 - Bugfix on closure for popup.
+- Improve types and documentation.
+
 
 ## [1.7.12] - 2022-04-07
 
