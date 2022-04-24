@@ -7,6 +7,19 @@
 ### Fixed
 
 
+## [1.7.15] - 2022-04-24
+
+### Added
+- Add IntersectionObserver
+- Add js.delay
+- New network components for impressions and votes
+- internal types module to define complex ones.
+
+### Fixed
+- Improve documentation
+- Better type hintings
+
+
 ## [1.7.14] - 2022-04-10
 
 ### Added
