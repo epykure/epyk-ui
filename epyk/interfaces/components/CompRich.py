@@ -44,11 +44,11 @@ class Rich:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
+    dfl_options = {"digits": 0, 'thousand_sep': ",", 'decimal_sep': ".",
                     'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
                     'orange': self.page.theme.warning.base}
     if options is not None:
-      dflt_options.update(options)
+      dfl_options.update(options)
     container = self.page.ui.div(align=align, height=height, width=width, profile=profile, options=options)
 
     if title is not None:
@@ -58,7 +58,7 @@ class Rich:
         title.style.css.text_align = align
       container.add(title)
     main_component = html.HtmlTextComp.Delta(
-      self.page, record or {}, components, width, ("auto", ''), dflt_options, helper, profile)
+      self.page, record or {}, components, width, ("auto", ''), dfl_options, helper, profile)
     container.add(main_component)
     container.build = main_component.build
     if title is not None:
@@ -292,6 +292,9 @@ class Rich:
     :categories:
 
     Usage::
+
+      c = page.ui.rich.console(
+        "* This is a log section for all the events in the different buttons *", options={"timestamp": True})
 
     Underlying HTML Objects:
 

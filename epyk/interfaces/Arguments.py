@@ -129,7 +129,7 @@ class Profile:
   def true(self):
     return True
 
-  def name(self, name):
+  def name(self, name: str):
     return {"name": name}
 
 

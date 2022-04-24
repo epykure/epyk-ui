@@ -630,6 +630,7 @@ class Images:
     Usage::
 
       page.ui.images.icon("fab fa-angellist")
+      icon = page.ui.icon("fab fa-python")
 
     Underlying HTML Objects:
 

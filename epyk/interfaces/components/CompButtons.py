@@ -920,6 +920,10 @@ class Buttons:
 
       page.ui.buttons.checkboxes(data)
 
+      cb2 = page.ui.buttons.checkboxes(data, color="red", width=(100, "px"))
+      cb2.style.configs.shadow()
+      cb2.click([page.js.console.log(cb2.dom.current)])
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlButton.Checkbox`
@@ -1108,6 +1112,9 @@ class Buttons:
 
     Usage::
 
+      b7 = page.ui.buttons.live(3, page.js.console.log("Click"), options={"started": False})
+      b8 = page.ui.buttons.live(2, page.js.console.log("refresh data"), profile=True)
+
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_icon.py
@@ -1212,6 +1219,8 @@ class Buttons:
     :categories:
 
     Usage::
+
+      b6 = page.ui.buttons.thumbs_up(tooltip="Like")
 
     Templates:
 

@@ -1135,11 +1135,10 @@ class JsWindow:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The function that will be executed.
-    :param int milliseconds: Optional. The number of milliseconds to wait before executing the code.
-    :param str window_id: Optional. The JavaScript window object.
-    :param Optional[Union[dict, bool]] profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
+    :param js_funcs: The function that will be executed.
+    :param milliseconds: Optional. The number of milliseconds to wait before executing the code.
+    :param window_id: Optional. The JavaScript window object.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return JsObject.JsObject(
       "%s.setTimeout(function(){%s}, %s)" % (

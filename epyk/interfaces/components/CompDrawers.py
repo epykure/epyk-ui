@@ -96,6 +96,12 @@ class Drawers:
         d.add_panel(page.ui.button("Test1"), "ok1")
         d.set_handle(button)
 
+        d.drawers[0].click([
+          d.dom.hide(),
+          d.panels[0].dom.css({"display": 'block'}).r,
+          page.js.console.log(d.dom.content)
+        ])
+
     Attributes:
     ----------
     :param width: Optional. A tuple with the integer for the component width and its unit.

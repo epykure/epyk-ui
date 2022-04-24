@@ -152,6 +152,7 @@ class Calendar:
         }
 
         monthly = page.ui.calendars.months(content=records, align="center")
+        monthly.style.css.margin_top = 10
 
     Templates:
 

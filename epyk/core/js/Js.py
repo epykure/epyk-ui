@@ -6,6 +6,7 @@ import os
 import base64
 from typing import Union, Optional, Any, List, Callable
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import KeyCodes
 
@@ -27,6 +28,7 @@ from epyk.core.js.fncs import JsFncsSamples
 from epyk.core.js.objects import JsData
 from epyk.core.js.objects import JsNodeAttributes
 from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.objects import JsIntersectionObserver
 from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsObjects
@@ -40,6 +42,79 @@ from epyk.core.js.statements import JsFor
 
 
 _CONSOLE_LOG_EXPR = "console.log({})"
+
+
+class JsBreadCrumb:
+
+  def __init__(self, src: primitives.PageModel = None):
+    self.page = src
+    self._selector = "breadcrumb"
+    self._anchor = None
+    self.page.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self.page.inputs)))
+
+  def add(self, key, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+    """
+    Description:
+    ------------
+    Add an entry to the Javascript breadcrumb dictionary.
+
+    Attributes:
+    ----------
+    :param key: String. The key in the Breadcrumb dictionary.
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    """
+    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (
+      self._selector, key, JsUtils.jsConvertData(data, js_conv_func)))
+
+  def get(self, key: Optional[str] = None):
+    """
+    Description:
+    ------------
+    returns the object stored in the breadcrumb dictionary.
+
+    Attributes:
+    ----------
+    :param Optional[str] key: Optional. The key in the Breadcrumb dictionary.
+
+    :return: A Python object.
+    """
+    if key is None:
+      return JsObject.JsObject("%s" % self._selector)
+
+    return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
+
+  def hash(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+    """
+    Description:
+    ------------
+    Add an anchor to the URL after the hashtag.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_loc_hash.asp
+
+    Attributes:
+    ----------
+    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    """
+    return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(data, js_conv_func)))
+
+  @property
+  def url(self):
+    """
+    Description:
+    ------------
+    Get the full URL.
+    """
+    js_location = JsLocation.JsLocation()
+    origin = js_location.origin
+    pathname = js_location.pathname
+    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
+
+  def toStr(self):
+    return '%s(%s)' % (JsFncs.FncOnRecords(self.page._props['js']).url(), self._selector)
 
 
 class JsBase:
@@ -131,7 +206,7 @@ class JsBase:
     return self.__location
 
   @property
-  def mediaRecorder(self):
+  def mediaRecorder(self) -> JsMediaRecorder.MediaRecorder:
     """
     Description:
     ------------
@@ -161,14 +236,14 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str js_code: The variable name for the speech recognition object.
+    :param js_code: The variable name for the speech recognition object.
 
     :rtype: JsSpeechRecognition.SpeechRecognition
     """
     return JsSpeechRecognition.SpeechRecognition(js_code, self.page)
 
   @property
-  def objects(self):
+  def objects(self) -> JsObjects.JsObjects:
     """
     Description:
     ------------
@@ -238,8 +313,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] data: Data to be evaluated.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: Data to be evaluated.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
@@ -258,7 +333,7 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
     """
     from epyk.core.js.packages import JsSocketIO
 
@@ -278,8 +353,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
-    :param bool secured: Optional. To define the right protocol for the WebSocket connection we or wss.
+    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param secured: Optional. To define the right protocol for the WebSocket connection we or wss.
     """
     return JsWebSocket.WebSocket(html_code, self.page, secured)
 
@@ -295,8 +370,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] html_code: The WebSocket id (variable name) on the JavaScript side.
-    :param bool server: Boolean.
+    :param html_code: The WebSocket id (variable name) on the JavaScript side.
+    :param server: Boolean.
     """
     return JsWebSocket.Worker(html_code, self.page, server)
 
@@ -317,7 +392,7 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Optional[str] html_code: The EventSource id (variable name) on the JavaScript side.
+    :param html_code: The EventSource id (variable name) on the JavaScript side.
     """
     return JsWebSocket.ServerSentEvent(html_code, self.page)
 
@@ -356,8 +431,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param data: String. A String corresponding to a JavaScript object.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: A String corresponding to a JavaScript object.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript fragment string.
     """
@@ -382,9 +457,9 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, list] condition: The Javascript condition. Can be a JsBoolean object.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param condition: The Javascript condition. Can be a JsBoolean object.
+    :param js_funcs: Optional. The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
@@ -404,10 +479,10 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, list] condition: The JavaScript condition.
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param condition: The JavaScript condition.
+    :param js_funcs: Javascript functions.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
@@ -427,12 +502,12 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param int step: The value to increment. Default 1.
-    :param int start: The first index in the for loop.
-    :param int end: The last index in the for loop.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param step: The value to increment. Default 1.
+    :param start: The first index in the for loop.
+    :param end: The last index in the for loop.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     for_statment = JsFor.JsFor(end, options)
     for_statment.start = start
@@ -448,7 +523,7 @@ class JsBase:
 
     Attributes:
     ----------
-    :param str data: The Javascript expression.
+    :param data: The Javascript expression.
     """
     return JsFncs.JsFunction("return %s" % data)
 
@@ -465,8 +540,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, primitives.HtmlModel] variable: Variable on which we will apply the switch.
-    :param Optional[Union[str, list]] js_conv_func: String. Optional. A specific JavaScript data conversion function.
+    :param variable: Variable on which we will apply the switch.
+    :param js_conv_func: String. Optional. A specific JavaScript data conversion function.
     """
     if hasattr(variable, 'dom'):
       variable = variable.dom.content
@@ -486,8 +561,8 @@ class JsBase:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript expression.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: The Javascript expression.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction('''
 var elInput = document.createElement('input'); elInput.setAttribute('type', 'text');
@@ -504,7 +579,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str import_alias: Alias reference of a JavaScript module.
+    :param import_alias: Alias reference of a JavaScript module.
     """
     self.page._props.setdefault('js', {}).setdefault('imports', set([])).add(import_alias)
     return self
@@ -522,8 +597,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str data: A String corresponding to a JavaScript object.
-    :param Optional[str] var_type: Optional. The type of object.
+    :param data: A String corresponding to a JavaScript object.
+    :param var_type: Optional. The type of object.
     """
     if var_type is None:
       return JsObjects.JsBoolean.JsBoolean("typeof %s" % data)
@@ -539,10 +614,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param str key: Optional. A key reference in the JavaScript object.
-    :param bool is_py_data: Optional. Specify if the data is in Python and should be jsonify first.
-    :param Optional[Union[list, str]] js_func: Optional. Javascript functions.
+    :param data: A String corresponding to a JavaScript object.
+    :param key: Optional. A key reference in the JavaScript object.
+    :param is_py_data: Optional. Specify if the data is in Python and should be jsonify first.
+    :param js_func: Optional. Javascript functions.
     """
     data = JsUtils.jsConvert(data, key, is_py_data, js_func)
     self.page._props.setdefault('js', {}).setdefault('bespoke', []).append(data)
@@ -556,7 +631,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str text: The Javascript fragment.
+    :param text: The Javascript fragment.
 
     :return: self to allow the chaining.
     """
@@ -578,12 +653,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str filename: The filename.
-    :param Optional[str] path: Optional. The file path.
-    :param str module_type: Optional. The module type.
-    :param bool absolute_path: Optional. If path is None this flag will map to the current main path.
-    :param Optional[list] requirements: Optional. The list of required packages.
-    :param bool randomize: Optional. Add random suffix to the module to avoid browser caching.
+    :param filename: The filename.
+    :param path: Optional. The file path.
+    :param module_type: Optional. The module type.
+    :param absolute_path: Optional. If path is None this flag will map to the current main path.
+    :param requirements: Optional. The list of required packages.
+    :param randomize: Optional. Add random suffix to the module to avoid browser caching.
 
     :return: The Js Object to allow the chaining.
     """
@@ -619,11 +694,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str py_class: The PyJs Classname.
-    :param str func_name: The Javascript function name.
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[dict] pmts: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param py_class: The PyJs Classname.
+    :param func_name: The Javascript function name.
+    :param js_funcs: Javascript functions.
+    :param pmts: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The Js Object to allow the chaining.
     """
@@ -633,7 +708,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return self
 
   def request_http(self, method_type: str, url: str, js_code: str = "response", is_json: bool = True,
-                   components: Optional[List[primitives.HtmlModel]] = None):
+                   components: Optional[List[primitives.HtmlModel]] = None) -> JsObjects.XMLHttpRequest:
     """
     Description:
     ------------
@@ -650,12 +725,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str method_type: The method of the HTTP Request.
-    :param str url: The url path of the HTTP request.
-    :param str js_code: Optional. The variable name created in the Javascript.
-    :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. A list of HTML objects values to be passed in the
-    request.
+    :param method_type: The method of the HTTP Request.
+    :param url: The url path of the HTTP request.
+    :param js_code: Optional. The variable name created in the Javascript.
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. A list of HTML objects values to be passed in the request.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -664,7 +738,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   def get(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
           js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
-          headers: Optional[dict] = None, asynchronous: bool = False):
+          headers: Optional[dict] = None, asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """
     Description:
     ------------
@@ -679,14 +753,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] url: The url path of the HTTP request.
-    :param Optional[dict] data: Optional. A String corresponding to a JavaScript object.
-    :param str js_code: Optional. The variable name created in the Javascript (default response).
-    :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional.
-    This will add the component value to the request object.
-    :param Optional[dict] headers: Optional. The request headers.
-    :param bool asynchronous: Async flag: true (asynchronous) or false (synchronous).
+    :param url: The url path of the HTTP request.
+    :param data: Optional. A String corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -715,7 +788,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
            is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
-           profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None, asynchronous: bool = False):
+           profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+           asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """
     Description:
     ------------
@@ -723,15 +797,14 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] url: The url path of the HTTP request.
-    :param Optional[dict] data: Optional. Corresponding to a JavaScript object.
-    :param str js_code: Optional. The variable name created in the Javascript (default response).
-    :param bool is_json: Optional. Specify the type of object passed.
-    :param Optional[List[primitives.HtmlModel]] components: Optional. This will add the component value to the request
-    object.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[dict] headers: Optional. The request headers.
-    :param bool asynchronous: Async flag: true (asynchronous) or false (synchronous).
+    :param url: The url path of the HTTP request.
+    :param data: Optional. Corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -757,7 +830,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return request
 
   def request_rpc(self, js_code: str, method_type: Union[str, primitives.JsDataModel],
-                  fnc: Callable, url: str, extra_params: Optional[Union[dict, primitives.JsDataModel]] = None):
+                  fnc: Callable, url: str,
+                  extra_params: Optional[Union[dict, primitives.JsDataModel]] = None) -> JsObjects.XMLHttpRequest:
     """
     Description:
     ------------
@@ -765,11 +839,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str js_code: The variable name created in the Javascript.
-    :param Union[str, primitives.JsDataModel] method_type: The method type
-    :param Callable fnc: Fnc. A python function.
-    :param str url: The service url
-    :param Optional[Union[dict, primitives.JsDataModel]] extra_params: Optional.
+    :param js_code: The variable name created in the Javascript.
+    :param method_type: The method type
+    :param fnc: Fnc. A python function.
+    :param url: The service url
+    :param extra_params: Optional.
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -810,10 +884,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str url: The target url.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param bool async_await: Optional.
+    :param url: The target url.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param async_await: Optional.
     """
     fetch_name = "await fetch" if async_await else "fetch"
     if options is None:
@@ -824,7 +898,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       profile, async_await)
 
   @property
-  def fncs(self):
+  def fncs(self) -> JsFncs.JsRegisteredFunctions:
     """
     Description:
     ------------
@@ -851,7 +925,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsFncsSamples.Samples(self.page)
 
   @property
-  def breadcrumb(self):
+  def breadcrumb(self) -> JsBreadCrumb:
     """
     Description:
     ------------
@@ -885,8 +959,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] url: The target url.
-    :param Optional[dict] options: Optional. The property of the location object.
+    :param url: The target url.
+    :param options: Optional. The property of the location object.
     """
     options = options or {}
     if options.get("target", '') != "_blank":
@@ -906,10 +980,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Description:
     ------------
-    :param str func_name: The function name.
-    :param Union[str, list] js_funcs: The Javascript function definition.
-    :param Optional[dict] args: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param func_name: The function name.
+    :param js_funcs: The Javascript function definition.
+    :param args: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     self.page._props.setdefault('js', {}).setdefault('functions', {})[func_name] = {
@@ -993,10 +1067,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] type: The type of profile tag.
-    :param str html_code: The HTML component ID.
-    :param Union[str, primitives.JsDataModel] mark: The mark reference.
-    :param Optional[int] records_count: Optional. The records count.
+    :param type: The type of profile tag.
+    :param html_code: The HTML component ID.
+    :param mark: The mark reference.
+    :param records_count: Optional. The records count.
     """
     type = JsUtils.jsConvertData(type, None)
     mark = JsUtils.jsConvertData(mark, None)
@@ -1016,8 +1090,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] id_name: The ID attribute's value of the element you want to get.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param id_name: The ID attribute's value of the element you want to get.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: An Element Object, representing an element with the specified ID. Returns null if no elements with
     the specified ID exists
@@ -1026,7 +1100,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       "document.getElementById(%s)" % JsUtils.jsConvertData(id_name, js_conv_func).toStr().replace("'", '"'))
 
   @staticmethod
-  def getElementsByName(name: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def getElementsByName(name: Union[str, primitives.JsDataModel],
+                        js_conv_func: Optional[Union[str, list]] = None) -> JsNodeDom.JsDomsList:
     """
     Description:
     ------------
@@ -1042,8 +1117,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] name: The name attribute value of the element you want to access/manipulate.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param name: The name attribute value of the element you want to access/manipulate.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: A NodeList object, representing a collection of elements with the specified name.
              The elements in the returned collection are sorted as they appear in the source code.
@@ -1055,7 +1130,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @staticmethod
   def getElementsByTagName(tag_name: Union[str, primitives.JsDataModel], i: int = 0,
-                           js_conv_func: Optional[Union[str, list]] = None):
+                           js_conv_func: Optional[Union[str, list]] = None) -> JsNodeDom.JsDoms:
     """
     Description:
     ------------
@@ -1071,9 +1146,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] tag_name: The tag name of the child elements you want to get.
-    :param int i: Optional. The index of the element.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param tag_name: The tag name of the child elements you want to get.
+    :param i: Optional. The index of the element.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (
       JsUtils.jsConvertData(tag_name, js_conv_func), i), js_code="%s_%s" % (tag_name, i), set_var=True)
@@ -1092,7 +1167,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str cls_name: The class name of the elements you want to get.
+    :param cls_name: The class name of the elements you want to get.
 
     :return: A NodeList object, representing a collection of elements with the specified class name.
              The elements in the returned collection are sorted as they appear in the source code.
@@ -1111,10 +1186,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str tag_name: The name of the element you want to create.
-    :param str js_code: The variable name to be set. Default random name.
-    :param bool set_var: Optional. Create a variable for the new object. Default True.
-    :param str dom_id: Optional. The Dom ID reference for the object.
+    :param tag_name: The name of the element you want to create.
+    :param js_code: The variable name to be set. Default random name.
+    :param set_var: Optional. Create a variable for the new object. Default True.
+    :param dom_id: Optional. The Dom ID reference for the object.
     """
     dom_obj = JsNodeDom.JsDoms.new(tag_name, js_code=js_code, set_var=set_var, page=self.page)
     if dom_id is not None:
@@ -1122,7 +1197,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return dom_obj
 
   @staticmethod
-  def createTextNode(text: Union[str, primitives.JsDataModel] = None, js_conv_func: Optional[Union[str, list]] = None):
+  def createTextNode(text: Union[str, primitives.JsDataModel] = None,
+                     js_conv_func: Optional[Union[str, list]] = None) -> JsObject.JsObject:
     """
     Description:
     ------------
@@ -1134,8 +1210,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional. The text of the Text node.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param text: Optional. The text of the Text node.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: A Text Node object with the created Text Node.
     """
@@ -1154,8 +1230,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] uri: The URI to be encoded.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param uri: The URI to be encoded.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: A String, representing the encoded URI.
     """
@@ -1173,15 +1249,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] url_enc: The URI to be decoded.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param url_enc: The URI to be decoded.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: A String, representing the decoded URI.
     """
     return JsObject.JsObject("decodeURIComponent(%s)" % JsUtils.jsConvertData(url_enc, js_conv_func))
 
   @property
-  def body(self):
+  def body(self) -> JsNodeDom.JsDoms:
     """
     Description:
     ------------
@@ -1211,10 +1287,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param data: String | Object. The String data.
-    :param str js_code: Optional. The specific name to be used for this JavaScript String.
-    :param bool set_var: Optional. Set a variable. Default False.
-    :param bool is_py_data: Optional. Specify the type of data.
+    :param data: The String data.
+    :param js_code: Optional. The specific name to be used for this JavaScript String.
+    :param set_var: Optional. Set a variable. Default False.
+    :param is_py_data: Optional. Specify the type of data.
     """
     return JsString.JsString(data, js_code, set_var, is_py_data, page=self.page)
 
@@ -1226,10 +1302,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param data: String | Object. The String data.
-    :param str js_code: Optional. The specific name to be used for this JavaScript String.
-    :param bool set_var: Optional. Set a variable. Default False.
-    :param bool is_py_data: Optional. Specify the type of data.
+    :param data: The String data.
+    :param js_code: Optional. The specific name to be used for this JavaScript String.
+    :param set_var: Optional. Set a variable. Default False.
+    :param is_py_data: Optional. Specify the type of data.
     """
     return JsNumber.JsNumber(data, js_code, set_var, is_py_data, page=self.page)
 
@@ -1241,12 +1317,32 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param data: String | Object. The String data.
-    :param str js_code: Optional. The specific name to be used for this JavaScript String.
-    :param bool set_var: Optional. Set a variable. Default False.
-    :param bool is_py_data: Optional. Specify the type of data.
+    :param data: The String data.
+    :param js_code: Optional. The specific name to be used for this JavaScript String.
+    :param set_var: Optional. Set a variable. Default False.
+    :param is_py_data: Optional. Specify the type of data.
     """
     return JsObject.JsObject(data, js_code, set_var, is_py_data, page=self.page)
+
+  def intersectionObserver(self, js_code: str, callback: types.JS_FUNCS_TYPES = None, options: dict = None,
+                           observe_once: bool = False, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_code: The PyJs functions.
+    :param callback: JavaScript functions called by the intersectionObserver.
+    :param options: intersectionObserver options.
+    :param observe_once: A flag to remove the observe once callbacks run.
+    :param profile: Option to perform profiling logs in the browser console.
+    """
+    if callback is not None or options is not None:
+      return JsIntersectionObserver.IntersectionObserver(self.page, js_code).new(
+        callback, options, observe_once, profile)
+
+    return JsIntersectionObserver.IntersectionObserver(self.page, js_code)
 
   def querySelectorAll(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
     """
@@ -1261,8 +1357,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] selector: CSS selectors.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param selector: CSS selectors.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsNodeDom.JsDomsList(
       "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, js_conv_func), is_py_data=False)
@@ -1279,8 +1375,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] selector: CSS selectors.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param selector: CSS selectors.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, js_conv_func))
 
@@ -1311,8 +1407,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Optional[Union[str, primitives.JsDataModel]] text: Optional. Representing the title of the document.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param text: Optional. Representing the title of the document.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     if text is None:
       return JsString.JsString("document.title")
@@ -1331,9 +1427,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str command:. Specifies the name of the command to execute on the selected section.
-    :param bool show_ui: specifies if the UI should be shown or not.
-    :param str value: Some commands need a value to be completed.
+    :param command:. Specifies the name of the command to execute on the selected section.
+    :param show_ui: specifies if the UI should be shown or not.
+    :param value: Some commands need a value to be completed.
 
     :return: A Boolean, false if the command is not supported, otherwise true.
     """
@@ -1353,7 +1449,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str event_type: A String that specifies the type of the event.
+    :param event_type: A String that specifies the type of the event.
 
     :return: An Event object
     """
@@ -1375,7 +1471,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str attribute_name: The name of the attribute you want to create.
+    :param attribute_name: The name of the attribute you want to create.
 
     :return: A Node object, representing the created attribute.
     """
@@ -1392,8 +1488,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/jsref/met_doc_writeln.asp
 
-    :param str value: What to write to the output stream. Multiple arguments can be listed and they will be appended
-    to the document in order of occurrence
+    Attributes:
+    ----------
+    :param value: What to write to the output stream. Multiple arguments can be listed and they will be appended
+      to the document in order of occurrence
 
     :return: No return value
     """
@@ -1412,7 +1510,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str value: The string to be parsed.
+    :param value: The string to be parsed.
 
     :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
@@ -1431,7 +1529,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str value: The string to be parsed.
+    :param value: The string to be parsed.
 
     :return: A Number. If the first character cannot be converted to a number, NaN is returned.
     """
@@ -1451,7 +1549,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str value: A string representing a date.
+    :param value: A string representing a date.
 
     :return: Number. Representing the milliseconds between the specified date-time and midnight January 1, 1970.
     """
@@ -1465,8 +1563,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str js_code: The Variable name.
-    :param str var_type: Optional. The scope of the variable.
+    :param js_code: The Variable name.
+    :param var_type: Optional. The scope of the variable.
 
     :return: Return the piece of script to be added to the Javascript.
     """
@@ -1488,10 +1586,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object
-    :param Optional[dict] css_style: Optional. The CSS attributes to be added to the HTML component.
-    :param str icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param int seconds: Optional. The number of second the info will be visible.
+    :param data: A String corresponding to a JavaScript object
+    :param css_style: Optional. The CSS attributes to be added to the HTML component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param seconds: Optional. The number of second the info will be visible.
     """
     if css_style is None:
       css_style = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px',
@@ -1520,9 +1618,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] content: The content of the popup.
-    :param int timer: Optional. The time the popup will be displayed.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
+    :param content: The content of the popup.
+    :param timer: Optional. The time the popup will be displayed.
+    :param css_attrs: Optional. The CSS attributes for the popup.
     """
     dfl_attrs = {"position": "absolute", "background": "white", "padding": "5px 10px", 'border-radius': "5px",
                  "top": JsObject.JsObject.get('event.clientY + "px"'),
@@ -1610,10 +1708,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param str script: A script name. A Js extension.
-    :param Union[str, list] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param bool self_contained:
+    :param script: A script name. A Js extension.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param self_contained:
     """
     if self_contained or script:
       if os.path.exists(script):
@@ -1656,7 +1754,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
 
     Attributes:
     ----------
-    :param str script: A script name with a CSS extension.
+    :param script: A script name with a CSS extension.
     """
     css_script = JsUtils.jsConvertData(script, None)
     return JsUtils.jsWrap('''
@@ -1668,6 +1766,26 @@ if (!existingStyle && (styleElementId !== 'css_')) {
   fileref.setAttribute("href", %(file)s); console.log("loaded");
   document.getElementsByTagName("head")[0].appendChild(fileref)
 }''' % {"file": css_script})
+
+  def delay(self, js_funcs: Union[list, str], seconds: int = 0, window_id: str = "window",
+            profile: Optional[Union[dict, bool]] = False):
+    """
+    Description:
+    ------------
+    Add a wrapper on top of the setTimeout.
+
+    Usage::
+
+      page.js.delay([text.build("Change the value")], 5)
+
+    Attributes:
+    ----------
+    :param js_funcs: The function that will be executed
+    :param seconds: Optional. The number of seconds to wait before executing the code
+    :param window_id: Optional. The JavaScript window object
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    """
+    return self.window.setTimeout(js_funcs, seconds * 1000, window_id, profile)
 
 
 class JsConsole:
@@ -1740,9 +1858,9 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
-    :param bool skip_data_convert:  Optional. Flag to specify to the framework if a Json conversion is needed.
+    :param data: The Javascript fragment.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param skip_data_convert: Optional. Flag to specify to the framework if a Json conversion is needed.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -1769,8 +1887,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: The Javascript fragment.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -1788,8 +1906,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param  data: The Javascript fragment.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -1807,8 +1925,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: The Javascript fragment.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -1826,8 +1944,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The data to fill the table with.
-    :param Optional[list] js_header: Optional. An array containing the names of the columns to be included in the table.
+    :param data: The data to fill the table with.
+    :param js_header: Optional. An array containing the names of the columns to be included in the table.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
@@ -1848,7 +1966,7 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] html_code: Use the label parameter to give the timer a name.
+    :param html_code: Use the label parameter to give the timer a name.
 
     :return: A Python Javascript Number.
     """
@@ -1866,7 +1984,7 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] html_code: The name of the timer to end.
+    :param html_code: The name of the timer to end.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers).
     """
@@ -1885,9 +2003,9 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The Javascript fragment.
-    :param str info: The JavaScript result.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: The Javascript fragment.
+    :param info: The JavaScript result.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     return JsFncs.JsFunction("console.assert(%s, '%s')" % (JsUtils.jsConvertData(data, js_conv_func), info))
 
@@ -1904,9 +2022,9 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: The Javascript functions.
-    :param Union[str, list] js_funcs_errs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param js_funcs_errs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)
     """
@@ -1924,8 +2042,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param str js_code: The variable var name use to compute the performance.
-    :param Optional[str] label: Optional. The description.
+    :param js_code: The variable var name use to compute the performance.
+    :param label: Optional. The description.
     """
     if label is not None:
       return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, js_code))
@@ -1940,8 +2058,8 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param str msg: The log message to be sent to the backend.
-    :param Optional[dict] headers: the service headers.
+    :param msg: The log message to be sent to the backend.
+    :param headers: the service headers.
     """
     from epyk import LOG_SERVICE
 
@@ -1979,10 +2097,10 @@ class JsJson:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param Optional[str] js_result_func: Optional. A function used to transform the result. The function is called for
-    each item. Any nested objects are transformed before the parent.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: A String corresponding to a JavaScript object.
+    :param js_result_func: Optional. A function used to transform the result. The function is called for each item.
+      Any nested objects are transformed before the parent.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript string method
     """
@@ -2005,91 +2123,18 @@ class JsJson:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: The value to convert to a string.
+    :param data: The value to convert to a string.
     :param replacer: Optional. Either a function or an array used to transform the result.
                                The replacer is called for each item.
-    :param int space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
+    :param space: Optional. Either a String or a Number. A string to be used as white space (max 10 characters),
       or a Number, from 0 to 10, to indicate how many space characters to use as white space.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript string method.
     """
     return JsString.JsString(
       "JSON.stringify(%s, %s, %s)" % (
         JsUtils.jsConvertData(data, js_conv_func), json.dumps(replacer), space), is_py_data=False)
-
-
-class JsBreadCrumb:
-
-  def __init__(self, src: primitives.PageModel = None):
-    self.page = src
-    self._selector = "breadcrumb"
-    self._anchor = None
-    self.page.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self.page.inputs)))
-
-  def add(self, key, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-    """
-    Description:
-    ------------
-    Add an entry to the Javascript breadcrumb dictionary.
-
-    Attributes:
-    ----------
-    :param key: String. The key in the Breadcrumb dictionary.
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
-    """
-    return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (
-      self._selector, key, JsUtils.jsConvertData(data, js_conv_func)))
-
-  def get(self, key: Optional[str] = None):
-    """
-    Description:
-    ------------
-    returns the object stored in the breadcrumb dictionary.
-
-    Attributes:
-    ----------
-    :param Optional[str] key: Optional. The key in the Breadcrumb dictionary.
-
-    :return: A Python object.
-    """
-    if key is None:
-      return JsObject.JsObject("%s" % self._selector)
-
-    return JsObject.JsObject('%s["pmts"]["%s"]' % (self._selector, key))
-
-  def hash(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-    """
-    Description:
-    ------------
-    Add an anchor to the URL after the hashtag.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/prop_loc_hash.asp
-
-    Attributes:
-    ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
-    """
-    return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(data, js_conv_func)))
-
-  @property
-  def url(self):
-    """
-    Description:
-    ------------
-    Get the full URL.
-    """
-    js_location = JsLocation.JsLocation()
-    origin = js_location.origin
-    pathname = js_location.pathname
-    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
-
-  def toStr(self):
-    return '%s(%s)' % (JsFncs.FncOnRecords(self.page._props['js']).url(), self._selector)
 
 
 class JsScreen:

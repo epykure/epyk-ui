@@ -812,6 +812,10 @@ class Banners:
 
     Usage::
 
+      # to Change the CSS style
+      top = page.ui.banners.top("text")
+      top.style.css.font_size = '40px'
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
@@ -852,6 +856,13 @@ class Banners:
     :categories:
 
     Usage::
+
+      # Add a banner with HTML content
+      icon = page.ui.icon("fab fa-python")
+      text = page.ui.text("This is a text")
+
+      # Chang the option to have the content in one line
+      bottom = page.ui.banners.bottom([icon, text], options={"inline": True})
 
     Underlying HTML Objects:
 
@@ -933,6 +944,21 @@ class Banners:
     :categories:
 
     Usage::
+
+      # Add a banner on the bottom right corner
+      b = page.ui.banners.corner("bottom", 'red')
+      # Add click event on the banner
+      b.click([
+        # hide the bonner on click
+        b.dom.hide()
+      ])
+
+      # Add a banner on the top right conner
+      corner = page.ui.banners.corner("top", 'red', position='top')
+      # Add interactivity on the banner style
+      corner.style.hover({"background": "white", 'color': 'red'})
+      # display the banner
+      corner.hover([b.dom.show()])
 
     Underlying HTML Objects:
 

@@ -236,6 +236,12 @@ class Texts:
 
       page.ui.texts.span("Test")
 
+      span = page.ui.texts.span("youpi")
+      span.mouse([
+        span.dom.css("color", "red"),
+        span.dom.css("cursor", "pointer").r],
+        span.dom.css("color", "blue").r)
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlText.Span`

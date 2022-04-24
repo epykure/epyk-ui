@@ -11,6 +11,7 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsBoolean
 
+from epyk.core.js.objects import JsIntersectionObserver
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.objects import JsData
 from epyk.core.js.objects import JsEvents
@@ -394,6 +395,18 @@ class JsObjects:
     if eval:
       return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (
         ", ".join(params), returns, ", ".join(values)))
+
+  def entry(self, i: int = 0, entry_code: str = "entry"):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param i:
+    :param entry_code:
+    """
+    return JsIntersectionObserver.IntersectionObserverEntry("%s[%s]" % (entry_code, i))
 
 
 class JsPromiseRecords(primitives.JsDataModel):

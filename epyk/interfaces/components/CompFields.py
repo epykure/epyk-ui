@@ -172,6 +172,7 @@ class Fields:
     Usage::
 
       page.ui.fields.today(label="Date").included_dates(["2019-09-01", "2019-09-06"])
+      page.ui.fields.today()
 
     Underlying HTML Objects:
 

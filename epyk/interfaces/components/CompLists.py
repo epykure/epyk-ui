@@ -251,7 +251,10 @@ class Lists:
 
     Usage::
 
-      page.ui.lists
+      c = page.ui.lists.items([
+        {"text": 'value 1', 'icon': 'fas fa-times', 'checked': True, 'value': 8000},
+        {"text": 'value 1', 'icon': 'fas fa-times', 'checked': True, 'value': 50000},
+      ], options={"style": {"background": 'green', 'color': 'white'}})
 
     Templates:
 
@@ -734,6 +737,12 @@ class Lists:
 
       page.ui.lists.badges([{'label': 'Python', 'value': 12}, {'label': 'R', 'value': 3}])
 
+      i = page.ui.lists.badges([
+        {"text": 'text', 'icon': 'fas fa-times', 'checked': True, 'value': 8},
+        {"text": 'text', 'icon': 'fas fa-times', 'checked': True, 'value': 5},
+      ], options={"badge": {"background": 'green'}})
+      i.click([page.js.console.log(i.dom.content)])
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlList.Badges`
@@ -852,7 +861,17 @@ class Lists:
 
     Usage::
 
-      page.ui.lists
+        minimalData = {
+          "teams": [
+            ["Team 1", "Team 2"],
+            ["Team 3", "Team 4"]
+        ],
+          "results": [
+            [[1, 2], [3, 4]],
+            [[4, 6], [2, 1]]]
+        }
+
+        bt = page.ui.lists.brackets(minimalData)
 
     Attributes:
     ----------

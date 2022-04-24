@@ -1,5 +1,6 @@
 
 from typing import Union, Optional
+from epyk.core.py import types
 from epyk.core.css import Defaults_css
 from epyk.core.css import FontFamily
 from epyk.interfaces import Arguments
@@ -16,9 +17,12 @@ def autoPrefixer(prop: str):
 
   Related Pages:
   --------------
-  https://www.w3schools.com/cssref/css3_browsersupport.asp
 
-  :param str prop: The CSS Attribute key.
+    https://www.w3schools.com/cssref/css3_browsersupport.asp
+
+  Attributes:
+  ----------
+  :param prop: The CSS Attribute key.
 
   :return: A generator function with the different keys to be added to the style.
   """
@@ -126,7 +130,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The animation-direction property defines whether an animation should be played forwards, backwards or in alternate cycles.
+    The animation-direction property defines whether an animation should be played forwards, backwards or in
+    alternate cycles.
 
     Related Pages:
 
@@ -166,13 +171,16 @@ class CssMixin:
     """
     Description:
     ------------
-    The animation-fill-mode property specifies a style for the target element when the animation is not playing (before it starts, after it ends, or both)
-    The animation-fill-mode property can have the following values:
+    The animation-fill-mode property specifies a style for the target element when the animation is not playing
+    (before it starts, after it ends, or both). The animation-fill-mode property can have the following values:
 
     none - Default value. Animation will not apply any styles to the element before or after it is executing
-    forwards - The element will retain the style values that is set by the last keyframe (depends on animation-direction and animation-iteration-count)
-    backwards - The element will get the style values that is set by the first keyframe (depends on animation-direction), and retain this during the animation-delay period
-    both - The animation will follow the rules for both forwards and backwards, extending the animation properties in both directions
+    forwards - The element will retain the style values that is set by the last keyframe
+      (depends on animation-direction and animation-iteration-count)
+    backwards - The element will get the style values that is set by the first keyframe
+      (depends on animation-direction), and retain this during the animation-delay period
+    both - The animation will follow the rules for both forwards and backwards,
+      extending the animation properties in both directions
 
     Related Pages:
 
@@ -373,12 +381,12 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param str val: Optional. The picture CSS url.
-    :param str size: Optional. The CSS background size property.
-    :param str repeat: Optional. The CSS repeat property.
-    :param str position: Optional. The CSS position.
-    :param str margin: Optional. The CSS margin.
-    :param str background_position: Optional. The CSS background position.
+    :param val: Optional. The picture CSS url.
+    :param size: Optional. The CSS background size property.
+    :param repeat: Optional. The CSS repeat property.
+    :param position: Optional. The CSS position.
+    :param margin: Optional. The CSS margin.
+    :param background_position: Optional. The CSS background position.
     """
     if val is not None:
       self.css({"background-image": "url(%a)" % val})
@@ -405,7 +413,7 @@ class CssMixin:
     ------------
     The background-position property sets the starting position of a background image.
 
-    Usage::
+    Related Pages:
 
       https://www.w3schools.com/cssref/pr_background-position.asp
     """
@@ -423,7 +431,7 @@ class CssMixin:
     ------------
     The background-repeat property sets if/how a background image will be repeated.
 
-    Usage::
+    Related Pages:
 
       https://www.w3schools.com/cssref/pr_background-repeat.asp
     """
@@ -453,10 +461,6 @@ class CssMixin:
     - border-color
 
     Related Pages:
-
-      https://www.w3schools.com/cssref/pr_border.asp
-
-    Usage::
 
       https://www.w3schools.com/cssref/pr_border.asp
     """
@@ -524,7 +528,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The border-collapse property sets whether table borders should collapse into a single border or be separated as in standard HTML.
+    The border-collapse property sets whether table borders should collapse into a single border or be separated as
+    in standard HTML.
 
     Related Pages:
 
@@ -775,7 +780,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The bottom property affects the vertical position of a positioned element. This property has no effect on non-positioned elements.
+    The bottom property affects the vertical position of a positioned element. This property has no effect on
+    non-positioned elements.
 
     Related Pages:
 
@@ -795,7 +801,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The box-decoration-break property specifies how the background, padding, border, border-image, box-shadow, margin, and clip-path of an element is applied when the box for the element is fragmented.
+    The box-decoration-break property specifies how the background, padding, border, border-image, box-shadow, margin,
+    and clip-path of an element is applied when the box for the element is fragmented.
 
     Related Pages:
 
@@ -865,7 +872,8 @@ class CssMixin:
     ------------
     What happens if an image is larger than its containing element?
 
-    The clip property lets you specify a rectangle to clip an absolutely positioned element. The rectangle is specified as four coordinates, all from the top-left corner of the element to be clipped.
+    The clip property lets you specify a rectangle to clip an absolutely positioned element. The rectangle is specified
+    as four coordinates, all from the top-left corner of the element to be clipped.
 
     Related Pages:
 
@@ -1043,7 +1051,8 @@ class CssMixin:
     ------------
     The display property specifies the display behavior (the type of rendering box) of an element.
 
-    In HTML, the default display property value is taken from the HTML specifications or from the browser/user default style sheet. The default value in XML is inline, including SVG elements.
+    In HTML, the default display property value is taken from the HTML specifications or from the browser/user default
+    style sheet. The default value in XML is inline, including SVG elements.
 
     Related Pages:
 
@@ -1148,7 +1157,7 @@ class CssMixin:
     val = val if val is not None else 'none'
     defined_vals = set(['none', 'left', 'right', 'initial', 'inherit'])
     if Defaults_css.CSS_EXCEPTIONS and val not in defined_vals:
-      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))
+      raise ValueError(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("float", val))
 
     self.css({"float": val})
 
@@ -1459,8 +1468,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The justify-content property aligns the flexible container's items when the items do not use all available space on the main-axis (horizontally).
-    This property is not inherited
+    The justify-content property aligns the flexible container's items when the items do not use all available space on
+    the main-axis (horizontally). This property is not inherited.
 
     Related Pages:
 
@@ -1479,7 +1488,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The left property affects the horizontal position of a positioned element. This property has no effect on non-positioned elements.
+    The left property affects the horizontal position of a positioned element. This property has no effect on
+    non-positioned elements.
 
     Related Pages:
 
@@ -1798,7 +1808,8 @@ class CssMixin:
     ------------
     The opacity property sets the opacity level for an element.
 
-    The opacity-level describes the transparency-level, where 1 is not transparent at all, 0.5 is 50% see-through, and 0 is completely transparent.
+    The opacity-level describes the transparency-level, where 1 is not transparent at all, 0.5 is 50% see-through,
+    and 0 is completely transparent.
 
     Related Pages:
 
@@ -1866,7 +1877,8 @@ class CssMixin:
     ------------
     The overflow property specifies what should happen if content overflows an element's box.
 
-    This property specifies whether to clip content or to add scrollbars when an element's content is too big to fit in a specified area.
+    This property specifies whether to clip content or to add scrollbars when an element's content is too big to fit
+    in a specified area.
 
     Note: The overflow property only works for block elements with a specified height.
 
@@ -1888,7 +1900,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The overflow-x property specifies whether to clip the content, add a scroll bar, or display overflow content of a block-level element, when it overflows at the left and right edges.
+    The overflow-x property specifies whether to clip the content, add a scroll bar, or display overflow content of a
+    block-level element, when it overflows at the left and right edges.
 
     Related Pages:
 
@@ -1906,7 +1919,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The overflow-y property specifies whether to clip the content, add a scroll bar, or display overflow content of a block-level element, when it overflows at the top and bottom edges.
+    The overflow-y property specifies whether to clip the content, add a scroll bar, or display overflow content of
+    a block-level element, when it overflows at the top and bottom edges.
 
     Related Pages:
 
@@ -2118,7 +2132,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The position property specifies the type of positioning method used for an element (static, relative, absolute, fixed, or sticky).
+    The position property specifies the type of positioning method used for an element (static, relative, absolute,
+    fixed, or sticky).
 
     Related Pages:
 
@@ -2210,9 +2225,10 @@ class CssMixin:
   @text_align.setter
   def text_align(self, val):
     val = val if val is not None else 'None'
+    vals = ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']
     first_val = val.split(" ")[0]
-    if Defaults_css.CSS_EXCEPTIONS and first_val not in ['center', 'None', 'left', 'right', 'justify', 'inherit', 'initial']:
-      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
+    if Defaults_css.CSS_EXCEPTIONS and first_val not in vals:
+      raise ValueError(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("text_align", val))
 
     self.css({"text-align": val})
 
@@ -2325,7 +2341,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The -webkit-text-stroke CSS property specifies the width and color of strokes for text characters. This is a shorthand property for the longhand properties -webkit-text-stroke-width and -webkit-text-stroke-color.
+    The -webkit-text-stroke CSS property specifies the width and color of strokes for text characters.
+    This is a shorthand property for the longhand properties -webkit-text-stroke-width and -webkit-text-stroke-color.
 
     Related Pages:
 
@@ -2361,7 +2378,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The -webkit-text-stroke-color CSS property specifies the stroke color of characters of text. If this property is not set, the value of the color property is used.
+    The -webkit-text-stroke-color CSS property specifies the stroke color of characters of text.
+    If this property is not set, the value of the color property is used.
 
     Related Pages:
 
@@ -2401,7 +2419,8 @@ class CssMixin:
     """
     Description:
     ------------
-    The transform property applies a 2D or 3D transformation to an element. This property allows you to rotate, scale, move, skew, etc., elements.
+    The transform property applies a 2D or 3D transformation to an element.
+    This property allows you to rotate, scale, move, skew, etc., elements.
 
     Related Pages:
 
@@ -2509,7 +2528,8 @@ class CssMixin:
     ------------
     The user-select property specifies whether the text of an element can be selected.
 
-    In web browsers, if you double-click on some text it will be selected/highlighted. This property can be used to prevent this.
+    In web browsers, if you double-click on some text it will be selected/highlighted.
+    This property can be used to prevent this.
 
     Related Pages:
 
@@ -2540,9 +2560,10 @@ class CssMixin:
   @vertical_align.setter
   def vertical_align(self, val):
     val = val if val is not None else 'None'
-    if Defaults_css.CSS_EXCEPTIONS and val not in ["baseline", "length", "sub", "super", "top", "text-top", "middle",
-                                                   "bottom", "text-bottom", "initial", "inherit", 'None']:
-      raise Exception(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("vertical_align", val))
+    vals = ["baseline", "length", "sub", "super", "top", "text-top", "middle", "bottom", "text-bottom", "initial",
+            "inherit", 'None']
+    if Defaults_css.CSS_EXCEPTIONS and val not in vals:
+      raise ValueError(Defaults_css.CSS_EXCEPTIONS_FORMAT % ("vertical_align", val))
 
     self.css({"vertical-align": val})
 
@@ -2586,8 +2607,8 @@ class CssMixin:
   @width.setter
   def width(self, val):
     if val is False:
-      if "width" in self.htmlObj.attrs:
-        del self.htmlObj.attrs['width']
+      if "width" in self.component.attrs:
+        del self.component.attrs['width']
       if "width" in self.component.attr["css"]:
         del self.component.attr["css"]["width"]
     else:
@@ -2660,7 +2681,8 @@ class CssMixin:
 
     An element with greater stack order is always in front of an element with a lower stack order.
 
-    Note: z-index only works on positioned elements (position: absolute, position: relative, position: fixed, or position: sticky).
+    Note: z-index only works on positioned elements (position: absolute, position: relative, position:
+    fixed, or position: sticky).
 
     Related Pages:
 
@@ -2681,7 +2703,7 @@ class CssMixin:
 
     Usage::
 
-      htmlObj.style.css.middle(25)
+      component.style.css.middle(25)
 
     Related Pages:
 
@@ -2690,7 +2712,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[int] line_height: Optional. Set the line height CSS property.
+    :param line_height: Optional. Set the line height CSS property.
     """
     self.vertical_align = "middle"
     self.text_align = "center"
@@ -2707,7 +2729,7 @@ class CssMixin:
 
     Usage::
 
-      htmlObj.style.css.sticky()
+      component.style.css.sticky()
 
     Related Pages:
 
@@ -2715,11 +2737,11 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param int top: The number of pixel from the top
-    :param Optional[int] bottom:
-    :param Optional[int] left:
-    :param Optional[int] right:
-    :param int z_index: Optional. The CSS level of the component.
+    :param top: The number of pixel from the top
+    :param bottom:
+    :param left:
+    :param right:
+    :param z_index: Optional. The CSS level of the component.
 
     :return: The CSS object to allow the chaining
     """
@@ -2743,7 +2765,7 @@ class CssMixin:
 
     Usage::
 
-      .style.css.shadow()
+      component.style.css.shadow()
 
     Related Pages:
 
@@ -2751,8 +2773,8 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[str] color: The color.
-    :param int size: The size for the shadow.
+    :param color: The color.
+    :param size: The size for the shadow.
     """
     if color is None:
       color = self.component.page.theme.colors[2]
@@ -2783,7 +2805,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param int top: The margin with the page top border.
+    :param top: The margin with the page top border.
     """
     self.position = "fixed"
     self.display = "block"
@@ -2794,7 +2816,7 @@ class CssMixin:
     """
     Description:
     ------------
-    Fix the component at the bottom of the page
+    Fix the component at the bottom of the page.
 
     Usage::
 
@@ -2802,7 +2824,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param int bottom: The margin with the bottom of the page.
+    :param bottom: The margin with the bottom of the page.
     """
     self.position = "fixed"
     self.display = "block"
@@ -2821,9 +2843,9 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[str] color: Optional. The border color. Default the grey from selected theme
-    :param int size: Optional. The border size. Default 1pz
-    :param str style: Optional. The border style. Default solid - a plain line
+    :param color: Optional. The border color. Default the grey from selected theme
+    :param size: Optional. The border size. Default 1pz
+    :param style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
       color = self.component.page.theme.greys[-1]
@@ -2834,7 +2856,7 @@ class CssMixin:
     """
     Description:
     ------------
-    Shortcut function to set the light border color for a defined HTML component
+    Shortcut function to set the light border color for a defined HTML component.
 
     Usage::
 
@@ -2842,9 +2864,9 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[str] color: Optional. The border color. Default the grey from selected theme
-    :param int size: Optional. The border size. Default 1pz
-    :param str style: Optional. The border style. Default solid - a plain line
+    :param color: Optional. The border color. Default the grey from selected theme
+    :param size: Optional. The border size. Default 1pz
+    :param style: Optional. The border style. Default solid - a plain line
     """
     if color is None:
       color = self.component.page.theme.greys[3]
@@ -2872,7 +2894,7 @@ class CssMixin:
     """
     Description:
     ------------
-    Shotcut to put the underline the text
+    Shortcut to put the underline the text
 
     Related Pages:
 
@@ -2889,12 +2911,12 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[tuple] top:
-    :param Optional[tuple] left:
-    :param Optional[tuple] bottom:
-    :param Optional[tuple] right:
-    :param bool transform:
-    :param bool center:
+    :param top:
+    :param left:
+    :param bottom:
+    :param right:
+    :param transform:
+    :param center:
     """
     if top is not None:
       top = Arguments.size(top, unit="px")
@@ -2926,11 +2948,11 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[tuple] top:
-    :param Optional[tuple] left:
-    :param Optional[tuple] bottom:
-    :param Optional[tuple] right:
-    :param bool transform:
+    :param top:
+    :param left:
+    :param bottom:
+    :param right:
+    :param transform:
     """
     if top is not None:
       top = Arguments.size(top, unit="px")
@@ -2957,7 +2979,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param float factor:
+    :param factor:
     """
     self.font_size = self.component.page.body.style.globals.font.normal(factor)
     return self.component
@@ -2971,10 +2993,10 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param Optional[tuple] top: Optional. The size from the top of the ocmponent with its unit
-    :param Optional[tuple] right: Optional. The size from the right of the ocmponent with its unit
-    :param Optional[tuple] bottom: Optional. The size from the bottom of the ocmponent with its unit
-    :param Optional[tuple] left: Optional. The size from the left of the ocmponent with its unit
+    :param top: Optional. The size from the top of the component with its unit
+    :param right: Optional. The size from the right of the component with its unit
+    :param bottom: Optional. The size from the bottom of the component with its unit
+    :param left: Optional. The size from the left of the component with its unit
     """
     width = self.width or '100%'
     overall_margin, overal_margin_unit = 0, None
@@ -2998,7 +3020,7 @@ class CssMixin:
       self.width = "calc(%s - %s%s)" % (width, overall_margin, overal_margin_unit)
     return self
 
-  def inline_block(self, width: Optional[Union[tuple, int, str]] = None):
+  def inline_block(self, width: types.SIZE_TYPE = None):
     """
     Description:
     -----------
@@ -3016,7 +3038,7 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param width: Integer | Tuple. Optional.
+    :param width: Optional.
     """
     if self.width is not None and self.width.endswith("%"):
       self.width = None
@@ -3070,9 +3092,9 @@ class CssMixin:
 
     Attributes:
     ----------
-    :param from_color: String.
-    :param to_color: String.
-    :param direction: String. Optional.
+    :param from_color: The first color code
+    :param to_color: The last color code
+    :param direction: Optional. The gradient side
     """
     self.css({"background": "-webkit-linear-gradient(%s, %s, %s)" % (direction, from_color, to_color),
               "-webkit-text-fill-color": "transparent", "-webkit-background-clip": "text"})

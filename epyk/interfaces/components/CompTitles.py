@@ -85,6 +85,8 @@ class Titles:
 
     Usage::
 
+      page.ui.titles.headline("Daily")
+
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
@@ -92,15 +94,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param options: Optional. Specific Python options available for this component.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param align: Optional. The text-align property within this component.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -177,6 +179,8 @@ class Titles:
     :categories:
 
     Usage::
+
+      t0 = page.ui.titles.section("Available Items")
 
     Attributes:
     ----------

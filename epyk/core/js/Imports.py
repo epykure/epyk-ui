@@ -164,6 +164,16 @@ NOTEBOOK_MAPPING = {
 TABULATOR_EXTENSIONS = '0.0.29'
 
 JS_IMPORTS = {
+  #
+  'intersection-observer': {
+    "repository": "https://github.com/w3c/IntersectionObserver/tree/main/polyfill",
+    "version": "0.12.0",
+    "polyfill": True,
+    'modules': [
+      {'script': 'intersection-observer.js', 'path': 'intersection-observer@%(version)s/', 'cdnjs': JSDELIVER},
+    ],
+  },
+
   # numbers formatting
   'accounting': {
     "repository": "https://github.com/openexchangerates/accounting.js",
@@ -3630,9 +3640,9 @@ class ImportManager:
   string with the module names and the correct paths to your final HTML report.
   """
 
-  online = True
-  self_contained = False
-  _static_path = None
+  online: bool = True
+  self_contained: bool = False
+  _static_path: Optional[str] = None
 
   def __init__(self, page=None):
     """
@@ -3650,6 +3660,7 @@ class ImportManager:
     :param page: Report. Optional. The internal report object with all the required external modules.
     """
     self.page, ovr_version, self.__pkgs = page, {}, None
+    self.force_position = {}
     self.reload()
 
   def reload(self):
@@ -3892,13 +3903,13 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param List[str] imports: An array with the list of aliases for the external packages.
-    :param Optional[dict] import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
-    :param bool use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
+    :param imports: An array with the list of aliases for the external packages.
+    :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
+    :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
 
     :return: Return the list with the full list of aliases (including dependencies)
     """
-    import_resolved = []
+    import_resolved, polyfills = [], []
     for mod in imports:
       self.getReq(mod, import_resolved, import_hierarchy or JS_IMPORTS, use_require_js=use_require_js)
     for a in set(import_resolved):
@@ -3912,7 +3923,10 @@ class ImportManager:
       if len(occurrences) > 1:
         for j in occurrences[::-1][1:]:
           import_resolved.pop(j)
-    return import_resolved[::-1]
+      if JS_IMPORTS.get(a, {}).get("polyfill"):
+        import_resolved.remove(a)
+        polyfills.append(a)
+    return polyfills + import_resolved[::-1]
 
   def cssResolve(self, css_aliases: List[str], local_css: Optional[dict] = None, excluded: List[str] = None):
     """
@@ -4007,10 +4021,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param List[str] js_aliases: An array with the list of aliases for the external packages.
-    :param Optional[dict] local_js: Optional. The external file overrides with the full path.
-    :param Optional[List[str]] excluded: Optional. Packages excluded from the result object
-      (mandatory for some frameworks already onboarding modules).
+    :param js_aliases: An array with the list of aliases for the external packages.
+    :param local_js: Optional. The external file overrides with the full path.
+    :param excluded: Optional. Packages excluded from the result object
+       (mandatory for some frameworks already onboarding modules).
 
     :return: The string to be added to the header
     """
@@ -4074,7 +4088,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param expr: String. The Javascript String in the page.
+    :param expr: The Javascript String in the page.
 
     :return: A Python list with all the Javascript external URL to be imported.
     """
@@ -4093,8 +4107,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param List[str] css_alias: An array with the list of aliases for the CSS external packages.
-    :param List[str] js_alias: An array with the list of aliases for the Js external packages.
+    :param css_alias: An array with the list of aliases for the CSS external packages.
+    :param js_alias: An array with the list of aliases for the Js external packages.
 
     :return: A dictionary with the CSS and JS files definition.
     """
@@ -4165,10 +4179,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param str alias: The package reference in the above list.
-    :param Optional[str] version: Optional. The package version to retrieve.
-    :param str static_path: Optional. The path in which the files should be copied to.
-    :param bool reload: Optional. Flag to force the package reloading if the folder already exists. Default False.
+    :param alias: The package reference in the above list.
+    :param version: Optional. The package version to retrieve.
+    :param static_path: Optional. The path in which the files should be copied to.
+    :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False.
 
     :return: The Python Import manager.
     """
@@ -4235,10 +4249,10 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param str alias: The package reference in the above list.
-    :param str version: The new version to be used globally.
-    :param Optional[dict] js: Optional. The JavaScript packages to be added.
-    :param Optional[dict] css: Optional. The CSS packages to be added.
+    :param alias: The package reference in the above list.
+    :param version: The new version to be used globally.
+    :param js: Optional. The JavaScript packages to be added.
+    :param css: Optional. The CSS packages to be added.
     """
     self.reqVersion[alias] = version
     for mod_type in [CSS_IMPORTS, JS_IMPORTS]:
@@ -4291,8 +4305,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param str alias: The package alias.
-    :param dict config: The Python dictionary with the package details.
+    :param alias: The package alias.
+    :param config: The Python dictionary with the package details.
 
     :return: The import Manager.
     """
@@ -4342,8 +4356,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param dict data: The Report modules to resolve.
-    :param Optional[list] excluded_packages: Optional. The packages to exclude.
+    :param data: The Report modules to resolve.
+    :param excluded_packages: Optional. The packages to exclude.
     """
     deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'],
                                                                                        'paths': {}}
@@ -4424,7 +4438,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param bool all: Optional. A flag to specify if only the one requested in the report should be displayed.
+    :param all: Optional. A flag to specify if only the one requested in the report should be displayed.
     """
     packages = {}
     if not all:
@@ -4467,9 +4481,9 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param List[str] products: The various Google products to enable in the report.
-    :param str api_key: Optional. The Google developer API key.
-    :param str site_key: Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
+    :param products: The various Google products to enable in the report.
+    :param api_key: Optional. The Google developer API key.
+    :param site_key: Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
     """
     global JS_IMPORTS
 
@@ -4491,8 +4505,8 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param List[str] aliases: The list of aliases.
-    :param Optional[str] end_points: Optional. The end point on the server (The module static_path as default).
+    :param aliases: The list of aliases.
+    :param end_points: Optional. The end point on the server (The module static_path as default).
     """
     global JS_IMPORTS
     global CSS_IMPORTS
@@ -4529,7 +4543,7 @@ class ImportManager:
 
     Attributes:
     ----------
-    :param str alias: The JavaScript module alias (usually the one used by npm).
+    :param alias: The JavaScript module alias (usually the one used by npm).
     """
     if alias not in JS_IMPORTS:
       return ""
@@ -4554,7 +4568,7 @@ class Package:
     """
     Description:
     ------------
-    This will allow to create and change external packages.
+    This will allow the creation and the change of external packages usually cached by the browser.
     It will add a unique ID to make sure the browser will always try to reload it.
 
     Usage::
@@ -4564,7 +4578,7 @@ class Package:
 
     Attributes:
     ----------
-    :param str name: The package name.
+    :param name: The package name.
     """
     import random
 

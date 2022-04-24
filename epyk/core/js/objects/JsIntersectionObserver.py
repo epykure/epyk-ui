@@ -1,18 +1,18 @@
-
-from epyk.core.js.objects import JsNodeDomRect
+from typing import Union
+from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsArray
-
-from epyk.core.js.fncs import JsFncs
 
 from epyk.core.js import JsUtils
 
 
-class IntersectionObserverEntry(JsObject.JsObject):
+class IntersectionObserverEntry:
+
+  def __init__(self, js_code: str = "entry"):
+    self.varId = js_code
 
   @property
   def boundingClientRect(self):
@@ -26,7 +26,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/boundingClientRect
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.boundingClientRect" % self.varId)
 
   @property
   def intersectionRatio(self):
@@ -40,7 +40,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRatio
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.intersectionRatio" % self.varId)
 
   @property
   def intersectionRect(self):
@@ -55,7 +55,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/intersectionRect
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.intersectionRect" % self.varId)
 
   @property
   def isIntersecting(self):
@@ -69,7 +69,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/isIntersecting
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.isIntersecting" % self.varId)
 
   @property
   def rootBounds(self):
@@ -83,7 +83,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/rootBounds
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.rootBounds" % self.varId)
 
   @property
   def target(self):
@@ -97,7 +97,7 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/target
     """
-    raise NotImplementedError()
+    return JsUtils.jsWrap("%s.target" % self.varId)
 
   @property
   def time(self):
@@ -111,13 +111,84 @@ class IntersectionObserverEntry(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry/time
     """
-    return JsNumber.JsNumber("%s.time")
+    return JsUtils.jsWrap("%s.time" % self.varId)
+
+  def toStr(self):
+    return JsUtils.jsWrap(self.varId)
 
 
-class IntersectionObserver(JsObject.JsObject):
+class IntersectionObserver:
 
-  def __init__(self):
-    pass
+  def __init__(self, page: primitives.PageModel, js_code: str):
+    self.page = page
+    self.page.jsImports.add("intersection-observer")
+    self._js = []
+    self.js_code = js_code
+
+  @property
+  def varId(self):
+    return self.js_code
+
+  def entry(self, i: int = 0, entry_code: str = "entry") -> IntersectionObserverEntry:
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param i: Optional.
+    :param entry_code: Optional. The entry variable name on JavaScript side.
+    """
+    return IntersectionObserverEntry(js_code="%s[%s]" % (entry_code, i))
+
+  def new(self, callback, options: dict = None, observe_once: bool = False, profile: types.PROFILE_TYPE = None,
+          entry_code: str = "entry"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param callback:
+    :param observe_once:
+    :param options:
+    :param profile:
+    :param entry_code:
+    """
+    if observe_once:
+      callback.append(
+        self.page.js.if_(self.page.js.objects.entry().isIntersecting,
+        self.page.js.intersectionObserver(js_code=self.js_code).disconnect()))
+    str_funcs = JsUtils.jsConvertFncs(callback, toStr=True, profile=profile)
+    if options is not None:
+      self._js.append("var %s = new IntersectionObserver(%s => {%s}, %s)" % (self.varId, entry_code, str_funcs, options))
+    else:
+      self._js.append("var %s = new IntersectionObserver(%s => {%s})" % (self.varId, entry_code, str_funcs))
+    return self
+
+  @property
+  def POLL_INTERVAL(self):
+    """
+    Description:
+    ------------
+    """
+    return JsObject.JsObject("%s.POLL_INTERVAL" % self.varId, is_py_data=False)
+
+  @POLL_INTERVAL.setter
+  def POLL_INTERVAL(self, mill_second: int):
+    self._js.append("%s.POLL_INTERVAL = %s" % (self.varId, mill_second))
+
+  @property
+  def USE_MUTATION_OBSERVER(self):
+    """
+    Description:
+    ------------
+    """
+    return JsObject.JsObject("%s.USE_MUTATION_OBSERVER" % self.varId, is_py_data=False)
+
+  @USE_MUTATION_OBSERVER.setter
+  def USE_MUTATION_OBSERVER(self, flag: bool):
+    self._js.append("%s.USE_MUTATION_OBSERVER = %s" % (self.varId, flag))
 
   @property
   def root(self):
@@ -132,7 +203,7 @@ class IntersectionObserver(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/root
     """
-    return JsObject.JsObject("%s.root", is_py_data=False)
+    return JsObject.JsObject("%s.root" % self.varId, is_py_data=False)
 
   @property
   def rootMargin(self):
@@ -146,7 +217,7 @@ class IntersectionObserver(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/rootMargin
     """
-    return JsString.JsString("%s.rootMargin", is_py_data=False)
+    return JsString.JsString("%s.rootMargin" % self.varId, is_py_data=False)
 
   @property
   def thresholds(self):
@@ -162,9 +233,9 @@ class IntersectionObserver(JsObject.JsObject):
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/thresholds
     """
-    return JsArray.JsArray("%s.thresholds", is_py_data=False)
+    return JsArray.JsArray("%s.thresholds" % self.varId, is_py_data=False)
 
-  def observe(self, target_element):
+  def observe(self, target_element: Union[primitives.HtmlModel, str]):
     """
     Description:
     ------------
@@ -180,9 +251,13 @@ class IntersectionObserver(JsObject.JsObject):
     :param target_element: An element whose visibility within the root is to be monitored.
                           This element must be a descendant of the root element (or contained wtihin the current
                           document, if the root is the document's viewport).
-    :return:
     """
-    raise NotImplementedError()
+    if hasattr(target_element, "dom"):
+      js_code = target_element.dom.varId
+    else:
+      js_code = JsUtils.jsConvertData(target_element, None)
+    self._js.append("%s.observe(%s)" % (self.varId, js_code))
+    return self
 
   def disconnect(self):
     """
@@ -190,11 +265,14 @@ class IntersectionObserver(JsObject.JsObject):
     ------------
     The IntersectionObserver method disconnect() stops watching all of its target elements for visibility changes.
 
-    https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/disconnect
-    """
-    return JsFncs.JsFunction("%s.disconnect()")
+    Related Pages:
 
-  def takeRecords(self):
+      https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/disconnect
+    """
+    self._js.append("%s.disconnect()" % self.varId)
+    return self
+
+  def takeRecords(self, js_code: str = None):
     """
     Description:
     ------------
@@ -205,26 +283,58 @@ class IntersectionObserver(JsObject.JsObject):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/takeRecords
+      https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/takeRecords
+
+    Attributes:
+    ----------
+    :param js_code: Optional. The entries variable name.
 
     :return: An array of IntersectionObserverEntry objects, one for each target element whose intersection with the
-    root has changed since the last time the intersections were checked.
+       root has changed since the last time the intersections were checked.
     """
-    return JsFncs.JsFunction("%s.takeRecords()")
+    return JsArray.JsArray("%s.takeRecords()" % self.varId, js_code=js_code)
 
-  def unobserve(self, target_element):
+  def eachRecord(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, entry_code: str = "entry"):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    :param entry_code: Optional. The entry variable name on JavaScript side.
+    """
+    str_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsUtils.jsWrap("%s.takeRecords().forEach(function(%s){%s})" % (self.varId, entry_code, str_funcs))
+
+  def unobserve(self, target_element: Union[primitives.HtmlModel, str]):
     """
     Description:
     ------------
     The IntersectionObserver method unobserve() instructs the IntersectionObserver to stop observing the specified
     target element.
 
+    Run the unobserve a target Element algorithm, providing this and target.
+
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/unobserve
+      https://w3c.github.io/IntersectionObserver/#dom-intersectionobserver-intersectionobserver
 
     Attributes:
     ----------
     :param target_element: The Element to cease observing.
-    If the specified element isn't being observed, this method does nothing and no exception is thrown.
+        If the specified element isn't being observed, this method does nothing and no exception is thrown.
     """
-    return JsFncs.JsFunction("%s.unobserve()")
+    if hasattr(target_element, "dom"):
+      js_code = target_element.dom.varId
+    else:
+      js_code = JsUtils.jsConvertData(target_element, None)
+    self._js.append("%s.unobserve(%s)" % (self.varId, js_code))
+    return self
+
+  def toStr(self):
+    str_content = "; ".join(self._js)
+    self._js = []
+    return str_content

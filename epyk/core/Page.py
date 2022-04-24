@@ -724,8 +724,11 @@ class Report:
 
     Usage::
 
-      page = Report()
+      page = pk.Page()
       page.headers.meta.viewport({"width": "device-width"})
+
+      # Use the default DEV icon.
+      page.headers.dev()
 
     :rtype: html.Header.Header
     """

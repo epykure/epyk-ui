@@ -91,7 +91,7 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param bool status: Optional. A flag to specify the status of the loading event.
+    :param status: Optional. A flag to specify the status of the loading event.
     """
     if status:
       self.dom.setAttribute("data-content", self.dom.content)
@@ -130,13 +130,17 @@ class Button(Html.Html):
       but = page.ui.button("Click Me")
       but.goto("http://www.epyk-studio.com")
 
+      # Create a link to a page within the same tab
+      button2 = page.ui.button("Go go Google")
+      button2.goto("www.google.fr", target="_self")
+
     Attributes:
     ----------
-    :param str url: The destination path.
-    :param Optional[Union[list, str]] js_funcs: The Javascript Events triggered before the redirection.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param str target: Optional. The type of link to the next page.
-    :param Optional[str] source_event: Optional. The event source.
+    :param url: The destination path.
+    :param js_funcs: The Javascript Events triggered before the redirection.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param target: Optional. The type of link to the next page.
+    :param source_event: Optional. The event source.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -175,8 +179,8 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[str] background_color: Optional. An hexadecimal color code.
-    :param Optional[str] color: Optional. A hexadecimal color code.
+    :param background_color: Optional. An hexadecimal color code.
+    :param color: Optional. A hexadecimal color code.
 
     :return: The htmlObj to allow the chaining
     """
@@ -203,10 +207,10 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_press_funcs: Optional. Javascript functions.
-    :param Optional[Union[list, str]] js_release_funcs: Optional. Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Boolean. Optional.
+    :param js_press_funcs: Optional. Javascript functions.
+    :param js_release_funcs: Optional. Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param on_ready: Optional.
     """
     str_fnc = ""
     if js_press_funcs is not None:
@@ -238,7 +242,7 @@ class Button(Html.Html):
 
     Attributes:
     ----------
-    :param str color: the color of the component (text and borders).
+    :param color: the color of the component (text and borders).
     """
     self.style.css.border = "1px solid {}".format(color)
     self.set_attrs(name="onmouseover", value="this.style.backgroundColor='%s';this.style.color='white'" % color)
@@ -304,6 +308,17 @@ class Checkbox(Html.Html):
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      b = page.ui.button("Add")
+      b.click([cb.dom.add([{"value": "test"}])])
+
     :rtype: JsHtml.JsHtmlButtonChecks
     """
     if self._dom is None:
@@ -326,9 +341,9 @@ class Checkbox(Html.Html):
 
     Attributes:
     ----------
-    :param str value: The tooltip value.
-    :param str location: Optional. The location of the tooltip compared to the HTML component.
-    :param Optional[dict] options: Optional. The tooltip options (not used yet)
+    :param value: The tooltip value.
+    :param location: Optional. The location of the tooltip compared to the HTML component.
+    :param options: Optional. The tooltip options (not used yet)
     """
     self.options.tooltip = value
     self.options.tooltip_options = options
@@ -361,10 +376,10 @@ class Checkbox(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: Optional. The source target for the event.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -394,14 +409,14 @@ class CheckButton(Html.Html):
   name = 'Check Button'
   _option_cls = OptButton.OptCheck
 
-  def __init__(self, report: primitives.PageModel, flag: bool = False, tooltip: Optional[str] = None,
+  def __init__(self, page: primitives.PageModel, flag: bool = False, tooltip: Optional[str] = None,
                width: Optional[tuple] = None, height: Optional[tuple] = None, icon: Optional[str] = None,
                label: Optional[str] = None, html_code: Optional[str] = None,
                options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None):
-    super(CheckButton, self).__init__(report, 'Y' if flag else 'N', html_code=html_code, options=options,
+    super(CheckButton, self).__init__(page, 'Y' if flag else 'N', html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile)
-    self.input = report.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
-      {"width": report.body.style.globals.font.normal()})
+    self.input = page.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
+      {"width": page.body.style.globals.font.normal()})
     self.input.style.css.color = self.page.theme.success.base if flag else self.page.theme.danger.base
     self.input.style.css.middle()
     self.input.options.managed = False
@@ -490,14 +505,14 @@ class CheckButton(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_fnc_true: Js function or a list of JsFunction to be triggered when checked
-    :param Optional[Union[list, str]] js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when
+    :param js_fnc_true: Js function or a list of JsFunction to be triggered when checked
+    :param js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when
     unchecked
-    :param bool with_colors: Optional. Add default colors to the icons.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param with_colors: Optional. Add default colors to the icons.
+    :param profile: Optional. A flag to set the component performance storage
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
-    :return: The htmlObj to allow the chaining
+    :return: The component to allow the chaining
     """
     if self.label is not None and hasattr(self.label, 'style'):
       self.label.style.css.cursor = 'pointer'
@@ -613,7 +628,7 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param int angle: The rotation angle.
+    :param angle: The rotation angle.
     """
     self.icon.rotate(angle)
     return self
@@ -635,7 +650,7 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param str position: Optional. The position of the icon in the page.
+    :param position: Optional. The position of the icon in the page.
     """
     self.icon.pull(position)
     return self
@@ -649,10 +664,10 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The source target for the event.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.hover_color:
       if self.hover_color == 'danger':
@@ -674,11 +689,11 @@ class IconEdit(Html.Html):
 
     Attributes:
     ----------
-    :param str url: The target url.
-    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param str target: Optional. The type of link in the browser (new tab or same one).
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The event source reference.
+    :param url: The target url.
+    :param js_funcs: Optional. Javascript functions.
+    :param target: Optional. The type of link in the browser (new tab or same one).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The event source reference.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -693,13 +708,13 @@ class IconEdit(Html.Html):
 class Buttons(Html.Html):
   name = 'Buttons'
 
-  def __init__(self, report: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
                html_code: Optional[str], helper: Optional[str], options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    super(Buttons, self).__init__(report, [], html_code=html_code,
+    super(Buttons, self).__init__(page, [], html_code=html_code,
                                   css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
     for b in data:
-      bt = report.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
+      bt = page.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
       bt.css(options.get("button_css", {}))
       self.__add__(bt)
     self.add_helper(helper)
@@ -740,11 +755,11 @@ class ButtonMenuItem:
 
     Attributes:
     ----------
-    :param str event: The JavaScript event.
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. Override the source component on which the component is defined.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param event: The JavaScript event.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. Override the source component on which the component is defined.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -763,10 +778,10 @@ class ButtonMenuItem:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Boolean. Optional. A flag to set the component performance storage.
-    :param str source_event: Optional. Override the source component on which the component is defined.
-    :param bool on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param source_event: Optional. Override the source component on which the component is defined.
+    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     return self.on("click", js_funcs, profile, source_event, on_ready)
 
@@ -874,6 +889,26 @@ class ButtonMore(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+      b = page.studio.buttons.more([
+        {"text": "Item 1"},
+        {"text": "Item 2"},
+      ], profile=True)
+
+      b.click([page.js.console.log("test")])
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    :param source_event:
+    :param on_ready:
+    """
     return self.text.click(js_funcs, profile, source_event, on_ready)
 
   def __str__(self):
@@ -1020,10 +1055,10 @@ class ButtonFilter(Html.Html):
 class ButtonData(Button):
   name = 'button data'
 
-  def __init__(self, report: primitives.PageModel, text: Optional[str] = None, icon: Optional[str] = None,
+  def __init__(self, page: primitives.PageModel, text: Optional[str] = None, icon: Optional[str] = None,
                width: Optional[tuple] = None, height: Optional[tuple] = None, html_code: Optional[str] = None,
                tooltip: Optional[str] = None, profile=None, options: Optional[dict] = None):
-    super(ButtonData, self).__init__(report, text, icon, width, height, html_code, tooltip, profile, options)
+    super(ButtonData, self).__init__(page, text, icon, width, height, html_code, tooltip, profile, options)
     self.set_attrs(name="data-content", value="")
     self.filename = None
 

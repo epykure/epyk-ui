@@ -7,6 +7,7 @@ import json
 import functools
 from typing import Union, Optional, List, Any
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
@@ -267,7 +268,7 @@ def getJsValid(value: str, fail: bool = True):
   return clean_name
 
 
-def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str], is_py_data: bool = False,
+def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
                   jsFncVal=None, toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
   """
   Description:
@@ -276,11 +277,11 @@ def jsConvertFncs(js_funcs: Union[List[Union[str, primitives.JsDataModel]], str]
 
   Attributes:
   ----------
-  :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: The PyJs functions.
-  :param bool is_py_data: Optional. A flag to force the Python conversion using json.
+  :param js_funcs: The PyJs functions.
+  :param is_py_data: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
-  :param bool toStr: Optional. A flag to specify if the result should be aggregated.
-  :param Optional[Union[bool, dict]] profile. Optional.
+  :param toStr: Optional. A flag to specify if the result should be aggregated.
+  :param profile. Optional.
   """
   global PROFILE_COUNT
 

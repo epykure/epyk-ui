@@ -66,7 +66,7 @@ class Graphs:
     return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                     options=options, html_code=html_code)
 
-  def skillbars(self, records=None, y_column: list = None, x_axis: str = None, title: str = None,
+  def skillbars(self, records=None, y_column: str = None, x_axis: str = None, title: str = None,
                 width: Union[int, tuple] = (100, '%'), height: Union[int, tuple] = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: Union[dict, bool] = False):
     """
@@ -91,10 +91,10 @@ class Graphs:
     Attributes:
     ----------
     :param records: Array<dict>. Optional. The Python list of dictionaries.
-    :param y_column: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
+    :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param title: Optional. The chart title.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.

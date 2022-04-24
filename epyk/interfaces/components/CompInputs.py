@@ -728,10 +728,12 @@ class Inputs:
     """
     Description:
     ------------
+    Add an input label component.
 
     Usage::
 
       page.ui.inputs.label()
+      page.ui.inputs.label("test")
 
     Underlying HTML Objects:
 

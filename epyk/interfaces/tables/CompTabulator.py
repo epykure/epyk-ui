@@ -23,6 +23,10 @@ class Tabulators:
 
     Usage::
 
+      data = [{"A": 1, "B": 2}]
+      table = page.ui.tables.tabulators.table(data, cols=["A"], rows=["B"])
+      table.on("dblclick", page.js.alert("test"), profile=False)
+
     Attributes:
     ----------
     :param records: List. Optional. The list of dictionaries with the input data.

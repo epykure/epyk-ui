@@ -1116,12 +1116,23 @@ class JsHtmlButtonChecks(JsHtml):
     THis will add the item at the end of the list by default.
     By default the list will not add duplicated entries.
 
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      a = page.ui.button("Add")
+      a.click([cb.dom.add([{"value": "test"}])])
+
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] data: The Python Javascript data.
-    :param bool is_unique: Optional. Flag to specify if only distinct values should be added (no duplicates).
-    :param Optional[dict] css_style: Optional. The CSS style of the added item.
-    :param str position: Optional. The position of the new item in the list (bottom or top).
+    :param data: The Python Javascript data.
+    :param is_unique: Optional. Flag to specify if only distinct values should be added (no duplicates).
+    :param css_style: Optional. The CSS style of the added item.
+    :param position: Optional. The position of the new item in the list (bottom or top).
     """
     css_style = css_style or {'margin': 0, 'display': 'block', 'position': 'relative', 'cursor': 'pointer'}
     is_unique = JsUtils.jsConvertData(is_unique, None)
@@ -1147,6 +1158,17 @@ class JsHtmlButtonChecks(JsHtml):
     Description:
     -----------
     Empty the list content.
+
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      d = page.ui.button("Empty")
+      d.click([cb.dom.empty()])
     """
     return '%s.empty()' % self.jquery.varId
 
@@ -1154,10 +1176,22 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
+    Delete an item to the checkbox butttons.
+
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      d = page.ui.button("Delete")
+      d.click([cb.dom.delete("test 2")])
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] data:
+    :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
@@ -1171,10 +1205,22 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
+    Check an a checkbox.
+
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      d = page.ui.button("Check")
+      d.click([cb.dom.check("test 2")])
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] data:
+    :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
@@ -1200,10 +1246,22 @@ class JsHtmlButtonChecks(JsHtml):
     """
     Description:
     -----------
+    Change the CSS style of a given item.
+
+    Usage::
+
+      data = [
+        {"value": "Test 1", "checked": True, "name": 'name'},
+        {"value": "Test 2", "dsc": 'description'},
+      ]
+      cb = page.ui.buttons.checkboxes(data)
+
+      s = page.ui.button("Style")
+      s.click([cb.dom.css_label("Test 2", {"color": 'orange'})])
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] data:
+    :param data:
     :param dict attrs:
     """
     data = JsUtils.jsConvertData(data, None)

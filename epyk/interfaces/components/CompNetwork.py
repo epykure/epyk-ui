@@ -5,7 +5,7 @@ import os
 import logging
 
 from typing import Union
-
+from epyk.core.py import types
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
@@ -16,8 +16,8 @@ class Network:
   def __init__(self, ui):
     self.page = ui.page
 
-  def comments(self, html_code, record=None, width: Union[tuple, int] = (100, '%'),
-               height: Union[tuple, int] = (200, 'px'), profile: Union[dict, bool] = None, options: dict = None):
+  def comments(self, html_code: str, record: list = None, width: types.SIZE_TYPE = (100, '%'),
+               height: types.SIZE_TYPE = (200, 'px'), profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     ------------
@@ -56,8 +56,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def chat(self, html_code, record=None, width: Union[tuple, int] = (100, '%'),
-           height: Union[tuple, int] = (200, 'px'), profile=None, options=None):
+  def chat(self, html_code: str, record: list = None, width: types.SIZE_TYPE = (100, '%'),
+           height: types.SIZE_TYPE = (200, 'px'), profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     ------------
@@ -90,12 +90,15 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def bot(self, html_code, width=(100, '%'), height=(200, 'px'), profile=None, options=None):
+  def bot(self, html_code: str, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+          profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     ------------
 
     Usage::
+
+      container = page.ui.network.bot(html_code='bot_service')
 
     Underlying HTML Objects:
 
@@ -122,8 +125,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def alert(self, type, value="", width: Union[tuple, int] = (320, 'px'), height: Union[tuple, int] = (None, None),
-            html_code: str = None, options: dict = None, profile=False):
+  def alert(self, type, value: str = "", width: types.SIZE_TYPE = (320, 'px'), height: types.SIZE_TYPE = (None, None),
+            html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -175,8 +178,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def danger(self, value="", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
-             height: Union[tuple, int] = (None, None), options=None, profile=False):
+  def danger(self, value: str = "", html_code: str = None, width: types.SIZE_TYPE = (320, 'px'),
+             height: types.SIZE_TYPE = (None, None), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -213,8 +216,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def info(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
-           height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[bool, dict] = False):
+  def info(self, value: str = "", html_code: str = None, width: types.SIZE_TYPE = (320, 'px'),
+           height: types.SIZE_TYPE = (None, None), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -247,8 +250,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def success(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
-              height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
+  def success(self, value: str = "", html_code: str = None, width: types.SIZE_TYPE = (320, 'px'),
+              height: types.SIZE_TYPE = (None, None), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -281,8 +284,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def warning(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
-              height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
+  def warning(self, value: str = "", html_code: str = None, width: types.SIZE_TYPE = (320, 'px'),
+              height: types.SIZE_TYPE = (None, None), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -293,6 +296,10 @@ class Network:
     Usage::
 
       page.ui.messaging.alert('warning', 'Server URL not recognized', 'Please check')
+
+      danger = page.ui.network.warning()
+      danger.options.time = None
+      danger.options.close = True
 
     Underlying HTML Objects:
 
@@ -315,8 +322,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def news(self, value: str = "", html_code: str = None, width: Union[tuple, int] = (320, 'px'),
-           height: Union[tuple, int] = (None, None), options: dict = None, profile: Union[dict, bool] = False):
+  def news(self, value: str = "", html_code: str = None, width: types.SIZE_TYPE = (320, 'px'),
+           height: types.SIZE_TYPE = (None, None), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -353,8 +360,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def room(self, img: str, html_code: str = None, width: Union[tuple, int] = (60, 'px'),
-           height: Union[tuple, int] = (60, 'px'), options: dict = None, profile: Union[dict, bool] = False):
+  def room(self, img: str, html_code: str = None, width: types.SIZE_TYPE = (60, 'px'),
+           height: types.SIZE_TYPE = (60, 'px'), options: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -380,9 +387,9 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def dropfile(self, placeholder: str = '', delimiter: str = "TAB", width: Union[tuple, int] = (100, '%'),
-               height: Union[tuple, int] = ('auto', ''), tooltip: str = None,
-               html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def dropfile(self, placeholder: str = '', delimiter: str = "TAB", width: types.SIZE_TYPE = (100, '%'),
+               height: types.SIZE_TYPE = ('auto', ''), tooltip: str = None,
+               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -419,8 +426,8 @@ class Network:
     html.Html.set_component_skin(component)
     return component
 
-  def upload(self, icon: str = None, width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
-             html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def upload(self, icon: str = None, width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'),
+             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -441,9 +448,9 @@ class Network:
     html.Html.set_component_skin(file)
     return file
 
-  def download(self, name: str, icon: str = None, path: str = None, width: Union[tuple, int] = (25, 'px'),
-               height: Union[tuple, int] = (25, 'px'), html_code: str = None, options: dict = None,
-               profile: Union[dict, bool] = None):
+  def download(self, name: str, icon: str = None, path: str = None, width: types.SIZE_TYPE = (25, 'px'),
+               height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -489,7 +496,7 @@ class Network:
     return file
 
   def assistant(self, image, name: str = "", path: str = None, html_code: str = None,
-                size: Union[tuple, int] = (50, 'px'), profile: Union[dict, bool] = None, options: dict = None):
+                size: types.SIZE_TYPE = (50, 'px'), profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     ------------
@@ -519,16 +526,90 @@ class Network:
     html.Html.set_component_skin(container)
     return container
 
-  def logs(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
-           profile: Union[bool, dict] = None, helper: str = None):
+  def logs(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+           options: dict = None, html_code: str = None,
+           profile: types.PROFILE_TYPE = None, helper: str = None):
     component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "logs"
     html.Html.set_component_skin(component)
     return component
 
-  def timeline(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
-               profile: Union[bool, dict] = None, helper: str = None):
+  def timeline(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+               options: dict = None, html_code: str = None,
+               profile: types.PROFILE_TYPE = None, helper: str = None):
     component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "timeline"
     html.Html.set_component_skin(component)
     return component
+
+  def impression(self, number: int = 0, icon: str = "fas fa-chart-bar", options: dict = None, html_code: str = None,
+                 profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+    Add an impression component. This is designed to use the viewport function to increment the value,
+
+    Usage::
+
+      page.ui.network.impression()
+
+    Attributes:
+    ----------
+    :param number: The initial value
+    :param icon: The icon text
+    :param options: The number component options
+    :param html_code: The code used on the JavaScript side
+    :param profile: The profiling options
+    """
+    component_icon = self.page.ui.icons.awesome(
+      icon, html_code="%s_icon" % html_code if html_code is not None else html_code, options=options, profile=profile)
+    component_icon.icon.style.css.font_factor(2)
+    text = self.page.ui.numbers.number(
+      number, width="auto", html_code=html_code, options=options, profile=profile)
+    text.style.css.inline()
+    text.style.css.user_select = "None"
+    text.style.css.font_factor(0)
+    container = self.page.ui.div([component_icon, text])
+    container.viewport([text.dom.add(1)])
+    container.icon = component_icon.icon
+    container.number = text
+    return container
+
+  def votes(self, number: int = 0, options: dict = None, html_code: str = None, profile: Union[bool, dict] = None):
+    """
+    Description:
+    ------------
+    Add a vote component with two arrows and a number.
+
+    Usage::
+
+      vote = page.ui.network.votes()
+      vote.up.style.css.cursor = "pointer"
+      vote.up.click(vote.number.dom.add(1))
+      vote.down.click(vote.number.dom.add(-1))
+
+    Attributes:
+    ----------
+    :param number: The initial value
+    :param options: The number component options
+    :param html_code: The code used on the JavaScript side
+    :param profile: The profiling options
+    """
+    icon_up = self.page.ui.div("&#8679;", width="auto")
+    icon_up.style.css.user_select = "None"
+    icon_up.style.css.inline()
+    icon_up.style.css.font_factor(6)
+    icon_down = self.page.ui.div("&#8681;", width="auto")
+    icon_down.style.css.user_select = "None"
+    icon_down.style.css.inline()
+    icon_down.style.css.font_factor(6)
+    text = self.page.ui.numbers.number(
+      number, width=(20, "px"), align="center", html_code=html_code, options=options, profile=profile)
+    text.style.css.inline()
+    text.style.css.user_select = "None"
+    text.style.css.font_factor(0)
+    container = self.page.ui.div([icon_up, text, icon_down])
+    container.up = icon_up
+    container.down = icon_down
+    container.number = text
+    return container
