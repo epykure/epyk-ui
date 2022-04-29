@@ -6,6 +6,7 @@ import datetime
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptCalendars
@@ -78,7 +79,7 @@ class DatePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
     return self._dom
 
-  def select(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -93,9 +94,8 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript events when the DatePicker selection changes.
-    :param Optional[Union[bool, dict]]  profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
+    :param js_funcs: The Javascript events when the DatePicker selection changes.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -105,8 +105,8 @@ class DatePicker(Html.Html):
     self.input.options.onSelect(js_funcs, profile)
     return self
 
-  def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: Optional[Union[list, str]] = None,
-                     profile: Optional[Union[bool, dict]] = False):
+  def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
+                     profile: types.PROFILE_TYPE = False):
     """
     Description:
     -----------
@@ -120,15 +120,14 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[List[str]] dts: Optional. A list of dates format YYYY-MM-DD.
-    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
+    :param dts: Optional. A list of dates format YYYY-MM-DD.
+    :param js_funcs: Optional. Javascript functions.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return self.input.excluded_dates(dts, js_funcs, profile)
 
-  def included_dates(self, dts: Optional[List[str]] = None, selected: Optional[str] = None,
-                     js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[bool, dict]] = False):
+  def included_dates(self, dts: List[str] = None, selected: str = None,
+                     js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     -----------
@@ -142,14 +141,14 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[List[str]] dts: Optional. A list of dates format YYYY-MM-DD.
-    :param Optional[str] selected: Optional. The selected date from the range. Default max.
-    :param Optional[Union[list, str]] js_funcs: Optional. Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile or a function on the console.
+    :param dts: Optional. A list of dates format YYYY-MM-DD.
+    :param selected: Optional. The selected date from the range. Default max.
+    :param js_funcs: Optional. Javascript functions.
+    :param profile: Optional. Set to true to get the profile or a function on the console.
     """
     return self.input.included_dates(dts, selected, js_funcs, profile)
 
-  def add_options(self, options: Optional[dict] = None, name: Optional[str] = None, value: Optional[str] = None):
+  def add_options(self, options: dict = None, name: str = None, value: str = None):
     """
     Description:
     -----------
@@ -161,9 +160,9 @@ class DatePicker(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[str] name: Optional. String | Python dictionary with the options to set.
-    :param Optional[str] value: Optional. The option value.
+    :param options: Optional. Specific Python options available for this component.
+    :param name: Optional. Python dictionary with the options to set.
+    :param value: Optional. The option value.
     """
     if options is None and name is None:
       raise ValueError("Either the attrs or the name should be specified")
@@ -221,7 +220,7 @@ class TimePicker(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
     return self._dom
 
-  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
+  def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -242,9 +241,9 @@ class TimePicker(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.input.change(js_funcs, profile, on_ready=on_ready)
     return self
@@ -292,7 +291,7 @@ class CountDownDate(Html.Html):
         clearInterval(window[htmlObj.id +"_interval"])
       }'''
 
-  def end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -300,8 +299,8 @@ class CountDownDate(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -421,8 +420,8 @@ class Calendar(Html.Html):
     """
     return super().options
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-            source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -430,10 +429,10 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to profile or a function on the Js console.
-    :param Optional[str] source_event: Optional. The source target for the event.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function.
+    :param profile: Optional. Set to true to profile or a function on the Js console.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -441,7 +440,7 @@ class Calendar(Html.Html):
     return self
 
   def task(self, name: str, start: str, capacity: Union[List[float], float], end: Optional[str] = None,
-           weekend: bool = False, options: Optional[dict] = None):
+           weekend: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -449,12 +448,12 @@ class Calendar(Html.Html):
 
     Attributes:
     ----------
-    :param str name: The task name.
-    :param str start: The task start date format YYYY-MM-DD.
-    :param Union[List[float], float] capacity: A figure in percentage.
-    :param str end: The task end date format YYYY-MM-DD.
-    :param bool weekend: Optional. Flag to specify if the weekends should be considered.
-    :param dict options: Optional. Specific Python options available for this component.
+    :param name: The task name.
+    :param start: The task start date format YYYY-MM-DD.
+    :param capacity: A figure in percentage.
+    :param end: The task end date format YYYY-MM-DD.
+    :param weekend: Optional. Flag to specify if the weekends should be considered.
+    :param options: Optional. Specific Python options available for this component.
     """
     if self.options.unit != 100 and options is None:
       options = {'unit': self.options.unit}
@@ -603,7 +602,7 @@ class Timer(Html.Html):
           r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
         tmp != 0 || (tmp=0)}, 1000)'''
 
-  def end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -611,9 +610,8 @@ class Timer(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

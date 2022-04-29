@@ -7,6 +7,7 @@ import base64
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html import HtmlContainer
@@ -62,7 +63,8 @@ class Image(Html.Html):
       self._dom = JsHtml.JsHtmlImg(self, page=self.page)
     return self._dom
 
-  def goto(self, url, js_funcs=None, profile=None, target="_blank", source_event=None):
+  def goto(self, url, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+           target: str = "_blank", source_event: str = None):
     """
     Description:
     -----------
@@ -70,11 +72,11 @@ class Image(Html.Html):
 
     Attributes:
     ----------
-    :param url: String. the url.
-    :param js_funcs: List | String. Optional. The Javascript Events triggered before the redirection.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
-    :param target: String. Optional. The target attribute specifies where to open the linked document.
-    :param source_event: String. Optional. The event source.
+    :param url: the url.
+    :param js_funcs: Optional. The Javascript Events triggered before the redirection.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param target: Optional. The target attribute specifies where to open the linked document.
+    :param source_event: Optional. The event source.
     """
     js_funcs = js_funcs or []
     self.style.css.cursor = 'pointer'
@@ -131,7 +133,7 @@ class Image(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The encoded picture.
+    :param text: The encoded picture.
 
     :return: self to allow the chaining
     """
@@ -230,7 +232,7 @@ class AnimatedImage(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The encoded picture.
+    :param text: The encoded picture.
 
     :return: self to allow the chaining
     """
@@ -303,7 +305,7 @@ class ImgCarousel(Html.Html):
   def __getitem__(self, i) -> Html.Html:
     return self.items[i]
 
-  def add_plot(self, plot, title: str = "", width: Union[str, tuple] = "auto"):
+  def add_plot(self, plot, title: str = "", width: types.SIZE_TYPE = "auto"):
     """
     Description:
     ------------
@@ -312,7 +314,7 @@ class ImgCarousel(Html.Html):
     ----------
     :param plot: matplotlib.pyplot. The ploting features in matplotlib.
     :param title:
-    :param width: Tuple | Value. Optional.
+    :param width: Optional.
 
     :return: self to allow the chaining.
     """
@@ -333,7 +335,9 @@ class ImgCarousel(Html.Html):
     Description:
     ------------
 
-    :param int selected:
+    Attributes:
+    ----------
+    :param selected:
 
     :return: self to allow the chaining.
     """
@@ -365,8 +369,8 @@ class ImgCarousel(Html.Html):
       self.items.append(div)
     return self
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-            source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -374,10 +378,10 @@ class ImgCarousel(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: optional. The reference of the component.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: optional. The reference of the component.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -464,8 +468,8 @@ class Icon(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  def goto(self, url: str, js_funcs: Optional[Union[str, list]] = None, profile: Optional[Union[dict, bool]] = None,
-           target: str = "_blank", source_event: Optional[str] = None):
+  def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+           target: str = "_blank", source_event: str = None):
     """
     Description:
     -----------
@@ -473,11 +477,11 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param str url: The url text.
-    :param Optional[Union[str, list]] js_funcs: Optional. The Javascript Events triggered before the redirection.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    :param str target: Optional. The name (type) of the href link.
-    :param str source_event: Optional. The event source.
+    :param url: The url text.
+    :param js_funcs: Optional. The Javascript Events triggered before the redirection.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param target: Optional. The name (type) of the href link.
+    :param source_event: Optional. The event source.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -569,7 +573,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param int value: The value of the size factor for the icon.
+    :param value: The value of the size factor for the icon.
     """
     if 'font-awesome' in self.requirements:
       if isinstance(value, int):
@@ -604,7 +608,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param int value: The rotation angle.
+    :param value: The rotation angle.
     """
     if 'font-awesome' in self.requirements:
       self.attr['class'].add("fa-rotate-%s" % value)
@@ -623,7 +627,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param string direction: Optional. The direction reference (h or v).
+    :param direction: Optional. The direction reference (h or v).
     """
     if 'font-awesome' in self.requirements:
       if direction.lower() == 'h':
@@ -646,7 +650,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param str position: Optional.
+    :param position: Optional.
     """
     if 'font-awesome' in self.requirements:
         self.attr['class'].add("fa-pull-%s" % position)
@@ -660,7 +664,7 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param str value: An icon class reference.
+    :param value: An icon class reference.
     """
     self.attr['class'].add(value)
     return self
@@ -677,8 +681,8 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param str color_hover: The color of the icon when mouse hover
-    :param str color_out: Optional. The color of the icon when mouse out
+    :param color_hover: The color of the icon when mouse hover
+    :param color_out: Optional. The color of the icon when mouse out
     """
     if color_out is None:
       color_out = self.page.theme.success.base
@@ -688,7 +692,7 @@ class Icon(Html.Html):
     self.set_attrs(name="onmouseout", value="this.style.color='%s'" % color_out)
     return self
 
-  def click(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None, source_event: str = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
     """
     Description:
@@ -697,10 +701,10 @@ class Icon(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(js_funcs, profile, source_event, on_ready=on_ready)
@@ -724,13 +728,13 @@ class IconToggle(Icon):
 
     Attributes:
     ----------
-    :param List[Html.Html] components: The HTML components.
+    :param components: The HTML components.
     """
     self._linked_components = components
     return self
 
-  def click(self, js_on_off_funcs: Union[list, str] = None, profile: Union[bool, dict] = None, source_event: str = None,
-            on_ready: bool = False):
+  def click(self, js_on_off_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -738,10 +742,10 @@ class IconToggle(Icon):
 
     Attributes:
     ----------
-    :param Union[list, str] js_on_off_funcs: The Javascript functions.
-    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_on_off_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.style.css.cursor = "pointer"
     if js_on_off_funcs is None:
@@ -868,8 +872,8 @@ class Badge(Html.Html):
     """
     return super().options
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-            source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -877,10 +881,10 @@ class Badge(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.icon.style.add_classes.icon.standard()
     return super(Badge, self).click(js_funcs, profile, source_event, on_ready=on_ready)
@@ -925,7 +929,7 @@ class SlideShow(Html.Html):
     Attributes:
     ----------
     :param plot: matplotlib.pyplot. The ploting features in matplotlib.
-    :param tuple width: Optional.
+    :param width: Optional.
 
     :return: self to allow the chaining.
     """
@@ -971,7 +975,7 @@ class SlideShow(Html.Html):
     :rtype: JsTinySlider.TinySlider
     """
     if self._js is None:
-      self._js = JsTinySlider.TinySlider(self.page, js_code=self.jsonId, set_var=False, parent=self)
+      self._js = JsTinySlider.TinySlider(page=self.page, js_code=self.jsonId, set_var=False, component=self)
     return self._js
 
   @property
@@ -990,18 +994,19 @@ class SlideShow(Html.Html):
       self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, page=self.page)
     return self._dom
 
-  def _events(self, event, js_funcs, source_event, profile=None, add=True):
+  def _events(self, event, js_funcs: types.JS_FUNCS_TYPES, source_event: str, profile: types.PROFILE_TYPE = None,
+              add: bool = True):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param event: String. The event type.
-    :param js_funcs: List | String. The JavaScript fragments.
-    :param source_event: String. The source target for the event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param add: Boolean. Optional.
+    :param event: The event type.
+    :param js_funcs: The JavaScript fragments.
+    :param source_event: The source target for the event.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param add: Optional.
     """
     if add:
       self.onReady(["%s.on('%s', function (info, eventName) {%s})" % (
@@ -1011,8 +1016,8 @@ class SlideShow(Html.Html):
         source_event, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))])
     return self
 
-  def add_index_changed(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                        source_event: Optional[str] = None):
+  def add_index_changed(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                        source_event: str = None):
     """
     Description:
     ------------
@@ -1020,14 +1025,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def rem_index_changed(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                        source_event: Optional[str] = None):
+  def rem_index_changed(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                        source_event: str = None):
     """
     Description:
     ------------
@@ -1035,28 +1040,28 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def add_transition_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                           source_event: Optional[str] = None):
+  def add_transition_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                           source_event: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def rem_transition_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                           source_event: Optional[str] = None):
+  def rem_transition_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                           source_event: str = None):
     """
     Description:
     ------------
@@ -1064,14 +1069,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def add_transition_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                         source_event: Optional[str] = None):
+  def add_transition_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                         source_event: str = None):
     """
     Description:
     ------------
@@ -1079,42 +1084,42 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
-  def rem_transition_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                         source_event: Optional[str] = None):
+  def rem_transition_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                         source_event: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
-  def add_new_breakpoint_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                               source_event: Optional[str] = None):
+  def add_new_breakpoint_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                               source_event: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_new_breakpoint_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                               source_event: Optional[str] = None):
+  def rem_new_breakpoint_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                               source_event: str = None):
     """
     Description:
     ------------
@@ -1122,14 +1127,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_new_breakpoint_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                             source_event: Optional[str] = None):
+  def add_new_breakpoint_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                             source_event: str = None):
     """
     Description:
     -----------
@@ -1137,98 +1142,98 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_new_breakpoint_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                             source_event: Optional[str] = None):
+  def rem_new_breakpoint_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                             source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_touch_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                      source_event: Optional[str] = None):
+  def add_touch_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                      source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_touch_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                      source_event: Optional[str] = None):
+  def rem_touch_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                      source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_touch_move(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                     source_event: Optional[str] = None):
+  def add_touch_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                     source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_touch_move(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                     source_event: Optional[str] = None):
+  def rem_touch_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                     source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_touch_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                    source_event: Optional[str] = None):
+  def add_touch_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                    source_event: str = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_touch_dnd(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                    source_event: Optional[str] = None):
+  def rem_touch_dnd(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                    source_event: str = None):
     """
     Description:
     -----------
@@ -1236,14 +1241,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_drag_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                     source_event: Optional[str] = None):
+  def add_drag_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                     source_event: str = None):
     """
     Description:
     -----------
@@ -1251,14 +1256,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_drag_start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                     source_event: Optional[str] = None):
+  def rem_drag_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                     source_event: str = None):
     """
     Description:
     -----------
@@ -1266,14 +1271,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_drag_move(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                    source_event: Optional[str] = None):
+  def add_drag_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                    source_event: str = None):
     """
     Description:
     -----------
@@ -1281,14 +1286,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_drag_move(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                    source_event: Optional[str] = None):
+  def rem_drag_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                    source_event: str = None):
     """
     Description:
     -----------
@@ -1296,14 +1301,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
-  def add_drag_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                   source_event: Optional[str] = None):
+  def add_drag_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                   source_event: str = None):
     """
     Description:
     -----------
@@ -1311,14 +1316,14 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile)
 
-  def rem_drag_end(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-                   source_event: Optional[str] = None):
+  def rem_drag_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                   source_event: str = None):
     """
     Description:
     -----------
@@ -1326,9 +1331,9 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript fragments.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: The source target for the event.
     """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1399,17 +1404,17 @@ class SlideShow(Html.Html):
 class Background(HtmlContainer.Div):
 
   def build(self, value: Union[str, list, primitives.JsDataModel] = None, options: dict = None,
-            profile: Union[bool, dict] = None, component_id: str = None):
+            profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[str, list, primitives.JsDataModel] value:
-    :param dict options: Optional. Specific Python options available for this component.
-    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
-    :param str component_id: Optional. A DOM component reference in the page.
+    :param value:
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param component_id: Optional. A DOM component reference in the page.
     """
     if isinstance(value, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in value.items()])

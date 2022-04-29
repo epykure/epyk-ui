@@ -70,7 +70,7 @@ class Label(Html.Html):
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
   @property
-  def options(self):
+  def options(self) -> OptText.OptionsText:
     """
     Description:
     ------------

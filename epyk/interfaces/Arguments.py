@@ -4,7 +4,7 @@
 from typing import Any
 
 
-def size(value: Any, unit: str = "%"):
+def size(value: Any, unit: str = "%", toStr: bool = False):
   """
   Description:
   ------------
@@ -19,6 +19,7 @@ def size(value: Any, unit: str = "%"):
   ----------
   :param value: The value for this argument
   :param unit: Optional. The unit for the argument. Default %.
+  :param toStr:
   """
   if value is False:
     return None, ""
@@ -43,6 +44,8 @@ def size(value: Any, unit: str = "%"):
     else:
       if value is not None and value > 100 and unit == "%":
         unit = "px"
+  if toStr:
+    return "{}{}".format(value, unit)
   return value, unit
 
 

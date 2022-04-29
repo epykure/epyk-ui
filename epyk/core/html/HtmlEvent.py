@@ -4,6 +4,7 @@
 import logging
 from typing import Union, Optional, Any
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptSliders
@@ -126,7 +127,8 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     if self.options.show_percentage:
-      return '<div %s><span style="position: absolute;margin: -1px 0 0 5px; "></span></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+      return '<div %s><span style="position: absolute;margin: -1px 0 0 5px; "></span></div>%s' % (
+        self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
     return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
@@ -382,7 +384,7 @@ class Slider(Html.Html):
       self._js = JsQueryUi.Slider(self, page=self.page)
     return self._js
 
-  def change(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
+  def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -395,16 +397,16 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Boolean. Optional. Trigger the change event when page is ready.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param on_ready: Optional. Trigger the change event when page is ready.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.options.change(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def start(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -416,15 +418,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["start"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def slide(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def slide(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -436,15 +438,15 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self._jsStyles["slide"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self
 
-  def stop(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def stop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -456,8 +458,8 @@ class Slider(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -726,7 +728,7 @@ class OptionsBar(Html.Html):
     super(OptionsBar, self).__add__(icon)
     return self
 
-  def draggable(self, options: Optional[dict] = None):
+  def draggable(self, options: dict = None):
     self.css({'border-radius': '5px', "border": "1px dotted %s" % self.page.theme.success.base})
     self.page.properties.js.add_builders(self.dom.jquery_ui.draggable(options).toStr())
     return self
@@ -811,7 +813,7 @@ class Filters(Html.Html):
         chipAdd(panel, val, options)})}
         '''
 
-  def enter(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -819,8 +821,8 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The JavaScript events.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The JavaScript events.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.__enter_def = True
     if not isinstance(js_funcs, list):
@@ -829,7 +831,7 @@ class Filters(Html.Html):
                         self.dom.add(self.dom.input)] + js_funcs + [self.input.dom.empty()], profile)
     return self
 
-  def drop(self, js_funcs: Union[list, str], prevent_default: bool = True, profile: Optional[Union[bool, dict]] = None):
+  def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -837,15 +839,15 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param bool prevent_default:
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param prevent_default:
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.style.css.border = "1px dashed black"
     self.tooltip("Drag and drop values here")
     return super(Filters, self).drop(js_funcs, prevent_default, profile)
 
-  def delete(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def delete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -853,8 +855,8 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if self.__enter_def:
       raise ValueError("delete on chip must be triggered before enter")
@@ -886,8 +888,8 @@ class Filters(Html.Html):
     rec['name'] = name or rec['category']
     self._vals.append(rec)
 
-  def draggable(self, js_funcs: Union[list, str] = None, options: Optional[dict] = None,
-                profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None):
+  def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: dict = None,
+                profile: types.PROFILE_TYPE = None, source_event: str = None):
     """
     Description:
     ------------
@@ -895,10 +897,10 @@ class Filters(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The source target for the event.
+    :param js_funcs: Javascript functions.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The source target for the event.
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):

@@ -3,6 +3,7 @@
 
 from typing import Union, Optional, Any
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
@@ -77,7 +78,7 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: A link to this HTML component.
+    :param component: A link to this HTML component.
     """
     self.val["url"] = "#%s" % component.htmlCode
     self.options.url = "#%s" % component.htmlCode
@@ -91,7 +92,7 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[str] color: Optional. The color code.
+    :param color: Optional. The color code.
     """
     self.style.css.text_decoration = None
     self.style.list_style_type = None
@@ -100,8 +101,8 @@ class ExternalLink(Html.Html):
     self.style.css.color = color
     return self
 
-  def build(self, data: Optional[Union[str, primitives.JsDataModel]] = None, options: Optional[dict] = None,
-            profile: Optional[Union[bool, dict]] = False, component_id: Optional[str] = None):
+  def build(self, data: types.JS_FUNCS_TYPES = None, options: dict = None,
+            profile: types.PROFILE_TYPE = False, component_id: str = None):
     """
     Description:
     -----------
@@ -109,10 +110,10 @@ class ExternalLink(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[Union[str, primitives.JsDataModel]] data: The component expected content.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] component_id: Optional. The component reference (the htmlCode).
+    :param data: The component expected content.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param component_id: Optional. The component reference (the htmlCode).
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):

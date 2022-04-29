@@ -5,6 +5,7 @@ import datetime
 
 from typing import Union, Optional
 from epyk.core import html
+from epyk.core.py import types
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 from epyk.core.data import components as cpn
@@ -20,8 +21,8 @@ class Fields:
     self.page = ui.page
 
   def text(self, text: str = "", label: str = None, color: str = None, align: str = 'left',
-           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-           tooltip: str = None, options: dict = None, helper: str = None, profile: Union[dict, bool] = None):
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           tooltip: str = None, options: dict = None, helper: str = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -99,8 +100,8 @@ class Fields:
     return component
 
   def date(self, value: Optional[str] = None, label: str = None, icon: str = "calendar", color: str = None,
-           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-           profile: Union[dict, bool] = None, options: dict = None, helper: str = None):
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -158,8 +159,8 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def today(self, label: str = None, icon: str = "calendar", color: str = None, width: Union[tuple, int] = (None, "px"),
-            height: Union[tuple, int] = (None, "px"), html_code: str = None, profile: Union[dict, bool] = None,
+  def today(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
             options: dict = None, helper: str = None):
     """
     Description:
@@ -215,9 +216,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def cob(self, label: str = None, icon: str = "calendar", color: str = None, width: Union[tuple, int] = (None, "px"),
-          height: Union[tuple, int] = (None, "px"),
-          html_code: str = None, profile=None, options=None, helper=None):
+  def cob(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
+          height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
+          options: dict = None, helper=None):
     """
     Description:
     ------------
@@ -268,7 +269,7 @@ class Fields:
     return component
 
   def now(self, deltatime: int = 0, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
-          profile: Union[dict, bool] = None, options: dict = None, helper: str = None):
+          profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -312,7 +313,7 @@ class Fields:
     return component
 
   def time(self, value: str = None, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
-           profile: Union[dict, bool] = None, options: dict = None, helper: str = None):
+           profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None):
     """
     Description:
     ------------
@@ -356,8 +357,8 @@ class Fields:
     return component
 
   def input(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -402,8 +403,8 @@ class Fields:
     return component
 
   def number(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -450,9 +451,9 @@ class Fields:
     return component
 
   def autocomplete(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-                   width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"),
+                   width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
                    html_code: str = None, helper: str = None, options: dict = None,
-                   profile: Union[dict, bool] = None):
+                   profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -493,8 +494,8 @@ class Fields:
     return component
 
   def static(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-             width: tuple = (100, "%"), height: tuple = (None, "px"), html_code: str = None, helper: str = None,
-             options: dict = None, profile: Union[dict, bool] = None):
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -536,8 +537,8 @@ class Fields:
     return component
 
   def hidden(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -582,8 +583,8 @@ class Fields:
     return component
 
   def integer(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-              helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+              helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -624,8 +625,8 @@ class Fields:
     return component
 
   def file(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-           helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -670,8 +671,8 @@ class Fields:
     return component
 
   def password(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-               width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-               helper: str = None, options: str = None, profile: str = None):
+               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+               helper: str = None, options: str = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -712,8 +713,8 @@ class Fields:
     return component
 
   def textarea(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-               width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-               helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+               helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -753,9 +754,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def checkbox(self, value: bool = False, label: str = None, icon: str = None, width: Union[tuple, int] = (100, "%"),
-               height: Union[tuple, int] = (None, "px"), html_code: str = None, helper: str = None,
-               options: dict = None, profile: Union[dict, bool] = None):
+  def checkbox(self, value: bool = False, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
+               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
+               options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -799,8 +800,8 @@ class Fields:
     return component
 
   def radio(self, value: bool = False, label: str = None, group_name: str = None, icon: str = None,
-            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -845,15 +846,18 @@ class Fields:
     height = Arguments.size(height, unit="px")
     component = html.HtmlInput.Radio(self.page, value, label, group_name, icon, width, height, html_code,
                                      helper, options or {}, profile)
-    component.label.css({"width": '100px', 'float': 'left'})
+    if options is not None and options.get('position') == 'after':
+      component.label.css({"width": '100px'})
+    else:
+      component.label.css({"width": '100px', 'float': 'left'})
     component.css({"display": 'inline-block'})
     html.Html.set_component_skin(component)
     return component
 
   def range(self, value: str = "", min: int = 0, max: int = 100, step: int = 1, label: str = None,
-            placeholder: str = "", icon: str = None, width: Union[tuple, int] = (100, "%"),
-            height: Union[tuple, int] = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
-            profile: Union[dict, bool] = None):
+            placeholder: str = "", icon: str = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -906,9 +910,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def select(self, value: list = None, label: str = None, icon: str = None, selected=None,
-             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, multiple: bool = False, profile=None):
+  def select(self, value: list = None, label: str = None, icon: str = None, selected: bool = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, multiple: bool = False, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -962,9 +966,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def months(self, value=None, label: str = None, icon: str = None, width: Union[tuple, int] = (100, "%"),
-             height: Union[tuple, int] = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
-             profile: Union[dict, bool] = None):
+  def months(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1014,9 +1018,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def weeks(self, value=None, label: str = None, icon: str = None, width: Union[tuple, int] = (100, "%"),
-            height: Union[tuple, int] = (None, "px"), html_code=None,
-            helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def weeks(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "px"), html_code=None,
+            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1070,8 +1074,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def years(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
-            helper=None, options=None, profile=None):
+  def years(self, value=None, label=None, icon=None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+            helper=None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1120,8 +1125,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def days(self, value=None, label=None, icon=None, width=(100, "%"), height=(None, "px"), html_code=None,
-           helper=None, options=None, profile=None):
+  def days(self, value=None, label=None, icon=None, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           helper=None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1171,8 +1177,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def column_text(self, label, text="", align='left', width=('auto', ""), height=(None, "px"), html_code=None,
-                  options=None, profile=None):
+  def column_text(self, label, text: str = "", align: str = 'left', width: types.SIZE_TYPE = ('auto', ""),
+                  height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+                  options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1211,9 +1218,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def column_date(self, label, value: str = "T", align: str = 'left', width: Union[tuple, int] = ('auto', ""),
-                  height: Union[tuple, int] = (None, "px"), html_code: str = None,
-                  options: dict = None, profile: Union[dict, bool] = None):
+  def column_date(self, label, value: str = "T", align: str = 'left', width: types.SIZE_TYPE = ('auto', ""),
+                  height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+                  options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1255,8 +1262,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def toggle(self, record=None, label=None, is_on=False, color=None, width=(100, '%'), height=(20, 'px'),
-             html_code=None, options=None, profile=None):
+  def toggle(self, record=None, label=None, is_on=False, color=None, width: types.SIZE_TYPE = (100, '%'),
+             height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, options: dict = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1316,8 +1324,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def slider(self, value=0, min=0, max=10, step=1, orientation='horizontal', label=None, width=(100, '%'),
-             height=(None, 'px'), html_code=None, options=None, range=False, profile=None):
+  def slider(self, value=0, min=0, max=10, step=1, orientation='horizontal', label=None,
+             width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+             options: dict = None, range: bool = False, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1378,10 +1387,10 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def filters(self, items=None, button=None, width: Union[tuple, int] = ("auto", ""),
-              height: Union[tuple, int] = (60, "px"), html_code: str = None, helper: str = None,
+  def filters(self, items=None, button=None, width: types.SIZE_TYPE = ("auto", ""),
+              height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
               options: dict = None, autocomplete: bool = False, kind: str = 'select',
-              profile: Union[dict, bool] = None):
+              profile: types.PROFILE_TYPE = None):
     if kind == 'select':
       component = self.page.ui.lists.filters(
         items, button, width, height, html_code, helper, options, autocomplete, profile)
@@ -1403,8 +1412,8 @@ class Timelines:
     self.page = ui.page
 
   def view(self, start_date: Union[datetime.datetime, str], end_date: Union[datetime.datetime, str],
-           width: Union[tuple, int] = (100, "%"),
-           height: Union[tuple, int] = (None, "px"), options=None, profile=None):
+           width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (None, "px"), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1450,9 +1459,9 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def period(self, start_date: Union[datetime.datetime, str], days: int, width: Union[tuple, int] = (100, "%"),
-             height: Union[tuple, int] = (None, "px"),
-             options=None, profile=None):
+  def period(self, start_date: Union[datetime.datetime, str], days: int, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "px"),
+             options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1500,9 +1509,9 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def week(self, start_date: Union[datetime.datetime, str], width: Union[tuple, int] = (100, "%"),
-           height: Union[tuple, int] = (None, "px"),
-           options: dict = None, profile: Union[dict, bool] = None):
+  def week(self, start_date: Union[datetime.datetime, str], width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (None, "px"),
+           options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1545,9 +1554,9 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def categories(self, value=None, label: str = None, icon=None, width: Union[tuple, int] = (100, "%"),
-                 height: Union[tuple, int] = (None, "px"), html_code: str = None,
-                 helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def categories(self, value=None, label: str = None, icon=None, width: types.SIZE_TYPE = (100, "%"),
+                 height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+                 helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1581,9 +1590,8 @@ class Timelines:
     return component
 
   def milestone(self, completion_date: Union[datetime.datetime, str], icon: str = None,
-                width: Union[tuple, int] = (25, 'px'),
-                height: Union[tuple, int] = (25, 'px'), html_code: str = None, options: dict = None,
-                profile: Union[dict, bool] = None):
+                width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
+                options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1628,9 +1636,9 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def meeting(self, time, icon: str = None, width: Union[tuple, int] = (25, 'px'),
-              height: Union[tuple, int] = (25, 'px'), html_code: str = None, options: dict = None,
-              profile: Union[dict, bool] = None):
+  def meeting(self, time, icon: str = None, width: types.SIZE_TYPE = (25, 'px'),
+              height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1661,8 +1669,8 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def workload(self, value, width: Union[tuple, int] = (25, 'px'), html_code: str = None, options: dict = None,
-               profile: Union[dict, bool] = None):
+  def workload(self, value, width: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1701,8 +1709,8 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def issues(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
-           profile: Union[bool, dict] = None, helper: str = None):
+  def issues(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+             options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "status"
     html.Html.set_component_skin(component)

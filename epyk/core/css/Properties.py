@@ -1,5 +1,5 @@
 
-from typing import Union, Optional
+from typing import Union, Optional, Any
 from epyk.core.py import types
 from epyk.core.css import Defaults_css
 from epyk.core.css import FontFamily
@@ -3111,3 +3111,45 @@ class CssMixin:
     """
     self.display = "inline-block"
     return self
+
+  def calc_width(self, width: Any = "100%", by: Any = None):
+      """
+      Description:
+      -----------
+
+      :param width:
+      :param by:
+      """
+      width = Arguments.size(width, unit="px", toStr=True)
+      f = []
+      if by is not None:
+        if hasattr(by, "style"):
+          f.append(by.style.css.width)
+          if by.style.css.margin_left is not None:
+            f.append(by.style.css.margin_left)
+          if by.style.css.margin_right is not None:
+            f.append(by.style.css.margin_right)
+          if by.style.css.margin is not None:
+            margins = by.style.css.margin.split(" ")
+            if len(margins) < 3:
+              f.append(margins[-1])
+              f.append(margins[-1])
+            elif len(margins) == 4:
+              f.append(margins[1])
+              f.append(margins[3])
+        else:
+          f.append(Arguments.size(by, unit="px", toStr=True))
+      if self.margin_left is not None:
+        f.append(self.margin_left)
+      if self.margin_right is not None:
+        f.append(self.margin_right)
+      if self.margin is not None:
+        margins = self.margin.split(" ")
+        if len(margins) < 3:
+          f.append(margins[-1])
+          f.append(margins[-1])
+        elif len(margins) == 4:
+          f.append(margins[1])
+          f.append(margins[3])
+      self.css({"width": "calc(%s - (%s))" % (width, " + ".join(f))})
+      return self
