@@ -1473,7 +1473,7 @@ class WebComponents:
     return self.fwks["jqui"]
 
   @property
-  def bs(self):
+  def bs(self) -> BoostrapUI.Components:
     """
     Description:
     ------------
