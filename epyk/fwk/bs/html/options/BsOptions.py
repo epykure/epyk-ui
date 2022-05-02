@@ -56,8 +56,8 @@ class OptionsDt(Options):
     return self._config_get(False)
 
   @sideBySide.setter
-  def sideBySide(self, bool):
-    self._config(bool)
+  def sideBySide(self, flag: bool):
+    self._config(flag)
 
   @property
   def inline(self):
@@ -72,8 +72,8 @@ class OptionsDt(Options):
     return self._config_get(False)
 
   @inline.setter
-  def inline(self, bool):
-    self._config(bool)
+  def inline(self, flag: bool):
+    self._config(flag)
 
   @property
   def daysOfWeekDisabled(self):
@@ -88,8 +88,8 @@ class OptionsDt(Options):
     return self._config_get()
 
   @daysOfWeekDisabled.setter
-  def daysOfWeekDisabled(self, bool):
-    self._config(bool)
+  def daysOfWeekDisabled(self, flag: bool):
+    self._config(flag)
 
   @property
   def viewMode(self):
@@ -104,8 +104,8 @@ class OptionsDt(Options):
     return self._config_get()
 
   @viewMode.setter
-  def viewMode(self, bool):
-    self._config(bool)
+  def viewMode(self, flag: bool):
+    self._config(flag)
 
   @property
   def defaultDate(self):
@@ -120,15 +120,16 @@ class OptionsDt(Options):
     return self._config_get(False)
 
   @defaultDate.setter
-  def defaultDate(self, bool):
-    self._config(bool)
+  def defaultDate(self, flag: bool):
+    self._config(flag)
 
   @property
   def format(self):
     """
     Description:
     ------------
-    See momentjs' docs for valid formats. Format also dictates what components are shown, e.g. MM/dd/YYYY will not display the time picker.
+    See momentjs' docs for valid formats.
+    Format also dictates what components are shown, e.g. MM/dd/YYYY will not display the time picker.
 
     Related Pages:
 
@@ -137,8 +138,8 @@ class OptionsDt(Options):
     return self._config_get(False)
 
   @format.setter
-  def format(self, bool):
-    self._config(bool)
+  def format(self, flag: bool):
+    self._config(flag)
 
   @property
   def locale(self):
@@ -153,8 +154,8 @@ class OptionsDt(Options):
     return self._config_get(False)
 
   @locale.setter
-  def locale(self, bool):
-    self._config(bool)
+  def locale(self, flag: bool):
+    self._config(flag)
 
   @property
   def options(self):
@@ -162,7 +163,9 @@ class OptionsDt(Options):
     Description:
     ------------
     Returns the components current options object.
-    Note that the changing the values of the returned object does not change the components actual configuration. Use options(options) to set the components options massively or the other methods for setting config options individually.
+    Note that the changing the values of the returned object does not change the components actual configuration.
+    Use options(options) to set the components options massively or the other methods for setting config options
+    individually.
 
     Related Pages:
 
@@ -180,7 +183,7 @@ class OptionsDt(Options):
     """
     Description:
     ------------
-    Number of minutes the up/down arrow's will move the minutes value in the time picker
+    Number of minutes the up/down arrow's will move the minutes value in the time picker.
 
     Related Pages:
 
@@ -189,6 +192,6 @@ class OptionsDt(Options):
     return self._config_get(1)
 
   @stepping.setter
-  def stepping(self, num):
+  def stepping(self, num: int):
     self._config(num)
 

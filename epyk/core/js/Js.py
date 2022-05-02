@@ -223,7 +223,7 @@ class JsBase:
       self.__media_recorder = JsMediaRecorder.MediaRecorder(self.page)
     return self.__media_recorder
 
-  def speechRecognition(self, js_code: str):
+  def speechRecognition(self, js_code: str) -> JsSpeechRecognition.SpeechRecognition:
     """
     Description:
     ------------
@@ -503,9 +503,9 @@ class JsBase:
     Attributes:
     ----------
     :param js_funcs: Javascript functions.
-    :param step: The value to increment. Default 1.
-    :param start: The first index in the for loop.
-    :param end: The last index in the for loop.
+    :param step: Optional. The value to increment. Default 1.
+    :param start: Optional. The first index in the for loop.
+    :param end: Optional. The last index in the for loop.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -515,7 +515,7 @@ class JsBase:
     for_statment.step = step
     return for_statment.fncs(js_funcs, profile=profile)
 
-  def return_(self, data: str):
+  def return_(self, data: str) -> JsFncs.JsFunction:
     """
     Description:
     ------------
@@ -528,7 +528,7 @@ class JsBase:
     return JsFncs.JsFunction("return %s" % data)
 
   def switch(self, variable: Union[str, primitives.JsDataModel, primitives.HtmlModel],
-             js_conv_func: Optional[Union[str, list]] = None):
+             js_conv_func: Optional[Union[str, list]] = None) -> JsSwitch.JsSwitch:
     """
     Description:
     ------------
@@ -541,7 +541,7 @@ class JsBase:
     Attributes:
     ----------
     :param variable: Variable on which we will apply the switch.
-    :param js_conv_func: String. Optional. A specific JavaScript data conversion function.
+    :param js_conv_func: Optional. A specific JavaScript data conversion function.
     """
     if hasattr(variable, 'dom'):
       variable = variable.dom.content
@@ -694,7 +694,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
-    :param py_class: The PyJs Classname.
+    :param py_class: PyJs class name.
     :param func_name: The Javascript function name.
     :param js_funcs: Javascript functions.
     :param pmts: Optional. Specific Python options available for this component.
@@ -841,7 +841,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     ----------
     :param js_code: The variable name created in the Javascript.
     :param method_type: The method type
-    :param fnc: Fnc. A python function.
+    :param fnc: Python function.
     :param url: The service url
     :param extra_params: Optional.
 
@@ -1711,7 +1711,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param script: A script name. A Js extension.
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
-    :param self_contained:
+    :param self_contained: Optional. A flag to specify where the import will be done.
     """
     if self_contained or script:
       if os.path.exists(script):

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.py import primitives
+from epyk.core.py import types
 from epyk.core import html
 from epyk.fwk.bs.js.html import BsDom
 
@@ -36,7 +37,8 @@ class BsComposite(html.HtmlTextComp.Composite):
 class Section(html.Html.Html):
   name = "Bootstrap Section"
 
-  def __init__(self, page: primitives.PageModel, type, data=None, options=None, profile=None):
+  def __init__(self, page: primitives.PageModel, type, data=None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     super(Section, self).__init__(page, [])
     self.style.clear_all()
     self.__section = type
@@ -53,7 +55,7 @@ class Section(html.Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The internal row based on the index.
+    :param i: The internal row based on the index.
 
     :rtype: Tr
     """
@@ -89,7 +91,8 @@ class Section(html.Html.Html):
 class BsToasts(html.Html.Html):
   name = "Bootstrap Toasts"
 
-  def __init__(self, report, components, title, width, height, options, profile):
+  def __init__(self, report, components, title, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               options: dict, profile: types.PROFILE_TYPE):
     super(BsToasts, self).__init__(report, [], profile=profile)
     self.style.clear_all()
     self.attr["class"].add("toast")

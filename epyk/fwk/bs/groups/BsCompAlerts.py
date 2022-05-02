@@ -1,12 +1,17 @@
 
+from typing import List
+from epyk.core.py import types
+from epyk.core.py import primitives
+
 
 class Components:
 
   def __init__(self, ui):
     self.page = ui.page
 
-  def alert(self, kind=None, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
-            profile=None):
+  def alert(self, kind: str = None, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -22,13 +27,13 @@ class Components:
 
     Attributes:
     ----------
-    :param kind: String. Optional. The Bootstrap predefined category.
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param kind: Optional. The Bootstrap predefined category.
+    :param components: Optional. The alert sub components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.page.web.std.div(
       components, width=width, height=height, html_code=html_code, options=options, profile=profile)
@@ -46,7 +51,9 @@ class Components:
       content.val.append(btn)
     return content
 
-  def primary(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def primary(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -58,17 +65,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("primary", components, width, height, html_code, options, profile)
     return content
 
-  def secondary(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def secondary(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -80,17 +89,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("secondary", components, width, height, html_code, options, profile)
     return content
 
-  def success(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def success(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -102,17 +113,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("secondary", components, width, height, html_code, options, profile)
     return content
 
-  def danger(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def danger(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -124,17 +137,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("danger", components, width, height, html_code, options, profile)
     return content
 
-  def warning(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def warning(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -146,17 +161,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("warning", components, width, height, html_code, options, profile)
     return content
 
-  def info(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def info(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+           height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -168,17 +185,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height:  Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options:  Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("info", components, width, height, html_code, options, profile)
     return content
 
-  def light(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def light(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -190,17 +209,19 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("light", components, width, height, html_code, options, profile)
     return content
 
-  def dark(self, components=None, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
+  def dark(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
+           height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -212,12 +233,12 @@ class Components:
 
     Attributes:
     ----------
-    :param components: Component | String. Optional. The alert sub components.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The alert sub-components.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = self.alert("dark", components, width, height, html_code, options, profile)
     return content

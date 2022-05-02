@@ -1,4 +1,5 @@
 
+from epyk.core.py import types
 from epyk.fwk.bs.html import HtmlBsForms
 from epyk.interfaces import Arguments
 
@@ -7,8 +8,9 @@ class Components:
   def __init__(self, ui):
     self.page = ui.page
 
-  def button(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
-             html_code=None, tooltip=None, profile=None, options=None):
+  def button(self, text: str = "", icon: str = None, category: str = "primary", width: types.SIZE_TYPE = (None, "%"),
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
+             profile: types.PROFILE_TYPE = None, options: dict = None):
     """
     Description:
     -----------
@@ -27,19 +29,19 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param category: String. Optional. The Bootstrap predefined category.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. The tooltip text.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the button.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome.
+    :param category: Optional. The Bootstrap predefined category.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. The tooltip text.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     button = self.page.web.std.button(text, icon=icon, width=width, height=height, html_code=html_code, tooltip=tooltip,
                                       align=None, options=options, profile=profile)
-    button.add_style(["btn"], {"width": "%s%s" % (width[0], width[1]), "height": "%s%s" % (height[0], height[1])},
+    button.add_style(["btn"], {"width": width, "height": height},
                      clear_first=True)
     if category is not None:
       button.attr["class"].add("btn-%s" % category)

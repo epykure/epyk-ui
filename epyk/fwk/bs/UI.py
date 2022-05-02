@@ -2,6 +2,8 @@
 from epyk.core.py import primitives
 from epyk.fwk.bs.html import HtmlBsDate
 from epyk.fwk.bs.html import HtmlBsWidgets
+from epyk.core.py import types
+from typing import Any, List
 
 from epyk.fwk.bs import PkgImports
 from epyk.fwk.bs import groups
@@ -37,7 +39,8 @@ class Components:
     self.col = self.layouts.col
     self.div = self.layouts.container
 
-  def date(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
+  def date(self, value: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"),
+           html_code: str = None, profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsDate.BsDatePicker:
     """
     Description:
     ------------
@@ -54,12 +57,12 @@ class Components:
 
     Attributes:
     ----------
-    :param value: String. Optional. The initial time value format YYYY-MM-DD
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param value: Optional. The initial time value format YYYY-MM-DD
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -75,8 +78,9 @@ class Components:
     datepicker.options.buttons.showClose = True
     return datepicker
 
-  def time(self, hour=None, minute=0, second=0, width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
-           options=None):
+  def time(self, hour: int = None, minute: int = 0, second: int = 0,
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           profile: types.PROFILE_TYPE = None, options=None) -> HtmlBsDate.BsDatePicker:
     """
     Description:
     ------------
@@ -93,14 +97,14 @@ class Components:
 
     Attributes:
     ----------
-    :param hour: Integer. Optional. The hours' value
-    :param minute: Integer. Optional. The minutes' value.
-    :param second: Integer. Optional. The seconds' value.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param hour: Optional. The hours' value
+    :param minute: Optional. The minutes' value.
+    :param second: Optional. The seconds' value.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -114,8 +118,9 @@ class Components:
     timepicker.options.formats.time_only()
     return timepicker
 
-  def loading(self, text="Loading...", width=(None, "%"), height=(None, "%"), category=None, options=None,
-              profile=None):
+  def loading(self, text: str = "Loading...", width: types.SIZE_TYPE = (None, "%"),
+              height: types.SIZE_TYPE = (None, "%"), category=None, options: dict = None,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -135,12 +140,12 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param category: String. Optional. The Bootstrap predefined category.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param text: Optional. The value to be displayed to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param category: Optional. The Bootstrap predefined category.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     options = options or {}
     component = self.page.web.std.div(width=width, height=height, profile=profile)
@@ -156,7 +161,7 @@ class Components:
     return component
 
   @property
-  def icons(self):
+  def icons(self) -> groups.BsCompIcons.Components:
     """
     Description:
     ------------
@@ -176,7 +181,7 @@ class Components:
     return groups.BsCompIcons.Components(self)
 
   @property
-  def images(self):
+  def images(self) -> groups.BsCompImages.Components:
     """
     Description:
     ------------
@@ -190,7 +195,7 @@ class Components:
     return groups.BsCompImages.Components(self)
 
   @property
-  def fields(self):
+  def fields(self) -> groups.BsCompFields.Components:
     """
     Description:
     ------------
@@ -203,7 +208,7 @@ class Components:
     return groups.BsCompFields.Components(self)
 
   @property
-  def texts(self):
+  def texts(self) -> groups.BsCompFields.TextComponents:
     """
     Description:
     ------------
@@ -212,7 +217,7 @@ class Components:
     return groups.BsCompFields.TextComponents(self)
 
   @property
-  def tables(self):
+  def tables(self) -> groups.BsCompTables.Components:
     """
     Description:
     ------------
@@ -226,7 +231,7 @@ class Components:
     return groups.BsCompTables.Components(self)
 
   @property
-  def lists(self):
+  def lists(self) -> groups.BsCompLists.Components:
     """
     Description:
     ------------
@@ -291,15 +296,17 @@ class Components:
     return groups.BsCompSliders.Components(self)
 
   @property
-  def inputs(self):
+  def inputs(self) -> groups.BsCompInputs.Components:
     """
     Description:
     ------------
+    Pre-defined inputs components.
+
     """
     return groups.BsCompInputs.Components(self)
 
   @property
-  def alerts(self):
+  def alerts(self) -> groups.BsCompAlerts.Components:
     """
     Description:
     ------------
@@ -312,7 +319,7 @@ class Components:
     return groups.BsCompAlerts.Components(self)
 
   @property
-  def modals(self):
+  def modals(self) -> groups.BsCompModals.Components:
     """
     Description:
     ------------
@@ -332,7 +339,7 @@ class Components:
     return groups.BsCompModals.Components(self)
 
   @property
-  def offcanvas(self):
+  def offcanvas(self) -> groups.BsCompModals.OffComponents:
     """
     Description:
     ------------
@@ -349,7 +356,7 @@ class Components:
     return groups.BsCompModals.OffComponents(self)
 
   @property
-  def navbars(self):
+  def navbars(self) -> groups.BsCompNavs.Components:
     """
     Description:
     ------------
@@ -366,7 +373,7 @@ class Components:
     return groups.BsCompNavs.Components(self)
 
   @property
-  def panels(self):
+  def panels(self) -> groups.BsCompPanels.Components:
     """
     Description:
     ------------
@@ -379,7 +386,7 @@ class Components:
     return groups.BsCompPanels.Components(self)
 
   @property
-  def layouts(self):
+  def layouts(self) -> groups.BsCompLayouts.Components:
     """
     Description:
     ------------
@@ -390,7 +397,9 @@ class Components:
     """
     return groups.BsCompLayouts.Components(self)
 
-  def accordion(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+  def accordion(self, values=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+                height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
+                options: dict = None) -> HtmlBsWidgets.BsAccordion:
     """
     Description:
     ------------
@@ -410,12 +419,12 @@ class Components:
 
     Attributes:
     ----------
-    :param values: Dictionary. Optional. Title: content.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param values: Optional. Title: content.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -426,12 +435,13 @@ class Components:
         component.add_section(k, v)
     return component
 
-  def breadcrumb(self, values=None, active=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None,
-                 options=None):
+  def breadcrumb(self, values: list = None, active: str = None, html_code: str = None,
+                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
+                 profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsWidgets.BsBreadcrumb:
     """
     Description:
     ------------
-    Add an breadcrumb.
+    Add a breadcrumb.
 
     Related Pages:
 
@@ -443,13 +453,13 @@ class Components:
 
     Attributes:
     ----------
-    :param values: List. Optional. Title: content.
-    :param active: String. Optional. The active section in the breadcrumb.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param values: Optional. Title: content.
+    :param active: Optional. The active section in the breadcrumb.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -457,11 +467,12 @@ class Components:
       self.page, None, html_code, options or {}, profile, {"width": width, "height": height})
     if values is not None:
       for v in values:
-        component.add_section(v, active=v==active)
+        component.add_section(v, active=v == active)
     return component
 
-  def offcanva(self, values=None, position="start", html_code=None, width=(100, "%"), height=(None, "%"), profile=None,
-               options=None):
+  def offcanva(self, values: list = None, position: str = "start", html_code: str = None,
+               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
+               profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsWidgets.BsOffCanvas:
     """
     Description:
     ------------
@@ -477,13 +488,13 @@ class Components:
 
     Attributes:
     ----------
-    :param values: Dictionary. Optional. Title: content.
-    :param position: String. Optional. The offcanvas position in the page.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param values: Optional. Title: content.
+    :param position: Optional. The offcanvas position in the page.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -498,8 +509,9 @@ class Components:
         component.add_to_body(v)
     return component
 
-  def modal(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None,
-            options=None):
+  def modal(self, values: dict = None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
+            options: dict = None) -> HtmlBsWidgets.BsModal:
     """
     Description:
     ------------
@@ -515,12 +527,12 @@ class Components:
 
     Attributes:
     ----------
-    :param values: Dictionary. Optional. Title: content.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param values: Optional. Title: content.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -533,7 +545,9 @@ class Components:
     component.options.fade = True
     return component
 
-  def navbar(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+  def navbar(self, values=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
+             options: dict = None) -> HtmlBsWidgets.BsNavBar:
     """
     Description:
     -----------
@@ -559,10 +573,13 @@ class Components:
         component.add_to_body(v)
     return component
 
-  def scrollspy(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+  def scrollspy(self, values=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+                height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, options: dict = None):
     pass
 
-  def toast(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
+  def toast(self, values: List[primitives.HtmlModel] = None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
+            options: dict = None) -> HtmlBsWidgets.BsToast:
     """
     Description:
     -----------
@@ -577,12 +594,12 @@ class Components:
 
     Attributes:
     ----------
-    :param values: List<Component>. Optional. Components added to the body.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param values: Optional. Components added to the body.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")

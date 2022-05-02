@@ -1,6 +1,8 @@
 
 from epyk.interfaces import Arguments
 from epyk.fwk.bs.html import HtmlBsWidgets
+from epyk.core.py import types
+from typing import List
 
 
 class Components:
@@ -8,8 +10,9 @@ class Components:
   def __init__(self, ui):
     self.page = ui.page
 
-  def img(self, image=None, path=None, thumbnail=False, width=(100, "%"), height=(None, "px"), align="center",
-          html_code=None, profile=None, tooltip=None, options=None):
+  def img(self, image: str = None, path: str = None, thumbnail: bool = False,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), align: str = "center",
+          html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None, options: dict = None):
     """
     Description:
     -----------
@@ -25,16 +28,16 @@ class Components:
 
     Attributes:
     ----------
-    :param image: String. Optional. The image file name.
-    :param path: String. Optional. Optional. TString. The image file path.
-    :param thumbnail: Boolean. Optional. you can set thumbnail to give an image a rounded 1px border appearance.
-    :param width: Tuple. Optional. Optional. Tuple. The component width in pixel or percentage.
-    :param height: Tuple. Optional. Optional. Tuple. The component height in pixel or percentage.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param image: Optional. The image file name.
+    :param path: Optional. Optional. TString. The image file path.
+    :param thumbnail: Optional. you can set thumbnail to give an image a rounded 1px border appearance.
+    :param width: Optional. Optional. Tuple. The component width in pixel or percentage.
+    :param height: Optional. Optional. Tuple. The component height in pixel or percentage.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param options: Optional. Specific Python options available for this component.
     """
     component = self.page.web.std.img(image, path, width, height, align, html_code, profile, tooltip, options)
     component.attr["class"].initialise(["img-fluid"])
@@ -42,8 +45,9 @@ class Components:
       component.attr["class"].add("img-thumbnail")
     return component
 
-  def badge(self, text="", category="primary", width=(None, "px"), height=(None, "px"), tooltip=None, options=None,
-            profile=None):
+  def badge(self, text: str = "", category: str = "primary", width: types.SIZE_TYPE = (None, "px"),
+            height: types.SIZE_TYPE = (None, "px"), tooltip: str = None, options: str = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -55,13 +59,13 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param category: String. Optional. The Bootstrap predefined category.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param category: Optional. The Bootstrap predefined category.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     component = self.page.web.std.tags.span(
       text, width=width, height=height, tooltip=tooltip, options=options, profile=profile)
@@ -71,8 +75,9 @@ class Components:
       component.attr["class"].add("bg-%s" % category)
     return component
 
-  def pill(self, text="", category="primary", icon=None, width=(None, "px"), height=(None, "px"), tooltip=None,
-           options=None, profile=None):
+  def pill(self, text: str = "", category: str = "primary", icon: str = None,
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
+           options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -88,14 +93,14 @@ class Components:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param category: String. Optional. The Bootstrap predefined category.
-    :param icon: String. Optional. A string with the value of the icon to display from Bootstrap.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param category: Optional. The Bootstrap predefined category.
+    :param icon: Optional. A string with the value of the icon to display from Bootstrap.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     values = []
     if icon is not None:
@@ -110,8 +115,9 @@ class Components:
       component.attr["class"].add("bg-%s" % category)
     return component
 
-  def carousel(self, images=None, active=None, width=(100, "%"), height=(300, "px"), html_code=None, options=None,
-               profile=None):
+  def carousel(self, images: List[str] = None, active: bool = None, width: types.SIZE_TYPE = (100, "%"),
+               height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -126,18 +132,18 @@ class Components:
     Usages::
 
       page.web.bs.images.carousel([
-      r"/static/template_3.PNG",
-      "/static/v1.6.PNG"])
+        r"/static/template_3.PNG",
+        "/static/v1.6.PNG"])
 
     Attributes:
     ----------
-    :param images: List<String>. Optional. The image paths.
-    :param active: Boolean. optional.
-    :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param images: Optional. The image paths.
+    :param active: optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")

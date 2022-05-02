@@ -16,8 +16,9 @@ class Style:
       https://getbootstrap.com/docs/5.0/helpers/clearfix/
     """
     self.cls.add("clearfix")
+    return self
 
-  def link(self, category):
+  def link(self, category: str):
     """
     Description:
     ------------
@@ -30,11 +31,12 @@ class Style:
 
     Attributes:
     ----------
-    :param category:
+    :param category: The link CSS category
     """
     self.cls.add("link-%s" % category)
+    return self
 
-  def ratio(self, x, y):
+  def ratio(self, x: int, y: int):
     """
     Description:
     ------------
@@ -51,8 +53,9 @@ class Style:
     """
     self.cls.add("ratio")
     self.cls.add("ratio-%sx%s" % (x, y))
+    return self
 
-  def sticky(self, position, breakpoint=None):
+  def sticky(self, position, breakpoint: str = None):
     """
     Description:
     ------------
@@ -74,8 +77,9 @@ class Style:
       self.cls.add("sticky-%s-%s" % (breakpoint, position))
     else:
       self.cls.add("sticky-%s" % position)
+    return self
 
-  def fixed(self, position, breakpoint=None):
+  def fixed(self, position, breakpoint: str = None):
     """
     Description:
     ------------
@@ -98,10 +102,11 @@ class Style:
     else:
       self.cls.add("fixed-%s" % position)
 
-  def visually_hidden(self, focusable=False):
+  def visually_hidden(self, focusable: bool = False):
     """
     Description:
     ------------
+    Use .visually-hidden-focusable to visually hide an element by default, but to display it when it’s focused.
 
     Related Pages:
 
@@ -109,7 +114,7 @@ class Style:
 
     Attributes:
     ----------
-    :param focusable:
+    :param focusable: A boolean to activate the focusable property
     """
     if not focusable:
       self.cls.add("visually-hidden")
@@ -127,8 +132,9 @@ class Style:
       https://getbootstrap.com/docs/5.0/helpers/text-truncation/
     """
     self.cls.add("text-truncate")
+    return self
 
-  def font_size(self, n):
+  def font_size(self, n: int):
     """
     Description:
     ------------
@@ -141,24 +147,26 @@ class Style:
 
     Attributes:
     ----------
-    :param n:
+    :param n: The font-size number.
     """
     self.cls.add("fs-%s" % n)
+    return self
 
   def text_break(self):
     """
     Description:
     ------------
     Prevent long strings of text from breaking your components' layout by using .text-break to set word-wrap:
-    break-word and word-break: break-word
+    break-word and word-break: break-word.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/utilities/text/
     """
     self.cls.add("text-break")
+    return self
 
-  def text(self, category):
+  def text(self, category: str):
     """
     Description:
     ------------
@@ -174,6 +182,7 @@ class Style:
     :param category:
     """
     self.cls.add("text-%s" % category)
+    return self
 
   def border(self, category, position=None):
     """
@@ -191,6 +200,7 @@ class Style:
     :param position:
     """
     self.cls.add("bg-%s" % category)
+    return self
 
   def bg(self, category):
     """
@@ -208,8 +218,9 @@ class Style:
     :param category:
     """
     self.cls.add("bg-%s" % category)
+    return self
 
-  def shadow(self, kind=None):
+  def shadow(self, kind: str = ""):
     """
     Description:
     ------------
@@ -222,15 +233,20 @@ class Style:
 
     Attributes:
     ----------
-    :param kind:
+    :param kind: The CSS category
     """
     if kind is None:
-      return
+      self.cls.add("shadow-none")
+      return self
 
-    if kind not in ("sm", "lg", "inset"):
-      pass
+    if kind:
+      self.cls.add("shadow-%s" % kind)
+      return self
 
-  def float(self, position):
+    self.cls.add("shadow")
+    return self
+
+  def float(self, position: str = None, breakpoint: str = None):
     """
     Description:
     ------------
@@ -241,8 +257,22 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/float/
 
+    Attributes:
+    ----------
     :param position:
+    :param breakpoint: Optional. Grid system category, with
+      - xs (for phones - screens less than 768px wide)
+      - sm (for tablets - screens equal to or greater than 768px wide)
+      - md (for small laptops - screens equal to or greater than 992px wide)
+      - lg (for laptops and desktops - screens equal to or greater than 1200px wide)
     """
+    if position is None:
+      position = "none"
+    if breakpoint is None:
+      self.cls.add("float-%s" % position)
+    else:
+      self.cls.add("float-%s-%s" % (breakpoint, position))
+    return self
 
   def user_select_all(self):
     """
@@ -255,6 +285,7 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/interactions/
     """
     self.cls.add("user-select-all")
+    return self
 
   def user_select_auto(self):
     """
@@ -267,6 +298,7 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/interactions/
     """
     self.cls.add("user-select-auto")
+    return self
 
   def user_select_none(self):
     """
@@ -279,8 +311,9 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/interactions/
     """
     self.cls.add("user-select-none")
+    return self
 
-  def glutters(self, n, vertical=False, horizontal=True, breakpoint=None):
+  def glutters(self, n: int, vertical: bool = False, horizontal: bool = True, breakpoint: str = None):
     """
     Description:
     ------------
@@ -297,7 +330,7 @@ class Style:
     :param n:
     :param vertical:
     :param horizontal:
-    :param breakpoint: String. Optional. Grid system category, with
+    :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
       - md (for small laptops - screens equal to or greater than 992px wide)
@@ -314,6 +347,7 @@ class Style:
       self.cls.add("g%s-%s-%s" % (pos, breakpoint, n))
     else:
       self.cls.add("g%s-%s" % (pos, n))
+    return self
 
   def no_glutter(self):
     """
@@ -326,6 +360,7 @@ class Style:
       https://getbootstrap.com/docs/5.0/layout/gutters/
     """
     self.cls.add("g-0")
+    return self
 
   def order(self, val):
     """
@@ -342,8 +377,9 @@ class Style:
     :param val:
     """
     self.cls.add("order-%s" % val)
+    return self
 
-  def offset(self, val, breakpoint=None):
+  def offset(self, val, breakpoint: str = None):
     """
     Description:
     ------------
@@ -358,7 +394,7 @@ class Style:
     Attributes:
     ----------
     :param val:
-    :param breakpoint: String. Optional. Grid system category, with
+    :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
       - md (for small laptops - screens equal to or greater than 992px wide)
@@ -368,8 +404,9 @@ class Style:
       self.cls.add("offset-%s-%s" % (breakpoint, val))
     else:
       self.cls.add("offset-%s" % val)
+    return self
 
-  def margin(self, val, breakpoint=None):
+  def margin(self, val, breakpoint: str = None):
     """
     Description:
     ------------
@@ -393,8 +430,9 @@ class Style:
       self.cls.add("ms-%s-%s" % (breakpoint, val))
     else:
       self.cls.add("ms-%s" % val)
+    return self
 
-  def width(self, percent, from_viewport=False):
+  def width(self, percent, from_viewport: bool = False):
     """
     Description:
     ------------
@@ -412,8 +450,9 @@ class Style:
       self.cls.add("vw-%s" % percent)
     else:
       self.cls.add("w-%s" % percent)
+    return self
 
-  def height(self, percent, from_viewport=False):
+  def height(self, percent, from_viewport: bool = False):
     """
     Description:
     ------------
@@ -431,6 +470,7 @@ class Style:
       self.cls.add("vh-%s" % percent)
     else:
       self.cls.add("h-%s" % percent)
+    return self
 
   def visible(self):
     """
@@ -445,6 +485,7 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/visibility/
     """
     self.cls.add("visible")
+    return self
 
   def invisible(self):
     """
@@ -459,8 +500,9 @@ class Style:
       https://getbootstrap.com/docs/5.0/utilities/visibility/
     """
     self.cls.add("invisible")
+    return self
 
-  def sizing(self, breakpoint):
+  def sizing(self, breakpoint: str):
     """
     Description:
     ------------
@@ -472,15 +514,16 @@ class Style:
 
     Attributes:
     ----------
-    :param breakpoint: String. Optional. Grid system category, with
+    :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
       - md (for small laptops - screens equal to or greater than 992px wide)
       - lg (for laptops and desktops - screens equal to or greater than 1200px wide)
     """
     self.cls.add("%s-%s" % (self.cls[0], breakpoint))
+    return self
 
-  def justify_content(self, position):
+  def justify_content(self, position: str):
     """
     Description:
     ------------
@@ -488,10 +531,11 @@ class Style:
 
     Related Pages:
 
-      https://getbootstrap.com/docs/5.1/components/navs-tabs/
+      https://getbootstrap.com/docs/5.1/components/navs-tabs/#horizontal-alignment
 
     Attributes:
     ----------
-    :param position: String. The position.
+    :param position: The position.
     """
     self.cls.add("justify-content-%s" % position)
+    return self

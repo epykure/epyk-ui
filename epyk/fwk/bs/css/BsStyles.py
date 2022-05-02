@@ -1,30 +1,35 @@
 
+from epyk.core.py import primitives
+
 
 class BsStyles:
 
   def __init__(self, page):
     self.page = page
 
-  def remove(self, style):
+  def remove(self, style: str):
     """
     Description:
     -----------
-    Remove a specific CSS class for all the components
+    Remove a specific CSS class for all the components.
 
     Attributes:
     ----------
     :param style: String the css style to be removed
     """
     self.replate(style, None)
+    return self
 
-  def replace(self, style, new_style):
+  def replace(self, style: str, new_style: str):
     """
     Description:
     -----------
-    Apply a style change on all the components
+    Apply a style change on all the components.
 
-    Usage
-    rptObj.styles.replace('btn', 'btn btn-custom')
+    Usage:
+    -----
+
+      page.styles.replace('btn', 'btn btn-custom')
 
     Attributes:
     ----------
@@ -38,20 +43,23 @@ class BsStyles:
         else:
           index = v.attr['class'].index(style)
           v.attr['class'][index] = new_style
+    return self
 
-  def apply_calc(self, component, style_map):
+  def apply_calc(self, component: primitives.HtmlModel, style_map: dict):
     """
     Description:
     -----------
     Apply a style calc on a component and its hierarchy of underlying components
 
-    Usage
-    rptObj.styles.apply_calc(d, {'btn': 'toto'})
+    Usage:
+    -----
+
+      page.styles.apply_calc(d, {'btn': 'toto'})
 
     Attributes:
     ----------
-    :param component:
-    :param style_map:
+    :param component: The HTML component
+    :param style_map: The CSS style map definition
     """
     for s, t in style_map.items():
       if s in component.attr['class']:
@@ -60,3 +68,4 @@ class BsStyles:
         else:
           index = component.attr['class'].index(s)
           component.attr['class'][index] = t
+    return self

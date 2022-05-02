@@ -1129,7 +1129,9 @@ class Html(primitives.HtmlModel):
     """
     Description:
     ------------
-    Add CSS styles (inline and classes) to a li item.
+    Add CSS styles (inline and classes) to the component.
+    This function could also remove all the predefined CSS style first.
+    To create inline CSS it will use the underlying css function.
 
     Attributes:
     ----------

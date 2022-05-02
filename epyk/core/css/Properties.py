@@ -3116,14 +3116,29 @@ class CssMixin:
       """
       Description:
       -----------
+      Set the with of a component and it can take into account complex ones.
 
-      :param width:
-      :param by:
+      .. Tips::
+
+        Since this object will take the margins of the components it is important to
+        set them all before.
+
+      Usage::
+
+        autocomplete = page.ui.fields.autocomplete(label="Auto complete")
+        autocomplete.input.style.css.margin_h = 5
+        autocomplete.input.style.css.calc_width(by=autocomplete.label)
+
+      Attributes:
+      ----------
+      :param width: The width object
+      :param by: A size object or a component on the same line in the page.
       """
       width = Arguments.size(width, unit="px", toStr=True)
       f = []
       if by is not None:
         if hasattr(by, "style"):
+          by.style.css.inline()
           f.append(by.style.css.width)
           if by.style.css.margin_left is not None:
             f.append(by.style.css.margin_left)
