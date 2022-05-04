@@ -664,7 +664,7 @@ class Report:
 
     Attributes:
     ----------
-    :param Union[list, str] html_codes: The reference of the HTML components loaded on the page.
+    :param html_codes: The reference of the HTML components loaded on the page.
     """
     if not isinstance(html_codes, list):
       return self.components[html_codes]

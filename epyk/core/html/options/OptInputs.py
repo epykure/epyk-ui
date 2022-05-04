@@ -964,7 +964,7 @@ class OptionAutoComplete(OptionsInput):
   def source(self, value):
     self._config(value)
 
-  def startswith(self, values):
+  def startswith(self, values: list):
     """
     Description:
     ------------
@@ -977,7 +977,7 @@ class OptionAutoComplete(OptionsInput):
 
     Attributes:
     ----------
-    :param values: List. The predefined values.
+    :param values: The predefined values.
     """
     values = JsUtils.jsConvertData(values, None)
     self._config('''function(request, response) {

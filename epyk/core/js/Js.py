@@ -786,8 +786,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         request.setRequestHeader(k, v)
     return request
 
-  def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
-           is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+  def rest(self, method: str, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
+           js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
            asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """
@@ -797,6 +797,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     Attributes:
     ----------
+    :param method: The REST method used.
     :param url: The url path of the HTTP request.
     :param data: Optional. Corresponding to a JavaScript object.
     :param js_code: Optional. The variable name created in the Javascript (default response).
@@ -808,7 +809,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     :rtype: JsObjects.XMLHttpRequest
     """
-    method_type = JsUtils.jsConvertData('POST', None)
+    method_type = JsUtils.jsConvertData(method, None)
     url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
     request.profile = profile
@@ -828,6 +829,122 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       for k, v in headers.items():
         request.setRequestHeader(k, v)
     return request
+
+  def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
+           is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+           profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+           asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
+    """
+    Description:
+    ------------
+    Create a POST HTTP request.
+
+    Related Pages:
+
+      https://pythonise.com/series/learning-flask/flask-http-methods
+
+    Attributes:
+    ----------
+    :param url: The url path of the HTTP request.
+    :param data: Optional. Corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    return self.rest("POST", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
+                     profile=profile, headers=headers, asynchronous=asynchronous)
+
+  def put(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
+          is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+          profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+          asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
+    """
+    Description:
+    ------------
+    Create a PUT HTTP request.
+
+    Related Pages:
+
+      https://pythonise.com/series/learning-flask/flask-http-methods
+
+    Attributes:
+    ----------
+    :param url: The url path of the HTTP request.
+    :param data: Optional. Corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    return self.rest("PUT", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
+                     profile=profile, headers=headers, asynchronous=asynchronous)
+
+  def patch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
+            is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+            asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
+    """
+    Description:
+    ------------
+    Create a PATH HTTP request.
+
+    Related Pages:
+
+      https://pythonise.com/series/learning-flask/flask-http-methods
+
+    Attributes:
+    ----------
+    :param url: The url path of the HTTP request.
+    :param data: Optional. Corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    return self.rest("PATH", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
+                     profile=profile, headers=headers, asynchronous=asynchronous)
+
+  def delete(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
+             is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+             profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+             asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
+    """
+    Description:
+    ------------
+    Create a DELETE HTTP request.
+
+    Related Pages:
+
+      https://pythonise.com/series/learning-flask/flask-http-methods
+
+    Attributes:
+    ----------
+    :param url: The url path of the HTTP request.
+    :param data: Optional. Corresponding to a JavaScript object.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param is_json: Optional. Specify the type of object passed.
+    :param components: Optional. This will add the component value to the request object.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param headers: Optional. The request headers.
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
+
+    :rtype: JsObjects.XMLHttpRequest
+    """
+    return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
+                     profile=profile, headers=headers, asynchronous=asynchronous)
 
   def request_rpc(self, js_code: str, method_type: Union[str, primitives.JsDataModel],
                   fnc: Callable, url: str,
