@@ -114,7 +114,7 @@ class JsBreadCrumb:
     return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
 
   def toStr(self):
-    return '%s(%s)' % (JsFncs.FncOnRecords(self.page._props['js']).url(), self._selector)
+    return '%s(%s)' % (JsFncs.FncOnRecords(None, self.page.properties.js).url(), self._selector)
 
 
 class JsBase:
@@ -296,7 +296,7 @@ class JsBase:
     """
     from epyk.core.js.packages import JsMoment
 
-    return JsMoment.Moment()
+    return JsMoment.Moment(page=self.page)
 
   def eval(self, data: Union[primitives.JsDataModel, str], js_conv_func: Optional[Union[str, list]] = None):
     """
@@ -1028,7 +1028,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsFncs.JsRegisteredFunctions(self.page)
 
   @property
-  def samples(self):
+  def samples(self) -> JsFncsSamples.Samples:
     """
     Description:
     ------------
@@ -1103,8 +1103,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param profile: Optional. A flag to set the component performance storage.
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-    self.page._props.setdefault('js', {}).setdefault('functions', {})[func_name] = {
-      'content': js_data, 'pmt': args}
+    self.page.properties.js.add_function(func_name, js_data, args)
     return self
 
   @property
@@ -1121,7 +1120,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keydown = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page._props['js'].setdefault('events', {})['keydown'] = keydown
+    self.page.properties.js.add_events('keydown', keydown)
     return keydown
 
   @property
@@ -1138,7 +1137,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keypress = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page._props['js'].setdefault('events', {})['keypress'] = keypress
+    self.page.properties.js.add_events('keypress', keypress)
     return keypress
 
   @property
@@ -1155,7 +1154,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keyup = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page._props['js'].setdefault('events', {})['keyup'] = keyup
+    self.page.properties.js.add_events('keyup', keyup)
     return keyup
 
   def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = False):

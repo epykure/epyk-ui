@@ -3,6 +3,7 @@
 
 from typing import Union, Any
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.fncs import JsFncsRecords
 from epyk.core.js.objects import JsChartD3
@@ -25,7 +26,7 @@ class FncToObject:
     """
     self._js_src, self._data_schema, self._data = js_src, data_schema, data
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+  def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None):
     """
     Description:
     ------------
@@ -33,9 +34,9 @@ class FncToObject:
 
     Attributes:
     ----------
-    :param fnc_name: String.
-    :param fnc_def:
-    :param fnc_pmts:
+    :param fnc_name: The JavaScript function name
+    :param fnc_def: The JavaScript function definition
+    :param fnc_pmts: The JavaScript function parameters
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if fnc_name not in self._js_src.get('js', {}).get('functions', {}):
@@ -68,7 +69,7 @@ class FncRoAggRec:
   def __init__(self, data, js_src, data_schema=None):
     self._js_src, self._data_schema, self._data = js_src, data_schema, data
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None):
+  def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None):
     """
     Description:
     ------------
@@ -76,9 +77,9 @@ class FncRoAggRec:
 
     Attributes:
     ----------
-    :param fnc_name: String.
+    :param fnc_name:
     :param fnc_def:
-    :param fnc_pmts: Dictionary. Optional.
+    :param fnc_pmts: Optional.
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if fnc_name not in self._js_src.get('js', {}).get('functions', {}):
@@ -88,7 +89,7 @@ class FncRoAggRec:
 
 class FncOnRecords:
 
-  def __init__(self, data, js_src, data_schema=None, profile: Union[bool, dict] = False):
+  def __init__(self, data, js_src, data_schema=None, profile: types.PROFILE_TYPE = False):
     self._js_src, self._data_schema, self._data, self.profile = js_src, data_schema, data, profile
 
   @property
@@ -101,7 +102,7 @@ class FncOnRecords:
     """
     return FncToObject(self._js_src, self._data_schema)
 
-  def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile: Union[bool, dict] = False):
+  def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -109,17 +110,17 @@ class FncOnRecords:
 
     Attributes:
     ----------
-    :param fnc_name: String.
+    :param fnc_name:
     :param fnc_def:
-    :param fnc_pmts: Dictionary. Optional.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param fnc_pmts: Optional.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     fnc_pmts = ["data"] + (fnc_pmts or [])
     if fnc_name not in self._js_src.get('js', {}).get('functions', {}):
       self._js_src.setdefault('js', {}).setdefault('functions', {})[fnc_name] = {
         'content': "var result = []; %s;return result" % JsUtils.cleanFncs(fnc_def), 'pmt': fnc_pmts}
 
-  def custom(self, fnc_name, fnc_content, fnc_pmts=None, profile: Union[bool, dict] = False):
+  def custom(self, fnc_name: str, fnc_content, fnc_pmts: dict = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -129,8 +130,8 @@ class FncOnRecords:
     ----------
     :param fnc_name: A string for the Javascript function name.
     :param fnc_content: The javascript function content.
-    :param fnc_pmts: String. Optional. The Javascript function parameters.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param fnc_pmts: Optional. The Javascript function parameters.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: "This" in order to allow the chains
     """
@@ -152,7 +153,7 @@ class FncOnRecords:
       self._js_src.setdefault('functions', {})[fnc_name] = {'content': "%s; return result" % content, 'pmt': fnc_pmts}
     return fnc_name
 
-  def count(self, keys, values=None, profile: Union[bool, dict] = False):
+  def count(self, keys, values=None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -185,16 +186,16 @@ class FncOnRecords:
       self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self._data
 
-  def count_with_kpi(self, keys, values, profile: Union[bool, dict] = False):
+  def count_with_kpi(self, keys: Union[list, str], values, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param keys: List | String. The column names.
-    :param values: List. Optional. The values to keep in the result record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param keys: The column names.
+    :param values: Optional. The values to keep in the result record.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     fnc_name = JsFncsRecords.JsCountSum.__name__
     self.__register_records_fnc(
@@ -202,15 +203,15 @@ class FncOnRecords:
     self._data_schema['fncs'].append("%s(%%s, %s, %s)" % (fnc_name, keys, values))
     return self._data
 
-  def count_distinct(self, keys, profile: Union[bool, dict] = False):
+  def count_distinct(self, keys: Union[list, str], profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param keys: List | String. The column names.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param keys: The column names.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
@@ -223,7 +224,7 @@ class FncOnRecords:
     return self._data
 
   def top(self, column: Union[str, primitives.JsDataModel], n: int = 1, order: str = 'desc',
-          profile: Union[bool, dict] = False):
+          profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -231,10 +232,10 @@ class FncOnRecords:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] column:
-    :param n: Integer. Optional.
-    :param order: String. Optional.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param column:
+    :param n: Optional.
+    :param order: Optional.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: "This" to allow function chains
     """
@@ -293,8 +294,8 @@ class FncFiltere:
     ----------
     :param column:
     :param val:
-    :param compare_type: String. Optional.
-    :param all_if_empty: Boolean. Optional.
+    :param compare_type: Optional.
+    :param all_if_empty: Optional.
     """
 
   def in_(self, column: str, val: Any):
@@ -318,8 +319,8 @@ class FncFiltere:
     ----------
     :param column:
     :param val:
-    :param strict_left: Boolean. Optional.
-    :param strict_right: Boolean. Optional.
+    :param strict_left: Optional.
+    :param strict_right: Optional.
     """
     if not strict_left:
       if not strict_right:
@@ -355,9 +356,9 @@ class FncFiltere:
 
     Attributes:
     ----------
-    :param column: String. The column name.
-    :param val: Object. The value in the dictionary.
-    :param strict: Boolean. Optional. A flag to specify if the value should be included.
+    :param column: The column name.
+    :param val: The value in the dictionary.
+    :param strict: Optional. A flag to specify if the value should be included.
     """
     if strict:
       return self.custom(column, val, ">", True)
@@ -372,9 +373,9 @@ class FncFiltere:
 
     Attributes:
     ----------
-    :param column: String. The column name.
-    :param val: Object. The value in the dictionary.
-    :param strict: Boolean. Optional. A flag to specify if the value should be included.
+    :param column: The column name.
+    :param val: The value in the dictionary.
+    :param strict: Optional. A flag to specify if the value should be included.
     """
     if strict:
       return self.custom(column, val, "<", True)
@@ -386,9 +387,7 @@ class JsRegisteredFunctions:
 
   def __init__(self, page: primitives.PageModel = None):
     self.page = page
-    if 'js' not in self.page._props:
-      self.page._props['js'] = {}
-    self._js_src = self.page._props['js']
+    self._js_src = self.page.properties.js
 
   def cssStyle(self, params):
     """
@@ -432,8 +431,8 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: Javascript functions.
-    :param dict pmts: Optional. The function parameters.
+    :param js_funcs: Javascript functions.
+    :param pmts: Optional. The function parameters.
     """
     if pmts is None:
       return JsFunction("(function(){%s})()" % js_funcs)
@@ -448,8 +447,8 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param str func_name: The function name.
-    :param args: Dictionary. The different arguments in the function definition.
+    :param func_name: The function name.
+    :param args: The different arguments in the function definition.
 
     :return: The Javascript sting
     """
@@ -467,9 +466,9 @@ class JsRegisteredFunctions:
 
     Attributes:
     ----------
-    :param str func_name: The function name.
-    :param Union[str, list] js_funcs: Javascript functions.
-    :param dict pmts: Optional. The function parameters.
+    :param func_name: The function name.
+    :param js_funcs: Javascript functions.
+    :param pmts: Optional. The function parameters.
 
     :return: The function name which can be used in the Javascript
     """
@@ -482,10 +481,10 @@ class JsRegisteredFunctions:
     """
     Description:
     ------------
-    Javascript pre defined function dedicated to transform a records.
+    Javascript pre-defined function dedicated to transform a records.
     Namely a list of dictionaries.
     """
-    return FncOnRecords(self._js_src)
+    return FncOnRecords(None, self._js_src)
 
 
 class JsFunction(primitives.JsDataModel):
@@ -515,7 +514,7 @@ class JsFunctions(list):
 
     Attributes:
     ----------
-    :param str func:
+    :param func:
     """
     self.__str_funcs.append(func)
 
@@ -526,7 +525,7 @@ class JsFunctions(list):
 
     Attributes:
     ----------
-    :param list funcs:
+    :param funcs:
     """
     self.__str_funcs.extend(funcs)
 
@@ -583,7 +582,7 @@ class JsAnonymous(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param dict pmts: The function parameters.
+    :param pmts: The function parameters.
     """
     self.__paramsFnc = pmts
     return self

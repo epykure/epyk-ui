@@ -130,7 +130,7 @@ class BsSelect(Component):
   def write_values(self):
     return {}
 
-  def add_option(self, value, label, selected=False, options=None):
+  def add_option(self, value: str, label: str, selected: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -138,10 +138,10 @@ class BsSelect(Component):
 
     Attributes:
     ----------
-    :param value: String. The option value.
-    :param label: String. The option label.
-    :param selected: Boolean. Optional.
-    :param options:
+    :param value: The option value.
+    :param label: The option label.
+    :param selected: Optional.
+    :param options: Optional.
     """
     o = Option(self.page, value, label, None, selected, options=options)
     o.options.managed = False
@@ -188,7 +188,7 @@ class BsDataList(Component):
           rec["selected"] = True
       self.add_option(rec["value"], rec.get("name", rec["value"]), selected=rec.get("selected", False))
 
-  def add_option(self, value, label, selected=False, options=None):
+  def add_option(self, value: str, label: str, selected: bool = False, options: dict = None):
     """
     Description:
     ------------
@@ -196,10 +196,10 @@ class BsDataList(Component):
 
     Attributes:
     ----------
-    :param value: String. The option value.
-    :param label: String. The option label.
-    :param selected: Boolean. Optional.
-    :param options:
+    :param value: The option value.
+    :param label: The option label.
+    :param selected: Optional.
+    :param options: Optional.
     """
     o = Option(self.page, value, label, None, selected, options=options)
     o.options.managed = False

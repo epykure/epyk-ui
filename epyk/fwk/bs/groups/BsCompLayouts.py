@@ -1,11 +1,13 @@
 
+from epyk.core.py import types
+
 
 class Components:
   def __init__(self, ui):
     self.page = ui.page
 
-  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
-           profile=None):
+  def grid(self, rows: list = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+           align: str = None, position: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------

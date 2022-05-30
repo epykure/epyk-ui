@@ -52,9 +52,22 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param str text: JavaScript fragments to be directly included to the page.
+    :param text: JavaScript fragments to be directly included to the page.
     """
     self._context["text"].append(text)
+
+  def add_event(self, event: str, value: str):
+    """
+    Description:
+    ------------
+    Add JavaScript fragments from String.
+
+    Attributes:
+    ----------
+    :param event: JavaScript fragments to be directly included to the page.
+    :param value:
+    """
+    self._context["events"][event] = value
 
   def add_builders(self, builder_def: str, func_dsc: str = None):
     """
