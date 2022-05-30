@@ -32,7 +32,7 @@ class Image(Html.Html):
 
   def __init__(self, page, image, path, align, html_code, width, height, profile, options):
     if path is None and image is not None:
-      if Defaults.SERVER_PATH is not None and not image.startswith("http"):
+      if Defaults.SERVER_PATH is not None and not (image.startswith("http") or image.startswith("data:")):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]
@@ -160,7 +160,7 @@ class AnimatedImage(Html.Html):
 
   def __init__(self, page, image, text, title, html_code, url, path, width, height, options, profile):
     if path is None:
-      if Defaults.SERVER_PATH is not None and not image.startswith("http"):
+      if Defaults.SERVER_PATH is not None and not (image.startswith("http") or image.startswith("data:")):
         path = Defaults.SERVER_PATH
       else:
         path = os.path.split(image)[0]

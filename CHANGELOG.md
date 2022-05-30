@@ -6,6 +6,17 @@
 
 ### Fixed
 
+## [1.7.18] - 2022-05-30
+
+### Added
+- Add all REST keywords for calls.
+- Function documentation
+
+### Fixed
+- Minor bug fixes
+- Align types
+- Improve autocompletion
+
 
 ## [1.7.15] - 2022-04-24
 
