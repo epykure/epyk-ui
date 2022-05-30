@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.7.18] - 2022-05-30
+## [1.7.19] - 2022-05-30
 
 ### Added
 - Add all REST keywords for calls.

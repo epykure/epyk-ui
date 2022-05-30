@@ -640,7 +640,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   def customFile(self, filename: str, path: Optional[str] = None, module_type: str = "text/javascript",
                  absolute_path: bool = False, requirements: Optional[list] = None,
-                 randomize: bool = False):
+                 randomize: bool = False, authorize: bool = False):
     """
     Description:
     ------------
@@ -659,6 +659,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param absolute_path: Optional. If path is None this flag will map to the current main path.
     :param requirements: Optional. The list of required packages.
     :param randomize: Optional. Add random suffix to the module to avoid browser caching.
+    :param authorize: Optional. Add to the restricted list of packages.
 
     :return: The Js Object to allow the chaining.
     """
@@ -667,10 +668,18 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         path = os.getcwd()
       else:
         path = "%s/js" % Imports.STATIC_PATH.replace("\\", "/")
-    self.page.imports.addPackage('local_%s' % filename[:-3], {'version': "", 'req': requirements or [],
+    self.page.imports.addPackage('local_%s' % filename[:-3], {
+      'version': "", 'req': requirements or [],
       'register': {'alias': 'local_%s' % filename[:-3], 'module': filename[:-3], 'npm_path': 'dist/maps/continents/'},
       'modules': [{'script': filename, "path": '', 'type': module_type, 'cdnjs': path, "config": "version=1"}]})
     self.page.jsImports.add('local_%s' % filename[:-3])
+    if authorize:
+      import inspect
+
+      mod_path = inspect.getmodule(inspect.stack()[1][0]).__file__
+      Imports.PACKAGE_STATUS['local_%s' % filename[:-3]] = {"allowed": True, "info": "from {}".format(mod_path)}
+      randomize = False # No point to change the url in this case.
+
     if randomize:
       import random
 
