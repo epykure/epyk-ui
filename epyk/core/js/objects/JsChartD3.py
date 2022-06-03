@@ -21,10 +21,10 @@ class JsChartD3Links:
 
     Attributes:
     ----------
-    :param str func_name: A String with the Javascript function name to be defined.
-    :param Union[str, primitives.JsDataModel] func_def: A String with the Javascript function content.
-    :param list func_pmts: A list of parameters.
-    :param Optional[Union[bool, dict]] profile: A boolean flag to activate the framework profiling.
+    :param func_name: A String with the Javascript function name to be defined.
+    :param func_def: A String with the Javascript function content.
+    :param func_pmts: A list of parameters.
+    :param profile: A boolean flag to activate the framework profiling.
     """
     fnc_pmts = ["data"] + (func_pmts or [])
     if func_name not in self._js_src.get('js', {}).get('functions', {}):

@@ -575,7 +575,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     Description:
     ------------
     Internal function to include an external JavaScript module.
-    This can only use pre defined modules. This will fail during the resolution if it does not exist.
+    This can only use pre-defined modules. This will fail during the resolution if it does not exist.
 
     Attributes:
     ----------
@@ -1460,7 +1460,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param js_code: The PyJs functions.
     :param callback: JavaScript functions called by the intersectionObserver.
     :param options: intersectionObserver options.
-    :param observe_once: A flag to remove the observe once callbacks run.
+    :param observe_once: A flag to remove the observable once callbacks run.
     :param profile: Option to perform profiling logs in the browser console.
     """
     if callback is not None or options is not None:
@@ -2031,7 +2031,7 @@ class JsConsole:
 
     Attributes:
     ----------
-    :param  data: The Javascript fragment.
+    :param data: The Javascript fragment.
     :param js_conv_func: Optional. A specific JavaScript data conversion function.
 
     :return: The Javascript String used to clear the console (F12 in standard browsers)

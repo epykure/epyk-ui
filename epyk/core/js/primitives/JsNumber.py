@@ -137,7 +137,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, float] n: The number value.
+    :param n: The number value.
 
     :return: A new Python Javascript Number
     """
@@ -151,7 +151,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, float] value: The maximum value for this object.
+    :param value: The maximum value for this object.
     """
     return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
@@ -165,7 +165,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, float] value: The minimum value for this object.
+    :param value: The minimum value for this object.
     """
     return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
@@ -182,7 +182,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, float] n: The number value.
+    :param n: The number value.
 
     :return: A new Python Javascript Number.
     """
@@ -265,8 +265,7 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] n: Optional. The number of digits. If omitted, it returns the entire
-    number (without any formatting).
+    :param n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
 
     :return: A Javascript Number
     """
@@ -301,7 +300,7 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("%s = %s" % (self.varId, JsMaths.JsMaths.pow(self, value)))
 
   @classmethod
-  def proto(cls, jsObj, func_name):
+  def proto(cls, js_obj, func_name):
     """
     Description:
     ------------
@@ -310,10 +309,10 @@ class JsNumber(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param jsObj:
-    :param func_name: String. The function name.
+    :param js_obj: The base Javascript Python object
+    :param func_name: The function name.
     """
-    jsObj.extendProto(cls, "formatMoney", '''
+    js_obj.extendProto(cls, "formatMoney", '''
 var n = this, decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces, decSeparator = decSeparator == undefined ? "." : decSeparator,
 thouSeparator = thouSeparator == undefined ? "," : thouSeparator, sign = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(decPlaces)) + "",
 j = (j = i.length) > 3 ? j % 3 : 0;
@@ -334,8 +333,8 @@ return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(
     Attributes:
     ----------
     :param js_obj: The base Javascript Python object
-    :param int dec_places: Optional. The number of decimal.
-    :param str country_code: Optional. The country code. Default uk.
+    :param dec_places: Optional. The number of decimal.
+    :param country_code: Optional. The country code. Default uk.
     """
     thou_separator, dec_separator = (",", ".") if country_code.upper() in ["UK", 'US'] else (" ", ".")
     js_obj.extendProto(self, "formatMoney", '''

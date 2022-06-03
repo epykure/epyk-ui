@@ -28,10 +28,10 @@ def parse_statements(line: str, level: int, delimiter: str = ";", spaces: Option
 
   Attributes:
   ----------
-  :param str line: The JavaScript statements.
-  :param int level: The level of indent to be added to this line.
-  :param str delimiter: Optional. The statement delimiter. Default ;.
-  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
+  :param line: The JavaScript statements.
+  :param level: The level of indent to be added to this line.
+  :param delimiter: Optional. The statement delimiter. Default ;.
+  :param spaces: Optional. The number of spaces. (Default 2).
   """
   row = []
   one_liner = "".join([l.strip() for l in line.split("\n")])
@@ -54,10 +54,10 @@ def parse(data: str, minify: Optional[bool] = None, to_str: bool = True, spaces:
 
   Attributes:
   ----------
-  :param str data: The Javascript statements.
-  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
-  :param bool to_str: Optional. Specify the type of data returned by this function (string or list).
-  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
+  :param data: The Javascript statements.
+  :param minify: Optional. Specify the type of formatting. (Default minify True).
+  :param to_str: Optional. Specify the type of data returned by this function (string or list).
+  :param spaces: Optional. The number of spaces. (Default 2).
   """
   level, frgs, k = 0, [], 0
   if minify:
@@ -98,9 +98,9 @@ def builder(cls, minify: Optional[bool] = None, to_str: bool = True, spaces: Opt
   Attributes:
   ----------
   :param cls: Class. An internal HTML component class.
-  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
-  :param bool to_str: Optional. Specify the type of data returned by this function (string or list).
-  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
+  :param minify: Optional. Specify the type of formatting. (Default minify True).
+  :param to_str: Optional. Specify the type of data returned by this function (string or list).
+  :param spaces: Optional. The number of spaces. (Default 2).
   """
   builder_name = cls.builder_name if cls.builder_name is not None else cls.__name__
   return parse(
@@ -124,10 +124,10 @@ def events(component: primitives.HtmlModel, minify: Optional[bool] = None, to_st
 
   Attributes:
   ----------
-  :param primitives.HtmlModel component: An internal component in the framework.
-  :param Optional[bool] minify: Optional. Specify the type of formatting. (Default minify True).
-  :param bool to_str: Optional. Specify the type of data returned by this function (string or list).
-  :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
+  :param component: An internal component in the framework.
+  :param minify: Optional. Specify the type of formatting. (Default minify True).
+  :param to_str: Optional. Specify the type of data returned by this function (string or list).
+  :param spaces: Optional. The number of spaces. (Default 2).
   """
   results = []
   for event_type, fnc_details in component._browser_data.get('mouse', {}).items():

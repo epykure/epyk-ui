@@ -29,9 +29,9 @@ class JsDate(JsObject.JsObject):
     Attributes:
     ----------
     :param data:
-    :param Optional[str] js_code: Optional.
-    :param bool set_var: Optional.
-    :param bool is_py_data: Optional.
+    :param js_code: Optional.
+    :param set_var: Optional.
+    :param is_py_data: Optional.
     :param local_time: Optional. Flag to return the local time or the ISO date time.
     """
     if set_var:
@@ -67,7 +67,7 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str js_code: The Javascript object reference.
+    :param js_code: The Javascript object reference.
 
     :return: The python Javascript object
     """
@@ -86,7 +86,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.get("dateTest").isWeedend
+      page.js.objects.date.get("dateTest").isWeedend
     """
     from epyk.core.js.primitives import JsBoolean
     return JsBoolean.JsBoolean("(%(varId)s.getDay() === 6) || (%(varId)s.getDay() === 0)" % {
@@ -101,7 +101,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.now()
+      page.js.objects.date.now()
 
     Related Pages:
 
@@ -122,7 +122,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      rptObj.js.objects.date.today()
+      page.js.objects.date.today()
 
     Related Pages:
 
@@ -139,8 +139,6 @@ class JsDate(JsObject.JsObject):
     -----------
     The getDate() method returns the day of the month (from 1 to 31) for the specified date.
 
-    Usage::
-
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_getdate.asp
@@ -155,8 +153,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getDay()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getDay()
 
     Related Pages:
 
@@ -173,8 +171,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getFullYear()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getFullYear()
 
     Related Pages:
 
@@ -194,8 +192,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getHours()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getHours()
 
     Related Pages:
 
@@ -215,8 +213,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getMilliseconds()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getMilliseconds()
 
     Related Pages:
 
@@ -236,8 +234,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getMonth()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getMonth()
 
     Related Pages:
 
@@ -252,12 +250,12 @@ class JsDate(JsObject.JsObject):
     """
     Description:
     -----------
-    Use getMonth() method returns the month the month name from the definition in the module.
+    Use getMonth() method returns the month name from the definition in the module.
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").getMonthName()
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").getMonthName()
 
     Related Pages:
 
@@ -276,8 +274,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").setDate(5)
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").setDate(5)
 
     Related Pages:
 
@@ -285,7 +283,7 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] day: An integer representing the day of a month.
+    :param day: An integer representing the day of a month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
@@ -300,8 +298,8 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
-      jsObj.objects.date.get("dateTest").setMonth(5)
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.get("dateTest").setMonth(5)
 
     Related Pages:
 
@@ -309,8 +307,8 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] month: An integer representing the month.
-    :param Union[primitives.JsDataModel, int] day: Optional. An integer representing the day of month.
+    :param month: An integer representing the month.
+    :param day: Optional. An integer representing the day of month.
 
     :return: A Number, representing the number of milliseconds between the date object and midnight January 1 1970
     """
@@ -369,7 +367,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
       jsType.date.get("dateTest").getStrDate()
 
     Related Pages:
@@ -390,7 +388,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.new("2019-01-01", varName="dateTest")
+      page.js.objects.date.new("2019-01-01", varName="dateTest")
       jsType.date.get("dateTest").getStrTimeStamp()
 
     Related Pages:
@@ -413,9 +411,9 @@ class JsDate(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param bool in_seconds: In second conversion of the Javascript timestamp
-    :param str js_code:
-    :param bool set_var:
+    :param in_seconds: In second conversion of the Javascript timestamp
+    :param js_code:
+    :param set_var:
     """
     from epyk.core.js.primitives import JsNumber
     if js_code is not None:
@@ -436,11 +434,11 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.this().getDate().add(1)
+      page.js.objects.date.this().getDate().add(1)
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] n: the number of days.
+    :param n: the number of days.
 
     :return: A Python Js object
     """
@@ -455,7 +453,7 @@ class JsDate(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.date.get("MyDate").addDays(jsObj, 6).getStrDate()
+      page.js.objects.date.get("MyDate").addDays(jsObj, 6).getStrDate()
 
     Related Pages:
 
@@ -465,9 +463,9 @@ class JsDate(JsObject.JsObject):
     ----------
     :param js_obj: The internal JS object used to store the prototype extension.
     :param int n: The number of days to be added.
-    :param bool weekend: Optional. flag to specify if the weekends should be considered in the count. Default False.
+    :param weekend: Optional. flag to specify if the weekends should be considered in the count. Default False.
 
-    :type jsObj: epyk.Lib.js.Js.JsBase
+    :type js_obj: epyk.Lib.js.Js.JsBase
     """
     js_obj.extendProto(self, "addDays", [
       js_obj.objects.date.this().setDate(js_obj.objects.date.this().getDate().add(js_obj.parseInt(js_obj.objects.get("n")))),

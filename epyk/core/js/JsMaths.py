@@ -16,7 +16,7 @@ from epyk.core.js.primitives import JsNumber
 class JsMaths:
 
   @property
-  def E(self):
+  def E(self) -> JsNumber.JsNumber:
     """
     Description:
     ------------

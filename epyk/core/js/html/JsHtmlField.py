@@ -19,7 +19,8 @@ class Radio(JsHtml.JsHtmlRich):
     -----------
 
     """
-    return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
+    return JsObjects.JsObjects.get(
+      '''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
         ''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name'), self.selected.toStr()))
 
   @property
@@ -74,7 +75,7 @@ class InputText(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: Javascript functions.
+    :param js_funcs: Javascript functions.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -88,8 +89,8 @@ class InputText(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param int n: The minimum length of the input content.
-    :param Union[str, list] js_funcs: Javascript functions.
+    :param n: The minimum length of the input content.
+    :param js_funcs: Javascript functions.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -103,8 +104,8 @@ class InputText(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param str rule:
-    :param Union[str, list] js_funcs: Javascript functions.
+    :param rule:
+    :param js_funcs: Javascript functions.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

@@ -504,7 +504,7 @@ class JsHistory:
     self.page.js.registerFunction("updateUrl", [
       self.page.js.objects.new([], js_code="newPmts"),
       self.page.js.location.search.substr(1).split("&").forEach([
-        self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", jsObj=self.page.js), [
+        self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", js_obj=self.page.js), [
           self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), js_code="urlPmts"),
           self.page.js.objects.array.get("urlPmts")[0].toString(),
           self.page.js.objects.get("newPmts").addItem(

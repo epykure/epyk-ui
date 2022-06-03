@@ -14,6 +14,13 @@ from epyk.core.js.primitives import JsNumber
 class Event(primitives.JsDataModel):
 
   def getEvent(self, js_code: str):
+    """
+    Description:
+    ------------
+
+    :param js_code:
+    :return:
+    """
     return JsObject.JsObject.get(js_code)
 
   def createEvent(self, js_code: str, event_type: Union[str, primitives.JsDataModel] = 'Event'):
@@ -27,8 +34,8 @@ class Event(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str js_code:
-    :param Union[str, primitives.JsDataModel] event_type:
+    :param js_code:
+    :param event_type:
     """
     event_type = JsUtils.jsConvertData(event_type, None)
     return "var %s = document.createEvent(%s)" % (js_code, event_type)
@@ -47,10 +54,10 @@ class Event(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param name: String. Optional.
-    :param str js_code: Optional.
-    :param bubbles: Boolean. Optional.
-    :param cancelable: Boolean. Optional.
+    :param name: Optional.
+    :param js_code: Optional.
+    :param bubbles: Optional.
+    :param cancelable: Optional.
     """
     name = JsUtils.jsConvertData(name, None)
     bubbles = JsUtils.jsConvertData(bubbles, None)

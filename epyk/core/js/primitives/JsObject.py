@@ -38,10 +38,10 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[str] js_code:
+    :param js_code:
     :param data:
-    :param bool set_var:
-    :param bool is_py_data:
+    :param set_var:
+    :param is_py_data:
     :param page: The internal report object.
     :param component:
     """
@@ -77,9 +77,9 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param data: Optional, The object data.
-    :param Optional[str] js_code: Optional, The object variable name.
-    :param bool is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json.
-    :param primitives.PageModel page: The internal report object.
+    :param js_code: Optional, The object variable name.
+    :param is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json.
+    :param page: The internal report object.
 
     :return: The Python Javascript Date primitive
     """
@@ -106,7 +106,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[primitives.PageModel] page: The internal report object.
+    :param page: The internal report object.
 
     :return: The python Javascript object
     """
@@ -130,8 +130,9 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str js_code: The Javascript object reference.
-    :param Optional[primitives.PageModel] page: The internal report object.
+    :param js_code: The Javascript object reference.
+    :param page: The internal report object.
+    :param component:
 
     :return: The python Javascript object
     """
@@ -154,12 +155,10 @@ class JsObject(primitives.JsDataModel):
     ------------
     The setVar() method will define the variable name and use this reference in the future.
 
-    Usage::
-
     Attributes:
     ----------
-    :param str js_code: The variable name.
-    :param str var_type: The type of variable to be set on the Javascript side.
+    :param js_code: The variable name.
+    :param var_type: The type of variable to be set on the Javascript side.
 
     :return: The Python Javascript Object
     """
@@ -193,7 +192,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str name: The object property name.
+    :param name: The object property name.
     :param value: The object property values.
 
     :return: A reference to the String.prototype object
@@ -213,7 +212,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, float] float n: The number value.
+    :param n: The number value.
 
     :return: A new Python Javascript Number
     """
@@ -372,7 +371,7 @@ class JsObject(primitives.JsDataModel):
     The Object.freeze() method freezes an object.
     A frozen object can no longer be changed; freezing an object prevents new properties from being added to it,
     existing properties from being removed, prevents changing the enumerability, configurability,
-    or writability of existing properties, and prevents the values of existing properties from being changed.
+    or writtability of existing properties, and prevents the values of existing properties from being changed.
 
     Usage::
 
@@ -429,8 +428,8 @@ class JsObject(primitives.JsDataModel):
     Attributes:
     ----------
     :param obj: The object on which to define the property.
-    :param str prop: The name or Symbol of the property to be defined or modified.
-    :param str descriptor: The descriptor for the property being defined or modified.
+    :param prop: The name or Symbol of the property to be defined or modified.
+    :param descriptor: The descriptor for the property being defined or modified.
 
     :return: The object that was passed to the function.
     """
@@ -496,8 +495,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] target: The target object.
-    :param List[Union[primitives.JsDataModel, str]] sources: The source object(s).
+    :param target: The target object.
+    :param sources: The source object(s).
     :param js_obj: Optional, The base Python Javascript object to add the polyfill
     """
     if js_obj is not None:
@@ -524,9 +523,9 @@ class JsObject(primitives.JsDataModel):
     ----------
     :param proto: The object which should be the prototype of the newly-created object.
     :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties
-    (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify
-    property descriptors to be added to the newly-created object, with the corresponding property names.
-    These properties correspond to the second argument of Object.defineProperties()
+      (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify
+      property descriptors to be added to the newly-created object, with the corresponding property names.
+      These properties correspond to the second argument of Object.defineProperties()
 
     :return: A Python Javascript object
     """
@@ -568,9 +567,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] key: The key to add to the object.
-    :param Union[primitives.JsDataModel, str] value: The value corresponding to the key. Can be a Python object or a
-    Javascript reference
+    :param key: The key to add to the object.
+    :param value: The value corresponding to the key. Can be a Python object or a Javascript reference
 
     :return: The Python Javascript object
     """
@@ -588,6 +586,11 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
     Wrapper to the setattr method.
+
+    Attributes:
+    ----------
+    :param key:
+    :param value:
     """
     return self.setattr(key, value)
 
@@ -598,7 +601,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel component:
+    :param component:
     """
     return self.setattr(component.htmlCode, component.dom.content)
 
@@ -610,7 +613,7 @@ class JsObject(primitives.JsDataModel):
 
     Usage::
 
-      jsObj.objects.get("MyObject")["test"]
+      page.js.objects.get("MyObject")["test"]
 
     Related Pages:
 
@@ -618,7 +621,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] key: The String used as key.
+    :param key: The String used as key.
 
     :return: The corresponding Javascript object
     """
@@ -632,7 +635,7 @@ class JsObject(primitives.JsDataModel):
 
     Usage::
 
-      jsObj.objects.get("MyObject").keys()
+      page.js.objects.get("MyObject").keys()
 
     Related Pages:
 
@@ -650,8 +653,6 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
     This might not be supported by all the browser.
-
-    Usage::
 
     Attributes:
     ----------
@@ -680,7 +681,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param bool explicit: Optional, default True. Parameter to force the String conversion on the Js side
+    :param explicit: Optional, default True. Parameter to force the String conversion on the Js side
 
     :return: A Javascript String
     """
@@ -752,7 +753,9 @@ class JsObject(primitives.JsDataModel):
     Description:
     ------------
 
-    row["Date"] = row["Date"].toISOString().slice(0, 10);
+    Usage::
+
+      row["Date"] = row["Date"].toISOString().slice(0, 10);
 
     Attributes:
     ----------
@@ -772,7 +775,7 @@ class JsObject(primitives.JsDataModel):
 
     Usage::
 
-      d = rptObj.ui.div()
+      d = page.ui.div()
       d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
     Attributes:
@@ -817,7 +820,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Optional[primitives.PageModel] page: Optional. The report object
+    :param page: Optional. The page object
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -839,8 +842,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, dict] attrs:
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param attrs:
+    :param page: Optional. The page object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -864,8 +867,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, list] keys:
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param keys:
+    :param page: Optional. The page object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -914,7 +917,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] delimiter: The line delimiter in the file.
+    :param delimiter: The line delimiter in the file.
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
     return JsObject('''(function(){var results = []; 

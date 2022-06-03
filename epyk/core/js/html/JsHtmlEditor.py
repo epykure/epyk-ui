@@ -27,7 +27,7 @@ class Console(JsHtml.JsHtmlRich):
     :param profile:
     :param stringify:
     :param skip_data_convert:
-    :param format: String. A string output format using %s to define the data in the string
+    :param format: A string output format using %s to define the data in the string
     """
     js_data = data if skip_data_convert else JsUtils.jsConvertData(data, None)
     if stringify:
@@ -152,7 +152,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] data:
+    :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get("%s.setValue(%s)" % (self.component.editorId, data))
@@ -165,8 +165,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel, float, dict, list] name:
-    :param Union[str, primitives.JsDataModel, float, dict, list] value:
+    :param name:
+    :param value:
     """
     name = JsUtils.jsConvertData(name, None)
     value = JsUtils.jsConvertData(value, None)
@@ -203,8 +203,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: The text to append.
-    :param bool from_selection: Optional.
+    :param text: The text to append.
+    :param from_selection: Optional.
     """
     text = JsUtils.jsConvertData(text, None)
     from_selection = JsUtils.jsConvertData(from_selection, None)

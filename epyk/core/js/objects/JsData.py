@@ -123,8 +123,8 @@ class RawData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.PageModel page: The main page object.
-    :param str js_code: The JavaScript variable name.
+    :param page: The main page object.
+    :param js_code: The JavaScript variable name.
 
     :return: A internal data object
     """
@@ -138,7 +138,7 @@ class RawData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str jq_id: The JQuery Identifier.
+    :param jq_id: The JQuery Identifier.
 
     :return: The Python object
     """
@@ -156,8 +156,8 @@ class RawData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel component:
-    :param Optional[Union[bool, dict]] profile: Optional.
+    :param component:
+    :param profile: Optional.
     """
     self.page.properties.data.get_schema_containers(self._data_id)[component.htmlCode] = {
       'fncs': [], 'outs': None, "profile": profile}
@@ -244,8 +244,8 @@ class Datamap(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel component: The HTML component.
-    :param str html_code: Optional. The Html code.
+    :param component: The HTML component.
+    :param html_code: Optional. The Html code.
     """
     self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     return self
@@ -259,8 +259,8 @@ class Datamap(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] k: The key attribute to be added to the object.
-    :param Any v: The value associated to the key.
+    :param k: The key attribute to be added to the object.
+    :param v: The value associated to the key.
     """
     self._data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     return self
@@ -273,7 +273,7 @@ class Datamap(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param dict data: All the attributes to attach
+    :param data: All the attributes to attach
     """
     for k, v in data.items():
       self.attr(k, v)
@@ -305,8 +305,8 @@ class FormData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str js_code: The JavaScript variable name.
-    :param str var_type: The JavaScript variable type (let, const, var...)
+    :param js_code: The JavaScript variable name.
+    :param var_type: The JavaScript variable type (let, const, var...)
     """
     self.alias = js_code
     return "%s %s = new FormData()" % (var_type, js_code)
@@ -319,7 +319,7 @@ class FormData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str js_code: The JavaScript variable name.
+    :param js_code: The JavaScript variable name.
     """
     self.alias = js_code
     return self
@@ -331,8 +331,8 @@ class FormData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] name:
-    :param Any value:
+    :param name:
+    :param value:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
@@ -345,8 +345,8 @@ class FormData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel component: The HTML component.
-    :param str html_code: Optional. The Html code.
+    :param component: The HTML component.
+    :param html_code: Optional. The Html code.
     """
     return "%s.append(%s, %s)" % (
       self.alias, JsUtils.jsConvertData(html_code or component.htmlCode, None),
@@ -359,7 +359,7 @@ class FormData(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[Datamap, dict] attrs:
+    :param attrs:
     """
     appends = []
     if isinstance(attrs, Datamap):
@@ -464,9 +464,9 @@ class JsData:
 
     Attributes:
     ----------
-    :param Any data: The data to be passed to the JavaScript side.
-    :param str js_code: The variable reference to this object on the JavaScript side.
-    :param dict options: The options to be added to this object.
+    :param data: The data to be passed to the JavaScript side.
+    :param js_code: The variable reference to this object on the JavaScript side.
+    :param options: The options to be added to this object.
     """
     vis_obj = VisDataSet(self.page, data=data, js_code=JsUtils.getJsValid(js_code))
     if options is not None:
@@ -619,8 +619,8 @@ class JsDataTransfer:
 
     Attributes:
     ----------
-    :param Any data:
-    :param Union[str, primitives.JsDataModel] data_type:
+    :param data:
+    :param data_type:
     """
     data_type = JsUtils.jsConvertData(data_type, None)
     data = JsUtils.jsConvertData(data, None)
@@ -653,7 +653,7 @@ class JsClipboardData:
     
     Attributes:
     ----------
-    :param js_code: String. Change the event source
+    :param js_code: Change the event source
     """
     self.varId = "%s.clipboardData" % js_code
     return self
@@ -715,7 +715,7 @@ class JsClipboardData:
 
     Attributes:
     ----------
-    :param str data_type: The data format
+    :param data_type: The data format
     """
     data_type = JsUtils.jsConvertData(data_type, None)
     return JsString.JsString("%s.getData(%s)" % (self.varId, data_type), is_py_data=False)

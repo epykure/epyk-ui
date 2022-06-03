@@ -44,9 +44,9 @@ class Radio(JsPackage):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Union[list, str] else_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param else_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if else_funcs is not None:
@@ -65,9 +65,9 @@ class Radio(JsPackage):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Union[list, str] else_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param else_funcs: Optional. The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if else_funcs is not None:
@@ -93,7 +93,7 @@ class CheckButton(JsPackage):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: Optional. The font color in the component. Default inherit.
+    :param color: Optional. The font color in the component. Default inherit.
     """
     times = self.component.options.icon_not_check
     check = self.component.options.icon_check
@@ -109,7 +109,7 @@ class CheckButton(JsPackage):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: Optional. The font color in the component. Default inherit.
+    :param color: Optional. The font color in the component. Default inherit.
     """
     times = self.component.options.icon_not_check
     check = self.component.options.icon_check
@@ -143,12 +143,12 @@ class Menu(JsPackage):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: The text to be set.
+    :param value: The text to be set.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.innerHTML = %s" % (self.varName, value))
 
-  def set_url(self, value, target='_blank'):
+  def set_url(self, value: str, target: str = '_blank'):
     """
     Description:
     -----------
@@ -164,8 +164,8 @@ class Menu(JsPackage):
 
     Attributes:
     ----------
-    :param value: String. The url link.
-    :param target: String. Optional. The target mode of the link component.
+    :param value: The url link.
+    :param target: Optional. The target mode of the link component.
     """
     value = JsUtils.jsConvertData(value, None)
     target = JsUtils.jsConvertData(target, None)
@@ -198,7 +198,7 @@ class Switch(JsPackage):
 
     Attributes:
     ----------
-    :param Union[bool, primitives.JsDataModel] data: Flag to specify the state for the switch.
+    :param data: Flag to specify the state for the switch.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
@@ -243,7 +243,7 @@ class Alerts(JsPackage):
 
     Attributes:
     ----------
-    :param int time:
+    :param time:
     """
     time = time or self.component.options.time
     return JsObjects.JsVoid('''

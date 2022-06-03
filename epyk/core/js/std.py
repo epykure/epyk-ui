@@ -29,7 +29,7 @@ def selector(component: Optional[primitives.HtmlModel] = None):
 
   Attributes:
   ----------
-  :param Optional[primitives.HtmlModel] component:
+  :param component:
   """
   return Selector.Selector(component)
 

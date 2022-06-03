@@ -38,9 +38,9 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str js_code: The variable name for the speech recognition object.
-    :param Optional[list] data:
-    :param primitives.PageModel page:
+    :param js_code: The variable name for the speech recognition object.
+    :param data:
+    :param page:
     """
     if data is None:
       data = []
@@ -81,9 +81,9 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: A function to be run for each element in the array
-    :param Optional[str] js_value: Optional. A value to be passed to the function to be used as its "this" value.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: A function to be run for each element in the array
+    :param js_value: Optional. A value to be passed to the function to be used as its "this" value.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if js_value is None:
@@ -103,9 +103,9 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: A function to be run for each element in the array
-    :param Optional[str] js_value: Optional. A value to be passed to the function to be used as its "this" value.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: A function to be run for each element in the array
+    :param js_value: Optional. A value to be passed to the function to be used as its "this" value.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if js_value is None:
@@ -119,16 +119,13 @@ class JsArray(JsObject.JsObject):
     -----------
     The find() method returns the value of the first element in an array that pass a test (provided as a function)
 
-    Usage::
+    Related Pages:
 
-      Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_find.asp
+    https://www.w3schools.com/jsref/jsref_find.asp
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each
-    element in the array.
+    :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
 
     :return: Returns the array element value if any of the elements in the array pass the test, otherwise it
     """
@@ -142,9 +139,9 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.console.log(jsObj.objects.array.get("MyArray").findIndex([
-      jsObj.if_(jsObj.data.loop.val <= 0, [jsObj.return_(jsObj.objects.true)]),
-      jsObj.return_(jsObj.objects.false)
+      page.js.console.log(jsObj.objects.array.get("MyArray").findIndex([
+      page.js.if_(jsObj.data.loop.val <= 0, [jsObj.return_(jsObj.objects.true)]),
+        page.js.return_(jsObj.objects.false)
       ]))
 
     Related Pages:
@@ -153,9 +150,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each
-    element in the array.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: Returns the array element index if any of the elements in the array pass the test, otherwise it returns -1
     """
@@ -179,9 +175,9 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: A function to be run for each element in the array
-    :param Optional[str] value: Optional. A value to be passed to the function to be used as its "this" value.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: A function to be run for each element in the array
+    :param value: Optional. A value to be passed to the function to be used as its "this" value.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, js_funcs))
@@ -194,9 +190,9 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.console.log(jsObj.objects.array.get("MyArray").map([
-      jsObj.data.loop.val * jsObj.math.max(jsObj.data.loop.arr.toArgs()),
-      jsObj.return_(jsObj.data.loop.val)]))
+      page.js.console.log(jsObj.objects.array.get("MyArray").map([
+      page.js.data.loop.val * jsObj.math.max(jsObj.data.loop.arr.toArgs()),
+      page.js.return_(jsObj.data.loop.val)]))
 
     Related Pages:
 
@@ -204,9 +200,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each
-    element in the array.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
@@ -225,8 +220,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
-      jsObj.objects.array.get("MyArray").sort()
+      page.js.console.log(jsObj.objects.array.new([2, 5, 12, -3], "MyArray").shift()),
+      page.js.objects.array.get("MyArray").sort()
 
     Related Pages:
 
@@ -234,9 +229,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each
-    element in the array.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: An Array object, representing the joined array
     """
@@ -256,9 +250,9 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.console.log(jsObj.objects.array.get("MyArray").reduce([
-      jsObj.data.reduce.val + jsObj.data.reduce.rVal,
-      jsObj.return_(jsObj.data.reduce.val)]))
+      page.js.console.log(jsObj.objects.array.get("MyArray").reduce([
+      page.js.data.reduce.val + jsObj.data.reduce.rVal,
+      page.js.return_(jsObj.data.reduce.val)]))
 
     Related Pages:
 
@@ -266,9 +260,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr)	Required. A function to be run for each
-    element in the array.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: A Python / Javascript Number
     """
@@ -293,7 +286,7 @@ class JsArray(JsObject.JsObject):
       https://www.w3schools.com/jsref/jsref_shift.asp
 
     :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array, a
-    boolean, or any other object types that are allowed in an array.
+      boolean, or any other object types that are allowed in an array.
     """
     return JsObject.JsObject("%s.shift()" % self.varId, is_py_data=False)
 
@@ -305,8 +298,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").slice(3, 5)
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").slice(3, 5)
 
     Related Pages:
 
@@ -314,8 +307,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] start: The index number in the array.
-    :param Union[primitives.JsDataModel, int] end: The index number in the array.
+    :param start: The index number in the array.
+    :param end: The index number in the array.
 
     :return: A new Array, containing the selected elements
     """
@@ -331,15 +324,15 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").pop()
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").pop()
 
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
 
     :return: Any type*, representing the removed array item. *An array item can be a string, a number, an array,
-    a boolean, or any other object types that are allowed in an array.
+      a boolean, or any other object types that are allowed in an array.
     """
     return JsObject.JsObject("%s.pop()" % self.varId, is_py_data=False)
 
@@ -352,8 +345,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").delete(2)
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").delete(2)
 
     Related Pages:
 
@@ -361,7 +354,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[float, primitives.JsDataModel] value: The index of the value in the array to be removed.
+    :param value: The index of the value in the array to be removed.
 
     :return: Void, The Javascript String
     """
@@ -384,8 +377,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] sep: Optional. The separator to be used. If omitted, the elements are
-    separated with a comma.
+    :param sep: Optional. The separator to be used. If omitted, the elements are separated with a comma.
+
     :return: A String, representing the array values, separated by the specified separator.
     """
     from epyk.core.js.primitives import JsString
@@ -402,7 +395,7 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
 
     Related Pages:
 
@@ -410,8 +403,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] start: Optional. The index position to start copying elements from (default is 0)
-    :param Optional[Union[primitives.JsDataModel, int]] end: Optional. The index position to stop copying elements from (default is array.length)
+    :param start: Optional. The index position to start copying elements from (default is 0)
+    :param end: Optional. The index position to stop copying elements from (default is array.length)
 
     :return: An Array, the changed array
     """
@@ -430,8 +423,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").fill("test", 0, 2)
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").fill("test", 0, 2)
 
     Related Pages:
 
@@ -439,10 +432,10 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param primitives.JsDataModel data: The value to fill the array with.
-    :param Union[primitives.JsDataModel, int] start: Optional. The index to start filling the array (default is 0).
-    :param Optional[Union[primitives.JsDataModel, int]] end: Optional. The index to stop filling the array (default is array.length).
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
+    :param data: The value to fill the array with.
+    :param start: Optional. The index to start filling the array (default is 0).
+    :param end: Optional. The index to stop filling the array (default is array.length).
+    :param js_funcs: Optional. The Javascript functions.
     :param js_obj: Optional, The base Python Javascript object to add the polyfill.
 
     :return: An Array, the changed array
@@ -528,8 +521,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").push(55, -17)
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").push(55, -17)
 
     Related Pages:
 
@@ -551,7 +544,9 @@ class JsArray(JsObject.JsObject):
     Description:
     -----------
 
-    page.js.objects.array.get("myArray").push_dict(x="a", y=45)
+    Usage::
+
+      page.js.objects.array.get("myArray").push_dict(x="a", y=45)
 
     Attributes:
     ----------
@@ -570,8 +565,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").reverse()
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").reverse()
 
     Related Pages:
 
@@ -594,8 +589,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, int] depth: The depth level specifying how deep a nested array structure
-    should be flattened. Defaults to 1.
+    :param depth: The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
     """
     return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), is_py_data=False)
 
@@ -613,8 +607,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: function(currentValue, index, arr). A function to be run for each element in the array.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: function(currentValue, index, arr). A function to be run for each element in the array.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: An Array containing the results of calling the provided function for each element in the original array.
     """
@@ -634,7 +628,7 @@ class JsArray(JsObject.JsObject):
 
     This method returns true if the array contains the element, and false if not.
 
-    Note: The includes() method is case sensitive.
+    Note: The includes() method is case-sensitive.
 
     Related Pages:
 
@@ -642,8 +636,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] element: Object. The element to search for.
-    :param int start: Optional. Default 0. At which position in the array to start the search.
+    :param element: Object. The element to search for.
+    :param start: Optional. Default 0. At which position in the array to start the search.
     """
     from epyk.core.js.primitives import JsBoolean
 
@@ -658,8 +652,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 5, 12, -3], "MyArray")
-    jsObj.objects.array.get("MyArray").unshift(22)
+      page.js.objects.array.new([2, 5, 12, -3], "MyArray")
+      page.js.objects.array.get("MyArray").unshift(22)
 
     Related Pages:
 
@@ -683,15 +677,15 @@ class JsArray(JsObject.JsObject):
 
     Related Pages:
 
-    https://www.w3schools.com/js/js_array_methods.asp
+      https://www.w3schools.com/js/js_array_methods.asp
 
     Attributes:
     ----------
-    :param int i: An integer that specifies at what position to add/remove items, Use negative values to.
-    specify the position from the end of the array.
-    :param int j: Optional. The number of items to be removed. If set to 0, no items will be removed.
-    :param Union[primitives.JsDataModel, str] data: Optional. The new item(s) to be added to the array.
-    :param Optional[Union[list, str]] js_funcs: Optional. The Javascript functions.
+    :param i: An integer that specifies at what position to add/remove items, Use negative values to.
+      specify the position from the end of the array.
+    :param j: Optional. The number of items to be removed. If set to 0, no items will be removed.
+    :param data: Optional. The new item(s) to be added to the array.
+    :param js_funcs: Optional. The Javascript functions.
 
     :return: A new Array, containing the removed items (if any)
     """
@@ -715,8 +709,8 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").unique()
+      page.js.objects.array.new([2, 2, -3, -3], "MyArray")
+      page.js.objects.array.get("MyArray").unique()
 
     Attributes:
     ----------
@@ -739,13 +733,13 @@ class JsArray(JsObject.JsObject):
 
     Usage::
 
-      jsObj.objects.array.new([2, 2, -3, -3], "MyArray")
-      jsObj.objects.array.get("MyArray").contains(2)
+      page.js.objects.array.new([2, 2, -3, -3], "MyArray")
+      page.js.objects.array.get("MyArray").contains(2)
 
     Attributes:
     ----------
     :param js_obj: The Python Javascript base object.
-    :param primitives.JsDataModel data: The object to look for in the array.
+    :param data: The object to look for in the array.
 
     :return: A Python Javascript boolean.
     """
@@ -771,7 +765,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list header:
+    :param header:
     """
     return JsObject.JsObject(
       "(function(r, h){var rec = {}; h.forEach(function(c, i){rec[c] = r[i]}); return rec})(%s, %s)" % (
@@ -790,8 +784,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: An index.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param n: An index.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -822,8 +816,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: An index.
-    :param Optional[primitives.PageModel] page: The report object.
+    :param n: An index.
+    :param page: The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -854,8 +848,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: An index.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param n: An index.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -886,8 +880,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: The length of the sub lists.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param n: The length of the sub lists.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -919,8 +913,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: An index.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param n: An index.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -952,8 +946,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[int, primitives.JsDataModel] n: An index.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param n: An index.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -981,8 +975,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[list, primitives.JsDataModel] values: All the values to be removed.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param values: All the values to be removed.
+    :param page: Optional. The report object.
     """
     values = JsUtils.jsConvertData(values, None)
     page = page or self.page
@@ -1004,8 +998,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[list, primitives.JsDataModel] values: All the values to be removed.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param values: All the values to be removed.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -1027,7 +1021,7 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[primitives.JsDataModel, list] arrays: The list of lists to sum.
+    :param arrays: The list of lists to sum.
     :param page: Optional. The report object.
     """
     page = page or self.page
@@ -1052,8 +1046,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Optional[primitives.JsDataModel, list] arrays: The list of lists to process.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param arrays: The list of lists to process.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -1077,8 +1071,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[bool, primitives.JsDataModel] is_sorted: Flag to specify if the list is sorted.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param is_sorted: Flag to specify if the list is sorted.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -1146,10 +1140,10 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int stop: The index of the last value
-    :param int start: The index of the first value
-    :param int step: The step
-    :param Optional[primitives.PageModel] page: Optional. The report object
+    :param stop: The index of the last value
+    :param start: The index of the first value
+    :param step: The step
+    :param page: Optional. The report object
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -1169,8 +1163,8 @@ class JsArray(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param list keys: The keys for the dictionary.
-    :param Optional[primitives.PageModel] page: Optional. The report object.
+    :param keys: The keys for the dictionary.
+    :param page: Optional. The report object.
     """
     page = page or self.page
     page.jsImports.add('underscore')
@@ -1189,7 +1183,7 @@ class JaArrayRejector:
 
     Attributes:
     ----------
-    :param Union[int, primitives.JsDataModel] n:
+    :param n:
     """
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ return num %% %s == 0; })" % (
@@ -1205,7 +1199,7 @@ class JaArrayRejector:
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, list] val:
+    :param val:
     """
     val = JsUtils.jsConvertData(val, None)
     if self.varName is None:
@@ -1222,7 +1216,7 @@ class JaArrayRejector:
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, list] values:
+    :param values:
     """
     values = JsUtils.jsConvertData(values, None)
     if self.varName is None:
@@ -1239,7 +1233,7 @@ class JaArrayRejector:
 
     Attributes:
     ----------
-    :param str js_expr: The JavaScript expression.
+    :param js_expr: The JavaScript expression.
     """
     if self.varName is None:
       return JsArray("_.%s(%s, function(num){ %s; })" % (self.func_name, self.data, js_expr), page=self.page)
@@ -1259,7 +1253,7 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] col_name: The column in the dictionary.
+    :param col_name: The column in the dictionary.
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (col_name, self.toStr()))
@@ -1272,8 +1266,8 @@ class JsRecordSet(JsArray):
 
     Attributes:
     ----------
-    :param Union[primitives.JsDataModel, str] col_name: The column in the dictionary.
-    :param Union[primitives.JsDataModel, str] value_name: The column in the dictionary.
+    :param col_name: The column in the dictionary.
+    :param value_name: The column in the dictionary.
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     value_name = JsUtils.jsConvertData(value_name, None)

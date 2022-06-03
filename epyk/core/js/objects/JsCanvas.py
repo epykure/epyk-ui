@@ -46,8 +46,8 @@ class RadialGradient:
 
     Attributes:
     ----------
-    :param float stop: A value between 0.0 and 1.0 that represents the position between start and end in a gradient.
-    :param str color: A CSS color value to display at the stop position.
+    :param stop: A value between 0.0 and 1.0 that represents the position between start and end in a gradient.
+    :param color: A CSS color value to display at the stop position.
     """
     self._js.append("%s.addColorStop(%s, %s)" % (self.varId, stop, JsUtils.jsConvertData(color, None)))
     return self
@@ -77,13 +77,13 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of the center of the circle.
-    :param float y: The y-coordinate of the center of the circle.
-    :param float r: The radius of the circle.
-    :param float start_angle: The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle).
-    :param float end_angle: The ending angle, in radians.
-    :param bool counterclockwise: Optional. Specifies whether the drawing should be counterclockwise or clockwise.
-    False is default, and indicates clockwise, while true indicates counter-clockwise.
+    :param x: The x-coordinate of the center of the circle.
+    :param y: The y-coordinate of the center of the circle.
+    :param r: The radius of the circle.
+    :param start_angle: The starting angle, in radians (0 is at the 3 o'clock position of the arc's circle).
+    :param end_angle: The ending angle, in radians.
+    :param counterclockwise: Optional. Specifies whether the drawing should be counterclockwise or clockwise.
+      False is default, and indicates clockwise, while true indicates counter-clockwise.
     """
     return "%s.arc(%s, %s, %s, %s, %s)" % (self.varId, x, y, r, start_angle, end_angle)
 
@@ -112,12 +112,12 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float cp1x: The x-coordinate of the first Bézier control point.
-    :param float cp1y: The y-coordinate of the first Bézier control point.
-    :param float cp2x: The x-coordinate of the second Bézier control point.
-    :param float cp2y: The y-coordinate of the second Bézier control point.
-    :param float x: The x-coordinate of the ending point.
-    :param float y: The y-coordinate of the ending point.
+    :param cp1x: The x-coordinate of the first Bézier control point.
+    :param cp1y: The y-coordinate of the first Bézier control point.
+    :param cp2x: The x-coordinate of the second Bézier control point.
+    :param cp2y: The y-coordinate of the second Bézier control point.
+    :param x: The x-coordinate of the ending point.
+    :param y: The y-coordinate of the ending point.
     """
     return "%s.bezierCurveTo(%s, %s, %s, %s, %s, %s)" % (self.varId, cp1x, cp1y, cp2x, cp2y, x, y)
 
@@ -133,10 +133,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of the upper-left corner of the rectangle to clear.
-    :param float y: The y-coordinate of the upper-left corner of the rectangle to clear.
-    :param float width: The width of the rectangle to clear, in pixels.
-    :param float height: The height of the rectangle to clear, in pixels.
+    :param x: The x-coordinate of the upper-left corner of the rectangle to clear.
+    :param y: The y-coordinate of the upper-left corner of the rectangle to clear.
+    :param width: The width of the rectangle to clear, in pixels.
+    :param height: The height of the rectangle to clear, in pixels.
     """
     return "%s.clearRect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
@@ -178,8 +178,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] image: Specifies the image, canvas, or video element of the pattern to use.
-    :param Union[str, primitives.JsDataModel] repeat_type: Default. The pattern repeats both horizontally and vertically.
+    :param image: Specifies the image, canvas, or video element of the pattern to use.
+    :param repeat_type: Default. The pattern repeats both horizontally and vertically.
     """
     image = JsUtils.jsConvertData(image, None)
     repeat_type = JsUtils.jsConvertData(repeat_type, None)
@@ -198,13 +198,13 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x0: The x-coordinate of the starting circle of the gradient.
-    :param float y0: The y-coordinate of the starting circle of the gradient.
-    :param float r0: The radius of the starting circle.
-    :param float x1: The x-coordinate of the ending circle of the gradient.
-    :param float y1: The y-coordinate of the ending circle of the gradient.
-    :param float r1: The radius of the ending circle.
-    :param str js_code: The object reference on the Javascript side.
+    :param x0: The x-coordinate of the starting circle of the gradient.
+    :param y0: The y-coordinate of the starting circle of the gradient.
+    :param r0: The radius of the starting circle.
+    :param x1: The x-coordinate of the ending circle of the gradient.
+    :param y1: The y-coordinate of the ending circle of the gradient.
+    :param r1: The radius of the ending circle.
+    :param js_code: The object reference on the Javascript side.
     """
     gradient_id = "%s.createRadialGradient(%s, %s, %s, %s, %s, %s)" % (self.varId, x0, y0, r0, x1, y1, r1)
     return RadialGradient(data=gradient_id, js_code=js_code)
@@ -230,11 +230,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x0: The x-coordinate of the start point of the gradient.
-    :param float y0: The y-coordinate of the start point of the gradient.
-    :param float x1: The x-coordinate of the end point of the gradient.
-    :param float y1: The y-coordinate of the end point of the gradient.
-    :param str js_code: The object reference on the Javascript side.
+    :param x0: The x-coordinate of the start point of the gradient.
+    :param y0: The y-coordinate of the start point of the gradient.
+    :param x1: The x-coordinate of the end point of the gradient.
+    :param y1: The y-coordinate of the end point of the gradient.
+    :param js_code: The object reference on the Javascript side.
     """
     gradient_id = "%s.createLinearGradient(%s, %s, %s, %s)" % (self.varId, x0, y0, x1, y1)
     return RadialGradient(data=gradient_id, js_code=js_code)
@@ -251,7 +251,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: Optional. String the color to be added to the fillStyle.
+    :param color: Optional. String the color to be added to the fillStyle.
     """
     if color is None:
       return "%s.fill()" % self.varId
@@ -270,7 +270,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: The color definition.
+    :param color: The color definition.
     """
     return "%s.fillStyle = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
@@ -286,11 +286,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param text: String. Specifies the text that will be written on the canvas.
-    :param x: Float. The x coordinate where to start painting the text (relative to the canvas).
-    :param y: Float. The y coordinate where to start painting the text (relative to the canvas).
-    :param int max_width: Optional. The maximum allowed width of the text, in pixels.
-    :param Union[str, primitives.JsDataModel] fill_style:
+    :param text: Specifies the text that will be written on the canvas.
+    :param x: The x coordinate where to start painting the text (relative to the canvas).
+    :param y: The y coordinate where to start painting the text (relative to the canvas).
+    :param max_width: Optional. The maximum allowed width of the text, in pixels.
+    :param fill_style:
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
@@ -316,7 +316,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value:
+    :param value:
     """
     return "%s.lineCap = %s" % (self.varId, JsUtils.jsConvertData(value, None))
 
@@ -332,7 +332,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value:
+    :param value:
     """
     return "%s.lineJoin = %s" % (self.varId, JsUtils.jsConvertData(value, None))
 
@@ -348,8 +348,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of where to create the line to
-    :param float y: The y-coordinate of where to create the line to
+    :param x: The x-coordinate of where to create the line to
+    :param y: The y-coordinate of where to create the line to
     """
     return "%s.lineTo(%s, %s)" % (self.varId, x, y)
 
@@ -365,7 +365,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float value: The current line width, in pixels.
+    :param value: The current line width, in pixels.
     """
     return "%s.lineWidth = %s" % (self.varId, value)
 
@@ -381,8 +381,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of where to move the path to
-    :param float y: The y-coordinate of where to move the path to
+    :param x: The x-coordinate of where to move the path to
+    :param y: The y-coordinate of where to move the path to
     """
     return "%s.moveTo(%s, %s)" % (self.varId, x, y)
 
@@ -398,10 +398,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of the upper-left corner of the rectangle
-    :param float y: The y-coordinate of the upper-left corner of the rectangle
-    :param float width: The width of the rectangle, in pixels
-    :param float height: The height of the rectangle, in pixels
+    :param x: The x-coordinate of the upper-left corner of the rectangle
+    :param y: The y-coordinate of the upper-left corner of the rectangle
+    :param width: The width of the rectangle, in pixels
+    :param height: The height of the rectangle, in pixels
     """
     return "%s.rect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
@@ -417,10 +417,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate of the upper-left corner of the rectangle
-    :param float y: float The y-coordinate of the upper-left corner of the rectangle
-    :param float width: The width of the rectangle, in pixels
-    :param float height: The height of the rectangle, in pixels
+    :param x: The x-coordinate of the upper-left corner of the rectangle
+    :param y: float The y-coordinate of the upper-left corner of the rectangle
+    :param width: The width of the rectangle, in pixels
+    :param height: The height of the rectangle, in pixels
     """
     return "%s.fillRect(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
@@ -436,7 +436,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] font_style: The font properties.
+    :param font_style: The font properties.
     """
     return "%s.font = %s" % (self.varId, JsUtils.jsConvertData(font_style, None))
 
@@ -454,7 +454,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float number: The transparency value. Must be a number between 0.0 (fully transparent) and 1.0 (no transparency)
+    :param number: The transparency value. Must be a number between 0.0 (fully transparent) and 1.0 (no transparency)
     """
     return "%s.globalAlpha = %s" % (self.varId, number)
 
@@ -470,8 +470,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x-coordinate to test.
-    :param float y: The y-coordinate to test.
+    :param x: The x-coordinate to test.
+    :param y: The y-coordinate to test.
     """
     return JsBoolean.JsBoolean("%s.isPointInPath(%s, %s)" % (self.varId, x, y), is_py_data=False)
 
@@ -487,7 +487,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: The text.
+    :param text: The text.
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
@@ -507,7 +507,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float angle: The angle number
+    :param angle: The angle number
     """
     return "%s.rotate(%s)" % (self.varId, angle)
 
@@ -523,8 +523,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float scale_width: Scales the width of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
-    :param float scale_height: Scales the height of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
+    :param scale_width: Scales the width of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
+    :param scale_height: Scales the height of the current drawing (1=100%, 0.5=50%, 2=200%, etc.)
     """
     return "%s.scale(%s, %s)" % (self.varId, scale_width, scale_height)
 
@@ -540,7 +540,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float value: The blur level for the shadow.
+    :param value: The blur level for the shadow.
     """
     return "%s.shadowBlur = %s" % (self.varId, value)
 
@@ -556,7 +556,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: the color code.
+    :param color: the color code.
     """
     return "%s.shadowColor = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
@@ -572,7 +572,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float value: A positive or negative number that defines the horizontal distance of the shadow from the shape
+    :param value: A positive or negative number that defines the horizontal distance of the shadow from the shape
     """
     return "%s.shadowOffsetX = %s" % (self.varId, value)
 
@@ -588,7 +588,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float value: A positive or negative number that defines the vertical distance of the shadow from the shape
+    :param value: A positive or negative number that defines the vertical distance of the shadow from the shape
     """
     return "%s.shadowOffsetY = %s" % (self.varId, value)
 
@@ -608,7 +608,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float val:
+    :param val:
     """
     return "%s.strokeWeight = %s" % (self.varId, val)
 
@@ -624,8 +624,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] color: A CSS color value that indicates the stroke color of the drawing.
-    Default value is #000000
+    :param color: A CSS color value that indicates the stroke color of the drawing.
+      Default value is #000000
     """
     return "%s.strokeStyle = %s" % (self.varId, JsUtils.jsConvertData(color, None))
 
@@ -652,10 +652,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, list, primitives.JsDataModel] text: Specifies the text that will be written on the canvas.
-    :param float x: The x coordinate where to start painting the text (relative to the canvas).
-    :param float y: The y coordinate where to start painting the text (relative to the canvas).
-    :param float max_width: Optional. The maximum allowed width of the text, in pixels.
+    :param text: Specifies the text that will be written on the canvas.
+    :param x: The x coordinate where to start painting the text (relative to the canvas).
+    :param y: The y coordinate where to start painting the text (relative to the canvas).
+    :param max_width: Optional. The maximum allowed width of the text, in pixels.
     """
     if isinstance(text, list):
       text = " + ".join([str(JsUtils.jsConvertData(t, None)) for t in text])
@@ -675,7 +675,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] position: The context align
+    :param position: The context align
     """
     return "%s.textAlign = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
@@ -691,8 +691,8 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The value to add to horizontal (x) coordinates
-    :param float y: The value to add to vertical (y) coordinates
+    :param x: The value to add to horizontal (x) coordinates
+    :param y: The value to add to vertical (y) coordinates
     """
     return "%s.translate(%s, %s)" % (self.varId, x, y)
 
@@ -708,7 +708,7 @@ class Context2D:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] position: The context baseline.
+    :param position: The context baseline.
     """
     return "%s.textBaseline = %s" % (self.varId, JsUtils.jsConvertData(position, None))
 
@@ -724,11 +724,11 @@ class Context2D:
 
     Attributes:
     ----------
-    :param img: String. Specifies the image, canvas, or video element to use.
-    :param float x: Optional. The x coordinate where to place the image on the canvas.
-    :param float y: Optional. The y coordinate where to place the image on the canvas.
-    :param float width: Optional. The width of the image to use (stretch or reduce the image).
-    :param float height: Optional. The height of the image to use (stretch or reduce the image).
+    :param img: Specifies the image, canvas, or video element to use.
+    :param x: Optional. The x coordinate where to place the image on the canvas.
+    :param y: Optional. The y coordinate where to place the image on the canvas.
+    :param width: Optional. The width of the image to use (stretch or reduce the image).
+    :param height: Optional. The height of the image to use (stretch or reduce the image).
     """
     pass
 
@@ -745,10 +745,10 @@ class Context2D:
 
     Attributes:
     ----------
-    :param float x: The x coordinate (in pixels) of the upper-left corner to start copy from.
-    :param float y: The y coordinate (in pixels) of the upper-left corner to start copy from.
-    :param float width: The width of the rectangular area you will copy.
-    :param float height: The height of the rectangular area you will copy.
+    :param x: The x coordinate (in pixels) of the upper-left corner to start copy from.
+    :param y: The y coordinate (in pixels) of the upper-left corner to start copy from.
+    :param width: The width of the rectangular area you will copy.
+    :param height: The height of the rectangular area you will copy.
     """
     return "%s.getImageData(%s, %s, %s, %s)" % (self.varId, x, y, width, height)
 
@@ -802,12 +802,11 @@ class Canvas(JsNodeDom.JsDoms):
         self.htmlCode, self.varName))
 
   @property
-  def events(self):
+  def events(self) -> JsNodeDom.JsDomEvents:
     """
     Description:
     ------------
 
-    :rtype: JsNodeDom.JsDomEvents
     """
     return JsNodeDom.JsDomEvents(self.component)
 
@@ -817,7 +816,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(
@@ -830,7 +828,6 @@ class Canvas(JsNodeDom.JsDoms):
     Description:
     ------------
 
-    :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(

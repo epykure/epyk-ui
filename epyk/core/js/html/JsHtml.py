@@ -39,7 +39,7 @@ class FmtNumber:
 
     Attributes:
     ----------
-    :param Optional[int] value: Optional. The number of digit to be displayed.
+    :param value: Optional. The number of digit to be displayed.
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toFixed()" % (self.selector, self._val))
@@ -58,7 +58,7 @@ class FmtNumber:
 
     Attributes:
     ----------
-    :param Optional[int] value: Optional. The number of digit to be displayed.
+    :param value: Optional. The number of digit to be displayed.
     """
     if value is None:
       return JsObjects.JsObjects.get("%s = %s.toPrecision()" % (self.selector, self._val))
@@ -110,8 +110,8 @@ class Formatters:
 
     Attributes:
     ----------
-    :param int digit: Optional. The number of digit to be displayed.
-    :param str thousand_sep: Optional. The thousand symbol separator.
+    :param digit: Optional. The number of digit to be displayed.
+    :param thousand_sep: Optional. The thousand symbol separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("%s = accounting.formatNumber(%s, %s, %s)" % (
@@ -130,10 +130,10 @@ class Formatters:
 
     Attributes:
     ----------
-    :param str symbol: Optional. The currency symbol.
-    :param int digit: Optional. The number of digit to be displayed.
-    :param str thousand_sep: Optional. The thousand symbol separator.
-    :param str decimal_sep: Optional. The decimal symbol separator.
+    :param symbol: Optional. The currency symbol.
+    :param digit: Optional. The number of digit to be displayed.
+    :param thousand_sep: Optional. The thousand symbol separator.
+    :param decimal_sep: Optional. The decimal symbol separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -176,7 +176,7 @@ class ContentFormatters:
     return JsObjects.JsObjects.get("%s == true" % self.selector)
 
   @packageImport("showdown")
-  def fromMarkdown(self, options: Optional[dict] = None):
+  def fromMarkdown(self, options: dict = None):
     """
     Description:
     ------------
@@ -192,7 +192,7 @@ class ContentFormatters:
 
     Attributes:
     ----------
-    :param Optional[dict] options: Optional. Options allowed in the showdown module.
+    :param options: Optional. Options allowed in the showdown module.
     """
     options = JsUtils.jsConvertData(options or {}, None)
     return JsObjects.JsObjects.get(
@@ -212,8 +212,8 @@ class ContentFormatters:
 
     Attributes:
     ----------
-    :param int digit: Optional. The number of digit to be displayed.
-    :param str thousand_sep: Optional. The thousand symbol separator.
+    :param digit: Optional. The number of digit to be displayed.
+    :param thousand_sep: Optional. The thousand symbol separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     return JsObjects.JsObjects.get("accounting.formatNumber(%s, %s, %s)" % (self.selector, digit, thousand_sep))
@@ -231,10 +231,10 @@ class ContentFormatters:
 
     Attributes:
     ----------
-    :param str symbol: Optional. The currency symbol.
-    :param int digit: Optional. The number of digit to be displayed.
-    :param str thousand_sep: Optional. The thousand symbol separator.
-    :param str decimal_sep: Optional. The decimal symbol separator.
+    :param symbol: Optional. The currency symbol.
+    :param digit: Optional. The number of digit to be displayed.
+    :param thousand_sep: Optional. The thousand symbol separator.
+    :param decimal_sep: Optional. The decimal symbol separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -323,7 +323,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
 
-    :rtype: JsNodeDom.JsDomsList
     """
     if self.component.attr.get('name') is not None:
       return JsNodeDom.JsDomsList(
@@ -337,8 +336,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Check if the component is in the visible part of the page (the viewport).
-
-    :rtype: JsObject.JsObject
 
     :return: A Javascript boolean
     """
@@ -356,7 +353,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript events.
+    :param js_funcs: The Javascript events.
     """
     return self.page.js.if_(self.isInViewPort, js_funcs)
 
@@ -368,7 +365,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param bool include_html: Optional. Store the full HTML (Default False).
+    :param include_html: Optional. Store the full HTML (Default False).
     """
     if include_html:
       return self.page.js.clipboard(self.innerHTML())
@@ -401,8 +398,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Link to the events attached to a Javascript DOM object.
-
-    :rtype: JsNodeDom.JsDomEvents
     """
     return JsNodeDom.JsDomEvents(self.component)
 
@@ -412,8 +407,6 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Link to the JQuery functions.
-
-    :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(
@@ -426,22 +419,18 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     -----------
     Wrapper to the D3 library.
-
-    :rtype: JsD3.D3Select
     """
     if self._d3 is None:
-      self._d3 = JsD3.D3Select(component=self.component, page=self.page,
-                               selector="d3.select('#%s')" % self.component.htmlCode)
+      self._d3 = JsD3.D3Select(
+        component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.htmlCode)
     return self._d3
 
   @property
-  def jquery_ui(self) ->  JsQueryUi.JQueryUI:
+  def jquery_ui(self) -> JsQueryUi.JQueryUI:
     """
     Description:
     -----------
     Wrapper to the JqueryUI component.
-
-    :rtype: JsQueryUi.JQueryUI
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(
@@ -450,7 +439,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return self._jquery_ui
 
   @property
-  def objects(self):
+  def objects(self) -> JsObjects.JsObjects:
     """
     Description:
     -----------
@@ -497,7 +486,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param dict attrs: The CSS attributes.
+    :param attrs: The CSS attributes.
     """
     styles = []
     for k, v in attrs.items():
@@ -519,10 +508,10 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param str fnc_name: The function name.
-    :param Union[list, str] js_funcs: The Javascript function definition.
-    :param Optional[list] pmts: Optional. The parameters for the function.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param fnc_name: The function name.
+    :param js_funcs: The Javascript function definition.
+    :param pmts: Optional. The parameters for the function.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The JsObject
     """
@@ -563,9 +552,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param Optional[str] inline: Optional. Set the CSS display attribute to inline-block instead of block.
-    :param Optional[int] duration: Optional. A time in second for the component display.
-    :param Optional[str] display_value: Optional. The value to display. Default inline-block.
+    :param inline: Optional. Set the CSS display attribute to inline-block instead of block.
+    :param duration: Optional. A time in second for the component display.
+    :param display_value: Optional. The value to display. Default inline-block.
     """
     display_value = display_value or self.display_value
     if duration is not None:
@@ -585,9 +574,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param bool flag: A flag to specify the display type show or None.
-    :param Optional[str] inline: Optional. Set the CSS display attribute to inline-block instead of block.
-    :param Optional[str] display_value: Optional. The default CSS attribute for this component.
+    :param flag: A flag to specify the display type show or None.
+    :param inline: Optional. Set the CSS display attribute to inline-block instead of block.
+    :param display_value: Optional. The default CSS attribute for this component.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsVoid("if(%s){%s} else{%s}" % (
@@ -615,8 +604,8 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param bool flag: Optional. specify the state of the component. Default True.
-    :param bool inverse: Optional. To specify the effect of the data flag.
+    :param flag: Optional. specify the state of the component. Default True.
+    :param inverse: Optional. To specify the effect of the data flag.
     """
     flag = JsUtils.jsConvertData(flag, None)
     if inverse:
@@ -690,9 +679,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param str attr:
-    :param Optional[str] val_1:
-    :param str val_2:
+    :param attr:
+    :param val_1:
+    :param val_2:
 
     :return: A Javascript if statement
     """
@@ -712,8 +701,8 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param Optional[dict] css_attrs:  Optional. The CSS attributes.
-    :param int time_event: Optional. The time of the event.
+    :param css_attrs: Optional. The CSS attributes.
+    :param time_event: Optional. The time of the event.
     """
     if css_attrs is None:
       css_attrs, css_attrs_origin = {}, {}
@@ -759,9 +748,9 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param List[primitives.HtmlModel] components: The different HTML objects to be added to the component.
-    :param bool append: Mention if the component should replace or append the data.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param append: Mention if the component should replace or append the data.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The Javascript string to be added to the page
     """
@@ -780,13 +769,13 @@ class JsHtml(JsNodeDom.JsDoms):
     Description:
     ------------
     Return the builder options used to generate the object on the Javascript side.
-    This is not necessarily the same object than the component options as some can be only used on the Python side.
+    This is not necessarily the same object as the component options as some can be only used on the Python side.
 
     This will not change the original option object used during the first object creation.
 
     Attributes:
     ----------
-    :param Optional[dict] options: Optional. The value to be changed.
+    :param options: Optional. The value to be changed.
     """
     opt = dict(self.component._jsStyles)
     if options is not None:
@@ -805,7 +794,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     Attributes:
     ----------
-    :param str event: The event to be triggered for the component.
+    :param event: The event to be triggered for the component.
     """
     return self.events.trigger(event)
 
@@ -858,11 +847,11 @@ class JsHtmlRich(JsHtml):
 
     Attributes:
     ----------
-    :param str current_val: The content of the HTML component.
-    :param str new_val: The new content of the HTML component.
-    :param Optional[list] current_funcs: Optional. The functions to be triggered when currentVal is visible.
-    :param Optional[list] new_funcs: Optional. The functions to be triggered when newVal is visible.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param current_val: The content of the HTML component.
+    :param new_val: The new content of the HTML component.
+    :param current_funcs: Optional. The functions to be triggered when currentVal is visible.
+    :param new_funcs: Optional. The functions to be triggered when newVal is visible.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     content = JsUtils.jsConvertData(current_val, None)
     content2 = JsUtils.jsConvertData(new_val, None)
@@ -897,8 +886,8 @@ class JsHtmlRich(JsHtml):
     Attributes:
     ----------
     :param value:
-    :param bool new_line: Boolean. Optional.
-    :param Optional[dict] options: Optional.
+    :param new_line: Boolean. Optional.
+    :param options: Optional.
     """
     value = JsUtils.jsConvertData(value, None)
     if options is not None and options.get('showdown') is not None:
@@ -940,7 +929,7 @@ class JsHtmlImg(JsHtml):
 
     Attributes:
     ----------
-    :param str image:
+    :param image:
     """
     image = JsUtils.jsConvertData(image, None)
     return JsFncs.JsFunctions("%s.src = %s" % (self.varName, image))
@@ -986,8 +975,8 @@ class JsHtmlButton(JsHtml):
 
     Attributes:
     ----------
-    :param bool flag:
-    :param bool multiple: Optional.
+    :param flag:
+    :param multiple: Optional.
     """
     i_loading = '<i class="fas fa-spinner fa-spin" style="margin-right:5px"></i>'
     fnc = self.disable(False) if multiple else self.disable(flag)
@@ -1004,8 +993,8 @@ class JsHtmlButton(JsHtml):
 
     Attributes:
     ----------
-    :param int time:
-    :param str color: Optional.
+    :param time:
+    :param color: Optional.
     """
     return JsFncs.JsFunction('''var bgColor = %s.style.borderColor; %s.style.borderColor = '%s'; 
 setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
@@ -1018,7 +1007,7 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
 
     Attributes:
     ----------
-    :param bool flag: Optional.
+    :param flag: Optional.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, flag))
@@ -1030,7 +1019,7 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
 
     Attributes:
     ----------
-    :param bool by_name: Optional.
+    :param by_name: Optional.
     """
     if by_name:
       funcs = JsFncs.JsFunctions(self.by_name.css("color", ''))
@@ -1051,7 +1040,7 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
 
     Attributes:
     ----------
-    :param bool not_allowed: Optional.
+    :param not_allowed: Optional.
     """
     funcs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
     funcs.append(self.css("background-color", self.getComputedStyle('background-color')))
@@ -1328,7 +1317,7 @@ class JsHtmlIcon(JsHtml):
 
     Attributes:
     ----------
-    :param bool status: Optional. The spin status.
+    :param status: Optional. The spin status.
     """
     if status:
       return self.component.dom.classList.add("fa-spin")
@@ -1343,7 +1332,7 @@ class JsHtmlIcon(JsHtml):
 
     Attributes:
     ----------
-    :param bool status: Optional. The spin status.
+    :param status: Optional. The spin status.
     """
     if status:
       return self.component.dom.classList.add("fa-pulse")
@@ -1394,9 +1383,9 @@ class JsHtmlList(JsHtml):
 
     Attributes:
     ----------
-    :param str item: The Item to be added to the list.
-    :param bool unique: Optional. Only add the item if it is not already in the list.
-    :param bool draggable: Optional. Set the new entry as draggable.
+    :param item: The Item to be added to the list.
+    :param unique: Optional. Only add the item if it is not already in the list.
+    :param draggable: Optional. Set the new entry as draggable.
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
@@ -1520,9 +1509,9 @@ class JsHtmlNumeric(JsHtmlRich):
 
     Attributes:
     ----------
-    :param float number:
-    :param int timer: The time spent for the increase in millisecond.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param number:
+    :param timer: The time spent for the increase in millisecond.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     return JsUtils.jsConvertFncs([
       self.page.js.objects.number(self.content.unformat(), js_code="%s_counter" % self.htmlCode, set_var=True),
@@ -1545,7 +1534,7 @@ class JsHtmlNumeric(JsHtmlRich):
 
     Attributes:
     ----------
-    :param float item: The value to be added.
+    :param item: The value to be added.
     """
     return JsObjects.JsVoid('''
       %(component)s.innerText = parseFloat(%(component)s.innerText) + %(value)s
@@ -1576,7 +1565,7 @@ class JsHtmlLink(JsHtml):
 
     Attributes:
     ----------
-    :param str url: The url path.
+    :param url: The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
@@ -1594,7 +1583,7 @@ class JsHtmlLink(JsHtml):
 
     Attributes:
     ----------
-    :param url: String. The url path.
+    :param url: The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
@@ -1612,7 +1601,7 @@ class JsHtmlLink(JsHtml):
 
     Attributes:
     ----------
-    :param str name: The target name.
+    :param name: The target name.
     """
     name = JsUtils.jsConvertData(name, None)
     return JsFncs.JsFunctions("%s.target = %s" % (self.varName, name))
@@ -1785,9 +1774,9 @@ class JsHtmlLi(JsHtmlRich):
 
     Attributes:
     ----------
-    :param str state: The CSS class.
-    :param Union[list, str] js_funcs: The function to run if the state is defined.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param state: The CSS class.
+    :param js_funcs: The function to run if the state is defined.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     return self.component.js.if_("%s.classList.contains(%s)" % (
       self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
@@ -1800,7 +1789,7 @@ class JsHtmlLi(JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The function to run if the state is defined.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The function to run if the state is defined.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     return self.has_state("active", js_funcs, profile=profile)

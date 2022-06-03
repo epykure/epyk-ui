@@ -23,7 +23,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.autocomplete" % self.component.dom.varName)
@@ -43,7 +43,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.autofocus" % self.component.dom.varName)
@@ -63,7 +63,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.defaultValue" % self.component.dom.varName)
@@ -83,7 +83,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.disabled" % self.component.dom.varName)
@@ -103,7 +103,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.maxLength" % self.component.dom.varName)
@@ -123,7 +123,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.pattern" % self.component.dom.varName)
@@ -143,7 +143,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.placeholder" % self.component.dom.varName)
@@ -163,7 +163,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.readOnly" % self.component.dom.varName)
@@ -183,7 +183,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.required" % self.component.dom.varName)
@@ -203,7 +203,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.size" % self.component.dom.varName)
@@ -223,7 +223,7 @@ class Inputs(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
       return JsObjects.JsString.JsString.get("%s.name" % self.component.dom.varName)

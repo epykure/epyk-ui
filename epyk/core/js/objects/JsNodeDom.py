@@ -58,7 +58,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js
+    :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
     """
@@ -81,7 +81,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -105,7 +105,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -124,7 +124,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -143,7 +143,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -162,7 +162,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -181,7 +181,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -200,7 +200,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -220,7 +220,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -239,7 +239,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -258,7 +258,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -277,7 +277,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -300,7 +300,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -319,7 +319,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js
+    :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
     """
@@ -338,7 +338,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js
+    :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
     """
@@ -357,7 +357,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: An array of Js functions or string. Or a string with the Js.
+    :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
     """
@@ -385,9 +385,9 @@ class JsDomEvents(primitives.JsDataModel):
     Attributes:
     ----------
     :param event: The event name
-    :param with_focus: Boolean. Optional. a boolean to define if the focus needs to be set to this component
-    :param options: Dictionary. Optional. Possibility to pass time option in second to set an implicit interval on the event
-    :param event_name: String.  Optional.
+    :param with_focus: Optional. a boolean to define if the focus needs to be set to this component
+    :param options: Optional. Possibility to pass time option in second to set an implicit interval on the event
+    :param event_name: Optional.
 
     :return: The Javascript string of this function
     """
@@ -464,18 +464,18 @@ class JsDomsTransforms:
 
     Usage::
 
-      Related Pages:
+    Related Pages:
 
-      https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
+    https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
 
     Attributes:
     ----------
-    :param float scale_x:
-    :param float skew_y:
-    :param float skew_x:
-    :param float scale_y:
-    :param float translate_x:
-    :param float translate_y:
+    :param scale_x:
+    :param skew_y:
+    :param skew_x:
+    :param scale_y:
+    :param translate_x:
+    :param translate_y:
     """
     return "%s.style.transform = 'matrix(%s, %s, %s, %s, %s, %s)'" % (
       self.selector, scale_x, skew_y, skew_x, scale_y, translate_x, translate_y)
@@ -494,8 +494,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param int x:
-    :param str unit: The unit used for the transformation (px, cm, rem...)
+    :param x:
+    :param unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translateX(%s%s)'" % (self.selector, x, unit)
 
@@ -512,8 +512,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param int y:
-    :param float unit: The unit used for the transformation (px, cm, rem...)
+    :param y:
+    :param unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translateY(%s%s)'" % (self.selector, y, unit)
 
@@ -530,9 +530,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param int x:
-    :param int y:
-    :param str unit: The unit used for the transformation (px, cm, rem...)
+    :param x:
+    :param y:
+    :param unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'translate(%s%s, %s%s)'" % (self.selector, x, unit, y, unit)
 
@@ -550,9 +550,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param int d: Is a <length> representing the distance from the user to the z=0 plane.
+    :param d: Is a <length> representing the distance from the user to the z=0 plane.
               If it is 0 or a negative value, no perspective transform is applied.
-    :param str unit: The unit used for the transformation (px, cm, rem...)
+    :param unit: The unit used for the transformation (px, cm, rem...)
     """
     return "%s.style.transform = 'perspective(%s%s)'" % (self.selector, d, unit)
 
@@ -568,8 +568,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float x: A <number> representing the abscissa of the scaling vector.
-    :param float y: A <number> representing the ordinate of the scaling vector.
+    :param x: A <number> representing the abscissa of the scaling vector.
+    :param y: A <number> representing the ordinate of the scaling vector.
               If not defined, its default value is sx, resulting in a uniform scaling that preserves the element's
               aspect ratio.
     """
@@ -588,8 +588,7 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float x: Is a <number> representing the scaling factor to apply on the abscissa of each point of the
-    element.
+    :param x: Is a <number> representing the scaling factor to apply on the abscissa of each point of the element.
     """
     return "%s.style.transform = 'scaleX(%s)'" % (self.selector, x)
 
@@ -606,8 +605,7 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float y: Is a <number> representing the scaling factor to apply on the ordinate of each point of the
-    element.
+    :param y: Is a <number> representing the scaling factor to apply on the ordinate of each point of the element.
     """
     return "%s.style.transform = 'scaleY(%s)'" % (self.selector, y)
 
@@ -624,10 +622,10 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float angle_x: Is an <angle> representing the angle to use to distort the element along the abscissa.
-    :param float angle_y: Is an <angle> representing the angle to use to distort the element along the ordinate.
-    If not defined, its default value is 0, resulting in a purely horizontal skewing.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param angle_x: Is an <angle> representing the angle to use to distort the element along the abscissa.
+    :param angle_y: Is an <angle> representing the angle to use to distort the element along the ordinate.
+      If not defined, its default value is 0, resulting in a purely horizontal skewing.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'skew(%s%s, %s%s)'" % (self.selector, angle_x, unit, angle_y, unit)
 
@@ -648,8 +646,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float angle: Is an <angle> representing the angle to use to distort the element along the abscissa.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param angle: Is an <angle> representing the angle to use to distort the element along the abscissa.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'skewX(%s%s)'" % (self.selector, angle, unit)
 
@@ -666,8 +664,8 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float angle: Is an <angle> representing the angle to use to distort the element along the ordinate.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param angle: Is an <angle> representing the angle to use to distort the element along the ordinate.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'skewY(%s%s)'" % (self.selector, angle, unit)
 
@@ -689,9 +687,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
-    a negative angle a counter-clockwise one.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+      a negative angle a counter-clockwise one.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotate(%s%s)'" % (self.selector, r, unit)
 
@@ -709,11 +707,15 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param float y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param float z: Is a <number> describing the z-coordinate of the vector denoting the axis of rotation which could between 0 and 1.
-    :param float a: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation, a negative angle a counter-clockwise one.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which
+      could between 0 and 1.
+    :param y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which
+      could between 0 and 1.
+    :param z: Is a <number> describing the z-coordinate of the vector denoting the axis of rotation which
+      could between 0 and 1.
+    :param a: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+      a negative angle a counter-clockwise one.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotate3d(%s, %s, %s, %s%s)'" % (self.selector, x, y, z, a, unit)
 
@@ -731,9 +733,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
-    a negative angle a counter-clockwise one.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+      a negative angle a counter-clockwise one.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateX(%s%s)'" % (self.selector, r, unit)
 
@@ -751,9 +753,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
-    a negative angle a counter-clockwise one.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+      a negative angle a counter-clockwise one.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateY(%s%s)'" % (self.selector, r, unit)
 
@@ -770,9 +772,9 @@ class JsDomsTransforms:
 
     Attributes:
     ----------
-    :param float r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
-    a negative angle a counter-clockwise one.
-    :param str unit: The unit for the transformation (deg, turn, rad...)
+    :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
+      a negative angle a counter-clockwise one.
+    :param unit: The unit for the transformation (deg, turn, rad...)
     """
     return "%s.style.transform = 'rotateZ(%s%s)'" % (self.selector, r, unit)
 
@@ -906,7 +908,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param Union[list, str] cls_names: The class names.
+    :param cls_names: The class names.
     """
     if not hasattr(cls_names, 'toStr'):
       if not isinstance(cls_names, list):
@@ -931,7 +933,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param str cls_name: The CSS classname.
+    :param cls_name: The CSS classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean.get("%s.contains(%s)" % (self.varId, cls_name))
@@ -944,7 +946,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param str cls_name: The CSS classname.
+    :param cls_name: The CSS classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean.get("!%s.contains(%s)" % (self.varId, cls_name))
@@ -963,7 +965,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param int index: The index of the class.
+    :param index: The index of the class.
     """
     return JsNumber.JsNumber.get("%s.item(%s)" % (self.varId, index))
 
@@ -989,7 +991,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param Union[list, str] cls_names: The class names.
+    :param cls_names: The class names.
     """
     if not hasattr(cls_names, 'toStr'):
       if not isinstance(cls_names, list):
@@ -1019,9 +1021,8 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name: The CSS classname.
-    :param Union[bool, primitives.JsDataModel] flag: forces the class to be added or removed, regardless of
-    whether or not it already existed.
+    :param cls_name: The CSS classname.
+    :param flag: forces the class to be added or removed, regardless of whether or not it already existed.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     if flag is None:
@@ -1039,7 +1040,7 @@ class JsClassList:
 
     Attributes:
     ----------
-    :param bool flag: To specific if the select style need to be added or removed from the ClassList.
+    :param flag: To specific if the select style need to be added or removed from the ClassList.
     """
     if self.component is None:
       raise ValueError("Cannot use select if select_style not defined for the component")
@@ -1068,11 +1069,11 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] tag_name: The tag name to be created.
-    :param str js_code: Optional,
-    :param bool is_py_data: Optional,
-    :param bool set_var: Optional,
-    :param primitives.PageModel page: Optional,
+    :param tag_name: The tag name to be created.
+    :param js_code: Optional,
+    :param is_py_data: Optional,
+    :param set_var: Optional,
+    :param page: Optional,
 
     :return: The Python Javascript Date primitive
     """
@@ -1105,7 +1106,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] tag: The DOM tag reference.
+    :param tag: The DOM tag reference.
     """
     tag = JsUtils.jsConvertData(tag, None)
     return JsDoms("%s.querySelector(%s)" % (self.toStr(), tag))
@@ -1123,8 +1124,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] tag: The tag name.
-    :param str js_code: The variable name on the javascript side.
+    :param tag: The tag name.
+    :param js_code: The variable name on the javascript side.
 
     :return: A javascript Array object
     """
@@ -1150,13 +1151,11 @@ class JsDoms(JsObject.JsObject):
     Description:
     -----------
     Link to the events attached to a Javascript DOM object.
-
-    :rtype: JsDomEvents
     """
     return JsDomEvents(self.page, js_code=self.varName)
 
   @property
-  def effects(self):
+  def effects(self) -> JsDomEffects:
     """
     Description:
     ------------
@@ -1165,7 +1164,7 @@ class JsDoms(JsObject.JsObject):
     return JsDomEffects(self.page, self.component)
 
   @property
-  def transform(self):
+  def transform(self) -> JsDomsTransforms:
     """
     Description:
     ------------
@@ -1209,8 +1208,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] event:
-    :param Union[list, str] js_funcs: The Javascript functions
+    :param event:
+    :param js_funcs: The Javascript functions
     """
     event = JsUtils.jsConvertData(event, None)
     self._js.append('addEventListener(%s, function(){%s})' % (event, ";".join(JsUtils.jsConvertFncs(js_funcs))))
@@ -1227,7 +1226,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] event: event is the Event object to be dispatched.
+    :param event: event is the Event object to be dispatched.
     """
     event = JsUtils.jsConvertData(event, None)
     self._js.append('dispatchEvent(%s)' % event)
@@ -1245,7 +1244,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions
+    :param js_funcs: The Javascript functions
     """
     self.page._props.setdefault('js', {}).setdefault(
       'onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(js_funcs))
@@ -1266,7 +1265,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
+    :param text: Optional, The Javascript String to be added.
     :param append: Boolean. Mention if the component should replace or append the data.
     :param val_type: The type of data expected in the component.
 
@@ -1304,8 +1303,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
-    :param append: Boolean. Mention if the component should replace or append the data.
+    :param text: Optional, The Javascript String to be added.
+    :param append: Mention if the component should replace or append the data.
     :param val_type: Type: The type of data expected in the component.
 
     :return: The JsObj to allow the chaining
@@ -1343,9 +1342,9 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be added.
-    :param append: Boolean. Mention if the component should replace or append the data.
-    :param val_type: Type: The type of data expected in the component.
+    :param text: Optional, The Javascript String to be added.
+    :param append: Mention if the component should replace or append the data.
+    :param val_type: The type of data expected in the component.
 
     :return: self to allow the chaining
     """
@@ -1377,7 +1376,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be set.
+    :param text: Optional, The Javascript String to be set.
 
     :return: self to allow the chaining
     """
@@ -1400,7 +1399,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional, The Javascript String to be set.
+    :param text: Optional, The Javascript String to be set.
 
     :return: self to allow the chaining
     """
@@ -1422,7 +1421,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional. Set the input value.
+    :param text: Optional. Set the input value.
     """
     if text is None:
       return JsString.JsString("%s.value" % self.varId, is_py_data=False)
@@ -1444,7 +1443,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: Optional. Set the node value.
+    :param text: Optional. Set the node value.
     """
     if text is None:
       return JsString.JsString("%s.nodeValue" % self.varId, is_py_data=False)
@@ -1471,8 +1470,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: A String with the type of parameter or a python dictionary.
-    :param Union[str, primitives.JsDataModel] data: A JsObj with the value to be set.
+    :param value: A String with the type of parameter or a python dictionary.
+    :param data: A JsObj with the value to be set.
 
     :return: A JsObj
     """
@@ -1510,8 +1509,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] attribute_name: The name of the attribute you want to add.
-    :param Union[str, bool, primitives.JsDataModel] attribute_value: The value of the attribute you want to add.
+    :param attribute_name: The name of the attribute you want to add.
+    :param attribute_value: The value of the attribute you want to add.
     """
     attribute_name = JsUtils.jsConvertData(attribute_name, None)
     self._js.append("%s.setAttribute(%s, %s)" % (
@@ -1536,10 +1535,10 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str cls_name: The Css classname.
-    :param dict attrs: A python dictionary with the css attributes.
-    :param dict event_attrs: A nested python dictionary with the css attributes for each event.
-    :param bool extend: To set if the class should replace the existing style definition.
+    :param cls_name: The Css classname.
+    :param attrs: A python dictionary with the css attributes.
+    :param event_attrs: A nested python dictionary with the css attributes for each event.
+    :param extend: To set if the class should replace the existing style definition.
     """
     if attrs is not None or event_attrs is not None:
       cls_name = self.page.style.cssName(cls_name)
@@ -1562,7 +1561,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name: String. Required. The classname.
+    :param cls_name: String. Required. The classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     self._js.append('%s.classList.remove(%s)' % (self.varId, cls_name))
@@ -1598,9 +1597,9 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[dict, str] attr: A String with the type of parameter or a python dictionary
-    :param Union[str, primitives.JsDataModel] data: A JsObj with the value to be set
-    :param int duration: Integer
+    :param attr: A String with the type of parameter or a python dictionary
+    :param data: A JsObj with the value to be set
+    :param duration: Integer
 
     :return: A JsObj
     """
@@ -1639,10 +1638,10 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int x: The position from the top of the page
-    :param int y: The position from the left
-    :param int dx:
-    :param int dy:
+    :param x: The position from the top of the page
+    :param y: The position from the left
+    :param dx:
+    :param dy:
 
     :return: A JsObj
     """
@@ -1668,12 +1667,12 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attribute: String or List. Specifies the name of the CSS property the transition effect is for
-    :param value: String or List. Specifies the value of the CSS property the transition effect is for
-    :param value2: String or List. Specifies the value of the CSS property the transition effect is for
-    :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
-    :param delay: Number. Defines when the transition effect will start
-    :param timing_func: String. The transition-timing-function property specifies the speed curve of the transition effect.
+    :param attribute: Specifies the name of the CSS property the transition effect is for
+    :param value: Specifies the value of the CSS property the transition effect is for
+    :param value2: Specifies the value of the CSS property the transition effect is for
+    :param duration: Specifies how many seconds or milliseconds the transition effect takes to complete
+    :param delay: Defines when the transition effect will start
+    :param timing_func: The transition-timing-function property specifies the speed curve of the transition effect.
     """
     if "-" in attribute:
       split_css = attribute.split("-")
@@ -1715,12 +1714,12 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param attribute: String or List. Specifies the name of the CSS property the transition effect is for
-    :param value: String or List. Specifies the value of the CSS property the transition effect is for
-    :param duration: Number or List. Specifies how many seconds or milliseconds the transition effect takes to complete
-    :param delay: Number. Defines when the transition effect will start
-    :param timing_fnc: String. The transition-timing-function property specifies the speed curve of the transition effect.
-    :param reverse: Boolean. Rewind the transition animation
+    :param attribute: Specifies the name of the CSS property the transition effect is for
+    :param value: Specifies the value of the CSS property the transition effect is for
+    :param duration: Specifies how many seconds or milliseconds the transition effect takes to complete
+    :param delay: Defines when the transition effect will start
+    :param timing_fnc: The transition-timing-function property specifies the speed curve of the transition effect.
+    :param reverse: Rewind the transition animation
     """
     self.css("transition-property", ",".join(attribute) if isinstance(attribute, list) else attribute)
     if isinstance(duration, list):
@@ -1809,9 +1808,9 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str attr:
-    :param str val_1:
-    :param str val_2:
+    :param attr:
+    :param val_1:
+    :param val_2:
     """
     if attr == 'display' and val_1 is None:
       val_1 = self.display_value
@@ -1832,8 +1831,8 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param pivot_key:
     :param pivot_val:
-    :param dict attrs_on: A python dictionary with CSS attributes
-    :param dict attrs_off: A python dictionary with CSS attributes
+    :param attrs_on: A python dictionary with CSS attributes
+    :param attrs_off: A python dictionary with CSS attributes
     """
     if pivot_key in ["color"] and not pivot_val.startswith("rgb"):
       colors_def = Colors.defined[pivot_val.upper()]
@@ -1851,8 +1850,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] string_1: String. The content
-    :param Union[str, primitives.JsDataModel] string_2: String. The new content
+    :param string_1: String. The content
+    :param string_2: String. The new content
     """
     str1 = JsUtils.jsConvertData(string_1, None)
     str2 = JsUtils.jsConvertData(string_2, None)
@@ -1886,8 +1885,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name: The classname to be toggled.
-    :param propagate: Boolean. Optional.
+    :param cls_name: The classname to be toggled.
+    :param propagate: Optional.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     if propagate:
@@ -1909,10 +1908,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name_1: A class name or a string with a list of classname space
-    separated.
-    :param Union[str, primitives.JsDataModel] cls_name_2: A class name or a string with a list of classname space
-    separated.
+    :param cls_name_1: A class name or a string with a list of classname space separated.
+    :param cls_name_2: A class name or a string with a list of classname space separated.
 
     :return: Self to allow the chaining
     """
@@ -1948,7 +1945,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param int i: The position of the child.
+    :param i: The position of the child.
     """
     return JsDoms("%s.childNodes[%s]" % (self.varId, i))
 
@@ -1977,7 +1974,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str node: Specifies the node that may be contained by (a descendant of) a specified node.
+    :param node: Specifies the node that may be contained by (a descendant of) a specified node.
 
     :return: A Boolean
     """
@@ -1999,7 +1996,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] attribute_name: The name of the attribute you want to get the value from
+    :param attribute_name: The name of the attribute you want to get the value from
 
     :return: A String, representing the specified attribute's value.
     """
@@ -2018,7 +2015,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] attribute_name: The name of the attribute you want to return.
+    :param attribute_name: The name of the attribute you want to return.
 
     :return: An Attr object, representing the specified attribute node.
     """
@@ -2032,7 +2029,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] attribute_name: String. Optional.
+    :param attribute_name: String. Optional.
     """
     if attribute_name is None:
       return JsString.JsString("getComputedStyle(%s)" % self.varId, is_py_data=False)
@@ -2081,7 +2078,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name:
+    :param cls_name:
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, cls_name), is_py_data=False)
@@ -2096,7 +2093,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: The Javascript String of the text node component.
+    :param value: The Javascript String of the text node component.
 
     :return: The main Python Dom Object
     """
@@ -2117,7 +2114,7 @@ class JsDoms(JsObject.JsObject):
       https://www.w3schools.com/jsref/prop_node_childnodes.asp
 
     :return: A NodeList object, representing a collection of nodes. The nodes in the returned collection are sorted as
-    they appear in the source code
+      they appear in the source code
     """
     self._js.append("%s.childNodes" % self.varId)
     return self
@@ -2163,11 +2160,11 @@ class JsDoms(JsObject.JsObject):
 
     Usage::
 
-      rptObj.ui.text("This is a text").dom.contentEditable(True)
+      page.ui.text("This is a text").dom.contentEditable(True)
 
     Attributes:
     ----------
-    :param Union[bool, primitives.JsDataModel] flag: Set the content editable flag to the Dom object
+    :param flag: Set the content editable flag to the Dom object
 
     :return: Return a JsBoolean object
     """
@@ -2189,8 +2186,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] cls_name: Specifies the class name of an element. To apply multiple classes, separate them with
-    spaces, like "test demo"
+    :param cls_name: Specifies the class name of an element. To apply multiple classes, separate them with
+      spaces, like "test demo"
 
     :return: A String, representing the class, or a space-separated list of classes, of an element
     """
@@ -2219,8 +2216,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[bool, primitives.JsDataModel] deep: Optional. Specifies whether all descendants of the node should be
-    cloned.
+    :param deep: Optional. Specifies whether all descendants of the node should be cloned.
 
     :return: A Node object, representing the cloned node
     """
@@ -2254,7 +2250,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] dom: The name of the attribute you want to remove.
+    :param dom: The name of the attribute you want to remove.
     """
     self._js.append("%s.removeAttribute(%s)" % (self.varId, JsUtils.jsConvertData(dom, None)))
     return self
@@ -2271,7 +2267,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] dom: The node object you want to remove.
+    :param dom: The node object you want to remove.
 
     :return: A Node object, representing the removed node, or null if the node does not exist.
     """
@@ -2293,7 +2289,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] dom: The node object you want to append.
+    :param dom: The node object you want to append.
 
     :return: 	A Node Object, representing the appended node
     """
@@ -2318,7 +2314,7 @@ class JsDoms(JsObject.JsObject):
     ----------
     :param new_node: The node object you want to insert
     :param existing_node: Optional. The child node you want to insert the new node before. If set to null,
-    the insertBefore method will insert the new_node at the end
+      the insertBefore method will insert the new_node at the end
     """
     if existing_node is None:
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, new_node, self.firstChild))
@@ -2335,7 +2331,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: The Javascript functions.
+    :param js_funcs: The Javascript functions.
     """
     if js_funcs is None:
       return JsObject.JsObject("%s.click()" % self.varId)
@@ -2355,9 +2351,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: Required. The Javascript function.
-    :param bool auto_style: Optional. Some predefined style attributes added to this event
-    (self.css({"cursor": "pointer"}))
+    :param js_funcs: Required. The Javascript function.
+    :param auto_style: Optional. Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
 
     :return: The PyDom object
     """
@@ -2375,7 +2370,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param js_funcs: String or List. The Javascript functions
+    :param js_funcs: The Javascript functions
     """
     self._js.append("var rect = %s.getBoundingClientRect()" % self.varId)
     return self
@@ -2395,8 +2390,9 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str context_type: Is a DOMString containing the context identifier defining the drawing context associated to the canvas
-    :param Union[dict, primitives.JsDataModel] context_attributes: Dictionary with specific context attributes (depending on the type
+    :param context_type: Is a DOMString containing the context identifier defining the drawing context
+      associated to the canvas
+    :param context_attributes: Dictionary with specific context attributes (depending on the type
 
     TODO: Add a check on the tag
     """
@@ -2420,7 +2416,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param str frg: The DOM feature.
+    :param frg: The DOM feature.
     """
     return JsObject.JsObject("%s.%s" % (self.varId, frg))
 
@@ -2435,7 +2431,7 @@ class JsDomsList(JsArray.JsArray):
 
     Attributes:
     ----------
-    :param Union[str, list] js_funcs: List of Javascript fragments.
+    :param js_funcs: List of Javascript fragments.
     """
     self._js.append("%s.forEach(function(elt, index){%s})" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
@@ -2465,8 +2461,8 @@ class JsDomsList(JsArray.JsArray):
 
     Attributes:
     ----------
-    :param Union[str, dict] attr: A String with the type of parameter or a python dictionary
-    :param Union[dict, str, primitives.JsDataModel] data: A JsObj with the value to be set
+    :param attr: A String with the type of parameter or a python dictionary
+    :param data: A JsObj with the value to be set
 
     :return: A JsObj
     """
@@ -2515,8 +2511,8 @@ class JsDomsList(JsArray.JsArray):
 
     Attributes:
     ----------
-    :param Union[str, dict] value: A String with the type of parameter or a python dictionary.
-    :param Union[dict, str, primitives.JsDataModel] data: A JsObj with the value to be set.
+    :param value: A String with the type of parameter or a python dictionary.
+    :param data: A JsObj with the value to be set.
     """
     if data is None and isinstance(value, dict):
       for k, v in value.items():
@@ -2539,6 +2535,6 @@ class JsDomsList(JsArray.JsArray):
 
     Attributes:
     ----------
-    :param int index: The index number of the item.
+    :param index: The index number of the item.
     """
     return JsDoms.get("%s[%s]" % (self.toStr(), index))

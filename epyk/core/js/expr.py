@@ -13,7 +13,7 @@ from epyk.core.js.statements import JsSwitch
 from epyk.core.js.statements import JsWhile
 
 
-def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]):
+def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]) -> JsIf.JsIf:
   """
   Description:
   ------------
@@ -25,15 +25,15 @@ def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], j
 
   Attributes:
   ----------
-  :param Union[list[Union[str, primitives.JsDataModel]], str] condition: The JavaScript conditions.
-  :param Union[list, str] js_funcs: The Javascript functions.
+  :param condition: The JavaScript conditions.
+  :param js_funcs: The Javascript functions.
   """
   if isinstance(condition, list):
     condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
   return JsIf.JsIf(condition, js_funcs)
 
 
-def switch(variable: Union[primitives.JsDataModel, str]):
+def switch(variable: Union[primitives.JsDataModel, str]) -> JsSwitch.JsSwitc:
   """
   Description:
   ------------
@@ -45,7 +45,7 @@ def switch(variable: Union[primitives.JsDataModel, str]):
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] variable:
+  :param variable:
   """
   if hasattr(variable, 'dom'):
     variable = variable.dom.content
@@ -54,7 +54,7 @@ def switch(variable: Union[primitives.JsDataModel, str]):
 
 
 def while_(pivot, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
-           profile: Optional[Union[dict, bool]] = False):
+           profile: Optional[Union[dict, bool]] = False) -> JsWhile.JsWhile:
   """
   Description:
   ------------
@@ -65,10 +65,10 @@ def while_(pivot, js_funcs: Optional[Union[list, str]] = None, options: Optional
 
   Attributes:
   ----------
-  :param str pivot: The JavaScript expression.
-  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
-  :param Optional[dict] options: Optional. Specific Python options available for this component.
-  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+  :param pivot: The JavaScript expression.
+  :param js_funcs: The Javascript functions.
+  :param options: Optional. Specific Python options available for this component.
+  :param profile: Optional. A flag to set the component performance storage.
   """
   js_while = JsWhile.JsWhile(pivot, options=options, profile=profile)
   if js_funcs is not None:
@@ -77,7 +77,7 @@ def while_(pivot, js_funcs: Optional[Union[list, str]] = None, options: Optional
 
 
 def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
-            profile: Optional[Union[dict, bool]] = None):
+            profile: Optional[Union[dict, bool]] = None) -> JsWhile.JsWhileIterable:
   """
   Description:
   ------------
@@ -89,9 +89,9 @@ def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Opti
   Attributes:
   ----------
   :param iterable:
-  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
-  :param Optional[dict] options: Optional. Specific Python options available for this component.
-  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+  :param js_funcs: The Javascript functions.
+  :param options: Optional. Specific Python options available for this component.
+  :param profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(iterable, 'dom'):
     iterable = iterable.dom.content
@@ -102,7 +102,7 @@ def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Opti
 
 
 def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
-         profile: Optional[Union[dict, bool]] = None):
+         profile: Optional[Union[dict, bool]] = None) -> JsFor.JsFor:
   """
   Description:
   ------------
@@ -115,9 +115,9 @@ def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dic
   Attributes:
   ----------
   :param end:
-  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
-  :param Optional[dict] options: Optional. Specific Python options available for this component.
-  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+  :param js_funcs: The Javascript functions.
+  :param options: Optional. Specific Python options available for this component.
+  :param profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(end, 'dom'):
     end = end.dom.content.number
@@ -128,7 +128,7 @@ def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dic
 
 
 def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
-          profile: Optional[Union[dict, bool]] = None):
+          profile: Optional[Union[dict, bool]] = None) -> JsFor.JsIterable:
   """
   Description:
   ------------
@@ -137,9 +137,9 @@ def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional
   Attributes:
   ----------
   :param js_obj:
-  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
-  :param Optional[dict] options: Optional. Specific Python options available for this component.
-  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+  :param js_funcs: The Javascript functions.
+  :param options: Optional. Specific Python options available for this component.
+  :param profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(js_obj, 'dom'):
     js_obj = js_obj.dom.content
@@ -150,7 +150,7 @@ def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional
 
 
 def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
-          profile: Optional[Union[dict, bool]] = None):
+          profile: Optional[Union[dict, bool]] = None) -> JsFor.JsIterable:
   """
   Description:
   ------------
@@ -159,9 +159,9 @@ def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Option
   Attributes:
   ----------
   :param iterable:
-  :param Optional[Union[list, str]] js_funcs: The Javascript functions.
-  :param Optional[dict] options: Optional. Specific Python options available for this component.
-  :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+  :param js_funcs: The Javascript functions.
+  :param options: Optional. Specific Python options available for this component.
+  :param profile: Optional. A flag to set the component performance storage.
   """
   if hasattr(iterable, 'dom'):
     iterable = iterable.dom.content
@@ -186,8 +186,8 @@ def typeof(data: Union[primitives.JsDataModel, str], type: Optional[Union[primit
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] data: A String corresponding to a JavaScript object.
-  :param Optional[Union[primitives.JsDataModel, str]] type: The type of object.
+  :param data: A String corresponding to a JavaScript object.
+  :param type: The type of object.
   """
   if type is None:
     return JsObjects.JsBoolean.JsBoolean("typeof %s" % JsUtils.jsConvertData(data, None))

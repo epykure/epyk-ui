@@ -50,7 +50,7 @@ class JsPivotAggFnc:
 
     Attributes:
     ----------
-    :param dict options:
+    :param options:
     """
     js_pivot = ["tmpVal: 0"]
     map_funcs = {'push': "function(record) {%s}", 'value': "function() {%s}", 'format': 'function(x) {%s}'}
@@ -84,7 +84,7 @@ class JsPivotSumAgg(JsPivotAggFnc):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "Sum Agg", 'digits': 0})
   """
   _dflts = {'digits': 0}  # Cannot be changed directly in the class
@@ -105,7 +105,7 @@ class JsPivotAbsSumAgg(JsPivotSumAgg):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "Abs Sum Agg", 'digits': 0})
   """
   name = "Abs Sum Agg"
@@ -121,7 +121,7 @@ class JsPivotMaxAgg(JsPivotSumAgg):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "Max Agg", 'digits': 0})
   """
   name = "Max Agg"
@@ -139,7 +139,7 @@ class JsPivotMinAgg(JsPivotSumAgg):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "Min Agg", 'digits': 0})
   """
   name = "Min Agg"
@@ -157,7 +157,7 @@ class JsPivotAvgAgg(JsPivotSumAgg):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "Avg Agg", 'digits': 0})
   """
   name = "Avg Agg"
@@ -177,7 +177,7 @@ class JsPivotDiff(JsPivotAggFnc):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "diff Agg", 'digits': 0})
   """
   name = "diff Agg"
@@ -195,7 +195,7 @@ class JsPivotDiffPct(JsPivotDiff):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "diff Pct Agg", 'digits': 0})
   """
   name = "diff Pct Agg"
@@ -210,7 +210,7 @@ class JsPivotDiffAbs(JsPivotDiff):
 
   Usage::
 
-      report.pivot(df, rows=['Date'], cols=['direction'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'],
         valCol=['AAPL.Low'], aggOptions={'name': "diff Abs Agg", 'digits': 0})
   """
   name = "diff Abs Agg"
@@ -225,7 +225,7 @@ class JsPivotDiffPctAbs(JsPivotDiff):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'], valCol=['AAPL.Low'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'], valCol=['AAPL.Low'],
         aggOptions={'name': "diff Abs Pct Agg", 'digits': 0})
   """
   name = "diff Abs Pct Agg"
@@ -239,7 +239,7 @@ class JsPivotSumOverSumAgg(JsPivotDiff):
 
   Usage::
 
-      page.pivot(df, rows=['Date'], cols=['direction'], valCol=['AAPL.Low'],
+      page.ui.pivot(df, rows=['Date'], cols=['direction'], valCol=['AAPL.Low'],
         aggOptions={'name': "sum Over Sum Agg", 'digits': 0})
   """
   name = "sum Over Sum Agg"

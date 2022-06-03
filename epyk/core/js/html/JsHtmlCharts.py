@@ -49,7 +49,6 @@ class ChartJs(JsCanvas.Canvas):
     Description:
     -----------
 
-    :rtype: JsNodeDom.JsDomsList
     """
     if self.component.attr.get('name') is not None:
       return JsNodeDom.JsDomsList(
@@ -80,7 +79,7 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript events
+    :param js_funcs: The Javascript events
     """
     return self.component.js.if_(self.isInViewPort, js_funcs)
 
@@ -113,8 +112,6 @@ class ChartJs(JsCanvas.Canvas):
     Description:
     -----------
     Link to the JQuery functions.
-
-    :rtype: JsQuery.JQuery
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(component=self.component,
@@ -127,8 +124,6 @@ class ChartJs(JsCanvas.Canvas):
     Description:
     -----------
     Wrapper to the D3 library.
-
-    :rtype: JsD3.D3Select
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(component=self.component, selector="d3.select('#%s')" % self.component.htmlCode)
@@ -169,7 +164,7 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param dict attrs: The CSS attributes.
+    :param attrs: The CSS attributes.
     """
     styles = []
     for k, v in attrs.items():
@@ -191,10 +186,10 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param str func_name: The function name.
-    :param Union[list, str] js_funcs: The Javascript function definition.
-    :param dict pmts:
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param func_name: The function name.
+    :param js_funcs: The Javascript function definition.
+    :param pmts:
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The JsObject
     """
@@ -234,9 +229,9 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param Optional[str] inline:
-    :param Optional[int] duration: A time in second for the component display
-    :param Optional[str] display_value: Optional. The value to display. Default inline-block
+    :param inline:
+    :param duration: A time in second for the component display
+    :param display_value: Optional. The value to display. Default inline-block
     """
     display_value = display_value or self.display_value
     if duration is not None:
@@ -252,8 +247,8 @@ class ChartJs(JsCanvas.Canvas):
     Attributes:
     ----------
     :param data: Boolean.
-    :param Optional[str] inline:
-    :param Optional[str] display_value:
+    :param inline:
+    :param display_value:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsVoid(
@@ -284,9 +279,9 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param str attr:
-    :param Optional[str] js_val1:
-    :param str js_val2:
+    :param attr:
+    :param js_val1:
+    :param js_val2:
 
     :return: A Javascript if statement
     """
@@ -306,8 +301,8 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param Optional[dict] css_attrs: A dictionary with the CSS attributes.
-    :param int time_event: The time of the event.
+    :param css_attrs: A dictionary with the CSS attributes.
+    :param time_event: The time of the event.
     """
     if css_attrs is None:
       css_attrs, css_attrs_origin = {}, {}
@@ -353,9 +348,9 @@ class ChartJs(JsCanvas.Canvas):
 
     Attributes:
     ----------
-    :param List[primitives.HtmlModel] components: The different HTML objects to be added to the component.
-    :param bool append: Mention if the component should replace or append the data.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param append: Optional. Mention if the component should replace or append the data.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The Javascript string to be added to the page
     """
@@ -374,13 +369,13 @@ class ChartJs(JsCanvas.Canvas):
     Description:
     ------------
     Return the builder options used to generate the object on the Javascript side.
-    This is not necessarily the same object than the component options as some can be only used on the Python side.
+    This is not necessarily the same object as the component options as some can be only used on the Python side.
 
     This will not change the original option object used during the first object creation.
 
     Attributes:
     ----------
-    :param Optional[dict] options: Optional. The value to be changed.
+    :param options: Optional. The value to be changed.
     """
     opt = dict(self.component._jsStyles)
     if options is not None:
@@ -397,4 +392,5 @@ class ChartJs(JsCanvas.Canvas):
     :param clipboardCopySelector:
     :param with_header:
     """
-    return JsObjects.JsVoid("(function(canvas){var image = new Image(); image.src = canvas.toDataURL('image/png'); return image})(%s)" % self.varName)
+    return JsObjects.JsVoid(
+      "(function(canvas){var image = new Image(); image.src = canvas.toDataURL('image/png'); return image})(%s)" % self.varName)
