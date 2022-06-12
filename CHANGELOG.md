@@ -6,6 +6,17 @@
 
 ### Fixed
 
+## [1.7.20] - 2022-06-12
+
+### Added
+- Add new Tabulator features
+- Improve type hints and documentation
+- New stringify for html components
+
+### Fixed
+- Bug fixes with dataclasses and Options
+
+
 ## [1.7.19] - 2022-05-30
 
 ### Added
