@@ -1,6 +1,7 @@
 
 
 from typing import Union
+from epyk.core.py import primitives, types
 from epyk.customs.data.html import HtmlDashboard
 from epyk.customs.data.html import HtmlProgress
 from epyk.core.html import Defaults
@@ -12,8 +13,10 @@ class Components:
   def __init__(self, ui):
     self.page = ui.page
 
-  def pivots(self, rows=None, columns=None, width=(100, "%"), height=('auto', ""), html_code=None, options=None,
-             profile=None):
+  def pivots(self, rows: Union[list, primitives.HtmlModel] = None, columns: Union[list, primitives.HtmlModel] = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
+             options: Union[dict, bool] = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -26,20 +29,20 @@ class Components:
 
     Attributes:
     ----------
-    :param columns: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param columns: Optional. The list of key from the record to be used as columns in the table.
+    :param rows: Optional. The list of key from the record to be used as rows in the table.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     options = options or {}
     dflt_options = {"sub_chart": False, "max": {"rows": 1}, "columns": "", 'rows': ""}
     if options is not None:
       dflt_options.update(options)
     component = HtmlDashboard.Pivots(self.page, width, height, html_code, options, profile)
-    if rows is None:
+    if rows is None or not hasattr(rows, "options"):
       row_options = dict(dflt_options)
       row_options["max"] = dflt_options.get("max", {}).get("rows")
       row_options["delete"] = dflt_options.get("delete_rows", True)
@@ -47,6 +50,8 @@ class Components:
       if row_options["max"] == 1:
         component.rows.style.css.min_height = 20
       component.rows.style.css.margin_top = 0
+      if rows is not None:
+        component.rows.add_items(rows)
     else:
       component.rows = rows
 
@@ -59,13 +64,15 @@ class Components:
     else:
       component.sub_rows = None
     component.rows.options.managed = False
-    if columns is None:
+    if columns is None or not hasattr(columns, "options"):
       columns_options = dict(dflt_options)
       columns_options["max"] = dflt_options.get("max", {}).get("columns")
       columns_options["delete"] = dflt_options.get("delete_columns", True)
       component.columns = self.page.ui.lists.drop(
         html_code="%s_columns" % component.htmlCode, options=columns_options)
       component.columns.style.css.margin_top = 0
+      if columns is not None:
+        component.rows.add_items(columns)
     else:
       component.columns = columns
     component.columns.options.managed = False
@@ -73,8 +80,9 @@ class Components:
     component.style.css.margin_bottom = 5
     return component
 
-  def filters(self, items=None, button=None, width=("auto", ""), height=(60, "px"), html_code=None, helper=None,
-              options=None, profile=None):
+  def filters(self, items=None, button=None, width: types.SIZE_TYPE = ("auto", ""),
+              height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
+              options: Union[dict, bool] = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -89,12 +97,12 @@ class Components:
     ----------
     :param items:
     :param button:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. The value to be displayed to the helper icon.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. The value to be displayed to the helper icon.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     options = options or {}
     container = self.page.ui.div(width=width)
@@ -148,27 +156,32 @@ class ProgressComponents:
   def __init__(self, ui):
     self.page = ui.page
 
-  def gauge(self, value: float, width: Union[tuple, int] = (90, 'px'), height: Union[tuple, int] = (45, "px"),
-            html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def gauge(self, value: float, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (45, "px"),
+            html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
+    Description:
+    ------------
 
-    https://codepen.io/jagathish/pen/ZXzbzN
+    Related Pages:
 
+      https://codepen.io/jagathish/pen/ZXzbzN
+
+    Attributes:
+    ----------
     :param value:
     :param width:
     :param height:
     :param html_code:
     :param options:
     :param profile:
-    :return:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     return HtmlProgress.Gauge(
       value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
 
-  def circle(self, value: float, width: Union[tuple, int] = (90, 'px'), height: Union[tuple, int] = (90, "px"),
-             html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def circle(self, value: float, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (90, "px"),
+             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     return HtmlProgress.Circle(
       value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
 

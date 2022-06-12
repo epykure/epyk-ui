@@ -58,7 +58,7 @@ def querySelectorAll(reference: Union[primitives.JsDataModel, str]):
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] reference: CSS selectors.
+  :param reference: CSS selectors.
   """
   return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(reference, None), is_py_data=False)
 

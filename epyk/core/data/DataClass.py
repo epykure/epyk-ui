@@ -26,7 +26,7 @@ class DataClass:
 
     Attributes:
     ----------
-    :param dict vals: All the attributes to be added to the component.
+    :param vals: All the attributes to be added to the component.
     """
     self._attrs.update(vals)
 
@@ -38,7 +38,7 @@ class DataClass:
     """
     return self._attrs.items()
 
-  def custom(self, name, value):
+  def custom(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -49,15 +49,15 @@ class DataClass:
 
     Attributes:
     ----------
-    :param name: String. The key to be added to the attributes.
-    :param value: String or JString. The value of the defined attributes.
+    :param name: The key to be added to the attributes.
+    :param value: The value of the defined attributes.
 
     :return: The DataAttrs to allow the chains
     """
     self._attrs[name] = value
     return self
 
-  def attr(self, name, value):
+  def attr(self, name: str, value: Any):
     """
     Description:
     ------------
@@ -65,8 +65,8 @@ class DataClass:
 
     Attributes:
     ----------
-    :param name: String. The attribute name.
-    :param value: Object. The attribute value.
+    :param name: The attribute name.
+    :param value: The attribute value.
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -94,8 +94,8 @@ class DataClass:
 
     Attributes:
     ----------
-    :param str dfl: Optional. The default value of this attribute.
-    :param str name: Optional. The attribute name. default the name of the function.
+    :param dfl: Optional. The default value of this attribute.
+    :param name: Optional. The attribute name. default the name of the function.
     """
     return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dfl)
 
@@ -107,8 +107,8 @@ class DataClass:
 
     Attributes:
     ----------
-    :param Any value: The attribute value.
-    :param str name: Optional. The attribute name. default the name of the function.
+    :param value: The attribute value.
+    :param name: Optional. The attribute name. default the name of the function.
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -125,7 +125,7 @@ class DataClass:
 
     Attributes:
     ----------
-    :param str name: The key to be added to the internal data dictionary.
+    :param name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     if name in self._attrs:
@@ -143,8 +143,8 @@ class DataClass:
 
     Attributes:
     ----------
-    :param str name: The key in the final data dictionary.
-    :param Any value: The value in the final data dictionary.
+    :param name: The key in the final data dictionary.
+    :param value: The value in the final data dictionary.
     """
     self.__sub_levels.add(name)
     self._attrs[name] = JsUtils.jsConvertData(value, None)
@@ -159,7 +159,7 @@ class DataClass:
 
     Attributes:
     ----------
-    :param str name: The key to be added to the internal data dictionary.
+    :param name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
     self.__sub__enum_levels.add(name)
@@ -180,9 +180,9 @@ class DataEnum:
   dflt = None
   js_conversion = False
 
-  def __init__(self, component, value=None):
-    self._report, self.__value = component, value or self.dflt
-    self.component = self._report
+  def __init__(self, component, value: Any = None):
+    self.page, self.__value = component.page, value or self.dflt
+    self.component = component
 
   def set(self, value: Union[str, primitives.JsDataModel] = None):
     """
@@ -193,7 +193,7 @@ class DataEnum:
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: Optional. The value to be set (default is the function name).
+    :param value: Optional. The value to be set (default is the function name).
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name
@@ -201,7 +201,7 @@ class DataEnum:
       value = value.toStr() if hasattr(value, "toStr") else JsUtils.jsConvertData(value, None).toStr()
     self.__value = value
 
-  def custom(self, value):
+  def custom(self, value: str):
     """
     Description:
     ------------
@@ -209,7 +209,7 @@ class DataEnum:
 
     Attributes:
     ----------
-    :param value: String. The value to be set.
+    :param value: The value to be set.
     """
     self.__value = value
 
@@ -219,8 +219,8 @@ class DataEnum:
 
 class DataGroup:
 
-  def __init__(self, report, attrs, parent=None):
-    self._attrs, self._report, self._parent = attrs, report, parent
+  def __init__(self, page: primitives.PageModel, attrs: dict, parent=None):
+    self._attrs, self.page, self._parent = attrs, page, parent
 
 
 class DataEnumMulti:
@@ -229,12 +229,12 @@ class DataEnumMulti:
   js_conversion = False
   delimiter = ","
 
-  def __init__(self, report, value=None):
-    self._report = report
+  def __init__(self, page: primitives.PageModel, value: Any = None):
+    self.page = page
     value = value or self.dflt
     self.__value = set() if value is None else set([value])
 
-  def set(self, value=None):
+  def set(self, value: str = None):
     """
     Description:
     ------------
@@ -243,7 +243,7 @@ class DataEnumMulti:
 
     Attributes:
     ----------
-    :param value: String. Optional. The value to be set (default is the function name).
+    :param value: Optional. The value to be set (default is the function name).
     """
     if value is None:
       value = sys._getframe().f_back.f_code.co_name

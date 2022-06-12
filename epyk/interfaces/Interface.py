@@ -931,7 +931,7 @@ class Components:
     """
     Description:
     ------------
-    Creates an new empty form.
+    Creates a new empty form.
 
     Usage::
 

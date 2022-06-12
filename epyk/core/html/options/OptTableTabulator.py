@@ -1,7 +1,8 @@
 
 import hashlib
+import json
 
-from typing import Union, List
+from typing import Union, List, Optional
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
@@ -26,7 +27,7 @@ class EnumTopCalc(Enums):
     """
     Description:
     -----------
-    A count of all non empty cells in the column.
+    A count of all non-empty cells in the column.
 
     Related Pages:
 
@@ -34,7 +35,7 @@ class EnumTopCalc(Enums):
     """
     return self._set_value()
 
-  def avg(self, precision: int = None):
+  def avg(self, precision: Union[int, bool] = None):
     """
     Description:
     -----------
@@ -46,8 +47,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
-    however many decimals are provided with the number
+    :param precision: The number of decimals to display, setting this value to false will display
+      however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -56,7 +57,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def max(self, precision: int = None):
+  def max(self, precision: Union[int, bool] = None):
     """
     Description:
     -----------
@@ -68,8 +69,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
-    however many decimals are provided with the number
+    :param precision: The number of decimals to display, setting this value to false will display
+      however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -78,7 +79,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def min(self, precision: int = None):
+  def min(self, precision: Union[int, bool] = None):
     """
     Description:
     -----------
@@ -90,8 +91,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
-    however many decimals are provided with the number
+    :param precision: The number of decimals to display, setting this value to false will display
+      however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -100,7 +101,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def sum(self, precision: int = None):
+  def sum(self, precision: Union[int, bool] = None):
     """
     Description:
     -----------
@@ -112,8 +113,8 @@ class EnumTopCalc(Enums):
 
     Attributes:
     ----------
-    :param precision: Integer | Boolean. The number of decimals to display, setting this value to false will display
-    however many decimals are provided with the number
+    :param precision: The number of decimals to display, setting this value to false will display
+      however many decimals are provided with the number
     """
     if precision is not None:
       if self.key == "bottomCalc":
@@ -122,7 +123,7 @@ class EnumTopCalc(Enums):
         self._set_value("topCalcParams", {"precision": precision})
     return self._set_value()
 
-  def bespoke(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def bespoke(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     return self._set_value(value=JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
@@ -191,7 +192,7 @@ class EnumLayout(Enums):
 
     Attributes:
     ----------
-    :param inline: Boolean. Optional. Force the CSS display to be inline-block.
+    :param inline: Optional. Force the CSS display to be inline-block.
     """
     self.component.style.css.width = "auto"
     self.component.style.css.border = "none !IMPORTANT"
@@ -296,7 +297,7 @@ class EnumColCss(Enums):
 
     Attributes:
     ----------
-    :param color: String. The CSS Color.
+    :param color: The CSS Color.
     """
     self.component.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self._add_value(value="tb-color-%s" % color)
@@ -309,7 +310,7 @@ class EnumColCss(Enums):
 
     Attributes:
     ----------
-    :param color: String. The CSS Color.
+    :param color: The CSS Color.
     """
     self.component.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
     return self._add_value(value="tb-background-%s" % color)
@@ -320,17 +321,56 @@ class EnumColCss(Enums):
     -----------
     CSS class for bespoke style.
 
-    col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
+    Usage::
+
+      col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. The CSS attributes for the class.
-    :param css_attrs_hover: Dictionary. Optional. The CSS Hover attributes for the class.
+    :param css_attrs: The CSS attributes for the class.
+    :param css_attrs_hover: Optional. The CSS Hover attributes for the class.
     """
     has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
     self.component.body.style.custom_class({
       '_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
     return self._add_value(value="tb-style-%s" % has_style)
+
+
+class PersistencePage(Options):
+
+  @property
+  def size(self):
+    """
+    Description:
+    -----------
+    persist the current page size.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/release#persistence
+    """
+    return self._config_get()
+
+  @size.setter
+  def size(self, val):
+    self._config(val)
+
+  @property
+  def page(self):
+    """
+    Description:
+    -----------
+    do not persist the current page.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/release#persistence
+    """
+    return self._config_get()
+
+  @page.setter
+  def page(self, val):
+    self._config(val)
 
 
 class PersistenceGroup(Options):
@@ -383,43 +423,6 @@ class PersistenceGroup(Options):
     self._config(val)
 
 
-class PersistencePage(Options):
-
-  @property
-  def size(self):
-    """
-    Description:
-    -----------
-    persist the current page size.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/release#persistence
-    """
-    return self._config_get()
-
-  @size.setter
-  def size(self, val):
-    self._config(val)
-
-  @property
-  def page(self):
-    """
-    Description:
-    -----------
-    do not persist the current page.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.5/release#persistence
-    """
-    return self._config_get()
-
-  @page.setter
-  def page(self, val):
-    self._config(val)
-
-
 class Persistence(Options):
 
   @property
@@ -459,7 +462,7 @@ class Persistence(Options):
     self._config(val)
 
   @property
-  def group(self):
+  def group(self) -> PersistenceGroup:
     """
     Description:
     -----------
@@ -469,13 +472,11 @@ class Persistence(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.5/release#persistence
-
-    :rtype: PersistenceGroup
     """
     return self.has_attribute(PersistenceGroup)
 
   @property
-  def page(self):
+  def page(self) -> PersistencePage:
     """
     Description:
     -----------
@@ -485,8 +486,6 @@ class Persistence(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.5/release#persistence
-
-    :rtype: PersistencePage
     """
     return self.has_attribute(PersistencePage)
 
@@ -509,36 +508,9 @@ class Persistence(Options):
     self._config(val)
 
 
-class ColumnsGroup(Options):
-
-  @property
-  def title(self):
-    """
-    Description:
-    -----------
-    Set a title for a could of columns.
-    """
-    return self._config_get()
-
-  @title.setter
-  def title(self, val: str):
-    self._config(val)
-
-  @property
-  def columns(self):
-    """
-    Description:
-    -----------
-    Add columns to a group.
-
-    :rtype: Column
-    """
-    return self._config_sub_data_enum("columns", Column)
-
-
 class EditorAutocomplete(Enums):
 
-  def startswith(self, values, showListOnEmpty=True, freetext=True, allowEmpty=True):
+  def startswith(self, values, showListOnEmpty=True, freetext: bool = True, allowEmpty: bool = True):
     """
     Description:
     -----------
@@ -562,7 +534,7 @@ return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (
 
 class Editor(Enums):
 
-  def input(self, search=True, elementAttributes=None, **kwargs):
+  def input(self, search: bool = True, element_attributes: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -574,18 +546,18 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param search: Boolean. Optional. Use search type input element with clear button.
-    :param elementAttributes: String. Optional. set attributes directly on the input element.
+    :param search: Optional. Use search type input element with clear button.
+    :param element_attributes: Optional. set attributes directly on the input element.
     """
     editor_params = {'search': search}
-    if elementAttributes is not None:
-      editor_params[elementAttributes] = elementAttributes
+    if element_attributes is not None:
+      editor_params["elementAttributes"] = element_attributes
     if kwargs:
       editor_params.update(kwargs)
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def textarea(self, verticalNavigation="editor", elementAttributes=None, **kwargs):
+  def textarea(self, vertical_navigation: str = "editor", element_attributes: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -597,16 +569,18 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param verticalNavigation: String. Optional. set attributes directly on the textarea element.
-    :param elementAttributes: String. Optional. determine how use of the up/down arrow keys will affect the editor.
-    :param kwargs:
+    :param vertical_navigation: Optional. set attributes directly on the textarea element.
+    :param element_attributes: Optional. determine how use of the up/down arrow keys will affect the editor.
+    :param kwargs: Dictionary with extra attributes
     """
-    editor_params = {'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
-    editor_params.update(editor_params.pop('kwargs'))
+    editor_params = {'verticalNavigation': vertical_navigation, "elementAttributes": element_attributes}
+    if kwargs:
+      editor_params.update(kwargs)
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def number(self, min=None, max=None, step=1, elementAttributes=None, verticalNavigation="table", **kwargs):
+  def number(self, min: float = None, max: float = None, step: int = 1, element_attributes: dict = None,
+             vertical_navigation: str = "table", **kwargs):
     """
     Description:
     -----------
@@ -618,14 +592,14 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param min: Number. Optional. the maximum allowed value.
-    :param max: Number. Optional. the minimum allowed value.
-    :param step: String. Optional. the step size when incrementing/decrementingthe value (default 1).
-    :param elementAttributes: String. Optional. set attributes directly on the input element.
-    :param verticalNavigation: String. Optional. determine how use of the up/down arrow keys will affect the editor,
-    :param kwargs:
+    :param min: Optional. the maximum allowed value.
+    :param max: Optional. the minimum allowed value.
+    :param step: Optional. the step size when incrementing/decrementingthe value (default 1).
+    :param element_attributes: Optional. set attributes directly on the input element.
+    :param vertical_navigation: Optional. determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs: Dictionary with extra attributes
     """
-    editor_params = {'step': step, 'verticalNavigation': verticalNavigation, "elementAttributes": elementAttributes}
+    editor_params = {'step': step, 'verticalNavigation': vertical_navigation, "elementAttributes": element_attributes}
     if min is not None:
       editor_params['min'] = min
     if max is not None:
@@ -635,7 +609,7 @@ class Editor(Enums):
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def range(self, min=None, max=None, step=1, elementAttributes=None, **kwargs):
+  def range(self, min: float = None, max: float = None, step: int = 1, element_attributes: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -647,22 +621,23 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param min: Number. Optional. the maximum allowed value.
-    :param max: Number. Optional. the minimum allowed value.
-    :param step: Number. Optional. the step size when incrementing/decrementingthe value (default 1).
-    :param elementAttributes: String. Optional. set attributes directly on the input element.
-    :param kwargs:
+    :param min: Optional. the maximum allowed value.
+    :param max: Optional. the minimum allowed value.
+    :param step: Optional. the step size when incrementing/decrementingthe value (default 1).
+    :param element_attributes: Optional. set attributes directly on the input element.
+    :param kwargs: Dictionary with extra attributes
     """
-    editor_params = {'step': step, "elementAttributes": elementAttributes}
+    editor_params = {'step': step, "elementAttributes": element_attributes}
     if min is not None:
       editor_params['min'] = min
     if max is not None:
       editor_params['max'] = max
-    editor_params.update(editor_params.pop('kwargs'))
+    if kwargs:
+      editor_params.update(kwargs)
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def tick(self, tristate=False, indeterminateValue=None, elementAttributes=None, **kwargs):
+  def tick(self, tristate: bool = False, indeterminate_value: str = None, element_attributes: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -674,19 +649,21 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param tristate: Boolean. Optional. allow tristate tickbox (default false).
-    :param indeterminateValue: String. Optional. when using tristate tickbox what value should the third indeterminate state have (default null)
-    :param elementAttributes: String. Optional. set attributes directly on the input element
-    :param kwargs:
+    :param tristate: Optional. allow tristate tickbox (default false).
+    :param indeterminate_value: Optional. when using tristate tickbox what value should the third indeterminate
+      state have (default null)
+    :param element_attributes: Optional. set attributes directly on the input element
+    :param kwargs: Dictionary with extra attributes
     """
-    editor_params = {'tristate': tristate, 'indeterminateValue': indeterminateValue}
-    if elementAttributes is not None:
-      editor_params['elementAttributes'] = elementAttributes
-    editor_params.update(editor_params.pop('kwargs'))
+    editor_params = {'tristate': tristate, 'indeterminateValue': indeterminate_value}
+    if element_attributes is not None:
+      editor_params['elementAttributes'] = element_attributes
+    if kwargs:
+      editor_params.update(kwargs)
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def stars(self, elementAttributes=None, **kwargs):
+  def stars(self, element_attributes: dict = None, **kwargs):
     """
     Description:
     -----------
@@ -701,41 +678,97 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param elementAttributes: String. Optional set attributes directly on the star holder element.
-    :param kwargs:
+    :param element_attributes: Optional set attributes directly on the star holder element.
+    :param kwargs: Dictionary with extra attributes
     """
     editor_params = {}
-    if elementAttributes is not None:
-      editor_params['elementAttributes'] = elementAttributes
-    editor_params.update(editor_params.pop('kwargs'))
+    if element_attributes is not None:
+      editor_params['elementAttributes'] = element_attributes
+    if kwargs:
+      editor_params.update(kwargs)
     self._set_value(value=editor_params, name="editorParams")
     return self._set_value()
 
-  def select(self, values: list, listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
-             verticalNavigation: str = "hybrid", **kwargs):
+  def select(self, values: list = True, default_value: str = None, element_attributes: dict = None,
+             vertical_navigation: str = "hybrid", **kwargs):
     """
     Description:
     -----------
     The select editor creates a dropdown select box to allow the user to select from some predefined options passed
     into the values property of the editorParams option.
 
+    Usage::
+
+        c.editors.select(listItemFormatter='function(value, title){return "Mr " + title;}')
+
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
+      http://tabulator.info/docs/5.2/edit#editor-list
 
     Attributes:
     ----------
     :param values: a list of values to be displayed to the user
-    :param listItemFormatter: a function that should return the HTML contents for each item in the value list
-    :param sortValuesList: if values property is set to true this option can be used to set how the generated list should be sorted
-    :param defaultValue: set the value that should be selected by default if the cells value is undefined
-    :param elementAttributes: set attributes directly on the input element
-    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
-    :param kwargs:
+    :param default_value: set the value that should be selected by default if the cells value is undefined
+    :param element_attributes: set attributes directly on the input element
+    :param vertical_navigation: determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs: Dictionary with extra attributes
     """
-    editor_params = {k: v for k, v in locals().items() if k != 'self'}
-    editor_params.update(editor_params.pop('kwargs'))
-    self._set_value(value=editor_params, name="editorParams")
+    editor_params = {"values": json.dumps(values) if values is True else values}
+    if element_attributes is not None:
+      editor_params["elementAttributes"] = element_attributes
+    if default_value is not None:
+      editor_params["defaultValue"] = default_value
+    if vertical_navigation is not None:
+      editor_params["verticalNavigation"] = vertical_navigation
+    if kwargs:
+      editor_params.update(kwargs)
+    for c in ["defaultValue", "verticalNavigation"]:
+      if c in editor_params:
+        editor_params[c] = json.dumps(editor_params[c])
+    self._set_value(value="{%s}" % ", ".join([
+      "%s: %s" % (k, v) for k, v in editor_params.items()]), name="editorParams", js_type=True)
+    return self._set_value()
+
+  def list(self, values: list = True, default_value: str = None, element_attributes: dict = None,
+           vertical_navigation: str = "hybrid", **kwargs):
+    """
+    Description:
+    -----------
+    The select editor creates a dropdown select box to allow the user to select from some predefined options passed
+    into the values property of the editorParams option.
+
+    Usage::
+
+        c.editors.select(listItemFormatter='function(value, title){return "Mr " + title;}')
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.5/edit#edit-builtin
+      http://tabulator.info/docs/5.2/edit#editor-list
+
+    Attributes:
+    ----------
+    :param values: a list of values to be displayed to the user
+    :param default_value: set the value that should be selected by default if the cells value is undefined
+    :param element_attributes: set attributes directly on the input element
+    :param vertical_navigation: determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs: Dictionary with extra attributes
+    """
+    editor_params = {"values": json.dumps(values) if values is True else values}
+    if element_attributes is not None:
+      editor_params["elementAttributes"] = element_attributes
+    if default_value is not None:
+      editor_params["defaultValue"] = default_value
+    if vertical_navigation is not None:
+      editor_params["verticalNavigation"] = vertical_navigation
+    if kwargs:
+      editor_params.update(kwargs)
+    for c in ["defaultValue", "verticalNavigation"]:
+      if c in editor_params:
+        editor_params[c] = json.dumps(editor_params[c])
+    self._set_value(value="{%s}" % ", ".join([
+      "%s: %s" % (k, v) for k, v in editor_params.items()]), name="editorParams", js_type=True)
     return self._set_value()
 
   @property
@@ -749,9 +782,8 @@ class Editor(Enums):
     self._set_value()
     return EditorAutocomplete(self, "editorParams")
 
-  def autocomplete(self, values=None, showListOnEmpty=False, freetext=False, allowEmpty=False, searchFunc=None,
-                   listItemFormatter=None, sortValuesList=None, defaultValue=None, elementAttributes=None,
-                   verticalNavigation=None, **kwargs):
+  def autocomplete(self, values: list = True, default_value=None, element_attributes: dict = None,
+                   vertical_navigation: str = "hybrid", **kwargs):
     """
     Description:
     -----------
@@ -760,6 +792,7 @@ class Editor(Enums):
 
     Usage::
 
+      c.editors.autocomplete(listItemFormatter='function(value, title){return "Mr " + title;}', freetext=True)
 
     Related Pages:
 
@@ -768,30 +801,29 @@ class Editor(Enums):
     Attributes:
     ----------
     :param values: a list of values to be displayed to the user
-    :param showListOnEmpty: show all values in the list when the input element is empty (default false)
-    :param freetext: allow the user to press enter to save a value to the cell that is not in the list (default false)
-    :param allowEmpty: allow the user to save an empty value to the cell (default false)
-    :param searchFunc: unction to search through array of value objects and return those that match the search term
-    :param listItemFormatter: a function that should return the HTML contents for each item in the value list
-    :param sortValuesList:  if values property is set to true this option can be used to set how the generated list should be sorted
-    :param defaultValue: set the value that should be selected by default if the cells value is undefined
-    :param elementAttributes: set attributes directly on the input element
-    :param verticalNavigation: determine how use of the up/down arrow keys will affect the editor,
+    :param default_value: set the value that should be selected by default if the cells value is undefined
+    :param element_attributes: set attributes directly on the input element
+    :param vertical_navigation: determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs: Dictionary with extra attributes
     """
-    self._set_value()
-    editor_params = {k: v for k, v in locals().items() if (k != 'self' and v is not None)}
-    editor_params.update(editor_params.pop('kwargs'))
+    editor_params = {"values": json.dumps(values) if values is True else values}
+    if element_attributes is not None:
+      editor_params["elementAttributes"] = element_attributes
+    if default_value is not None:
+      editor_params["defaultValue"] = default_value
+    if vertical_navigation is not None:
+      editor_params["verticalNavigation"] = vertical_navigation
+    if kwargs:
+      editor_params.update(kwargs)
+    for c in ["showListOnEmpty", "freetext", "allowEmpty", "defaultValue", "verticalNavigation"]:
+      if c in editor_params:
+        editor_params[c] = json.dumps(editor_params[c])
+    self._set_value(value="{%s}" % ", ".join([
+      "%s: %s" % (k, v) for k, v in editor_params.items()]), name="editorParams", js_type=True)
+    return self._set_value()
 
-    params = []
-    for k, v in editor_params.items():
-      if k in ("searchFunc", ):
-        params.append("%s: %s" % (k, v))
-      else:
-        params.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
-    self._set_value(value="{%s}" % ", ".join(params), name="editorParams", js_type=True)
-    return self
-
-  def custom(self, fncName, fncDef=None):
+  def custom(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, editor_params: dict = None,
+             profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -802,22 +834,60 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param fncName: String. The function name.
-    :param fncDef: String. Optional. The function definition.
+    :param func_name: The function name
+    :param js_funcs: Optional. The function definition
+    :param editor_params: The editor parameters
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
-    if fncDef is None:
+    if js_funcs is None:
       self._set_value(js_type=True)
     else:
-      self.component.page.extendModule(
-        "edit", "editors", fncName, "function(cell, onRendered, success, cancel, editorParams){%s}" % fncDef)
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
+      str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+      if not str_func.startswith("function(cell, onRendered, success, cancel, editorParams)") and not func_ref:
+        str_func = "function(cell, onRendered, success, cancel, editorParams){%s}" % str_func
+      self.component.page.extendModule("edit", "editors", func_name, str_func)
       self._set_value()
+    if editor_params is not None:
+      self._set_value(value=editor_params, name="editorParams")
     return self
 
 
 class Formattors(Enums):
 
-  def rowSelection(self):
+  def rowSelection(self, title_formatter: bool = True, title_formatter_params: dict = None,
+                   hoz_align: Optional[str] = "center", header_sort: bool = False, **kwargs):
+    """
+    Description:
+    -----------
+
+    Usage::
+
+      table = page.ui.tables.tabulators.table(rows=["row", "values"], cols=["ticks"])
+      for c in table.get_columns():
+        if c.field == "ticks":
+          c.formatters.rowSelection(width=20)
+
+    Attributes:
+    ----------
+    :param title_formatter: title formatter
+    :param title_formatter_params: title formatter parameters
+    :param hoz_align: To set the horizontal alignment
+    :param header_sort: Flag to special the sort
+    :param kwargs: Other attributes to be set for the column
+    """
     self._set_value()
+    if title_formatter:
+      self._set_value("titleFormatter", value="rowSelection")
+    if title_formatter_params is not None:
+      self._set_value("titleFormatterParams", value=title_formatter_params)
+    if hoz_align is not None:
+      self._set_value(name="hozAlign", value=hoz_align)
+    self._set_value(name="headerSort", value=json.dumps(header_sort), js_type=True)
+    for k, v in kwargs.items():
+      self._set_value(k, value=v)
 
   def text(self, **kwargs):
     """
@@ -930,7 +1000,8 @@ class Formattors(Enums):
     self._set_value("%sParams" % self.key, format_params)
     return self
 
-  def link(self, label=None, url=None, target='_blank', urlPrefix=None, labelField=None, urlField=None, **kwargs):
+  def link(self, label: str = None, url: str = None, target: str = '_blank', url_prefix: str = None,
+           label_field: str = None, url_field: str = None, **kwargs):
     """
     Description:
     -----------
@@ -943,12 +1014,16 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param label: a string representing the label, or a function which must return the string for the label, the function is passed the Cell Component as its first argument
-    :param url:  a string representing the url, or a function which must return the string for the url, the function is passed the Cell Component as its first argument
-    :param target: a string representing the value of the anchor tags target artibute (eg. set to "_blank" to open link in new tab)
-    :param urlPrefix: a prefix to put before the url value (eg. to turn a emaill address into a clickable mailto link you should set this to "mailto:")
-    :param labelField: the field in the row data that should be used for the link lable
-    :param urlField: the field in the row data that should be used for the link url
+    :param label: a string representing the label, or a function which must return the string for the label,
+      the function is passed the Cell Component as its first argument
+    :param url:  a string representing the url, or a function which must return the string for the url,
+      the function is passed the Cell Component as its first argument
+    :param target: a string representing the value of the anchor tags target artibute (eg. set to "_blank"
+      to open link in new tab)
+    :param url_prefix: a prefix to put before the url value (eg. to turn a emaill address into a clickable
+      mailto link you should set this to "mailto:")
+    :param label_field: the field in the row data that should be used for the link lable
+    :param url_field: the field in the row data that should be used for the link url
     :param kwargs:
     """
     format_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
@@ -957,7 +1032,8 @@ class Formattors(Enums):
     self._set_value("%sParams" % self.key, format_params)
     return self
 
-  def datetime(self, inputFormat="YYYY-MM-DD", outputFormat="YYYY-MM-DD", invalidPlaceholder="(invalid date)", **kwargs):
+  def datetime(self, input_format: str = "YYYY-MM-DD", output_format: str = "YYYY-MM-DD",
+               invalid_placeholder: str = "(invalid date)", **kwargs):
     """
     Description:
     -----------
@@ -969,20 +1045,22 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param inputFormat:
-    :param outputFormat:
-    :param invalidPlaceholder:
+    :param input_format:
+    :param output_format:
+    :param invalid_placeholder:
     :param kwargs:
     """
     self._set_value()
-    format_params = {"inputFormat": inputFormat, "outputFormat": outputFormat, "invalidPlaceholder": invalidPlaceholder}
+    format_params = {
+      "inputFormat": input_format, "outputFormat": output_format, "invalidPlaceholder": invalid_placeholder}
     if kwargs:
       format_params.update(kwargs)
     self._set_value("%sParams" % self.key, format_params)
     return self
 
-  def tickcross(self, allowEmpty=True, allowTruthy=True, tickElement="<i class='fa fa-check'></i>",
-                crossElement="<i class='fa fa-times'></i>", **kwargs):
+  def tickcross(self, allow_empty: bool = True, allow_truthy: bool = True,
+                tick_element: str = "<i class='fa fa-check'></i>", cross_element: str = "<i class='fa fa-times'></i>",
+                **kwargs):
     """
     Description:
     -----------
@@ -994,15 +1072,18 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param allowEmpty: set to true to cause empty values (undefined, null, "") to display an empty cell instead of a cross (default false)
-    :param allowTruthy: set to true to allow any truthy value to show a tick (default false)
-    :param tickElement: custom HTML for the tick element, if set to false the tick element will not be shown (it will only show crosses)
-    :param crossElement: custom HTML for the cross element, if set to false the cross element will not be shown (it will only show ticks)
-    :param kwargs:
+    :param allow_empty: set to true to cause empty values (undefined, null, "") to display an empty
+      cell instead of a cross (default false)
+    :param allow_truthy: set to true to allow any truthy value to show a tick (default false)
+    :param tick_element: custom HTML for the tick element,
+      if set to false the tick element will not be shown (it will only show crosses)
+    :param cross_element: custom HTML for the cross element,
+      if set to false the cross element will not be shown (it will only show ticks)
+    :param kwargs: Extra parameters to be added to this formatter
     """
-    self._set_value()
+    self._set_value(value="tickCross")
     format_params = {
-      'allowEmpty': allowEmpty, 'allowTruthy': allowTruthy, 'tickElement': tickElement, 'crossElement': crossElement}
+      'allowEmpty': allow_empty, 'allowTruthy': allow_truthy, 'tickElement': tick_element, 'crossElement': cross_element}
     if kwargs:
       format_params.update(kwargs)
     self._set_value("%sParams" % self.key, format_params)
@@ -1088,7 +1169,8 @@ class Formattors(Enums):
     self._set_value("%sParams" % self.key, format_params)
     return self
 
-  def custom(self, fncName: str, fncDef: str = None, formatterParams: dict = None):
+  def custom(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, formatter_params: dict = None,
+             profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -1099,17 +1181,24 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param fncName:
-    :param fncDef:
-    :param formatterParams:
+    :param func_name: The function name
+    :param js_funcs: Optional. The function definition
+    :param formatter_params: Formatter attributes
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
-    if fncDef is None:
-      self._set_value(fncName, js_type=True)
+    if js_funcs is None:
+      self._set_value(func_name, js_type=True)
     else:
-      self.component.extendModule("format", "formatters", fncName, "function(cell, formatterParams){%s}" % fncDef)
-      self._set_value(value=fncName)
-    if formatterParams is not None:
-      self._set_value("%sParams" % self.key, formatterParams)
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
+      str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+      if not str_func.startswith("function(cell, formatterParams)") and not func_ref:
+        str_func = "function(cell, formatterParams){%s}" % str_func
+      self.component.extendModule("format", "formatters", func_name, str_func)
+      self._set_value(value=func_name)
+    if formatter_params is not None:
+      self._set_value("%sParams" % self.key, formatter_params)
     return self
 
   def css(self, attrs: dict):
@@ -1140,11 +1229,11 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
     :param formatter_params:
     """
     self._set_value(value='''
-      function(cell, formatterParams){const cssAttrs = formatterParams.css;
-        var cell = cell.getTable().modules.format.getFormatter('%s').call(cell.getTable().modules.format, cell, formatterParams);
-        let frag = document.createRange().createContextualFragment(cell).firstChild;
-        Object.keys(cssAttrs).forEach(function(key){frag.style[key] = cssAttrs[key]}); 
-        return frag; }''' % formatter, js_type=True)
+function(cell, formatterParams){const cssAttrs = formatterParams.css;
+  var cell = cell.getTable().modules.format.getFormatter('%s').call(cell.getTable().modules.format, cell, formatterParams);
+  let frag = document.createRange().createContextualFragment(cell).firstChild;
+  Object.keys(cssAttrs).forEach(function(key){frag.style[key] = cssAttrs[key]}); 
+  return frag; }''' % formatter, js_type=True)
     formatter_params = formatter_params or {}
     formatter_params['css'] = css_attrs
     self._set_value("%sParams" % self.key, formatter_params)
@@ -1153,7 +1242,7 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
 
 class Mutators(Enums):
 
-  def bespoke(self, fncName, fncDef=None):
+  def bespoke(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1167,21 +1256,27 @@ class Mutators(Enums):
 
     Attributes:
     ----------
-    :param fncName: String.
-    :param fncDef: String.
+    :param func_name: Javascript functions name
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    if fncDef is None:
-      self._set_value(fncName, js_type=True)
+    if js_funcs is None:
+      self._set_value(func_name, js_type=True)
     else:
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
       self.component.extendModule(
-        "mutator", "mutators", fncName, "function(value, data, type, mutatorParams, component){%s}" % fncDef)
-      self._set_value(fncName)
+        "mutator", "mutators", func_name,
+        "function(value, data, type, mutatorParams, component){%s}" % JsUtils.jsConvertFncs(
+          js_funcs, toStr=True, profile=profile))
+      self._set_value(func_name)
     return self
 
 
 class Accessors(Enums):
 
-  def bespoke(self, fncName, fncDef=None, accessorParams=None):
+  def bespoke(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, accessor_params: dict = None,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1198,18 +1293,23 @@ class Accessors(Enums):
 
     Attributes:
     ----------
-    :param fncName: String.
-    :param fncDef: String.
-    :param accessorParams: String.
+    :param func_name: Javascript functions name
+    :param js_funcs: Javascript function
+    :param accessor_params: Accessor parameters
+    :param profile: Optional. A flag to set the component performance storage
     """
-    if fncDef is None:
-      self._set_value(fncName, js_type=True)
+    if js_funcs is None:
+      self._set_value(func_name, js_type=True)
     else:
+      if not isinstance(js_funcs, list):
+        js_funcs = [js_funcs]
       self.component.extendModule(
-        "accessor", "accessors", fncName, "function(value, data, type, params, column, row){%s}" % fncDef)
-      self._set_value(fncName)
-    if accessorParams is not None:
-      self._set_value("accessorParams", accessorParams)
+        "accessor", "accessors", func_name,
+        "function(value, data, type, params, column, row){%s}" % JsUtils.jsConvertFncs(
+          js_funcs, toStr=True, profile=profile))
+      self._set_value(func_name)
+    if accessor_params is not None:
+      self._set_value("accessorParams", accessor_params)
     return self
 
 
@@ -1446,7 +1546,7 @@ class HeaderMenu(Options):
     self._attrs["separator_%s" % len(self._attrs)] = None
     return self
 
-  def custom(self, label, strFnc, icon=None, disabled=False):
+  def custom(self, label: str, func: str, icon: str = None, disabled: bool = False):
     """
     Description:
     -----------
@@ -1455,14 +1555,16 @@ class HeaderMenu(Options):
     Attributes:
     ----------
     :param label:
-    :param strFnc:
+    :param func: JavaScript expression or entire function starting with function(e, column){
     :param icon:
     :param disabled:
     """
+    if not func.startswith("function("):
+      func = "function(e, column){%s}" % func
     if icon is not None:
-      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = strFnc
+      self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = func
     else:
-      self._attrs[label] = strFnc
+      self._attrs[label] = func
     return self
 
   def __str__(self):
@@ -1471,7 +1573,7 @@ class HeaderMenu(Options):
       if v is None and k.startswith("separator_"):
         result.append("{'separator': true}")
       else:
-        result.append("{label: '%s', action: function(e, column){%s}}" % (k, v))
+        result.append("{label: '%s', action: %s}" % (k, v))
     return ", ".join(result)
 
 
@@ -1525,10 +1627,27 @@ class Column(Options):
     col_def.title = field if title is None else title
     return col_def
 
-  def cellClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
-    self._config("function(event, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+  def cellClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
 
-  def cellEditing(self, js_funcs, profile: types.PROFILE_TYPE = None):
+    Related Pages:
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, cell)") and not func_ref:
+      str_func = "function(event, cell){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def cellEditing(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -1539,17 +1658,19 @@ class Column(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def cellEdited(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellEdited(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -1560,14 +1681,16 @@ class Column(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
   @property
@@ -1594,7 +1717,7 @@ class Column(Options):
     return self._config_get()
 
   @editable.setter
-  def editable(self, val):
+  def editable(self, val: bool):
     self._config(val)
 
   @property
@@ -1655,7 +1778,7 @@ class Column(Options):
     return self._config_get()
 
   @field.setter
-  def field(self, val):
+  def field(self, val: str):
     self._config(val)
 
   @property
@@ -1694,7 +1817,7 @@ class Column(Options):
     self._config(values)
 
   @property
-  def formatters(self):
+  def formatters(self) -> Formattors:
     """
     Description:
     -----------
@@ -1720,7 +1843,7 @@ class Column(Options):
     return self._config_get()
 
   @frozen.setter
-  def frozen(self, val):
+  def frozen(self, val: bool):
     self._config(val)
 
   @property
@@ -1749,25 +1872,95 @@ class Column(Options):
     """
     return self._config_get()
 
+  @property
+  def headerFilterPlaceholder(self):
+    """
+    Description:
+    -----------
+    Placeholder text for the header filter (see Header Filtering for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
+    """
+    return self._config_get()
+
+  @headerFilterPlaceholder.setter
+  def headerFilterPlaceholder(self, text: str):
+    self._config(text)
+
+  @property
+  def headerFilterEmptyCheck(self):
+    """
+    Description:
+    -----------
+    Function to check when the header filter is empty (see Header Filtering for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
+    """
+    return self._config_get()
+
+  @headerFilterEmptyCheck.setter
+  def headerFilterEmptyCheck(self, values: dict):
+    self._config(values)
+
   @headerFilter.setter
   def headerFilter(self, value):
     self._config(value)
 
-  def headerFilterFunc(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerFilterFunc(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue, rowData, filterParams)
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function customHeaderFilter(headerValue, rowValue, rowData, filterParams){%s}" % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function ") and not func_ref:
+      str_func = "function customHeaderFilter(headerValue, rowValue, rowData, filterParams){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  @property
+  def headerFilterFuncParams(self):
+    """
+    Description:
+    -----------
+    Additional parameters object passed to the headerFilterFunc function (see Header Filtering for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
+    """
+    return self._config_get()
+
+  @headerFilterFuncParams.setter
+  def headerFilterFuncParams(self, values: dict):
+    self._config(values)
+
+  @property
+  def headerFilterLiveFilter(self):
+    """
+    Description:
+    -----------
+    Disable live filtering of the table (see Header Filtering for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
+    """
+    return self._config_get()
+
+  @headerFilterLiveFilter.setter
+  def headerFilterLiveFilter(self, values: dict):
+    self._config(values)
 
   @property
   def headerVertical(self):
@@ -1804,6 +1997,91 @@ class Column(Options):
     self._config(val)
 
   @property
+  def headerSortStartingDir(self):
+    """
+    Description:
+    -----------
+    Set the starting sort direction when a user first clicks on a header (see Sorting Data for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#header-visibility
+    """
+    return self._config_get()
+
+  @headerSortStartingDir.setter
+  def headerSortStartingDir(self, val: str):
+    self._config(val)
+
+  @property
+  def headerSortTristate(self):
+    """
+    Description:
+    -----------
+    Allow tristate toggling of column header sort direction (see Sorting Data for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#header-visibility
+    """
+    return self._config_get()
+
+  @headerSortTristate.setter
+  def headerSortTristate(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def headerPopup(self):
+    """
+    Description:
+    -----------
+    Add popup button to column header (see Header Popups for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-column
+    """
+    return self._config_get()
+
+  @headerPopup.setter
+  def headerPopup(self, text: str):
+    self._config(text)
+
+  @property
+  def headerPopupIcon(self):
+    """
+    Description:
+    -----------
+    Add popup button to column header (see Header Popups for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-column
+    """
+    return self._config_get()
+
+  @headerPopupIcon.setter
+  def headerPopupIcon(self, text: str):
+    self._config(text)
+
+  @property
+  def headerContextPopup(self):
+    """
+    Description:
+    -----------
+    Add context popup to column header (see Header Context Popups for more details)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-column
+    """
+    return self._config_get()
+
+  @headerContextPopup.setter
+  def headerContextPopup(self, text: str):
+    self._config(text)
+
+  @property
   def headerVisible(self):
     """
     Description:
@@ -1814,12 +2092,13 @@ class Column(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns
+      http://tabulator.info/docs/5.2/columns#header-visibility
     """
     return self._config_get()
 
   @headerVisible.setter
-  def headerVisible(self, val):
-    self._config(val)
+  def headerVisible(self, flag: bool):
+    self._config(flag)
 
   @property
   def hozAlign(self):
@@ -1990,7 +2269,7 @@ class Column(Options):
     return self._config_get()
 
   @tooltip.setter
-  def tooltip(self, flag):
+  def tooltip(self, flag: bool):
     self._config(flag)
 
   @property
@@ -2023,7 +2302,7 @@ class Column(Options):
     return self._config_get()
 
   @titleFormatterParams.setter
-  def titleFormatterParams(self, val):
+  def titleFormatterParams(self, val: dict):
     self._config(val)
 
   @property
@@ -2214,6 +2493,31 @@ class Column(Options):
     return Validators(self, "validator")
 
 
+class ColumnsGroup(Options):
+
+  @property
+  def title(self):
+    """
+    Description:
+    -----------
+    Set a title for a group of columns.
+    """
+    return self._config_get()
+
+  @title.setter
+  def title(self, val: str):
+    self._config(val)
+
+  @property
+  def columns(self) -> Column:
+    """
+    Description:
+    -----------
+    Add columns to a group.
+    """
+    return self._config_sub_data_enum("columns", Column)
+
+
 class Keybindings(Options):
 
   def addRow(self, keys):
@@ -2257,7 +2561,8 @@ class Keybindings(Options):
     self._attrs["deleteSelectedRows"] = keys
     return self
 
-  def bespoke(self, keys, fncName, fncDef, prevent_default=True):
+  def bespoke(self, keys, func_name, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+              prevent_default: bool = True):
     """
     Description:
     -----------
@@ -2271,23 +2576,28 @@ class Keybindings(Options):
 
     Attributes:
     ----------
-    :param keys: String. The keys to trigger the event.
-    :param fncName: String. The function name / alias for this event.
-    :param fncDef: String. The function definition of this event.
-    :param prevent_default: Boolean. Stop the event and do not change the cell in editable.
+    :param keys: The keys to trigger the event
+    :param func_name: The function name / alias for this event
+    :param js_funcs: The function definition of this event
+    :param profile: Optional. A flag to set the component performance storage
+    :param prevent_default: Optional. Stop the event and do not change the cell in editable.
     """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if prevent_default:
       self.component.extendModule(
-        "keybindings", "actions", fncName, "function(event){event.preventDefault(); %s}" % fncDef)
+        "keybindings", "actions", func_name, "function(event){event.preventDefault(); %s}" % JsUtils.jsConvertFncs(
+          js_funcs, toStr=True, profile=profile))
     else:
-      self.component.extendModule("keybindings", "actions", fncName, "function(){%s}" % fncDef)
-    self._attrs[fncName] = keys
+      self.component.extendModule("keybindings", "actions", func_name, "function(){%s}" % JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile))
+    self._attrs[func_name] = keys
     return self
 
 
 class RowContextMenu(Options):
 
-  def duplicate(self, label="Duplicate", icon=None, disabled=False):
+  def duplicate(self, label: str = "Duplicate", icon: str = None, disabled: bool = False, separator: bool = None):
     """
     Description:
     -----------
@@ -2295,14 +2605,52 @@ class RowContextMenu(Options):
 
     Attributes:
     ----------
-    :param label:
-    :param icon:
-    :param disabled:
+    :param label: The message. Default Duplicate
+    :param icon: The icon reference e.g: fas fa-trash
+    :param disabled: Flag for the status
+    :param separator: You can add a horizontal separator to a list of menu items by including an object with the
+      separator property set to true
     """
-    self._attrs[label] = "row.getTable().addRow(row.getData(), false, row.getPosition())"
+    if icon is not None:
+      label = "<i class='%s'></i> %s" % (icon, label)
+    self._attrs[label] = {
+      "action": "function(e, row){row.getTable().addRow(row.getData(), false, row.getPosition())}"}
+    if disabled:
+      self._attrs[label]["disabled"] = json.dumps(disabled)
+    if separator is not None:
+      self._attrs[label]["separator"] = json.dumps(separator)
     return self
 
-  def delete(self, label="Delete", icon=None, disabled=False):
+  def delete(self, label: str = "Delete", icon: str = None, disabled: bool = False, separator: bool = None):
+    """
+    Description:
+    -----------
+    Add a delete entry to the context menu.
+
+    Usage::
+
+      table = page.ui.tables.tabulators.table(rows=["Test"], cols=["AA"])
+      table.options.rowContextMenu.delete()
+
+    Attributes:
+    ----------
+    :param label: The message. Default Duplicate
+    :param icon: The icon reference e.g: fas fa-trash
+    :param disabled: Flag for the status
+    :param separator: You can add a horizontal separator to a list of menu items by including an object with the
+      separator property set to true
+    """
+    if icon is not None:
+      label = "<i class='%s'></i> %s" % (icon, label)
+    self._attrs[label] = {
+      "action": "function(e, row){row.delete()}"}
+    if disabled:
+      self._attrs[label]["disabled"] = json.dumps(disabled)
+    if separator is not None:
+      self._attrs[label]["separator"] = json.dumps(separator)
+    return self
+
+  def ajax(self, label: str, url: str, icon: str = None, disabled: bool = False, separator: bool = None):
     """
     Description:
     -----------
@@ -2310,50 +2658,87 @@ class RowContextMenu(Options):
 
     Attributes:
     ----------
-    :param label:
-    :param icon:
-    :param disabled:
+    :param label: The label to be display
+    :param url: The url of the underlying service
+    :param icon: Optional. The font-awesome icon
+    :param disabled: Optional. The status of the link
+    :param separator: You can add a horizontal separator to a list of menu items by including an object with the
+      separator property set to true
     """
-    self._attrs[label] = "row.delete()"
+    if icon is not None:
+      label = "<i class='%s'></i> %s" % (icon, label)
+    self._attrs[label] = {
+      "action": self.component.page.js.post(
+        url, {"label": label, "data": JsUtils.jsWrap("row.getData()")}).onSuccess([
+          self.component.page.js.msg.status()
+      ]).toStr()}
+    if disabled:
+      self._attrs[label]["disabled"] = json.dumps(disabled)
+    if separator is not None:
+      self._attrs[label]["separator"] = json.dumps(separator)
     return self
 
-  def ajax(self, label, url, icon=None, disabled=False):
+  def custom(self, label: str, js_funcs: types.JS_FUNCS_TYPES, icon: str = None, disabled: bool = False,
+             separator: bool = None, func_ref: bool = False, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
     Add a delete entry to the context menu.
 
+    Usage::
+
+        table = page.ui.tables.tabulators.table(rows=["Test"], cols=["AA"])
+        table.options.rowContextMenu.custom("test", js_funcs="function(e, row){alert(row)}", icon="fas fa-trash")
+
     Attributes:
     ----------
-    :param label: String. The label to be display.
-    :param url: String. The url of the underlying service.
-    :param icon: String. Optional. The font-awesome icon.
-    :param disabled: Boolean. Optional. The status of the link.
+    :param label: The message. Default Duplicate
+    :param js_funcs: The Javascript functions.
+    :param icon: The icon reference e.g: fas fa-trash
+    :param disabled: Flag for the status
+    :param separator: You can add a horizontal separator to a list of menu items by including an object with the
+      separator property set to true
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._attrs[label] = self.component.page.js.post(
-      url, {"label": label, "data": JsUtils.jsWrap("row.getData()")}).onSuccess([
-        self.component.page.js.msg.status()
-    ]).toStr()
+    if icon is not None:
+      label = "<i class='%s'></i> %s" % (icon, label)
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(e, row)") and not func_ref:
+      str_func = "function(e, row){%s}" % str_func
+    self._attrs[label] = {
+      "action": str_func}
+    if disabled:
+      self._attrs[label]["disabled"] = json.dumps(disabled)
+    if separator is not None:
+      self._attrs[label]["separator"] = json.dumps(separator)
     return self
 
-  def custom(self, label, strFnc, icon=None, disabled=False):
+  def config_js(self, attrs: dict = None):
     """
     Description:
     -----------
-    Add a delete entry to the context menu.
 
     Attributes:
     ----------
-    :param label:
-    :param strFnc:
-    :param icon:
-    :param disabled:
+    :param attrs: Global dictionary with context menu properties.
     """
-    self._attrs[label] = strFnc
-    return self
+    items = []
+    for label, props in self._attrs.items():
+      props["label"] = json.dumps(label)
+      if attrs is not None:
+        props.update(attrs)
+      items.append("{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in props.items()]))
+    return JsUtils.jsWrap(", ".join(items))
 
   def __str__(self):
-    return ", ".join(["{label: '%s', action: function(e, row){%s}}" % (k, v) for k, v in self._attrs.items()])
+    items = []
+    for label, props in self._attrs.items():
+      props["label"] = json.dumps(label)
+      items.append("{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in props.items()]))
+    return ", ".join(items)
 
 
 class TableConfig(Options):
@@ -2371,7 +2756,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @ajaxURL.setter
-  def ajaxURL(self, val):
+  def ajaxURL(self, val: str):
     self._config(val)
 
   @property
@@ -2379,6 +2764,8 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    If you are loading a lot of data from a remote source into your table in one go, it can sometimes take a long time
+    for the server to return the request, which can slow down the user experience.
 
     Related Pages:
 
@@ -2387,7 +2774,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @ajaxProgressiveLoad.setter
-  def ajaxProgressiveLoad(self, val):
+  def ajaxProgressiveLoad(self, val: str):
     self._config(val)
 
   @property
@@ -2404,7 +2791,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @ajaxProgressiveLoadDelay.setter
-  def ajaxProgressiveLoadDelay(self, number):
+  def ajaxProgressiveLoadDelay(self, number: int):
     self._config(number)
 
   @property
@@ -2423,7 +2810,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @ajaxProgressiveLoadScrollMargin.setter
-  def ajaxProgressiveLoadScrollMargin(self, number):
+  def ajaxProgressiveLoadScrollMargin(self, number: int):
     self._config(number)
 
   @property
@@ -2495,7 +2882,7 @@ class TableConfig(Options):
   def columnCalcs(self, val):
     self._config(val)
 
-  def cellClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2508,17 +2895,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def cellEditing(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellEditing(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2529,17 +2918,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){let value = cell.getValue(); let data = cell.getRow().getData(); %s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def clipboardPasted(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def clipboardPasted(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2551,17 +2942,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(clipboard, rowData, rows){%s} " % JsUtils.jsConvertFncs(
-        js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(clipboard, rowData, rows)") and not func_ref:
+      str_func = "function(clipboard, rowData, rows){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def cellDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2574,16 +2967,20 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(e, cell)") and not func_ref:
+      str_func = "function(e, cell){%s}" % str_func
     self.component.style.css.cursor = "pointer"
-    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    self._config(str_func, js_type=True)
     return self
 
-  def cellContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2596,15 +2993,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(e, cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(e, cell)") and not func_ref:
+      str_func = "function(e, cell){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def cellEditCancelled(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellEditCancelled(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2616,15 +3017,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def cellEdited(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def cellEdited(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2636,12 +3041,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(cell){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(cell)") and not func_ref:
+      str_func = "function(cell){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
   @property
@@ -2894,7 +3303,7 @@ class TableConfig(Options):
   def groupValues(self, val):
     self._config(val)
 
-  def headerClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2907,16 +3316,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, column)") and not func_ref:
+      str_func = "function(event, column){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def headerDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2929,16 +3341,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, column)") and not func_ref:
+      str_func = "function(event, column){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def headerContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2951,16 +3366,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, column)") and not func_ref:
+      str_func = "function(event, column){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def headerTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2973,16 +3391,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, column)") and not func_ref:
+      str_func = "function(event, column){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def headerDblTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def headerDblTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -2995,13 +3416,16 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config(
-      "function(event, column){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, column)") and not func_ref:
+      str_func = "function(event, column){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
   @property
@@ -3461,7 +3885,7 @@ class TableConfig(Options):
   def resizableColumns(self, val):
     self._config(val)
 
-  def rowAdded(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowAdded(self, js_funcs, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3473,16 +3897,20 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
   @property
-  def rowContextMenu(self):
+  def rowContextMenu(self) -> RowContextMenu:
     """
     Description:
     -----------
@@ -3491,55 +3919,107 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.6/menu#cell-context
-
-    :rtype: RowContextMenu
     """
     contextMenu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
     return contextMenu
 
-  def rowClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
     The rowClick callback is triggered when a user clicks on a row.
 
+    Usage::
+
+      page.properties.js.add_text('''function alertRow(event, row){alert(row.getData())}  ''')
+      table.options.rowClick("alertRow", func_ref=True)
+
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, row)") and not func_ref:
+      str_func = "function(event, row){%s}" % str_func
     self.component.style.css.cursor = "pointer"
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    self._config(str_func, js_type=True)
     return self
 
-  def rowDblClick(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
     The rowDblClick callback is triggered when a user double clicks on a row.
 
+    Usage::
+
+      page.properties.js.add_text('''function alertRow(event, row){alert(row.getData())}  ''')
+      table.options.rowDblClick("alertRow", func_ref=True)
+
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, row)") and not func_ref:
+      str_func = "function(event, row){%s}" % str_func
     self.component.style.css.cursor = "pointer"
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    self._config(str_func, js_type=True)
     return self
 
-  def rowDelete(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  @property
+  def rowClickPopup(self):
+    """
+    Description:
+    -----------
+    You can add a click popup to any row by passing the popup contents to the rowClickPopup option in the table
+    constructor object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-row
+    """
+    return self._config_get()
+
+  @rowClickPopup.setter
+  def rowClickPopup(self, text: str):
+    self._config(text)
+
+  @property
+  def rowContextPopup(self):
+    """
+    Description:
+    -----------
+    You can add a right click popup to any row by passing the popup contents to the rowContextPopup option in the
+    table constructor object.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-row
+    """
+    return self._config_get()
+
+  @rowContextPopup.setter
+  def rowContextPopup(self, text: str):
+    self._config(text)
+
+  def rowDelete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3551,15 +4031,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def rowContext(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3574,15 +4058,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, row)") and not func_ref:
+      str_func = "function(event, row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def rowFormatter(self, js_funcs, profile: Union[dict, bool] = None):
+  def rowFormatter(self, js_funcs: types.JS_FUNCS_TYPES, profile: Union[dict, bool] = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3595,15 +4083,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def rowMove(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowMove(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3615,15 +4107,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def rowTap(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3635,15 +4131,19 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(event, row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(event, row)") and not func_ref:
+      str_func = "function(event, row){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
-  def rowUpdated(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def rowUpdated(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -3656,12 +4156,89 @@ class TableConfig(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self._config("function(row){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
+    return self
+
+  def rowSelected(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    The rowSelected event is triggered when a row is selected, either by the user or programmatically.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks#select
+
+    Attributes:
+    ----------
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
+    return self
+
+  def rowDeselected(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    The rowDeselected event is triggered when a row is deselected, either by the user or programmatically.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks#select
+
+    Attributes:
+    ----------
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
+    return self
+
+  def rowSelectionChanged(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    Whenever the number of selected rows changes, through selection or deselection, the rowSelectionChanged event
+    is triggered.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/callbacks#select
+
+    Attributes:
+    ----------
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(data, rows)") and not func_ref:
+      str_func = "function(data, rows){%s}" % str_func
+    self._config(str_func, js_type=True)
     return self
 
   @property
@@ -3678,8 +4255,65 @@ class TableConfig(Options):
     return self._config_get()
 
   @selectable.setter
-  def selectable(self, val):
-    self._config(val)
+  def selectable(self, flag: Union[bool, int]):
+    self._config(flag)
+
+  @property
+  def selectableRollingSelection(self):
+    """
+    Description:
+    -----------
+    Disable rolling selection
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+    """
+    return self._config_get()
+
+  @selectableRollingSelection.setter
+  def selectableRollingSelection(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def selectablePersistence(self):
+    """
+    Description:
+    -----------
+    Disable rolling selection
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+    """
+    return self._config_get()
+
+  @selectablePersistence.setter
+  def selectablePersistence(self, flag: bool):
+    self._config(flag)
+
+  def selectableCheck(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    The selectableCheck options allows you to pass a function to check if the current row should be selectable,
+    returning true will allow row selection, false will result in nothing happening.
+    The function should accept a RowComponent as its first argument.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+
+    Attributes:
+    ----------
+    :param js_funcs: JavaScript expression or entire function starting with function(row, level)
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row)") and not func_ref:
+      str_func = "function(row){%s}" % str_func
+    self._config(str_func, js_type=True)
 
   @property
   def tooltips(self):
@@ -3732,7 +4366,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(True)
 
   @dataTreeSort.setter
-  def dataTreeSort(self, flag):
+  def dataTreeSort(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3749,7 +4383,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(True)
 
   @dataTreeFilter.setter
-  def dataTreeFilter(self, flag):
+  def dataTreeFilter(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3766,7 +4400,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeStartExpanded.setter
-  def dataTreeStartExpanded(self, flag):
+  def dataTreeStartExpanded(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3783,7 +4417,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeSelectPropagate.setter
-  def dataTreeSelectPropagate(self, flag):
+  def dataTreeSelectPropagate(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3817,7 +4451,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeElementColumn.setter
-  def dataTreeElementColumn(self, flag):
+  def dataTreeElementColumn(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3834,7 +4468,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(True)
 
   @dataTreeBranchElement.setter
-  def dataTreeBranchElement(self, flag):
+  def dataTreeBranchElement(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3851,8 +4485,8 @@ class TableTreeConfig(TableConfig):
     return self._config_get(9)
 
   @dataTreeChildIndent.setter
-  def dataTreeChildIndent(self, flag):
-    self._config(flag)
+  def dataTreeChildIndent(self, number: int):
+    self._config(number)
 
   @property
   def dataTreeCollapseElement(self):
@@ -3868,7 +4502,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeCollapseElement.setter
-  def dataTreeCollapseElement(self, flag):
+  def dataTreeCollapseElement(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3885,7 +4519,7 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeExpandElement.setter
-  def dataTreeExpandElement(self, flag):
+  def dataTreeExpandElement(self, flag: bool):
     self._config(flag)
 
   @property
@@ -3902,10 +4536,11 @@ class TableTreeConfig(TableConfig):
     return self._config_get(False)
 
   @dataTreeChildColumnCalcs.setter
-  def dataTreeChildColumnCalcs(self, flag):
+  def dataTreeChildColumnCalcs(self, flag: bool):
     self._config(flag)
 
-  def dataTreeRowExpanded(self, js_funcs, profile: types.PROFILE_TYPE = None):
+  def dataTreeRowExpanded(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                          func_ref: bool = False):
     """
     Description:
     -----------
@@ -3913,8 +4548,13 @@ class TableTreeConfig(TableConfig):
     Related Pages:
 
 
-
-    :param js_funcs:
-    :param profile:
+    Attributes:
+    ----------
+    :param js_funcs: JavaScript expression or entire function starting with function(row, level)
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
-    self._config("function(row, level) {%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(row, level)") and not func_ref:
+      str_func = "function(row, level){%s}" % str_func
+    self._config(str_func, js_type=True)

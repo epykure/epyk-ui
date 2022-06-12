@@ -3,7 +3,7 @@
 
 from typing import Generator
 
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlTabulator
@@ -46,8 +46,6 @@ class Table(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsTable.Tabulator
     """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Tabulator(self)
@@ -59,8 +57,6 @@ class Table(Html.Html):
     Description:
     -----------
     HTML Dom object.
-
-    :rtype: JsHtmlTabulator.JsHtmlTabulator
     """
     if self._dom is None:
       self._dom = JsHtmlTabulator.JsHtmlTabulator(self, page=self.page)
@@ -81,21 +77,17 @@ class Table(Html.Html):
     Description:
     ------------
     Tabulator table options.
-
-    :rtype: OptTableTabulator.TableConfig
     """
     return super().options
 
   @property
   @Html.deprecated("use self.options instead")
-  def config(self):
+  def config(self) -> OptTableTabulator.TableConfig:
     """
     Description:
     ------------
     Tabulator configuration options.
     Deprecated and replaced by component options.
-
-    :rtype: TableConfig
     """
     return self.options
 
@@ -107,8 +99,6 @@ class Table(Html.Html):
     Return the Javascript internal object.
 
     :return: A Javascript object
-
-    :rtype: JsTabulator.Tabulator
     """
     if self._js is None:
       self._js = JsTabulator.Tabulator(page=self.page, selector=self.tableId, set_var=False, component=self)
@@ -119,11 +109,13 @@ class Table(Html.Html):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     """
     self.options.data = data
 
-  def add_column(self, field=None, title=None):
+  def add_column(self, field: str = None, title: str = None):
     """
     Description:
     ------------
@@ -131,8 +123,8 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param field: String. Optional. The key in the row.
-    :param title: String. Optional. The title for the column. Default to the field.
+    :param field: Optional. The key in the row.
+    :param title: Optional. The title for the column. Default to the field.
     """
     return self.options.add_column(field, title)
 
@@ -147,8 +139,6 @@ class Table(Html.Html):
     ----------
     :param str by_field: Optional. The field reference for the column.
     :param str by_title: Optional. The title reference for the column.
-
-    :rtype: OptTableTabulator.Column
     """
     return self.options.get_column(by_field, by_title)
 
@@ -169,13 +159,14 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param dict cols_def: The header definition.
+    :param cols_def: The header definition.
     """
     for c in self.options.columns:
       if c.field is not None and c.field in cols_def:
         c.js_tree.update(cols_def[c.field])
 
-  def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+            on_ready: bool = False):
     """
     Description:
     ------------
@@ -185,27 +176,27 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.options.rowClick(["var data = row.getData()"] + js_funcs)
     return self
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: dict = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param data: String. A String corresponding to a JavaScript object.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional.
+    :param data: A String corresponding to a JavaScript object
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. Change the component id if specific
     """
     if data:
       return self.js.setData(data)
@@ -214,7 +205,7 @@ class Table(Html.Html):
       "tableId": self.tableId, "htmlCode": self.htmlCode, "config": self._json_config,
       "options": self.options.config_js(options)}
 
-  def extendModule(self, category, type, func_name, func_def):
+  def extendModule(self, category: str, type: str, func_name: str, func_def: str):
     """
     Description:
     ------------
@@ -225,15 +216,16 @@ class Table(Html.Html):
     experience possible with minimal setup.
 
     Related Pages:
+
       http://tabulator.info/docs/4.0/modules
       http://tabulator.info/docs/4.2/modules#module-keybindings
 
     Attributes:
     ----------
-    :param category: String. The name of the module. e.g format.
-    :param type: String. The name of the property you want to extend. e.g. formatters.
-    :param func_name: String. The alias of teh function to be added to the registery.
-    :param func_def: String. The function definition to be attached to this fncName.
+    :param category: The name of the module. e.g format
+    :param type: The name of the property you want to extend. e.g. formatters
+    :param func_name: The alias of teh function to be added to the registry
+    :param func_def: The function definition to be attached to this function name
     """
     if func_name not in self.__bespoke_formatters:
       self.__bespoke_formatters.add(func_name)
@@ -241,7 +233,7 @@ class Table(Html.Html):
         category, type, func_name, func_def))
     return self
 
-  def loading(self, status=True, color=None):
+  def loading(self, status: bool = True, color: str = None):
       """
       Description:
       ------------
@@ -249,8 +241,8 @@ class Table(Html.Html):
 
       Attributes:
       ----------
-      :param status: Boolean. Optional. The loading status.
-      :param color: String. Optional. The loading text color.
+      :param status: Optional. The loading status.
+      :param color: Optional. The loading text color.
       """
       self.require.add(cssDefaults.get_icon(None)["icon_family"])
       if status:
@@ -297,8 +289,6 @@ class TableTree(Table):
     ------------
     Tabulator configuration options.
     Deprecated and replaced by component options.
-
-    :rtype: OptTableTabulator.TableTreeConfig
     """
     return self.options
 
@@ -308,7 +298,5 @@ class TableTree(Table):
     Description:
     ------------
     Tabulator table options.
-
-    :rtype: OptTableTabulator.TableTreeConfig
     """
     return super().options

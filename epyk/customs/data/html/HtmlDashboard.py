@@ -26,8 +26,6 @@ class Pivots(Html.Html):
     Description:
     -----------
     Property to set all the possible object for a button.
-
-    :rtype: OptDashboard.OptionsPivot
     """
     return super().options
 
@@ -41,8 +39,6 @@ class Pivots(Html.Html):
 
     Usage:
     -----
-
-    :rtype: JsHtmlDashboard.JsHtmlPivot
     """
     if self._dom is None:
       self._dom = JsHtmlDashboard.JsHtmlPivot(self, page=self.page)
@@ -60,7 +56,7 @@ class Pivots(Html.Html):
     Attributes:
     ----------
     :param style: The alias of the style to apply.
-    :param css_attrs.
+    :param css_attrs: Css attributes.
     """
     li_item_style = {}
     if style == "bullets":
@@ -87,7 +83,7 @@ class Pivots(Html.Html):
 
     Attributes:
     ----------
-    :param Union[dict, bool] profile:
+    :param profile:
     """
     return JsUtils.jsConvertFncs([self.rows.dom.clear(), self.columns.dom.clear()], toStr=True, profile=profile)
 
@@ -115,16 +111,16 @@ class Pivots(Html.Html):
       if self.rows.options.max == 1:
         self.container.add([
           self.page.ui.text(
-            "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3)).css(
+            self.options.title_rows).css(
             {"display": "block"}), self.rows])
       else:
         self.container.add([
           self.page.ui.text(
-            "Rows <i style='font-size:%s'>(multiple field)</i>" % self.page.body.style.globals.font.normal(-3)).css(
+            self.options.title_rows).css(
             {"display": "block"}), self.rows])
     self.container.add([
       self.page.ui.text(
-        "Values <i style='font-size:%s'>(multiple fields)</i>" % self.page.body.style.globals.font.normal(-3)).css(
+        self.options.title_values).css(
         {"display": "block"}), self.columns])
     html = [h.html() for h in self._vals]
     return "<div %s>%s%s</div>" % (

@@ -355,7 +355,7 @@ class ChartJs(JsPackage):
     Attributes:
     ----------
     :param Union[dict, primitives.JsDataModel] config: Optional. A config object can be provided with additional
-    configuration for the process.
+      configuration for the process.
     """
     if config is None:
       return JsObjects.JsObject.JsObject("%s.update()" % self.toStr())

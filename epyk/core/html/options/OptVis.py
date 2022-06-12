@@ -109,7 +109,9 @@ class OptionsBackgroundColor(DataClass):
     -----------
     The chart fill color, as an HTML color string.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["fill"]
 
@@ -124,7 +126,9 @@ class OptionsBackgroundColor(DataClass):
     -----------
     The color of the chart border, as an HTML color string.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["stroke"]
 
@@ -139,7 +143,9 @@ class OptionsBackgroundColor(DataClass):
     -----------
     The border width, in pixels.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["strokeWidth"]
 
@@ -238,7 +244,9 @@ class OptionsCameraPosition(DataClass):
     -----------
     Value in radians. It can have any value, but is normally in the range of 0 and 2*Pi.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["horizontal"]
 
@@ -253,7 +261,9 @@ class OptionsCameraPosition(DataClass):
     -----------
     Value in radians between 0 and 0.5*Pi.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["vertical"]
 
@@ -269,7 +279,9 @@ class OptionsCameraPosition(DataClass):
     The (normalized) distance from the camera to the center of the graph, in the range of 0.71 to 5.0.
     A larger distance puts the graph further away, making it smaller.
 
-    https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
+    Related Pages:
+
+      https://visjs.github.io/vis-graph3d/docs/graph3d/index.html
     """
     return self._attrs["distance"]
 
@@ -287,7 +299,9 @@ class OptionsInterpolation(DataClass):
     -----------
     Toggle the interpolation.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["enabled"]
 
@@ -304,7 +318,9 @@ class OptionsInterpolation(DataClass):
     The options are 'centripetal' (best results), 'chordal' and 'uniform'. Uniform is the computationally cheapest
     variant. If interpolation is disabled, linear interpolation is used.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["parametrization"]
 
@@ -462,7 +478,9 @@ class OptionsdrawPoints(DataClass):
     -----------
     Toggles the drawing of the datapoints.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["enabled"]
 
@@ -480,7 +498,9 @@ class OptionsdrawPoints(DataClass):
     according to the group setting of drawPoints.enabled. This callback must return true if the datapoint should be
     rendered, otherwise false.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["onRender"]
 
@@ -495,7 +515,9 @@ class OptionsdrawPoints(DataClass):
     -----------
     Determine the size at which the data points are drawn.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["size"]
 
@@ -521,7 +543,9 @@ class OptionBarChart(DataClass):
     -----------
     The alignment of the bars with regards to the coordinate. The options are 'left', 'right' or 'center'.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
 
     :rtype: EnumAlign
     """
@@ -536,7 +560,9 @@ class OptionBarChart(DataClass):
     If sideBySide is set to true, they will be drawn side by side, within the same width as a single bar..
     See example 10 for more information. When using groups, see example 11.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["sideBySide"]
 
@@ -551,7 +577,9 @@ class OptionBarChart(DataClass):
     -----------
     The width of the bars
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["width"]
 
@@ -567,7 +595,9 @@ class OptionBarChart(DataClass):
     The minimum width of the bars in pixels: by default the bars get smaller while zooming out to prevent overlap,
     this value is the minimum width of the bar. Default behavior (when minWidth is not set) is 10% of the bar width.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["minWidth"]
 
@@ -586,7 +616,9 @@ class OptionsLegendPosition(DataClass):
     Both axis, left and right, have a corresponding legend. This toggles the visibility of the legend that is coupled
     with the left axis.
 
-    https://visjs.github.io/vis-timeline/docs/graph2d/
+    Related Pages:
+
+      https://visjs.github.io/vis-timeline/docs/graph2d/
     """
     return self._attrs["visible"]
 
@@ -1872,14 +1904,14 @@ class OptionsTimeline(DataClass):
     self._attrs["autoResize"] = val
 
   @property
-  def editable(self):
+  def editable(self) -> OptionsEditable:
     """
+    Description:
+    -----------
 
     Related Pages:
 
       https://visjs.github.io/vis-timeline/docs/timeline/
-
-    :rtype: OptionsEditable
     """
     return self.has_attribute(OptionsEditable)
 
@@ -2138,8 +2170,6 @@ class OptionNodeScaling(DataClass):
   @property
   def label(self) -> OptionLabel:
     """
-
-    :rtype: OptionLabel
     """
     return self.has_attribute(OptionLabel)
 
@@ -2168,24 +2198,18 @@ class OptionNode(DataClass):
   @property
   def shape(self) -> EnumNodeShapes:
     """
-
-    :rtype: EnumNodeShapes
     """
     return self.has_attribute(EnumNodeShapes)
 
   @property
   def scaling(self) -> OptionNodeScaling:
     """
-
-    :rtype: OptionNodeScaling
     """
     return self.has_attribute(OptionNodeScaling)
 
   @property
   def font(self) -> OptionFont:
     """
-
-    :rtype: OptionFont
     """
     return self.has_attribute(OptionFont)
 
@@ -2212,10 +2236,9 @@ class OptionPhysics(DataClass):
     self._attrs["stabilization"] = val
 
   @property
-  def physics(self):
+  def physics(self) -> OptionPhysicsBarnesHut:
     """
 
-    :rtype: OptionPhysicsBarnesHut
     """
     return self.has_attribute(OptionPhysicsBarnesHut)
 
@@ -2378,8 +2401,8 @@ class OptionEdge(DataClass):
   @property
   def color(self) -> OptionColor:
     """
-
-    :rtype: OptionColor
+    Description:
+    -----------
     """
     return self.has_attribute(OptionColor)
 
@@ -2394,8 +2417,8 @@ class OptionEdge(DataClass):
   @property
   def interaction(self) -> OptionInteraction:
     """
-
-    :rtype: OptionInteraction
+    Description:
+    -----------
     """
     return self.has_attribute(OptionInteraction)
 
@@ -2410,16 +2433,16 @@ class OptionEdge(DataClass):
   @property
   def smooth(self) -> OptionSmooth:
     """
-
-    :rtype: OptionSmooth
+    Description:
+    -----------
     """
     return self.has_attribute(OptionSmooth)
 
   @property
   def shadow(self) -> OptionShadow:
     """
-
-    :rtype: OptionShadow
+    Description:
+    -----------
     """
     return self.has_attribute(OptionShadow)
 
@@ -2503,8 +2526,11 @@ class OPtionsHierarchical(DataClass):
     Description:
     -----------
     Method for reducing whitespace. Can be used alone or together with edge minimization.
-    Each node will check for whitespace and will shift it's branch along with it for as far as it can, respecting the nodeSpacing on any level.
-    This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics. This will greatly speed up the stabilization time though!
+    Each node will check for whitespace and will shift it's branch along with it for as far as it can,
+    respecting the nodeSpacing on any level.
+
+    This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics.
+    This will greatly speed up the stabilization time though!
 
     Related Pages:
 
@@ -2624,8 +2650,6 @@ class OptionLayout(DataClass):
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/layout.html#
-
-    :rtype: OPtionsHierarchical
     """
     return self.has_attribute(OPtionsHierarchical)
 
@@ -2738,8 +2762,6 @@ class OptionsNetwork(DataClass):
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/
-
-    :rtype: OptionEdge
     """
     return self.has_attribute(OptionEdge)
 
@@ -2754,8 +2776,6 @@ class OptionsNetwork(DataClass):
       https://visjs.github.io/vis-network/docs/network/
 
     All options in this object are explained in the layout module.
-
-    :rtype: OptionLayout
     """
     return self.has_attribute(OptionLayout)
 
@@ -2769,8 +2789,6 @@ class OptionsNetwork(DataClass):
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/
-
-    :rtype: OptionPhysics
     """
     return self.has_attribute(OptionPhysics)
 
@@ -2784,8 +2802,6 @@ class OptionsNetwork(DataClass):
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/
-
-    :rtype: OptionInteraction
     """
     return self.has_attribute(OptionInteraction)
 
@@ -2799,8 +2815,6 @@ class OptionsNetwork(DataClass):
     Related Pages:
 
       https://visjs.github.io/vis-network/docs/network/
-
-    :rtype: OptionManipulation
     """
     return self.has_attribute(OptionManipulation)
 

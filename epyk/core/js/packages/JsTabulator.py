@@ -881,7 +881,30 @@ class TabRowContextMenu(JsPackage):
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
 
-  def download(self, format, filename, options=None):
+  @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
+  def alert(self, text: str):
+    """
+    Description:
+    -----------
+    To show an alert, call the alert function on the table. Passing the message into the first argument of the function.
+
+    Usage::
+
+      btn1 = page.ui.button("Display Alert")
+      btn1.click([table.js.alert("Test")])
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-row
+
+    Attributes:
+    ----------
+    :param text: Alert message
+    """
+    text = JsUtils.jsConvertData(text, None)
+    return JsObjects.JsVoid("%s.alert(%s)" % (self.varId, text))
+
+  def download(self, format, filename: str, options: dict = None):
     """
     Description:
     -----------
@@ -927,6 +950,24 @@ class Tabulator(JsPackage):
       self.page.jsImports.add("jspdf")
     format = JsUtils.jsConvertData(format, None)
     return JsObjects.JsVoid("%s.downloadToTab(%s)" % (self.varId, format))
+
+  @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
+  def clearAlert(self):
+    """
+    Description:
+    -----------
+    To clear an active alert, call the clearAlert funtion on the table.
+
+    Usage::
+
+      btn1 = page.ui.button("Clear Alert")
+      btn1.click([table.js.clearAlert()])
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/menu#popup-row
+    """
+    return JsObjects.JsVoid("%s.clearAlert()" % self.varId)
 
   def copyToClipboard(self, clipboard_copy_selector=None, with_header: bool = True):
     """
@@ -1758,6 +1799,51 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
   @property
   def rowContextMenu(self):
     return TabRowContextMenu(self.component, selector=self.varId, page=self.page)
+
+  def deselectRow(self, row_id: int):
+    """
+    Description:
+    -----------
+    To deselect a specific row you can pass any of the standard row component look up options into the first argument
+    of the function. If you leave the argument blank you will deselect all rows.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+
+    Attributes:
+    ----------
+    :param row_id: The row ID.
+    """
+    return JsObjects.JsVoid("%s.deselectRow(%s)" % (self.varId, row_id))
+
+  def getSelectedData(self):
+    """
+    Description:
+    -----------
+    To get the data objects for the selected rows you can use the getSelectedData function.
+
+    This will return an array of the selected rows data objects in the order in which they were selected.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+    """
+    return JsObjects.JsArray.JsArray("%s.getSelectedData()" % self.varId)
+
+  def getSelectedRows(self):
+    """
+    Description:
+    -----------
+    To get the RowComponent's for the selected rows at any time you can use the getSelectedRows function.
+
+    This will return an array of RowComponent's for the selected rows in the order in which they were selected.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/select
+    """
+    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.varId)
 
 
 class _Export:

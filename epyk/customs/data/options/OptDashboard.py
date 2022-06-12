@@ -64,3 +64,29 @@ class OptionsPivot(Options):
   @delete_columns.setter
   def delete_columns(self, flag: bool):
     self._config(flag)
+
+  @property
+  def title_values(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(
+      "Values <i style='font-size:%s'>(multiple fields)</i>" % self.page.body.style.globals.font.normal(-3))
+
+  @title_values.setter
+  def title_values(self, text: str):
+    self._config(text)
+
+  @property
+  def title_rows(self):
+    """
+    Description:
+    ------------
+    """
+    return self._config_get(
+      "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3))
+
+  @title_rows.setter
+  def title_rows(self, text: str):
+    self._config(text)

@@ -4,6 +4,7 @@
 from typing import Union
 
 from epyk.core import html
+from epyk.core.py import primitives, types
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
@@ -14,8 +15,9 @@ class Lists:
   def __init__(self, ui):
     self.page = ui.page
 
-  def select(self, records=None, html_code: str = None, selected: str = None, width=(100, "%"), height=(None, "%"),
-             profile: Union[bool, dict] = None, multiple: bool = False, options: dict = None):
+  def select(self, records=None, html_code: str = None, selected: str = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
+             options: dict = None):
     """
     Description:
     ------------
@@ -44,14 +46,14 @@ class Lists:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param selected: String. Optional. The selected value or values.
-    :param width: Tuple. Optional. Integer for the component width.
-    :param height: Tuple. Optional. Integer for the component height.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param multiple: Boolean. Optional. To set if the component can handle multiple selections.
-    :param options: Dictionary. The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
+    :param records: Optional. The list of dictionaries with the input data.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param selected: Optional. The selected value or values.
+    :param width: Optional. Integer for the component width.
+    :param height: Optional. Integer for the component height.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param multiple: Optional. To set if the component can handle multiple selections.
+    :param options: The select options as defined https://developer.snapappointments.com/bootstrap-select/options/
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -83,8 +85,9 @@ class Lists:
     html.Html.set_component_skin(html_select)
     return html_select
 
-  def lookup(self, lookup=None, html_code: str = None, width=(100, "%"), height=(None, "%"),
-             profile: Union[bool, dict] = None, multiple: bool = False, options: dict = None):
+  def lookup(self, lookup=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
+             options: dict = None):
     """
     Description:
     ------------
@@ -165,8 +168,9 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def list(self, data=None, color: str = None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
-           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def list(self, data=None, color: str = None, width: types.SIZE_TYPE = ('auto', ""),
+           height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None, options: dict = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -211,8 +215,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def drop(self, data=None, color=None, width=(100, "%"), height=(None, 'px'), html_code: str = None,
-           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def drop(self, data=None, color=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -243,8 +247,8 @@ class Lists:
     html.Html.set_component_skin(component)
     return component
 
-  def items(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None,
-            html_code: str = None, profile: Union[bool, dict] = None, helper: str = None):
+  def items(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -264,13 +268,13 @@ class Lists:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param helper: String. Optional. A tooltip helper
+    :param records: Optional. The list of dictionaries with the input data.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -285,22 +289,22 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def links(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None, html_code: str = None,
-            profile: Union[bool, dict] = None, helper: str = None):
+  def links(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "link"
     html.Html.set_component_skin(component)
     return component
 
-  def icons(self, records=None, width=(100, "%"), height=("auto", ""), options: dict = None,
-            html_code: str = None, profile: Union[bool, dict] = None, helper: str = None):
+  def icons(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     component = self.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "icon"
     html.Html.set_component_skin(component)
     return component
 
-  def pills(self, records=None, width=(100, "%"), height=(None, "%"), options: dict = None, html_code: str = None,
-            profile: Union[bool, dict] = None, helper: str = None):
+  def pills(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
+            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -326,8 +330,8 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def box(self, records=None, width=(100, "%"), height=(None, "%"), options: dict = None, html_code: str = None,
-          profile: Union[bool, dict] = None, helper: str = None):
+  def box(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
+          options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -344,12 +348,12 @@ class Lists:
     Attributes:
     ----------
     :param records:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param helper: String. Optional. A tooltip helper
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -362,8 +366,8 @@ class Lists:
     html.Html.set_component_skin(html_item)
     return html_item
 
-  def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: dict = None,
-              profile: Union[bool, dict] = None, helper: str = None):
+  def numbers(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+              html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -380,6 +384,16 @@ class Lists:
 
       https://www.w3schools.com/html/html_lists.asp
       https://www.w3.org/wiki/CSS/Properties/list-style-type
+
+    Attributes:
+    ----------
+    :param data:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -389,8 +403,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def alpha(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: dict = None,
-            profile: Union[bool, dict] = None, helper: str = None):
+  def alpha(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+            html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -406,12 +420,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -421,8 +435,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def roman(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, options: str = None,
-            profile: Union[bool, dict] = None, helper: str = None):
+  def roman(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+            html_code: str = None, options: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -438,12 +452,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -453,8 +467,9 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def points(self, data=None, width=('auto', ""), height=(None, 'px'), align: str = None, html_code: str = None,
-             options: dict = None, profile: Union[bool, dict] = None, helper: str = None):
+  def points(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+             align: str = None, html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
+             helper: str = None):
     """
     Description:
     ------------
@@ -474,13 +489,13 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param align:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -493,8 +508,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def disc(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
-           options: dict = None, profile: Union[bool, dict] = None):
+  def disc(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -518,12 +533,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -533,8 +548,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def squares(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
-              options: dict = None, profile: Union[bool, dict] = None):
+  def squares(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+              html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -554,12 +569,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -569,8 +584,9 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def groups(self, data=None, categories=None, color=None, width=('auto', ""), height=(None, 'px'),
-             html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def groups(self, data=None, categories=None, color: str = None, width: types.SIZE_TYPE = ('auto', ""),
+             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
+             options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -594,12 +610,12 @@ class Lists:
     :param data:
     :param categories:
     :param color:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -616,8 +632,8 @@ class Lists:
     html.Html.set_component_skin(html_obj)
     return html_obj
 
-  def tree(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None,
-           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def tree(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -633,12 +649,12 @@ class Lists:
 
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -646,8 +662,9 @@ class Lists:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'),
-               html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def dropdown(self, records=None, text: str = "", width: types.SIZE_TYPE = ('auto', ""),
+               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
+               options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -669,14 +686,14 @@ class Lists:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param text: String. Optional. The value to be displayed to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param records: Optional. The list of dictionaries with the input data.
+    :param text: Optional. The value to be displayed to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -688,8 +705,8 @@ class Lists:
     html.Html.set_component_skin(html_d)
     return html_d
 
-  def checks(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
-             options: dict = None, profile: Union[bool, dict] = None):
+  def checks(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+             html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -710,12 +727,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -727,8 +744,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def badges(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
-             options: dict = None, profile: Union[bool, dict] = None):
+  def badges(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+             html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -759,12 +776,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -776,8 +793,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def icons(self, data=None, width=('auto', ""), height=(None, 'px'), html_code: str = None, helper: str = None,
-            options=None, profile=None):
+  def icons(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
+            html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -798,12 +815,12 @@ class Lists:
     Attributes:
     ----------
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -816,8 +833,9 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def radios(self, data=None, group_name: str = 'group', width=('auto', ""), height=(None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def radios(self, data=None, group_name: str = 'group', width: types.SIZE_TYPE = ('auto', ""),
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -853,8 +871,8 @@ class Lists:
     html.Html.set_component_skin(html_list)
     return html_list
 
-  def brackets(self, records=None, width=(100, "%"), height=(550, 'px'), options: dict = None,
-               profile: Union[bool, dict] = None):
+  def brackets(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (550, 'px'),
+               options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -876,10 +894,10 @@ class Lists:
     Attributes:
     ----------
     :param records:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -890,8 +908,9 @@ class Lists:
     html.Html.set_component_skin(component)
     return component
 
-  def chips(self, items=None, category: str = 'group', placeholder: str = "", width=(100, "%"), height=(60, "px"),
-            html_code: str = None, helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def chips(self, items=None, category: str = 'group', placeholder: str = "", width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -916,15 +935,15 @@ class Lists:
 
     Attributes:
     ----------
-    :param items: List. Selected items
-    :param category: String. The group of the items.
-    :param placeholder: String. The input field placeholder
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param items: Selected items
+    :param category: Optional. The group of the items.
+    :param placeholder: Optional. The input field placeholder
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -949,7 +968,7 @@ class Lists:
     return html_f
 
   def menu(self, component, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'), save_funcs=None,
-           update_funcs=None, editable: bool = False, options: dict = None, profile: Union[bool, dict] = None,
+           update_funcs=None, editable: bool = False, options: dict = None, profile: types.PROFILE_TYPE = None,
            checks: tuple = ("fas fa-check-square", "far fa-square")):
 
     commands = [("Add&nbsp;", "fas fa-plus")] if add else []

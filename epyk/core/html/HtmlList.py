@@ -239,10 +239,10 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param bool prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action
+    :param js_funcs: Javascript functions.
+    :param prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action
       that belongs to the event will not occur.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     from epyk.core.js.primitives import JsObjects
 

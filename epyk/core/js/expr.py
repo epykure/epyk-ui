@@ -33,7 +33,7 @@ def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], j
   return JsIf.JsIf(condition, js_funcs)
 
 
-def switch(variable: Union[primitives.JsDataModel, str]) -> JsSwitch.JsSwitc:
+def switch(variable: Union[primitives.JsDataModel, str]) -> JsSwitch.JsSwitch:
   """
   Description:
   ------------

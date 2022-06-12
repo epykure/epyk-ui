@@ -20,11 +20,10 @@ More examples can be found in the tests folder if needed.
 If necessary the test folders can be updated in order to catch some specific regressions
 """
 
-from typing import Union, Optional, Any, List
+from typing import Union
 from epyk.core.py import primitives
 
 from epyk.core.js.primitives import JsObject
-from epyk.core.js import JsMaths
 from epyk.core.js import JsUtils
 
 
@@ -297,6 +296,8 @@ class JsNumber(JsObject.JsObject):
     return JsNumber("%s %%= %s" % (self.varId, value), is_py_data=False)
 
   def __pow__(self, value: Union[primitives.JsDataModel, float]):
+    from epyk.core.js import JsMaths
+
     return JsNumber("%s = %s" % (self.varId, JsMaths.JsMaths.pow(self, value)))
 
   @classmethod
