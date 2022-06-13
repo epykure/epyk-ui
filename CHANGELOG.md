@@ -6,7 +6,7 @@
 
 ### Fixed
 
-## [1.7.20] - 2022-06-12
+## [1.7.21] - 2022-06-12
 
 ### Added
 - Add new Tabulator features
