@@ -893,7 +893,7 @@ class JsObject(primitives.JsDataModel):
 
       https://www.w3schools.com/js/js_json_parse.asp
     """
-    return JsObject("JSON.parse(%s)" % self.varName)
+    return JsObject("JSON.parse(%s)" % self.varId)
 
   def stringify(self):
     """
@@ -907,7 +907,7 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
     """
-    return JsObject("JSON.stringify(%s)" % self.varName)
+    return JsObject("JSON.stringify(%s)" % self.varId)
 
   def fileParse(self, delimiter: Union[primitives.JsDataModel, str]):
     """

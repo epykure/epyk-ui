@@ -294,7 +294,6 @@ class ContentFormatters:
     """ Cast the Javascript object to a Json object """
     return JsObjects.JsObject.JsObject.get("JSON.parse(%s)" % self.selector)
 
-  @property
   def stringify(self):
     """ Cast the Javascript object to a string object """
     return JsObjects.JsObject.JsObject.get("JSON.stringify(%s)" % self.selector)
