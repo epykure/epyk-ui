@@ -332,6 +332,17 @@ class Tables:
             table.js.hideColumns(checks.dom.unselected), table.js.showColumns(data)], toStr=True)
 
       container.js.set_columns = table_set_columns
+    if getattr(table.options, "dataTree", False):
+      expand = container.add_command("fas fa-expand", tooltip="Expand tree table")
+      expand.icon.style.css.font_factor(-5)
+      expand.style.css.margin_left = 2
+      expand.style.css.margin_right = 2
+      expand.click(table.js.getRows().forEach(["row.treeExpand()"], value="row"))
+      compress = container.add_command("fas fa-compress", tooltip="Collapse tree table")
+      compress.icon.style.css.font_factor(-5)
+      compress.style.css.margin_left = 2
+      compress.style.css.margin_right = 2
+      compress.click(table.js.getRows().forEach(["row.treeCollapse()"], value="row"))
     return container
 
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,

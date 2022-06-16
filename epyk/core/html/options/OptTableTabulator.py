@@ -8,6 +8,11 @@ from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
 from epyk.core.py import types
 
+from epyk.core.html.tables.exts import TbEditors
+from epyk.core.html.tables.exts import TbFormatters
+from epyk.core.html.tables.exts import TbMutators
+from epyk.core.html.tables.exts import TbValidators
+
 
 class EnumTopCalc(Enums):
 
@@ -312,10 +317,26 @@ class EnumColCss(Enums):
     ----------
     :param color: The CSS Color.
     """
-    self.component.body.style.custom_class({'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
+    self.component.body.style.custom_class(
+      {'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
     return self._add_value(value="tb-background-%s" % color)
 
-  def css(self, css_attrs: dict, css_attrs_hover: dict = None):
+  def name(self, name: str):
+    """
+    Description:
+    -----------
+    CSS class for bespoke style.
+
+    Usage::
+
+      page.properties.css.add_text('''.teststyle {background: pink}''')
+      c.cssClasses.name("teststyle")
+
+    :param name: The CSS classname
+    """
+    return self._add_value(value=name)
+
+  def css(self, css_attrs: dict, css_attrs_hover: dict = None, important: bool = False):
     """
     Description:
     -----------
@@ -329,10 +350,12 @@ class EnumColCss(Enums):
     ----------
     :param css_attrs: The CSS attributes for the class.
     :param css_attrs_hover: Optional. The CSS Hover attributes for the class.
+    :param important: Optional. To set the CSS configuration as important
     """
     has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
-    self.component.body.style.custom_class({
-      '_attrs': css_attrs, '_hover': css_attrs_hover}, classname="tb-style-%s" % has_style)
+    self.page.body.style.custom_class({
+      '_attrs': css_attrs or {}, '_hover': css_attrs_hover or {}}, classname="tb-style-%s" % has_style,
+      important=important)
     return self._add_value(value="tb-style-%s" % has_style)
 
 
@@ -772,12 +795,11 @@ class Editor(Enums):
     return self._set_value()
 
   @property
-  def autocompletes(self):
+  def autocompletes(self) -> EditorAutocomplete:
     """
     Description:
     -----------
     Predefined autocomplete configurations.
-
     """
     self._set_value()
     return EditorAutocomplete(self, "editorParams")
@@ -893,7 +915,8 @@ class Formattors(Enums):
     """
     Description:
     -----------
-    The plaintext formatter is the default formatter for all cells and will simply display the value of the cell as text.
+    The plaintext formatter is the default formatter for all cells and will simply display the value of the cell
+    as text.
 
     Related Pages:
 
@@ -1453,7 +1476,7 @@ class Extensions(Options):
     self.__options = options
 
   @property
-  def editors(self):
+  def editors(self) -> TbEditors.ExtsEditors:
     """
     Description:
     -----------
@@ -1465,12 +1488,10 @@ class Extensions(Options):
 
       http://tabulator.info/docs/4.0/modules
     """
-    from epyk.core.html.tables.exts import TbEditors
-
     return TbEditors.ExtsEditors(self.__options, "editor")
 
   @property
-  def formatters(self):
+  def formatters(self) -> TbFormatters.ExtsFormattors:
     """
     Description:
     -----------
@@ -1483,12 +1504,10 @@ class Extensions(Options):
 
       http://tabulator.info/docs/4.0/format
     """
-    from epyk.core.html.tables.exts import TbFormatters
-
     return TbFormatters.ExtsFormattors(self.__options, "formatter")
 
   @property
-  def mutators(self):
+  def mutators(self) -> TbMutators.ExtsMutators:
     """
     Description:
     -----------
@@ -1500,12 +1519,10 @@ class Extensions(Options):
 
       http://tabulator.info/docs/4.0/mutators
     """
-    from epyk.core.html.tables.exts import TbMutators
-
     return TbMutators.ExtsMutators(self.__options, "mutator")
 
   @property
-  def validators(self):
+  def validators(self) -> TbValidators.ExtsValidators:
     """
     Description:
     -----------
@@ -1517,8 +1534,6 @@ class Extensions(Options):
 
       http://tabulator.info/docs/4.0/modules
     """
-    from epyk.core.html.tables.exts import TbValidators
-
     return TbValidators.ExtsValidators(self.__options, "validator")
 
 
@@ -1698,10 +1713,31 @@ class Column(Options):
     """
     Description:
     -----------
+    sets css classes on header and cells in this column.
+    (value should be a string containing space separated class names).
 
-    :rtype: EnumColCss
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
     """
-    return self.has_attribute(EnumColCss)
+    return self._config_get()
+
+  @cssClass.setter
+  def cssClass(self, text: str):
+    self._config(text)
+
+  @property
+  def cssClasses(self) -> EnumColCss:
+    """
+    Description:
+    -----------
+    sets css classes on header and cells in this column. (value should be a string containing space separated class names)
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/columns#main-contents
+    """
+    return self.has_attribute(EnumColCss, name="cssClass")
 
   @property
   def editable(self):
@@ -2119,7 +2155,7 @@ class Column(Options):
     self._config(val)
 
   @property
-  def sorter(self):
+  def sorter(self) -> EnumSorter:
     """
     Description:
     -----------
@@ -2129,10 +2165,8 @@ class Column(Options):
     Related Pages:
 
       http://tabulator.info/examples/4.5#sorters
-
-    :rtype: EnumSorter
     """
-    return self.sub_data("sorter", EnumSorter)
+    return self._config_sub_data_enum("sorter", EnumSorter)
 
   @property
   def width(self):
@@ -2201,7 +2235,7 @@ class Column(Options):
     return self._config_get()
 
   @widthGrow.setter
-  def widthGrow(self, val):
+  def widthGrow(self, val: int):
     self._config(val)
 
   @property
@@ -4331,6 +4365,43 @@ class TableConfig(Options):
   @tooltips.setter
   def tooltips(self, val):
     self._config(val)
+
+  @property
+  def virtualDomBuffer(self):
+    """
+    Description:
+    -----------
+    In some situations, where you have a full screen table with a large number of columns,
+    this can result in slow rendering performance in older browsers. In these situations it is possible to manually set
+    the height of the buffer in pixels using the virtualDomBuffer option.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.1/layout#fittowidth
+    """
+    return self._config_get()
+
+  @virtualDomBuffer.setter
+  def virtualDomBuffer(self, val: int):
+    self._config(val)
+
+  @property
+  def virtualDom(self):
+    """
+    Description:
+    -----------
+    If you need to disable virtual rendering for any reason you can set the virtualDom option to false to force
+    standard rendering.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.1/layout#fittowidth
+    """
+    return self._config_get()
+
+  @virtualDom.setter
+  def virtualDom(self, flag: bool):
+    self._config(flag)
 
 
 class TableTreeConfig(TableConfig):

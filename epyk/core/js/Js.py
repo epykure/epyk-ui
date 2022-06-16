@@ -1129,7 +1129,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keydown = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page.properties.js.add_events('keydown', keydown)
+    self.page.properties.js.add_event('keydown', keydown)
     return keydown
 
   @property
@@ -1146,7 +1146,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keypress = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page.properties.js.add_events('keypress', keypress)
+    self.page.properties.js.add_event('keypress', keypress)
     return keypress
 
   @property
@@ -1163,7 +1163,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :rtype: KeyCodes.KeyCode
     """
     keyup = KeyCodes.KeyCode(page=self.page, source_event='document')
-    self.page.properties.js.add_events('keyup', keyup)
+    self.page.properties.js.add_event('keyup', keyup)
     return keyup
 
   def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = False):

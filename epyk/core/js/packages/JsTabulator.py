@@ -1829,21 +1829,7 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
 
       http://tabulator.info/docs/4.0/select
     """
-    return JsObjects.JsArray.JsArray("%s.getSelectedData()" % self.varId)
-
-  def getSelectedRows(self):
-    """
-    Description:
-    -----------
-    To get the RowComponent's for the selected rows at any time you can use the getSelectedRows function.
-
-    This will return an array of RowComponent's for the selected rows in the order in which they were selected.
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/select
-    """
-    return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.varId)
+    return JsObjects.JsArray.JsArray("%s.getSelectedData()" % self.varId, page=self.page, component=self.component)
 
 
 class _Export:
@@ -1854,6 +1840,10 @@ class _Export:
     Description:
     ------------
     Cell component for the edited cell.
+
+    Usage::
+
+      page.js.console.log(pk.js_libs.tabulator.cell.getRow().getData()),
     """
     return CellComponent(selector="cell", set_var=False)
 

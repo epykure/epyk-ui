@@ -9,7 +9,8 @@ class CssTabulator(CssStyle.Style):
 
   def customize(self):
     self.css({
-      "border": "none !IMPORTANT", 'background-color': self.page.theme.greys[0],
+      "border": "none !IMPORTANT",
+      'background-color': self.page.theme.greys[0],
       'font-family': self.page.body.style.globals.font.family})
 
 
@@ -21,6 +22,11 @@ class CssTabulatorFooter(CssStyle.Style):
       'color': self.page.theme.greys[-1],
       'border': 'none',
       'background': self.page.theme.greys[0]}, important=True)
+
+
+class CssTabulatorTable(CssStyle.Style):
+  classname = "tabulator-table"
+  _attrs = {'width': '100%'}
 
 
 class CssTabulatorEditing(CssStyle.Style):
@@ -43,14 +49,14 @@ class CssTabulatorHeader(CssStyle.Style):
   classname = "tabulator-header"
 
   def customize(self):
-    self.css({'border': 'none', 'background': 'none'}, important=True)
+    self.css({'background': 'none'}, important=True)
 
 
 class CssTabulatorHeaders(CssStyle.Style):
   classname = 'tabulator-headers'
 
   def customize(self):
-    self.css({'border': 'none', 'background': 'none'}, important=True)
+    self.css({'border': 'none', 'background': 'none', "height": "30px"}, important=True)
 
 
 class CssTabulatorSelected(CssStyle.Style):
@@ -59,7 +65,8 @@ class CssTabulatorSelected(CssStyle.Style):
   def customize(self):
     self.css({
       'border': '1px solid %s' % self.page.theme.success.base, 'color': self.page.theme.black,
-      'background': self.page.theme.success.light}, important=True)
+      'background': None
+    }, important=True)
 
 
 class CssTabulatorCol(CssStyle.Style):

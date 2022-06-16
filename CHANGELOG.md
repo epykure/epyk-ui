@@ -6,6 +6,21 @@
 
 ### Fixed
 
+## [1.7.22] - 2022-06-15
+
+### Added
+- More documentation
+- New tabulator features
+- menu specific items for hierarchy tables
+
+### Changed
+- Tabulator style
+
+### Fixed
+- Fix nested enum in component options.
+- add_event typo for js bindings
+
+
 ## [1.7.21] - 2022-06-12
 
 ### Added

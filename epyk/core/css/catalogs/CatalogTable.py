@@ -170,6 +170,10 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorFooterPagination)
 
+  def tabulator_table(self):
+    """ Change the tabulator content placeholder """
+    return self._set_class(CssStylesTabulator.CssTabulatorTable)
+
   def tabulator_editing(self):
     """ Change the style when cell are editable """
     return self._set_class(CssStylesTabulator.CssTabulatorEditing)

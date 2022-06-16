@@ -64,7 +64,7 @@ class JsPackage(primitives.JsDataModel):
           self.component.cssImport.add(self.lib_alias['css'])
         if 'js' in self.lib_alias:
           self.component.jsImports.add(self.lib_alias['js'])
-      else:
+      elif self.page is not None:
         if 'css' in self.lib_alias:
           self.page.cssImport.add(self.lib_alias['css'])
         if 'js' in self.lib_alias:

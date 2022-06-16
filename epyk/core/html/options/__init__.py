@@ -132,9 +132,12 @@ class Options(DataClass):
     :param str name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
-    self.__config_sub__enum_levels.add(name)
-    enum_data = cls_obj(self.component, js_tree={})
-    self.js_tree.setdefault(name, []).append(enum_data)
+    if issubclass(cls_obj, Enums):
+      enum_data = cls_obj(self, name=name, js_tree={})
+    else:
+      self.__config_sub__enum_levels.add(name)
+      enum_data = cls_obj(self.component, js_tree={})
+      self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 
   def custom_config(self, name: str, value: Any, js_type: bool = False):
@@ -176,6 +179,25 @@ class Options(DataClass):
     :param property_name: String. The property name.
     """
     return self.js_type.get(property_name, False)
+
+  def has_attribute(self, cls_obj, name: str = None):
+    """
+    Description:
+    ------------
+    Add an extra sub layer to the data structure.
+    The key in the object representation will be the function name.
+
+    Attributes:
+    ----------
+    :param cls_obj: Class. The sub data class used in the structure definition
+    :param name: The sub attribute name
+    """
+    name = name or sys._getframe().f_back.f_code.co_name
+    if issubclass(cls_obj, Enums):
+      self.__config_sub_levels.add(name)
+      return self._config_sub_data_enum(name, cls_obj)
+
+    return self.sub_data(name, cls_obj)
 
   @property
   def managed(self):
@@ -403,7 +425,7 @@ class Options(DataClass):
       for k, v in tmp_tree.items():
         if k in self.value_enums:
           v = self.value_enums[k].join(v)
-        if k in self.__config_sub_levels:
+        if k not in self.value_enums and k in self.__config_sub_levels:
           js_attrs.append("%s: %s" % (k, v.config_js(attrs=attrs.get(k, {})).toStr()))
         elif k in self.__config_sub__enum_levels:
           js_attrs.append("%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
@@ -476,10 +498,11 @@ class Enums:
   delimiter = None
   js_conversion = False
 
-  def __init__(self, options: Options, name: str):
+  def __init__(self, options: Options, name: str, js_tree: bool = None,
+               page: primitives.PageModel = None):
     self.__option = options
     self.component = options.component
-    self.page = self.component.page
+    self.page = page or options.component.page
     self.__name = name
 
   @property
