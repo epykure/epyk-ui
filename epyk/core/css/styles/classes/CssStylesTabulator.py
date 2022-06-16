@@ -26,7 +26,7 @@ class CssTabulatorFooter(CssStyle.Style):
 
 class CssTabulatorTable(CssStyle.Style):
   classname = "tabulator-table"
-  _attrs = {'width': '100%'}
+  #_attrs = {'width': '100%'}
 
 
 class CssTabulatorEditing(CssStyle.Style):
