@@ -36,13 +36,14 @@ class CssTabulatorEditing(CssStyle.Style):
     self.css({
       'font-family': self.page.body.style.globals.font.family,
       'font-size': "inherit", 'background': 'none', 'border': 'none'}, important=True)
+    self.focus.css({'outline-color': self.page.theme.success.base})
 
 
 class CssTabulatorCellEditing(CssStyle.Style):
   classname = "tabulator-cell.tabulator-editing"
 
   def customize(self):
-    self.css({'border': 'none'}, important=True)
+    self.css({'border-color': 'none'}, important=True)
 
 
 class CssTabulatorHeader(CssStyle.Style):
@@ -56,7 +57,7 @@ class CssTabulatorHeaders(CssStyle.Style):
   classname = 'tabulator-headers'
 
   def customize(self):
-    self.css({'border': 'none', 'background': 'none', "height": "30px"}, important=True)
+    self.css({'border': 'none', 'background': 'none'}, important=True)
 
 
 class CssTabulatorSelected(CssStyle.Style):
@@ -132,6 +133,13 @@ class CssTabulatorGroups(CssStyle.Style):
   classname = 'tabulator-group'
 
 
+class CssTabulatorHeaderFilterInput(CssStyle.Style):
+  _attrs = {'padding': '1px 4px !IMPORTANT', "border": "none !IMPORTANT"}
+  _focus = {'outline': 0}
+  classname = 'tabulator-header-filter'
+  _selectors = {'child': 'input'}
+
+
 class CssTabulatorEvenRow(CssStyle.Style):
   _selectors = {'child': '.tabulator-row-even'}
 
@@ -162,6 +170,7 @@ class CssTabulatorRow(CssStyle.Style):
 
   def customize(self):
     self.css({
+      "min-height": "none !IMPORTANT",
       'color': self.page.theme.greys[-1],
       'border': "1px solid %s" % self.page.theme.greys[0]
     })

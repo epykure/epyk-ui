@@ -230,7 +230,7 @@ class Tabulator(GrpCls.ClassHtml):
     self._css_tb_odd_row, self._css_tb_groups, self._css_tb_footer, self._css_tabulator_menu_item = 4 * [None]
     self._css_tb_footer_pg, self._css_tb_tree, self._css_tb_tree_exp, self._css_tabulator_menu = 4 * [None]
     self._css_tabulator_even_row_no_strip, self._css_tabulator_editing, self._css_tabulator_cell_editing = 3 * [None]
-    self._css_tabulator_col_title, self._css_tb_table = None, None
+    self._css_tabulator_col_title, self._css_tb_table, self._css_header_filter_input = 3 * [None]
     self._css_sorter_asc, self._css_sorter_desc, self._css_sorter_none = 3 * [None]
     self.__strip = False
     self.classList['main'].add(self.cls_tabulator)
@@ -256,15 +256,33 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_sorter_desc)
     self.classList['other'].add(self.cls_sorter_none)
     self.classList['other'].add(self.cls_tb_table)
+    self.classList['other'].add(self.cls_header_filter_input)
 
-  def strip(self):
+  def strip(self, attrs: dict = None, important: bool = False):
     """
     Description:
     -----------
+    Configure the style of the row.
 
+    Usage::
+
+      table.style.strip({"background": "yellow"}, important=True)
+
+    Attributes:
+    ----------
+    :param attrs:
+    :param important:
     """
     self.__strip = True
-    self.classList['main'].add(self.cls_tabulator_even_row)
+    if self._css_tabulator_even_row is None:
+      if attrs is not None and important:
+        attrs = dict(attrs)
+        for k, v in attrs.items():
+          attrs[k] = "%s !IMPORTANT" % v
+      self._css_tabulator_even_row = Classes.CatalogTable.CatalogTable(
+        self.component.page, self.classList['main'], component=self.component).tabulator_even_rows(attrs)
+    self.classList['other'].add(self.cls_tabulator_even_row)
+    return self._css_tabulator_even_row
 
   @property
   def cls_tabulator(self) -> Classes.CatalogTable.CatalogTable:
@@ -272,7 +290,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator is None:
       self._css_tabulator = Classes.CatalogTable.CatalogTable(
@@ -280,16 +297,27 @@ class Tabulator(GrpCls.ClassHtml):
     return self._css_tabulator
 
   @property
+  def cls_header_filter_input(self) -> Classes.CatalogTable.CatalogTable:
+    """
+    Description:
+    -----------
+
+    """
+    if self._css_header_filter_input is None:
+      self._css_header_filter_input = Classes.CatalogTable.CatalogTable(
+        self.component.page, self.classList['other'], component=self.component).tabulator_header_filter_input()
+    return self._css_header_filter_input
+
+  @property
   def cls_sorter_asc(self) -> Classes.CatalogTable.CatalogTable:
     """
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_sorter_asc is None:
       self._css_sorter_asc = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_asc()
+        self.component.page, self.classList['other'], component=self.component).tabulator_sorter_asc()
     return self._css_sorter_asc
 
   @property
@@ -298,11 +326,10 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_sorter_desc is None:
       self._css_sorter_desc = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_desc()
+        self.component.page, self.classList['other'], component=self.component).tabulator_sorter_desc()
     return self._css_sorter_desc
 
   @property
@@ -311,11 +338,10 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_sorter_none is None:
       self._css_sorter_none = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], component=self.component).tabulator_sorter_none()
+        self.component.page, self.classList['other'], component=self.component).tabulator_sorter_none()
     return self._css_sorter_none
 
   @property
@@ -324,7 +350,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_row is None:
       self._css_tabulator_row = Classes.CatalogTable.CatalogTable(
@@ -337,7 +362,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_cell is None:
       self._css_tabulator_cell = Classes.CatalogTable.CatalogTable(
@@ -350,7 +374,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_col is None:
       self._css_tabulator_col = Classes.CatalogTable.CatalogTable(
@@ -363,7 +386,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_col_title is None:
       self._css_tabulator_col_title = Classes.CatalogTable.CatalogTable(
@@ -376,7 +398,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_col_content is None:
       self._css_tabulator_col_content = Classes.CatalogTable.CatalogTable(
@@ -389,7 +410,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_menu is None:
       self._css_tabulator_menu = Classes.CatalogTable.CatalogTable(
@@ -402,7 +422,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_menu_item is None:
       self._css_tabulator_menu_item = Classes.CatalogTable.CatalogTable(
@@ -415,7 +434,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_selected is None:
       self._css_tabulator_selected = Classes.CatalogTable.CatalogTable(
@@ -428,11 +446,10 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_even_row is None:
       self._css_tabulator_even_row = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], component=self.component).tabulator_even_rows()
+        self.component.page, self.classList['other'], component=self.component).tabulator_even_rows()
     return self._css_tabulator_even_row
 
   @property
@@ -441,11 +458,10 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_even_row_no_strip is None:
       self._css_tabulator_even_row_no_strip = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], component=self.component).tabulator_even_rows_no_strop()
+        self.component.page, self.classList['other'], component=self.component).tabulator_even_rows_no_strop()
     return self._css_tabulator_even_row_no_strip
 
   @property
@@ -454,7 +470,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_odd_row is None:
       self._css_tb_odd_row = Classes.CatalogTable.CatalogTable(
@@ -467,7 +482,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_groups is None:
       self._css_tb_groups = Classes.CatalogTable.CatalogTable(
@@ -480,7 +494,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_footer is None:
       self._css_tb_footer = Classes.CatalogTable.CatalogTable(
@@ -505,7 +518,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_footer_pg is None:
       self._css_tb_footer_pg = Classes.CatalogTable.CatalogTable(
@@ -518,7 +530,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_tree is None:
       self._css_tb_tree = Classes.CatalogTable.CatalogTable(
@@ -531,7 +542,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tb_tree_exp is None:
       self._css_tb_tree_exp = Classes.CatalogTable.CatalogTable(
@@ -544,7 +554,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_header is None:
       self._css_tabulator_header = Classes.CatalogTable.CatalogTable(
@@ -557,7 +566,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_editing is None:
       self._css_tabulator_editing = Classes.CatalogTable.CatalogTable(
@@ -570,7 +578,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_cell_editing is None:
       self._css_tabulator_cell_editing = Classes.CatalogTable.CatalogTable(
@@ -583,7 +590,6 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_tabulator_headers is None:
       self._css_tabulator_headers = Classes.CatalogTable.CatalogTable(
@@ -595,11 +601,56 @@ class Tabulator(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :return:
     """
     if not self.__strip:
       self.classList['main'].add(self.cls_tabulator_even_row_no_strip)
     return super(Tabulator, self).get_classes_css()
+
+  def bespoke(self, name: str = None, css_table: dict = None, css_selected: dict = None, important: bool = True,
+              css_col_content: dict = None, others: dict = None):
+    """
+    Description:
+    -----------
+    Override specific CSS classes.
+
+    Usage::
+
+      table.style.bespoke(name="myTable", css_selected={"color": "red"},
+                      css_col_content={"background": "red", "border": "red"}, important=True)
+
+      table.style.bespoke(others={"tabulator-editing input": {"color": "purple"}})
+
+    Attributes:
+    ----------
+    :param name: Optional. The table HTML tag name.
+    :param css_table: Optional. The Tabulator table CSS attributes.
+    :param css_selected: Optional. The Tabulator selected CSS attributes
+    :param important: Optional. Set the attributes are important
+    :param css_col_content: Optional. The Tabulator Column content CSS attributes
+    :param others: Optional. A dictionary with other CSS attributes
+    """
+    if name is None:
+      selector = "#%s" % self.component.htmlCode
+    else:
+      selector = "div[name=%s]" % name
+      self.component.attr["name"] = name
+    flag = " !IMPORTANT" if important else ""
+    if css_table is not None:
+      self.page.properties.css.add_text("%s .tabulator-table {%s}\n" % (
+        selector, "; ".join(["%s: %s%s" % (k, v, flag) for k, v in css_table.items()])))
+    if css_selected is not None:
+      self.page.properties.css.add_text("%s .tabulator-selected {%s}\n" % (
+        selector, "; ".join(["%s: %s%s" % (k, v, flag) for k, v in css_selected.items()])))
+    if css_col_content is not None:
+      if "background" in css_col_content:
+        self.page.properties.css.add_text("%s .tabulator-col {background: %s%s}\n" % (
+          selector, css_col_content["background"], flag))
+      self.page.properties.css.add_text("%s .tabulator-col-content {%s}\n" % (
+        selector, "; ".join(["%s: %s%s" % (k, v, flag) for k, v in css_col_content.items()])))
+    if others is not None:
+      for css_cls, attrs in others.items():
+        self.page.properties.css.add_text("%s .%s {%s}\n" % (
+          selector, css_cls, "; ".join(["%s: %s%s" % (k, v, flag) for k, v in attrs.items()])))
 
 
 class Pivot(GrpCls.ClassHtml):

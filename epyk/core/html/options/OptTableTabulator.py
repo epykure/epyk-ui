@@ -985,7 +985,8 @@ class Formattors(Enums):
     ----------
     :param decimal: Symbol to represent the decimal point (default ".")
     :param thousand: Symbol to represent the thousands separator (default ",")
-    :param precision: the number of decimals to display (default is 2), setting this value to false will display however many decimals are provided with the number
+    :param precision: the number of decimals to display (default is 2), setting this value to false will display
+      however many decimals are provided with the number
     :param symbol: currency symbol (no default)
     :param symbolAfter: position the symbol after the number (default false)
     :param kwargs:
@@ -1106,7 +1107,8 @@ class Formattors(Enums):
     """
     self._set_value(value="tickCross")
     format_params = {
-      'allowEmpty': allow_empty, 'allowTruthy': allow_truthy, 'tickElement': tick_element, 'crossElement': cross_element}
+      'allowEmpty': allow_empty, 'allowTruthy': allow_truthy, 'tickElement': tick_element,
+      'crossElement': cross_element}
     if kwargs:
       format_params.update(kwargs)
     self._set_value("%sParams" % self.key, format_params)
@@ -1612,7 +1614,7 @@ class Column(Options):
     self._config(val, name="hozAlign")
 
   @property
-  def accessors(self):
+  def accessors(self) -> Accessors:
     """
     Description:
     -----------
@@ -1731,7 +1733,8 @@ class Column(Options):
     """
     Description:
     -----------
-    sets css classes on header and cells in this column. (value should be a string containing space separated class names)
+    sets css classes on header and cells in this column.
+    (value should be a string containing space separated class names)
 
     Related Pages:
 
@@ -1786,6 +1789,40 @@ class Column(Options):
       http://tabulator.info/docs/4.0/modules
     """
     return Extensions(self, self._attrs)
+
+  @property
+  def editor(self):
+    """
+    Description:
+    -----------
+    Tabulator comes with a number of built-in editors including:
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/edit#edit-builtin
+    """
+    return self._config_get()
+
+  @editor.setter
+  def editor(self, val: str):
+    self._config(val)
+
+  @property
+  def editorParams(self):
+    """
+    Description:
+    -----------
+    Tabulator comes with a number of built-in editors including:
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.2/edit#edit-builtin
+    """
+    return self._config_get()
+
+  @editorParams.setter
+  def editorParams(self, values: dict):
+    self._config(val)
 
   @property
   def editors(self):
@@ -1953,7 +1990,8 @@ class Column(Options):
 
     Attributes:
     ----------
-    :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue, rowData, filterParams)
+    :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue,
+      rowData, filterParams)
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
     """
@@ -2461,7 +2499,7 @@ class Column(Options):
     self._config(val)
 
   @property
-  def bottomCalcFormatters(self):
+  def bottomCalcFormatters(self) -> Formattors:
     return Formattors(self, "bottomCalcFormatter")
 
   @property
@@ -3149,8 +3187,6 @@ class TableConfig(Options):
     ----------
     :param by_field: String. Optional. The field reference for the column.
     :param by_title: String. Optional. The title reference for the column.
-
-    :rtype: Column
     """
     for c in self.columns:
       if by_field is not None and c.field == by_field:
@@ -3500,7 +3536,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def keybindings(self):
+  def keybindings(self) -> Keybindings:
     """
     Description:
     -----------
@@ -3509,8 +3545,6 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.2/modules#module-keybindings
-
-    :rtype: Keybindings
     """
     return self._config_sub_data("keybindings", Keybindings)
 
@@ -3571,7 +3605,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def layouts(self):
+  def layouts(self) -> EnumLayout:
     """
     Description:
     -----------
@@ -3697,7 +3731,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @pagination.setter
-  def pagination(self, val):
+  def pagination(self, val: Union[str, bool]):
     self._config(val)
 
   @property
@@ -3715,7 +3749,16 @@ class TableConfig(Options):
 
   @paginationMode.setter
   def paginationMode(self, val):
-    self._config(val)
+
+    if val is False:
+      if 'paginationSize' in self.js_tree:
+        del self.js_tree['paginationSize']
+
+      if 'pagination' in self.js_tree:
+        del self.js_tree['pagination']
+
+    else:
+      self._config(val)
 
   @property
   def paginationSize(self):
@@ -3731,10 +3774,17 @@ class TableConfig(Options):
     return self._config_get()
 
   @paginationSize.setter
-  def paginationSize(self, val):
+  def paginationSize(self, val: Union[bool, int]):
     if val is not None:
       self._config('local', name="pagination")
-    self._config(val)
+    if val is False:
+      if 'paginationSize' in self.js_tree:
+        del self.js_tree['paginationSize']
+      if 'pagination' in self.js_tree:
+        del self.js_tree['pagination']
+
+    else:
+      self._config(val)
 
   @property
   def paginationSizeSelector(self):
@@ -3771,7 +3821,7 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def persistence(self):
+  def persistence(self) -> Persistence:
     """
     Description:
     -----------

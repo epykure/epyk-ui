@@ -218,9 +218,16 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTabulator.CssTabulatorGroups)
 
-  def tabulator_even_rows(self):
+  def tabulator_header_filter_input(self):
     """  """
-    return self._set_class(CssStylesTabulator.CssTabulatorEvenRow)
+    return self._set_class(CssStylesTabulator.CssTabulatorHeaderFilterInput)
+
+  def tabulator_even_rows(self, attrs: dict = None):
+    """  """
+    cls = self._set_class(CssStylesTabulator.CssTabulatorEvenRow)
+    if attrs is not None:
+      cls.css(attrs)
+    return cls
 
   def tabulator_even_rows_no_strop(self):
     """  """
