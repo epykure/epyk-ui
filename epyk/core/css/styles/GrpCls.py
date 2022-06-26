@@ -596,15 +596,19 @@ class ClassHtml:
     self.component.attr['class'] = self.classList['main']
     return self
 
-  def clear_style(self):
+  def clear_style(self, persist_attrs: dict = None):
     """
     Description:
     ------------
     Clear all the inline CSS styles defined for the component.
 
+    :param persist_attrs: CSS attributes to be maintained
+
     :return: self to allow the chaining.
     """
     self.component.attr['css'] = {}
+    if persist_attrs is not None:
+      self.component.attr['css'].update(persist_attrs)
     self.css.attrs = self.component.attr['css']
     return self
 

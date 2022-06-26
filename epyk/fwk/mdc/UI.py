@@ -69,7 +69,8 @@ class Components:
     html_but = HtmlMdcForms.ProgressBar(self.page, text, None, options or {}, profile, {"width": width, "height": height})
     return html_but
 
-  def select(self, text="Loading...", width=(None, "%"), height=(None, "%"), options=None, profile=None):
+  def select(self, text="Loading...", label: str = "", width=(None, "%"),
+             height=(None, "%"), options=None, profile=None):
     """
     https://github.com/material-components/material-components-web/tree/master/packages/mdc-linear-progress
 

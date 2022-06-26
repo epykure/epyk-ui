@@ -2079,7 +2079,7 @@ class Section(Html.Html):
   name = 'Section'
   _option_cls = OptPanel.OptionsDiv
 
-  def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel, width: tuple, height: tuple,
+  def __init__(self, page: primitives.PageModel, component: Union[Html.Html, List[Html.Html]], width: tuple, height: tuple,
                html_code: str, helper: str, options: dict, profile: Union[dict, bool]):
     super(Section, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height})

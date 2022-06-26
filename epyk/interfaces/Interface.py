@@ -144,13 +144,13 @@ class Components:
 
     Attributes:
     ----------
-    :param dict css_attrs: The CSS attributes to be applied.
+    :param css_attrs: The CSS attributes to be applied.
     """
     self.page.properties.css.container_style(css_attrs)
     return self
 
-  def print(self, text: Optional[str] = None, end: str = "\n", html_code: Optional[str] = None,
-            options: Optional[Union[dict, bool]] = None, profile: Optional[Union[dict, bool]] = None):
+  def print(self, text: str = None, end: str = "\n", html_code: str = None,
+            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -167,11 +167,11 @@ class Components:
 
     Attributes:
     ----------
-    :param Optional[str] text: Optional. The content to be displayed.
-    :param str end: Optional. The end of line.
-    :param Optional[str] html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param Optional[Union[dict, bool]] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The content to be displayed.
+    :param end: Optional. The end of line.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if callable(text):
       import inspect
@@ -745,8 +745,8 @@ class Components:
 
   def contents(self, title: str = "Contents", top: int = 10, right: int = 10, left: int = None,
                width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
-               html_code: Optional[str] = None, options: Union[dict, bool] = None,
-               profile: types.PROFILE_TYPE = None):
+               html_code: str = None, options: types.OPTION_TYPE = None,
+               profile: types.PROFILE_TYPE = None) -> html.HtmlTextComp.ContentsTable:
     """
     Description:
     ------------
@@ -830,7 +830,7 @@ class Components:
 
   def _tags(self, vals=None, title: str = "", icon: str = "", width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            profile: types.PROFILE_TYPE = None):
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Tags:
     """
     Description:
     ------------
@@ -851,8 +851,8 @@ class Components:
       self.page, vals, title, icon, (self.page.body.style.globals.font.size, 'px'), width, height, html_code,
       profile)
 
-  def loading(self, text: str = "Loading", color: Union[str, bool] = None, options: Optional[Union[dict, bool]] = None,
-              profile: types.PROFILE_TYPE = None):
+  def loading(self, text: str = "Loading", color: Union[str, bool] = None, options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Loading:
     """
     Description:
     ------------
@@ -879,8 +879,8 @@ class Components:
 
   def breadcrumb(self, values=None, selected: Optional[int] = None, width: types.SIZE_TYPE = (100, '%'),
                  height: types.SIZE_TYPE = (30, 'px'), html_code: str = None,
-                 options: Optional[Union[dict, bool]] = None,
-                 profile: types.PROFILE_TYPE = None):
+                 options: types.OPTION_TYPE = None,
+                 profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Breadcrumb:
     """
     Description:
     ------------
@@ -927,7 +927,7 @@ class Components:
     return html_breadcrumb
 
   def form(self, components: List[html.Html.Html] = None, helper: str = None, method: str = "POST",
-           action: str = "#", label: str = "Submit"):
+           action: str = "#", label: str = "Submit") -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -953,7 +953,7 @@ class Components:
     return form
 
   def json(self, data: dict = None, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (100, '%'),
-           options: Optional[Union[dict, bool]] = None, profile: types.PROFILE_TYPE = None):
+           options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.HtmlJson:
     """
     Description:
     ------------
@@ -983,8 +983,8 @@ class Components:
     return container
 
   def slideshow(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, "%"),
-                height: types.SIZE_TYPE = ('auto', ""), options: Optional[Union[dict, bool]] = None,
-                profile: types.PROFILE_TYPE = None):
+                height: types.SIZE_TYPE = ('auto', ""), options: types.OPTION_TYPE = None,
+                profile: types.PROFILE_TYPE = None) -> html.HtmlImage.SlideShow:
     """
     Description:
     ------------
@@ -1021,7 +1021,7 @@ class Components:
     return container
 
   def qrcode(self, data=None, width: types.SIZE_TYPE = (128, 'px'), height: types.SIZE_TYPE = (128, 'px'),
-             options: Optional[Union[dict, bool]] = None, profile: types.PROFILE_TYPE = None):
+             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.HtmlQRCode:
     """
     Description:
     ------------
@@ -1053,8 +1053,8 @@ class Components:
     return h_qrcode
 
   def captcha(self, text: str = "Submit", width: types.SIZE_TYPE = (None, 'px'),
-              height: types.SIZE_TYPE = (None, 'px'), options: Optional[Union[dict, bool]] = None,
-              profile: types.PROFILE_TYPE = None):
+              height: types.SIZE_TYPE = (None, 'px'), options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.HtmlCaptcha:
     """
     Description:
     ------------
@@ -1077,7 +1077,8 @@ class Components:
     return captcha
 
   def postit(self, components: List[html.Html.Html] = None, anchor: html.Html.Html = None,
-             options: Optional[Union[dict, bool]] = None, profile: types.PROFILE_TYPE = None):
+             options: types.OPTION_TYPE = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -1125,8 +1126,8 @@ class Components:
 
     Attributes:
     ----------
-    :param str package_name: The package name.
-    :param str alias: Optional. The alias for the link in report.ui.
+    :param package_name: The package name.
+    :param alias: Optional. The alias for the link in report.ui.
     """
     mod = __import__(package_name)
     __import__("%s.components" % package_name)
@@ -1134,9 +1135,10 @@ class Components:
       alias = getattr(mod.components, 'alias', package_name)
     setattr(self, alias, mod.components.Components(self))
 
-  def asterix(self, tooltip: str, family=None, width: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+  def asterix(self, tooltip: str, family: str = None, width: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
               height: types.SIZE_TYPE = (None, "px"), color: str = None,
-              align: str = "left", options: str = None, profile: types.PROFILE_TYPE = None):
+              align: str = "left", options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Icon:
     """
     Description:
     ------------
@@ -1164,8 +1166,9 @@ class Components:
   def menu(self, component: Union[html.Html.Html, List[html.Html.Html]], title: Union[str, dict] = None,
            copy: str = "fas fa-copy", editable: tuple = ("fas fa-user-edit", "fas fa-user-lock"),
            refresh: str = "fas fa-redo-alt", visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
-           height: tuple = (18, 'px'), save_funcs: list = None, update_funcs: list = None,
-           menu_items=None, options: dict = None, profile: types.PROFILE_TYPE = None):
+           height: tuple = (18, 'px'), save_funcs: types.JS_FUNCS_TYPES = None,
+           update_funcs: types.JS_FUNCS_TYPES = None, menu_items=None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1238,10 +1241,11 @@ class Components:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, align="center", text=typ, tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
+          icon, align="center", text=typ, tooltip=typ, height=height, width=(size, 'px'), options=options,
+          profile=profile)
         r.span.style.css.hide()
-        r.icon.style.css.font_factor(-4)
-        r.style.css.font_factor(-3)
+        r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+        r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.span.style.css.margin = "0 2px -3px -3px"
         if typ == "Edit":
           r.click([
@@ -1305,8 +1309,8 @@ class Components:
       r = self.page.ui.icons.awesome(
         "fas fa-save", align="center", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-4)
-      r.style.css.font_factor(-3)
+      r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+      r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
           r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
@@ -1318,8 +1322,8 @@ class Components:
         r = self.page.ui.icons.awesome(
           "fas fa-sync-alt", align="center", tooltip="Sync", height=height, width=(15, 'px'), options=options,
           profile=profile)
-        r.icon.style.css.font_factor(-4)
-        r.style.css.font_factor(-3)
+        r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+        r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.click([
             r.dom.css({"background": self.page.theme.greys[2], "border-radius": "10px"}).r,
             self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
@@ -1333,8 +1337,8 @@ class Components:
             profile=profile, run_on_start=options.get("run_on_start", True))])
     trash = self.page.ui.icons.awesome(
       "fas fa-trash", align="center", height=height, width=(10, 'px'), options=options, profile=profile)
-    trash.icon.style.css.font_factor(-4)
-    trash.style.css.font_factor(-3)
+    trash.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+    trash.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
     trash.style.css.margin_left = 10
     menu_items.append(trash)
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
@@ -1360,8 +1364,8 @@ class Components:
       """
       comp = self.page.ui.icons.awesome(
         icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
-      comp.icon.style.css.font_factor(-4)
-      comp.style.css.font_factor(-3)
+      comp.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+      comp.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       comp.style.css.margin_left = 5
       comp.style.css.margin_right = 5
       container.insert(0, comp)
@@ -1396,8 +1400,8 @@ class Components:
       """
       comp = self.page.ui.icons.awesome(
         icon, tooltip=tooltip, height=height, width=(size, 'px'), options=options, profile=profile)
-      comp.icon.style.css.font_factor(-4)
-      comp.style.css.font_factor(-3)
+      comp.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+      comp.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       comp.style.css.margin_left = 5
       comp.style.css.margin_right = 5
       if not isinstance(items, list):

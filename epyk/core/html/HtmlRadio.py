@@ -3,6 +3,7 @@
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 
@@ -141,8 +142,8 @@ class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, page: primitives.PageModel, records: list, color: str, width: tuple, height: tuple,
-               html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
+  def __init__(self, page: primitives.PageModel, records: list, color: str, width: types.SIZE_TYPE,
+               height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE):
     self.width = width[0]
     super(Switch, self).__init__(page, records, html_code=html_code, options=options, profile=profile,
                                  css_attrs={"width": width, "height": height, 'color': color})
@@ -240,8 +241,8 @@ class Switch(Html.Html):
     """
     return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
-            source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -266,8 +267,8 @@ class Switch(Html.Html):
       self.page.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, self.switch.toStr())
 
-  def toggle(self, on_funcs: Optional[Union[list, str]] = None, off_funcs: Optional[Union[list, str]] = None,
-             profile: Optional[Union[bool, dict]] = None, on_ready: bool = False):
+  def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
+             profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """
     Description:
     ------------

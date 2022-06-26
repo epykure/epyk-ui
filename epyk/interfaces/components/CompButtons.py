@@ -3,6 +3,7 @@
 
 import os
 from typing import Union, Optional
+from epyk.core.py import types
 
 from epyk.core import html
 from epyk.core.html import Defaults_html
@@ -60,7 +61,7 @@ class Buttons:
   def button(self, text: str = "", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = (None, "%"),
              height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
              tooltip: Optional[str] = None, profile: Optional[Union[dict, bool]] = None,
-             options: Optional[dict] = None):
+             options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Description:
     ------------
@@ -844,11 +845,17 @@ class Buttons:
 
   def toggle(self, record=None, label: Optional[str] = None, color: Optional[str] = None,
              width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "left",
-             html_code: Optional[str] = None, options: Optional[dict] = None, profile: Union[dict, bool] = None):
+             html_code: Optional[str] = None, options: Optional[dict] = None,
+             profile: Union[dict, bool] = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
     Add a toggle component.
+
+    Component Structure::
+
+      component.input: :class:`html.HtmlRadio.Switch`
+      component.label: :class:`html.HtmlText.Label`
 
     :tags:
     :categories:
@@ -1322,9 +1329,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def more(self, items, text: str = "More", width: Union[tuple, int] = ("auto", ""),
-           height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
-           tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
+  def more(self, items, text: str = "More", width: types.SIZE_TYPE = ("auto", ""),
+           height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           tooltip: str = None, profile: types.PROFILE_TYPE = None,
+           options: types.OPTION_TYPE = None) -> html.HtmlButton.ButtonMore:
     """
     Description:
     ------------
@@ -1348,14 +1356,14 @@ class Buttons:
 
     Attributes:
     ----------
-    :param items: List. List of items to be added to the menu.
-    :param text: String. Optional. The text visible in the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param items: List of items to be added to the menu.
+    :param text: Optional. The text visible in the button.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

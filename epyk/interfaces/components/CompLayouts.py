@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
+from epyk.core.py import types
 
 from epyk.core import html
 from epyk.interfaces import Arguments
@@ -12,7 +13,7 @@ class Layouts:
   def __init__(self, ui):
     self.page = ui.page
 
-  def br(self, count: int = 1, profile: Union[bool, dict] = None):
+  def br(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
     """
     Description:
     ------------
@@ -44,7 +45,7 @@ class Layouts:
     html.Html.set_component_skin(html_new_line)
     return html_new_line
 
-  def new_line(self, count: int = 1, profile: Union[bool, dict] = None):
+  def new_line(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
     """
     Description:
     ------------
@@ -81,8 +82,9 @@ class Layouts:
     html.Html.set_component_skin(html_new_line)
     return html_new_line
 
-  def hr(self, count: int = 1, background_color: str = None, margins: int = 0, width=(100, '%'), height=(None, 'px'),
-         align=None, options: dict = None, profile: Union[bool, dict] = None):
+  def hr(self, count: int = 1, background_color: str = None, margins: int = 0,
+         width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+         align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -111,14 +113,14 @@ class Layouts:
 
     Attributes:
     ----------
-    :param count: Integer. Optional. The number of HR tag to be added.
-    :param background_color: String. Optional. The component background color.
-    :param margins: Integer. Optional. The margin top and bottom in pixels.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added.
+    :param background_color: Optional. The component background color.
+    :param margins: Optional. The margin top and bottom in pixels.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align:  Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -139,7 +141,8 @@ class Layouts:
     html.Html.set_component_skin(hr_html)
     return hr_html
 
-  def underline(self, width=(10, '%'), height=(3, 'px'), align: str = None, options=None, profile=None):
+  def underline(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (3, 'px'),
+                align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -157,11 +160,11 @@ class Layouts:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     hr = self.hr(
       1, self.page.theme.colors[-1], 0, width=width, height=height, align=align, options=options, profile=profile)
@@ -171,7 +174,8 @@ class Layouts:
     html.Html.set_component_skin(hr)
     return hr
 
-  def accentuate(self, width=(10, '%'), height=(1, 'px'), align=None, options=None, profile=None):
+  def accentuate(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (1, 'px'), align: str = None,
+                 options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -188,11 +192,11 @@ class Layouts:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     hr = self.hr(
       1, self.page.theme.colors[6], 0, width=width, height=height, align=align, options=options, profile=profile)
@@ -202,8 +206,10 @@ class Layouts:
     html.Html.set_component_skin(hr)
     return hr
 
-  def col(self, components=None, position: str = 'middle', width=(100, '%'), height=(None, 'px'), align: str = None,
-          helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def col(self, components: List[html.Html.Html] = None, position: str = 'middle',
+          width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = None,
+          helper: str = None, options: dict = None,
+          profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
     """
     Description:
     ------------
@@ -236,13 +242,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param position: String. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param components: The different HTML objects to be added to the component.
+    :param position: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
@@ -252,8 +258,9 @@ class Layouts:
     html.Html.set_component_skin(html_col)
     return html_col
 
-  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
-          options=None, profile: Union[bool, dict] = None):
+  def row(self, components: List[html.Html.Html] = None, position: str = 'middle', width: types.SIZE_TYPE = (100, '%'),
+          height: types.SIZE_TYPE = (None, 'px'), align: str = None, helper: str = None,
+          options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Row:
     """
     Description:
     ------------
@@ -286,14 +293,14 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param position: String. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param position: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -305,8 +312,9 @@ class Layouts:
     html.Html.set_component_skin(html_col)
     return html_col
 
-  def table(self, components=None, width=(100, '%'), height=(None, 'px'), helper: str = None, options=None,
-            profile: Union[bool, dict] = None):
+  def table(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Table:
     """
     Description:
     ------------
@@ -328,12 +336,12 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param helper:  Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -341,8 +349,9 @@ class Layouts:
     html.Html.set_component_skin(html_row)
     return html_row
 
-  def grid(self, rows=None, width=(100, '%'), height=(None, 'px'), align=None, position=None, options=None,
-           profile: Union[bool, dict] = None):
+  def grid(self, rows=None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+           align: str = None, position: str = None, options: dict = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
     Description:
     ------------
@@ -369,12 +378,12 @@ class Layouts:
     Attributes:
     ----------
     :param rows:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param position: String. Optional. A string with the vertical position of the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param position: Optional. A string with the vertical position of the component.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -382,8 +391,10 @@ class Layouts:
     html.Html.set_component_skin(html_grid)
     return html_grid
 
-  def panel(self, components=None, title=None, color=None, width=(100, "%"), height=(None, "px"), html_code=None,
-            helper=None, options=None, profile: Union[bool, dict] = False):
+  def panel(self, components: List[html.Html.Html] = None, title: str = None, color: str = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+            helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Panel:
     """
     Description:
     ------------
@@ -402,15 +413,15 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component.
     :param title:
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -421,9 +432,11 @@ class Layouts:
     html.Html.set_component_skin(html_panel)
     return html_panel
 
-  def div(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
-          height=(None, "px"), editable=False, align='left', padding=None, html_code=None, tag='div', helper=None,
-          options=None, profile: Union[bool, dict] = None, position: Union[bool, dict] = None):
+  def div(self, components: Union[html.Html.Html, List[html.Html.Html]] = None, label: str = None, color: str = None,
+          width: types.SIZE_TYPE = (100, "%"), icon: str = None, height: types.SIZE_TYPE = (None, "px"),
+          editable: bool = False, align: str = 'left', padding: int = None, html_code: str = None, tag: str = 'div',
+          helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
+          position: Union[bool, dict] = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -450,21 +463,21 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component.
     :param label:
     :param color:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param icon:
-    :param position: String. Optional.
+    :param position: Optional.
     :param editable:
-    :param align: String. Optional. A string with the horizontal position of the component
+    :param align: Optional. A string with the horizontal position of the component
     :param padding:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param tag:
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
-    :param helper: String. Optional.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -481,8 +494,9 @@ class Layouts:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def inline(self, components=None, width=(None, "%"), height=(None, "px"), align='left', html_code: str = None,
-             options: dict = None, profile: Union[bool, dict] = None):
+  def inline(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (None, "%"),
+             height: types.SIZE_TYPE = (None, "px"), align: str = 'left', html_code: str = None,
+             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -496,13 +510,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_comp = self.div(
       components=components, width=width, height=height, align=align, html_code=html_code, options=options,
@@ -511,8 +525,9 @@ class Layouts:
     html.Html.set_component_skin(html_comp)
     return html_comp
 
-  def centered(self, components=None, width=("auto", ""), height=(None, "px"), align='left', html_code: str = None,
-               options: dict = None, profile: Union[bool, dict] = None):
+  def centered(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = ("auto", ""),
+               height: types.SIZE_TYPE = (None, "px"), align: str = 'left', html_code: str = None,
+               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -526,13 +541,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_comp = self.div(components=components, width=width, height=height, align=align, options=options,
                          html_code=html_code, profile=profile)
@@ -540,8 +555,9 @@ class Layouts:
     html.Html.set_component_skin(html_comp)
     return html_comp
 
-  def popup(self, components=None, width=(100, '%'), height=(None, 'px'),
-            options: dict = None, profile: Union[bool, dict] = None):
+  def popup(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'),
+            options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
     """
     Description:
     ------------
@@ -567,11 +583,11 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -582,8 +598,8 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def iframe(self, url: str = "", width=(100, "%"), height=(100, "%"), helper: str = None,
-             profile: Union[bool, dict] = None):
+  def iframe(self, url: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (100, "%"),
+             helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IFrame:
     """
     Description:
     ------------
@@ -604,11 +620,11 @@ class Layouts:
 
     Attributes:
     ----------
-    :param url: String. Optional. The link to the underlying page.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param helper: String. Optional. A tooltip helper.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param url: Optional. The link to the underlying page.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param helper: Optional. A tooltip helper.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -616,8 +632,9 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code: str = None, helper: str = None,
-              options: dict = None, profile: Union[bool, dict] = None):
+  def dialogs(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (20, 'px'),
+              html_code: str = None, helper: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlEvent.Dialog:
     """
     Description:
     ------------
@@ -639,13 +656,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -653,8 +670,9 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def icons(self, icon_names=None, width=(100, "%"), height=(None, "px"), html_code: str = None,
-            helper: str = None, profile: Union[bool, dict] = None):
+  def icons(self, icon_names=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
+            html_code: str = None, helper: str = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IconsMenu:
     """
     Description:
     ------------
@@ -680,11 +698,11 @@ class Layouts:
     Attributes:
     ----------
     :param icon_names:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -695,7 +713,7 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def form(self, components=None, helper: str = None):
+  def form(self, components: List[html.Html.Html] = None, helper: str = None) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -713,15 +731,16 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param helper: String. Optional. A tooltip helper.
+    :param components: The different HTML objects to be added to the component.
+    :param helper: Optional. A tooltip helper.
     """
     component = html.HtmlContainer.Form(self.page, components, helper)
     html.Html.set_component_skin(component)
     return component
 
-  def header(self, components=None, width=(100, "%"),  height=(None, "px"), html_code: str = None, helper: str = None,
-             options: dict = None, profile: Union[bool, dict] = None):
+  def header(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
+             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Header:
     """
     Description:
     ------------
@@ -748,13 +767,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param helper:
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -765,8 +784,10 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def section(self, components=None, width=(100, "%"), height=(None, "px"), html_code: str = None,
-              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+  def section(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+              helper: str = None, options: dict = None,
+              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Section:
     """
     Description:
     ------------
@@ -793,13 +814,13 @@ class Layouts:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -810,8 +831,9 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
-  def columns(self, components, cols, width=(100, '%'), height=(None, 'px'), align: str = None, position: str = None,
-              options: dict = None, profile: Union[bool, dict] = None):
+  def columns(self, components: List[html.Html.Html], cols, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), align: str = None, position: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
     Description:
     ------------
@@ -856,8 +878,8 @@ class Delimiter:
   def __init__(self, ui):
     self.page = ui.page
 
-  def line(self, count: int = 1, width=(100, '%'), align: str = None, options: dict = None,
-           profile: Union[bool, dict] = None):
+  def line(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = None, options: dict = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -872,11 +894,11 @@ class Delimiter:
 
     Attributes:
     ----------
-    :param count: Integer. Optional. The number of HR tag to be added.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -884,8 +906,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def double(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
-             profile: Union[bool, dict] = None):
+  def double(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -900,11 +922,11 @@ class Delimiter:
 
     Attributes:
     ----------
-    :param count: Integer. Optional. The number of HR tag to be added.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -913,8 +935,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def dashed(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
-             profile: Union[bool, dict] = None):
+  def dashed(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -929,11 +951,11 @@ class Delimiter:
 
     Attributes:
     ----------
-    :param count: Integer. Optional. The number of HR tag to be added.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -944,8 +966,8 @@ class Delimiter:
     html.Html.set_component_skin(hrs)
     return hrs
 
-  def dotted(self, count: int = 1, width=(100, '%'), align: str = "center", options: dict = None,
-             profile: Union[bool, dict] = None):
+  def dotted(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -960,11 +982,11 @@ class Delimiter:
 
     Attributes:
     ----------
-    :param count: Integer. Optional. The number of HR tag to be added.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param align: Tuple. Optional. The content position. Values (left, right, center). Default center.
-    :param options: Dictionary. Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param align: Optional. The content position. Values (left, right, center). Default center.
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)

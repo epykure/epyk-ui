@@ -274,7 +274,7 @@ BODY_CONTAINER = None   # The body CSS dictionary
 BODY_STYLE = None
 BACKGROUND = ('greys', 0)
 MEDIA = 600
-
+MENU_ICON_SIZE = -1
 
 # Default CSS
 CSS_EXCEPTIONS = True

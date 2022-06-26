@@ -11,7 +11,7 @@ from epyk.core.js.fncs import JsFncs
 JQUERY_ALIAS = "$"
 
 
-def decorate_var(var_name, convert_var=True):
+def decorate_var(var_name: str, convert_var: bool = True):
   """
   Return the String Jquery variable reference for a given component id
 

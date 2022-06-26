@@ -3,7 +3,7 @@
 
 import os
 
-from typing import Union
+from epyk.core.py import types
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.js import Imports
@@ -45,9 +45,10 @@ class ChartJs:
                                    css=False)
     return self
 
-  def plot(self, record: list = None, y: list = None, x=None, kind: str = "line", profile: Union[dict, bool] = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
-           options: dict = None, html_code: str = None):
+  def plot(self, record: list = None, y: list = None, x: str = None, kind: str = "line",
+           profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+           html_code: str = None) -> graph.GraphChartJs.Chart:
     """
     Description:
     ------------
@@ -61,24 +62,24 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param kind: Optional. The chart type.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-           html_code: str = None):
+  def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+           html_code: str = None) -> graph.GraphChartJs.ChartLine:
     """
     Description:
     ------------
@@ -95,14 +96,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -118,8 +119,9 @@ class ChartJs:
     return line_chart
 
   def timeseries(self, record: list = None, y_columns: list = None, x_axis: str = None,
-                 profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
-                 height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
+                 profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+                 height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+                 html_code: str = None) -> graph.GraphChartJs.ChartLine:
     """
     Description:
     ------------
@@ -136,23 +138,23 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width:  Optional. The width of the component in the page, default (100, '%').
+    :param height:  Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     line = self.line(record, y_columns, x_axis, profile, width, height, options, html_code)
     return line
 
-  def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-          width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-          html_code: str = None):
+  def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+          html_code: str = None) -> graph.GraphChartJs.ChartPie:
     """
     Description:
     ------------
@@ -169,14 +171,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. To set the profiling.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. To set the profiling.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -190,9 +192,9 @@ class ChartJs:
       line_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
     return line_chart
 
-  def donut(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-            html_code: str = None):
+  def donut(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+            html_code: str = None) -> graph.GraphChartJs.ChartPie:
     """
     Description:
     ------------
@@ -209,14 +211,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -235,9 +237,9 @@ class ChartJs:
       pie_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
     return pie_chart
 
-  def area(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-           html_code: str = None):
+  def area(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+           html_code: str = None) -> graph.GraphChartJs.ChartLine:
     """
     Description:
     ------------
@@ -254,14 +256,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -276,8 +278,8 @@ class ChartJs:
       line_chart.dataset().fill = True
     return line_chart
 
-  def step(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
+  def step(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None):
     """
     Description:
@@ -295,14 +297,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -317,9 +319,9 @@ class ChartJs:
       line_chart.dataset().steppedLine = 'before'
     return line_chart
 
-  def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-          width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-          html_code: str = None):
+  def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+          html_code: str = None) -> graph.GraphChartJs.ChartBar:
     """
     Description:
     ------------
@@ -336,14 +338,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -361,9 +363,9 @@ class ChartJs:
     bar_chart.options.scales.x_axes().offset = True
     return bar_chart
 
-  def custom(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-             width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-             html_code: str = None):
+  def custom(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+             html_code: str = None) -> graph.GraphChartJs.ChartExts:
     """
     Description:
     ------------
@@ -380,14 +382,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -442,9 +444,9 @@ class ChartJs:
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-           width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-           html_code: str = None):
+  def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+           html_code: str = None) -> graph.GraphChartJs.ChartHBar:
     """
     Description:
     ------------
@@ -461,14 +463,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis:  Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -488,8 +490,8 @@ class ChartJs:
     return bar_chart
 
   def multi(self, kind: str, record: list = None, y_columns: list = None, x_axis: str = None,
-            profile: Union[dict, bool] = None, options: dict = None, width: Union[tuple, int] = (100, "%"),
-            height: Union[tuple, int] = (330, "px"), html_code: str = None):
+            profile: types.PROFILE_TYPE = None, options: dict = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphChartJs.ChartBar:
     """
     Description:
     ------------
@@ -506,15 +508,15 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param kind: String. The chart type.
-    :param record: List. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param kind: The chart type.
+    :param record: Optional. The Python list of dictionaries.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -530,9 +532,9 @@ class ChartJs:
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
     return bar_chart
 
-  def scatter(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-              html_code: str = None):
+  def scatter(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+              html_code: str = None) -> graph.GraphChartJs.ChartScatter:
     """
     Description:
     ------------
@@ -549,14 +551,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -571,8 +573,9 @@ class ChartJs:
     return line_chart
 
   def bubble(self, record: list = None, y_columns: list = None, x_axis: str = None, r_values: list = None,
-             profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
-             height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
+             profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+             html_code: str = None) -> graph.GraphChartJs.ChartBubble:
     """
     Description:
     ------------
@@ -589,15 +592,15 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param r_values: List
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param r_values: Optional.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -612,9 +615,9 @@ class ChartJs:
       line_chart.add_dataset(d, data['series'][i])
     return line_chart
 
-  def polar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"),
-            options: dict = None, html_code: str = None):
+  def polar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+            options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartPolar:
     """
     Description:
     ------------
@@ -631,14 +634,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -653,9 +656,9 @@ class ChartJs:
       polar_chart.add_dataset(d["data"], d['label'])
     return polar_chart
 
-  def radar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-            width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-            html_code: str = None):
+  def radar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+            html_code: str = None) -> graph.GraphChartJs.ChartRadar:
     """
     Description:
     ------------
@@ -672,14 +675,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -694,8 +697,9 @@ class ChartJs:
       radar_chart.add_dataset(d["data"], d['label'])
     return radar_chart
 
-  def fabric(self, profile: Union[dict, bool] = None, width: Union[tuple, int] = (100, "%"),
-             height: Union[tuple, int] = (330, "px"), options: dict = None, html_code: str = None):
+  def fabric(self, profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+             html_code: str = None) -> graph.GraphChartJs.Fabric:
     """
     Description:
     ------------
@@ -707,11 +711,11 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {}
     width = Arguments.size(width, unit="%")
@@ -720,9 +724,9 @@ class ChartJs:
     component = graph.GraphChartJs.Fabric(self.page, width, height, html_code, options, profile)
     return component
 
-  def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
-              width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (330, "px"), options: dict = None,
-              html_code: str = None):
+  def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+              html_code: str = None) -> graph.GraphChartJs.ChartTreeMap:
     """
     Description:
     ------------
@@ -739,14 +743,14 @@ class ChartJs:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

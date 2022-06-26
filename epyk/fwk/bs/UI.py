@@ -245,7 +245,7 @@ class Components:
     return groups.BsCompLists.Components(self)
 
   @property
-  def buttons(self):
+  def buttons(self) -> groups.BsCompBtns.Components:
     """
     Description:
     ------------

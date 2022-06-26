@@ -14,8 +14,8 @@ class HtmlGeneric(Html.Html):
   name = 'tag'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, page: primitives.PageModel, tag: Union[str], text: Union[str, primitives.HtmlModel], width: tuple,
-               height: tuple, html_code: Optional[str], tooltip: str, options: Optional[dict],
+  def __init__(self, page: primitives.PageModel, tag: Union[str], text: Union[str, list, primitives.HtmlModel],
+               width: tuple, height: tuple, html_code: Optional[str], tooltip: str, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
     self.tag = tag
     super(HtmlGeneric, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},

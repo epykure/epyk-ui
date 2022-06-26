@@ -6,6 +6,7 @@ from epyk.core.html import Html
 from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
 from epyk.core.js import JsUtils
+from epyk.core.css import Defaults_css
 
 from epyk.core.data import events
 from epyk.interfaces.tables import CompTabulator
@@ -282,8 +283,8 @@ class Tables:
           icon = icon[0]
         r = self.page.ui.icons.awesome(
           icon, align="center", tooltip=typ, height=height, width=(15, 'px'), options=options, profile=profile)
-        r.icon.style.css.font_factor(-5)
-        r.style.css.font_factor(-5)
+        r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+        r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         if typ == "Csv":
           r.click([table.js.download("csv", "data.csv")])
         elif typ == "New":
@@ -334,12 +335,12 @@ class Tables:
       container.js.set_columns = table_set_columns
     if getattr(table.options, "dataTree", False):
       expand = container.add_command("fas fa-expand", tooltip="Expand tree table")
-      expand.icon.style.css.font_factor(-5)
+      expand.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       expand.style.css.margin_left = 2
       expand.style.css.margin_right = 2
       expand.click(table.js.getRows().forEach(["row.treeExpand()"], value="row"))
       compress = container.add_command("fas fa-compress", tooltip="Collapse tree table")
-      compress.icon.style.css.font_factor(-5)
+      compress.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       compress.style.css.margin_left = 2
       compress.style.css.margin_right = 2
       compress.click(table.js.getRows().forEach(["row.treeCollapse()"], value="row"))

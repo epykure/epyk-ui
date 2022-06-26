@@ -12,6 +12,7 @@ from epyk.core.html import Defaults
 from epyk.core.html.options import OptInputs
 
 #
+from epyk.core.js import packages
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlInput
 from epyk.core.js.objects import JsComponents
@@ -61,8 +62,6 @@ class Input(Html.Html):
     Description:
     -----------
     Property to set all the input component properties.
-
-    :rtype: OptInputs.OptionsInput
     """
     return super().options
 
@@ -72,8 +71,6 @@ class Input(Html.Html):
     Description:
     -----------
     Specific Javascript function for the input object.
-
-    :rtype: JsHtmlField.InputText
     """
     if self._js is None:
       self._js = JsHtmlField.InputText(self, page=self.page)
@@ -106,8 +103,6 @@ class Input(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsInput.ClassInput
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInput(self)
@@ -276,6 +271,35 @@ class Input(Html.Html):
         del self.attr["readonly"]
 
     return self
+
+  @packages.packageImport('jqueryui', 'jqueryui')
+  def autocomplete(self, values: List[str], options: dict = None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      input = page.ui.inputs.input("test autocomplete")
+      input.autocomplete(["AAAAA", "AAABBB", "AAACCC"])
+      input.focus(options={"reset": True})
+
+    Related Pages:
+
+      https://jqueryui.com/autocomplete/
+
+    Attributes:
+    ----------
+    :param values:
+    :param options:
+    """
+    if self.attr["type"] != "text":
+      raise ValueError("Autocomplete can only be used with input text components")
+    values = JsUtils.jsConvertData(values, None)
+    options = options or {}
+    self.page.body.onReady('''
+%s.autocomplete(Object.assign({source: %s}, %s))
+''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), values, options))
 
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
@@ -459,8 +483,6 @@ class InputTime(Input):
     Description:
     ------------
     The Javascript Dom object.
-
-    :rtype: JsHtmlJqueryUI.JsHtmlTimePicker
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, page=self.page)
@@ -473,8 +495,6 @@ class InputTime(Input):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsTimepicker.Timepicker
     """
     if self._js is None:
       self._js = JsTimepicker.Timepicker(self, page=self.page)

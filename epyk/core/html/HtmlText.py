@@ -13,6 +13,7 @@ from epyk.core.html import Defaults as Default_html
 
 # The list of Javascript classes
 from epyk.core.js.objects import JsNodeDom
+from epyk.core.js.packages import JsCompNumber
 from epyk.core.js.html import JsHtml
 from epyk.core.css.styles import GrpCls
 
@@ -880,6 +881,19 @@ class Numeric(Html.Html):
       self._dom = JsHtml.JsHtmlNumeric(self, page=self.page)
     return self._dom
 
+  @property
+  def js(self) -> JsCompNumber.CompNumber:
+    """
+    Description:
+    -----------
+    Return the Javascript internal object.
+
+    :return: A Javascript object
+    """
+    if self._js is None:
+      self._js = JsCompNumber.CompNumber(page=self.page, selector=self.dom.varId, set_var=False, component=self)
+    return self._js
+
   def to(self, number: int, timer: int = 1):
     """
     Description:
@@ -919,8 +933,7 @@ class Numeric(Html.Html):
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
     :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
     """
-    self.style.css.cursor = "pointer"
-    self.style.add_classes.div.border_hover()
+    self.style.add_classes.div.color_hover()
     return super(Numeric, self).click(js_funcs, profile, source_event, on_ready)
 
   @property

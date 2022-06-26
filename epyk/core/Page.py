@@ -263,14 +263,14 @@ class Report:
   ext_packages = None    # For extension modules
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
-  def __init__(self, inputs: Optional[dict] = None):
+  def __init__(self, inputs: dict = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Optional[dict] inputs: The global input data for the defined components in the page.
+    :param inputs: The global input data for the defined components in the page.
                                   Passing data for a given component with an htmlCode will override the value.
     """
     self._css = {}
@@ -280,6 +280,7 @@ class Report:
           # JavaScript framework triggered after the HTML. Impact the entire page
           'onReady': OrderedSet(),
           'events': {},
+          'functions': {},
           # Local worker sections
           'workers': {},
           # Static and generic builders

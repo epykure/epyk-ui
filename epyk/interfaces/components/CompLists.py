@@ -6,6 +6,7 @@ from typing import Union
 from epyk.core import html
 from epyk.core.py import primitives, types
 from epyk.core.html import Defaults
+from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
 
@@ -136,7 +137,7 @@ class Lists:
     html.Html.set_component_skin(html_select)
     return html_select
 
-  def item(self, text: str = None, tag=None, options: dict = None):
+  def item(self, text: str = None, tag: str = None, options: dict = None) -> html.HtmlList.Li:
     """
     Description:
     ------------
@@ -668,6 +669,7 @@ class Lists:
     """
     Description:
     ------------
+    Create a dropdown item.
 
     Underlying HTML Objects:
 
@@ -983,8 +985,8 @@ class Lists:
         r = self.page.ui.icons.awesome(
           icon, text=typ, align="center", height=height, width=(35, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-4)
-        r.style.css.font_factor(-3)
+        r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+        r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.span.style.css.margin = "0 0 -3px -3px"
         if typ == "Add&nbsp;":
           r.click([
@@ -1008,8 +1010,8 @@ class Lists:
       r = self.page.ui.icons.awesome(
         "save", align="center", text="Save", height=height, width=(35, 'px'), options=options, profile=profile)
       r.span.style.css.line_height = r.style.css.height
-      r.icon.style.css.font_factor(-5)
-      r.style.css.font_factor(-5)
+      r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+      r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       r.span.style.css.margin = "0 2px -3px -3px"
       r.click([
         r.dom.css({"background": self.page.theme.success.light, "border-radius": "10px"}).r,

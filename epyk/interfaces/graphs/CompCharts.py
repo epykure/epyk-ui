@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from epyk.core.py import types
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.css import Defaults_css
 
 from epyk.interfaces.graphs import CompChartsApex
 from epyk.interfaces.graphs import CompChartsBillboard
@@ -36,8 +37,8 @@ class Graphs:
     self.line = dflt_chart_fam.line
 
   def plot(self, pkg: str = "apex", record=None, y: list = None, x: str = None, kind: str = "line",
-           profile: Union[dict, bool] = None, width: Union[int, tuple] = (100, "%"),
-           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
+           profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
            html_code: str = None):
     """
     Description:
@@ -49,16 +50,16 @@ class Graphs:
 
     Attributes:
     ----------
-    :param pkg: String. Optional. The external chart package reference. Default ApexCharts.
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param pkg: Optional. The external chart package reference. Default ApexCharts.
+    :param record: Optional. The list of dictionaries with the input data.
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param kind: Optional. The chart type.
+    :param profile:  Optional. A flag to set the component performance storage.
+    :param width: Optional. The width of the component in the page, default (100, '%').
+    :param height: Optional. The height of the component in the page, default (330, "px").
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     if y is not None and not isinstance(y, list):
       y = [y]
@@ -67,8 +68,8 @@ class Graphs:
                                     options=options, html_code=html_code)
 
   def skillbars(self, records=None, y_column: str = None, x_axis: str = None, title: str = None,
-                width: Union[int, tuple] = (100, '%'), height: Union[int, tuple] = (None, 'px'), html_code: str = None,
-                options: dict = None, profile: Union[dict, bool] = False):
+                width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+                options: dict = None, profile: types.PROFILE_TYPE = False) -> html.HtmlEvent.SkillBar:
     """
     Description:
     ------------
@@ -90,15 +91,15 @@ class Graphs:
 
     Attributes:
     ----------
-    :param records: Array<dict>. Optional. The Python list of dictionaries.
+    :param records: Optional. The Python list of dictionaries.
     :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
     :param title: Optional. The chart title.
     :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if y_column is None or x_axis is None:
       raise ValueError("seriesName and axis must be defined")
@@ -112,8 +113,8 @@ class Graphs:
     return html_skillbar
 
   def sparkline(self, chart_type: str, data, title: str = None, options: dict = None,
-                width: Union[int, tuple] = (None, "%"), height: Union[int, tuple] = (None, "px"),
-                profile: Union[dict, bool] = False):
+                width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
+                profile: types.PROFILE_TYPE = False) -> html.graph.GraphSparklines.Sparklines:
     """
     Description:
     ------------
@@ -134,11 +135,11 @@ class Graphs:
     ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
     :param data: String. A String corresponding to a JavaScript object.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: A python Sparkline object
     """
@@ -498,8 +499,8 @@ class Graphs:
     """
     return CompChartsVega.VegaEmbedded(self)
 
-  def menu(self, chart: html.Html.Html, height: Union[int, tuple] = (18, 'px'), options: dict = None,
-           post: Union[list, str] = None, profile: Union[dict, bool] = None):
+  def menu(self, chart: html.Html.Html, height: types.SIZE_TYPE = (18, 'px'), options: dict = None,
+           post: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
     """
     Description:
     -----------
@@ -524,8 +525,8 @@ class Graphs:
         r = self.page.ui.icons.awesome(
           icon, align="center", tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
-        r.icon.style.css.font_factor(-4)
-        r.style.css.font_factor(-3)
+        r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
+        r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.margin_left = 5
         r.style.css.margin_right = 5
         if typ == "Csv":
@@ -559,7 +560,7 @@ class Chart2d:
 
       https://plotly.com/javascript/
 
-    :return: A Python Plolty object
+    :return: A Python Plotly object
     """
     return CompChartsPlotly.Plotly2D(self)
 

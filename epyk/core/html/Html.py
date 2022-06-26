@@ -1125,7 +1125,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def add_style(self, css_classes: Optional[Union[str, list]] = None, css_attrs: Optional[dict] = None,
-                clear_first: bool = False):
+                clear_first: bool = False, keep_css_keys: Optional[tuple] = ("width", "height")):
     """
     Description:
     ------------
@@ -1138,9 +1138,16 @@ class Html(primitives.HtmlModel):
     :param css_classes: Optional. The CSS class reference.
     :param css_attrs: Optional. The CSS attributes.
     :param clear_first: Optional. Remove all the predefined CSS Inline style and classes for the component.
+    :param keep_css_keys: Optional. List of attributes to maintain (default width and height).
     """
     if clear_first:
       self.attr["class"].clear()
+      if keep_css_keys is not None:
+        if css_attrs is None:
+          css_attrs = {}
+        for css_key in keep_css_keys:
+          if css_key in self.attr["css"]:
+            css_attrs[css_key] = self.attr["css"][css_key]
       self.style.clear_style()
     if not isinstance(css_classes, list):
       css_classes = [css_classes]
@@ -2254,9 +2261,9 @@ class Component(Html):
                options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
                css_attrs: Optional[dict] = None):
     super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
-    self.style.clear_style()   # Clear all default CSS styles.
+    self.style.clear_style(persist_attrs=css_attrs)   # Clear all default CSS styles.
     if self.css_classes is not None:
-      self.add_style(self.css_classes, clear_first=True)
+      self.add_style(self.css_classes, clear_first=True, css_attrs=css_attrs, keep_css_keys=None)
     self.items = []
 
   @property
