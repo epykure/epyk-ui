@@ -6,6 +6,19 @@
 
 ### Fixed
 
+
+## [1.7.25] - 2022-06-26
+
+### Added
+- More documentation
+- Add more type hints
+
+### Changed
+- Type argument name to category
+
+### Fixed
+- Menu issues
+
 ## [1.7.24] - 2022-06-16
 
 ### Added
