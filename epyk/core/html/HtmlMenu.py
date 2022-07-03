@@ -38,8 +38,6 @@ class HtmlNavBar(Html.Html):
     Description:
     -----------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsMenu.ClassNav
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassNav(self)
@@ -85,7 +83,7 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param bool to_top: Optional. To define if the padding must be removed.
+    :param to_top: Optional. To define if the padding must be removed.
     """
     self.background = False
     self.style.css.background_color = "#11ffee00"
@@ -112,9 +110,9 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: Internal component to the framework.
-    :param Optional[dict] css: Optional. The CSS attributes.
-    :param bool prepend: Optional.
+    :param component: Internal component to the framework.
+    :param css: Optional. The CSS attributes.
+    :param prepend: Optional.
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.text(component, width=("auto", ''))
@@ -151,7 +149,7 @@ class HtmlNavBar(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Html.Html, str] text: The link to be added to the navbar.
+    :param text: The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
       text = self.page.ui.text(text)
@@ -219,8 +217,6 @@ class HtmlFooter(Html.Html):
     Description:
     -----------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsMenu.ClassFooter
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassFooter(self)
@@ -243,7 +239,7 @@ class HtmlFooter(Html.Html):
 
     Attributes:
     ----------
-    :param int i: the column index.
+    :param i: the column index.
     """
     return self.val[i]
 
@@ -283,8 +279,6 @@ class ContextMenu(Html.Html):
     Description:
     -----------
     Component options.
-
-    :rtype: OptList.OptionsLi
     """
     return super().options
 
@@ -304,8 +298,8 @@ class ContextMenu(Html.Html):
 
     Attributes:
     ----------
-    :param str value:
-    :param str icon: Optional. The Font awesome icon.
+    :param value:
+    :param icon: Optional. The Font awesome icon.
     """
     self += {"value": value, 'icon': icon}
     return self
@@ -317,7 +311,7 @@ class ContextMenu(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: Internal component to the framework.
+    :param component: Internal component to the framework.
     """
     self.__add__(component)
     return self.val[-1].val
@@ -329,7 +323,7 @@ class ContextMenu(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: The new HTML component to be added to the main component.
+    :param component: The new HTML component to be added to the main component.
     """
     if not hasattr(component, 'options'):
       if isinstance(component, dict):
@@ -416,8 +410,8 @@ class PanelsBar(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The anchor visible linked to a panel.
-    :param Html.Html content: The panel.
+    :param text: The anchor visible linked to a panel.
+    :param content: The panel.
     """
     content.style.css.padding = "0 5px"
     if not hasattr(text, 'options'):
@@ -482,8 +476,6 @@ class Shortcut(Html.Html):
     Description:
     -----------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsMenu.ClassShortcut
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassShortcut(self)
@@ -524,11 +516,11 @@ class Shortcut(Html.Html):
 
     Attributes:
     ----------
-    :param str icon: The component icon content from font-awesome references
-    :param Optional[str] path: Optional.
-    :param str align: Optional. A string with the horizontal position of the component
-    :param tuple width: Optional. A tuple with the integer for the component width and its unit
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit
+    :param icon: The component icon content from font-awesome references
+    :param path: Optional.
+    :param align: Optional. A string with the horizontal position of the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     """
     self.logo = self.page.ui.img(icon, path=path, align=align, width=width, height=height)
     self.logo.options.managed = False

@@ -89,8 +89,14 @@ class CatalogDiv(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesDiv.CssDivBoxCenter)
 
-  def color_hover(self) -> CssStylesDivEvents.CssDivOnHover:
+  def color_hover(self, color: str = None) -> CssStylesDivEvents.CssDivOnHover:
     """ Change the color when the mouse is on the component """
+    if color is not None:
+      cssObj = CssStylesDivEvents.CssDivOnHover(self.page, html_id=self._html_id)
+      cssObj.classname = "%s_%s" % (cssObj.classname, color.replace("#", ""))
+      cssObj.hover.css({"color": color}, important=True)
+      return self._add_class(cssObj)
+
     return self._set_class(CssStylesDivEvents.CssDivOnHover)
 
   def danger_hover(self):

@@ -36,8 +36,6 @@ class ExternalLink(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlLink
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlLink(self, page=self.page)
@@ -49,8 +47,6 @@ class ExternalLink(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsLink
     """
     return super().options
 

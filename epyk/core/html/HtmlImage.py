@@ -56,8 +56,6 @@ class Image(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlImg
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlImg(self, page=self.page)
@@ -354,7 +352,7 @@ class ImgCarousel(Html.Html):
     Attributes:
     ----------
     :param values:
-    :param Union[str, tuple] width: Optional.
+    :param width: Optional.
 
     :return: self to allow the chaining.
     """
@@ -498,8 +496,6 @@ class Icon(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlIcon
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlIcon(self, page=self.page)
@@ -511,8 +507,6 @@ class Icon(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsImage.ClassIcon
     """
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassIcon(self)
@@ -788,8 +782,6 @@ class Emoji(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -853,8 +845,6 @@ class Badge(Html.Html):
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtml(component=self, page=self.page)
@@ -867,8 +857,6 @@ class Badge(Html.Html):
     Description:
     ------------
     Property to the options specific to the HTML component.
-
-    :rtype: OptButton.OptionsBadge
     """
     return super().options
 
@@ -945,8 +933,6 @@ class SlideShow(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsImage.ClassTinySlider
     """
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassTinySlider(self)
@@ -971,8 +957,6 @@ class SlideShow(Html.Html):
     Return the Javascript internal object.
 
     :return: A Javascript object
-
-    :rtype: JsTinySlider.TinySlider
     """
     if self._js is None:
       self._js = JsTinySlider.TinySlider(page=self.page, js_code=self.jsonId, set_var=False, component=self)
@@ -987,8 +971,6 @@ class SlideShow(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtmlTinySlider.JsHtmlTinySlider
     """
     if self._dom is None:
       self._dom = JsHtmlTinySlider.JsHtmlTinySlider(self, page=self.page)
@@ -1355,8 +1337,6 @@ class SlideShow(Html.Html):
     Related Pages:
 
       https://github.com/ganlanyuan/tiny-slider
-
-    :rtype: OptImg.OptionsTinySlider
     """
     return super().options
 
@@ -1379,7 +1359,7 @@ class SlideShow(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: A component to be added to the slider container
+    :param component: A component to be added to the slider container
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)

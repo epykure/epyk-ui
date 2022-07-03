@@ -30,9 +30,9 @@ class DataHeader(GraphPlotly.DataChart):
     Description:
     ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataMarkersLine
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
@@ -42,9 +42,9 @@ class DataHeader(GraphPlotly.DataChart):
     Description:
     ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataFont
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("font", GraphPlotly.DataFont)
 
@@ -54,9 +54,9 @@ class DataHeader(GraphPlotly.DataChart):
     Description:
     ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataFill
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("fill", GraphPlotly.DataFill)
 
@@ -85,29 +85,33 @@ class DataCells(GraphPlotly.DataChart):
     Description:
     ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataMarkersLine
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("line", GraphPlotly.DataMarkersLine)
 
   @property
   def font(self) -> GraphPlotly.DataFont:
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataFont
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("font", GraphPlotly.DataFont)
 
   @property
   def fill(self) -> GraphPlotly.DataFill:
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: GraphPlotly.DataFill
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("fill", GraphPlotly.DataFill)
 
@@ -136,8 +140,9 @@ class DataTable(GraphPlotly.DataChart):
   @property
   def domain(self) -> DataDomain:
     """
+    Description:
+    ------------
 
-    :rtype: DataDomain
     """
     return self.sub_data("domain", DataDomain)
 
@@ -164,20 +169,24 @@ class DataTable(GraphPlotly.DataChart):
   @property
   def header(self) -> DataHeader:
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: DataHeader
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("header", DataHeader)
 
   @property
   def cells(self) -> DataCells:
     """
+    Description:
+    ------------
 
-    https://plot.ly/javascript/bubble-maps/
+    Related Pages:
 
-    :rtype: DataCells
+      https://plot.ly/javascript/bubble-maps/
     """
     return self.sub_data("cells", DataCells)
 
@@ -193,11 +202,9 @@ class Table(GraphPlotly.Chart):
     """
     Description:
     ------------
-
-    :rtype: JsPlotly.Pie
     """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(self.page, varName=self.chartId)
+      self._chart = JsPlotly.Pie(self, js_code=self.chartId, page=self.page)
     return self._chart
 
   @property
@@ -206,7 +213,6 @@ class Table(GraphPlotly.Chart):
     Description:
     ------------
 
-    :rtype: GraphPlotly.Layout
     """
     if self._layout is None:
       self._layout = GraphPlotly.Layout(self, page=self.page)
@@ -216,13 +222,14 @@ class Table(GraphPlotly.Chart):
   def data(self):
     return self._traces[-1]
 
-  def headers_color(self, colors):
+  def headers_color(self, colors: list):
     """
     Description:
     ------------
     Set the background color of the header
 
-
+    Attributes:
+    ----------
     :param colors:
     """
     self.data.header.fill.color = colors
@@ -233,6 +240,8 @@ class Table(GraphPlotly.Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param colors:
     """
     self.data.header.font.color = colors
@@ -243,6 +252,8 @@ class Table(GraphPlotly.Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param colors:
     """
     self.data.cells.fill.color = colors
@@ -253,16 +264,20 @@ class Table(GraphPlotly.Chart):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param colors:
     """
     self.data.cells.font.color = colors
     return self
 
-  def add_trace(self, data, type='table', mode=None):
+  def add_trace(self, data, type: str = 'table', mode=None):
     """
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param data:
     :param type:
     :param mode:

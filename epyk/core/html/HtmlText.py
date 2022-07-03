@@ -51,8 +51,6 @@ class Label(Html.Html):
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -76,8 +74,6 @@ class Label(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 

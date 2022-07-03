@@ -21,7 +21,7 @@ class Component:
 
     Attributes:
     ----------
-    :param str name: The name of the file.
+    :param name: The name of the file.
     """
     self.name = name.capitalize()
     self.folder = self.name.lower()
@@ -45,7 +45,7 @@ class Component:
 
     Attributes:
     ----------
-    :param Optional[str] name: Optional. The component name. Can be set to define test components.
+    :param name: Optional. The component name. Can be set to define test components.
     """
     if name is not None:
       self.rename(name)

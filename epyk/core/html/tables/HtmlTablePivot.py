@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
+
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
@@ -13,7 +15,7 @@ from epyk.core.css.styles import GrpClsTable
 
 class PivotAggregator:
 
-  def __init__(self, page: primitives.PageModel, options: dict):
+  def __init__(self, page: primitives.PageModel, options: Union[OptTable.OptionsPivot, dict]):
     self.page, self.options = page, options
 
   def sumOverSum(self, cols: list):
@@ -25,7 +27,7 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param cols: List. The columns to be added up.
+    :param cols: The columns to be added up.
     """
     cols = JsUtils.jsConvertData(cols, None)
     self.options.aggregator = '$.pivotUtilities.aggregators["Sum over Sum"](%s)' % cols
@@ -41,7 +43,7 @@ class PivotAggregator:
     self.options.aggregator = '$.pivotUtilities.aggregators["Count"]()'
     self.options.aggregatorName = "Count"
 
-  def sum(self, col1):
+  def sum(self, col1: str):
     """
     Description:
     ------------
@@ -50,13 +52,13 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1: String. The column name.
+    :param col1: The column name.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     self.options.aggregator = '$.pivotUtilities.aggregators["Sum"]([%s])' % col1
     self.options.aggregatorName = "Sum"
 
-  def max(self, col1):
+  def max(self, col1: str):
     """
     Description:
     ------------
@@ -65,11 +67,11 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1: String. The column name.
+    :param col1: The column name.
     """
     self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)", "Max")
 
-  def min(self, col1):
+  def min(self, col1: str):
     """
     Description:
     ------------
@@ -78,11 +80,11 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1: String. The column name.
+    :param col1: The column name.
     """
     self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)", "Min")
 
-  def absSum(self, col1):
+  def absSum(self, col1: str):
     """
     Description:
     ------------
@@ -95,7 +97,7 @@ class PivotAggregator:
     """
     self.singleFactorFormulas(col1, "+= Math.abs(col1)", "sum (abs)")
 
-  def quick(self, col1, name, formula):
+  def quick(self, col1: str, name: str, formula: str):
     """
     Description:
     ------------
@@ -108,9 +110,9 @@ class PivotAggregator:
 
     Attributes:
     ----------
-    :param col1: String. The column name.
-    :param name: String. The function name.
-    :param formula: String. The formula to be applied.
+    :param col1: The column name.
+    :param name: The function name.
+    :param formula: The formula to be applied.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     fnc = '''function(attributeArray) { 
@@ -129,7 +131,7 @@ return function(){
     self.options.aggregatorName = name  # "diff Abs Agg"
     self.options.aggregator = "$.pivotUtilities.aggregators['%(name)s']()" % {"name": name}
 
-  def singleFactorFormulas(self, col1, formula, name):
+  def singleFactorFormulas(self, col1: str, formula: str, name: str):
     """
     Description:
     ------------
@@ -143,9 +145,9 @@ return function(){
 
     Attributes:
     ----------
-    :param col1: String. The column name.
-    :param formula: String. The formula to be applied.
-    :param name: String. The function name.
+    :param col1: The column name.
+    :param formula: The formula to be applied.
+    :param name: The function name.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     fnc = '''function(attributeArray) { 
@@ -161,7 +163,7 @@ return function(data, rowKey, colKey) {
     self.options.aggregatorName = name # "diff Abs Agg"
     self.options.aggregator = "$.extend($.pivotUtilities.aggregators, {'%(name)s': function(){return %(fnc)s}() })['%(name)s']([%(col)s])" % {"name": name, "fnc": fnc, "col": col1}
 
-  def twoFactorFormulas(self, col1, col2, name, formula):
+  def twoFactorFormulas(self, col1: str, col2: str, name: str, formula: str):
     """
     Description:
     ------------
@@ -176,10 +178,10 @@ return function(data, rowKey, colKey) {
 
     Attributes:
     ----------
-    :param col1: String. The column name.
-    :param col2: String. The column name.
-    :param name: String. The function name.
-    :param formula: String. The formula to be applied.
+    :param col1: The column name.
+    :param col2: The column name.
+    :param name: The function name.
+    :param formula: The formula to be applied.
     """
     col1 = JsUtils.jsConvertData(col1, None)
     col2 = JsUtils.jsConvertData(col2, None)
@@ -197,7 +199,7 @@ return function(data, rowKey, colKey) {
     self.options.aggregator = "$.extend($.pivotUtilities.aggregators, {'%(name)s': function(){return %(fnc)s}() })['%(name)s']([%(col1)s, %(col2)s])" % {"name": name, "fnc": fnc, "col1": col1, "col2": col2}
     self.options.aggregatorName = "diff Abs Agg"
 
-  def diffAbsolute(self, col1, col2, formula="+= col1 - col2"):
+  def diffAbsolute(self, col1: str, col2: str, formula: str = "+= col1 - col2"):
     """
     Description:
     ------------
@@ -206,13 +208,13 @@ return function(data, rowKey, colKey) {
 
     Attributes:
     ----------
-    :param col1: String. The column name.
-    :param col2: String. The column name.
-    :param formula: String. The formula to be applied.
+    :param col1: The column name.
+    :param col2: The column name.
+    :param formula: The formula to be applied.
     """
     self.twoFactorFormulas(col1, col2, "diff Abs Agg", formula)
 
-  def custom(self, name, js_def):
+  def custom(self, name: str, js_def: str):
     """
     Description:
     ------------
@@ -226,8 +228,8 @@ return function(data, rowKey, colKey) {
 
     Attributes:
     ----------
-    :param name: String. The function name.
-    :param js_def: String. The function definition
+    :param name: The function name.
+    :param js_def: The function definition
     """
     self.page.properties.js.add_builders("$.pivotUtilities.aggregators['%(name)s'] = %(fnc)s" % {
       "name": name, "fnc": js_def.strip()})
@@ -441,7 +443,7 @@ class PivotRendererPlotly:
 
 class PivotRenderer:
 
-  def __init__(self, page: primitives.PageModel, options: dict):
+  def __init__(self, page: primitives.PageModel, options: Union[OptTable.OptionsPivot, dict]):
     self.page, self.options = page, options
 
   def table(self):
@@ -553,8 +555,6 @@ class PivotTable(Html.Html):
     Property to the CSS Style of the component.
 
     Usage::
-
-    :rtype: GrpClsTable.Pivot
     """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Pivot(self)
@@ -568,8 +568,6 @@ class PivotTable(Html.Html):
     Pivot Table options.
 
     Usage::
-
-    :rtype: OptTable.OptionsPivot
     """
     return super().options
 
@@ -634,7 +632,6 @@ class PivotUITable(PivotTable):
 
     Usage::
 
-    :rtype: OptTable.OptionsPivotUI
     """
     return super().options
 

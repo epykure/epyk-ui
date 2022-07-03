@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptNet
@@ -45,8 +46,6 @@ class Comments(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptNet.OptionsChat
     """
     return super().options
 
@@ -59,8 +58,6 @@ class Comments(Html.Html):
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object
-
-    :rtype: JsComponents.Chat
     """
     if self._js is None:
       self._js = JsComponents.Chat(self, page=self.page)
@@ -94,13 +91,13 @@ class Comments(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The text message.
-    :param str time: the timestamp.
+    :param text: The text message.
+    :param time: the timestamp.
     """
     self.val.append({"text": text, "time": time})
     return self
 
-  def enter(self, js_funcs=None, profile: Optional[Union[bool, dict]] = None,
+  def enter(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -109,10 +106,10 @@ class Comments(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -126,7 +123,7 @@ class Comments(Html.Html):
       self.input.dom.empty()], profile, source_event, on_ready)
     return self
 
-  def send(self, socket, channel=None, js_funcs=None, profile=None):
+  def send(self, socket, channel=None, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -135,8 +132,8 @@ class Comments(Html.Html):
     ----------
     :param socket:
     :param channel:
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -166,11 +163,11 @@ class Comments(Html.Html):
     Attributes:
     ----------
     :param socket: Socket. A python socket object
-    :param channel: String. The channel on which events will be received
+    :param channel: The channel on which events will be received
     :param data:
-    :param options: Dictionary.
+    :param options:
     :param js_funcs:
-    :param profile: Boolean | Dictionary.
+    :param profile:
     """
     if data is None:
       data = socket.message
@@ -215,8 +212,6 @@ class Bot(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsNetwork.ClassNetworkBot
     """
     if self._styleObj is None:
       self._styleObj = GrpClsNetwork.ClassNetworkBot(self)
@@ -293,8 +288,6 @@ class Chat(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptNet.OptionsChat
     """
     return super().options
 
@@ -305,8 +298,6 @@ class Chat(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsComponents.Chat
     """
     if self._js is None:
       self._js = JsComponents.Chat(self, page=self.page)
@@ -334,10 +325,10 @@ class Chat(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -355,8 +346,8 @@ class Chat(Html.Html):
     ----------
     :param socket:
     :param channel:
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -381,11 +372,11 @@ class Chat(Html.Html):
     Attributes:
     ----------
     :param socket: Socket. A python socket object
-    :param channel: String. The channel on which events will be received
+    :param channel: The channel on which events will be received
     :param data:
-    :param options: Dictionary.
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options:
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if data is None:
       data = socket.message
@@ -429,8 +420,6 @@ class Alert(Html.Html):
 
       danger = page.ui.network.warning()
       danger.options.time = None
-
-    :rtype: OptNet.OptionsAlert
     """
     return super().options
 
@@ -489,8 +478,6 @@ class News(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsComponents.News
     """
     if self._js is None:
       self._js = JsComponents.News(self, page=self.page)
@@ -505,8 +492,6 @@ class News(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptNet.OptionsNews
     """
     return super().options
 
@@ -552,8 +537,6 @@ class Room(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsComponents.Room
     """
     if self._js is None:
       self._js = JsComponents.Room(self, page=self.page)
@@ -632,8 +615,6 @@ class DropFile(Html.Html):
     Description:
     ------------
 
-
-    :rtype: JsHtmlNetwork.JsHtmlDropFiles
     """
     if self._dom is None:
       self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, page=self.page)
@@ -648,8 +629,6 @@ class DropFile(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptNet.OptionFiles
     """
     return super().options
 
@@ -661,7 +640,7 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param str url: The transfer end point on the server.
+    :param url: The transfer end point on the server.
     """
     # TODO add if else statement for the allowed and forbidden extensions
     form_data = self.page.js.data.formdata.get("form_data")
@@ -682,11 +661,11 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. The Javascript series of functions.
-    :param js_data: Data. Optional. A datamap objection of a dictionary.
-    :param components: List. The different HTML objects to be added to the component.
-    :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript series of functions.
+    :param js_data: Optional. A datamap objection of a dictionary.
+    :param components: The different HTML objects to be added to the component.
+    :param prevent_default: Optional. Prevent default on the JavaScript event.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: Return self to allow the chaining
     """
@@ -721,7 +700,7 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param label: String. Optional.
+    :param label: Optional.
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
@@ -741,11 +720,11 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List. The Javascript series of functions.
-    :param js_data: String. Optional. A datamap objection of a dictionary.
-    :param components: List. The different HTML objects to be added to the component.
-    :param prevent_default: Boolean. Optional. Prevent default on the JavaScript event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript series of functions.
+    :param js_data: Optional. A datamap objection of a dictionary.
+    :param components: Optional. The different HTML objects to be added to the component.
+    :param prevent_default: Optional. Prevent default on the JavaScript event.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     from epyk.core.data import events
 
@@ -773,10 +752,10 @@ class DropFile(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param components: List. The different HTML objects to be added to the component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The source target for the event.
+    :param js_funcs: Javascript functions.
+    :param components: The different HTML objects to be added to the component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The source target for the event.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

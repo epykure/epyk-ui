@@ -54,8 +54,6 @@ class Popup(Html.Html):
     Specific JavaScript features for the popup component.
 
     :return: A Javascript object
-
-    :rtype: JsHtmlPopup.JsHtmlPopup
     """
     if self._js is None:
       self._js = JsHtmlPopup.JsHtmlPopup(page=self.page, component=self)
@@ -70,7 +68,7 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: The component to be added to the underlying list.
+    :param component: The component to be added to the underlying list.
     """
     return self.container.add(component)
 
@@ -82,7 +80,7 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param List[Html.Html] components: The component to be added to the underlying list.
+    :param components: The component to be added to the underlying list.
     """
     return self.container.extend(components)
 
@@ -94,8 +92,8 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param int n: The position in the popup.
-    :param Html.Html component: The component to be added to the underlying list.
+    :param n: The position in the popup.
+    :param component: The component to be added to the underlying list.
     """
     return self.container.insert(n, component)
 
@@ -105,8 +103,6 @@ class Popup(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    :rtype: OptPanel.OptionPopup
     """
     return self.__options
 
@@ -119,12 +115,12 @@ class Popup(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The value to be displayed to the component.
-    :param str align: Optional. The text-align property within this component.
-    :param Optional[int] level: Optional.
-    :param Optional[dict] css: Optional. The CSS attributes to be added to the HTML component
-    :param str position: Optional. The position compared to the main component tag.
-    :param Optional[dict] options: Specific Python options available for this component.
+    :param text: The value to be displayed to the component.
+    :param align: Optional. The text-align property within this component.
+    :param level: Optional.
+    :param css: Optional. The CSS attributes to be added to the HTML component
+    :param position: Optional. The position compared to the main component tag.
+    :param options: Specific Python options available for this component.
     """
     if not hasattr(text, 'options'):
       title = self.page.ui.title(text, align=align, level=level, options=options)

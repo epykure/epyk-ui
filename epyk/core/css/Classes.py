@@ -1,5 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import base64
+import os
 
 from epyk.core.js import Imports
 
@@ -64,7 +66,8 @@ class Catalog:
     self.page, self.__class_list = page, classList
     self.__ctx = {}
 
-  def font_face(self, font_family, src, stretch="normal", style="normal", weight="normal"):
+  def font_face(self, font_family: str, src: str, stretch: str = "normal", style: str = "normal",
+                weight: str = "normal"):
     """
     Description:
     ------------
@@ -84,16 +87,16 @@ class Catalog:
 
     Attributes:
     ----------
-    :param font_family: String. Required. Defines the name of the font.
-    :param src: String. Required. Defines the URL(s) where the font should be downloaded from.
-    :param stretch: String. Optional. Defines how the font should be stretched. Default value is "normal".
-    :param style: String. Optional. Defines how the font should be styled. Default value is "normal".
-    :param weight: String. Optional. Defines the boldness of the font. Default value is "normal".
+    :param font_family: Defines the name of the font.
+    :param src: Defines the URL(s) where the font should be downloaded from.
+    :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
+    :param style: Optional. Defines how the font should be styled. Default value is "normal".
+    :param weight: Optional. Defines the boldness of the font. Default value is "normal".
     """
     self.page.properties.css.font_face(font_family, src, stretch, style, weight)
     return self
 
-  def _class_type(self, cls_type):
+  def _class_type(self, cls_type: str):
     """
     Description:
     ------------
@@ -103,7 +106,7 @@ class Catalog:
 
     Attributes:
     ----------
-    :param cls_type: String. The alias of the class other or main.
+    :param cls_type: The alias of the class other or main.
     """
     self.__class_list_type = self.__class_list[cls_type]
     return self
@@ -139,7 +142,7 @@ class Catalog:
     return self.__class_list_type
 
   @property
-  def std(self):
+  def std(self) -> CatalogStd.CatalogStd:
     """
     Description:
     ------------
@@ -153,15 +156,13 @@ class Catalog:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/utilities/spacing/
-
-    :rtype: CatalogStd.CatalogSt
     """
     if "std" not in self.__ctx:
       self.__ctx['std'] = CatalogStd.CatalogStd(self.page, self.__class_list)
     return self.__ctx['std']
 
   @property
-  def button(self):
+  def button(self) -> CatalogButton.CatalogButton:
     """
     Description:
     ------------
@@ -171,15 +172,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.button)
-
-    :rtype: CatalogButton.CatalogButton
     """
     if "button" not in self.__ctx:
       self.__ctx['button'] = CatalogButton.CatalogButton(self.page, self.__class_list_type)
     return self.__ctx['button']
 
   @property
-  def select(self):
+  def select(self) -> CatalogSelect.CatalogSelect:
     """
     Description:
     ------------
@@ -189,15 +188,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.select)
-
-    :rtype: CatalogMedia.CatalogSelect
     """
     if "select" not in self.__ctx:
       self.__ctx['select'] = CatalogSelect.CatalogSelect(self.page, self.__class_list_type)
     return self.__ctx['select']
 
   @property
-  def screens(self):
+  def screens(self) -> CatalogMedia.CatalogMedia:
     """
     Description:
     ------------
@@ -207,15 +204,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.screens)
-
-    :rtype: CatalogMedia.CatalogMedia
     """
     if "screens" not in self.__ctx:
       self.__ctx['screens'] = CatalogMedia.CatalogMedia(self.page, self.__class_list_type)
     return self.__ctx['screens']
 
   @property
-  def icon(self):
+  def icon(self) -> CatalogIcons.CatalogIcon:
     """
     Description:
     ------------
@@ -225,15 +220,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.icon)
-
-    :rtype: CatalogIcons.CatalogIcon
     """
     if "icon" not in self.__ctx:
       self.__ctx['icon'] = CatalogIcons.CatalogIcon(self.page, self.__class_list_type)
     return self.__ctx['icon']
 
   @property
-  def layout(self):
+  def layout(self) -> CatalogLayout.CatalogLayout:
     """
     Description:
     ------------
@@ -243,15 +236,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.layout)
-
-    :rtype: CatalogLayout.CatalogLayout
     """
     if "layout" not in self.__ctx:
       self.__ctx['layout'] = CatalogLayout.CatalogLayout(self.page, self.__class_list_type)
     return self.__ctx['layout']
 
   @property
-  def dropdown(self):
+  def dropdown(self) -> CatalogTree.CssStyleDropdown:
     """
     Description:
     ------------
@@ -261,15 +252,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.dropdown)
-
-    :rtype: CatalogTree.CssStyleDropdown
     """
     if "dropdown" not in self.__ctx:
       self.__ctx['dropdown'] = CatalogTree.CatalogDropDown(self.page, self.__class_list_type)
     return self.__ctx['dropdown']
 
   @property
-  def table(self):
+  def table(self) -> CatalogTable.CatalogTable:
     """
     Description:
     ------------
@@ -279,15 +268,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.table)
-
-    :rtype: CatalogTable.CatalogTable
     """
     if "table" not in self.__ctx:
       self.__ctx['table'] = CatalogTable.CatalogTable(self.page, self.__class_list_type)
     return self.__ctx['table']
 
   @property
-  def chart(self):
+  def chart(self) -> CatalogButton.CatalogButton:
     """
     Description:
     ------------
@@ -297,15 +284,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.chart)
-
-    :rtype: CatalogButton.CatalogButton
     """
     if "chart" not in self.__ctx:
       self.__ctx['chart'] = CatalogChart.CatalogChart(self.page, self.__class_list_type)
     return self.__ctx['chart']
 
   @property
-  def link(self):
+  def link(self) -> CatalogLink.CatalogLink:
     """
     Description:
     ------------
@@ -315,15 +300,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.link)
-
-    :rtype: CatalogLink.CatalogLink
     """
     if "link" not in self.__ctx:
       self.__ctx['link'] = CatalogLink.CatalogLink(self.page, self.__class_list_type)
     return self.__ctx['link']
 
   @property
-  def date(self):
+  def date(self) -> CatalogInput.CatalogDate:
     """
     Description:
     ------------
@@ -333,15 +316,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.date)
-
-    :rtype: CatalogInput.CatalogDate
     """
     if "date" not in self.__ctx:
       self.__ctx['date'] = CatalogInput.CatalogDate(self.page, self.__class_list_type)
     return self.__ctx['date']
 
   @property
-  def text(self):
+  def text(self) -> CatalogText.CatalogText:
     """
     Description:
     ------------
@@ -351,15 +332,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.text)
-
-    :rtype: CatalogText.CatalogText
     """
     if "text" not in self.__ctx:
       self.__ctx['text'] = CatalogText.CatalogText(self.page, self.__class_list_type)
     return self.__ctx['text']
 
   @property
-  def input(self):
+  def input(self) -> CatalogInput.CatalogInput:
     """
     Description:
     ------------
@@ -369,15 +348,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.input)
-
-    :rtype: CatalogInput.CatalogInput
     """
     if "inputs" not in self.__ctx:
       self.__ctx['inputs'] = CatalogInput.CatalogInput(self.page, self.__class_list_type)
     return self.__ctx['inputs']
 
   @property
-  def image(self):
+  def image(self) -> CatalogImg.CatalogImg:
     """
     Description:
     ------------
@@ -387,15 +364,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.image)
-
-    :rtype: CatalogImg.CatalogImg
     """
     if "image" not in self.__ctx:
       self.__ctx['image'] = CatalogImg.CatalogImg(self.page, self.__class_list_type)
     return self.__ctx['image']
 
   @property
-  def div(self):
+  def div(self) -> CatalogDiv.CatalogDiv:
     """
     Description:
     ------------
@@ -405,15 +380,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.div)
-
-    :rtype: CatalogDiv.CatalogDiv
     """
     if "div" not in self.__ctx:
       self.__ctx['div'] = CatalogDiv.CatalogDiv(self.page, self.__class_list_type)
     return self.__ctx['div']
 
   @property
-  def shapes(self):
+  def shapes(self) -> CatalogDiv.CatalogShapes:
     """
     Description:
     ------------
@@ -423,15 +396,13 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.shapes)
-
-    :rtype: CatalogDiv.CatalogShapes
     """
     if "shapes" not in self.__ctx:
       self.__ctx['shapes'] = CatalogDiv.CatalogShapes(self.page, self.__class_list_type)
     return self.__ctx['shapes']
 
   @property
-  def radio(self):
+  def radio(self) -> CatalogRadio.CatalogRadio:
     """
     Description:
     ------------
@@ -441,8 +412,6 @@ class Catalog:
 
       t1 = page.ui.title("Templates structure")
       print(t1.style.add_classes.radio)
-
-    :rtype: CatalogRadio.CatalogRadio
     """
     if "radio" not in self.__ctx:
       self.__ctx['radio'] = CatalogRadio.CatalogRadio(self.page, self.__class_list_type)
@@ -468,18 +437,19 @@ class Catalog:
     self.__class_list_type.add(css_cls_obj)
     return self
 
-  def customFile(self, filename, path=None):
+  def customFile(self, filename: str, path: str = None):
     """
     Description:
     ------------
     Add an external CSS file to the final HTML report.
+    If the file is defined with a local absolute path the content will be endocded and included to the page.
 
     Usage::
 
     Attributes:
     ----------
-    :param filename: String. The file name.
-    :param path: String. Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
+    :param filename: The file name.
+    :param path: Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
                  will be used.
 
     :return: self for the chaining.
@@ -487,10 +457,17 @@ class Catalog:
     if path is None:
       self.page.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
     else:
-      self.page.cssLocalImports.add("%s/%s" % (path, filename))
+      file_path = os.path.join(path, filename)
+      if os.path.exists(file_path):
+        with open(file_path, "rb") as fp:
+          base64_bytes = base64.b64encode(fp.read())
+          base64_content = base64_bytes.decode("ascii")
+        self.page.cssLocalImports.add("data:text/css;base64,%s" % base64_content)
+      else:
+        self.page.cssLocalImports.add("%s/%s" % (path, filename))
     return self
 
-  def customText(self, text):
+  def customText(self, text: str):
     """
     Description:
     ------------
@@ -500,14 +477,14 @@ class Catalog:
 
     Attributes:
     ----------
-    :param text: String. The CSS fragment to be added to the HTML report. This can be a class or a group of class.
+    :param text: The CSS fragment to be added to the HTML report. This can be a class or a group of class.
 
     :return: self for the chaining.
     """
     self.page.properties.css.add_text(text)
     return self
 
-  def anonymous_cls(self, attrs):
+  def anonymous_cls(self, attrs: dict):
     """
     Description:
     ------------
@@ -536,7 +513,7 @@ class Catalog:
     meta_cls = type('Style%s' % has_style, (CssStyle.Style,), attrs)
     return meta_cls
 
-  def external(self, classname):
+  def external(self, classname: str):
     """
     Description:
     ------------

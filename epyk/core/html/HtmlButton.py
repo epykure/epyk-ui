@@ -4,6 +4,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptButton
@@ -52,8 +53,6 @@ class Button(Html.Html):
 
       but = page.ui.button("Click Me")
       but.options.multiple = False
-
-    :rtype: OptButton.OptionsButton
     """
     return super().options
 
@@ -69,8 +68,6 @@ class Button(Html.Html):
 
       but = page.ui.button("Click Me")
       page.js.console.log(but.dom.content)
-
-    :rtype: JsHtml.JsHtmlButton
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButton(component=self, page=self.page)
@@ -118,7 +115,7 @@ class Button(Html.Html):
     self.style.css.background_color = "#11ffee00"
     return self
 
-  def goto(self, url: str, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[dict, bool]] = None,
+  def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
     """
     Description:
@@ -159,8 +156,6 @@ class Button(Html.Html):
 
       but = page.ui.button("Click Me")
       but.style.css.margin = "5px"
-
-    :rtype: GrpClsButton.ClassButton
     """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButton(self)
@@ -193,9 +188,10 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, js_press_funcs: Optional[Union[list, str]] = None,
-            js_release_funcs: Optional[Union[list, str]] = None,
-            profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
+  def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None,
+            js_release_funcs: types.JS_FUNCS_TYPES = None,
+            profile: types.PROFILE_TYPE = None,
+            on_ready: bool = False):
     """
     Description:
     -----------
@@ -295,8 +291,6 @@ class Checkbox(Html.Html):
     Description:
     -----------
     Property to set all the possible object for check boxes.
-
-    :rtype: OptButton.OptCheckboxes
     """
     return super().options
 
@@ -318,8 +312,6 @@ class Checkbox(Html.Html):
 
       b = page.ui.button("Add")
       b.click([cb.dom.add([{"value": "test"}])])
-
-    :rtype: JsHtml.JsHtmlButtonChecks
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButtonChecks(self, page=self.page)
@@ -431,8 +423,6 @@ class CheckButton(Html.Html):
     Description:
     -----------
     Property to set all the possible object for check button.
-
-    :rtype: OptButton.OptCheck
     """
     return super().options
 
@@ -442,8 +432,6 @@ class CheckButton(Html.Html):
     Description:
     ------------
     The Javascript Dom object.
-
-    :rtype: JsHtml.JsHtmlButtonMenu
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButtonMenu(self, page=self.page)
@@ -458,8 +446,6 @@ class CheckButton(Html.Html):
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object
-
-    :rtype: JsComponents.CheckButton
     """
     if self._js is None:
       self._js = JsComponents.CheckButton(self, page=self.page)
@@ -484,15 +470,13 @@ class CheckButton(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsButton.ClassButtonCheckBox
     """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
-  def click(self, js_fnc_true: Union[list, str], js_fnc_false: Optional[Union[list, str]] = None,
-            with_colors: bool = True, profile: Optional[Union[dict, bool]] = None, on_ready: bool = False):
+  def click(self, js_fnc_true: types.JS_FUNCS_TYPES, js_fnc_false: Optional[Union[list, str]] = None,
+            with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -506,8 +490,7 @@ class CheckButton(Html.Html):
     Attributes:
     ----------
     :param js_fnc_true: Js function or a list of JsFunction to be triggered when checked
-    :param js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when
-    unchecked
+    :param js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when unchecked
     :param with_colors: Optional. Add default colors to the icons.
     :param profile: Optional. A flag to set the component performance storage
     :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
@@ -655,7 +638,7 @@ class IconEdit(Html.Html):
     self.icon.pull(position)
     return self
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -676,7 +659,7 @@ class IconEdit(Html.Html):
         self.icon.style.add_classes.icon.basic()
     return super(IconEdit, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
-  def goto(self, url: str, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[bool, dict]] = None,
+  def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
     """
     Description:
@@ -739,14 +722,12 @@ class ButtonMenuItem:
     Javascript module of the items in the menu.
 
     :return: A Javascript Dom object
-
-    :rtype: JsComponents.Menu
     """
     if self._js is None:
       self._js = JsComponents.Menu(self.container, js_code=self.component_id, page=self.page)
     return self._js
 
-  def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -769,7 +750,7 @@ class ButtonMenuItem:
       self.page.body.onReady([self.page.js.getElementById(self.component_id).dom.events.trigger(event)])
     return self.container
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -826,8 +807,6 @@ class ButtonMenu(Html.Html):
     Usage::
 
       self.style.css.margin = "5px"
-
-    :rtype: GrpClsButton.ClassButtonMenu
     """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButtonMenu(self)
@@ -887,7 +866,7 @@ class ButtonMore(Html.Html):
       self.page.js.objects.event.stopPropagation(), self.page.js.objects.event.preventDefault(),
       self.menu.dom.invisible()])
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -904,10 +883,10 @@ class ButtonMore(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
-    :param source_event:
-    :param on_ready:
+    :param js_funcs: A Javascript Python function.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     return self.text.click(js_funcs, profile, source_event, on_ready)
 
@@ -1017,8 +996,6 @@ class ButtonFilter(Html.Html):
 
       but = page.ui.button("Click Me")
       but.options.multiple = False
-
-    :rtype: OptButton.OptionsButtonFilter
     """
     return super().options
 
@@ -1034,8 +1011,6 @@ class ButtonFilter(Html.Html):
 
       but = page.ui.button("Click Me")
       page.js.console.log(but.dom.content)
-
-    :rtype: JsHtml.JsHtmlButtonFilter
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButtonFilter(self, page=self.page)

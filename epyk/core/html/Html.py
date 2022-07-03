@@ -9,7 +9,7 @@ import logging
 import inspect
 
 from typing import Union, Optional, List, Any
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 
 from epyk.core.js import JsUtils
 from epyk.core.js import Js
@@ -172,7 +172,7 @@ class EventTouch:
   def __init__(self, page):
     self._page = page
 
-  def start(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+  def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
             source_event: Optional[str] = None):
     """
     Description:
@@ -200,7 +200,7 @@ class EventTouch:
     self._page.on("touchstart", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def move(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+  def move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
            source_event: Optional[str] = None):
     """
     Description:
@@ -227,7 +227,7 @@ class EventTouch:
     self._page.on("touchmove", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def cancel(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+  def cancel(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
              source_event: Optional[str] = None):
     """
     Description:
@@ -254,7 +254,7 @@ class EventTouch:
     self._page.on("touchcancel", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def end(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = False,
+  def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
           source_event: Optional[str] = None):
     """
     Description:
@@ -282,8 +282,8 @@ class EventTouch:
     self._page.on("touchend", js_funcs, profile, source_event=source_event)
     return self._page
 
-  def swap(self, js_funcs_left: Optional[Union[list, str]], js_funcs_right: Optional[Union[list, str]],
-           profile: Optional[Union[dict, bool]] = False, source_event: Optional[str] = None):
+  def swap(self, js_funcs_left: types.JS_FUNCS_TYPES, js_funcs_right: types.JS_FUNCS_TYPES,
+           profile: types.PROFILE_TYPE = False, source_event: Optional[str] = None):
     """
     Description:
     ------------
@@ -349,7 +349,7 @@ class Html(primitives.HtmlModel):
   _option_cls = Options
 
   def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
-               options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
+               options: types.OPTION_TYPE = None, profile: types.JS_FUNCS_TYPES = None,
                css_attrs: Optional[dict] = None):
     """ Create an python HTML object """
     # Child component for this component
@@ -403,7 +403,7 @@ class Html(primitives.HtmlModel):
     self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
     self._internal_components = [self.htmlCode]
 
-  def with_profile(self, profile: Optional[Union[dict, bool]], event: Optional[str] = None,
+  def with_profile(self, profile: types.PROFILE_TYPE, event: Optional[str] = None,
                    element_id: Optional[str] = None):
     """
     Description:
@@ -501,8 +501,6 @@ class Html(primitives.HtmlModel):
 
       div = page.ui.div()
       div.style.css.background = 'black'
-
-    :rtype: GrpCls.ClassHtml
     """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtml(self)
@@ -539,7 +537,7 @@ class Html(primitives.HtmlModel):
     return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
   @property
-  def js(self):
+  def js(self) -> 'Js.JsBase':
     """
     Description:
     -----------
@@ -556,8 +554,6 @@ class Html(primitives.HtmlModel):
       ])
 
     :return: A Javascript object
-
-    :rtype: Js.JsBase
     """
     if self._js is None:
       self._js = Js.JsBase(self.page, component=self)
@@ -577,8 +573,6 @@ class Html(primitives.HtmlModel):
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtml(component=self, page=self.page)
@@ -595,12 +589,10 @@ class Html(primitives.HtmlModel):
 
       div = page.ui.div(htmlCode="testDiv")
       div.options.inline = True
-
-    :rtype: Options
     """
     return self.__options
 
-  def prepend_child(self, component: primitives.HtmlModel, profile: Optional[Union[dict, bool]] = None):
+  def prepend_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -618,7 +610,7 @@ class Html(primitives.HtmlModel):
 
     Attributes:
     ----------
-    :param component: primitives.HtmlModel component: The html component.
+    :param component: The html component.
     :param profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
@@ -632,7 +624,7 @@ class Html(primitives.HtmlModel):
       self.dom.insertBefore(component.dom)], toStr=True, profile=profile))
     return self
 
-  def append_child(self, component: primitives.HtmlModel, profile: Optional[Union[dict, bool]] = None):
+  def append_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -650,7 +642,7 @@ class Html(primitives.HtmlModel):
 
     Attributes:
     ----------
-    :param component: primitives.HtmlModel component: The html component.
+    :param component: The html component.
     :param profile: Optional. A flag to set the component performance storage.
 
     :return: The HTML component.
@@ -663,7 +655,7 @@ class Html(primitives.HtmlModel):
       self.dom.appendChild(component.dom)], toStr=True, profile=profile))
     return self
 
-  def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = None):
+  def onReady(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -697,7 +689,7 @@ class Html(primitives.HtmlModel):
 
     Attributes:
     ----------
-    :param context_menu: ContextMenu. A Python context menu object.
+    :param context_menu: A Python context menu object.
     """
     context_menu.source = self
     self.page._contextMenu[self.dom.jquery.varName] = context_menu
@@ -745,7 +737,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def add_label(self, text: str, css: Optional[dict] = None, position: str = "before", for_: str = None,
-                html_code: Optional[str] = None, options: Optional[dict] = None):
+                html_code: Optional[str] = None, options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -818,7 +810,7 @@ class Html(primitives.HtmlModel):
 
   def add_link(self, text: str, url: str = None, script_name: Optional[str] = None, report_name: Optional[str] = None,
                name: Optional[str] = None, icon: Optional[str] = None, css: Optional[dict] = None,
-               position: str = "before", options: Optional[dict] = None):
+               position: str = "before", options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -859,7 +851,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def add_title(self, text: str, level: Optional[int] = None, css: Optional[dict] = None, position: str = "before",
-                options: Optional[dict] = None):
+                options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -890,7 +882,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def add_input(self, text: str, css: Optional[dict] = None, attrs: Optional[dict] = None, position: str = "before",
-                options: Optional[dict] = None):
+                options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -1002,8 +994,6 @@ class Html(primitives.HtmlModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
-
-    :rtype: KeyCodes.KeyCode
     """
     if self._browser_data.get('keys', {}).get('keypress') is None:
       self._browser_data['keys']['keypress'] = KeyCodes.KeyCode(component=self)
@@ -1019,8 +1009,6 @@ class Html(primitives.HtmlModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
-
-    :rtype: KeyCodes.KeyCode
     """
     if self._browser_data.get('keys', {}).get('keyup') is None:
       self._browser_data['keys']['keyup'] = KeyCodes.KeyCode(component=self)
@@ -1161,7 +1149,7 @@ class Html(primitives.HtmlModel):
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
-  def tooltip(self, value: Union[str, primitives.JsDataModel], location: str = 'top', options: Optional[dict] = None):
+  def tooltip(self, value: types.JS_DATA_TYPES, location: str = 'top', options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -1216,7 +1204,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   @packages.packageImport('bootstrap', 'bootstrap')
-  def popover(self, content: str, title: Optional[str] = None, options: Optional[dict] = None):
+  def popover(self, content: str, title: str = None, options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -1244,7 +1232,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         "%s.popover()" % JsQuery.decorate_var("'[data-toggle=popover]'", convert_var=False))
     return self
 
-  def draggable(self, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
+  def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,
                 profile: Union[bool, dict] = None, source_event: Optional[str] = None):
     """
     Description:
@@ -1296,7 +1284,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     ])
     return self
 
-  def add_options(self, options: Optional[dict] = None, name: Optional[str] = None, value: Optional[str] = None):
+  def add_options(self, options: types.OPTION_TYPE = None, name: Optional[str] = None, value: Optional[str] = None):
     """
     Description:
     -----------
@@ -1387,7 +1375,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     Attributes:
     ----------
-    :param with_id: Boolean. Optional. Add the ID tag. This is handled by the framework. (Default true)
+    :param with_id: Optional. Add the ID tag. This is handled by the framework. (Default true)
     :param css_class_names: Optional. The Python class names.
 
     :return: A string with the dom attributes
@@ -1422,7 +1410,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     str_tag = " ".join(html_tags)
     return str_tag.strip()
 
-  def on(self, event: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -1476,7 +1464,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return list(self._browser_data['mouse'][event][self.dom.varId]["content"])
 
-  def drop(self, js_funcs: Union[list, str], prevent_default: bool = True, profile: Optional[Union[bool, dict]] = None):
+  def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1513,7 +1501,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       dft_fnc, self.dom.css('box-shadow', 'none').r)
     return self
 
-  def hover(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None):
     """
     Description:
@@ -1535,7 +1523,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return self.on("mouseover", js_funcs, profile, source_event)
 
-  def viewport(self, js_funcs: Union[list, str], options: dict = None, profile: Optional[Union[bool, dict]] = None,
+  def viewport(self, js_funcs: types.JS_FUNCS_TYPES, options: dict = None, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None):
     """
     Description:
@@ -1564,7 +1552,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           observe_once=True).observe(source_event or self)
       ])
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -1593,7 +1581,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.page.body.onReady([self.dom.events.trigger("click")])
     return self.on("click", js_funcs, profile, source_event)
 
-  def focusout(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+  def focusout(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None):
     """
     Description:
@@ -1623,7 +1611,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     js_funcs.insert(0, "if(%(dom)s.contains(event.relatedTarget)) {return ;}" % {"dom": source_event or self.dom.varId})
     return self.on("focusout", js_funcs, profile, source_event)
 
-  def dblclick(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+  def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
@@ -1645,7 +1633,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.page.body.onReady([self.dom.events.trigger("dblclick")])
     return self.on("dblclick", js_funcs, profile, source_event)
 
-  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
+  def scroll(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
              source_event: Optional[str] = None):
     """
     Description:
@@ -1664,8 +1652,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return self.on("scroll", js_funcs, profile, source_event)
 
-  def mouse(self, on_funcs: Optional[Union[list, str]] = None,
-            out_funcs=None, profile: Optional[Union[dict, bool]] = None, source_event: Optional[str] = None):
+  def mouse(self, on_funcs: types.JS_FUNCS_TYPES = None, out_funcs: types.JS_FUNCS_TYPES = None,
+            profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None):
     """
     Description:
     -----------
@@ -1700,7 +1688,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       self.on("mouseleave", out_funcs, profile, source_event)
     return self
 
-  def paste(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event=None,
+  def paste(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event=None,
             components=None):
     """
     Description:
@@ -1721,7 +1709,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       ["var data = %s" % data_map.toStr()] + js_funcs, toStr=True)
     return self.on("paste", str_fncs, profile, source_event)
 
-  def contextMenu(self, menu, js_funcs: Optional[Union[list, str]] = None, profile: Optional[Union[bool, dict]] = None):
+  def contextMenu(self, menu, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1766,8 +1754,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return EventTouch(self)
 
-  def build(self, data: Optional[Union[str, list, primitives.JsDataModel]] = None, options: Optional[dict] = None,
-            profile: Optional[Union[dict, bool]] = None, component_id: Optional[str] = None):
+  def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
     if not self.builder_name or self._js__builder__ is None:
       raise ValueError("No builder defined for this HTML component %s" % self.__class__.__name__)
 
@@ -1806,7 +1794,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self.build(self.val, None)
 
   def subscribe(self, socket, channel: str, data=None, options: Optional[dict] = None,
-                js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None):
+                js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1822,7 +1810,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     Attributes:
     ----------
     :param socket: Socket. A python socket object.
-    :param str channel: The channel on which events will be received.
+    :param channel: The channel on which events will be received.
     :param data:
     :param options: Optional. Specific Python options available for this component.
     :param js_funcs: Optional. Javascript functions.
@@ -1835,7 +1823,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   @packageImport('sortablejs')
-  def sortable(self, options: Optional[dict] = None, propagate: bool = True, propagate_only: bool = False):
+  def sortable(self, options: types.OPTION_TYPE = None, propagate: bool = True, propagate_only: bool = False):
     """
     Description:
     ------------
@@ -1923,8 +1911,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 class Body(Html):
   name = "Body"
 
-  def __init__(self, report, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
-               profile: Optional[Union[dict, bool]] = None, css_attrs=None):
+  def __init__(self, report, vals, html_code: Optional[str] = None, options: types.OPTION_TYPE = None,
+               profile: types.PROFILE_TYPE = None, css_attrs: dict = None):
     super(Body, self).__init__(report, vals, html_code, options, profile, css_attrs)
     if Defaults_css.BODY_STYLE is not None:
       for attrs in Defaults_css.BODY_STYLE.split(";"):
@@ -1939,8 +1927,6 @@ class Body(Html):
     -----------
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
-
-    :rtype: GrpCls.ClassPage
     """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassPage(self)
@@ -1955,16 +1941,14 @@ class Body(Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtml
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtml(self, page=self.page)
       self._dom.varName = "document.body"
     return self._dom
 
-  def scroll(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
-             source_event: Optional[str] = None):
+  def scroll(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+             source_event: str = None):
     """
     Description:
     -----------
@@ -1982,7 +1966,7 @@ class Body(Html):
       self.page.js.window.events.addScrollListener(JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  def onReady(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onReady(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2005,7 +1989,7 @@ class Body(Html):
       js_funcs = [js_funcs]
     self.page.js.onReady(js_funcs)
 
-  def onLoad(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onLoad(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -2020,7 +2004,7 @@ class Body(Html):
       js_funcs = [js_funcs]
     self.page.properties.js.add_builders(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
-  def fromConfig(self, js_funcs: Optional[Union[list, str]] = None,
+  def fromConfig(self, js_funcs: types.JS_FUNCS_TYPES = None,
                  components: Optional[List[primitives.HtmlModel]] = None,
                  lang: Optional[str] = "eng", end_point: str = "/static/configs", sync: bool = True,
                  filename: Optional[str] = None):
@@ -2209,8 +2193,6 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
       page = pk.Page()
       page.body.template.margins(5)
       page.body.template.style.css.background = "white"
-
-    :rtype: Html
     """
     if self._template is None:
       self.header = self.page.ui.div()
@@ -2253,12 +2235,12 @@ class Component(Html):
     - dyn_repr String. Optional. The sub items HTML definition.
   """
 
-  css_classes = None
+  css_classes: Optional[List] = None
   str_repr = None
   dyn_repr = None
 
   def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
-               options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None,
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
                css_attrs: Optional[dict] = None):
     super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
     self.style.clear_style(persist_attrs=css_attrs)   # Clear all default CSS styles.
@@ -2310,7 +2292,7 @@ class Component(Html):
     """
     return {"sub_item": item.html()}
 
-  def write_values(self):
+  def write_values(self) -> dict:
     """
     Description:
     -----------
@@ -2349,11 +2331,12 @@ class StructComponent(Html):
     - str_repr String. Mandatory. The component HTML definition.
   """
 
-  css_classes = None
+  css_classes: Optional[List] = None
   str_repr = None
 
-  def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None, options: Optional[dict] = None,
-               profile: Optional[Union[dict, bool]] = None, css_attrs: Optional[dict] = None):
+  def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
+               css_attrs: Optional[dict] = None):
     super(StructComponent, self).__init__(page, vals, html_code, options, profile, css_attrs)
     if self.css_classes is not None:
       self.add_style(self.css_classes, clear_first=True)

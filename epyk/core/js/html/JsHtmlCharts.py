@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import json
-from typing import Union, Optional, List
+from typing import Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
@@ -71,7 +72,7 @@ class ChartJs(JsCanvas.Canvas):
     flag._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
-  def onViewPort(self, js_funcs: Union[list, str]):
+  def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     -----------
@@ -88,7 +89,7 @@ class ChartJs(JsCanvas.Canvas):
     """
     Description:
     -----------
-
+    The component content object
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
@@ -101,8 +102,6 @@ class ChartJs(JsCanvas.Canvas):
     Description:
     -----------
     Link to the events attached to a Javascript DOM object.
-
-    :rtype: JsNodeDom.JsDomEvents
     """
     return JsNodeDom.JsDomEvents(self.component)
 
@@ -174,8 +173,8 @@ class ChartJs(JsCanvas.Canvas):
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return JsUtils.jsConvertFncs(styles, toStr=True)
 
-  def registerFunction(self, func_name: str, js_funcs: Union[list, str], pmts: Optional[dict] = None,
-                       profile: Optional[Union[dict, bool]] = None):
+  def registerFunction(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[dict] = None,
+                       profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -188,7 +187,7 @@ class ChartJs(JsCanvas.Canvas):
     ----------
     :param func_name: The function name.
     :param js_funcs: The Javascript function definition.
-    :param pmts:
+    :param pmts: Optional.
     :param profile: Optional. A flag to set the component performance storage.
 
     :return: The JsObject
@@ -328,7 +327,7 @@ class ChartJs(JsCanvas.Canvas):
         ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
   def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
-               profile: Optional[Union[dict, bool]] = None):
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------

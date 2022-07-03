@@ -67,8 +67,6 @@ class Media(Html.Html):
     Description:
     -----------
     Property to set all the possible object for a Media (video and audio).
-
-    :rtype: OptButton.OptMedia
     """
     return super().options
 
@@ -148,7 +146,7 @@ class Youtube(Html.Html):
 
     Attributes:
     ----------
-    :param str youtube_link: The Youtube link of the online video.
+    :param youtube_link: The Youtube link of the online video.
     """
     return 'https://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
 
@@ -170,8 +168,6 @@ class Camera(Html.Html):
     Description:
     -----------
     Property to set all the possible object for a Media (video and audio).
-
-    :rtype: OptButton.OptMedia
     """
     return super().options
 
@@ -181,8 +177,6 @@ class Camera(Html.Html):
     Description:
     -----------
     The Javascript Dom object.
-
-    :rtype: JsHtml.JsMedia
     """
     if self._dom is None:
       self._dom = JsHtml.JsMedia(self, page=self.page)

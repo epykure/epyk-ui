@@ -815,8 +815,6 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param profile: Optional. A flag to set the component performance storage.
     :param headers: Optional. The request headers.
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
-
-    :rtype: JsObjects.XMLHttpRequest
     """
     method_type = JsUtils.jsConvertData(method, None)
     url = JsUtils.jsConvertData(url, None)

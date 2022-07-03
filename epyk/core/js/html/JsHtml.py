@@ -3,6 +3,7 @@
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 import json
 
@@ -349,7 +350,7 @@ class JsHtml(JsNodeDom.JsDoms):
     flag._js.insert(0, self.getBoundingClientRect().setVar("rect"))
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
-  def onViewPort(self, js_funcs: Union[list, str]):
+  def onViewPort(self, js_funcs:  types.JS_FUNCS_TYPES):
     """
     Description:
     -----------
@@ -500,8 +501,8 @@ class JsHtml(JsNodeDom.JsDoms):
       styles.append("this.style.%s = %s" % (k, json.dumps(v)))
     return JsUtils.jsConvertFncs(styles, toStr=True)
 
-  def registerFunction(self, fnc_name: str, js_funcs: Union[list, str], pmts: Optional[list] = None,
-                       profile: Optional[Union[dict, bool]] = None):
+  def registerFunction(self, fnc_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[list] = None,
+                       profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -732,7 +733,7 @@ class JsHtml(JsNodeDom.JsDoms):
       ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
   def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
-               profile: Optional[Union[dict, bool]] = None):
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -842,8 +843,8 @@ class JsHtmlRich(JsHtml):
     """
     return Formatters(self.page, "%s.innerHTML" % self.varName)
 
-  def toggleContent(self, current_val: str, new_val: str, current_funcs: Optional[list] = None,
-                    new_funcs: Optional[list] = None, profile: Optional[Union[dict, bool]] = None):
+  def toggleContent(self, current_val: str, new_val: str, current_funcs: types.JS_FUNCS_TYPES = None,
+                    new_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1165,7 +1166,7 @@ class JsHtmlButtonChecks(JsHtml):
     """
     return '%s.empty()' % self.jquery.varId
 
-  def delete(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
+  def delete(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
     """
     Description:
     -----------
@@ -1188,13 +1189,13 @@ class JsHtmlButtonChecks(JsHtml):
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
-      var compData = %(jsData)s;
-      if (compData === true) {%(jqId)s.empty()}
+      var %(dataRef)s = %(jsData)s;
+      if (%(dataRef)s === true) {%(jqId)s.empty()}
       else {%(jqId)s.find('span').each(function(){
-          if (compData.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
-      })}''' % {"jsData": data, "jqId": self.jquery.varId})
+          if (%(dataRef)s.indexOf($(this).data('content')) > -1){$(this).parent().remove()}
+      })}''' % {"jsData": data, "jqId": self.jquery.varId, "dataRef": data_ref})
 
-  def check(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
+  def check(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
     """
     Description:
     -----------
@@ -1217,14 +1218,14 @@ class JsHtmlButtonChecks(JsHtml):
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''
-      var compData = %(jsData)s;
+      var %(dataRef)s = %(jsData)s;
       %(jqId)s.find('span').each(function(){
         var itemCode = $(this).data('content');
-        if(typeof compData === "boolean"){
-          if (compData === true && $(this).find("i").attr("class") === undefined){$(this).trigger("click")}
-          if (!compData && $(this).find("i").attr("class") !== undefined){$(this).trigger("click")}}
-        else if (compData.indexOf(itemCode) > -1){if ($(this).find("i").attr("class") === undefined){$(this).trigger("click")}}
-      })''' % {"jsData": data, "jqId": self.jquery.varId})
+        if(typeof %(dataRef)s === "boolean"){
+          if (%(dataRef)s === true && $(this).find("i").attr("class") === undefined){$(this).trigger("click")}
+          if (!%(dataRef)s && $(this).find("i").attr("class") !== undefined){$(this).trigger("click")}}
+        else if (%(dataRef)s.indexOf(itemCode) > -1){if ($(this).find("i").attr("class") === undefined){$(this).trigger("click")}}
+      })''' % {"jsData": data, "jqId": self.jquery.varId, "dataRef": data_ref})
 
   @property
   def current(self):
@@ -1235,7 +1236,7 @@ class JsHtmlButtonChecks(JsHtml):
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
 
-  def css_label(self, data: Union[str, primitives.JsDataModel, float, dict, list], attrs: dict):
+  def css_label(self, data: types.JS_DATA_TYPES, attrs: dict, data_ref: str = "compData"):
     """
     Description:
     -----------
@@ -1260,11 +1261,11 @@ class JsHtmlButtonChecks(JsHtml):
     data = JsUtils.jsConvertData(data, None)
     attrs = JsUtils.jsConvertData(attrs, None)
     return JsObjects.JsObjects.get('''
-      var compData = %(jsData)s; var compAttrs = %(attrs)s;
+      var %(dataRef)s = %(jsData)s; var compAttrs = %(attrs)s;
       %(jqId)s.find('span').each(function(){
         var itemCode = $(this).data('content');
-        if (compData.indexOf(itemCode) > -1){$(this).parent().find("p").css(compAttrs)}
-      }) ''' % {"jsData": data, "jqId": self.jquery.varId, "attrs": attrs})
+        if (%(dataRef)s.indexOf(itemCode) > -1){$(this).parent().find("p").css(compAttrs)}
+      }) ''' % {"jsData": data, "jqId": self.jquery.varId, "attrs": attrs, "dataRef": data_ref})
 
 
 class JsHtmlButtonMenu(JsHtmlButton):
@@ -1460,7 +1461,7 @@ class JsHtmlList(JsHtml):
     """
     return JsObjects.JsString.JsString.get("wrapper.innerText")
 
-  def unactive(self, current_index: int = -1):
+  def unactive(self, current_index: int = -1, data_ref: str = "list_items"):
     """
     Description:
     -----------
@@ -1477,9 +1478,9 @@ class JsHtmlList(JsHtml):
     :param int current_index: Optional. The item of the current item.
     """
     return JsObjects.JsVoid('''
-let list_items = %(comp)s.children; for (var i = 0; i < list_items.length; i++) { 
-  if (list_items[i].classList.contains('active') && (i != %(current_index)s)){list_items[i].classList.remove('active')}
-}''' % {"comp": self.component.dom.varName, "current_index": current_index})
+let %(data_ref)s = %(comp)s.children; for (var i = 0; i < %(data_ref)s.length; i++) { 
+  if (%(data_ref)s[i].classList.contains('active') && (i != %(current_index)s)){%(data_ref)s[i].classList.remove('active')}
+}''' % {"comp": self.component.dom.varName, "current_index": current_index, "data_ref": data_ref})
 
 
 class JsHtmlBackground(JsHtml):
@@ -1506,7 +1507,7 @@ class JsHtmlBackground(JsHtml):
 
 class JsHtmlNumeric(JsHtmlRich):
 
-  def to(self, number: float, timer: int = 1, profile: Optional[Union[dict, bool]] = None):
+  def to(self, number: float, timer: int = 1, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1769,7 +1770,7 @@ class JsHtmlTable(JsHtml):
 
 class JsHtmlLi(JsHtmlRich):
 
-  def has_state(self, state: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def has_state(self, state: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1785,7 +1786,7 @@ class JsHtmlLi(JsHtmlRich):
     return self.component.js.if_("%s.classList.contains(%s)" % (
       self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
 
-  def is_active(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def is_active(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------

@@ -50,8 +50,6 @@ class Drawer(Html.Html):
     Description:
     ------------
     Property to get the common dom features.
-
-    :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
       self._dom = JsHtmlStepper.Drawer(self, page=self.page)
@@ -63,8 +61,6 @@ class Drawer(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a drawer.
-
-    :rtype: OptPanel.OptionDrawer
     """
     return super().options
 
@@ -76,9 +72,9 @@ class Drawer(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Html.Html, str] link: The value in the drawer.
-    :param Html.Html container: The component to be displayed.
-    :param bool display: Optional. The CSS Display property.
+    :param link: The value in the drawer.
+    :param container: The component to be displayed.
+    :param display: Optional. The CSS Display property.
     """
     if not hasattr(link, 'options'):
       link = self.page.ui.div(link)
@@ -97,8 +93,6 @@ class Drawer(Html.Html):
     Description:
     ------------
     Get the CSS Style of the object.
-
-    :rtype: GrpClsContainer.ClassDrawer
     """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDrawer(self)
@@ -112,7 +106,7 @@ class Drawer(Html.Html):
 
     Attributes:
     ----------
-    :param Html.Html component: An HTML component.
+    :param component: An HTML component.
     """
     self.handle = self.page.ui.div()
     self.handle.style.clear_all()
@@ -181,8 +175,6 @@ class DrawerMulti(Html.Html):
     Description:
     ------------
     Property to get the common dom features.
-
-    :rtype: JsHtmlStepper.Drawer
     """
     if self._dom is None:
       self._dom = JsHtmlStepper.Drawer(self, page=self.page)
@@ -194,8 +186,6 @@ class DrawerMulti(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a drawer.
-
-    :rtype: OptPanel.OptionDrawer
     """
     return super().options
 
@@ -207,8 +197,8 @@ class DrawerMulti(Html.Html):
 
     Attributes:
     ----------
-    :param Union[str, Html.Html] link: The value in the drawer.
-    :param Html.Html container: The component to be displayed.
+    :param link: The value in the drawer.
+    :param container: The component to be displayed.
     """
     if not hasattr(link, 'options'):
       link = self.page.ui.div(link)
@@ -250,8 +240,6 @@ class DrawerMulti(Html.Html):
     Description:
     ------------
     Get the CSS Style of the object.
-
-    :rtype: GrpClsContainer.ClassDrawer
     """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassDrawer(self)

@@ -32,8 +32,6 @@ class HtmlGeneric(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 
@@ -66,8 +64,6 @@ class HtmlGeneric(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -103,8 +99,8 @@ class HtmlGenericLInk(HtmlGeneric):
 
     Attributes:
     ----------
-    :param str url: The url path.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param url: The url path.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.on('mouseenter', [
       self.page.js.request_http("test", 'GET', url).send().onSuccess([

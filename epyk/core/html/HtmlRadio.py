@@ -34,7 +34,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Html.Html, str] val: The item to be added.
+    :param val: The item to be added.
     :param checked:  Optional. Check the item.
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
@@ -51,7 +51,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The item value to disable.
+    :param text: The item value to disable.
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -65,7 +65,7 @@ class Radio(Html.Html):
 
     Attributes:
     ----------
-    :param str text: The item value to set as checked.
+    :param text: The item value to set as checked.
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -78,8 +78,6 @@ class Radio(Html.Html):
     Description:
     ------------
     HTML Dom object.
-
-    :rtype: JsHtmlSelect.Radio
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.Radio(self, page=self.page)
@@ -126,8 +124,6 @@ class Tick(Html.Html):
     Description:
     ------------
     HTML Dom object.
-
-    :rtype: JsHtmlSelect.Tick
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.Tick(self, page=self.page)
@@ -199,8 +195,6 @@ class Switch(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
-
-    :rtype: JsHtmlSelect.JsHtmlSwitch
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.JsHtmlSwitch(self, page=self.page)
@@ -221,8 +215,6 @@ class Switch(Html.Html):
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object.
-
-    :rtype: JsComponents.Switch
     """
     if self._js is None:
       self._js = JsComponents.Switch(self, page=self.page)
@@ -237,7 +229,7 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param str event: The event function.
+    :param event: The event function.
     """
     return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
 
@@ -257,11 +249,10 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: A Javascript Python function.
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
-      Javascript console.
-    :param Optional[str] source_event: Optional. The source target for the event.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("click")])
@@ -284,10 +275,10 @@ class Switch(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] on_funcs: Optional. The Javascript functions.
-    :param Optional[Union[list, str]] off_funcs: Optional. The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_funcs: Optional. The Javascript functions.
+    :param off_funcs: Optional. The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self._clicks['profile'] = profile
     if on_funcs is not None:

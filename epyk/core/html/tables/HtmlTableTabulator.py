@@ -28,17 +28,15 @@ class Table(Html.Html):
       self.options.data = records
     self.style.css.background = None
     self.__bespoke_formatters = set()
+    if options is not None and options.get("stripped"):
+      self.style.strip()
 
   _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
 
   @property
+  @Html.deprecated("Should use .js._. instead to get table core components")
   def cell(self) -> JsHtmlTabulator.JsHtmlTabulatorCell:
-    """
-    Description:
-    ------------
-
-    """
-    return JsHtmlTabulator.JsHtmlTabulatorCell(self.tableId, page=self.page, component=self)
+    return JsHtmlTabulator.JsHtmlTabulatorCell(js_code=self.tableId, page=self.page, component=self)
 
   @property
   def style(self) -> GrpClsTable.Tabulator:
@@ -137,8 +135,8 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param str by_field: Optional. The field reference for the column.
-    :param str by_title: Optional. The title reference for the column.
+    :param by_field: Optional. The field reference for the column.
+    :param by_title: Optional. The title reference for the column.
     """
     return self.options.get_column(by_field, by_title)
 
@@ -166,7 +164,7 @@ class Table(Html.Html):
         c.js_tree.update(cols_def[c.field])
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
-            on_ready: bool = False):
+            on_ready: bool = False, data_ref: str = "data"):
     """
     Description:
     ------------
@@ -180,10 +178,11 @@ class Table(Html.Html):
     :param profile: Optional. A flag to set the component performance storage
     :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
     :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param data_ref: JavaScript variable name for the main data in the function (default data)
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.options.rowClick(["var data = row.getData()"] + js_funcs)
+    self.options.rowClick(["var %s = row.getData()" % data_ref] + js_funcs)
     return self
 
   def build(self, data=None, options: dict = None, profile: types.PROFILE_TYPE = None, component_id: str = None):

@@ -51,8 +51,6 @@ class ProgressBar(Html.Html):
     Related Pages:
 
       https://api.jqueryui.com/progressbar
-
-    :rtype: OptSliders.OptionsProgBar
     """
     return super().options
 
@@ -64,8 +62,8 @@ class ProgressBar(Html.Html):
 
     Attributes:
     ----------
-    :param float number: The final state for the progress bar.
-    :param int timer: Optional. the appended of the increase in millisecond.
+    :param number: The final state for the progress bar.
+    :param timer: Optional. the appended of the increase in millisecond.
     """
     self.page.body.onReady([
       self.page.js.objects.number(self.val, js_code="%s_counter" % self.htmlCode, set_var=True),
@@ -101,8 +99,6 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
       https://api.jqueryui.com/progressbar
 
     :return: A Javascript Dom object
-
-    :rtype: JsQueryUi.ProgressBar
     """
     if self._js is None:
       self._js = JsQueryUi.ProgressBar(self, page=self.page)
@@ -117,8 +113,6 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
@@ -151,8 +145,6 @@ class Menu(Html.Html):
     Description:
     -----------
     Property to the CSS Style of the component.
-
-    :rtype: rpClsJqueryUI.ClassMenu
     """
     if self._styleObj is None:
       self._styleObj = GrpClsJqueryUI.ClassMenu(self)
@@ -171,8 +163,6 @@ class Menu(Html.Html):
     Related Pages:
 
       https://api.jqueryui.com/menu
-
-    :rtype: OptSliders.OptionsMenu
     """
     return super().options
 
@@ -203,8 +193,6 @@ class Menu(Html.Html):
       https://api.jqueryui.com/menu
 
     :return: A Javascript Dom object
-
-    :rtype: JsQueryUi.Menu
     """
     if self._js is None:
       self._js = JsQueryUi.Menu(self, page=self.page)
@@ -219,8 +207,6 @@ class Menu(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlProgressBar
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
@@ -260,8 +246,6 @@ class Dialog(Html.Html):
     Related Pages:
 
       https://jqueryui.com/dialog/
-
-    :rtype: OptSliders.OptionDialog
     """
     return super().options
 
@@ -282,8 +266,6 @@ class Dialog(Html.Html):
       https://jqueryui.com/dialog/
 
     :return: A Javascript Dom object
-
-    :rtype: JsQueryUi.Dialog
     """
     if self._js is None:
       self._js = JsQueryUi.Dialog(self, page=self.page)
@@ -298,8 +280,6 @@ class Dialog(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlJqueryUI.JsHtmlProgressBar
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
@@ -346,8 +326,6 @@ class Slider(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptSliders.OptionsSlider
     """
     return super().options
 
@@ -357,8 +335,6 @@ class Slider(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsJqueryUI.ClassSlider
     """
     if self._styleObj is None:
       self._styleObj = GrpClsJqueryUI.ClassSlider(self)
@@ -377,8 +353,6 @@ class Slider(Html.Html):
       https://api.jqueryui.com/slider
 
     :return: A Javascript Dom object
-
-    :rtype: JsQueryUi.Slider
     """
     if self._js is None:
       self._js = JsQueryUi.Slider(self, page=self.page)
@@ -472,8 +446,6 @@ class Slider(Html.Html):
     Description:
     -----------
     The Javascript Dom object.
-
-    :rtype: JsHtmlJqueryUI.JsHtmlSlider
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, page=self.page)
@@ -543,8 +515,6 @@ class SliderDate(Slider):
     Description:
     -----------
     The Javascript Dom object.
-
-    :rtype: JsHtmlJqueryUI.JsHtmlSliderDate
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, page=self.page)
@@ -567,8 +537,6 @@ class SliderDates(SliderDate):
     Description:
     -----------
     The Javascript Dom object.
-
-    :rtype: JsHtmlJqueryUI.JsHtmlSliderDates
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, page=self.page)
@@ -615,8 +583,6 @@ class SkillBar(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptSliders.OptionsSkillbars
     """
     return super().options
 
@@ -628,8 +594,6 @@ class SkillBar(Html.Html):
     The JavaScript predefined functions for this component.
 
     :return: A Javascript object
-
-    :rtype: JsComponents.SkillBar
     """
     if self._js is None:
       self._js = JsComponents.SkillBar(self, js_code=self.dom.varName, page=self.page)
@@ -716,8 +680,6 @@ class OptionsBar(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptSliders.OptionBar
     """
     return super().options
 
@@ -795,8 +757,6 @@ class Filters(Html.Html):
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptList.OptionsTagItems
     """
     return super().options
 
@@ -916,8 +876,6 @@ class Filters(Html.Html):
     Description:
     -----------
     The Javascript Dom object.
-
-    :rtype: JsHtmlList.Tags
     """
     if self._dom is None:
       self._dom = JsHtmlList.Tags(self, page=self.page)

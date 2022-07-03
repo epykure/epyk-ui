@@ -133,10 +133,96 @@ class TabulatorEvents:
     return JsTabulator.ColumnComponent(set_var=False, js_code=None)
 
 
-class DataEvents:
+class DataFile:
+
+  def __init__(self, js_code: str = "value"):
+    self.varName = js_code
 
   @property
-  def tabulator(self):
+  def name(self):
+    """
+    Description:
+    ------------
+    Get the filename.
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get("%s.name" % self.varName)
+
+  @property
+  def size(self):
+    """
+    Description:
+    ------------
+    Get the file size.
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get("%s.size" % self.varName)
+
+  @property
+  def lastModifiedDate(self):
+    """
+    Description:
+    ------------
+    Get the last modified date for the file.
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsDate.JsDate("%s.lastModifiedDate" % self.varName)
+
+  @property
+  def lastModified(self):
+    """
+    Description:
+    ------------
+    Get the last modified date for the file.
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsDate.JsDate("%s.lastModified" % self.varName)
+
+  @property
+  def toISOString(self):
+    """
+    Description:
+    ------------
+
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get(
+      "(function(){var dt = new Date(%s.lastModified); return dt.toISOString() }())" % self.varName)
+
+  @property
+  def description(self):
+    """
+    Description:
+    ------------
+    Get file description (name, size and date).
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {
+      'varName': self.varName, 'dt': self.toISOString})
+
+
+class DataEvents:
+
+  def __getitem__(self, alias: str):
+    """
+    Description:
+    ------------
+    Get a bespoke variable.
+
+    Examples::
+
+        btn = page.ui.button("Click")
+        btn.click(["var data2 = 'Static example'", page.js.alert(pk.events["data2"])])
+
+    Attributes:
+    ----------
+    :param alias: The variable name on the JavaScript side
+    """
+    from epyk.core.js.primitives import JsObjects
+    return JsObjects.JsObjects.get(alias)
+
+  @property
+  def tabulator(self) -> TabulatorEvents:
     """
     Description:
     ------------
@@ -155,7 +241,7 @@ class DataEvents:
     return JsObjects.JsArray.JsArray.get("Array.from(event.dataTransfer.files)")
 
   @property
-  def file(self):
+  def file(self) -> DataFile:
     """
     Description:
     ------------
@@ -303,74 +389,6 @@ class DataEvents:
     return GeolocationCoordinates("navPos")
 
 
-class DataFile:
-
-  def __init__(self, js_code: str = "value"):
-    self.varName = js_code
-
-  @property
-  def name(self):
-    """
-    Description:
-    ------------
-    Get the filename.
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("%s.name" % self.varName)
-
-  @property
-  def size(self):
-    """
-    Description:
-    ------------
-    Get the file size.
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("%s.size" % self.varName)
-
-  @property
-  def lastModifiedDate(self):
-    """
-    Description:
-    ------------
-    Get the last modified date for the file.
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsDate.JsDate("%s.lastModifiedDate" % self.varName)
-
-  @property
-  def lastModified(self):
-    """
-    Description:
-    ------------
-    Get the last modified date for the file.
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsDate.JsDate("%s.lastModified" % self.varName)
-
-  @property
-  def toISOString(self):
-    """
-    Description:
-    ------------
-
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get(
-      "(function(){var dt = new Date(%s.lastModified); return dt.toISOString() }())" % self.varName)
-
-  @property
-  def description(self):
-    """
-    Description:
-    ------------
-    Get file description (name, size and date).
-    """
-    from epyk.core.js.primitives import JsObjects
-    return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {
-      'varName': self.varName, 'dt': self.toISOString})
-
-
 class DataLoops:
 
   @property
@@ -430,8 +448,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -447,8 +465,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -465,8 +483,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -482,8 +500,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -499,8 +517,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -516,8 +534,8 @@ class DataPrimitives:
 
     Attributes:
     ----------
-    :param list data: Optional. The Python object used to feed the list.
-    :param str name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list.
+    :param name: Optional. The variable name used on the JavaScript.
     """
     from epyk.core.js.primitives import JsObjects
 

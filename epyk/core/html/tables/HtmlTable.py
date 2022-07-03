@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List, Union
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
@@ -23,8 +24,6 @@ class Row(Html.Html):
     """
     Description:
     ------------
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -36,8 +35,6 @@ class Row(Html.Html):
     Description:
     ------------
     All table options.
-
-    :rtype: OptTable.OptionsTableRow
     """
     return super().options
 
@@ -77,7 +74,6 @@ class Cell(Html.Html):
     Description:
     ------------
 
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -89,8 +85,6 @@ class Cell(Html.Html):
     Description:
     ------------
     All table options.
-
-    :rtype: OptTable.OptionsTableCell
     """
     return super().options
 
@@ -102,7 +96,7 @@ class Cell(Html.Html):
 
     Attributes:
     ----------
-    :param primitives.HtmlModel component: Python HTML object
+    :param component: Python HTML object
 
     :return: self, the cell object to allow the chaining
     """
@@ -139,8 +133,6 @@ class Bespoke(Html.Html):
     Description:
     ------------
     All table options.
-
-    :rtype: OptTable.OptionsBasic
     """
     return super().options
 
@@ -162,15 +154,16 @@ class Bespoke(Html.Html):
     """
     return self._header
 
-  def set_header(self, values, css=None):
+  def set_header(self, values: list, css: dict = None):
     """
     Description:
     -----------
+    Set the table header.
 
     Attributes:
     ----------
-    :param values:
-    :param css: Dictionary
+    :param values: A list of headers
+    :param css: Specific CSS attributes
     """
     for i, col in enumerate(self._header):
       col._vals = values[i]
@@ -211,7 +204,7 @@ class Bespoke(Html.Html):
 
     Attributes:
     ----------
-    :param i: Integer. The column number
+    :param i: The column number
     """
     return self.items[i]
 
@@ -225,15 +218,15 @@ class Bespoke(Html.Html):
 
     Attributes:
     ----------
-    :param int i: The column number.
-    :param bool inc_header: Optional. Default False
+    :param i: The column number.
+    :param inc_header: Optional. Default False
     """
     if not inc_header and self._fields is not None:
       return self[i+1]
 
     return self[i]
 
-  def col(self, header=None, i=None):
+  def col(self, header: Union[str, bool] = None, i: int = None):
     """
     Description:
     -----------
@@ -246,8 +239,8 @@ class Bespoke(Html.Html):
 
     Attributes:
     ----------
-    :param header: String | Boolean. Optional. Consider or not the header.
-    :param i: Integer. Optional. The column index.
+    :param header: Optional. Consider or not the header.
+    :param i: Optional. The column index.
     """
     start = 1 if header is False else 0
     for v in self.items[start:]:
@@ -257,7 +250,7 @@ class Bespoke(Html.Html):
 
     return self
 
-  def set_editable_cols(self, col_indices):
+  def set_editable_cols(self, col_indices: List[int]):
     """
     Description:
     ------------
@@ -265,7 +258,7 @@ class Bespoke(Html.Html):
 
     Attributes:
     ----------
-    :param col_indices: List<Integer>. List of columns to be changed.
+    :param col_indices: Column indices to be changed.
     """
     for row in self.items:
       for i in col_indices:
@@ -277,14 +270,12 @@ class Bespoke(Html.Html):
     Description:
     ------------
     Dom properties for a table.
-
-    :rtype: JsHtml.JsHtmlTable
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlTable(self, page=self.page)
     return self._dom
 
-  def add(self, row, missing="", is_header=False):
+  def add(self, row: Union[dict, list], missing: str = "", is_header: bool = False):
     """
     Description:
     -----------

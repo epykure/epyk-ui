@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import types
 import json
 
 from epyk.core.html import Html
@@ -80,8 +81,6 @@ class Select(Html.Html):
     Description:
     -----------
     Property to set all the possible object for a button.
-
-    :rtype: OptSelect.OptionsSelectJs
     """
     return super().options
 
@@ -92,8 +91,6 @@ class Select(Html.Html):
     -----------
     A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
-
-    :rtype: GrpClsList.ClassSelect
     """
     if self._styleObj is None:
       self._styleObj = GrpClsList.ClassSelect(self)
@@ -108,8 +105,6 @@ class Select(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlSelect.DomSelect
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.DomSelect(self, page=self.page)
@@ -127,11 +122,7 @@ class Select(Html.Html):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
-
-    :rtype: JsSelect.JSelect
     """
     if self._js is None:
       self._js = JsSelect.JSelect(self, page=self.page)
@@ -176,8 +167,8 @@ class Select(Html.Html):
       selectObj.selectpicker(options).selectpicker('refresh');
       selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
-  def change(self, js_funcs: Union[list, str], empty_funcs: Optional[Union[list, str]] = None,
-             profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None,
+  def change(self, js_funcs: types.JS_FUNCS_TYPES, empty_funcs: types.JS_FUNCS_TYPES = None,
+             profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None,
              on_ready: bool = False):
     """
     Description:
@@ -186,11 +177,11 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Set of Javascript function to trigger on this event.
-    :param Optional[Union[list, str]] empty_funcs: Optional. Set of Js function to trigger if the value is empty.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Set of Javascript function to trigger on this event.
+    :param empty_funcs: Optional. Set of Js function to trigger if the value is empty.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -213,11 +204,11 @@ class Select(Html.Html):
 
     Attributes:
     ----------
-    :param str url: The request URL for the ajax call.
-    :param js_data: String | Js Object. The value of the item to be removed from the list.
-    :param bool is_json: Optional. A flag to specific if the data are json (default True).
-    :param str method: Optional. The HTTP request method. Default Post
-    :param Optional[dict] options: Optional. The specific properties for the ajax request.
+    :param url: The request URL for the ajax call.
+    :param js_data: The value of the item to be removed from the list.
+    :param is_json: Optional. A flag to specific if the data are json (default True).
+    :param method: Optional. The HTTP request method. Default Post
+    :param options: Optional. The specific properties for the ajax request.
     """
     self.options.liveSearch = True
     options = options or {}
@@ -270,7 +261,8 @@ class Select(Html.Html):
           self.htmlCode, self.attr.get("data-background")))
       self.attr['class'].add("%s_background" % self.htmlCode)
     if self.button_css is not None:
-      self.page.css.customText('.%s_button_bespoke {%s}' % (self.htmlCode, ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in self.button_css.items()])))
+      self.page.css.customText('.%s_button_bespoke {%s}' % (
+        self.htmlCode, ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in self.button_css.items()])))
       self.attr['class'].insert(0, "%s_button_bespoke" % self.htmlCode)
     data_cls = self.get_attrs(css_class_names=self.style.get_classes()).replace('class="', 'data-style="')
     return "<select %s>%s</select>" % (data_cls, "".join(data))

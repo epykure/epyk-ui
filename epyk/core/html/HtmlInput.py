@@ -90,8 +90,6 @@ class Input(Html.Html):
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtmlInput.Inputs
     """
     if self._dom is None:
       self._dom = JsHtmlInput.Inputs(self, page=self.page)
@@ -123,7 +121,8 @@ class Input(Html.Html):
       else { htmlObj.value = data; }
       '''
 
-  def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None, options: dict = None, source_event: str = None, on_ready: bool = False):
+  def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+            options: dict = None, source_event: str = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -365,8 +364,6 @@ class AutoComplete(Input):
     Related Pages:
 
       https://timepicker.co/options/
-
-    :rtype: OptInputs.OptionAutoComplete
     """
     return super().options
 
@@ -407,8 +404,6 @@ class AutoComplete(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsInput.ClassInputAutocomplete
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputAutocomplete(self)
@@ -421,8 +416,6 @@ class AutoComplete(Input):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsQueryUi.Autocomplete
     """
     if self._js is None:
       self._js = JsQueryUi.Autocomplete(self, page=self.page)
@@ -459,8 +452,6 @@ class InputTime(Input):
     Related Pages:
 
       https://timepicker.co/options/
-
-    :rtype: OptInputs.OptionsTimePicker
     """
     return super().options
 
@@ -470,8 +461,6 @@ class InputTime(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsInput.ClassInputTime
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputTime(self)
@@ -555,8 +544,6 @@ class InputDate(Input):
     Related Pages:
 
       https://timepicker.co/options/
-
-    :rtype: OptInputs.OptionsDatePicker
     """
     return super().options
 
@@ -567,8 +554,6 @@ class InputDate(Input):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsQueryUi.Datepicker
     """
     if self._js is None:
       self._js = JsQueryUi.Datepicker(self, page=self.page)
@@ -580,8 +565,6 @@ class InputDate(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsInput.ClassInputDate
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputDate(self)
@@ -593,8 +576,6 @@ class InputDate(Input):
     Description:
     ------------
     The Javascript Dom object.
-
-    :rtype: JsHtmlJqueryUI.JsHtmlDatePicker
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, page=self.page)
@@ -694,8 +675,6 @@ class InputInteger(Input):
     Description:
     -----------
     Property to set all the input component properties.
-
-    :rtype: OptInputs.OptionsInputInteger
     """
     return super().options
 
@@ -739,8 +718,6 @@ class InputRange(Input):
     Description:
     ------------
     Property to set input range properties.
-
-    :rtype: OptInputs.OptionsInputRange
     """
     return super().options
 
@@ -750,8 +727,6 @@ class InputRange(Input):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsInput.ClassInputRange
     """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputRange(self)
@@ -800,8 +775,6 @@ class Field(Html.Html):
     The HTML Dom object linked to this component.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, page=self.page)
@@ -1087,8 +1060,6 @@ class Checkbox(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    :rtype: JsHtmlField.Check
     """
     if self._dom is None:
       self._dom = JsHtmlField.Check(self, page=self.page)
@@ -1101,8 +1072,6 @@ class Checkbox(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsComponents.Radio
     """
     if self._js is None:
       self._js = JsComponents.Radio(self, page=self.page)
@@ -1153,8 +1122,6 @@ class Radio(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    :rtype: JsHtmlField.Radio
     """
     if self._dom is None:
       self._dom = JsHtmlField.Radio(self, page=self.page)
@@ -1167,8 +1134,6 @@ class Radio(Html.Html):
     -----------
     The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: JsComponents.Radio
     """
     if self._js is None:
       self._js = JsComponents.Radio(self, page=self.page)
@@ -1202,8 +1167,6 @@ class TextArea(Html.Html):
     Description:
     -----------
     Property to set all the input component properties.
-
-    :rtype: OptInputs.OptionsTextarea
     """
     return self.__options
 
@@ -1236,8 +1199,6 @@ class TextArea(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/js/js_htmldom.asp
-
-    :rtype: JsHtmlField.Textarea
     """
     if self._dom is None:
       self._dom = JsHtmlField.Textarea(self, page=self.page)
@@ -1359,8 +1320,6 @@ class Search(Html.Html):
     -----------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    :rtype: JsHtmlField.JsHtmlFields
     """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, page=self.page)

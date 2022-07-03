@@ -1748,6 +1748,7 @@ class Column(Options):
     Description:
     -----------
     callback to check if the cell is editable (see Manipulating Data for more details).
+    This does not support function, use editable_check() otherwise.
 
     Related Pages:
 
@@ -1758,6 +1759,39 @@ class Column(Options):
   @editable.setter
   def editable(self, val: bool):
     self._config(val)
+
+  def editable_check(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    This lets you set a callback that is executed before the editor is built, if this callback returns true the editor
+    is added, if it returns false the edit is aborted and the cell remains a non-editable cell.
+
+    Usage::
+
+        page.js.customText("function MyCell(cell){var data = cell.getRow().getData(); return data.iata  == 'ORD' }")
+
+        for c in table.get_columns():
+          c.editor = "input"
+          c.editable_check("MyCell", func_ref=True)
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/edit
+
+    Attributes:
+    ----------
+    :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue,
+      rowData, filterParams)
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function ") and not func_ref:
+      str_func = "function (cell){%s}" % str_func
+    self._config(str_func, name="editable", js_type=True)
 
   @property
   def editableTitle(self):
@@ -1822,7 +1856,7 @@ class Column(Options):
 
   @editorParams.setter
   def editorParams(self, values: dict):
-    self._config(val)
+    self._config(values)
 
   @property
   def editors(self):
@@ -1983,7 +2017,8 @@ class Column(Options):
   def headerFilter(self, value):
     self._config(value)
 
-  def headerFilterFunc(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+  def headerFilterFunc(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+                       func_ref: bool = False):
     """
     Description:
     -----------

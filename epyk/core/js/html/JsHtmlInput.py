@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
-from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
@@ -11,7 +10,7 @@ from epyk.core.js.primitives import JsObjects
 
 class Inputs(JsHtml.JsHtml):
 
-  def autocomplete(self, data: Union[str, primitives.JsDataModel] = None):
+  def autocomplete(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -31,7 +30,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.autocomplete = %s" % (self.component.dom.varName, data))
 
-  def autofocus(self, data: Union[str, primitives.JsDataModel] = None):
+  def autofocus(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -51,7 +50,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.autofocus = %s" % (self.component.dom.varName, data))
 
-  def defaultValue(self, data: Union[str, primitives.JsDataModel] = None):
+  def defaultValue(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -71,7 +70,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.defaultValue = %s" % (self.component.dom.varName, data))
 
-  def disabled(self, data: Union[str, primitives.JsDataModel] = None):
+  def disabled(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -91,7 +90,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.disabled = %s" % (self.component.dom.varName, data))
 
-  def maxLength(self, data: Union[str, primitives.JsDataModel] = None):
+  def maxLength(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -111,7 +110,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.maxLength = %s" % (self.component.dom.varName, data))
 
-  def pattern(self, data: Union[str, primitives.JsDataModel] = None):
+  def pattern(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -131,7 +130,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.pattern = %s" % (self.component.dom.varName, data))
 
-  def placeholder(self, data: Union[str, primitives.JsDataModel] = None):
+  def placeholder(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -151,7 +150,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.placeholder = %s" % (self.component.dom.varName, data))
 
-  def readOnly(self, data: Union[str, primitives.JsDataModel] = None):
+  def readOnly(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -171,7 +170,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.readOnly = %s" % (self.component.dom.varName, data))
 
-  def required(self, data: Union[str, primitives.JsDataModel] = None):
+  def required(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -191,7 +190,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.required = %s" % (self.component.dom.varName, data))
 
-  def size(self, data: Union[str, primitives.JsDataModel] = None):
+  def size(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -211,7 +210,7 @@ class Inputs(JsHtml.JsHtml):
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.size = %s" % (self.component.dom.varName, data))
 
-  def name(self, data: Union[str, primitives.JsDataModel] = None):
+  def name(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------

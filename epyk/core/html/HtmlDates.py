@@ -54,8 +54,6 @@ class DatePicker(Html.Html):
     Description:
     -----------
     Property to set all the DatePicker properties.
-
-    :rtype: OptCalendars.OptionDatePicker
     """
     return super().options
 
@@ -72,8 +70,6 @@ class DatePicker(Html.Html):
       today.select([
         page.js.console.log(today.dom.content)
       ])
-
-    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
@@ -213,8 +209,6 @@ class TimePicker(Html.Html):
       time_picker.change([
         page.js.console.log(time_picker.dom.content)
       ])
-
-    :rtype: JsHtmlJqueryUI.JsHtmlDateFieldPicker
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
@@ -341,8 +335,6 @@ htmlObj.setAttribute('data-value', data)
     Description:
     -----------
     Property to set all the DatePicker properties.
-
-    :rtype: OptText.OptionsUpdate
     """
     return super().options
 
@@ -360,8 +352,6 @@ htmlObj.setAttribute('data-value', data)
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -415,8 +405,6 @@ class Calendar(Html.Html):
     Description:
     -----------
     Property to set all the Calendar properties.
-
-    :rtype: OptCalendars.OptionDays
     """
     return super().options
 
@@ -525,7 +513,7 @@ class Calendar(Html.Html):
     :param start:
     :param capacity:
     :param frequency:
-    :param weekend: Boolean. Optional. Flag to specify if the weekends should be considered.
+    :param weekend: Optional. Flag to specify if the weekends should be considered.
     :param options:
     """
     dt = datetime.date(*map(lambda x: int(x), start.split("-")))

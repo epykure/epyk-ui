@@ -242,7 +242,6 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_tabulator_col_title)
     self.classList['other'].add(self.cls_tabulator_col_content)
     self.classList['other'].add(self.cls_tabulator_selected)
-    self.classList['other'].add(self.cls_tb_even_row)
     self.classList['other'].add(self.cls_tb_groups)
     self.classList['other'].add(self.cls_tb_footer)
     self.classList['other'].add(self.cls_tb_footer_pg)
@@ -267,11 +266,13 @@ class Tabulator(GrpCls.ClassHtml):
     Usage::
 
       table.style.strip({"background": "yellow"}, important=True)
+      # In the table definition
+      table = page.ui.tables.tabulators.table(data[:50], width=(200, "px"), options={"stripped": True})
 
     Attributes:
     ----------
-    :param attrs:
-    :param important:
+    :param attrs: bespoke CSS attributes
+    :param important: Set the attributes as important to override the default classes
     """
     self.__strip = True
     if self._css_tabulator_even_row is None:

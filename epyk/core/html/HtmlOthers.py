@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
@@ -43,9 +44,9 @@ class Hr(Html.Html):
 
     Attributes:
     ----------
-    :param int left: Optional. The margin left.
-    :param int right: Optional. The margin right.
-    :param str unit: Optional. The unit by default percentage.
+    :param left: Optional. The margin left.
+    :param right: Optional. The margin right.
+    :param unit: Optional. The unit by default percentage.
     """
     if left:
       self.style.css.margin_left = "%s%s" % (left, unit)
@@ -60,8 +61,6 @@ class Hr(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :return: GrpClsLayout.ClassStandard
     """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassStandard(self)
@@ -111,15 +110,14 @@ class Stars(Html.Html):
     Description:
     ------------
     The JavaScript dom object to be used in any events.
-
-    :rtype: JsHtmlStars.Stars
     """
     if self._dom is None:
       self._dom = JsHtmlStars.Stars(self, page=self.page)
     return self._dom
 
-  def click(self, js_funcs: Optional[Union[list, str]] = None,
-            profile: Optional[Union[bool, dict]] = None, source_event: Optional[str] = None, on_ready: bool = False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES = None,
+            profile: types.PROFILE_TYPE = None,
+            source_event: Optional[str] = None, on_ready: bool = False):
     """
     Description:
     ------------
@@ -133,10 +131,10 @@ class Stars(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: The Javascript functions
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: self to allow the chains
     """
@@ -182,8 +180,6 @@ class Help(Html.Html):
     Description:
     ------------
     Property to the CSS Style of the component.
-
-    :rtype: GrpClsLayout.ClassHelp
     """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassHelp(self)
@@ -227,8 +223,8 @@ class Loading(Html.Html):
 
     Attributes:
     ----------
-    :param Optional[dict] css: Optional. The css attributes.
-    :param Optional[dict] icon_css: Optional. The CSS attributes.
+    :param css: Optional. The css attributes.
+    :param icon_css: Optional. The CSS attributes.
 
     :return: self to allow the chains.
     """
@@ -262,8 +258,6 @@ class HtmlJson(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
-
-    :rtype: JsHtmlJson.JsonFormatter
     """
     if self._dom is None:
       self._dom = JsHtmlJson.JsonFormatter(self, page=self.page)
@@ -291,8 +285,6 @@ class HtmlJson(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptJsonFormatter.OptionsJsonFmt
     """
     return super().options
 
@@ -304,8 +296,6 @@ class HtmlJson(Html.Html):
     Return the Javascript internal object.
 
     :return: A Javascript object
-
-    :rtype: JsJsonFormatter.Json
     """
     if self._js is None:
       self._js = JsJsonFormatter.Json(page=self.page, js_code=self.jsonId, set_var=False, component=self)
@@ -347,8 +337,6 @@ class Breadcrumb(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a breadcrumb definition.
-
-    :rtype: OptText.OptBreadCrumb
     """
     return super().options
 
@@ -410,8 +398,6 @@ class Legend(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptJsonFormatter.OptionsLegend
     """
     return super().options
 
@@ -515,8 +501,6 @@ class Slides(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 
@@ -527,8 +511,6 @@ class Slides(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
-
-    :rtype: JsHtmlStars.Slides
     """
     if self._dom is None:
       self._dom = JsHtmlStars.Slides(component=self, page=self.page)
@@ -542,7 +524,7 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param Union[Html.Html, str] component: The HTML component to be added to this component.
+    :param component: The HTML component to be added to this component.
     """
     if isinstance(component, list):
       for c in component:
@@ -571,9 +553,9 @@ class Slides(Html.Html):
 
     Attributes:
     ----------
-    :param str title: The title value in the slide.
-    :param Union[Html.Html, str] component: The HTML component.
-    :param Optional[dict] options: Optional. The various component options.
+    :param title: The title value in the slide.
+    :param component: The HTML component.
+    :param options: Optional. The various component options.
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
@@ -633,8 +615,6 @@ class HtmlQRCode(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptQrCode.OptionsQrCode
     """
     return super().options
 
@@ -659,8 +639,6 @@ class HtmlQRCode(Html.Html):
     Return the Javascript internal object.
 
     :return: A Javascript object
-
-    :rtype: JsQrCode.QrCode
     """
     if self._js is None:
       self._js = JsQrCode.QrCode(js_code=self.jsonId, set_var=False, component=self, page=self.page)

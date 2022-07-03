@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import types
 from epyk.core.html import Html
 
 from epyk.core.js import Imports
@@ -42,8 +43,6 @@ class Stepper(Html.Html):
     ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
-
-    :rtype: JsHtmlStepper.Stepper
     """
     if self._dom is None:
       self._dom = JsHtmlStepper.Stepper(self, page=self.page)
@@ -55,8 +54,6 @@ class Stepper(Html.Html):
     Description:
     ------------
     Property to set all the possible object for a button.
-
-    :rtype: OptPanel.OptionsStepper
     """
     return super().options
 
@@ -97,9 +94,9 @@ class Stepper(Html.Html):
 
     Attributes:
     ----------
-    :param str shape: The reference of the shape.
-    :param str shape_def: The shape JavaScript definition.
-    :param Optional[list] dependencies: Optional. The external module dependencies.
+    :param shape: The reference of the shape.
+    :param shape_def: The shape JavaScript definition.
+    :param dependencies: Optional. The external module dependencies.
     """
     if dependencies is not None:
       for d in dependencies:
@@ -128,7 +125,7 @@ class Step:
     self.component = component
     self._selector = selector
 
-  def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -136,8 +133,8 @@ class Step:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
