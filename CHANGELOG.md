@@ -7,6 +7,18 @@
 ### Fixed
 
 
+## [1.8.0] - 2022-07-03
+
+### Added
+ - new argument data_ref to change the javascript data variable
+ - More types annotations
+ - More documentation
+ - Introduce _ property to get core modules from Js object
+ 
+### Fixed
+- Few bugs in modules for class definition
+
+
 ## [1.7.25] - 2022-06-26
 
 ### Added
