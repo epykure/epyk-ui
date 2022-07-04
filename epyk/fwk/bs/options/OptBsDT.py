@@ -892,3 +892,4 @@ class DT(Options):
   @date.setter
   def date(self, value):
     self._config(value)
+

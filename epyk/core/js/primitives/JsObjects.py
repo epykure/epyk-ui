@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Any
+from typing import Optional, Any, Type
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.primitives import JsArray
 from epyk.core.js.primitives import JsDate
@@ -27,418 +28,36 @@ class JsVoid(primitives.JsDataModel):
     return self._data
 
 
-class JsObjects:
-  def __init__(self, page: primitives.PageModel = None, component: primitives.HtmlModel = None):
-    self.page, self.component = page, component
-
-  @property
-  def this(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript "this" object (which is a dom object very often).
-    """
-    return JsNodeDom.JsDoms.get("this")
-
-  @property
-  def result(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript result object from a post or any other AJAX calls.
-    """
-    return JsObject.JsObject.get("result")
-
-  @property
-  def request(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript result object from a post or any other AJAX calls.
-
-    :rtype: XMLHttpRequest
-    """
-    return XMLHttpRequest.get("result")
-
-  @property
-  def data(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript data object from a post or any other AJAX calls.
-    """
-    return JsObject.JsObject.get("data")
-
-  @property
-  def value(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript value in an event
-    """
-    return JsObject.JsObject.get("value")
-
-  @property
-  def mouseEvent(self):
-    """
-    Description:
-    -----------
-    Interface to the JavaScript MouseEvents.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/obj_mouseevent.asp
-    """
-    return JsEvents.MouseEvent()
-
-  @property
-  def event(self):
-    """
-    Description:
-    -----------
-    Interface to the JavaScript Events.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/obj_event.asp
-    """
-    return JsEvents.Event()
-
-  @property
-  def jqThis(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    :return: The Javascript "this" object
-    """
-    from epyk.core.js.packages import JsQuery
-    return JsQuery.JQuery(component=self.component, page=self.page, selector="jQuery(this)", set_var=False)
-
-  @classmethod
-  def get(cls, js_code: str):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    Attributes:
-    ----------
-    :param str js_code: The variable name.
-
-    :return: The requested Python JsObject primitive
-    """
-    return JsObject.JsObject.get(js_code)
-
-  @classmethod
-  def new(cls, data=None, js_code: Optional[str] = None, is_py_data: bool = False,
-          page: primitives.PageModel = None):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
-
-    Attributes:
-    ----------
-    :param data: Object. Optional. The value.
-    :param Optional[str] js_code: Optional. The variable name.
-    :param bool is_py_data: Optional. The data type.
-    :param primitives.PageModel page: Optional. The underlying page object (the context).
-
-    :return: A Python generic JsObject primitive.
-    """
-    return JsObject.JsObject.new(data, js_code, is_py_data, page=page)
-
-  def time(self, js_code: str, page: primitives.PageModel = None):
-    """
-    Description:
-    -----------
-    Return a time object from the Javascript function performance.now().
-
-    Attributes:
-    ----------
-    :param str js_code: The variable name.
-    :param primitives.PageModel page: Report. Optional. The report object.
-    """
-    return JsObject.JsObject.new("performance.now()", js_code, False, page=page)
-
-  @property
-  def number(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Number primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_number.asp
-
-    :return: A Python JsNumber primitive.
-    """
-    return JsNumber.JsNumber
-
-  @property
-  def string(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript String primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_string.asp
-
-    :return: A Python JsString primitive.
-    """
-    return JsString.JsString
-
-  @property
-  def list(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Array primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_array.asp
-
-    :return: A Python JsArray primitive.
-    """
-    return JsArray.JsArray
-
-  @property
-  def array(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Array primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_array.asp
-
-    :return: A Python JsArray primitive.
-    """
-    return JsArray.JsArray
-
-  @property
-  def date(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Date primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_date.asp
-
-    :return: A Python JsDate object.
-    """
-    return JsDate.JsDate
-
-  @property
-  def boolean(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Boolean primitive.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_boolean.asp
-
-    :return: A Python JsBoolean primitive.
-    """
-    return JsBoolean.JsBoolean
-
-  @property
-  def dom(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Dom class.
-
-    :return: A Python Document.
-    """
-    return JsNodeDom.JsDoms
-
-  @property
-  def null(self):
-    """
-    Description:
-    -----------
-    Similar as None in Python.
-
-    Related Pages:
-
-      https://www.w3schools.com/js/js_datatypes.asp
-
-    :return: A Python Js Null object.
-    """
-    return JsObject.JsObject("null")
-
-  @property
-  def undefined(self):
-    """
-    Description:
-    -----------
-    Similar as the None in Python.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_undefined.asp
-
-    :return: A Python Js undefined object.
-    """
-    return JsObject.JsObject("undefined", is_py_data=False)
-
-  @property
-  def NaN(self):
-    """
-    Description:
-    -----------
-    The NaN property represents "Not-a-Number" value. This property indicates that a value is not a legal number.
-
-    The NaN property is the same as the Number.Nan property.
-
-    Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_number_nan.asp
-      https://www.w3schools.com/jsref/jsref_isnan.asp
-    """
-    return JsNumber.JsNumber("Number.NaN")
-
-  @property
-  def true(self):
-    """
-    Description:
-    -----------
-    Similar as True in Python.
-
-    Related Pages:
-
-      https://www.w3schools.com/js/js_booleans.asp
-
-    :return: A Python Js True object.
-    """
-    return JsBoolean.JsBoolean.get('true')
-
-  @property
-  def false(self):
-    """
-    Description:
-    -----------
-    Similar as False in Python.
-
-    Related Pages:
-
-      https://www.w3schools.com/js/js_booleans.asp
-    
-    :return: A Python Js False object.
-    """
-    return JsBoolean.JsBoolean.get('false')
-
-  def record(self, js_code: str):
-    """
-    Description:
-    -----------
-    Get a record object.
-
-    Attributes:
-    ----------
-    :param str js_code: A string with of the existing variable name.
-    """
-    return JsData.RawData.get(page=self.page, js_code=js_code)
-
-  def incr(self, incr: str):
-    """
-    Description:
-    -----------
-    Increment a counter.
-
-    Attributes:
-    ----------
-    :param str incr: the variable name used to store the counter.
-    """
-    return JsObject.JsObject("%s++" % incr)
-
-  def function(self, args, returns: str, eval: bool = False):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param args:
-    :param str returns:
-    :param bool eval:
-    """
-    params, values = [], []
-    for i, v in enumerate(args):
-      if i > 0:
-        params.append("x%s" % i)
-      else:
-        params.append("x")
-      values.append(str(v))
-    if eval:
-      return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (
-        ", ".join(params), returns, ", ".join(values)))
-
-  def entry(self, i: int = 0, entry_code: str = "entry"):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
-    :param i:
-    :param entry_code:
-    """
-    return JsIntersectionObserver.IntersectionObserverEntry("%s[%s]" % (entry_code, i))
-
-
 class JsPromiseRecords(primitives.JsDataModel):
 
   def __init__(self, promise):
     self.promise = promise
 
-  def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = None):
+  def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.promise.then("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
     return self
 
-  def cast(self, columns: list, to: str = "float", profile: Union[dict, bool] = None):
+  def cast(self, columns: list, to: str = "float", profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param list columns:
-    :param str to:
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param columns:
+    :param to:
+    :param profile: Optional. A flag to set the component performance storage.
     """
     cast_cols = {}
     str_frg = []
@@ -454,15 +73,15 @@ class JsPromiseRecords(primitives.JsDataModel):
         str_frg.append("row['%(col)s'] = parseInt(row['%(col)s'])" % {"col": col})
     return self.row(str_frg, profile=profile)
 
-  def row(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
+  def row(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = []
@@ -470,8 +89,8 @@ class JsPromiseRecords(primitives.JsDataModel):
       "function(data){let result = []; data.forEach(function(row){%s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
     return self
 
-  def filterCol(self, column: Union[str, primitives.JsDataModel],
-                value: Union[str, primitives.JsDataModel, float, dict, list],
+  def filterCol(self, column: types.JS_DATA_TYPES,
+                value: types.JS_DATA_TYPES,
                 operator: str = "==", keep: bool = True):
     """
     Description:
@@ -479,10 +98,10 @@ class JsPromiseRecords(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel column:
-    :param Union[str, primitives.JsDataModel, float, dict, list] value:
-    :param str operator:
-    :param bool keep:
+    :param column:
+    :param value:
+    :param operator:
+    :param keep:
     """
     column = JsUtils.jsConvertData(column, None)
     value = JsUtils.jsConvertData(value, None)
@@ -503,12 +122,12 @@ class JsPromiseRecords(primitives.JsDataModel):
 
 class JsPromise:
 
-  def __init__(self, data: Union[str, primitives.JsDataModel], profile: Optional[Union[dict, bool]] = False,
+  def __init__(self, data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False,
                async_await: bool = False):
     self.data, self.profile, self.async_await = data, profile, async_await
     self.__thens, self.__catch = [], []
 
-  def then(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def then(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -516,59 +135,61 @@ class JsPromise:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.__thens.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def csvRows(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def csvRows(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.then(["function(response){ return response.text()}"], profile)
+    self.then(["function(%s){ return %s.text()}" % (js_code, js_code)], profile)
     return self.then(["function(data){let result = []; data.split('\\n').forEach(function(line){let row = line.split(','); %s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)], profile)
 
-  def csvtoRecords(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def csvtoRecords(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param js_code: Optional. The variable name created in the Javascript (default response).
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.then(["function(response){ return response.text()}"], profile)
-    return JsPromiseRecords(self.then(['''function(response){
-    let fileContent = response.split(/\\r?\\n/); let data = [];
+    self.then(["function(%s){ return %s.text()}" % (js_code, js_code)], profile)
+    return JsPromiseRecords(self.then(['''function(%s){
+    let fileContent = %s.split(/\\r?\\n/); let data = [];
     let fileHeader = fileContent[0].split(',');
     for (var i=1; i < fileContent.length; i++){
       let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
       %s; data.push(row)}; 
     return data}
-    ''' % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile)], profile))
+    ''' % (js_code, js_code, JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))], profile))
 
-  def catch(self, js_funcs: Union[list, str]):
+  def catch(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
+    :param js_funcs: The Javascript functions.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -601,8 +222,8 @@ class XMLHttpRequestErrors:
     self._http = http_request
     self.profile = None
 
-  def e404(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
-           profile: Optional[Union[dict, bool]] = None):
+  def e404(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -613,9 +234,9 @@ class XMLHttpRequestErrors:
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: Javascript functions.
-    :param bool default: Optional. Use the default messages.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param default: Optional. Use the default messages.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = list(js_funcs or [])
     if default:
@@ -626,8 +247,8 @@ class XMLHttpRequestErrors:
       self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def e405(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
-           profile: Optional[Union[dict, bool]] = None):
+  def e405(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -638,9 +259,9 @@ class XMLHttpRequestErrors:
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: Javascript functions.
-    :param bool default: Optional. Use the default messages.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param default: Optional. Use the default messages.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = list(js_funcs or [])
     if default:
@@ -651,17 +272,17 @@ class XMLHttpRequestErrors:
       self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def e200(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
-           profile: Optional[Union[dict, bool]] = None):
+  def e200(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: Javascript functions.
-    :param bool default: Optional. Use the default messages.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param default: Optional. Use the default messages.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = list(js_funcs or [])
     if default:
@@ -672,17 +293,17 @@ class XMLHttpRequestErrors:
       "if(%s == 200){%s}" % (self._http.status, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self._http
 
-  def commons(self, js_funcs: Optional[Union[list, str]] = None, default: bool = True,
-              profile: Optional[Union[dict, bool]] = None):
+  def commons(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param Optional[Union[list, str]] js_funcs: Javascript functions.
-    :param bool default: Optional. Use the default messages.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions.
+    :param default: Optional. Use the default messages.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.e405(js_funcs, default, profile)
     self.e404(js_funcs, default, profile)
@@ -696,7 +317,7 @@ class XMLHttpRequest:
                url: Optional[str], data: JsData.Datamap = None, asynchronous: bool = False):
     self.data = JsData.Datamap() if data is None else data
     self.page, self.__headers, self.url = page, {}, url
-    self.__mod_name, self.__mod_path, self.method = None, None, method_type
+    self.__mod_name, self.__mod_path, self.method, self.__data_ref = None, None, method_type, "data"
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
     self.__url_prefix, self.__responseType = "", 'json'
@@ -713,14 +334,14 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param str js_code: The variable name on tje JavaScript side.
+    :param js_code: The variable name on tje JavaScript side.
 
     :return: The requested Python JsObject primitive.
     """
     return XMLHttpRequest(None, js_code, None, None)
 
   @property
-  def readyState(self):
+  def readyState(self) -> JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -733,7 +354,7 @@ class XMLHttpRequest:
     return JsNumber.JsNumber("%s.readyState" % self.varId)
 
   @property
-  def status(self):
+  def status(self) -> JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -747,7 +368,7 @@ class XMLHttpRequest:
     return JsNumber.JsNumber("%s.status" % self.varId)
 
   @property
-  def responseType(self, value: Optional[str] = None):
+  def responseType(self, value: Optional[str] = None) -> JsString.JsString:
     """
     Description:
     ------------
@@ -760,7 +381,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Optional[str] value: Optional. The response type.
+    :param value: Optional. The response type.
     """
     if value is not None:
       self.__responseType = value
@@ -769,7 +390,7 @@ class XMLHttpRequest:
     return JsString.JsString("%s.responseType" % self.varId, is_py_data=False)
 
   @property
-  def responseText(self):
+  def responseText(self) -> JsString.JsString:
     """
     Description:
     ------------
@@ -794,7 +415,7 @@ class XMLHttpRequest:
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/abort_event
     """
 
-  def addEventListener(self, event: str, js_funcs: Union[list, str], options: Optional[dict] = None):
+  def addEventListener(self, event: str, js_funcs: types.JS_FUNCS_TYPES, options: types.OPTION_TYPE = None):
     """
     Description:
     ------------
@@ -810,9 +431,9 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param str event: A case-sensitive string representing the event type to listen for.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
+    :param event: A case-sensitive string representing the event type to listen for.
+    :param js_funcs: Optional. The Javascript functions.
+    :param options: Optional. Specific Python options available for this component.
     """
 
   def open(self, method_type: str, url: str, _async: bool = True, user: Optional[str] = None,
@@ -828,11 +449,11 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param str method_type: The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
-    :param str url: A DOMString representing the URL to send the request to.
-    :param bool _async: Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
-    :param Optional[str] user: Optional. The optional user name to use for authentication purposes; by default, this is the null value.
-    :param Optional[str] password: Optional. The optional password to use for authentication purposes; by default, this is the null value.
+    :param method_type: The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
+    :param url: A DOMString representing the URL to send the request to.
+    :param _async: Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
+    :param user: Optional. The optional user name to use for authentication purposes; by default, this is the null value.
+    :param password: Optional. The optional password to use for authentication purposes; by default, this is the null value.
     """
     self.url, self.method = url, method_type
     return self
@@ -849,7 +470,7 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param dict headers: The different attributes to be added to the header.
+    :param headers: The different attributes to be added to the header.
     """
     self.__headers.update(headers)
     return self
@@ -866,13 +487,13 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param str name: The header name.
-    :param str value: The header value.
+    :param name: The header name.
+    :param value: The header value.
     """
     self.__headers[name] = value
     return self
 
-  def onSuccess(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onSuccess(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, data_ref: str = "data"):
     """
     Description:
     ------------
@@ -885,14 +506,15 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile. A flag to set the component performance storage
+    :param data_ref: JavaScript variable name for the main data in the function (default data)
     """
     if profile is not None:
       self.profile = profile
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.__req_success = js_funcs
+    self.__req_success, self.__data_ref = js_funcs, data_ref
     if self.profile is not None and self.profile:
       self.__req_success.insert(
         0, "console.log('Start[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
@@ -900,7 +522,7 @@ class XMLHttpRequest:
         "console.log('End[SUCCESS]: '+ (performance.now() - t_post%s)+ ' ms')" % JsUtils.PROFILE_COUNT)
     return self
 
-  def onerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onerror(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -913,8 +535,8 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
@@ -926,7 +548,7 @@ class XMLHttpRequest:
       self.__on["onerror"] = js_funcs
     return self
 
-  def onFail(self, js_funcs: Union[list, str], status_code: int = 404, profile: Optional[Union[dict, bool]] = None):
+  def onFail(self, js_funcs: types.JS_FUNCS_TYPES, status_code: int = 404, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -939,9 +561,9 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param int status_code: Optional. The status code for the failure condition.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param status_code: Optional. The status code for the failure condition.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if "onloadend" not in self.__on:
       self.__on["onloadend"] = []
@@ -952,7 +574,7 @@ class XMLHttpRequest:
     return self
 
   @property
-  def errors(self):
+  def errors(self) -> XMLHttpRequestErrors:
     """
     Description:
     ------------
@@ -962,7 +584,7 @@ class XMLHttpRequest:
       self.__on["onloadend"] = []
     return XMLHttpRequestErrors(self.__on["onloadend"], self.page, self)
 
-  def ontimeout(self, js_funcs: Union[list, str], timeout: int = 2000, profile: Optional[Union[dict, bool]] = None):
+  def ontimeout(self, js_funcs: types.JS_FUNCS_TYPES, timeout: int = 2000, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -974,9 +596,9 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param int timeout: Optional. Time in milliseconds.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param timeout: Optional. Time in milliseconds.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
@@ -986,7 +608,7 @@ class XMLHttpRequest:
     self.__on["ontimeout"] = js_funcs
     return self
 
-  def onloadend(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onloadend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -994,8 +616,8 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
@@ -1004,7 +626,7 @@ class XMLHttpRequest:
     self.__on["onloadend"] = js_funcs
     return self
 
-  def onloadstart(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def onloadstart(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1013,8 +635,8 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if profile is not None:
       self.profile = profile
@@ -1038,10 +660,10 @@ class XMLHttpRequest:
 
     Attributes:
     ----------
-    :param bool flag: Flag to specify the use of credentials.
+    :param flag: Flag to specify the use of credentials.
     """
 
-  def send(self, json_data: Union[list, dict, primitives.JsDataModel] = None, encode_uri_data: dict = None,
+  def send(self, json_data: types.JS_DATA_TYPES = None, encode_uri_data: dict = None,
            stringify: bool = True):
     """
     Description:
@@ -1058,8 +680,8 @@ class XMLHttpRequest:
     Attributes:
     ----------
     :param json_data:
-    :param dict encode_uri_data:
-    :param bool stringify:
+    :param encode_uri_data:
+    :param stringify:
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if json_data:
@@ -1104,13 +726,15 @@ class XMLHttpRequest:
     else:
       request.append("%s.open(%s, %s)" % (self.varId, self.method, self.url))
     for k, v in self.__headers.items():
-      request.append("%s.setRequestHeader('%s', '%s')" % (self.varId, k, v))
+      request.append("%s.setRequestHeader(%s, %s)" % (
+        self.varId, JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     if self.__req_success is not None:
       if self.__req_fail is not None:
         request.append("%s.onload = function(){}" % self.varId)
       else:
-        request.append("%(varId)s.onload = function(){var data = %(varId)s.response; %(jsFncs)s}" % {
-          'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True, profile=self.profile)})
+        request.append("%(varId)s.onload = function(){var %(dataRef)s = %(varId)s.response; %(jsFncs)s}" % {
+          'varId': self.varId, 'dataRef': self.__data_ref,
+          'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True, profile=self.profile)})
     if self.__req_end is not None:
       request.append("%(varId)s.onloadend = function(){%(jsFncs)s}" % {
         'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_end, toStr=True, profile=self.profile)})
@@ -1124,3 +748,396 @@ class XMLHttpRequest:
     if self.profile is not None and self.profile:
       JsUtils.PROFILE_COUNT += 1
     return ";".join(request)
+
+
+class JsObjects:
+  def __init__(self, page: primitives.PageModel = None, component: primitives.HtmlModel = None):
+    self.page, self.component = page, component
+
+  def __getitem__(self, alias: str):
+    """
+    Description:
+    ------------
+    Get a bespoke object.
+
+    Attributes:
+    ----------
+    :param alias: The variable name on the JavaScript side
+    """
+    return JsObject.JsObject.get("data")
+
+  @property
+  def this(self) -> JsNodeDom.JsDoms:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript "this" object (which is a dom object very often).
+    """
+    return JsNodeDom.JsDoms.get("this")
+
+  @property
+  def result(self) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript result object from a post or any other AJAX calls.
+    """
+    return JsObject.JsObject.get("result")
+
+  @property
+  def request(self) -> XMLHttpRequest:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript result object from a post or any other AJAX calls.
+    """
+    return XMLHttpRequest.get("result")
+
+  @property
+  def data(self) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript data object from a post or any other AJAX calls.
+    """
+    return JsObject.JsObject.get("data")
+
+  @property
+  def value(self) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript value in an event
+    """
+    return JsObject.JsObject.get("value")
+
+  @property
+  def mouseEvent(self) -> JsEvents.MouseEvent:
+    """
+    Description:
+    -----------
+    Interface to the JavaScript MouseEvents.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_mouseevent.asp
+    """
+    return JsEvents.MouseEvent()
+
+  @property
+  def event(self) -> JsEvents.Event:
+    """
+    Description:
+    -----------
+    Interface to the JavaScript Events.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/obj_event.asp
+    """
+    return JsEvents.Event()
+
+  @property
+  def jqThis(self):
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    :return: The Javascript "this" object
+    """
+    from epyk.core.js.packages import JsQuery
+    return JsQuery.JQuery(component=self.component, page=self.page, selector="jQuery(this)", set_var=False)
+
+  @classmethod
+  def get(cls, js_code: str) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    Attributes:
+    ----------
+    :param js_code: The variable name.
+
+    :return: The requested Python JsObject primitive
+    """
+    return JsObject.JsObject.get(js_code)
+
+  @classmethod
+  def new(cls, data=None, js_code: Optional[str] = None, is_py_data: bool = False,
+          page: primitives.PageModel = None) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Object primitive.
+
+    Attributes:
+    ----------
+    :param data: Optional. The value.
+    :param js_code: Optional. The variable name.
+    :param is_py_data: Optional. The data type.
+    :param page: Optional. The underlying page object (the context).
+
+    :return: A Python generic JsObject primitive.
+    """
+    return JsObject.JsObject.new(data, js_code, is_py_data, page=page)
+
+  def time(self, js_code: str, page: primitives.PageModel = None) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Return a time object from the Javascript function performance.now().
+
+    Attributes:
+    ----------
+    :param js_code: The variable name.
+    :param page: Optional. The report object.
+    """
+    return JsObject.JsObject.new("performance.now()", js_code, False, page=page)
+
+  @property
+  def number(self) -> Type[JsNumber.JsNumber]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Number primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_number.asp
+
+    :return: A Python JsNumber primitive.
+    """
+    return JsNumber.JsNumber
+
+  @property
+  def string(self) -> Type[JsString.JsString]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript String primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_string.asp
+
+    :return: A Python JsString primitive.
+    """
+    return JsString.JsString
+
+  @property
+  def list(self) -> Type[JsArray.JsArray]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Array primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_array.asp
+
+    :return: A Python JsArray primitive.
+    """
+    return JsArray.JsArray
+
+  @property
+  def array(self) -> Type[JsArray.JsArray]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Array primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_array.asp
+
+    :return: A Python JsArray primitive.
+    """
+    return JsArray.JsArray
+
+  @property
+  def date(self) -> Type[JsDate.JsDate]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Date primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_date.asp
+
+    :return: A Python JsDate object.
+    """
+    return JsDate.JsDate
+
+  @property
+  def boolean(self) -> Type[JsBoolean.JsBoolean]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Boolean primitive.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_obj_boolean.asp
+
+    :return: A Python JsBoolean primitive.
+    """
+    return JsBoolean.JsBoolean
+
+  @property
+  def dom(self) -> Type[JsNodeDom.JsDoms]:
+    """
+    Description:
+    -----------
+    Interface to the Javascript Dom class.
+
+    :return: A Python Document.
+    """
+    return JsNodeDom.JsDoms
+
+  @property
+  def null(self) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Similar as None in Python.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_datatypes.asp
+
+    :return: A Python Js Null object.
+    """
+    return JsObject.JsObject("null")
+
+  @property
+  def undefined(self) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Similar as the None in Python.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_undefined.asp
+
+    :return: A Python Js undefined object.
+    """
+    return JsObject.JsObject("undefined", is_py_data=False)
+
+  @property
+  def NaN(self) -> JsNumber.JsNumber:
+    """
+    Description:
+    -----------
+    The NaN property represents "Not-a-Number" value. This property indicates that a value is not a legal number.
+
+    The NaN property is the same as the Number.Nan property.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/jsref_number_nan.asp
+      https://www.w3schools.com/jsref/jsref_isnan.asp
+    """
+    return JsNumber.JsNumber("Number.NaN")
+
+  @property
+  def true(self) -> JsBoolean.JsBoolean:
+    """
+    Description:
+    -----------
+    Similar as True in Python.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_booleans.asp
+
+    :return: A Python Js True object.
+    """
+    return JsBoolean.JsBoolean.get('true')
+
+  @property
+  def false(self) -> JsBoolean.JsBoolean:
+    """
+    Description:
+    -----------
+    Similar as False in Python.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_booleans.asp
+
+    :return: A Python Js False object.
+    """
+    return JsBoolean.JsBoolean.get('false')
+
+  def record(self, js_code: str) -> JsData.RawData:
+    """
+    Description:
+    -----------
+    Get a record object.
+
+    Attributes:
+    ----------
+    :param js_code: A string with of the existing variable name.
+    """
+    return JsData.RawData.get(page=self.page, js_code=js_code)
+
+  def incr(self, incr: str) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+    Increment a counter.
+
+    Attributes:
+    ----------
+    :param incr: the variable name used to store the counter.
+    """
+    return JsObject.JsObject("%s++" % incr)
+
+  def function(self, args, returns: str, eval: bool = False) -> JsObject.JsObject:
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param args:
+    :param returns:
+    :param eval:
+    """
+    params, values = [], []
+    for i, v in enumerate(args):
+      if i > 0:
+        params.append("x%s" % i)
+      else:
+        params.append("x")
+      values.append(str(v))
+    if eval:
+      return JsObject.JsObject("(function(%s){ return eval(%s) })(%s)" % (
+        ", ".join(params), returns, ", ".join(values)))
+
+  def entry(self, i: int = 0, entry_code: str = "entry") -> JsIntersectionObserver.IntersectionObserverEntry:
+    """
+    Description:
+    -----------
+    Get a specific entry when using a JsIntersectionObserver in a loop.
+
+    Attributes:
+    ----------
+    :param i: The index entry.
+    :param entry_code: The entry reference in the loop. Default entry
+    """
+    return JsIntersectionObserver.IntersectionObserverEntry("%s[%s]" % (entry_code, i))

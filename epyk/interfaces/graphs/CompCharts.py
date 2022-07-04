@@ -524,15 +524,16 @@ class Graphs:
           icon = icon[0]
         r = self.page.ui.icons.awesome(
           icon, align="center", tooltip=typ, height=height, width=(size, 'px'), options=options, profile=profile)
-        r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
-        r.style.css.margin_left = 5
-        r.style.css.margin_right = 5
         if typ == "Csv":
           r.click([chart.js.download("csv", "data.csv")])
+          r.icon.style.add_classes.div.color_hover()
         elif typ == "Clear":
           r.click([chart.js.clearData()])
+          r.icon.style.add_classes.div.danger_hover()
+        else:
+          r.icon.style.add_classes.div.color_hover()
         menu_items.append(r)
     container = self.page.ui.menu(chart, menu_items=menu_items, copy=False, post=post, editable=False)
     html.Html.set_component_skin(container)

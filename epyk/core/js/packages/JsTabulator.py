@@ -6,7 +6,10 @@ http://tabulator.info/docs/4.4/components
 TODO: Add tree event on RowComponent
 """
 
+from typing import Union, List
+
 from epyk.core.py import primitives
+from epyk.core.py import types
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
@@ -557,15 +560,15 @@ class ColumnComponent(JsPackage):
 class ColumnComponents(JsPackage):
   lib_selector = "column"
 
-  def forEach(self, js_funcs, profile=None):
+  def forEach(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
+    :param js_funcs: A Javascript Python function.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     return self.fnc_closure("forEach(function(rec){%s})" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
@@ -590,15 +593,15 @@ class ColumnComponents(JsPackage):
       "(function(){var columns = []; %s.forEach(function(rec){columns.push(rec.getField())}); return columns})()" % self._selector,
       component=self.component, page=self.page)
 
-  def rename(self, field=None, title=None, columns=None):
+  def rename(self, field: str = None, title: str = None, columns=None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param field: String.
-    :param title:
+    :param field: Column fields' name
+    :param title: Column title's name
     :param columns:
     """
     if columns is not None:
@@ -613,7 +616,7 @@ class ColumnComponents(JsPackage):
 class RowComponent(JsPackage):
   lib_selector = "row"
 
-  def update(self, data):
+  def update(self, data: Union[primitives.JsDataModel, dict]):
     """
     Description:
     ------------
@@ -631,7 +634,7 @@ class RowComponent(JsPackage):
     data = JsUtils.jsConvertData(data, None)
     return self.fnc_closure("update(%s)" % data)
 
-  def getData(self):
+  def getData(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -643,7 +646,7 @@ class RowComponent(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr(), page=self.page, component=self.component)
 
-  def getElement(self):
+  def getElement(self) -> JsNodeDom.JsDoms:
     """
     Description:
     ------------
@@ -656,7 +659,7 @@ class RowComponent(JsPackage):
     """
     return JsNodeDom.JsDoms("%s.getElement()" % self.toStr(), page=self.page, component=self.component)
 
-  def getCells(self):
+  def getCells(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -664,7 +667,7 @@ class RowComponent(JsPackage):
     """
     return JsObjects.JsArray.JsArray("%s.getCells()" % self.toStr(), page=self.page, component=self.component)
 
-  def getCell(self):
+  def getCell(self) -> CellComponent:
     """
     Description:
     ------------
@@ -672,7 +675,7 @@ class RowComponent(JsPackage):
     """
     return CellComponent(js_code="%s.getCell()" % self.toStr(), page=self.page, component=self.component)
 
-  def getIndex(self):
+  def getIndex(self) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -681,16 +684,20 @@ class RowComponent(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.getIndex()" % self.toStr(), page=self.page, component=self.component)
 
-  def getPosition(self, flag: bool = True):
+  def getPosition(self, flag: Union[primitives.JsDataModel, bool] = True):
     """
     Description:
     ------------
     Use the getPosition function to retrieve the numerical position of a row in the table.
     By default this will return the position of the row in all data, including data currently filtered out of the table.
 
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/components#:~:text=Get%20Position,filtered%20out%20of%20the%20table.
+
     Attributes:
     ----------
-    :param flag:
+    :param flag: To get the position of the row in the currently filtered/sorted data
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsObjects.JsNumber.JsNumber(
@@ -734,7 +741,7 @@ class RowComponent(JsPackage):
     """
     return self.fnc_closure("pageTo()")
 
-  def move(self, index, flag=True):
+  def move(self, index: int, flag: Union[primitives.JsDataModel, bool] = True):
     """
     Description:
     ------------
@@ -832,7 +839,7 @@ class RowComponent(JsPackage):
 class TabRowContextMenu(JsPackage):
   lib_set_var = False
 
-  def add(self, name, url, icon=None):
+  def add(self, name: str, url: str, icon: str = None):
     """
     Description:
     ------------
@@ -847,9 +854,9 @@ class TabRowContextMenu(JsPackage):
 
     Attributes:
     ----------
-    :param name: String. The name of the item in the context menu.
-    :param url: String. The service URL. (This service will only return a message).
-    :param icon: String. The icon class name.
+    :param name: The name of the item in the context menu.
+    :param url: The service URL. (This service will only return a message).
+    :param icon: Optional. The icon class name.
     """
     js_service = self.page.js.fncs.service()
     if icon is not None:
@@ -857,7 +864,7 @@ class TabRowContextMenu(JsPackage):
 
     return JsObjects.JsVoid("%s.options.rowContextMenu.push({label: '%s', action: function(e, row){var data = {row: row.getData(), label: '%s'}; %s('%s', data)} })" % (self.toStr(), name, name, js_service, url))
 
-  def fromConfig(self, services):
+  def fromConfig(self, services: list):
     """
     Description:
     ------------
@@ -865,7 +872,7 @@ class TabRowContextMenu(JsPackage):
 
     Attributes:
     ----------
-    :param services: List. A list of services to be added to the context menu.
+    :param services: A list of services to be added to the context menu.
     """
     js_service = self.page.js.fncs.service()
     services = JsUtils.jsConvertData(services, None)
@@ -904,7 +911,7 @@ class Tabulator(JsPackage):
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsVoid("%s.alert(%s)" % (self.varId, text))
 
-  def download(self, format, filename: str, options: dict = None):
+  def download(self, format: str, filename: str, options: dict = None):
     """
     Description:
     -----------
@@ -929,7 +936,7 @@ class Tabulator(JsPackage):
     options = JsUtils.jsConvertData(options, None)
     return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
 
-  def downloadToTab(self, format):
+  def downloadToTab(self, format: str):
     """
     Description:
     -----------
@@ -944,7 +951,7 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param format: String. The output format
+    :param format: The output format
     """
     if format == "pdf":
       self.page.jsImports.add("jspdf")
@@ -956,7 +963,7 @@ class Tabulator(JsPackage):
     """
     Description:
     -----------
-    To clear an active alert, call the clearAlert funtion on the table.
+    To clear an active alert, call the clearAlert function on the table.
 
     Usage::
 
@@ -969,7 +976,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsVoid("%s.clearAlert()" % self.varId)
 
-  def copyToClipboard(self, clipboard_copy_selector=None, with_header: bool = True):
+  def copyToClipboard(self, clipboard_copy_selector: str = None, with_header: bool = True):
     """
     Description:
     -----------
@@ -982,8 +989,8 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param clipboard_copy_selector: String. can be table, active, selected, visible, all
-    :param with_header: Boolean. Optional. defined if the header are included in the copy
+    :param clipboard_copy_selector: can be table, active, selected, visible, all
+    :param with_header: Optional. defined if the header are included in the copy
     """
     self.page.config.clipboard = True
     if clipboard_copy_selector is None:
@@ -1037,6 +1044,7 @@ class Tabulator(JsPackage):
     """
     Description:
     -----------
+    You can change to show the next page using the previousPage function.
 
     Related Pages:
 
@@ -1048,15 +1056,20 @@ class Tabulator(JsPackage):
     """
     Description:
     -----------
+    You can change to show the next page using the nextPage function.
 
-    http://tabulator.info/docs/4.1/page
+    Related Pages:
+
+      http://tabulator.info/docs/4.1/page
     """
     return JsObjects.JsPromise("%s.nextPage()" % self.varId)
 
-  def setPage(self, i: int):
+  def setPage(self, i: Union[str, int]):
     """
     Description:
     -----------
+    When pagination is enabled the table footer will contain a number of pagination controls for navigating
+    through the data.
 
     Related Pages:
 
@@ -1064,7 +1077,7 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param int i:
+    :param i: The page index or some special keywords like first, next...
     """
     return JsObjects.JsPromise("%s.setPage(%s)" % (self.varId, i))
 
@@ -1072,6 +1085,8 @@ class Tabulator(JsPackage):
     """
     Description:
     -----------
+    You can change the page size at any point by using the setPageSize function.
+    (this setting will be ignored if using remote pagination with the page size set by the server)
 
     Related Pages:
 
@@ -1079,11 +1094,11 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param int i:
+    :param i: The rows number
     """
     return JsObjects.JsPromise("%s.setPageSize(%s)" % (self.varId, i))
 
-  def setGroupBy(self, column=None):
+  def setGroupBy(self, column: str = None):
     """
     Description:
     -----------
@@ -1096,14 +1111,14 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param column:
+    :param column: Optional. The column name
     """
     if column is None:
       return JsObjects.JsVoid("%s.setGroupBy()" % self.varId)
 
     return JsObjects.JsVoid("%s.setGroupBy(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
-  def setGroupStartOpen(self, flag):
+  def setGroupStartOpen(self, flag: Union[primitives.JsDataModel, bool]):
     """
     Description:
     ------------
@@ -1116,11 +1131,11 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param flag:
+    :param flag: Flag for the open state for groups
     """
     return JsObjects.JsVoid("%s.setGroupStartOpen(%s)" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
-  def setGroupHeader(self, js_funcs, profile=None):
+  def setGroupHeader(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1133,13 +1148,14 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param js_funcs:
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage.
     """
     return self.fnc_closure(
       "setGroupHeader(function(value, count, data, group){%s})" % JsUtils.jsConvertFncs(
         js_funcs, toStr=True, profile=profile))
 
-  def deleteRow(self, n):
+  def deleteRow(self, n: int):
     """
     Description:
     ------------
@@ -1152,11 +1168,11 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param n:
+    :param n: Row index
     """
     return JsObjects.JsPromise("%s.deleteRow(%s)" % (self.varId, n))
 
-  def addRow(self, data, flag=False):
+  def addRow(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
     """
     Description:
     ------------
@@ -1220,7 +1236,7 @@ class Tabulator(JsPackage):
     """
     return self.fnc_closure("updateOrAddRow(%s, %s)" % (row_id, JsUtils.jsConvertData(data, None)))
 
-  def getRow(self, index):
+  def getRow(self, index: Union[types.JS_DATA_TYPES, int]):
     """
     Description:
     ------------
@@ -1255,7 +1271,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsArray.JsArray("%s.getSelectedRows()" % self.varId, page=self.page, component=self.component)
 
-  def getRows(self):
+  def getRows(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -1272,7 +1288,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsArray.JsArray("%s.getRows()" % self.varId, page=self.page, component=self.component)
 
-  def getRowPosition(self, row, flag: bool = True):
+  def getRowPosition(self, row, flag: bool = True) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -1291,7 +1307,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsNumber.JsNumber(
       "%s.getRowPosition(%s, %s)" % (self.varId, row, flag), page=self.page, component=self.component)
 
-  def getPageSize(self):
+  def getPageSize(self) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -1302,7 +1318,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.getPageSize()" % self.varId, page=self.page, component=self.component)
 
-  def getPage(self):
+  def getPage(self) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -1313,7 +1329,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.getPage()" % self.varId, page=self.page, component=self.component)
 
-  def getPageMax(self):
+  def getPageMax(self) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -1324,7 +1340,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsNumber.JsNumber("%s.getPageMax()" % self.varId, page=self.page, component=self.component)
 
-  def getRowFromPosition(self, n: int, flag: bool = True):
+  def getRowFromPosition(self, n: int, flag: bool = True) -> JsObjects.JsNumber.JsNumber:
     """
     Description:
     ------------
@@ -1338,7 +1354,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsNumber.JsNumber(
       "%s.getRowFromPosition(%s, %s)" % (self.varId, n, flag), page=self.page, component=self.component)
 
-  def toggleColumn(self, column):
+  def toggleColumn(self, column: str):
     """
     Description:
     ------------
@@ -1356,12 +1372,12 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param column:
+    :param column: The column name
     """
     column = JsUtils.jsConvertData(column, None)
     return JsObjects.JsPromise("%s.toggleColumn(%s)" % (self.varId, column))
 
-  def hideColumn(self, column):
+  def hideColumn(self, column: str):
     """
     Description:
     ------------
@@ -1379,12 +1395,12 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param column:
+    :param column: The column name
     """
     column = JsUtils.jsConvertData(column, None)
     return JsObjects.JsPromise("%s.hideColumn(%s)" % (self.varId, column))
 
-  def hideColumns(self, columns):
+  def hideColumns(self, columns: List[str]):
     """
     Description:
     ------------
@@ -1402,7 +1418,7 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param columns:
+    :param columns: Columns' names
     """
     columns = JsUtils.jsConvertData(columns, None)
     return JsObjects.JsPromise("%s.forEach(function(c){%s.hideColumn(c)})" % (columns, self.varId))
@@ -1681,7 +1697,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsVoid("%s.clearData()" % self.varId)
 
-  def showColumn(self, column):
+  def showColumn(self, column: str):
     """
     Description:
     ------------
@@ -1694,7 +1710,7 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param column: String. The column name to be displayed.
+    :param column: The column name to be displayed.
     """
     return JsObjects.JsPromise("%s.showColumn(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
@@ -1788,7 +1804,7 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
     return JsObjects.JsObject.JsObject(
       "%s.replaceData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)), component=self.component, page=self.page)
 
-  def getData(self):
+  def getData(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -1797,7 +1813,7 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
     return JsObjects.JsObject.JsObject("%s.getData()" % self.varId, component=self.component, page=self.page)
 
   @property
-  def rowContextMenu(self):
+  def rowContextMenu(self) -> TabRowContextMenu:
     return TabRowContextMenu(self.component, selector=self.varId, page=self.page)
 
   def deselectRow(self, row_id: int):
@@ -1817,7 +1833,7 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
     """
     return JsObjects.JsVoid("%s.deselectRow(%s)" % (self.varId, row_id))
 
-  def getSelectedData(self):
+  def getSelectedData(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     -----------
@@ -1831,11 +1847,24 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
     """
     return JsObjects.JsArray.JsArray("%s.getSelectedData()" % self.varId, page=self.page, component=self.component)
 
+  @property
+  def _(self):
+    """
+    Description:
+    ------------
+    Tabulator standard components.
+
+    Usage::
+
+      table.js._.cell.getRow()
+    """
+    return _Export()
+
 
 class _Export:
 
   @property
-  def cell(self):
+  def cell(self) -> CellComponent:
     """
     Description:
     ------------
@@ -1848,7 +1877,7 @@ class _Export:
     return CellComponent(selector="cell", set_var=False)
 
   @property
-  def row(self):
+  def row(self) -> RowComponent:
     return RowComponent(selector="row", set_var=False)
 
   @property
@@ -1879,7 +1908,7 @@ class _Export:
     return JsObjects.JsObjects.get("row")
 
   @property
-  def rows(self):
+  def rows(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------

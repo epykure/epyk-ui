@@ -1201,6 +1201,9 @@ class Components:
     :param options:
     :param profile:
     """
+    # Add font awesome
+    self.page.jsImports.add("font-awesome")
+    self.page.cssImport.add("font-awesome")
     options, link = options or {}, None
     menu_items = menu_items or []
     if isinstance(component, list):
@@ -1244,6 +1247,7 @@ class Components:
           icon, align="center", text=typ, tooltip=typ, height=height, width=(size, 'px'), options=options,
           profile=profile)
         r.span.style.css.hide()
+        r.icon.style.add_classes.div.color_hover()
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.span.style.css.margin = "0 2px -3px -3px"
@@ -1340,6 +1344,7 @@ class Components:
     trash.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
     trash.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
     trash.style.css.margin_left = 10
+    trash.icon.style.add_classes.div.danger_hover()
     menu_items.append(trash)
     container = self.page.ui.div(menu_items, align="right", options=options, profile=profile)
     container.style.css.border_bottom = "1px solid {}".format(self.page.theme.greys[2])

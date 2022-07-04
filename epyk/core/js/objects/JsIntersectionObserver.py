@@ -226,7 +226,7 @@ class IntersectionObserver:
     ------------
     The IntersectionObserver interface's read-only thresholds property returns the list of intersection thresholds that
     was specified when the observer was instantiated with IntersectionObserver().
-    If only one threshold ratio was provided when instanitating the object, this will be an array containing
+    If only one threshold ratio was provided when instantiating the object, this will be an array containing
     that single value.
 
     Related Pages:
@@ -301,8 +301,8 @@ class IntersectionObserver:
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
+    :param js_funcs: A Javascript Python function.
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param entry_code: Optional. The entry variable name on JavaScript side.
     """
     str_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)

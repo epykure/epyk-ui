@@ -287,10 +287,13 @@ class Tables:
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         if typ == "Csv":
           r.click([table.js.download("csv", "data.csv")])
+          r.icon.style.add_classes.div.color_hover()
         elif typ == "New":
           r.click([table.js.addRow(options.get("add", {}), True)])
+          r.icon.style.add_classes.div.color_hover()
         elif typ == "Clear":
           r.click([table.js.clearData()])
+          r.icon.style.add_classes.div.danger_hover()
         elif typ == "Columns" and table is not None:
           checks = self.page.ui.lists.checks([{"value": k, "checked": v} for k, v in columns.items()])
           popup_columns = self.page.ui.modals.popup([checks], title="Columns", options={"background": False})
@@ -337,11 +340,13 @@ class Tables:
       expand = container.add_command("fas fa-expand", tooltip="Expand tree table")
       expand.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       expand.style.css.margin_left = 2
+      expand.icon.style.add_classes.div.color_hover()
       expand.style.css.margin_right = 2
       expand.click(table.js.getRows().forEach(["row.treeExpand()"], value="row"))
       compress = container.add_command("fas fa-compress", tooltip="Collapse tree table")
       compress.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       compress.style.css.margin_left = 2
+      compress.icon.style.add_classes.div.color_hover()
       compress.style.css.margin_right = 2
       compress.click(table.js.getRows().forEach(["row.treeCollapse()"], value="row"))
     return container

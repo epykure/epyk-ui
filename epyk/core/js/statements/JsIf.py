@@ -2,14 +2,15 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.js import JsUtils
-from typing import Union, Optional
+from epyk.core.py import types
+from typing import Optional
 from epyk.core.py import primitives
 
 
 class JsIf:
 
-  def __init__(self, condition: str, js_funcs: Union[list, str], context: Optional[primitives.PageModel] = None,
-               profile: Optional[Union[dict, bool]] = False):
+  def __init__(self, condition: str, js_funcs: types.JS_FUNCS_TYPES, context: Optional[primitives.PageModel] = None,
+               profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -21,10 +22,10 @@ class JsIf:
 
     Attributes:
     ----------
-    :param str condition: The Javascript condition. Can be a JsBoolean object.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[primitives.PageModel] context: Optional. Meta data concerning the context.
-    :param Optional[Union[dict, bool]] profile: Boolean. Optional. A flag to set the component performance storage.
+    :param condition: The Javascript condition. Can be a JsBoolean object.
+    :param js_funcs: Optional. The Javascript functions.
+    :param context: Optional. Metadata concerning the context.
+    :param profile: Boolean. Optional. A flag to set the component performance storage.
     """
     self._context = context
     js_funcs = JsUtils.jsConvertFncs(js_funcs, False, profile=profile)
@@ -33,7 +34,7 @@ class JsIf:
     self._js = [(condition, js_funcs)]
     self.__js_else = None
 
-  def elif_(self, condition: str, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
+  def elif_(self, condition: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -41,9 +42,9 @@ class JsIf:
 
     Attributes:
     ----------
-    :param str condition: The Javascript condition. Can be a JsBoolean object.
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param condition: The Javascript condition. Can be a JsBoolean object.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The If object to allow the chaining.
     """
@@ -51,7 +52,7 @@ class JsIf:
     self._js.append((condition, js_funcs))
     return self
 
-  def else_(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
+  def else_(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -63,8 +64,8 @@ class JsIf:
 
     Attributes:
     ----------
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
 
     :return: The If object to allow the chaining.
     """

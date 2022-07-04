@@ -29,7 +29,7 @@ def selector(component: Optional[primitives.HtmlModel] = None):
 
   Attributes:
   ----------
-  :param component:
+  :param component: An HTML component
   """
   return Selector.Selector(component)
 
@@ -75,7 +75,7 @@ def querySelector(reference: Union[primitives.JsDataModel, str]):
 
   Attributes:
   ----------
-  :param Union[primitives.JsDataModel, str] reference: CSS selectors.
+  :param reference: CSS selectors.
   """
   return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(reference, None))
 
@@ -105,7 +105,7 @@ def comment(value: str):
 
   Attributes:
   ----------
-  :param str value: the Value.
+  :param value: the Value.
   """
   return JsObjects.JsVoid("/*%s*/" % value)
 
@@ -118,10 +118,10 @@ def var(name: str, value: Union[primitives.JsDataModel, str] = None, global_scop
 
   Attributes:
   ----------
-  :param str name: The variable name.
-  :param Union[primitives.JsDataModel, str] value: Optional. The object.
-  :param bool global_scope: Optional. The variable scope.
-  :param bool depth: Optional. Set to true of it is a nested object.
+  :param name: The variable name.
+  :param value: Optional. The object.
+  :param global_scope: Optional. The variable scope.
+  :param depth: Optional. Set to true of it is a nested object.
   """
   if global_scope:
     name = "window['%s']" % name
@@ -143,9 +143,9 @@ def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, globa
 
   Attributes:
   ----------
-  :param str name: The variable name.
-  :param Union[primitives.JsDataModel, str] value: Optional. The object.
-  :param bool global_scope: Optional. The variable scope.
+  :param name: The variable name.
+  :param value: Optional. The object.
+  :param global_scope: Optional. The variable scope.
   """
   if global_scope:
     name = "window['%s']" % name
@@ -174,9 +174,9 @@ def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = Fals
 
   Attributes:
   ----------
-  :param str name: The variable name.
-  :param Union[primitives.JsDataModel, str] value: Optional. The object.
-  :param bool depth: Optional. Set to true of it is a nested object.
+  :param name: The variable name.
+  :param value: Optional. The object.
+  :param depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("let %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 
@@ -197,9 +197,9 @@ def const(name: str, value: Union[primitives.JsDataModel, str] = None, depth: bo
 
   Attributes:
   ----------
-  :param str name: The variable name.
-  :param Union[primitives.JsDataModel, str] value: Object. Optional. The object.
-  :param bool depth: Optional. Set to true of it is a nested object.
+  :param name: The variable name.
+  :param value: Object. Optional. The object.
+  :param depth: Optional. Set to true of it is a nested object.
   """
   return JsObjects.JsVoid("const %s = %s" % (name, JsUtils.jsConvertData(value, None, depth)))
 

@@ -1,6 +1,7 @@
 
 from typing import Union
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsUtils
@@ -74,7 +75,7 @@ class JsAttributes(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[int, primitives.JsDataModel] i: The index of the node in the NamedNodeMap you want to return
+    :param i: The index of the node in the NamedNodeMap you want to return
 
     :return: A Node object, representing the attribute node at the specified index.
     """
@@ -98,7 +99,7 @@ class JsAttributes(JsObject.JsObject):
     """
     return "removeNamedItem(%s)" % name
 
-  def setNamedItem(self, attrs: Union[str, primitives.JsDataModel]):
+  def setNamedItem(self, attrs: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -113,13 +114,13 @@ class JsAttributes(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] attrs:
+    :param attrs:
 
     :return: A Node object, representing the replaced node (if any), otherwise null.
     """
     return "setNamedItem(%s)" % JsUtils.jsConvertData(attrs, None)
 
-  def getNamedItem(self, node_name: Union[str, primitives.JsDataModel]):
+  def getNamedItem(self, node_name: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -131,7 +132,7 @@ class JsAttributes(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] node_name: The name of the node in the namedNodeMap you want to return.
+    :param node_name: The name of the node in the namedNodeMap you want to return.
 
     :return: A Node object, representing the attribute node with the specified name.
     """

@@ -28,7 +28,7 @@ class Table(Html.Html):
       self.options.data = records
     self.style.css.background = None
     self.__bespoke_formatters = set()
-    if options is not None and options.get("stripped"):
+    if options is not None and options.get("striped"):
       self.style.strip()
 
   _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'

@@ -1,6 +1,7 @@
 
-from typing import Any, Union
+from typing import Any
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObjects
@@ -24,9 +25,9 @@ def packageImport(js_package: str = None, css_package: str = None, if_true: bool
 
   Attributes:
   ----------
-  :param str js_package:
-  :param str css_package:
-  :param bool if_true:
+  :param js_package: Optional. JavaScript package alias
+  :param css_package: Optional. CSS Package alias
+  :param if_true: Optional. Add packages only if they exist in the internal definition
   """
   def wrap(func):
     def inner(page, *args, **kwargs):
@@ -91,14 +92,14 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str tag: The package versions example 1.11.0.
-    :param dict js: Optional. The JavaScript packages to be added.
-    :param dict css: Optional. The CSS packages to be added.
+    :param tag: The package versions example 1.11.0.
+    :param js: Optional. The JavaScript packages to be added.
+    :param css: Optional. The CSS packages to be added.
     """
     self.page.imports.setVersion(self.lib_alias, tag, js, css)
     return self
 
-  def fnc(self, data: str, unique: bool = False):
+  def fnc(self, data: Any, unique: bool = False):
     """
     Description:
     ------------
@@ -108,8 +109,8 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str data: The Javascript fragment to be added.
-    :param bool unique: Ensure the function is available one time in the chain. If not the last call we will present.
+    :param data: The Javascript fragment to be added.
+    :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
 
     :return: "Self" to allow the chains
     """
@@ -129,8 +130,8 @@ class JsPackage(primitives.JsDataModel):
     Base function to allow the creation of function with parameters which are list of dataclasses.
     Basically this will be then transpiled to a list of dictionary.
 
-    :param str name: The function Name.
-    :param data_class: Class. The Python Data class
+    :param name: The function Name.
+    :param data_class: The Python Data class
     """
     index = len(self._js) - 1
     if index not in self._js_enums:
@@ -154,8 +155,8 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str data: The Javascript fragment to be added.
-    :param bool check_undefined: Add a check on the variable definition.
+    :param data: The Javascript fragment to be added.
+    :param check_undefined: Add a check on the variable definition.
     :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
 
     :return: The "self" to allow the chains
@@ -184,8 +185,8 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str data: The Javascript fragment to be added.
-    :param bool check_undefined: Add a check on the variable definition.
+    :param data: The Javascript fragment to be added.
+    :param check_undefined: Add a check on the variable definition.
 
     :return: The promise
     """
@@ -220,7 +221,7 @@ class JsPackage(primitives.JsDataModel):
     self.setVar = flag
     return self
 
-  def getStr(self, empty_stack: bool = True):
+  def getStr(self, empty_stack: bool = True) -> str:
     """
     Description:
     ------------
@@ -228,7 +229,7 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param bool empty_stack:
+    :param empty_stack:
     """
     js_stack = None
     if not empty_stack:
@@ -241,7 +242,7 @@ class JsPackage(primitives.JsDataModel):
 
     return content
 
-  def _mapVarId(self, func, js_code: str):
+  def _mapVarId(self, func: types.JS_FUNCS_TYPES, js_code: str):
     """
     Description:
     ------------
@@ -266,8 +267,8 @@ class JsPackage(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str func_nam: The function name.
-    :param argv: Objects. Optional. The function arguments on the JavasScript side.
+    :param func_nam: The function name.
+    :param argv: Optional. The function arguments on the JavasScript side.
     """
     js_args = []
     for arg in argv:
@@ -332,7 +333,7 @@ class DataAttrs(primitives.JsDataModel):
   def __init__(self, page: primitives.PageModel, attrs: dict = None, options: dict = None):
     self.page, self.options, self._attrs = page, options, attrs or {}
 
-  def custom(self, name: str, value: Union[str, primitives.JsDataModel]):
+  def custom(self, name: str, value: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -343,8 +344,8 @@ class DataAttrs(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param str name: The key to be added to the attributes.
-    :param Union[str, primitives.JsDataModel] value: The value of the defined attributes.
+    :param name: The key to be added to the attributes.
+    :param value: The value of the defined attributes.
 
     :return: The DataAttrs to allow the chains
     """

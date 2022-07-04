@@ -3,6 +3,7 @@
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.fncs import JsFncs
 from epyk.core.css import Colors
@@ -44,7 +45,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('stopPropagation()')
     return self
 
-  def blur(self, js_funcs: Union[list, str]):
+  def blur(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -65,7 +66,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("blur", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def click(self, js_funcs: Union[list, str]):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -88,7 +89,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("click", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def change(self, js_funcs: Union[list, str]):
+  def change(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -112,7 +113,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("change", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def dblclick(self, js_funcs: Union[list, str]):
+  def dblclick(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -131,7 +132,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("dblclick", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def focus(self, js_funcs: Union[list, str]):
+  def focus(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -150,7 +151,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("focus", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def focusin(self, js_funcs: Union[list, str]):
+  def focusin(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -169,7 +170,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("focusin", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def focusout(self, js_funcs: Union[list, str]):
+  def focusout(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -188,7 +189,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("focusin", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def keydown(self, js_funcs: Union[list, str]):
+  def keydown(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -204,11 +205,10 @@ class JsDomEvents(primitives.JsDataModel):
 
     :return: The Python Dom object
     """
-    self._js.append(
-      'addEventListener("keydown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
+    self._js.append('addEventListener("keydown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def keypress(self, js_funcs: Union[list, str]):
+  def keypress(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -227,7 +227,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("keypress", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def keyup(self, js_funcs: Union[list, str]):
+  def keyup(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -246,7 +246,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("keyup", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mousedown(self, js_funcs: Union[list, str]):
+  def mousedown(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -265,7 +265,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mousedown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mouseenter(self, js_funcs: Union[list, str]):
+  def mouseenter(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -284,7 +284,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mousedown", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mouseleave(self, js_funcs: Union[list, str]):
+  def mouseleave(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -307,7 +307,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mouseleave", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mouseover(self, js_funcs: Union[list, str]):
+  def mouseover(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -326,7 +326,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mouseover", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mouseup(self, js_funcs: Union[list, str]):
+  def mouseup(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -345,7 +345,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mouseover", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def mouseout(self, js_funcs: Union[list, str]):
+  def mouseout(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -364,7 +364,7 @@ class JsDomEvents(primitives.JsDataModel):
     self._js.append('addEventListener("mouseout", function(){%s})' % JsUtils.jsConvertFncs(js_funcs, toStr=True))
     return self
 
-  def trigger(self, event: Union[str, primitives.JsDataModel], with_focus: bool = True,
+  def trigger(self, event: types.JS_DATA_TYPES, with_focus: bool = True,
               options: dict = None, event_name: str = "clickEvent"):
     """
     Description:
@@ -461,8 +461,6 @@ class JsDomsTransforms:
     Description:
     ------------
     Defines a 2D transformation, using a matrix of six values.
-
-    Usage::
 
     Related Pages:
 
@@ -999,8 +997,7 @@ class JsClassList:
       cls_names = ", ".join([str(JsUtils.jsConvertData(c, None)) for c in cls_names])
     return JsObject.JsObject.get("%s.remove(%s)" % (self.varId, cls_names))
 
-  def toggle(self, cls_name: Union[str, primitives.JsDataModel],
-             flag: Union[bool, primitives.JsDataModel] = None):
+  def toggle(self, cls_name: types.JS_DATA_TYPES, flag: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -1056,7 +1053,7 @@ class JsDoms(JsObject.JsObject):
   display_value = 'block'
 
   @classmethod
-  def new(cls, tag_name: Union[str, primitives.JsDataModel] = None, js_code: str = None, is_py_data: bool = True,
+  def new(cls, tag_name: types.JS_DATA_TYPES = None, js_code: str = None, is_py_data: bool = True,
           set_var: bool = True, page: primitives.PageModel = None):
     """
     Description:
@@ -1111,7 +1108,7 @@ class JsDoms(JsObject.JsObject):
     tag = JsUtils.jsConvertData(tag, None)
     return JsDoms("%s.querySelector(%s)" % (self.toStr(), tag))
 
-  def querySelectorAll(self, tag: Union[str, primitives.JsDataModel], js_code: str = None):
+  def querySelectorAll(self, tag: types.JS_DATA_TYPES, js_code: str = None):
     """
     Description:
     ------------
@@ -1196,7 +1193,7 @@ class JsDoms(JsObject.JsObject):
       self._jq = JsQuery.JQuery(self.page, selector="jQuery('#%s')" % self._id, set_var=False)
     return self._jq
 
-  def addEventListener(self, event: Union[str, primitives.JsDataModel], js_funcs: Union[list, str]):
+  def addEventListener(self, event: types.JS_DATA_TYPES, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -1208,14 +1205,14 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param event:
+    :param event: The JavaScript event
     :param js_funcs: The Javascript functions
     """
     event = JsUtils.jsConvertData(event, None)
     self._js.append('addEventListener(%s, function(){%s})' % (event, ";".join(JsUtils.jsConvertFncs(js_funcs))))
     return self
 
-  def dispatchEvent(self, event: Union[str, primitives.JsDataModel]):
+  def dispatchEvent(self, event: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -1232,7 +1229,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append('dispatchEvent(%s)' % event)
     return self
 
-  def addOnReady(self, js_funcs: Union[list, str]):
+  def addOnReady(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -1249,7 +1246,7 @@ class JsDoms(JsObject.JsObject):
     self.page._props.setdefault('js', {}).setdefault(
       'onCompReady', {})[self.varId] = ";".join(JsUtils.jsConvertFncs(js_funcs))
 
-  def innerText(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
+  def innerText(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1287,7 +1284,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.innerText = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def textContent(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
+  def textContent(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1304,8 +1301,8 @@ class JsDoms(JsObject.JsObject):
     Attributes:
     ----------
     :param text: Optional, The Javascript String to be added.
-    :param append: Mention if the component should replace or append the data.
-    :param val_type: Type: The type of data expected in the component.
+    :param append: Optional. Mention if the component should replace or append the data.
+    :param val_type: Optional. The type of data expected in the component.
 
     :return: The JsObj to allow the chaining
     """
@@ -1325,7 +1322,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.textContent = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def innerHTML(self, text: Union[str, primitives.JsDataModel] = None, append: bool = False, val_type=None):
+  def innerHTML(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
     Description:
     ------------
@@ -1342,9 +1339,9 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param text: Optional, The Javascript String to be added.
-    :param append: Mention if the component should replace or append the data.
-    :param val_type: The type of data expected in the component.
+    :param text: Optional.  The Javascript String to be added.
+    :param append: Optional. Mention if the component should replace or append the data.
+    :param val_type: Optional. The type of data expected in the component.
 
     :return: self to allow the chaining
     """
@@ -1364,7 +1361,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.innerHTML = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def outerText(self, text: Union[str, primitives.JsDataModel] = None):
+  def outerText(self, text: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -1376,7 +1373,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param text: Optional, The Javascript String to be set.
+    :param text: Optional. The Javascript String to be set.
 
     :return: self to allow the chaining
     """
@@ -1386,7 +1383,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.outerText = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def outerHTML(self, text: Union[str, primitives.JsDataModel] = None):
+  def outerHTML(self, text: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -1399,7 +1396,7 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param text: Optional, The Javascript String to be set.
+    :param text: Optional. The Javascript String to be set.
 
     :return: self to allow the chaining
     """
@@ -1409,7 +1406,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.outerHTML = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def value(self, text: Union[str, primitives.JsDataModel] = None):
+  def value(self, text: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -1429,7 +1426,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.value = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def nodeValue(self, text: Union[str, primitives.JsDataModel] = None):
+  def nodeValue(self, text: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -1451,8 +1448,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.nodeValue = %s" % (self.varId, JsUtils.jsConvertData(text, None)))
     return self
 
-  def attr(self, value: Union[dict, str, primitives.JsDataModel],
-           data: Union[str, bool, float, primitives.JsDataModel] = None):
+  def attr(self, value: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES = None):
     """
     Description:
     -----------
@@ -1492,8 +1488,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.setAttribute(%s, %s)" % (self.varId, value, JsUtils.jsConvertData(data, None)))
     return self
 
-  def setAttribute(self, attribute_name: Union[str, primitives.JsDataModel],
-                   attribute_value: Union[str, bool, float, primitives.JsDataModel]):
+  def setAttribute(self, attribute_name: types.JS_DATA_TYPES, attribute_value: types.JS_DATA_TYPES):
     """
     Description:
     -----------
@@ -1549,7 +1544,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append('%s.setAttribute("class", "%s")' % (self.varId, cls_name))
     return self
 
-  def removeClass(self, cls_name: Union[str, primitives.JsDataModel]):
+  def removeClass(self, cls_name: types.JS_DATA_TYPES):
     """
     Description:
     -----------
@@ -1561,14 +1556,14 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param cls_name: String. Required. The classname.
+    :param cls_name: Required. The classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
     self._js.append('%s.classList.remove(%s)' % (self.varId, cls_name))
     return self
 
   @property
-  def classList(self):
+  def classList(self) -> JsClassList:
     """
     Description:
     -----------
@@ -1580,8 +1575,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsClassList("%s.classList" % self.varId, self.component)
 
-  def css(self, attr: Union[dict, str, primitives.JsDataModel], data: Union[str, primitives.JsDataModel] = None,
-          duration: int = None):
+  def css(self, attr: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES = None, duration: int = None):
     """
     Description:
     -----------
@@ -1691,7 +1685,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(%s.style.%s != '%s') {%s} else {%s}" % (self.varId, css_attr, value, if_, else_))
     return self
 
-  def transition(self, attribute: Union[str, list], value: Optional[Union[str, list, primitives.JsDataModel]],
+  def transition(self, attribute: Union[str, list], value: types.JS_DATA_TYPES,
                  duration: Union[float, List[float]] = 1, delay: int = None, timing_fnc: str = 'ease',
                  reverse: bool = False):
     """
@@ -1842,7 +1836,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
 
-  def toggleText(self, string_1: Union[str, primitives.JsDataModel], string_2: Union[str, primitives.JsDataModel]):
+  def toggleText(self, string_1: types.JS_DATA_TYPES, string_2: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -1850,8 +1844,8 @@ class JsDoms(JsObject.JsObject):
 
     Attributes:
     ----------
-    :param string_1: String. The content
-    :param string_2: String. The new content
+    :param string_1: The content
+    :param string_2: The new content
     """
     str1 = JsUtils.jsConvertData(string_1, None)
     str2 = JsUtils.jsConvertData(string_2, None)
@@ -1877,7 +1871,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsNumber.JsNumber("%s.clientHeight" % self.varId)
 
-  def toggleClass(self, cls_name: Union[str, primitives.JsDataModel], propagate: bool = False):
+  def toggleClass(self, cls_name: types.JS_DATA_TYPES, propagate: bool = False):
     """
     Description:
     ------------
@@ -1896,7 +1890,7 @@ class JsDoms(JsObject.JsObject):
       "varId": self.varId, 'data': cls_name})
     return self
 
-  def switchClass(self, cls_name_1: Union[str, primitives.JsDataModel], cls_name_2: Union[str, primitives.JsDataModel]):
+  def switchClass(self, cls_name_1: types.JS_DATA_TYPES, cls_name_2: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -1980,7 +1974,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsBoolean.JsBoolean('%s.contains(%s)' % (self.varId, node))
 
-  def getAttribute(self, attribute_name: Union[str, primitives.JsDataModel]):
+  def getAttribute(self, attribute_name: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2003,7 +1997,7 @@ class JsDoms(JsObject.JsObject):
     return JsObject.JsObject(
       "%s.getAttribute(%s)" % (self.varId, JsUtils.jsConvertData(attribute_name, None)), is_py_data=False)
 
-  def getAttributeNode(self, attribute_name: Union[str, primitives.JsDataModel]):
+  def getAttributeNode(self, attribute_name: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2022,7 +2016,7 @@ class JsDoms(JsObject.JsObject):
     attribute_name = JsUtils.jsConvertData(attribute_name, None)
     return JsString.JsString("%s.getAttributeNode(%s)" % (self.varId, attribute_name))
 
-  def getComputedStyle(self, attribute_name: Union[str, primitives.JsDataModel] = None):
+  def getComputedStyle(self, attribute_name: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -2039,7 +2033,7 @@ class JsDoms(JsObject.JsObject):
       attribute_name = "%s%s" % (split_css[0], split_css[1].title())
     return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attribute_name), is_py_data=False)
 
-  def getBoundingClientRect(self):
+  def getBoundingClientRect(self) -> JsNodeDomRect.JsDOMRect:
     """
     Description:
     -----------
@@ -2053,7 +2047,7 @@ class JsDoms(JsObject.JsObject):
     return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
 
   @property
-  def hasChildNodes(self):
+  def hasChildNodes(self) -> JsBoolean.JsBoolean:
     """
     Description:
     ------------
@@ -2071,7 +2065,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsBoolean.JsBoolean("%s.hasChildNodes()" % self.varId, is_py_data=False)
 
-  def hasClass(self, cls_name: Union[str, primitives.JsDataModel]):
+  def hasClass(self, cls_name: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2083,7 +2077,7 @@ class JsDoms(JsObject.JsObject):
     cls_name = JsUtils.jsConvertData(cls_name, None)
     return JsBoolean.JsBoolean("%s.classList.contains(%s)" % (self.varId, cls_name), is_py_data=False)
 
-  def text(self, value: Union[str, primitives.JsDataModel]):
+  def text(self, value: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2152,7 +2146,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsString.JsString("%s.offsetTop" % self.varId, is_py_data=False)
 
-  def contentEditable(self, flag: Union[bool, primitives.JsDataModel]):
+  def contentEditable(self, flag: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2170,7 +2164,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsBoolean.JsBoolean.get("%s.contentEditable = %s" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
-  def className(self, cls_name: Union[str, primitives.JsDataModel] = None):
+  def className(self, cls_name: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -2198,7 +2192,7 @@ class JsDoms(JsObject.JsObject):
     return JsString.JsString("%s; %s.className = %s" % (
       self.toStr(), self.varId, JsUtils.jsConvertData(cls_name, None)), is_py_data=False)
 
-  def cloneNode(self, deep: Union[bool, primitives.JsDataModel] = True):
+  def cloneNode(self, deep: types.JS_DATA_BOOLEAN_TYPES = True):
     """
     Description:
     ------------
@@ -2238,7 +2232,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsFncs.JsFunction("%s.remove()" % self.varId)
 
-  def removeAttribute(self, dom: Union[str, primitives.JsDataModel]):
+  def removeAttribute(self, dom: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2255,7 +2249,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.removeAttribute(%s)" % (self.varId, JsUtils.jsConvertData(dom, None)))
     return self
 
-  def removeChild(self, dom: Union[str, primitives.JsDataModel]):
+  def removeChild(self, dom: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2273,7 +2267,7 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms("%s.removeChild(%s)" % (self.varId, dom))
 
-  def appendChild(self, dom: Union[str, primitives.JsDataModel]):
+  def appendChild(self, dom: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -2322,7 +2316,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, new_node, existing_node))
     return self
 
-  def click(self, js_funcs: Union[str, list] = None):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -2339,7 +2333,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.click(%s)" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  def onclick(self, js_funcs: Union[str, list], auto_style: bool = True):
+  def onclick(self, js_funcs: types.JS_FUNCS_TYPES, auto_style: bool = True):
     """
     Description:
     -----------
@@ -2363,7 +2357,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("%s.onclick = function(){%s}" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
     return self
 
-  def onVisible(self, js_funcs: Union[str, list]):
+  def onVisible(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -2375,7 +2369,7 @@ class JsDoms(JsObject.JsObject):
     self._js.append("var rect = %s.getBoundingClientRect()" % self.varId)
     return self
 
-  def getContext(self, context_type: str, context_attributes: Union[dict, primitives.JsDataModel] = None):
+  def getContext(self, context_type: str, context_attributes: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -2423,7 +2417,7 @@ class JsDoms(JsObject.JsObject):
 
 class JsDomsList(JsArray.JsArray):
 
-  def all(self, js_funcs: Union[str, list]):
+  def all(self, js_funcs: types.JS_FUNCS_TYPES):
     """
     Description:
     ------------
@@ -2445,7 +2439,7 @@ class JsDomsList(JsArray.JsArray):
     """
     return JsDoms.get("%s[0]" % self.toStr())
 
-  def css(self, attr: Union[str, dict], data: Union[dict, str, primitives.JsDataModel] = None):
+  def css(self, attr: Union[str, dict], data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
@@ -2493,7 +2487,7 @@ class JsDomsList(JsArray.JsArray):
     self._js.append("for(let e of %s){ console.log(e) }" % self.varId)
     return self
 
-  def attr(self, value: Union[str, dict], data: Union[dict, str, bool, primitives.JsDataModel] = None):
+  def attr(self, value: Union[str, dict], data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------

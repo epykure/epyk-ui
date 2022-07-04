@@ -988,6 +988,7 @@ class Lists:
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.span.style.css.margin = "0 0 -3px -3px"
+        r.icon.style.add_classes.div.color_hover()
         if typ == "Add&nbsp;":
           r.click([
             component.dom.add(""),
@@ -1013,6 +1014,7 @@ class Lists:
       r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
       r.span.style.css.margin = "0 2px -3px -3px"
+      r.icon.style.add_classes.div.color_hover()
       r.click([
         r.dom.css({"background": self.page.theme.success.light, "border-radius": "10px"}).r,
         self.page.js.window.setTimeout([r.dom.css({"background": "none"}).r], 2000),
