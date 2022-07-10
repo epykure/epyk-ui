@@ -63,7 +63,9 @@ def deprecated(comment: str):
   def decorator(func):
     @functools.wraps(func)
     def new_func(*args, **kwargs):
+      import os
       logging.warning('#########################################')
+      logging.warning("Action => {}.".format(os.getcwd()))
       logging.warning("Call to deprecated function {}.".format(func.__name__))
       logging.warning("Action => {}.".format(comment))
       logging.warning('#########################################')
@@ -723,7 +725,7 @@ class Html(primitives.HtmlModel):
       logging.warning("Family %s not defined in %s" % (family, defined_families))
 
     if family is None:
-      family = Defaults_css.ICON_FAMILY
+      family = self.page.icons.family
     if text is not None:
       html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
       self.icon = self.page.ui.images.icon(

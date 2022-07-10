@@ -24,7 +24,6 @@ from epyk.core.js.html import JsHtmlJqueryUI
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsInput
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Output(Html.Html):
@@ -1028,7 +1027,7 @@ class FieldSelect(Field):
       page.inputs.get(html_code, value), "%s_input" % html_code if html_code is not None else html_code,
       width=(100, "%"), options=options)
     html_input.options.iconBase = "iconBase"
-    icon_details = Defaults_css.get_icon("check")
+    icon_details = page.icons.get("check")
     html_input.options.tickIcon = icon_details["icon"]
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)

@@ -21,7 +21,7 @@ class Tree(Html.Html):
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    icon_details = cssDefaults.get_icon("folder_open")
+    icon_details = page.icons.get("folder_open")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Tree, self).__init__(page, records, profile=profile, options=options, html_code=html_code,

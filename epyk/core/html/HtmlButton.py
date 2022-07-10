@@ -524,9 +524,9 @@ class IconEdit(Html.Html):
 
   def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
                tooltip: Optional[str], width, height, html_code, options, profile: Optional[Union[bool, dict]]):
-    super(IconEdit, self).__init__(page, '', html_code=html_code, profile=profile,
-                                   css_attrs={"width": width, 'height': height,
-                                              'float': 'left' if position is None else position})
+    super(IconEdit, self).__init__(
+      page, '', html_code=html_code, profile=profile, css_attrs={
+        "width": width, 'height': height, 'float': 'left' if position is None else position})
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper

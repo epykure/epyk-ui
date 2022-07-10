@@ -6,7 +6,6 @@ from epyk.core import html
 from epyk.core.py import types
 from epyk.core.css import Colors
 from epyk.interfaces import Arguments
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Images:
@@ -683,7 +682,7 @@ class Images:
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
 
-    icon_details = Defaults_css.get_icon(icon, family)
+    icon_details = self.page.icons.get(icon, family)
     options = options or {}
     options["icon_family"] = family or icon_details["icon_family"]
     component = html.HtmlImage.Icon(
@@ -753,7 +752,7 @@ class Images:
       background_color = self.page.theme.greys[0]
     if color is None:
       color = self.page.theme.success.base
-    icon_details = Defaults_css.get_icon(icon)
+    icon_details = self.page.icons.get(icon)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     component = html.HtmlImage.Badge(

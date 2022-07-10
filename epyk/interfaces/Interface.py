@@ -141,6 +141,7 @@ class Components:
 
     Usage::
 
+        page.ui.css({"color": "blue"})
 
     Attributes:
     ----------
@@ -200,7 +201,7 @@ class Components:
 
     Usage::
 
-      page.ui.codes
+      page.ui.codes.css(".test {color: red}")
 
     Related Pages:
 
@@ -335,6 +336,7 @@ class Components:
 
     Usage::
 
+      page.ui
     """
     return CompNavigation.NavBars(self)
 
@@ -1452,6 +1454,15 @@ class WebComponents:
   def __init__(self, page: primitives.PageModel):
     self.page = page
     self.fwks = {}
+    self.page.properties.context["libs"] = Defaults_css.WEB_LIBS
+
+  @property
+  def default(self) -> str:
+    return self.page.properties.context["libs"]
+
+  @default.setter
+  def default(self, alias: str):
+    self.page.properties.context["libs"] = alias
 
   @property
   def std(self) -> Components:
@@ -1564,7 +1575,7 @@ class WebComponents:
     return self.fwks["clr"]
 
   @property
-  def evr(self):
+  def evr(self) -> EvergreenUI.Components:
     """
     Description:
     ------------

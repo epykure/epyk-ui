@@ -6,7 +6,6 @@ from typing import Union
 from epyk.core import html
 from epyk.core.py import primitives, types
 from epyk.core.html import Defaults
-from epyk.core.css import Defaults_css
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as Defaults_css
 
@@ -71,7 +70,7 @@ class Lists:
           if rec["value"] in selected:
             rec["selected"] = True
 
-      icon_details = Defaults_css.get_icon("check")
+      icon_details = self.page.icons.get("check")
       options["iconBase"] = "iconBase"
       options["tickIcon"] = icon_details["icon"]
       html_select = html.HtmlSelect.Select(self.page, records, html_code, width, height, profile, multiple, options)
@@ -826,7 +825,7 @@ class Lists:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon("check")
+    icon_details = self.page.icons.get("check")
     dft_options = {"icon": icon_details["icon"], 'markdown': True, "items_type": 'icon'}
     if options is not None:
       dft_options.update(options)

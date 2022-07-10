@@ -1,13 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, List
+from typing import Union
 
+from epyk.core.py import types
 from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Icons:
@@ -19,9 +19,10 @@ class Icons:
   def get(self):
     return JsFontAwesome
 
-  def awesome(self, icon: str, text: str = None, tooltip: str = None, position: str = None, width: tuple = (25, 'px'),
-              height: tuple = (25, 'px'), html_code: str = None, options: dict = None,
-              profile: Union[dict, bool] = None, align: str = "left", size=(None, 'px')):
+  def awesome(self, icon: str, text: str = None, tooltip: str = None, position: str = None,
+              width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
+              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, align: str = "left",
+              size: types.SIZE_TYPE = (None, 'px')):
     """
     Description:
     ------------
@@ -43,22 +44,24 @@ class Icons:
 
     Attributes:
     ----------
-    :param icon: String. The font awesome icon reference.
-    :param text: String. Optional. The text to be displayed to this component. Default None.
-    :param position: String. Optional. The position of the icon in the line (left, right, center).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param icon: The font awesome icon reference.
+    :param text: Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param align: Optional.
+    :param size: Optional.
     """
     width = Arguments.size(width, unit="px")
     size = Arguments.size(size, unit="px")
     height = Arguments.size(height, unit="px")
     options = options or {}
     if "icon_family" not in options:
-      icon_details = Defaults_css.get_icon(icon)
+      icon_details = self.page.icons.get(icon)
       options["icon_family"] = icon_details["icon_family"]
     else:
       icon_details = {"icon": icon, "icon_family": options["icon_family"]}
@@ -76,9 +79,9 @@ class Icons:
     html.Html.set_component_skin(html_edit)
     return html_edit
 
-  def fluent(self, icon: str, text: str = None, tooltip: str = None, position: str = None, width: tuple = (25, 'px'),
-             height: tuple = (25, 'px'), html_code: str = None, options: dict = None,
-             profile: Union[dict, bool] = None):
+  def fluent(self, icon: str, text: str = None, tooltip: str = None, position: str = None,
+             width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
+             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -94,19 +97,19 @@ class Icons:
 
     Attributes:
     ----------
-    :param icon: String. The fluentui icon reference.
-    :param text: String. Optional. The text to be displayed to this component. Default None.
-    :param position: String. Optional. The position of the icon in the line (left, right, center).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
+    :param icon: The fluentui icon reference.
+    :param text: Optional. The text to be displayed to this component. Default None.
+    :param position: Optional. The position of the icon in the line (left, right, center).
+    :param tooltip: Optional. A string with the value of the tooltip.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon(icon)
+    icon_details = self.page.icons.get(icon)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     html_edit = html.HtmlButton.IconEdit(
@@ -1571,7 +1574,7 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon(icon)
+    icon_details = self.page.icons.get(icon)
     dftl_options = {'dateFormat': 'yy-mm-dd', "icon_family": icon_details["icon_family"]}
     if options is not None:
       dftl_options.update(options)
@@ -1617,10 +1620,10 @@ class Icons:
       t.attr["data-active"] = 0
     t.click([
       self.page.js.if_(t.dom.getAttribute("data-active") == 1, [
-        t.icon.dom.removeClass(Defaults_css.get_icon("spin")["icon"]).r, t.dom.setAttribute("data-active", 0),
+        t.icon.dom.removeClass(self.page.icons.get("spin")["icon"]).r, t.dom.setAttribute("data-active", 0),
         self.page.js.window.clearInterval("%s_timer" % t.htmlCode)
       ]).else_([
-        t.icon.dom.addClass(Defaults_css.get_icon("spin")["icon"]), t.dom.setAttribute("data-active", 1),
+        t.icon.dom.addClass(self.page.icons.get("spin")["icon"]), t.dom.setAttribute("data-active", 1),
         self.page.js.window.setInterval(js_funcs, "%s_timer" % t.htmlCode, time)
       ]),
     ])
@@ -1882,7 +1885,7 @@ class Toggles:
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
     options = options or {}
-    options['icon_family'] = family or Defaults_css.ICON_FAMILY
+    options['icon_family'] = family or self.page.icons.family
     html_icon = html.HtmlImage.IconToggle(
       self.page, icon_on, width=width, height=height, color=color, tooltip=tooltip, options=options,
       html_code=html_code, profile=profile)
@@ -1927,7 +1930,7 @@ class Toggles:
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
     options = options or {}
-    options['icon_family'] = family or Defaults_css.ICON_FAMILY
+    options['icon_family'] = family or self.page.icons.family
     html_icon = html.HtmlImage.IconToggle(self.page, icon_on, width=width, height=height, color=color,
                                           tooltip=tooltip, options=options, html_code=html_code, profile=profile)
     html_icon.icon_on = icon_on

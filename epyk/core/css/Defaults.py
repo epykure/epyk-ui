@@ -30,8 +30,8 @@ class Font:
 
     Attributes:
     ----------
-    :param int step: Optional. The value to be added to the default font size.
-    :param str unit: Optional. The unit code. default px.
+    :param step: Optional. The value to be added to the default font size.
+    :param unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self._size + step, unit or self.unit)
 
@@ -43,8 +43,8 @@ class Font:
 
     Attributes:
     ----------
-    :param int step: Optional. The value to be added to the default font size.
-    :param str unit: Optional. The unit code. default px.
+    :param step: Optional. The value to be added to the default font size.
+    :param unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.header_size + step, unit or self.unit)
 
@@ -60,8 +60,8 @@ class Icon:
 
     Attributes:
     ----------
-    :param int step: Optional. The value to be added to the default font size.
-    :param str unit: Optional. The unit code. default px.
+    :param step: Optional. The value to be added to the default font size.
+    :param unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.small+step, unit or self.unit)
 
@@ -73,8 +73,8 @@ class Icon:
 
     Attributes:
     ----------
-    :param int step: Optional. The value to be added to the default font size.
-    :param str unit: Optional. The unit code. default px.
+    :param step: Optional. The value to be added to the default font size.
+    :param unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.normal+step, unit or self.unit)
 
@@ -86,8 +86,8 @@ class Icon:
 
     Attributes:
     ----------
-    :param int step: Optional. The value to be added to the default font size.
-    :param str unit: Optional. The unit code. default px.
+    :param step: Optional. The value to be added to the default font size.
+    :param unit: Optional. The unit code. default px.
     """
     return "%s%s" % (self.big+step, unit or self.unit)
 
@@ -100,7 +100,7 @@ def header(step: int = 0):
 
   Attributes:
   ----------
-  :param int step: Optional. The value to be added to the default font size.
+  :param step: Optional. The value to be added to the default font size.
   """
   return "%s%s" % (Font.header_size+step, Font.unit)
 
@@ -122,8 +122,8 @@ def inline(css_attrs: dict, important: bool = False):
 
   Attributes:
   ----------
-  :param dict css_attrs: The CSS Attributes.
-  :param bool important: Optional. Set the attributes to important. Default False.
+  :param css_attrs: The CSS Attributes.
+  :param important: Optional. Set the attributes to important. Default False.
   """
   if important:
     return ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in css_attrs.items()])
@@ -144,8 +144,8 @@ def px_to_em(value: float, with_unit: bool = True):
 
   Attributes:
   ----------
-  :param float value: A pixel value.
-  :param bool with_unit: Optional. To define the return format.
+  :param value: A pixel value.
+  :param with_unit: Optional. To define the return format.
   """
   em_value = value / 16
   if with_unit:
@@ -167,8 +167,8 @@ def em_to_px(value: float, with_unit: bool = True):
 
   Attributes:
   ----------
-  :param float value: The em value.
-  :param bool with_unit: Optional. To define the return format.
+  :param value: The em value.
+  :param with_unit: Optional. To define the return format.
   """
   px_value = value * 16
   if with_unit:
@@ -250,6 +250,7 @@ ICON_MAPPINGS = {
     'arrow_left': "fas fa-arrow-alt-circle-left",
   }
 }
+WEB_LIBS = "std"
 
 
 def get_icon(alias: Optional[str], family: str = None):
@@ -259,8 +260,8 @@ def get_icon(alias: Optional[str], family: str = None):
 
   Attributes:
   ----------
-  :param str alias: The icon reference in the components.
-  :param str family: Optional. The defined family (if different from the page icon family).
+  :param alias: The icon reference in the components.
+  :param family: Optional. The defined family (if different from the page icon family).
   """
   icon = ICON_MAPPINGS[family or ICON_FAMILY].get(alias, alias)
   if icon is None:

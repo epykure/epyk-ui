@@ -45,7 +45,7 @@ class UpDown(Html.Html):
     if components is not None:
       for component in components:
         self.add(component)
-    self.val['color'] = self.page.theme.colors[9] if color is None else color
+    self.val['color'] = self.page.theme.colors[-1] if color is None else color
     self.options.label = record.get('label', '')
 
   @property
@@ -200,9 +200,9 @@ class TextWithBorder(Html.Html):
     self.add_helper(helper)
     self.align = align
     if 'colorTitle' not in self.val:
-      self.val['colorTitle'] = self.page.theme.colors[9]
+      self.val['colorTitle'] = self.page.theme.colors[-1]
     if 'color' not in self.val:
-      self.val['color'] = self.page.theme.colors[9]
+      self.val['color'] = self.page.theme.colors[-1]
     self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
 
   @property
@@ -302,7 +302,7 @@ class Delta(Html.Html):
                                 css_attrs={"width": width, "height": height}, profile=profile)
     self.add_helper(helper)
     if 'color' not in self.val:
-      self.val['color'] = self.page.theme.colors[9]
+      self.val['color'] = self.page.theme.colors[-1]
     if 'thresold1' not in self.val:
       self.options.threshold1 = 100
     if 'thresold2' not in self.val:

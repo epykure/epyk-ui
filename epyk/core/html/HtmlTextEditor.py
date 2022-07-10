@@ -16,7 +16,6 @@ from epyk.core.html.options import OptText
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsCodeMirror
-from epyk.core.css import Defaults as cssDefaults
 
 
 class Console(Html.Html):
@@ -486,7 +485,7 @@ class Tags(Html.Html):
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
-    icon_details = cssDefaults.get_icon("close")
+    icon_details = self.page.icons.get("close")
     self.page.properties.js.add_builders('RemoveSelection(srcObj, htmlCode)', 'srcObj.parent().remove()',
        func_dsc="Remove the item from the Tags Html component but also from the underlying javascript variable")
     return '''

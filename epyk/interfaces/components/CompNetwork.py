@@ -481,15 +481,15 @@ class Network:
     """
     options = options or {}
     mapped_file = {
-      "excel": Defaults_css.get_icon("excel"), 'pdf': Defaults_css.get_icon("pdf"), 'code':
-      Defaults_css.get_icon("code"), 'csv': Defaults_css.get_icon("csv"), 'word': Defaults_css.get_icon("word")}
+      "excel": self.page.icons.get("excel"), 'pdf': self.page.icons.get("pdf"), 'code':
+      self.page.icons.get("code"), 'csv': self.page.icons.get("csv"), 'word': self.page.icons.get("word")}
     extension = name.split(".")[-1]
     if extension in mapped_file:
       icon = mapped_file[extension]["icon"]
       options["icon_family"] = mapped_file[extension]["icon_family"]
     if icon is None:
-      icon = Defaults_css.get_icon("upload")["icon"]
-      options["icon_family"] = Defaults_css.get_icon("upload")["icon_family"]
+      icon = self.page.icons.get("upload")["icon"]
+      options["icon_family"] = self.page.icons.get("upload")["icon_family"]
     file = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     file.tooltip(r"Download file: %(path)s\%(name)s" % {"path": path, "name": name})

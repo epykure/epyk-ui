@@ -2984,8 +2984,7 @@ class CssMixin:
     self.font_size = self.component.page.body.style.globals.font.normal(factor)
     return self.component
 
-  def margins(self, top: Optional[tuple] = None, right: Optional[tuple] = None, bottom: Optional[tuple] = None,
-              left: Optional[tuple] = None):
+  def margins(self, top: Any = None, right: Any = None, bottom: Any = None, left: Any = None):
     """
     Description:
     ------------

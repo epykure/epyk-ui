@@ -241,7 +241,7 @@ class PanelSlide(Panel):
                title: Union[Html.Html, str], color: Optional[str], width: Optional[tuple],
                height: Optional[tuple], html_code: Optional[str], helper,
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
-    self.requirements = (cssDefaults.ICON_FAMILY, )
+    self.requirements = (page.icons.family, )
     super(PanelSlide, self).__init__(
       page, components, None, color, width, height, html_code, helper, options, profile)
     self.add_helper(helper)
@@ -980,7 +980,7 @@ class Col(Html.Html):
     :param component:
     """
     if not hasattr(component, 'options'):
-      component = self.page.ui.div(component)
+      component = self.page.ui.div(component, align=None)
     super(Col, self).__add__(component)
     return self
 
@@ -1198,6 +1198,13 @@ class Grid(Html.Html):
   def __exit__(self, type, value, traceback):
     return True
 
+  def row(self, n: int):
+    return self._vals[n]
+
+  def col(self, n: int):
+    cells = [row[n] for row in self._vals]
+    return cells
+
   @property
   def options(self) -> OptPanel.OptionGrid:
     """
@@ -1215,7 +1222,7 @@ class Grid(Html.Html):
     if isinstance(row_data, Row):
       row = row_data
     else:
-      row = self.page.ui.layouts.row(position=self.position, options=self.options._attrs)
+      row = self.page.ui.layouts.row(position=self.position, options=self.options._attrs, align=None)
       row.style.clear(no_default=True)
       row.style.css.margin = 'auto'
       row.attr["class"].add("row")

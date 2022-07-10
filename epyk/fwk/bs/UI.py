@@ -17,10 +17,11 @@ class Components:
     self.page = page
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
-    self.page.ext_packages.update(PkgImports.BOOTSTRAP)
-    self.page.imports.reload()
-    Defaults_css.ICON_FAMILY = 'bootstrap-icons'   # Set the default family for icons to rely on Bootstrap
-    Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY] = PkgImports.ICON_MAPPINGS
+    self.page.icons.add('bootstrap-icons', PkgImports.BOOTSTRAP)
+    #self.page.ext_packages.update(PkgImports.BOOTSTRAP)
+    #self.page.imports.reload()
+    #Defaults_css.ICON_FAMILY = 'bootstrap-icons'   # Set the default family for icons to rely on Bootstrap
+    #Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY] = PkgImports.ICON_MAPPINGS
 
     self.page.imports.pkgs.bootstrap.version = "5.1.0"
     self.page.jsImports.add("bootstrap")

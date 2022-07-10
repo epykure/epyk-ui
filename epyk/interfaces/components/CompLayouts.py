@@ -294,7 +294,7 @@ class Layouts:
     Attributes:
     ----------
     :param components: The different HTML objects to be added to the component.
-    :param position: Optional.
+    :param position: Optional. The CSS justify-content attribute
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param align: Optional. A string with the horizontal position of the component.

@@ -627,8 +627,8 @@ class Slidings:
     sliding = self.page.ui.panels.sliding(
       components, color=color, title=title, align=align, width=width, height=height,
       html_code=html_code, helper=helper, options=dfl_options, profile=profile)
-    sliding.options.icon_closed = Defaults_css.get_icon("chevron_up")["icon"]
-    sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
+    sliding.options.icon_closed = self.page.icons.get("chevron_up")["icon"]
+    sliding.options.icon_expanded = self.page.icons.get("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
     html.Html.set_component_skin(sliding)
@@ -661,8 +661,8 @@ class Slidings:
     """
     sliding = self.page.ui.panels.sliding(components, color=color, title=title, align=align, width=width, height=height,
                                           html_code=html_code, helper=helper, options=options, profile=profile)
-    sliding.options.icon_closed = Defaults_css.get_icon("chevron_up")["icon"]
-    sliding.options.icon_expanded = Defaults_css.get_icon("chevron_down")["icon"]
+    sliding.options.icon_closed = self.page.icons.get("chevron_up")["icon"]
+    sliding.options.icon_expanded = self.page.icons.get("chevron_down")["icon"]
     sliding.style.css.width = "80%"
     sliding.style.css.border_bottom = "1px solid black"
     html.Html.set_component_skin(sliding)
@@ -697,8 +697,8 @@ class Slidings:
       components, title, color, align, width, height, html_code, helper, options, profile)
     html_slide.title.style.css.padding = 0
     html_slide.title[1].style.css.margin_left = 15
-    html_slide.options.icon_closed = Defaults_css.get_icon("plus")["icon"]
-    html_slide.options.icon_expanded = Defaults_css.get_icon("minus")["icon"]
+    html_slide.options.icon_closed = self.page.icons.get("plus")["icon"]
+    html_slide.options.icon_expanded = self.page.icons.get("minus")["icon"]
     html_slide.val[1].style.padding_left = 40
     html.Html.set_component_skin(html_slide)
     return html_slide

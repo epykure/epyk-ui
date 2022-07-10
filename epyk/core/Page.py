@@ -14,6 +14,7 @@ from epyk.core.js import Imports
 from epyk.interfaces import Interface
 from epyk.core.css import themes
 from epyk.core.css import Classes
+from epyk.core.css import Icons
 
 from epyk.core import html
 from epyk.core import js
@@ -79,7 +80,7 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param str builder_def: The builder definition.
+    :param builder_def: The builder definition.
     """
     if isinstance(builder_def, list):
       for builder in builder_def:
@@ -97,7 +98,7 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param str builder_def: The builder definition function.
+    :param builder_def: The builder definition function.
     """
     self._context['onReady'].add(builder_def)
 
@@ -109,8 +110,8 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param str name:
-    :param str content:
+    :param name:
+    :param content:
     """
     self._context['constructors'][name] = content
     return name
@@ -122,7 +123,7 @@ class JsProperties:
 
     Attributes:
     ----------
-    :param str name:
+    :param name:
     """
     return name in self._context['constructors']
 
@@ -152,7 +153,7 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param str text: CSS Style to be directly included to the page.
+    :param text: CSS Style to be directly included to the page.
     """
     self._context['css']["text"].append(text)
 
@@ -164,7 +165,7 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param str builder_def: The builder definition.
+    :param builder_def: The builder definition.
     """
     if 'builders_css' not in self._context['js']:
       self._context['js']['builders_css'] = OrderedSet()
@@ -180,7 +181,7 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param dict css: The CSS attributes to be applied.
+    :param css: The CSS attributes to be applied.
     """
     self._context['css']['container'].update(css)
 
@@ -192,11 +193,11 @@ class CssProperties:
 
     Attributes:
     ----------
-    :param str font_family: Defines the name of the font.
-    :param str src: Defines the URL(s) where the font should be downloaded from.
-    :param str stretch: Optional. Defines how the font should be stretched. Default value is "normal".
-    :param str style: Optional. Defines how the font should be styled. Default value is "normal".
-    :param str weight: Optional. Defines the boldness of the font. Default value is "normal".
+    :param font_family: Defines the name of the font.
+    :param src: Defines the URL(s) where the font should be downloaded from.
+    :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
+    :param style: Optional. Defines how the font should be styled. Default value is "normal".
+    :param weight: Optional. Defines the boldness of the font. Default value is "normal".
     """
     self._context['css']["font-face"][font_family] = {
       'src': "url(%s)" % src, 'font-stretch': stretch, 'font-style': style, 'font-weight': weight}
@@ -206,6 +207,24 @@ class Properties:
 
   def __init__(self, context):
     self._context = context
+
+  @property
+  def context(self):
+    """
+    Description:
+    ------------
+    Return the common Page context.
+    """
+    return self._context['context']
+
+  @property
+  def icon(self):
+    """
+    Description:
+    ------------
+    Return the page icons definition
+    """
+    return self._context['icon']
 
   @property
   def js(self) -> JsProperties:
@@ -235,7 +254,6 @@ class Properties:
     Description:
     ------------
 
-    :return:
     """
     if "data" in self._context:
       self._context["data"] = {"sources": {}, "schema": {}}
@@ -271,11 +289,12 @@ class Report:
     Attributes:
     ----------
     :param inputs: The global input data for the defined components in the page.
-                                  Passing data for a given component with an htmlCode will override the value.
+      Passing data for a given component with an htmlCode will override the value.
     """
     self._css = {}
     self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
+    module = inspect.getmodule(inspect.stack()[1][0])
     self._props = {'js': {
           # JavaScript framework triggered after the HTML. Impact the entire page
           'onReady': OrderedSet(),
@@ -294,12 +313,14 @@ class Report:
           'text': [],
         },
         # Used on the Python side to make some decisions
-        'context': {'framework': 'JS'},
+        'context': {'framework': 'JS', "script": module.__file__},
         # Add report font-face CSS definition
         'css': {
           "font-face": {},
           "container": {},
-          "text": []}
+          "text": []},
+        # Add icons properties
+        "icon": {"family": None}
     }
     # Components for the entire page
     self.components = collections.OrderedDict()
@@ -336,8 +357,6 @@ class Report:
       page.body.onReady([
         page.js.alert("Loading started")
       ])
-
-    :rtype: html.Html.Body
     """
     if self.__body is None:
       self.__body = html.Html.Body(self, None, html_code='body')
@@ -350,7 +369,7 @@ class Report:
     self.__body = calc(self, None)
 
   @property
-  def theme(self):
+  def theme(self) -> themes.Theme:
     """
     Description:
     ------------
@@ -360,8 +379,6 @@ class Report:
 
       page = Report()
       page.theme = themes.ThemeBlue.Blue
-
-    :rtype: themes.Theme.ThemeDefault
     """
     if self._theme is None:
       self._theme = themes.Theme.ThemeDefault()
@@ -376,18 +393,16 @@ class Report:
       self._theme = theme
 
   @property
-  def themes(self):
+  def themes(self) -> themes.RegisteredThemes:
     return themes.RegisteredThemes(self)
 
   @property
-  def skins(self):
+  def skins(self) -> skins.Skins:
     """
     Description:
     ------------
     Add a special skin to the page.
     This could be used for special event or season during the year (Christmas for example).
-
-    rtype: skins.Skins
     """
     return skins.Skins(self)
 
@@ -400,10 +415,10 @@ class Report:
 
     Attributes:
     ----------
-    :param str path: Optional. The nodeJs path.
-    :param Optional[str] alias: Optional.
-    :param bool install: Optional.
-    :param bool update: Optional.
+    :param path: Optional. The nodeJs path.
+    :param alias: Optional.
+    :param install: Optional.
+    :param update: Optional.
     """
     if path is not None:
       self._node_modules = (path, alias or path, install, update)
@@ -423,15 +438,13 @@ class Report:
 
       page = Report()
       page.imports
-
-    :rtype: Imports.ImportManager
     """
     if self.__import_manage is None:
       self.__import_manage = Imports.ImportManager(page=self)
     return self.__import_manage
 
   @property
-  def symbols(self):
+  def symbols(self) -> symboles.Symboles:
     """
     Description:
     ------------
@@ -448,13 +461,11 @@ class Report:
 
       https://www.w3schools.com/html/html_symbols.asp
       https://www.w3schools.com/charsets/ref_utf_math.asp
-
-    :rtype: symboles.Symboles
     """
     return symboles.Symboles()
 
   @property
-  def entities(self):
+  def entities(self) -> entities.Entities:
     """
     Description:
     ------------
@@ -491,8 +502,6 @@ class Report:
     Related Pages:
 
       https://www.w3schools.com/html/default.asp
-
-    :rtype: Interface.Components
     """
     return self.web.std
 
@@ -514,15 +523,13 @@ class Report:
     Related Pages:
 
       https://www.w3schools.com/html/default.asp
-
-    :rtype: Interface.WebComponents
     """
     if self._ui is None:
       self._ui = Interface.WebComponents(self)
     return self._ui
 
   @property
-  def css(self):
+  def css(self) -> Classes.Catalog:
     """
     Description:
     ------------
@@ -532,8 +539,6 @@ class Report:
 
       page = Report()
       page.css.
-
-    :rtyype: Classes.Catalog
     """
     cls_obj = Classes.Catalog(self, {'other': set()})
     cls_obj.other
@@ -555,8 +560,6 @@ class Report:
     Related Pages:
 
       https://www.w3schools.com/js/default.asp
-
-    :rtype: js.Js.JsBase
 
     :return: Python HTML object
     """
@@ -581,8 +584,6 @@ class Report:
 
       https://www.w3schools.com/js/default.asp
 
-    :rtype: PyExt.PyExt
-
     :return: Python HTML object.
     """
     if self._py is None:
@@ -605,8 +606,6 @@ class Report:
 
       https://developers.google.com/identity/sign-in/web/sign-in
 
-    :rtype: auth.Auth
-
     :return: Python Auth Object.
     """
     if self._auth is None:
@@ -614,7 +613,7 @@ class Report:
     return self._auth
 
   @property
-  def data(self):
+  def data(self) -> data.Data.DataSrc:
     """
     Description:
     ------------
@@ -627,12 +626,10 @@ class Report:
       page = Report()
 
     :return: The framework available data source
-
-    :rtype: data.Data.DataSrc
     """
     return data.Data.DataSrc(self)
 
-  def register(self, ext_components):
+  def register(self, ext_components: list):
     """
     Description:
     ------------
@@ -651,7 +648,7 @@ class Report:
 
     Attributes:
     ----------
-    :param ext_components: List | HTML. The external components to be added.
+    :param ext_components: The external components to be added.
     """
     if type(ext_components) != list:
       ext_components = [ext_components]
@@ -707,12 +704,12 @@ class Report:
 
     Attributes:
     ----------
-    :param str name: The destination framework for the page.
+    :param name: The destination framework for the page.
     """
     self._props['context']['framework'] = name.upper()
 
   @property
-  def outs(self):
+  def outs(self) -> PyOuts.PyOuts:
     """
     Description:
     ------------
@@ -743,8 +740,6 @@ class Report:
 
       # Use the default DEV icon.
       page.headers.dev()
-
-    :rtype: html.Header.Header
     """
     if self._header_obj is None:
       self._header_obj = html.Header.Header(self)
@@ -773,14 +768,14 @@ class Report:
 
     Attributes:
     ----------
-    :param dict result: The python dictionary or data structure.
+    :param result: The python dictionary or data structure.
 
     :return: The serialised data
     """
     return json.dumps(data, cls=js.JsEncoder.Encoder, allow_nan=False)
 
   @property
-  def apps(self):
+  def apps(self) -> apps.AppRoute:
     """
     Description:
     ------------
@@ -792,10 +787,22 @@ class Report:
     Usage::
 
       page = Report()
-
-    :rtype: apps.AppRoute
     """
     self._props['web'] = {
       'modules': {}
     }
     return apps.AppRoute(self)
+
+  @property
+  def icons(self) -> Icons.IconModel:
+    """
+    Description:
+    ------------
+    Change the icons framework used in the page.
+    Defaults.py in the CSS module is to change the framework for all the page generated by the framework.
+
+    Usage::
+
+
+    """
+    return Icons.IconModel(self)

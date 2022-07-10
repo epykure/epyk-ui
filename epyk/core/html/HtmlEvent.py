@@ -714,7 +714,7 @@ class SignIn(Html.Html):
 
   def __str__(self):
     if not hasattr(self.page, 'user') or self.page.user == 'local':
-      icon_details = cssDefaults.get_icon(self.icon or "user")
+      icon_details = self.page.icons.get(self.icon or "user")
       self.attr["class"].add(icon_details["icon"])
       self.style.css.font_family = "Font Awesome 5 Free"
       self.style.css.padding = "2px"

@@ -243,7 +243,7 @@ class Table(Html.Html):
       :param status: Optional. The loading status.
       :param color: Optional. The loading text color.
       """
-      self.require.add(cssDefaults.get_icon(None)["icon_family"])
+      self.require.add(self.page.icons.get(None)["icon_family"])
       if status:
         return ''' 
           if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){

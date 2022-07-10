@@ -81,7 +81,7 @@ class Stars(Html.Html):
   name = 'Stars'
 
   def __init__(self, page: primitives.PageModel, val, label, color, align, best, html_code, helper, options, profile):
-    icon_details = Defaults.get_icon("star")
+    icon_details = page.icons.get("star")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Stars, self).__init__(page, val, html_code=html_code, profile=profile, options=options)
@@ -166,7 +166,7 @@ class Help(Html.Html):
 
   def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
                options: Optional[dict]):
-    icon_details = Defaults.get_icon("info")
+    icon_details = page.icons.get("info")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Help, self).__init__(page, val, css_attrs={"width": width}, profile=profile)
@@ -198,7 +198,7 @@ class Loading(Html.Html):
 
   def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
-    icon_details = Defaults.get_icon("spin")
+    icon_details = self.page.icons.get("spin")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Loading, self).__init__(page, text, profile=profile)
@@ -416,10 +416,10 @@ class Slides(Html.Html):
 
   def __init__(self, page: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
                profile: Optional[Union[dict, bool]]):
-    icon_details_right = Defaults.get_icon("arrow_right")
+    icon_details_right = self.page.icons.get("arrow_right")
     if icon_details_right['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details_right['icon_family'],)
-    icon_details_left = Defaults.get_icon("arrow_left")
+    icon_details_left = self.page.icons.get("arrow_left")
     super(Slides, self).__init__(page, [], options=options,
                                  css_attrs={"width": width, 'height': height}, profile=profile)
     self.attr['data-current_slide'] = start

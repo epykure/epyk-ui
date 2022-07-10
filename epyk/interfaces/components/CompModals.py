@@ -230,7 +230,7 @@ class Modals:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon("close")
+    icon_details = self.page.icons.get("close")
     dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
     if options is not None:
       dfl_options.update(options)
@@ -331,7 +331,7 @@ class Modals:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon("close")
+    icon_details = self.page.icons.get("close")
     dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
     if options is not None:
       dfl_options.update(options)

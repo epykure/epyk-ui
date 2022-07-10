@@ -7,7 +7,6 @@ from epyk.core.py import types
 from epyk.core import html
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Inputs:
@@ -778,7 +777,7 @@ class Inputs:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = Defaults_css.get_icon("search")
+    icon_details = self.page.icons.get("search")
     dflt_options = {"icon": icon_details["icon"], 'position': 'left', 'select': True, "border": 1}
     if options is not None:
       dflt_options.update(options)

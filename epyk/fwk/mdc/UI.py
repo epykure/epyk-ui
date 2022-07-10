@@ -2,7 +2,6 @@ from epyk.fwk.mdc import PkgImports
 from epyk.interfaces import Arguments
 from epyk.fwk.mdc.html import HtmlMdcForms
 from epyk.fwk.mdc import groups
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Components:
@@ -11,10 +10,12 @@ class Components:
     self.page = page
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
-    self.page.ext_packages.update(PkgImports.MATERIAL_DESIGN_COMPONENTS)
-    self.page.imports.reload()
-    Defaults_css.ICON_FAMILY = 'material-design-icons'   # Set the default family for icons to rely on Material design
-    Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY] = PkgImports.ICON_MAPPINGS
+
+    self.page.icons.add('material-design-icons', PkgImports.MATERIAL_DESIGN_COMPONENTS)
+    #self.page.ext_packages.update(PkgImports.MATERIAL_DESIGN_COMPONENTS)
+    #self.page.imports.reload()
+    #Defaults_css.ICON_FAMILY = 'material-design-icons'   # Set the default family for icons to rely on Material design
+    #Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY] = PkgImports.ICON_MAPPINGS
     self.page.jsImports.add("material-components-web")
     self.page.cssImport.add("material-components-web")
     self.page.css.customText('''
