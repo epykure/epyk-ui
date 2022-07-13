@@ -18,8 +18,8 @@ def size(value: Any, unit: str = "%", toStr: bool = False):
   Attributes:
   ----------
   :param value: The value for this argument
-  :param unit: Optional. The unit for the argument. Default %.
-  :param toStr:
+  :param unit: Optional. The unit for the argument. Default %
+  :param toStr: Optional. Transform the tuple to string
   """
   if value is False:
     return None, ""

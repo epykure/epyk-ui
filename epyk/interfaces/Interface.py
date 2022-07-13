@@ -376,7 +376,9 @@ class Components:
 
     Usage::
 
-
+      page.ui.fields.now(label="timestamp", color="red", helper="This is the report timestamp")
+      page.ui.rich.delta({'number': 100, 'prevNumber': 60, 'thresold1': 100, 'thresold2': 50}, helper="test")
+      page.ui.rich.info("text")
     """
     return CompRich.Rich(self)
 
@@ -391,7 +393,11 @@ class Components:
 
     Usage::
 
-
+      page.ui.vignets.number(500, "Test")
+      page.ui.vignets.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
+      page.ui.vignets.block({
+        "text": 'This is a brand new python framework', "title": 'New Python Web Framework',
+        "button": {"text": 'Get Started', 'url': "/getStarted"}, 'color': 'green'})
     """
     return CompVignets.Vignets(self)
 
@@ -1436,6 +1442,7 @@ class Components:
     """
     Description:
     ------------
+    Bespoke catalog of components.
     """
     return pyks.Bespoke(self)
 

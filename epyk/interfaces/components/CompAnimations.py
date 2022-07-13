@@ -1,6 +1,7 @@
 
 from epyk.core.css.styles.classes import CssStylesLoadings
 from epyk.core.py import types
+from epyk.core import html
 
 
 class Animations:
@@ -9,7 +10,7 @@ class Animations:
     self.page = ui.page
 
   def loading_line(self, height: types.PROFILE_TYPE = (3, "px"), profile: types.PROFILE_TYPE = None,
-                   html_code: str = None, options: dict = None):
+                   html_code: str = None, options: dict = None) -> html.HtmlContainer.Div:
     """
     Description:
     -----------
@@ -43,15 +44,13 @@ class Animations:
     component.start = start
     return component
 
-  def progress_cursor(self):
+  def progress_cursor(self) -> html.HtmlContainer.Div:
     """
     Description:
     -----------
 
     Related Pages:
 
-
-    :return:
     """
     cursor = self.page.body.style.css.cursor
     component = self.page.ui.div()

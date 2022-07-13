@@ -804,8 +804,8 @@ class Images:
     html.Html.set_component_skin(div)
     return div
 
-  def gallery(self, images: List[Union[dict, html.Html.Html]] = None, columns: int = 6, width: types.SIZE_TYPE = (None, '%'),
-              height: types.SIZE_TYPE = ('auto', ''), options: dict = None,
+  def gallery(self, images: List[Union[dict, html.Html.Html]] = None, columns: int = 6,
+              width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''), options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
     Description:

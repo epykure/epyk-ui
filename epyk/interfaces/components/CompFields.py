@@ -1331,7 +1331,7 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def slider(self, value=0, min=0, max=10, step: float = 1, orientation: str = 'horizontal', label: str = None,
+  def slider(self, value: float = 0, min: float = 0, max: float = 10, step: float = 1, orientation: str = 'horizontal', label: str = None,
              width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
              options: dict = None, range: bool = False,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:

@@ -4,7 +4,7 @@
 from typing import List, Union
 from epyk.core import html
 from epyk.interfaces import Arguments
-from epyk.core.css import Defaults as Defaults_css
+from epyk.core.py import types
 
 
 class Panels:
@@ -12,9 +12,9 @@ class Panels:
   def __init__(self, ui):
     self.page = ui.page
 
-  def panel(self, components: List[html.Html.Html] = None, title=None, color=None, width=(100, "%"),
-            height=(None, "px"), html_code: str = None, helper: str = None, options: dict = None,
-            profile: Union[dict, bool] = False):
+  def panel(self, components: List[html.Html.Html] = None, title: str = None, color: str = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -32,15 +32,15 @@ class Panels:
 
     Attributes:
     ----------
-    :param components: List. Optional. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -51,8 +51,9 @@ class Panels:
     html.Html.set_component_skin(html_panel)
     return html_panel
 
-  def pills(self, color: str = None, width=(100, '%'), height=(None, 'px'), align="left", html_code: str = None,
-            helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
+  def pills(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+            align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -77,14 +78,14 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -103,8 +104,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def boxes(self, color=None, width=(100, '%'), height=(None, 'px'), align: str = "left", html_code: str = None,
-            helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
+  def boxes(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+            align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -129,19 +131,19 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     dfl_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                                'color': self.page.theme.greys[-1]}}
+                               'color': self.page.theme.greys[-1]}}
     if options is not None:
       dfl_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
@@ -156,8 +158,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def tabs(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile: Union[dict, bool] = False):
+  def tabs(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -182,13 +185,13 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -201,8 +204,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def arrows_up(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-                profile: Union[dict, bool] = False):
+  def arrows_up(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+                html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+                profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -223,13 +227,13 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -248,8 +252,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def arrows_down(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-                  profile: Union[dict, bool] = False):
+  def arrows_down(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+                  html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+                  profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -270,13 +275,13 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -296,8 +301,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def menu(self, color=None, width=(100, '%'), height=(None, 'px'), html_code=None, helper=None, options=None,
-           profile: Union[dict, bool] = False):
+  def menu(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -318,13 +324,13 @@ class Panels:
 
     Attributes:
     ----------
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -342,8 +348,9 @@ class Panels:
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
-  def sliding(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"),
-              html_code=None, helper=None, options=None, profile: Union[dict, bool] = False):
+  def sliding(self, components, title, color: str = None, align: str = "center", width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
+              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.PanelSlide:
     """
     Description:
     ------------
@@ -365,16 +372,16 @@ class Panels:
 
     Attributes:
     ----------
-    :param components: List. Optional. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. Optional. The text-align property within this component (Default center).
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: Optional. The text-align property within this component (Default center).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -396,8 +403,10 @@ class Panels:
     html.Html.set_component_skin(html_slide)
     return html_slide
 
-  def split(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
-            helper=None, options=None, profile: Union[dict, bool] = None):
+  def split(self, left: html.Html.Html = None, right: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+            left_width: types.SIZE_TYPE = (160, 'px'), resizable: bool = True,
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSplit:
     """
     Description:
     ------------
@@ -421,15 +430,15 @@ class Panels:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param left_width:
-    :param left:
-    :param right:
-    :param resizable:
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param left_width: Optional.
+    :param left: Optional.
+    :param right: Optional.
+    :param resizable: Optional.
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -438,8 +447,9 @@ class Panels:
     html.Html.set_component_skin(html_split)
     return html_split
 
-  def filters(self, items=None, category='group', width=(100, "%"), height=(60, "px"), html_code=None, helper=None,
-              options=None, profile: Union[dict, bool] = None):
+  def filters(self, items=None, category: str = 'group', width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
+              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -462,14 +472,14 @@ class Panels:
 
     Attributes:
     ----------
-    :param items:
-    :param category:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param items: Optional.
+    :param category: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     options = options or {}
     width = Arguments.size(width, unit="%")
@@ -487,7 +497,8 @@ class Panels:
     html.Html.set_component_skin(chip)
     return chip
 
-  def nav(self, width=(100, '%'), height=(100, '%'), options=None, profile: Union[dict, bool] = None, helper=None):
+  def nav(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
+          options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -503,11 +514,11 @@ class Panels:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param options: Optional. A dictionary with the components properties.
     :param profile: Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param helper: Optional. A tooltip helper.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -537,16 +548,16 @@ class Panels:
 
     Attributes:
     ----------
-    :param components: List. Optional. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. Optional. The text-align property within this component (Default center).
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: Optional. The text-align property within this component (Default center).
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -569,7 +580,6 @@ class Panels:
     html_slide.icon.options.managed = False
     html_slide.icon.style.css.float = "right"
     html_slide.icon.style.css.margin_top = 3
-    #html_slide.icon.style.css.margin_right = 2
     html_slide.style.css.border = "1px solid %s" % self.page.theme.greys[2]
     html_slide._vals[1].style.css.padding = 5
     html_slide.title.add(html_slide.icon)
@@ -596,7 +606,7 @@ class Slidings:
   def __init__(self, ui):
     self.page = ui.page
 
-  def right(self, components, title, color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
+  def right(self, components: List[html.Html.Html], title: str = "", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
     Description:
@@ -610,16 +620,16 @@ class Slidings:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. The text-align property within this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: Optional. The text-align property within this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     dfl_options = {"icon_position": "right"}
     if options is not None:
@@ -634,8 +644,9 @@ class Slidings:
     html.Html.set_component_skin(sliding)
     return sliding
 
-  def left(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
-           helper=None, options=None, profile=False):
+  def left(self, components: List[html.Html.Html], title: str = "", color: str = None, align: str = "center",
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -648,16 +659,16 @@ class Slidings:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. The text-align property within this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: The text-align property within this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     sliding = self.page.ui.panels.sliding(components, color=color, title=title, align=align, width=width, height=height,
                                           html_code=html_code, helper=helper, options=options, profile=profile)
@@ -668,8 +679,9 @@ class Slidings:
     html.Html.set_component_skin(sliding)
     return sliding
 
-  def plus(self, components, title="", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
-           helper=None, options=None, profile=False):
+  def plus(self, components, title: str = "", color: str = None, align: str = "center",
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -682,16 +694,16 @@ class Slidings:
 
     Attributes:
     ----------
-    :param components: List. The different HTML objects to be added to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. The text-align property within this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: Optional. The text-align property within this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     html_slide = self.page.ui.panels.sliding(
       components, title, color, align, width, height, html_code, helper, options, profile)

@@ -128,7 +128,6 @@ class IconModel:
     """
     self.page.ext_packages.update(imports)
     self.page.imports.reload()
-    self.family = 'bootstrap-icons'   # Set the default family for icons to rely on Bootstrap
-    _ICON_MAPPINGS[self.family] = imports
+    _ICON_MAPPINGS[alias] = imports
     if set_default:
       self._family = alias

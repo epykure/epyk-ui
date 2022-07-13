@@ -15,7 +15,7 @@ class Inputs:
     self.page = ui.page
 
   def d_text(self, text: str = "", placeholder: str = '',
-             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = "",
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
              html_code: str = None, options: dict = None, attrs: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
@@ -54,7 +54,7 @@ class Inputs:
       html_input.tooltip(tooltip)
     return html_input
 
-  def d_radio(self, flag: bool = False, group_name: str = None, placeholder: str = '', tooltip: str = "",
+  def d_radio(self, flag: bool = False, group_name: str = None, placeholder: str = '', tooltip: str = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
               options: dict = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRadio:
@@ -95,7 +95,7 @@ class Inputs:
 
   def d_search(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-               attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+               attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -136,7 +136,7 @@ class Inputs:
 
   def password(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-               attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+               attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -172,7 +172,7 @@ class Inputs:
 
   def file(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-           attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+           attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Input file object.
 
@@ -210,7 +210,7 @@ class Inputs:
 
   def d_time(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (139, "px"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-             attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputTime:
+             attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputTime:
     """
     Description:
     ------------
@@ -247,7 +247,7 @@ class Inputs:
 
   def d_date(self, text: str, placeholder: str = '', width: types.SIZE_TYPE = (140, "px"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-             attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputDate:
+             attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputDate:
     """
     Description:
     ------------
@@ -281,7 +281,7 @@ class Inputs:
 
   def d_int(self, value: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-            attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputInteger:
+            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputInteger:
     """
     Description:
     ------------
@@ -316,7 +316,7 @@ class Inputs:
     return html_integer
 
   def d_range(self, value, min_val: float = 0, max_val: float = 100, step: float = 1, placeholder: str = '',
-              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = "",
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
               html_code: str = None, options: dict = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRange:
     """
@@ -375,7 +375,7 @@ class Inputs:
     return html_output
 
   def textarea(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), rows: int = 5, placeholder: str = None,
-               background_color: str = None, html_code: str = None, options: dict = None, tooltip: str = "",
+               background_color: str = None, html_code: str = None, options: dict = None, tooltip: str = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.TextArea:
     """
     Description:
@@ -416,7 +416,7 @@ class Inputs:
 
   def autocomplete(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
                    height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-                   attrs: dict = None, tooltip: str = "",
+                   attrs: dict = None, tooltip: str = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlInput.AutoComplete:
     """
     Description:
@@ -466,7 +466,7 @@ class Inputs:
 
   def input(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-            attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -505,7 +505,7 @@ class Inputs:
 
   def left(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-           attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+           attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -546,7 +546,7 @@ class Inputs:
 
   def hidden(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-             attrs: dict = None, tooltip: str = "", profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+             attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -625,7 +625,7 @@ class Inputs:
 
   def radio(self, flag: bool, label: str = None, group_name: str = None, icon: str = None,
             width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, tooltip: str = "",
+            helper: str = None, options: dict = None, tooltip: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
     """
     Description:
@@ -738,7 +738,7 @@ class Inputs:
 
   def search(self, text: str = '', placeholder: str = 'Search..', align: str = "left", color: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
-             html_code: str = None, tooltip: str = '', extensible: bool = False, options: dict = None,
+             html_code: str = None, tooltip: str = None, extensible: bool = False, options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Search:
     """
     Description:
@@ -792,7 +792,7 @@ class Inputs:
     return html_s
 
   def label(self, label: str, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = "",
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
             options: dict = None, attrs: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:

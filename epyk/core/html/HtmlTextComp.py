@@ -27,7 +27,7 @@ class UpDown(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, 'accounting')
   _option_cls = OptText.OptionsNumberMoves
 
-  def __init__(self, page: primitives.PageModel, record: list, components: List[Html.Html], color: Optional[str],
+  def __init__(self, page: primitives.PageModel, record: dict, components: List[Html.Html], color: Optional[str],
                label: Optional[str], width: tuple, height: tuple, options: Optional[dict], helper: Optional[str],
                profile: Optional[Union[bool, dict]]):
     if record is None:

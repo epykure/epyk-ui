@@ -12,7 +12,9 @@ class Forms:
   def __init__(self, ui):
     self.page = ui.page
 
-  def new(self, components: List[html.Html.Html] = None, helper: Optional[str] = None):
+  def new(self,
+          components: List[html.Html.Html] = None,
+          helper: Optional[str] = None) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -72,7 +74,11 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def dates(self, html_code: str, profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None):
+  def dates(self,
+            html_code: str,
+            profile: types.PROFILE_TYPE = None,
+            options: dict = None,
+            helper: str = None) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -111,7 +117,8 @@ class Forms:
     return form
 
   def input(self, html_code: str, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-            profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None):
+            profile: types.PROFILE_TYPE = None, options: dict = None,
+            helper: str = None) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -146,7 +153,7 @@ class Forms:
     return form
 
   def inputs(self, record: List[dict], helper: str = None, html_code: str = None, options: dict = None,
-             profile: types.PROFILE_TYPE = False):
+             profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
@@ -193,7 +200,7 @@ class Forms:
   def subscribe(self, value: str = "", placeholder: str = "Enter email address",
                 button: Union[html.Html.Html, str] = "Subscribe",
                 width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
-                profile: types.PROFILE_TYPE = False):
+                profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Div:
     """
     Description:
     ------------

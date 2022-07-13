@@ -1,5 +1,6 @@
 
 import json
+import sys
 import collections
 import time
 import inspect
@@ -281,20 +282,24 @@ class Report:
   ext_packages = None    # For extension modules
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
-  def __init__(self, inputs: dict = None):
+  def __init__(self, inputs: dict = None, script: str = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param inputs: The global input data for the defined components in the page.
+    :param inputs: Optional. The global input data for the defined components in the page.
       Passing data for a given component with an htmlCode will override the value.
+    :param script: Optional. The origin script for building the page (for investigation purposes)
     """
     self._css = {}
     self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
     module = inspect.getmodule(inspect.stack()[1][0])
+    if script is None:
+      frame = inspect.stack()[1]
+      script = inspect.getmodule(frame[0]).__file__
     self._props = {'js': {
           # JavaScript framework triggered after the HTML. Impact the entire page
           'onReady': OrderedSet(),
@@ -313,7 +318,7 @@ class Report:
           'text': [],
         },
         # Used on the Python side to make some decisions
-        'context': {'framework': 'JS', "script": module.__file__},
+        'context': {'framework': 'JS', "script": script},
         # Add report font-face CSS definition
         'css': {
           "font-face": {},
@@ -343,6 +348,15 @@ class Report:
     Property to the different Page properties JavaScript and CSS.
     """
     return Properties(self._props)
+
+  @property
+  def root__script(self) -> str:
+    """
+    Description:
+    ------------
+    Return the name of the script creating the Page object.
+    """
+    return self._props["context"]["script"]
 
   @property
   def body(self) -> html.Html.Body:

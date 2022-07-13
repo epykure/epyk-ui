@@ -2,6 +2,7 @@
 from epyk.core.html.HtmlSelect import Option
 from epyk.core.html.Html import Component
 from epyk.core.data.DataPy import SelectionBox
+from epyk.fwk.mdc.dom import DomMdcSnackbar
 
 
 class Text(Component):
@@ -17,6 +18,18 @@ class Text(Component):
 '''
 
   _js__builder__ = "window[htmlObj.id] = new mdc.textField.MDCTextField(htmlObj)"
+
+
+class Button(Component):
+  css_classes = ["mdc-button"]
+  name = "Material Design Button"
+  str_repr = '''
+<button {attrs}>
+   <span class="mdc-button__ripple"></span>
+   <span class="mdc-button__label">Text Button</span>
+</button>
+'''
+  _js__builder__ = "console.log(mdc)"
 
 
 class Check(Component):
@@ -208,7 +221,18 @@ class Snackbar(Component):
   </div>
 </aside>
 '''
-  _js__builder__ = "window[htmlObj.id] = new mdc.snackbar.MDCSnackbar(htmlObj)"
+  _js__builder__ = "window[htmlObj.id] = new mdc.snackbar.MDCSnackbar(htmlObj); console.log(window[htmlObj.id])"
+
+  @property
+  def dom(self) -> DomMdcSnackbar.DomSnackbar:
+    """
+    Description:
+    -----------
+    The common DOM properties.
+    """
+    if self._dom is None:
+      self._dom = DomMdcSnackbar.DomSnackbar(component=self, page=self.page)
+    return self._dom
 
 
 class Chip(Component):

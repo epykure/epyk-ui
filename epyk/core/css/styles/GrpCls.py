@@ -311,8 +311,6 @@ class ClassHtml:
     Description:
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
-
-    :rtype: Commons
     """
     if self._css_struct is None:
       self._css_struct = Commons(self.component)
@@ -325,8 +323,6 @@ class ClassHtml:
     ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
-
-    :rtype: Classes.CatalogDiv.CatalogDiv
     """
     if self._css_class is None:
       self._css_class = Classes.CatalogDiv.CatalogDiv(
@@ -397,8 +393,6 @@ class ClassHtml:
     Description:
     ------------
     Add animation effect to the component based either on a bespoke definition or a predefined one.
-
-    :rtype: Effects.Effects
     """
     if self.__cls_effects is None:
       self.__cls_effects = Effects.Effects(self.page, self.component)
@@ -410,8 +404,6 @@ class ClassHtml:
     Description:
     ------------
     Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
-
-    :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.page, self.classList)
@@ -424,8 +416,6 @@ class ClassHtml:
     ------------
     Property to get access to the catalog of CSS classes to be loaded in the page.
     Those classes will not be automatically added to any HTML tag and they need to be added manually.
-
-    :rtype: Classes.Catalog
     """
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.page, self.classList)
@@ -443,10 +433,10 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param key: String. The attribute key.
-    :param name: String. The attribute value.
-    :param dflt: String. Optional. The default value for the attribute.
-    :param suffix: String. Optional. The suffix for the attribute.
+    :param key: The attribute key.
+    :param name: The attribute value.
+    :param dflt: Optional. The default value for the attribute.
+    :param suffix: Optional. The suffix for the attribute.
     """
     key_selector = "_%s" % suffix
     if key_selector not in self.__css_virtual:
@@ -469,7 +459,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param str name: The attribute content name.
+    :param name: The attribute content name.
     """
     self.attr("content", name, suffix='before')
 
@@ -481,7 +471,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param dict attrs: The CSS attributes for the mouse hover style.
+    :param attrs: The CSS attributes for the mouse hover style.
     """
     self.selector("hover", attrs)
 
@@ -492,8 +482,8 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param int percent: Optional. The percentage of space on the left and right.
-    :param bool width_adj: Optional. Adjust the width of the component considering this space.
+    :param percent: Optional. The percentage of space on the left and right.
+    :param width_adj: Optional. Adjust the width of the component considering this space.
     """
     if width_adj:
       self.css.margins(left=(percent, '%'), right=(percent, '%'))
@@ -509,15 +499,16 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param str suffix: The selector suffix value.
-    :param dict attrs: The CSS attributes.
+    :param suffix: The selector suffix value.
+    :param attrs: The CSS attributes.
     """
     key_selector = "_%s" % suffix
     if key_selector not in self.__css_virtual:
       self.__css_virtual[key_selector] = {}
     self.__css_virtual[key_selector].update(attrs)
 
-  def add_custom_class(self, css_attrs, classname=None, selector=None, is_class=True, to_component=False):
+  def add_custom_class(self, css_attrs: dict, classname: str = None, selector: str = None,
+                       is_class: bool = True, to_component: bool = False):
     """
     Description:
     -----------
@@ -536,11 +527,11 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param css_attrs: Dictionary. Nested dictionary with the different attributes.
-    :param classname: String. Optional. The classname in the CSS definition.
-    :param selector: String. Optional. The class selector (if it is not a classname using . but a strict definition).
-    :param is_class: Boolean. Optional. Automatically transform the name to a CSS class definition by adding a .
-    :param to_component:
+    :param css_attrs: Nested dictionary with the different attributes.
+    :param classname: Optional. The classname in the CSS definition.
+    :param selector: Optional. The class selector (if it is not a classname using . but a strict definition).
+    :param is_class: Optional. Automatically transform the name to a CSS class definition by adding a .
+    :param to_component: Optional.
     """
     if classname is None:
       classname = "Virtual%s" % abs(hash(str(css_attrs)))
@@ -584,7 +575,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param str classname: The CSS class name to be removed for the component.
+    :param classname: The CSS class name to be removed for the component.
 
     :return: The style property for chaining.
     """
@@ -602,7 +593,9 @@ class ClassHtml:
     ------------
     Clear all the inline CSS styles defined for the component.
 
-    :param persist_attrs: CSS attributes to be maintained
+    Attributes:
+    ----------
+    :param persist_attrs: Optional. CSS attributes to be maintained
 
     :return: self to allow the chaining.
     """
@@ -620,7 +613,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param no_default: Boolean. Optional. Remove the default class.
+    :param no_default: Optional. Remove the default class.
 
     :return: self to allow the chaining.
     """
@@ -647,7 +640,7 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param no_default: Boolean. Optional. Remove the default class.
+    :param no_default: Optional. Remove the default class.
 
     :return: self to allow the chaining.
     """
@@ -664,8 +657,8 @@ class ClassHtml:
 
     Attributes:
     ----------
-    :param str name: The Javascript variable name.
-    :param str js_frg: The Javascript framework corresponding to the Js builder.
+    :param name: The Javascript variable name.
+    :param js_frg: The Javascript framework corresponding to the Js builder.
     """
     self.component.page.properties.css.add_builders("const %s = %s" % (name, js_frg))
     return self
@@ -739,8 +732,6 @@ class ClassHtmlEmpty(ClassHtml):
     Description:
     ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
-
-    :rtype: Empty
     """
     if self._css_struct is None:
       self._css_struct = Empty(self.component, page=self.page)

@@ -13,7 +13,7 @@ class Drawers:
 
   def drawer(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
              options: dict = None, profile: types.PROFILE_TYPE = None,
-             helper: str = None):
+             helper: str = None) -> html.HtmlDrawer.Drawer:
     """
     Description:
     ------------
@@ -49,7 +49,7 @@ class Drawers:
 
   def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
            options: dict = None, profile: types.PROFILE_TYPE = None,
-           helper: str = None):
+           helper: str = None) -> html.HtmlDrawer.Drawer:
     """
     Description:
     ------------
@@ -79,7 +79,7 @@ class Drawers:
 
   def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
             options: dict = None, profile: types.PROFILE_TYPE = None,
-            helper: str = None):
+            helper: str = None) -> html.HtmlDrawer.Drawer:
     """
     Description:
     ------------
@@ -121,7 +121,7 @@ class Drawers:
 
   def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
-            profile: dict = None, helper: str = None):
+            profile: dict = None, helper: str = None) -> html.HtmlDrawer.DrawerMulti:
     """
     Description:
     ------------
@@ -137,7 +137,7 @@ class Drawers:
 
     Attributes:
     ----------
-    :param component: Html component. Object in charge of managing the panel display..
+    :param component: Object in charge of managing the panel display..
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param options: Optional. A dictionary with the components properties.
@@ -155,7 +155,8 @@ class Drawers:
 
   def no_handle(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
                 height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
-                profile: types.PROFILE_TYPE = None, helper: str = None):
+                profile: types.PROFILE_TYPE = None,
+                helper: str = None) -> html.HtmlDrawer.Drawer:
     """
     Description:
     ------------
@@ -171,7 +172,7 @@ class Drawers:
 
     Attributes:
     ----------
-    :param component: Html component. Object in charge of managing the panel display.
+    :param component: Object in charge of managing the panel display.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param options: Optional. A dictionary with the components properties.

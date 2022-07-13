@@ -949,7 +949,7 @@ class Html(primitives.HtmlModel):
         self.checkbox.set_attrs(attrs=attrs)
     return self
 
-  def add_helper(self, text: str, css: Optional[dict] = None):
+  def add_helper(self, text: str, css: dict = None):
     """
     Description:
     -----------
@@ -1235,7 +1235,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,
-                profile: Union[bool, dict] = None, source_event: Optional[str] = None):
+                profile: types.PROFILE_TYPE = None, source_event: str = None):
     """
     Description:
     ------------
@@ -1255,7 +1255,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self.on("dragstart", js_funcs + [
       'event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
 
-  def sticky(self, anchor: primitives.HtmlModel, css_attrs: Optional[dict] = None):
+  def sticky(self, anchor: primitives.HtmlModel, css_attrs: dict = None):
     """
     Description:
     -----------
@@ -1286,7 +1286,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     ])
     return self
 
-  def add_options(self, options: types.OPTION_TYPE = None, name: Optional[str] = None, value: Optional[str] = None):
+  def add_options(self, options: types.OPTION_TYPE = None, name: str = None, value: str = None):
     """
     Description:
     -----------

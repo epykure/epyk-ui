@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core import html
+from epyk.core.py import types
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
 from epyk.core.js import Imports
-from epyk.core.css import Defaults as Defaults_css
 
 
 class Rich:
@@ -13,8 +13,9 @@ class Rich:
   def __init__(self, ui):
     self.page = ui.page
 
-  def delta(self, record=None, components=None, title=None, align="center", width=('auto', ''), height=('auto', ''),
-            options=None, helper=None, profile=None):
+  def delta(self, record=None, components=None, title: str = None, align: str = "center",
+            width: types.SIZE_TYPE = ('auto', ''), height: types.SIZE_TYPE = ('auto', ''),
+            options: types.OPTION_TYPE = None, helper: str = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -32,15 +33,15 @@ class Rich:
 
     Attributes:
     ----------
-    :param record: Dictionary. Optional. The input data for this component.
-    :param components: List. Optional. The HTML components to be added to this component.
-    :param title: String | Component. Optional. A panel title. This will be attached to the title property.
-    :param align: String. The text-align property within this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper: String. Optional. A tooltip helper.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param record: Optional. The input data for this component.
+    :param components: Optional. The HTML components to be added to this component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param align: The text-align property within this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param helper: Optional. A tooltip helper.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -66,8 +67,9 @@ class Rich:
     html.Html.set_component_skin(container)
     return container
 
-  def stars(self, val=None, label=None, color=None, align='left', best=5, html_code=None, helper=None, options=None,
-            profile=None):
+  def stars(self, val=None, label: str = None, color: str = None, align: str = 'left', best: int = 5,
+            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -92,22 +94,23 @@ class Rich:
 
     Attributes:
     ----------
-    :param val: Integer. Optional. Number of stars.
-    :param label: String. Optional. The text of label to be added to the component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param best: Integer. Optional. The max number of stars. Default 5.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param helper: String. Optional. The value to be displayed to the helper icon.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param val: Optional. Number of stars.
+    :param label: Optional. The text of label to be added to the component.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param best: Optional. The max number of stars. Default 5.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param helper: Optional. The value to be displayed to the helper icon.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     html_star = html.HtmlOthers.Stars(self.page, val, label, color, align, best, html_code, helper, options, profile)
     html.Html.set_component_skin(html_star)
     return html_star
 
-  def light(self, color=None, height=(None, 'px'), label=None, align="left", tooltip=None, helper=None, options=None,
-            profile=None):
+  def light(self, color: str = None, height: types.SIZE_TYPE = (None, 'px'), label: str = None, align: str = "left",
+            tooltip: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -127,14 +130,14 @@ class Rich:
 
     Attributes:
     ----------
-    :param color: String. Optional. A hexadecimal color code.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param label: String. Optional. The text of label to be added to the component.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param helper: String. Optional. The filtering properties for this component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary.Optional. A flag to set the component performance storage.
+    :param color: Optional. A hexadecimal color code.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param label: Optional. The text of label to be added to the component.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param helper: Optional. The filtering properties for this component.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     height = Arguments.size(height, unit="px")
     if height is None or height[0] is None:
@@ -148,7 +151,7 @@ class Rich:
     html.Html.set_component_skin(html_traffic)
     return html_traffic
 
-  def info(self, text=None, options=None, profile=None):
+  def info(self, text: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -172,17 +175,18 @@ class Rich:
 
     Attributes:
     ----------
-    :param text: String. Optional. The content of the tooltip.
-    :param profile: Boolean | Dictionary. Optional, A boolean to store the performances for each components.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param text: Optional. The content of the tooltip.
+    :param profile: Optional. A boolean to store the performances for each components.
+    :param options: Optional. Specific Python options available for this component.
     """
     html_help = html.HtmlOthers.Help(self.page, text, width=(10, "px"), profile=profile, options=options or {})
     html.Html.set_component_skin(html_help)
     return html_help
 
-  def countdown(self, day, month, year, hour=0, minute=0, second=0, label=None, icon="fas fa-stopwatch",
-                time_ms_factor=1000, width=(None, '%'), height=(None, 'px'), html_code=None, helper=None,
-                options=None, profile=None):
+  def countdown(self, day, month, year, hour: int = 0, minute: int = 0, second: int = 0, label: str = None,
+                icon: str = "fas fa-stopwatch", time_ms_factor: int = 1000, width: types.SIZE_TYPE = (None, '%'),
+                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
+                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -207,21 +211,21 @@ class Rich:
 
     Attributes:
     ----------
-    :param day: Integer. . Day's number.
-    :param month: Integer. . Month's number.
-    :param year: Integer. Year's number.
-    :param hour: Integer. Optional. Number of hours.
-    :param minute: Integer. Optional. Number of minutes.
-    :param second: Integer. Optional. Number of seconds.
-    :param label: String. Optional. The component label content.
-    :param icon: String. Optional. The component icon content from font-awesome references.
-    :param time_ms_factor: Integer. Optional. The format from the format in milliseconds.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param day: Day's number.
+    :param month: Month's number.
+    :param year: Year's number.
+    :param hour: Optional. Number of hours.
+    :param minute: Optional. Number of minutes.
+    :param second: Optional. Number of seconds.
+    :param label: Optional. The component label content.
+    :param icon: Optional. The component icon content from font-awesome references.
+    :param time_ms_factor: Optional. The format from the format in milliseconds.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. The component identifier code (for both Python and Javascript).
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -231,8 +235,9 @@ class Rich:
     html.Html.set_component_skin(html_cd)
     return html_cd
 
-  def update(self, label=None, color=None, align: str = None, width=("auto", ""), height=(None, "px"), html_code=None,
-             options=None, profile=None):
+  def update(self, label: str = None, color: str = None, align: str = None, width: types.SIZE_TYPE = ("auto", ""),
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -258,14 +263,14 @@ class Rich:
 
     Attributes:
     ----------
-    :param label: String. Optional. The label to be displayed close to the date. Default Last Update.
-    :param color: String. Optional. The color code for the font.
-    :param align: String. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. The component identifier code (for both Python and Javascript).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param label: Optional. The label to be displayed close to the date. Default Last Update.
+    :param color: Optional. The color code for the font.
+    :param align: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. The component identifier code (for both Python and Javascript).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -282,7 +287,8 @@ class Rich:
     html.Html.set_component_skin(component)
     return component
 
-  def console(self, content="", width=(100, "%"), height=(200, "px"), html_code=None, options=None, profile=None):
+  def console(self, content: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (200, "px"),
+              html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -306,12 +312,12 @@ class Rich:
 
     Attributes:
     ----------
-    :param content: String. Optional. The console content.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param content: Optional. The console content.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -324,8 +330,10 @@ class Rich:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def search_input(self, text='', placeholder='Search..', color=None, width=(100, '%'), height=(None, "px"),
-                   html_code=None, tooltip=None, extensible=False, options=None, profile=None):
+  def search_input(self, text: str = '', placeholder: str = 'Search..', color: str = None,
+                   width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, "px"),
+                   html_code: str = None, tooltip: str = None, extensible: bool = False,
+                   options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -348,16 +356,16 @@ class Rich:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param placeholder: String. Optional. The text display when empty.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param extensible: Boolean. Optional. Flag to specify the input style.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param placeholder: Optional. The text display when empty.
+    :param color: Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param extensible: Optional. Flag to specify the input style.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -370,8 +378,9 @@ class Rich:
     html.Html.set_component_skin(html_s)
     return html_s
 
-  def search_results(self, records=None, results_per_page=20, width=(100, "%"), height=(None, "px"), options=None,
-                     profile=None):
+  def search_results(self, records=None, results_per_page: int = 20, width: types.SIZE_TYPE = (100, "%"),
+                     height: types.SIZE_TYPE = (None, "px"), options: types.OPTION_TYPE = None,
+                     profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -388,12 +397,12 @@ class Rich:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param results_per_page: Integer. Optional. The page index.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data.
+    :param results_per_page: Optional. The page index.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -407,8 +416,9 @@ class Rich:
     html.Html.set_component_skin(html_help)
     return html_help
 
-  def composite(self, schema, width=(None, "%"), height=(None, "px"), html_code=None, helper=None, options=None,
-                profile=None):
+  def composite(self, schema, width: types.SIZE_TYPE = (None, "%"), height: types.PROFILE_TYPE = (None, "px"),
+                html_code: str = None, helper: str = None, options: dict = None,
+                profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -429,13 +439,13 @@ class Rich:
 
     Attributes:
     ----------
-    :param schema: Dictionary. The component nested structure.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. The value to be displayed to the helper icon.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param schema: The component nested structure.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param helper: Optional. The value to be displayed to the helper icon.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -445,7 +455,8 @@ class Rich:
     html.Html.set_component_skin(html_help)
     return html_help
 
-  def status(self, status, width=(None, "%"), height=(None, "px"), html_code=None, options=None, profile=None):
+  def status(self, status: str, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
+             html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -458,11 +469,11 @@ class Rich:
     Attributes:
     ----------
     :param status:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -477,8 +488,9 @@ class Rich:
     html_help.style.css.inline()
     return html_help
 
-  def markdown(self, text="", width=("calc(100% - 10px)", ''), height=("auto", ''), html_code=None, options=None,
-               profile=None):
+  def markdown(self, text: str = "", width: types.SIZE_TYPE = ("calc(100% - 10px)", ''),
+               height: types.SIZE_TYPE = ("auto", ''), html_code: str = None, options: types.OPTION_TYPE = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -500,12 +512,12 @@ class Rich:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -519,7 +531,8 @@ class Rich:
     html.Html.set_component_skin(md)
     return md
 
-  def adv_text(self, section, title, content, background="", options=None, profile=None):
+  def adv_text(self, section, title, content, background: str = "",
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -535,8 +548,8 @@ class Rich:
     :param title: String | Component. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param background:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     container = self.page.ui.div(options=options, profile=profile)
     if section is not None:
@@ -571,8 +584,9 @@ class Rich:
     html.Html.set_component_skin(container)
     return container
 
-  def color(self, code, content="data copied to clipboard", width=(20, 'px'), height=(20, 'px'), options=None,
-            profile=None):
+  def color(self, code, content: str = "data copied to clipboard", width: types.SIZE_TYPE = (20, 'px'),
+            height: types.SIZE_TYPE = (20, 'px'), options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -586,11 +600,11 @@ class Rich:
     Attributes:
     ----------
     :param code: Tuple or String. The color code.
-    :param content:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param content: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     dflt_options = {"type": 'rgb', 'popup_timers': 1000}
     if options is not None:

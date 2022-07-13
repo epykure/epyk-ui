@@ -3,7 +3,6 @@
 
 import datetime
 
-from typing import Union
 from epyk.core import html
 from epyk.core.py import types
 from epyk.interfaces import Arguments
@@ -119,7 +118,7 @@ class Calendar:
     :param text: Optional. The value to be displayed to the timer
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param align: The text-align property within this component
+    :param align: Optional. The text-align property within this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
@@ -326,8 +325,8 @@ class Calendar:
     :param task:
     :param start: Date format YYYYMMDD
     :param end: Date format YYYYMMDD
-    :param details:
-    :param location:
+    :param details: Optional.
+    :param location: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
     :param text: Optional. The value to be displayed to the button.
     :param profile: Optional. A flag to set the component performance storage.
@@ -378,8 +377,8 @@ class Calendar:
     :param task:
     :param start:
     :param end:
-    :param details:
-    :param location:
+    :param details: Optional.
+    :param location: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
     :param text: Optional. The value to be displayed to the button.
     :param profile: Optional. A flag to set the component performance storage.
@@ -428,8 +427,8 @@ class Calendar:
     Attributes:
     ----------
     :param text: Optional. The value to be displayed to the button.
-    :param value:
-    :param group:
+    :param value: Optional.
+    :param group: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
