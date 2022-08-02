@@ -298,7 +298,7 @@ class Calendar:
     return component
 
   def google(self, task, start: str, end: str, details=None, location=None, icon: str = "google_plus",
-             text: str = "Add to Google Calendar", options: dict = None, profile: types.PROFILE_TYPE = None):
+             text: str = "Add to Google Calendar", options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
 from epyk.core.css.styles.classes import CssStylesLoadings
 from epyk.core.py import types
@@ -22,10 +24,10 @@ class Animations:
 
     Attributes:
     ----------
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.page.ui.div(html_code=html_code, height=height, options=options, profile=profile)
     component.style.css.background_color = "#ddd"

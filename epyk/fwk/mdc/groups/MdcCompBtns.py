@@ -38,7 +38,7 @@ class Components:
     """
 
   def check(self, flag: bool = False, tooltip: str = None, width: types.SIZE_TYPE = (None, "px"),
-            height: types.SIZE_TYPE =(None, "px"), label: str = None, html_code: str = None,
+            height: types.SIZE_TYPE = (None, "px"), label: str = None, html_code: str = None,
             profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
     Description:

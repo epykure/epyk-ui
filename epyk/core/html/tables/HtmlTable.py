@@ -288,8 +288,8 @@ class Bespoke(Html.Html):
     Attributes:
     ----------
     :param row: The row to be added to the table
-    :param missing: The data to put when a cell is missing
-    :param is_header: Boolean. Optional.
+    :param missing: Optional. The data to put when a cell is missing
+    :param is_header: Optional.
 
     :return: The python table
     """
@@ -322,12 +322,12 @@ class Excel(Html.Html):
     self.add_title(title, options={'content_table': False})
 
   _js__builder__ = '''
-      var tr = $('<tr></tr>');
-      jsStyles.header.forEach(function(rec){tr.append("<th>"+ rec +"</th>")});
-      htmlObj.append(tr); var tr = $('<tr></tr>'); var tbody = $('<tbody></tbody>');
-      jsStyles.header.forEach(function(rec){tr.append("<td><input type='text' style='"+ jsStyles.cellwidth +"'/></td>")});
-      tbody.append(tr);htmlObj.append(tbody)
-      '''
+var tr = $('<tr></tr>');
+jsStyles.header.forEach(function(rec){tr.append("<th>"+ rec +"</th>")});
+htmlObj.append(tr); var tr = $('<tr></tr>'); var tbody = $('<tbody></tbody>');
+jsStyles.header.forEach(function(rec){tr.append("<td><input type='text' style='"+ jsStyles.cellwidth +"'/></td>")});
+tbody.append(tr);htmlObj.append(tbody)
+'''
 
   def __str__(self):
     self._browser_data['component_ready'].append('''

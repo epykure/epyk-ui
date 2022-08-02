@@ -16,7 +16,7 @@ class Images:
   def img(self, image: str = None, path: str = None, width: types.SIZE_TYPE = (100, "%"),
           height: types.SIZE_TYPE = (None, "px"), align: str = "center", html_code: str = None,
           profile: types.PROFILE_TYPE = None, tooltip: str = None,
-          options: dict = None) -> html.HtmlImage.Image:
+          options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
     """
     Description:
     ------------
@@ -47,15 +47,15 @@ class Images:
 
     Attributes:
     ----------
-    :param image: Optional. The image file name.
-    :param path: Optional. Optional. TString. The image file path.
-    :param width: Optional. Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Optional. Tuple. The component height in pixel or percentage.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. Specific Python options available for this component.
+    :param image: Optional. The image file name
+    :param path: Optional. Optional. The image file path
+    :param width: Optional. Optional. The component width in pixel or percentage
+    :param height: Optional. Optional. The component height in pixel or percentage
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -74,7 +74,7 @@ class Images:
   def figure(self, image: str = None, caption: str = None, path: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"), align: str = "center",
              html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None,
-             options: dict = None) -> html.HtmlImage.Figure:
+             options: types.OPTION_TYPE = None) -> html.HtmlImage.Figure:
     """
     Description:
     ------------
@@ -94,16 +94,16 @@ class Images:
 
     Attributes:
     ----------
-    :param image: Optional. The url path of the image.
+    :param image: Optional. The url path of the image
     :param caption: Optional.
-    :param path: Optional. String. The image file path.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. Specific Python options available for this component.
+    :param path: Optional. The image file path
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -121,9 +121,10 @@ class Images:
     html.Html.set_component_skin(container)
     return container
 
-  def container(self, components: List[html.Html.Html], max_width: types.SIZE_TYPE = (900, 'px'), align: str = "center",
+  def container(self, components: List[html.Html.Html], max_width: types.SIZE_TYPE = (900, 'px'),
+                align: str = "center",
                 profile: types.PROFILE_TYPE = None,
-                options: dict = None) -> html.HtmlContainer.Div:
+                options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -137,11 +138,11 @@ class Images:
 
     Attributes:
     ----------
-    :param components: List of HTML Component. internal components.
-    :param max_width: Optional. The maximum width for this container.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param components: List of HTML Component. internal components
+    :param max_width: Optional. The maximum width for this container
+    :param align: Optional. A string with the horizontal position of the component
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     max_width = Arguments.size(max_width, unit="%")
     container = self.page.ui.div(components, profile=profile, options=options)
@@ -155,7 +156,7 @@ class Images:
   def background(self, url: str, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (300, "px"),
                  size: str = "cover", margin: int = 0, align: str = "center",
                  html_code: str = None, position: str = "middle", profile: types.PROFILE_TYPE = None,
-                 options: dict = None) -> html.HtmlContainer.Div:
+                 options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -169,17 +170,17 @@ class Images:
 
     Attributes:
     ----------
-    :param url: Optional. The link to the gallery.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param url: Optional. The link to the gallery
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param size: Optional. The type of background in
     :param margin: Optional. The CSS margin properties are used to create space around elements, outside of any defined
-      borders.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param position: Optional. A string with the vertical position of the component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+      borders
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param position: Optional. A string with the vertical position of the component
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     div = self.page.ui.div(
       height=Arguments.size(height, "px"), width=Arguments.size(width), html_code=html_code, options=options,
@@ -195,7 +196,7 @@ class Images:
   def wallpaper(self, url: str = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (100, "%"),
                 size: str = "cover", margin: int = 0, align: str = "center",
                 html_code: str = None, position: str = "middle", profile: types.PROFILE_TYPE = None,
-                options: dict = None) -> html.HtmlImage.Background:
+                options: types.OPTION_TYPE = None) -> html.HtmlImage.Background:
     """
     Description:
     ------------
@@ -208,17 +209,17 @@ class Images:
 
     Attributes:
     ----------
-    :param url: Optional. The link to the gallery.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
+    :param url: Optional. The link to the gallery
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
     :param size: Optional. The type of background in
     :param margin: Optional. The CSS margin properties are used to create space around elements,
-                            outside of any defined borders.
-    :param align: Optional. The text-align property within this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param position: Optional. The position compared to the main component tag.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+      outside of any defined borders
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param position: Optional. The position compared to the main component tag
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     options = options or {}
     div = html.HtmlImage.Background(self.page, [], label=None, color=None, width=Arguments.size(width),
@@ -238,7 +239,7 @@ class Images:
 
   def logo(self, url: str, width: types.SIZE_TYPE = (160, "px"), height: types.SIZE_TYPE = (60, "px"),
            top: types.SIZE_TYPE = (16, "px"), left: types.SIZE_TYPE = (16, "px"), profile: types.PROFILE_TYPE = None,
-           options: dict = None) -> html.HtmlContainer.Div:
+           options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -252,13 +253,13 @@ class Images:
 
     Attributes:
     ----------
-    :param url: Optional. The link to the gallery.
-    :param width: Optional. The component width in pixel or percentage.
-    :param height: Optional. The component height in pixel or percentage.
-    :param top: Optional. A tuple with the integer for the component's distance to the top of the page.
-    :param left: Optional. A tuple with the integer for the component's distance to the left of the page.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param url: Optional. The link to the gallery
+    :param width: Optional. The component width in pixel or percentage
+    :param height: Optional. The component height in pixel or percentage
+    :param top: Optional. A tuple with the integer for the component's distance to the top of the page
+    :param left: Optional. A tuple with the integer for the component's distance to the left of the page
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     top = Arguments.size(top, 'px')
     left = Arguments.size(left, 'px')
@@ -277,7 +278,7 @@ class Images:
 
   def youtube(self, video_id: str = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
               align: str = "center", html_code: str = None, profile: types.PROFILE_TYPE = None,
-              options: dict = None) -> html.HtmlImage.Image:
+              options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
     """
     Description:
     ------------
@@ -291,13 +292,13 @@ class Images:
 
     Attributes:
     ----------
-    :param video_id: Optional. The youtube video ID.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param video_id: Optional. The youtube video ID
+    :param width: Optional. The component width in pixel or percentage
+    :param height: Optional. The component height in pixel or percentage
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.img(
       "0.jpg", "http://img.youtube.com/vi/%s" % video_id, Arguments.size(width),
@@ -308,7 +309,7 @@ class Images:
   def circular(self, image: str = None, path: str = None, width: types.SIZE_TYPE = (200, "px"),
                height: types.SIZE_TYPE = (200, "px"), align: str = "center", html_code: str = None,
                profile: types.PROFILE_TYPE = None,
-               options: dict = None) -> html.HtmlImage.Image:
+               options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
     """
     Description:
     ------------
@@ -339,14 +340,14 @@ class Images:
 
     Attributes:
     ----------
-    :param image: Optional. The image file name.
-    :param path: Optional. String. The image file path.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param image: Optional. The image file name
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -364,7 +365,7 @@ class Images:
   def avatar(self, text: str = "", image: str = "", path: str = None, status: str = None,
              width: types.SIZE_TYPE = (30, "px"), height: types.SIZE_TYPE = (30, "px"), align: str = "center",
              html_code: str = None, profile: types.PROFILE_TYPE = None,
-             options: dict = None) -> html.HtmlContainer.Div:
+             options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -389,16 +390,16 @@ class Images:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param image: Optional. The url of the image.
-    :param path: Optional. String. The image file path.
-    :param status: Optional. The avatar status code. Default no status.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param text: Optional. The value to be displayed to the component
+    :param image: Optional. The url of the image
+    :param path: Optional. String. The image file path
+    :param status: Optional. The avatar status code. Default no status
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -456,7 +457,7 @@ class Images:
   def section(self, image: str, name: str, title: str, text: str, url: str = None, path: str = None,
               width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
               profile: types.PROFILE_TYPE = None,
-              options: dict = None) -> html.HtmlContainer.Div:
+              options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -478,16 +479,16 @@ class Images:
 
     Attributes:
     ----------
-    :param image: The url of the image.
-    :param name:  The name of the image.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param text: Optional. The value to be displayed to the component.
-    :param url: Optional. The link to the gallery.
-    :param path: Optional. The image file path.
-    :param width: Optional. The component width in pixel or percentage.
-    :param height: Optional. The component height in pixel or percentage.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param image: The url of the image
+    :param name: The name of the image
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param text: Optional. The value to be displayed to the component
+    :param url: Optional. The link to the gallery
+    :param path: Optional. The image file path
+    :param width: Optional. The component width in pixel or percentage
+    :param height: Optional. The component height in pixel or percentage
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -511,7 +512,7 @@ class Images:
 
   def animated(self, image: str = "", text: str = "", title: str = "", url: str = None, path: str = None,
                width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
-               html_code: str = None, options: dict = None,
+               html_code: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlImage.AnimatedImage:
     """
     Description:
@@ -537,16 +538,16 @@ class Images:
 
     Attributes:
     ----------
-    :param image: Optional. The image file name.
-    :param text: Optional. String. The image file path.
-    :param title: Optional. The image title displayed in to the mask on mouse hover the container.
-    :param url: Optional. The link to the gallery.
-    :param path: Optional. String. The image file path.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel or percentage.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param image: Optional. The image file name
+    :param text: Optional. String. The image file path
+    :param title: Optional. The image title displayed in to the mask on mouse hover the container
+    :param url: Optional. The link to the gallery
+    :param path: Optional. String. The image file path
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel or percentage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -556,7 +557,7 @@ class Images:
     return component
 
   def carousel(self, images: list = None, path: str = None, selected: int = 0, width: types.SIZE_TYPE = (100, "%"),
-               height: types.SIZE_TYPE = (300, "px"), options: dict = None,
+               height: types.SIZE_TYPE = (300, "px"), options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlImage.ImgCarousel:
     """
     Description:
@@ -586,13 +587,13 @@ class Images:
 
     Attributes:
     ----------
-    :param images: Optional. With the different picture file names.
-    :param path: Optional. The common path for the pictures.
-    :param width: Optional. Tuple. The component width in pixel or percentage.
-    :param height: Optional. Tuple. The component height in pixel.
-    :param selected: Optional. The selected item index.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param images: Optional. With the different picture file names
+    :param path: Optional. The common path for the pictures
+    :param width: Optional. Tuple. The component width in pixel or percentage
+    :param height: Optional. Tuple. The component height in pixel
+    :param selected: Optional. The selected item index
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width)
     height = Arguments.size(height, "px")
@@ -604,7 +605,7 @@ class Images:
     html.Html.set_component_skin(component)
     return component
 
-  def emoji(self, symbol: str = None, top: types.SIZE_TYPE = (20, 'px'), options: dict = None,
+  def emoji(self, symbol: str = None, top: types.SIZE_TYPE = (20, 'px'), options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Emoji:
     """
     Description:
@@ -631,10 +632,10 @@ class Images:
 
     Attributes:
     ----------
-    :param symbol: Optional. The emoji code.
-    :param top: Optional. The number of pixel from the top of the page.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param symbol: Optional. The emoji code
+    :param top: Optional. The number of pixel from the top of the page
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     top = Arguments.size(top, "px")
     component = html.HtmlImage.Emoji(self.page, symbol, top, options, profile)
@@ -643,7 +644,7 @@ class Images:
 
   def icon(self, icon: str = None, family: str = None, width: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, height: types.SIZE_TYPE = (None, "px"), color: str = None,
-           tooltip: str = None, align: str = "left", options: dict = None,
+           tooltip: str = None, align: str = "left", options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Icon:
     """
     Description:
@@ -669,15 +670,15 @@ class Images:
     Attributes:
     ----------
     :param icon: Optional. The component icon content from font-awesome references
-    :param family: Optional. The Icon framework reference.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param align: Optional. The text-align property within this component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param family: Optional. The Icon framework reference
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The font color in the component. Default inherit
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -699,7 +700,7 @@ class Images:
 
   def badge(self, text: str = "", label: str = None, icon: str = None, width: types.SIZE_TYPE = (25, "px"),
             height: types.SIZE_TYPE = (25, "px"), background_color: str = None,
-            color: str = None, url: str = None, tooltip: str = None, options: dict = None,
+            color: str = None, url: str = None, tooltip: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Badge:
     """
     Description:
@@ -734,17 +735,17 @@ class Images:
 
     Attributes:
     ----------
-    :param text: Optional. The content of the badge.
-    :param label: Optional. The label to display close to the badge.
-    :param icon: Optional. A String with the icon to display from font-awesome.
-    :param background_color: Optional. The background color of the badge.
-    :param color: Optional. The text color of the badge.
-    :param url: Optional. The underlying url link for the badge.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param tooltip: String. Optional, The text to display in the tooltip.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A boolean to store the performances for each components.
+    :param text: Optional. The content of the badge
+    :param label: Optional. The label to display close to the badge
+    :param icon: Optional. A String with the icon to display from font-awesome
+    :param background_color: Optional. The background color of the badge
+    :param color: Optional. The text color of the badge
+    :param url: Optional. The underlying url link for the badge
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param tooltip: String. Optional, The text to display in the tooltip
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A boolean to store the performances for each components
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -762,7 +763,7 @@ class Images:
     return component
 
   def color(self, code: str, color: str = None, width: types.SIZE_TYPE = (110, 'px'),
-            height: types.SIZE_TYPE = (25, 'px'), options: dict = None, helper: str = None,
+            height: types.SIZE_TYPE = (25, 'px'), options: types.OPTION_TYPE = None, helper: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
@@ -784,13 +785,13 @@ class Images:
 
     Attributes:
     ----------
-    :param code:  The color code.
-    :param color: Optional. The font color.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param code: The color code
+    :param color: Optional. The font color
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -805,7 +806,8 @@ class Images:
     return div
 
   def gallery(self, images: List[Union[dict, html.Html.Html]] = None, columns: int = 6,
-              width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''), options: dict = None,
+              width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''),
+              options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
     Description:
@@ -826,12 +828,12 @@ class Images:
 
     Attributes:
     ----------
-    :param images: Optional. The list with the pictures.
-    :param columns: Optional. The number of column for the mosaic component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param images: Optional. The list with the pictures
+    :param columns: Optional. The number of column for the mosaic component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dflt_options = {}
     if options is not None:

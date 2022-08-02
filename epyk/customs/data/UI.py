@@ -489,8 +489,9 @@ class Gallery:
       img.style.css.background_attachment = "fixed"
     return img
 
-  def link(self, img, url="#", path=None, width=(100, "%"), height=(None, "px"), align="center", options=None,
-           html_code=None, profile=None):
+  def link(self, img: str, url: str = "#", path: str = None, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (None, "px"), align: str = "center", options: types.OPTION_TYPE = None,
+           html_code: str = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -505,21 +506,17 @@ class Gallery:
 
     Related Pages:
 
-    Underlying HTML Objects:
-
-    Templates:
-
     Attributes:
     ----------
     :param img:
-    :param url: String. Optional. The url link.
-    :param path: String. Optional. The picture path.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param url: Optional. The url link.
+    :param path: Optional. The picture path.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     img = self.page.ui.images.img(
       img, path=path, width=width, height=height, align=align, html_code=html_code, options=options, profile=profile)
@@ -528,8 +525,9 @@ class Gallery:
     img.goto(url)
     return img
 
-  def overlay(self, img, text=None, path=None, width=(100, "%"), height=(None, "px"), align="center", options=None,
-              profile=None):
+  def overlay(self, img: str, text: str = None, path: str = None, width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (None, "px"), align: str = "center", options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -553,13 +551,13 @@ class Gallery:
     Attributes:
     ----------
     :param img:
-    :param text: String. Optional. The content.
-    :param path: String. Optional. The picture path.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The content.
+    :param path: Optional. The picture path.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     options = options or {}
     container = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
@@ -653,8 +651,11 @@ class Gallery:
     container.add(container.overlay)
     return container
 
-  def wallpaper(self, url, width=(100, "%"), height=(300, "px"), size="cover", margin=0, align="center",
-                position="middle", options=None, profile=False):
+  def wallpaper(self, url: str, width: types.SIZE_TYPE = (100, "%"),
+                height: types.SIZE_TYPE = (300, "px"), size: str = "cover",
+                margin: int = 0, align: str = "center",
+                position: str = "middle", options: types.OPTION_TYPE = None,
+                profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -675,23 +676,24 @@ class Gallery:
 
     Attributes:
     ----------
-    :param url: String. Optional. The url link.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
+    :param url: Optional. The url link.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
     :param size:
     :param margin:
-    :param align: String. The text-align property within this component.
-    :param position: String. Optional. The position compared to the main component tag.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param align: Optional. The text-align property within this component.
+    :param position: Optional. The position compared to the main component tag.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     background = self.page.ui.images.wallpaper(
       url, width=width, height=height, size=size, margin=margin, align=align, position=position, options=options,
       profile=profile)
     return background
 
-  def animated(self, image=None, text="", title="", url=None, path=None, width=(200, "px"), height=(200, "px"),
-               html_code=None, options=None, profile=None):
+  def animated(self, image: str = None, text: str = "", title: str = "", url: str = None, path: str = None,
+               width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
+               html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -710,24 +712,25 @@ class Gallery:
 
     Attributes:
     ----------
-    :param image: String. Optional.
-    :param text: String. Optional. The value to be displayed to the component.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param url: String. Optional. The url link.
-    :param path: String. Optional. The picture path.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param image: Optional.
+    :param text: Optional. The value to be displayed to the component.
+    :param title: Optional. A panel title. This will be attached to the title property.
+    :param url: Optional. The url link.
+    :param path: Optional. The picture path.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     a = self.page.ui.images.animated(
       image, text=text, title=title, url=url, path=path, width=width, height=height, html_code=html_code,
       options=options, profile=profile)
     return a
 
-  def folders(self, path, columns=6, images=None, position="top", width=(None, '%'), height=('auto', ''), options=None,
-              profile=None):
+  def folders(self, path: str, columns: int = 6, images: dict = None, position: str = "top", width: types.SIZE_TYPE = (None, '%'),
+              height: types.SIZE_TYPE = ('auto', ''), options: types.OPTION_TYPE = None,
+              profile: types.OPTION_TYPE = None):
     """
     Description:
     ------------
@@ -746,14 +749,14 @@ class Gallery:
 
     Attributes:
     ----------
-    :param path: String. Optional. The picture path.
+    :param path: Optional. The picture path.
     :param columns:
     :param images:
     :param position:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     dflt_options = {"extensions": ['jpg']}
     if options is not None:
@@ -820,12 +823,13 @@ class Gallery:
     container.options.autoSize = False
     container[1].style.css.top = 30
     container[1].style.css.position = 'sticky'
-
     container[0].attr['class'].add("col-8")
     container[1].attr['class'].add("col-4")
     return container
 
-  def list(self, path, urls=None, width=('auto', ''), height=('auto', ''), options=None, profile=None):
+  def list(self, path: str, urls: dict = None, width: types.SIZE_TYPE = ('auto', ''),
+           height: types.SIZE_TYPE = ('auto', ''), options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -844,12 +848,12 @@ class Gallery:
 
     Attributes:
     ----------
-    :param path: String. Optional. The picture path.
-    :param urls: Dictionary. Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param path: Optional. The picture path.
+    :param urls: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     rows = []
     for f in os.listdir(path):
@@ -868,4 +872,3 @@ class Gallery:
         hr.style.css.width = "calc(100% - 10px)"
         rows.append(self.page.ui.col([div, hr]))
     return self.page.ui.list(rows, width=width, height=height, options=options, profile=profile)
-

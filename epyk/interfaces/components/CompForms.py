@@ -18,7 +18,7 @@ class Forms:
     """
     Description:
     ------------
-    Creates an new empty form.
+    Creates a new empty form.
 
     :tags:
     :categories:
@@ -29,15 +29,15 @@ class Forms:
 
     Attributes:
     ----------
-    :param helper: Optional. A tooltip helper.
-    :param components: Optional. The different HTML objects to be added to the component.
+    :param helper: Optional. A tooltip helper
+    :param components: Optional. The different HTML objects to be added to the component
     """
     form = html.HtmlContainer.Form(self.page, components or [], helper)
     html.Html.set_component_skin(form)
     return form
 
   def date(self, html_code: str = "Current", profile: types.PROFILE_TYPE = None,
-           options: dict = None, helper: Optional[str] = None):
+           options: types.OPTION_TYPE = None, helper: str = None):
     """
     Description:
     ------------
@@ -58,10 +58,10 @@ class Forms:
 
     Attributes:
     ----------
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     date = self.page.ui.fields.today(label=html_code, profile=profile, options=options)
     date.input.set_attrs({"name": html_code.upper()})
@@ -77,12 +77,12 @@ class Forms:
   def dates(self,
             html_code: str,
             profile: types.PROFILE_TYPE = None,
-            options: dict = None,
+            options: types.OPTION_TYPE = None,
             helper: str = None) -> html.HtmlContainer.Form:
     """
     Description:
     ------------
-    Create two datepicker objects for current and previous.
+    Create two DatePicker objects for current and previous.
 
     :tags:
     :categories:
@@ -99,10 +99,10 @@ class Forms:
 
     Attributes:
     ----------
-    :param html_code: An identifier for the prefix of the date components (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param html_code: An identifier for the prefix of the date components (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     date1 = self.page.ui.fields.today(label="%s_current" % html_code, profile=profile, options=options)
     date1.input.set_attrs({"name": date1.htmlCode.upper()})
@@ -117,7 +117,7 @@ class Forms:
     return form
 
   def input(self, html_code: str, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
-            profile: types.PROFILE_TYPE = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
             helper: str = None) -> html.HtmlContainer.Form:
     """
     Description:
@@ -135,14 +135,14 @@ class Forms:
 
     Attributes:
     ----------
-    :param html_code: An identifier for this component (on both Python and Javascript side).
-    :param value: Optional. The value to be displayed to this component. Default empty.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param html_code: An identifier for this component (on both Python and Javascript side)
+    :param value: Optional. The value to be displayed to this component. Default empty
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     inp = self.page.ui.fields.input(
       value=value, label=label, html_code="%s_input" % html_code, placeholder=placeholder, icon=icon, profile=profile,
@@ -152,7 +152,7 @@ class Forms:
     html.Html.set_component_skin(form)
     return form
 
-  def inputs(self, record: List[dict], helper: str = None, html_code: str = None, options: dict = None,
+  def inputs(self, record: List[dict], helper: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Form:
     """
     Description:
@@ -176,11 +176,11 @@ class Forms:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param record: The Python list of dictionaries
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     components = []
     for i, rec in enumerate(record):
@@ -199,7 +199,8 @@ class Forms:
 
   def subscribe(self, value: str = "", placeholder: str = "Enter email address",
                 button: Union[html.Html.Html, str] = "Subscribe",
-                width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+                width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+                options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Div:
     """
     Description:
@@ -212,13 +213,13 @@ class Forms:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param button: Optional. The button component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default empty
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param button: Optional. The button component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     input_component = self.page.ui.input(text=value, placeholder=placeholder)
     input_component.attr["class"].add("form-control")

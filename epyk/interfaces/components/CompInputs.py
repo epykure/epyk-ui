@@ -16,7 +16,7 @@ class Inputs:
 
   def d_text(self, text: str = "", placeholder: str = '',
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
-             html_code: str = None, options: dict = None, attrs: dict = None,
+             html_code: str = None, options: types.OPTION_TYPE = None, attrs: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
@@ -32,15 +32,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -56,7 +56,7 @@ class Inputs:
 
   def d_radio(self, flag: bool = False, group_name: str = None, placeholder: str = '', tooltip: str = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-              options: dict = None, attrs: dict = None,
+              options: types.OPTION_TYPE = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRadio:
     """
     Description:
@@ -73,16 +73,16 @@ class Inputs:
 
     Attributes:
     ----------
-    :param flag: Optional. The component init value.
-    :param group_name: Optional. The radio group name.
-    :param placeholder: Optional. Text visible when the input component is empty.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param flag: Optional. The component init value
+    :param group_name: Optional. The radio group name
+    :param placeholder: Optional. Text visible when the input component is empty
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
     attrs = attrs or {}
@@ -94,8 +94,9 @@ class Inputs:
     return html_input
 
   def d_search(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-               attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
+               attrs: dict = None, tooltip: str = None,
+               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
     ------------
@@ -116,15 +117,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
     html_search = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs, profile)
@@ -135,7 +136,7 @@ class Inputs:
     return html_search
 
   def password(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
                attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
@@ -152,15 +153,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
     attrs.update({"type": 'password'})
@@ -171,11 +172,9 @@ class Inputs:
     return component
 
   def file(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Input file object.
-
     Description:
     ------------
     Input field that will hide characters typed in
@@ -190,15 +189,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
     attrs.update({"type": 'file'})
@@ -209,7 +208,7 @@ class Inputs:
     return component
 
   def d_time(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (139, "px"),
-             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputTime:
     """
     Description:
@@ -226,15 +225,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     dflt_options = {'timeFormat': 'h:i:s'}
     dflt_options.update(options or {})
@@ -246,7 +245,7 @@ class Inputs:
     return html_input_t
 
   def d_date(self, text: str, placeholder: str = '', width: types.SIZE_TYPE = (140, "px"),
-             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputDate:
     """
     Description:
@@ -262,15 +261,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_date = html.HtmlInput.InputDate(
       self.page, text, placeholder, width, height, html_code, options, attrs or {}, profile)
@@ -280,8 +279,9 @@ class Inputs:
     return html_date
 
   def d_int(self, value: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
-            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputInteger:
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
+            attrs: dict = None, tooltip: str = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputInteger:
     """
     Description:
     ------------
@@ -296,15 +296,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param value: Optional. The value of this input number field.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param value: Optional. The value of this input number field
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
     attrs.update({"type": 'number'})
@@ -317,7 +317,7 @@ class Inputs:
 
   def d_range(self, value, min_val: float = 0, max_val: float = 100, step: float = 1, placeholder: str = '',
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
-              html_code: str = None, options: dict = None, attrs: dict = None,
+              html_code: str = None, options: types.OPTION_TYPE = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRange:
     """
     Description:
@@ -327,18 +327,18 @@ class Inputs:
 
     Attributes:
     ----------
-    :param value: Optional. The value of the component.
-    :param min_val: Optional. The minimum value.
-    :param max_val: Optional. The maximum value.
-    :param step: Optional. The step when the handle is moved.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param value: Optional. The value of the component
+    :param min_val: Optional. The minimum value
+    :param max_val: Optional. The maximum value
+    :param step: Optional. The step when the handle is moved
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
     attrs.update({"type": 'range'})
@@ -349,7 +349,7 @@ class Inputs:
       html_range.tooltip(tooltip)
     return html_range
 
-  def _output(self, value: str = "", options: dict = None,
+  def _output(self, value: str = "", options: types.OPTION_TYPE = None,
               profile: Optional[types.PROFILE_TYPE] = False) -> html.HtmlInput.Output:
     """
     Description:
@@ -366,17 +366,17 @@ class Inputs:
 
     Attributes:
     ----------
-    :param value:
-    :param options:
-    :param profile:
+    :param value: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_output = html.HtmlInput.Output(self.page, value, options=options, profile=profile)
     html.Html.set_component_skin(html_output)
     return html_output
 
   def textarea(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), rows: int = 5, placeholder: str = None,
-               background_color: str = None, html_code: str = None, options: dict = None, tooltip: str = None,
-               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.TextArea:
+               background_color: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
+               tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.TextArea:
     """
     Description:
     ------------
@@ -395,15 +395,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text:
-    :param width:
+    :param text: Optional. The value to be displayed to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
     :param rows:
-    :param placeholder:
+    :param placeholder: Optional. Text visible when the input component is empty
     :param background_color:
-    :param html_code:
-    :param options:
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile:
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     dflt_options = {"spellcheck": False, 'selectable': False}
     dflt_options.update(options or {})
@@ -415,7 +415,7 @@ class Inputs:
     return html_t_area
 
   def autocomplete(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
                    attrs: dict = None, tooltip: str = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlInput.AutoComplete:
     """
@@ -440,15 +440,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
     attrs = attrs or {}
@@ -465,7 +465,7 @@ class Inputs:
     return html_input
 
   def input(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
             attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
@@ -488,15 +488,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     component = self.d_text(text=text, placeholder=placeholder, width=width, height=height, tooltip=tooltip,
                             html_code=html_code, options=options, attrs=attrs, profile=profile)
@@ -504,7 +504,7 @@ class Inputs:
     return component
 
   def left(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
@@ -527,15 +527,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     component = self.d_text(text=text, placeholder=placeholder, width=width, height=height, tooltip=tooltip,
                             html_code=html_code, options=options, attrs=attrs, profile=profile)
@@ -545,7 +545,7 @@ class Inputs:
     return component
 
   def hidden(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
-             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: dict = None,
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
     Description:
@@ -563,15 +563,15 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param placeholder: Optional. Text visible when the input component is empty.
+    :param text: Optional. The value to be displayed to the component
+    :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param attrs: Optional. Specific HTML tags to be added to the component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional. Specific HTML tags to be added to the component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
     """
     component = self.d_text(text=text, placeholder=placeholder, width=width, height=height, tooltip=tooltip,
                             html_code=html_code, options=options, attrs=attrs, profile=profile)
@@ -581,7 +581,7 @@ class Inputs:
 
   def checkbox(self, flag: bool, label: str = "", group_name: str = None, width: types.SIZE_TYPE = (None, "%"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-               options: dict = None, attrs: dict = None, tooltip: str = "",
+               options: types.OPTION_TYPE = None, attrs: dict = None, tooltip: str = "",
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Checkbox:
     """
     Description:
@@ -602,15 +602,15 @@ class Inputs:
     Attributes:
     ----------
     :param flag:
-    :param label:
+    :param label: Optional. The text of label to be added to the component
     :param group_name:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
     :param attrs:
     :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile:
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -625,7 +625,7 @@ class Inputs:
 
   def radio(self, flag: bool, label: str = None, group_name: str = None, icon: str = None,
             width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, tooltip: str = None,
+            helper: str = None, options: types.OPTION_TYPE = None, tooltip: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
     """
     Description:
@@ -655,9 +655,9 @@ class Inputs:
     :param icon:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper:
-    :param tooltip: Optional. A string with the value of the tooltip.
+    :param tooltip: Optional. A string with the value of the tooltip
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -669,7 +669,7 @@ class Inputs:
     return component
 
   def editor(self, text: str = "", language: str = 'python', width: types.SIZE_TYPE = (100, "%"),
-             height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: dict = None,
+             height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Editor:
     """
     Description:
@@ -685,11 +685,11 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text:
+    :param text: Optional. The value to be displayed to the componen
     :param language:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -703,7 +703,7 @@ class Inputs:
     return component
 
   def cell(self, text: str = "", language: str = 'python', width: types.SIZE_TYPE = (100, "%"),
-           height: types.SIZE_TYPE = (60, "px"), html_code: str = None, options: dict = None,
+           height: types.SIZE_TYPE = (60, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Cell:
     """
     Description:
@@ -719,11 +719,11 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text:
+    :param text: Optional. The value to be displayed to the componen
     :param language:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -738,7 +738,7 @@ class Inputs:
 
   def search(self, text: str = '', placeholder: str = 'Search..', align: str = "left", color: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
-             html_code: str = None, tooltip: str = None, extensible: bool = False, options: dict = None,
+             html_code: str = None, tooltip: str = None, extensible: bool = False, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Search:
     """
     Description:
@@ -763,14 +763,14 @@ class Inputs:
 
     Attributes:
     ----------
-    :param text:
+    :param text: Optional. The value to be displayed to the componen
     :param placeholder:
-    :param align:
+    :param align: Optional. The text-align property within this component
     :param color:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code:
-    :param tooltip: Optional. A string with the value of the tooltip.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
     :param extensible:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage

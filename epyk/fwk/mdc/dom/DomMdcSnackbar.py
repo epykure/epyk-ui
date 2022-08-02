@@ -17,7 +17,7 @@ class DomSnackbar(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsBoolean.JsBoolean.get("window['%s'].isOpen()" % self.component.htmlCode)
 
-  def open(self):
+  def open(self) -> JsUtils.jsWrap:
     """
     Description:
     -----------

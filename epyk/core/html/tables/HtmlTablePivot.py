@@ -535,7 +535,7 @@ class PivotTable(Html.Html):
 
   def __init__(self, page: primitives.PageModel, records, rows, cols, width, height, html_code, helper,
                options, profile):
-    super(PivotTable, self).__init__(page, records, html_code=html_code, profile=profile,
+    super(PivotTable, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height})
     # Add the extra HTML components
     self.add_helper(helper)

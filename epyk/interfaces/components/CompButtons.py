@@ -27,8 +27,8 @@ class Buttons:
 
     Attributes:
     ----------
-    :param component: The component to be aligned in the page.
-    :param align: The text-align property within this component.
+    :param component: The component to be aligned in the page
+    :param align: The text-align property within this component
     """
     if align == "center":
       component.style.css.margin = "auto"
@@ -41,7 +41,7 @@ class Buttons:
     Description:
     ------------
     Set the background color for the button.
-    By default it will use the theme's color.
+    By default, it will use the theme's color.
 
     Attributes:
     ----------
@@ -289,7 +289,7 @@ class Buttons:
     Description:
     ------------
     Display a button on the page regardless the current layout of components.
-    By default the button will be center on the page.
+    By default, the button will be center on the page.
 
     :tags:
     :categories:
@@ -843,10 +843,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def toggle(self, record=None, label: Optional[str] = None, color: Optional[str] = None,
-             width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "left",
-             html_code: Optional[str] = None, options: Optional[dict] = None,
-             profile: Union[dict, bool] = None) -> html.HtmlContainer.Div:
+  def toggle(self, record=None, label: str = None, color: str = None,
+             width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = "left",
+             html_code: str = None, options: types.OPTION_TYPE = None,
+             profile: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -880,15 +880,15 @@ class Buttons:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the data.
-    :param label: String. Optional. The toggle static label displayed.
-    :param color: String. Optional. String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param record: Optional. The list of dictionaries with the data.
+    :param label: Optional. The toggle static label displayed.
+    :param color: Optional. String. Optional. The font color in the component. Default inherit.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
@@ -897,7 +897,7 @@ class Buttons:
       height = (Defaults_html.LINE_HEIGHT, height[1])
     html_toggle = html.HtmlRadio.Switch(self.page, record, color, width, height, html_code, options or {}, profile)
     if label is not None:
-      label = self.page.ui.texts.label(label, options=options, html_code="%s_label" % html_toggle.htmlCode)
+      label = self.page.ui.texts.label(label, align=align, options=options, html_code="%s_label" % html_toggle.htmlCode)
       html_toggle.style.css.display = "inline-block"
       html_toggle.style.css.padding_top = 2
       component = self.page.ui.div([label, html_toggle], width=width)
@@ -908,10 +908,10 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def checkboxes(self, record=None, color: Optional[str] = None, width: Union[tuple, int] = (100, "%"),
-                 height: Union[tuple, int] = (None, "px"), align: str = 'left',
-                 html_code: Optional[str] = None, tooltip: Optional[str] = '', options: Optional[dict] = None,
-                 profile: Union[dict, bool] = None):
+  def checkboxes(self, record=None, color: str = None, width: types.SIZE_TYPE = (100, "%"),
+                 height: types.SIZE_TYPE = (None, "px"), align: str = 'left',
+                 html_code: str = None, tooltip: str = '', options: types.OPTION_TYPE = None,
+                 profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -945,15 +945,15 @@ class Buttons:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the data.
-    :param color: String. Optional. The color code.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param record: Optional. The list of dictionaries with the data.
+    :param color: Optional. The color code.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. The text-align property within this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -962,13 +962,13 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def check(self, flag: bool = False, tooltip: Optional[str] = None, width: Union[tuple, int] = (None, "px"),
-            height: Union[tuple, int] = (20, "px"), label: Optional[str] = None, icon: Optional[str] = None,
-            html_code: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
+  def check(self, flag: bool = False, tooltip: str = None, width: types.SIZE_TYPE = (None, "px"),
+            height: types.SIZE_TYPE = (20, "px"), label: str = None, icon: str = None,
+            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
     Description:
     ------------
-    Wrapper to the check box button object.
+    Wrapper to the checkbox button object.
 
     :tags:
     :categories:
@@ -990,15 +990,15 @@ class Buttons:
 
     Attributes:
     ----------
-    :param flag: Boolean. Optional. The value of the checkbox. Default False.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param label: String. Optional. The component label content.
-    :param icon: String. Optional. The icon to be used in the check component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param flag: Optional. The value of the checkbox. Default False.
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param label: Optional. The component label content.
+    :param icon: Optional. The icon to be used in the check component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -1009,9 +1009,9 @@ class Buttons:
     return component
 
   def menu(self, record, text: str = "", icon: Optional[Union[str, bool]] = None,
-           width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
-           html_code: Optional[str] = None, tooltip: Optional[str] = None,
-           profile: Union[dict, bool] = None, options: Optional[dict] = None):
+           width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
+           html_code: str = None, tooltip: str = None,
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -1039,15 +1039,15 @@ class Buttons:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the data.
-    :param text: String. Optional. The value to be displayed to the button.
-    :param icon: String. Optional. The icon to be used in the check component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param record: Optional. The list of dictionaries with the data.
+    :param text: Optional. The value to be displayed to the button.
+    :param icon: Optional. The icon to be used in the check component.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param tooltip: Optional. A string with the value of the tooltip.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1057,9 +1057,9 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def store(self, image, url, width: Union[tuple, int] = (7.375, "rem"), height: Union[tuple, int] = (2.375, "rem"),
-            html_code: Optional[str] = None, align: str = "left", options: Optional[dict] = None,
-            profile: Union[dict, bool] = None):
+  def store(self, image, url, width: types.SIZE_TYPE = (7.375, "rem"), height: types.SIZE_TYPE = (2.375, "rem"),
+            html_code: str = None, align: str = "left", options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1085,14 +1085,14 @@ class Buttons:
 
     Attributes:
     ----------
-    :param image: String. The url of the image.
-    :param url: String. The link to the app in the store.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param align: String. The text-align property within this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param image: The url of the image.
+    :param url: The link to the app in the store.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param align: Optional. The text-align property within this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     width = Arguments.size(width, unit="rem")
     height = Arguments.size(height, unit="rem")
@@ -1106,8 +1106,8 @@ class Buttons:
     return component
 
   def live(self, time, js_funcs, icon: Optional[Union[str, bool]] = "fas fa-circle",
-           width: Union[tuple, int] = (15, "px"), height: Union[tuple, int] = (15, "px"), align: str = "left",
-           html_code: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
+           width: types.SIZE_TYPE = (15, "px"), height: types.SIZE_TYPE = (15, "px"), align: str = "left",
+           html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
@@ -1130,13 +1130,13 @@ class Buttons:
     ----------
     :param time: Integer. Interval time in second.
     :param js_funcs: String | List. The Javascript functions.
-    :param icon: String. Optional. The font awesome icon reference.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param icon: Optional. The font awesome icon reference.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param align: Optional. A string with the horizontal position of the component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
     """
     dflt_options = {"started": True}
     if options is not None:
@@ -1241,8 +1241,9 @@ class Buttons:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
-    component = self.button(icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip,
-                      profile=profile, options=options, align=align)
+    component = self.button(
+      icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile,
+      options=options, align=align)
     component.style.css.background = self.page.theme.success.base
     component.style.css.border_color = self.page.theme.success.base
     component.style.css.padding = "0 10px"

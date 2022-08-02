@@ -3,7 +3,7 @@
 
 import datetime
 
-from typing import Union, Optional
+from typing import Optional
 from epyk.core import html
 from epyk.core.py import types
 from epyk.core.html import Defaults
@@ -22,7 +22,7 @@ class Fields:
 
   def text(self, text: str = "", label: str = None, color: str = None, align: str = 'left',
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           tooltip: str = None, options: dict = None, helper: str = None,
+           tooltip: str = None, options: types.OPTION_TYPE = None, helper: str = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
     """
     Description:
@@ -54,17 +54,17 @@ class Fields:
 
     Attributes:
     ----------
-    :param text: Optional. The string value to be displayed in the component.
-    :param label: Optional. The text of label to be added to the component.
-    :param color: Optional. The color of the text.
-    :param align: Optional. The position of the icon in the line (left, right, center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param tuple height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The string value to be displayed in the component
+    :param label: Optional. The text of label to be added to the component
+    :param color: Optional. The color of the text
+    :param align: Optional. The position of the icon in the line (left, right, center)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param tuple height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     if width[0] is None:
@@ -102,7 +102,8 @@ class Fields:
 
   def date(self, value: Optional[str] = None, label: str = None, icon: str = "calendar", color: str = None,
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None) -> html.HtmlDates.DatePicker:
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+           helper: str = None) -> html.HtmlDates.DatePicker:
     """
     Description:
     ------------
@@ -130,16 +131,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to the time component. Default now.
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param value: Optional. The value to be displayed to the time component. Default now
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     if value is None:
         return self.today(label=label, icon=icon, color=color, width=width, height=height, html_code=html_code,
@@ -162,7 +163,7 @@ class Fields:
 
   def today(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
-            options: dict = None, helper: str = None) -> html.HtmlDates.DatePicker:
+            options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
     """
     Description:
     ------------
@@ -194,15 +195,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The font color in the component. Default inherit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -219,7 +220,7 @@ class Fields:
 
   def cob(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
-          options: dict = None, helper: str = None) -> html.HtmlDates.DatePicker:
+          options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
     """
     Description:
     ------------
@@ -246,15 +247,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -270,7 +271,8 @@ class Fields:
     return component
 
   def now(self, deltatime: int = 0, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
-          profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None) -> html.HtmlDates.TimePicker:
+          profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+          helper: str = None) -> html.HtmlDates.TimePicker:
     """
     Description:
     ------------
@@ -298,14 +300,14 @@ class Fields:
 
     Attributes:
     ----------
-    :param deltatime: Optional.
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param deltatime: Optional
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     date = datetime.datetime.now() + datetime.timedelta(minutes=deltatime)
     component = html.HtmlDates.TimePicker(
@@ -314,7 +316,8 @@ class Fields:
     return component
 
   def time(self, value: str = None, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
-           profile: types.PROFILE_TYPE = None, options: dict = None, helper: str = None) -> html.HtmlDates.TimePicker:
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+           helper: str = None) -> html.HtmlDates.TimePicker:
     """
     Description:
     ------------
@@ -342,14 +345,14 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to the time component. Default now.
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param helper: Optional. A tooltip helper.
+    :param value: Optional. The value to be displayed to the time component. Default now
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
     """
     options = options or {}
     component = html.HtmlDates.TimePicker(
@@ -359,7 +362,8 @@ class Fields:
 
   def input(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
     Description:
     ------------
@@ -381,16 +385,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -405,7 +409,8 @@ class Fields:
 
   def number(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
+             helper: str = None, options: types.OPTION_TYPE = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
     Description:
     ------------
@@ -427,16 +432,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -453,7 +458,7 @@ class Fields:
 
   def autocomplete(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
                    width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
-                   html_code: str = None, helper: str = None, options: dict = None,
+                   html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldAutocomplete:
     """
     Description:
@@ -476,16 +481,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -496,7 +501,7 @@ class Fields:
 
   def static(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None,
+             helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
     Description:
@@ -519,16 +524,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -540,7 +545,8 @@ class Fields:
 
   def hidden(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
+             helper: str = None, options: types.OPTION_TYPE = None,
+             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
     Description:
     ------------
@@ -564,16 +570,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -586,7 +592,7 @@ class Fields:
 
   def integer(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-              helper: str = None, options: dict = None,
+              helper: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInteger:
     """
     Description:
@@ -609,16 +615,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -629,7 +635,8 @@ class Fields:
 
   def file(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldFile:
+           helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldFile:
     """
     Description:
     ------------
@@ -651,16 +658,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -675,7 +682,7 @@ class Fields:
 
   def password(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-               helper: str = None, options: str = None,
+               helper: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldPassword:
     """
     Description:
@@ -698,16 +705,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -718,7 +725,7 @@ class Fields:
 
   def textarea(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-               helper: str = None, options: dict = None,
+               helper: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldTextArea:
     """
     Description:
@@ -741,16 +748,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param placeholder: Optional. The text to be displayed when the input is empty.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param placeholder: Optional. The text to be displayed when the input is empty
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -761,7 +768,8 @@ class Fields:
 
   def checkbox(self, value: bool = False, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
-               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldCheckBox:
+               options: types.OPTION_TYPE = None,
+               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldCheckBox:
     """
     Description:
     ------------
@@ -787,15 +795,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default empty string
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -806,7 +814,8 @@ class Fields:
 
   def radio(self, value: bool = False, label: str = None, group_name: str = None, icon: str = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
     """
     Description:
     ------------
@@ -836,16 +845,16 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default False.
-    :param label: Optional. The text of label to be added to the component.
-    :param group_name: Optional. Group different radio together to only have 1 value selected.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component. Default False
+    :param label: Optional. The text of label to be added to the component
+    :param group_name: Optional. Group different radio together to only have 1 value selected
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -861,7 +870,8 @@ class Fields:
 
   def range(self, value: str = "", min: int = 0, max: int = 100, step: int = 1, label: str = None,
             placeholder: str = "", icon: str = None, width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
+            options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldRange:
     """
     Description:
@@ -894,19 +904,19 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default empty string.
+    :param value: Optional. The value to be displayed to this component. Default empty string
     :param min:
     :param max:
     :param step:
-    :param label:
+    :param label: Optional. The text of label to be added to the component
     :param placeholder:
-    :param icon:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -917,7 +927,7 @@ class Fields:
 
   def select(self, value: list = None, label: str = None, icon: str = None, selected: bool = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-             helper: str = None, options: dict = None, multiple: bool = False,
+             helper: str = None, options: types.OPTION_TYPE = None, multiple: bool = False,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
@@ -940,17 +950,17 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to the component. Default False.
-    :param label: Optional. The text of label to be added to the component.
-    :param icon: Optional. The component icon content from font-awesome references.
-    :param selected: Optional. The selected value.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param multiple: Optional. Flag to specify the number of items to be selectable.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to the component. Default False
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param selected: Optional. The selected value
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param multiple: Optional. Flag to specify the number of items to be selectable
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -973,7 +983,8 @@ class Fields:
     return component
 
   def months(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
-             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
+             options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
@@ -996,15 +1007,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component.
-    :param label:
-    :param icon:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     import calendar
 
@@ -1025,8 +1036,9 @@ class Fields:
     return component
 
   def weeks(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (None, "px"), html_code=None,
-            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
+            height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
     ------------
@@ -1048,15 +1060,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component.
-    :param label:
-    :param icon:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param value: Optional. The value to be displayed to this component
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1082,7 +1094,8 @@ class Fields:
 
   def years(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-            helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
     ------------
@@ -1105,15 +1118,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component.
-    :param label:
-    :param icon:
+    :param value: Optional. The value to be displayed to this component
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code:
-    :param helper:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1133,7 +1146,8 @@ class Fields:
 
   def days(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
+           helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
     ------------
@@ -1155,15 +1169,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component.
-    :param label:
-    :param icon:
+    :param value: Optional. The value to be displayed to this component
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     import calendar
 
@@ -1185,7 +1199,7 @@ class Fields:
 
   def column_text(self, label, text: str = "", align: str = 'left', width: types.SIZE_TYPE = ('auto', ""),
                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-                  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
+                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -1197,14 +1211,14 @@ class Fields:
 
     Attributes:
     ----------
-    :param label:
-    :param text:
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param label: Optional. The text of label to be added to the component
+    :param text: Optional. The string value to be displayed in the component
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     component = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     component.label = self.page.ui.text(
@@ -1226,7 +1240,7 @@ class Fields:
 
   def column_date(self, label, value: str = "T", align: str = 'left', width: types.SIZE_TYPE = ('auto', ""),
                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-                  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
+                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     ------------
@@ -1238,14 +1252,14 @@ class Fields:
 
     Attributes:
     ----------
-    :param label:
-    :param value: Optional. The value to be displayed to this component. Default T.
-    :param align:
-    :param width:
-    :param height:
-    :param html_code:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param label: Optional. The text of label to be added to the component
+    :param value: Optional. The value to be displayed to this component. Default T
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     component = self.page.ui.div(align=align, width=width, height=height, options=options, profile=profile)
     component.label = self.page.ui.text(
@@ -1270,7 +1284,7 @@ class Fields:
 
   def toggle(self, record=None, label: str = None, is_on: bool = False, color: str = None,
              width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (20, 'px'),
-             html_code: str = None, options: dict = None,
+             html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
@@ -1300,15 +1314,15 @@ class Fields:
 
     Attributes:
     ----------
-    :param record: Optional. The list of dictionaries with the data.
-    :param label: Optional. The toggle static label displayed.
-    :param is_on:
-    :param color: Optional. String. Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param record: Optional. The list of dictionaries with the data
+    :param label: Optional. The toggle static label displayed
+    :param is_on: Optional.
+    :param color: Optional. String. Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
@@ -1331,9 +1345,9 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def slider(self, value: float = 0, min: float = 0, max: float = 10, step: float = 1, orientation: str = 'horizontal', label: str = None,
-             width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-             options: dict = None, range: bool = False,
+  def slider(self, value: float = 0, min: float = 0, max: float = 10, step: float = 1, orientation: str = 'horizontal',
+             label: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
+             html_code: str = None, options: types.OPTION_TYPE = None, range: bool = False,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
@@ -1341,18 +1355,18 @@ class Fields:
 
     Attributes:
     ----------
-    :param value: Optional. The value to be displayed to this component. Default 0.
+    :param value: Optional. The value to be displayed to this component. Default 0
     :param min: Optional.
     :param max: Optional.
     :param step: Optional.
     :param orientation: Optional.
-    :param label: Optional. The toggle static label displayed.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param range:
-    :param profile: Optional. A flag to set the component performance storage.
+    :param label: Optional. The toggle static label displayed
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param range: Optional.
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1397,8 +1411,25 @@ class Fields:
 
   def filters(self, items=None, button=None, width: types.SIZE_TYPE = ("auto", ""),
               height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
-              options: dict = None, autocomplete: bool = False, kind: str = 'select',
+              options: types.OPTION_TYPE = None, autocomplete: bool = False, kind: str = 'select',
               profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param items:
+    :param button:
+    :param width:
+    :param height:
+    :param html_code:
+    :param helper:
+    :param options:
+    :param autocomplete:
+    :param kind:
+    :param profile:
+    """
     if kind == 'select':
       component = self.page.ui.lists.filters(
         items, button, width, height, html_code, helper, options, autocomplete, profile)
@@ -1419,9 +1450,8 @@ class Timelines:
   def __init__(self, ui):
     self.page = ui.page
 
-  def view(self, start_date: types.DATE_TYPES, end_date: types.DATE_TYPES,
-           width: types.SIZE_TYPE = (100, "%"),
-           height: types.SIZE_TYPE = (None, "px"), options: dict = None,
+  def view(self, start_date: types.DATE_TYPES, end_date: types.DATE_TYPES, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (None, "px"), options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
@@ -1470,7 +1500,7 @@ class Timelines:
 
   def period(self, start_date: types.DATE_TYPES, days: int, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"),
-             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
+             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     -----------
@@ -1520,7 +1550,7 @@ class Timelines:
 
   def week(self, start_date: types.DATE_TYPES, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"),
-           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
+           options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     -----------
@@ -1563,9 +1593,9 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def categories(self, value=None, label: str = None, icon=None, width: types.SIZE_TYPE = (100, "%"),
+  def categories(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
                  height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-                 helper: str = None, options: dict = None,
+                 helper: str = None, options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
     Description:
@@ -1580,12 +1610,12 @@ class Timelines:
     Attributes:
     ----------
     :param value:
-    :param label:
-    :param icon:
+    :param label: Optional.
+    :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code:
-    :param helper:
+    :param html_code: Optional.
+    :param helper: Optional.
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -1601,7 +1631,8 @@ class Timelines:
 
   def milestone(self, completion_date: types.DATE_TYPES, icon: str = None,
                 width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
-                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
+                options: types.OPTION_TYPE = None,
+                profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
     """
     Description:
     -----------
@@ -1615,10 +1646,10 @@ class Timelines:
     Attributes:
     ----------
     :param completion_date:
-    :param icon:
+    :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code:
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional.
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -1647,7 +1678,7 @@ class Timelines:
     return component
 
   def meeting(self, time, icon: str = None, width: types.SIZE_TYPE = (25, 'px'),
-              height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
+              height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
     """
     Description:
@@ -1662,10 +1693,10 @@ class Timelines:
     Attributes:
     ----------
     :param time:
-    :param icon:
+    :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code:
+    :param html_code: Optional.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1679,8 +1710,8 @@ class Timelines:
     html.Html.set_component_skin(component)
     return component
 
-  def workload(self, value, width: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
-               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
+  def workload(self, value, width: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Description:
     -----------
@@ -1722,6 +1753,26 @@ class Timelines:
   def issues(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
              options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None,
              helper: str = None) -> html.HtmlList.Items:
+    """
+    Description:
+    -----------
+
+    :tags:
+    :categories:
+
+    Usage::
+
+
+    Attributes:
+    ----------
+    :param records:
+    :param width:
+    :param height:
+    :param options:
+    :param html_code:
+    :param profile:
+    :param helper:
+    """
     component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)
     component.options.items_type = "status"
     html.Html.set_component_skin(component)

@@ -1,17 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlNetwork
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
+from epyk.core.py import types
 
 
 class JsHtmlPivot(JsHtml.JsHtml):
 
   @property
-  def content(self):
+  def content(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -20,13 +20,14 @@ class JsHtmlPivot(JsHtml.JsHtml):
     if self.component.sub_rows is None:
       return JsObjects.JsObjects.get(
         "{rows: %s, columns: %s}" % (self.component.rows.dom.content, self.component.columns.dom.content))
+
     return JsObjects.JsObjects.get(
       "{rows: %s, columns: %s, sub_rows: %s}" % (
         self.component.rows.dom.content,
         self.component.columns.dom.content,
         self.component.sub_rows.dom.content))
 
-  def clear(self, profile: Union[bool, dict] = None):
+  def clear(self, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -38,7 +39,7 @@ class JsHtmlPivot(JsHtml.JsHtml):
 
     Attributes:
     ----------
-    :param Union[bool, dict] profile: Optional. A flag to set the component performance storage.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     if self.component.sub_rows is not None:
       return JsUtils.jsConvertFncs([
@@ -52,7 +53,7 @@ class JsHtmlPivot(JsHtml.JsHtml):
 class JsHtmlColumns(JsHtml.JsHtml):
 
   @property
-  def val(self):
+  def val(self) -> JsObjects.JsObject.JsObject:
     """
     Description:
     ------------
@@ -62,7 +63,7 @@ class JsHtmlColumns(JsHtml.JsHtml):
 timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlCode, self.varName))
 
   @property
-  def content(self):
+  def content(self) -> JsObjects.JsArray.JsArray:
     """
     Description:
     ------------
@@ -94,9 +95,9 @@ timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlC
 
     Attributes:
     ----------
-    :param item: String. The Item to be added to the list.
-    :param bool unique: Optional. Only add the item if it is not already in the list.
-    :param bool draggable: Optional. Set the new entry as draggable.
+    :param item: The Item to be added to the list.
+    :param unique: Optional. Only add the item if it is not already in the list.
+    :param draggable: Optional. Set the new entry as draggable.
     """
     if hasattr(item, 'dom'):
       item = item.dom.content
@@ -185,7 +186,7 @@ timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlC
 
     Attributes:
     ----------
-    :param str label: Optional. The processing message.
+    :param label: Optional. The processing message.
     """
     return JsObjects.JsVoid("%s.innerHTML = '<i style=\"margin-right:5px\" class=\"fas fa-spinner fa-spin\"></i>%s'" % (
       self.component.dom.varName, label))
@@ -197,7 +198,7 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
     """
     Description:
     ------------
-    Not available for a task object as the data will be directly returned and there is not need to
+    Not available for a task object as the data will be directly returned and there is not needed to
     perform some string transformation before loading.
 
     Usage:
@@ -210,7 +211,7 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
     """
     raise ValueError("Not available use load instead")
 
-  def load(self, data):
+  def load(self, data: types.JS_DATA_TYPES):
     """
     Description:
     ------------

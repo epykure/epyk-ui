@@ -12,10 +12,10 @@ class Code:
   def __init__(self, ui):
     self.page = ui.page
 
-  def css(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-          options: Optional[dict] = None, helper: Optional[str] = None,
-          profile: Optional[Union[dict, bool]] = None):
+  def css(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+          height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+          options: types.OPTION_TYPE = None, helper: str = None,
+          profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -43,14 +43,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -63,10 +63,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def xml(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-          profile: Optional[Union[dict, bool]] = None):
+  def xml(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+          height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+          options: types.OPTION_TYPE = None, helper: str = None,
+          profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -89,14 +89,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -109,10 +109,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def sql(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-          profile: Optional[Union[dict, bool]] = None):
+  def sql(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+          height: types.SIZE_TYPE = (200, 'px'), html_code: Optional[str] = None,
+          options: types.OPTION_TYPE = None, helper: str = None,
+          profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -135,14 +135,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -154,10 +154,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def r(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-        height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-        options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-        profile: Optional[Union[dict, bool]] = None):
+  def r(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+        height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+        options: types.OPTION_TYPE = None, helper: str = None,
+        profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -180,14 +180,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -199,10 +199,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def python(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-             height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-             options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-             profile: Optional[Union[dict, bool]] = None):
+  def python(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+             height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+             options: types.OPTION_TYPE = None, helper: str = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -225,14 +225,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -244,10 +244,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def javascript(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-                 height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-                 options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-                 profile: Optional[Union[dict, bool]] = None):
+  def javascript(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+                 height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+                 options: types.OPTION_TYPE = None, helper: str = None,
+                 profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -270,14 +270,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -288,10 +288,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def markdown(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-               height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-               options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-               profile: Optional[Union[dict, bool]] = None):
+  def markdown(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+               height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+               options: types.OPTION_TYPE = None, helper: str = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -311,14 +311,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -329,10 +329,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def rst(self, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-          height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-          options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-          profile: Optional[Union[dict, bool]] = None):
+  def rst(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+          height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+          options: types.OPTION_TYPE = None, helper: str = None,
+          profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -352,14 +352,14 @@ class Code:
 
     Attributes:
     ----------
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -370,10 +370,10 @@ class Code:
     html.Html.set_component_skin(component)
     return component
 
-  def code(self, language: str, text: str = "", color: Union[str, bool] = None, width: Union[tuple, int] = (90, '%'),
-           height: Union[tuple, int] = (200, 'px'), html_code: Optional[str] = None,
-           options: Optional[Union[dict, bool]] = None, helper: Optional[str] = None,
-           profile: Optional[Union[dict, bool]] = None):
+  def code(self, language: str, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+           height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+           options: types.OPTION_TYPE = None, helper: str = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -393,15 +393,15 @@ class Code:
 
     Attributes:
     ----------
-    :param str language: The language.
-    :param str text: Optional. The text.
-    :param Union[str, bool] color: Optional. The color code.
-    :param Union[tuple, int] width: Optional. The with details in the format(value, unit).
-    :param Union[tuple, int] height: Optional. The height details in the format(value, unit).
-    :param Optional[str] html_code: Optional. The unique component ID.
-    :param Optional[Union[dict, bool]] options: Optional. The object properties.
-    :param Optional[str] helper: Optional. The helper.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param language: The language
+    :param text: Optional. The text
+    :param color: Optional. The color code
+    :param width: Optional. The with details in the format(value, unit)
+    :param height: Optional. The height details in the format(value, unit)
+    :param html_code: Optional. The unique component ID
+    :param options: Optional. The object properties
+    :param helper: Optional. The helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

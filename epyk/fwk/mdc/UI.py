@@ -46,6 +46,12 @@ class Components:
 
     Attributes:
     ----------
+    :param text:
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     label = self.page.web.std.tags.span(
       text=text, width=width, height=height, html_code=html_code, options=options, profile=profile)
@@ -66,6 +72,17 @@ class Components:
 
     Attributes:
     ----------
+    :param components:
+    :param color:
+    :param width:
+    :param height:
+    :param editable:
+    :param align:
+    :param padding:
+    :param html_code:
+    :param options:
+    :param profile:
+    :param position:
     """
     ripple = self.page.web.std.div(
       components=components, color=color, width=width, height=height, editable=editable, align=align, padding=padding,
@@ -247,7 +264,7 @@ class Components:
     return html_but
 
   @property
-  def icons(self):
+  def icons(self) -> groups.MdcCompIcons.Components:
     """
     Description:
     ------------
