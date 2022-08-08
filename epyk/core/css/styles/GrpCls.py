@@ -587,7 +587,7 @@ class ClassHtml:
     self.component.attr['class'] = self.classList['main']
     return self
 
-  def clear_style(self, persist_attrs: dict = None):
+  def clear_style(self, persist_attrs: dict = None, keep_attrs: list = None):
     """
     Description:
     ------------
@@ -596,9 +596,19 @@ class ClassHtml:
     Attributes:
     ----------
     :param persist_attrs: Optional. CSS attributes to be maintained
+    :param keep_attrs: Optional. CSS attributes to keep from the initial state
 
     :return: self to allow the chaining.
     """
+    if keep_attrs is not None:
+      if persist_attrs is not None:
+        persist_attrs = dict(persist_attrs)
+      else:
+        persist_attrs = {}
+      for k in keep_attrs:
+        val = self.component.attr['css'][k]
+        if val is not None:
+          persist_attrs[k] = val
     self.component.attr['css'] = {}
     if persist_attrs is not None:
       self.component.attr['css'].update(persist_attrs)
