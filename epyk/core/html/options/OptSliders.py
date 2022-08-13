@@ -212,7 +212,7 @@ class OptionsSlider(Options):
 
   def slide(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             readout: bool = True, readout_level: str = "handle", readout_format: bool = True,
-            options: types.OPTION_TYPE = None, delay_ms: int = 0):
+            options: types.OPTION_TYPE = None, css: dict = None, precision: int = 0, delay_ms: int = 0):
     """
     Description:
     -----------
@@ -225,6 +225,12 @@ class OptionsSlider(Options):
       https://api.jqueryui.com/slider/
       https://jqueryui.com/position/
 
+    Usage::
+
+      slider = page.ui.slider(5)
+      slider.options.step = 0.01
+      slider.options.slide(precision=2)
+
     Attributes:
     ----------
     :param js_funcs: Javascript functions
@@ -234,11 +240,16 @@ class OptionsSlider(Options):
     :param readout_format: Optional
     :param options: Optional. The slide effect options
     :param delay_ms: Optional. The delay before the change in milliseconds
+    :param css: Optional. The label CSS attributes
+    :param precision: Optional. Number of digits in the slider increments
     """
+    dfl_css = {"color": self.page.theme.black}
+    if css is not None:
+      dfl_css.update(css)
     if readout:
       if readout_level == "slider":
         if readout_format is True:
-          readout_format = {"type": "number", "precision": 0, "thousand": ",", "decimal": "."}
+          readout_format = {"type": "number", "precision": precision, "thousand": ",", "decimal": "."}
         elif isinstance(readout_format, int):
           readout_format = {"type": "number", "precision": readout_format, "thousand": ",", "decimal": "."}
         if readout_format and readout_format["type"] in ("number", "money"):
@@ -253,16 +264,14 @@ class OptionsSlider(Options):
           options = options or {"position": "absolute", "right": "-45px", "top": "-8px", "font-size": "10px"}
         else:
           options = options or {"position": "absolute", "right": "-35px", "top": "-8px", "font-size": "10px"}
+        options.update(dfl_css)
         value = '''
-          if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
-          else {
-             var label = $('<output></output>'); label.css(%(options)s);
-             $("#%(htmlCode)s").append(label)}
-          $(label).html(%(fmt_html)s)''' % {
-            "htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
+if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
+else {var label = $('<output></output>'); label.css(%(options)s); $("#%(htmlCode)s").append(label)}
+$(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
       else:
         if readout_format is True:
-          readout_format = {"type": "number", "precision": 0, "thousand": ",", "decimal": "."}
+          readout_format = {"type": "number", "precision": precision, "thousand": ",", "decimal": "."}
         elif isinstance(readout_format, int):
           readout_format = {"type": "number", "precision": readout_format, "thousand": ",", "decimal": "."}
         options = options or {"my": "center top", "at": "center bottom", "offset": "0, 10"}
@@ -271,11 +280,12 @@ class OptionsSlider(Options):
           fmt_html = "accounting.formatNumber(ui.value, %s)" % readout_format
         else:
           fmt_html = "ui.values[0] +' - '+ ui.values[1]" if self.component.is_range else "ui.value"
-        value = '''
-            if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
-            else {var label = $('<span></span>'); $(ui.handle).append(label)}
-            var options = %(options)s; options.of = ui.handle;
-            $(label).html(%(fmt_html)s).position(options)''' % {"options": options, "fmt_html": fmt_html}
+        value = ''' 
+if ($(ui.handle).children().length > 0){var label = $(ui.handle).children().first()}
+else {var label = $('<span name="slideLabel"></span>'); $(ui.handle).append(label)}
+var options = %(options)s; options.of = ui.handle; label.css(%(css)s);
+$(label).html(%(fmt_html)s).position(options)''' % {
+          "options": options, "fmt_html": fmt_html, "css": dfl_css}
       if js_funcs is None:
         js_funcs = []
       if delay_ms:
@@ -310,6 +320,11 @@ class OptionsSlider(Options):
     ------------
     Determines the size or amount of each interval or step the slider takes between the min and max.
     The full specified value range of the slider (max - min) should be evenly divisible by the step.
+
+    Usage::
+
+      slider = page.ui.slider(5)
+      slider.options.step = 0.01
 
     Related Pages:
 

@@ -953,6 +953,31 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                      profile=profile, headers=headers, asynchronous=asynchronous)
 
+  def queueMicrotask(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+    The queueMicrotask() method, which is exposed on the Window or Worker interface, queues a microtask to be executed
+    at a safe time prior to control returning to the browser's event loop.
+
+    Usage::
+
+      page.body.onReady([
+          page.js.queueMicrotask([page.js.alert("ok")])
+        ])
+
+    Related Pages:
+
+      https://developer.mozilla.org/fr/docs/Web/API/queueMicrotask
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript function definition.
+    :param profile: Optional. A flag to set the component performance storage.
+    """
+    js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    return JsObjects.JsVoid("queueMicrotask(() => {%s})" % js_data)
+
   def request_rpc(self, js_code: str, method_type: Union[str, primitives.JsDataModel],
                   fnc: Callable, url: str,
                   extra_params: Optional[Union[dict, primitives.JsDataModel]] = None) -> JsObjects.XMLHttpRequest:
