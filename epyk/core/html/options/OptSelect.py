@@ -484,7 +484,6 @@ class OptionsSelectJs(OptionsSelect):
 
   @liveSearchPlaceholder.setter
   def liveSearchPlaceholder(self, value):
-    #self._report.attr["data-actions-box"] = value
     self._config(value)
 
   @property

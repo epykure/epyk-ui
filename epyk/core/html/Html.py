@@ -1758,6 +1758,19 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+    Attributes:
+    ----------
+    :param data: Optional.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. The object reference ID
+    """
     if not self.builder_name or self._js__builder__ is None:
       raise ValueError("No builder defined for this HTML component %s" % self.__class__.__name__)
 

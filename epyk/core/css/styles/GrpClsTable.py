@@ -841,8 +841,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for filter popups.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_popup is None:
       self._css_popup = Classes.CatalogTable.CatalogTable(
@@ -855,8 +853,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for menu.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_menu is None:
       self._css_menu = Classes.CatalogTable.CatalogTable(
@@ -869,8 +865,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for filter.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_filter is None:
       self._css_filter = Classes.CatalogTable.CatalogTable(
@@ -883,8 +877,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for header.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_head is None:
       self._css_head = Classes.CatalogTable.CatalogTable(
@@ -897,8 +889,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for rows.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_row_even is None:
       self._css_row_even = Classes.CatalogTable.CatalogTable(
@@ -911,8 +901,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for rows.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_row is None:
       self._css_row = Classes.CatalogTable.CatalogTable(
@@ -925,8 +913,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for rows.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_row_odd is None:
       self._css_row_odd = Classes.CatalogTable.CatalogTable(
@@ -939,8 +925,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for cells when focus.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_cell_focus is None:
       self._css_cell_focus = Classes.CatalogTable.CatalogTable(
@@ -953,8 +937,6 @@ class Aggrid(GrpCls.ClassHtml):
     Description:
     ------------
     Property to the CSS Class definition for cells.
-
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_cell is None:
       self._css_cell = Classes.CatalogTable.CatalogTable(
