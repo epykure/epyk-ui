@@ -1,5 +1,6 @@
 
 from typing import Union
+from epyk.core.py import types
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
 
@@ -21,8 +22,8 @@ class OptionsSlider(Options):
     return self._config_get(False)
 
   @animate.setter
-  def animate(self, value):
-    self._config(value)
+  def animate(self, flag: bool):
+    self._config(flag)
 
   @property
   def css(self):
@@ -38,8 +39,8 @@ class OptionsSlider(Options):
     return self._config_get({"background": self.page.theme.success[0]})
 
   @css.setter
-  def css(self, value):
-    self._config(value)
+  def css(self, values: dict):
+    self._config(values)
 
   @property
   def handler_css(self):
@@ -58,7 +59,14 @@ class OptionsSlider(Options):
   def handler_css(self, value):
     self._config(value)
 
-  def change(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None, options: dict=None):
+  def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+
+    :param js_funcs:
+    :param profile:
+    """
     self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(
       js_funcs, toStr=True, profile=profile), js_type=True)
 
@@ -78,7 +86,7 @@ class OptionsSlider(Options):
     return self._config_get('classes')
 
   @classes.setter
-  def classes(self, value):
+  def classes(self, value: str):
     self._config(value)
 
   @property
@@ -95,8 +103,8 @@ class OptionsSlider(Options):
     return self._config_get(False)
 
   @disabled.setter
-  def disabled(self, value):
-    self._config(value)
+  def disabled(self, flag: bool):
+    self._config(flag)
 
   @property
   def max(self):
@@ -112,7 +120,7 @@ class OptionsSlider(Options):
     return self._config_get(100)
 
   @max.setter
-  def max(self, value):
+  def max(self, value: float):
     self._config(value)
 
   @property
@@ -126,12 +134,14 @@ class OptionsSlider(Options):
 
       https://api.jqueryui.com/slider/#option-min
 
-    :prop value:
+    Attributes:
+    ----------
+    :prop value: The min value
     """
     return self._config_get(0)
 
   @min.setter
-  def min(self, value):
+  def min(self, value: float):
     self._config(value)
 
   @property
@@ -180,7 +190,7 @@ class OptionsSlider(Options):
     return self._config_get("horizontal")
 
   @orientation.setter
-  def orientation(self, value):
+  def orientation(self, value: str):
     self._config(value)
 
   @property
@@ -197,10 +207,12 @@ class OptionsSlider(Options):
     return self._config_get(False)
 
   @range.setter
-  def range(self, value):
-    self._config(value)
+  def range(self, flag: bool):
+    self._config(flag)
 
-  def slide(self, js_funcs: Union[list, str] = None, profile=None, readout=True, readout_level="handle", readout_format=True, options=None):
+  def slide(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+            readout: bool = True, readout_level: str = "handle", readout_format: bool = True,
+            options: types.OPTION_TYPE = None, delay_ms: int = 0):
     """
     Description:
     -----------
@@ -215,12 +227,13 @@ class OptionsSlider(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param readout: Boolean. Optional. Show the value in a popup.
-    :param readout_level: Dictionary. Optional.
-    :param readout_format: Dictionary | String. Optional.
-    :param options:
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param readout: Optional. Show the value in a popup
+    :param readout_level: Optional
+    :param readout_format: Optional
+    :param options: Optional. The slide effect options
+    :param delay_ms: Optional. The delay before the change in milliseconds
     """
     if readout:
       if readout_level == "slider":
@@ -241,14 +254,12 @@ class OptionsSlider(Options):
         else:
           options = options or {"position": "absolute", "right": "-35px", "top": "-8px", "font-size": "10px"}
         value = '''
-            var delay = function() {
-                if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
-                else {
-                   var label = $('<output></output>'); label.css(%(options)s);
-                   $("#%(htmlCode)s").append(label)}
-                $(label).html(%(fmt_html)s);
-            };
-            setTimeout(delay, 5)''' % {"htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
+          if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
+          else {
+             var label = $('<output></output>'); label.css(%(options)s);
+             $("#%(htmlCode)s").append(label)}
+          $(label).html(%(fmt_html)s)''' % {
+            "htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
       else:
         if readout_format is True:
           readout_format = {"type": "number", "precision": 0, "thousand": ",", "decimal": "."}
@@ -259,24 +270,23 @@ class OptionsSlider(Options):
           self.component.page.jsImports.add("accounting")
           fmt_html = "accounting.formatNumber(ui.value, %s)" % readout_format
         else:
-          if self.component.is_range:
-            fmt_html = "ui.values[0] +' - '+ ui.values[1]"
-          else:
-            fmt_html = "ui.value"
+          fmt_html = "ui.values[0] +' - '+ ui.values[1]" if self.component.is_range else "ui.value"
         value = '''
-            var delay = function() {
-                if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
-                else {var label = $('<span></span>'); $(ui.handle).append(label)}
-                var options = %(options)s; options.of = ui.handle;
-                $(label).html(%(fmt_html)s).position(options)
-            }; setTimeout(delay, 5)''' % {"options": options, "fmt_html": fmt_html}
+            if ($(ui.handle).find('span').length){var label = $(ui.handle).find('span')[0]}
+            else {var label = $('<span></span>'); $(ui.handle).append(label)}
+            var options = %(options)s; options.of = ui.handle;
+            $(label).html(%(fmt_html)s).position(options)''' % {"options": options, "fmt_html": fmt_html}
       if js_funcs is None:
         js_funcs = []
-      js_funcs.append(value)
-    self._config("function (event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+      if delay_ms:
+        js_funcs.append("setTimeout(function(){%(value)s}, %(delay_ms)s)" % {"value": value, "delay_ms": delay_ms})
+      else:
+        js_funcs.append(value)
+    self._config(
+      "function (event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
     self.force_show_current = False
 
-  def create(self, js_funcs=None, profile=None):
+  def create(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -288,8 +298,8 @@ class OptionsSlider(Options):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     self._config("function (){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
@@ -308,7 +318,7 @@ class OptionsSlider(Options):
     return self._config_get(1)
 
   @step.setter
-  def step(self, value):
+  def step(self, value: int):
     self._config(value)
 
   @property
@@ -326,7 +336,7 @@ class OptionsSlider(Options):
     return self._config_get(0)
 
   @value.setter
-  def value(self, value):
+  def value(self, value: int):
     self._config(value)
 
   @property
@@ -365,7 +375,7 @@ class OptionsProgBar(Options):
     return self._config_get(None)
 
   @classes.setter
-  def classes(self, value):
+  def classes(self, value: str):
     self._config(value)
 
   @property
@@ -395,7 +405,7 @@ class OptionsProgBar(Options):
     return self._config_group_get('css', None)
 
   @background.setter
-  def background(self, value):
+  def background(self, value: str):
     self._config_group('css', value)
 
   @property
@@ -408,15 +418,17 @@ class OptionsProgBar(Options):
     return self._config_group_get('css', None, name="borderColor")
 
   @border_color.setter
-  def border_color(self, value):
+  def border_color(self, value: str):
     self._config_group('css', value, name="borderColor")
 
-  def css(self, attrs):
+  def css(self, attrs: dict):
     """
     Description:
     ------------
 
-    :param attrs:
+    Attributes:
+    ----------
+    :param attrs: The CSS attributes
     """
     css_attrs = self._config_get({}, 'css')
     css_attrs.update(attrs)
@@ -453,7 +465,7 @@ class OptionsProgBar(Options):
     return self._config_get(100)
 
   @max.setter
-  def max(self, num):
+  def max(self, num: int):
     self._config(num)
 
   @property
@@ -483,7 +495,7 @@ class OptionsProgBar(Options):
     return self.component.style.css.border_radius
 
   @rounded.setter
-  def rounded(self, val):
+  def rounded(self, val: int):
     self.component.style.css.border_radius = val
     self.css({"border-radius": self.component.style.css.border_radius})
 
@@ -492,7 +504,7 @@ class OptionsProgBar(Options):
     return self._config_get(False)
 
   @show_percentage.setter
-  def show_percentage(self, flag):
+  def show_percentage(self, flag: bool):
     self._config(flag)
 
 
@@ -514,7 +526,7 @@ class OptionsMenu(Options):
     return self._config_get({})
 
   @classes.setter
-  def classes(self, value):
+  def classes(self, value: dict):
     self._config(value)
 
   @property
@@ -531,7 +543,7 @@ class OptionsMenu(Options):
     return self._config_get(False)
 
   @disabled.setter
-  def disabled(self, flag):
+  def disabled(self, flag: bool):
     self._config(flag)
 
   @property
@@ -588,8 +600,8 @@ class OptionDialog(Options):
     return self._config_get('body')
 
   @appendTo.setter
-  def appendTo(self, flag: bool):
-    self._config(flag)
+  def appendTo(self, value: Union[bool, str]):
+    self._config(value)
 
   @property
   def autoOpen(self):
@@ -625,7 +637,7 @@ class OptionDialog(Options):
     return self._config_get({})
 
   @classes.setter
-  def classes(self, value):
+  def classes(self, value: dict):
     self._config(value)
 
   @property
@@ -642,8 +654,8 @@ class OptionDialog(Options):
     return self._config_get(True)
 
   @closeOnEscape.setter
-  def closeOnEscape(self, value):
-    self._config(value)
+  def closeOnEscape(self, flag: bool):
+    self._config(flag)
 
   @property
   def closeText(self):
@@ -659,8 +671,8 @@ class OptionDialog(Options):
     return self._config_get(True)
 
   @closeText.setter
-  def closeText(self, value):
-    self._config(value)
+  def closeText(self, flag: bool):
+    self._config(flag)
 
   @property
   def draggable(self):
@@ -677,8 +689,8 @@ class OptionDialog(Options):
     return self._config_get(True)
 
   @draggable.setter
-  def draggable(self, value):
-    self._config(value)
+  def draggable(self, flag: bool):
+    self._config(flag)
 
   @property
   def height(self):
@@ -694,7 +706,7 @@ class OptionDialog(Options):
     return self._config_get('auto')
 
   @height.setter
-  def height(self, value):
+  def height(self, value: Union[str, int]):
     self._config(value)
 
   @property
@@ -728,7 +740,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @maxHeight.setter
-  def maxHeight(self, value):
+  def maxHeight(self, value: int):
     self._config_group("option", value)
 
   @property
@@ -745,7 +757,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @maxWidth.setter
-  def maxWidth(self, value):
+  def maxWidth(self, value: int):
     self._config_group("option", value)
 
   @property
@@ -762,7 +774,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @minHeight.setter
-  def minHeight(self, value):
+  def minHeight(self, value: int):
     self._config_group("option", value)
 
   @property
@@ -779,7 +791,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @minWidth.setter
-  def minWidth(self, value):
+  def minWidth(self, value: int):
     self._config_group("option", value)
 
   def position(self, my: str = "center", at: str = "center", of: str = "window"):
@@ -793,9 +805,11 @@ class OptionDialog(Options):
 
       https://api.jqueryui.com/dialog/#option-position
 
-    :param my: String.
-    :param at: String.
-    :param of: String.
+    Attributes:
+    ----------
+    :param my:
+    :param at:
+    :param of:
     """
     self._config({"my": my, "at": at, "of": of})
     return self
@@ -816,7 +830,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @modal.setter
-  def modal(self, value):
+  def modal(self, value: bool):
     self._config_group("option", value)
 
   @property
@@ -833,7 +847,7 @@ class OptionDialog(Options):
     return self._config_group_get("option", None)
 
   @resizable.setter
-  def resizable(self, value):
+  def resizable(self, value: bool):
     self._config_group("option", value)
 
   @property
@@ -851,7 +865,7 @@ class OptionDialog(Options):
     return self._config_get(None)
 
   @title.setter
-  def title(self, value):
+  def title(self, value: str):
     self._config(value)
 
   @property
@@ -868,7 +882,7 @@ class OptionDialog(Options):
     return self._config_get(300)
 
   @width.setter
-  def width(self, value):
+  def width(self, value: int):
     self._config(value)
 
   @property
@@ -876,7 +890,7 @@ class OptionDialog(Options):
     """
     Description:
     ------------
-    Empty the dialog content first..
+    Empty the dialog content first.
 
     This is the default behaviour in case of content as text.
     """
@@ -935,7 +949,7 @@ class OptionsSkillbars(Options):
     return self._config_get(self.page.theme.success[0])
 
   @success.setter
-  def success(self, color):
+  def success(self, color: str):
     self._config(color)
 
   @property
@@ -947,7 +961,7 @@ class OptionsSkillbars(Options):
     return self._config_get(self.page.theme.warning.light)
 
   @warning.setter
-  def warning(self, color):
+  def warning(self, color: str):
     self._config(color)
 
   @property
@@ -959,7 +973,7 @@ class OptionsSkillbars(Options):
     return self._config_get(self.page.theme.danger.light)
 
   @danger.setter
-  def danger(self, color):
+  def danger(self, color: str):
     self._config(color)
 
   @property

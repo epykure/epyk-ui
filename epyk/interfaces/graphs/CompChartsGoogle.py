@@ -1,6 +1,7 @@
 
 
 from epyk.core.html import graph
+from epyk.core.py import types
 
 
 class ChartGoogle:
@@ -9,8 +10,9 @@ class ChartGoogle:
     self.page = ui.page
     self.chartFamily = "Google"
 
-  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def plot(self, record=None, y=None, x=None, kind: str = "line", profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -22,23 +24,25 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def line(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-           html_code=None):
+  def line(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (330, "px"), options: types.OPTION_TYPE = None,
+           html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -55,14 +59,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'LineChart'}
     options.update(
@@ -71,8 +75,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def column(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, html_code=None):
+  def column(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+             options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -92,14 +97,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'ColumnChart'}
     options.update({'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts,
@@ -109,8 +114,9 @@ class ChartGoogle:
       self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-          html_code=None):
+  def bar(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+          options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -129,14 +135,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'ComboChart'}
     options.update(
@@ -146,8 +152,9 @@ class ChartGoogle:
     bar_chart.options.seriesType = "bars"
     return bar_chart
 
-  def hbar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-           html_code=None):
+  def hbar(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -166,14 +173,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries.
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param options: Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     """
     options = options or {'type': 'BarChart'}
 
@@ -183,8 +190,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+  def scatter(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+              options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -204,14 +212,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'ScatterChart'}
     options.update(
@@ -220,8 +228,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def histogram(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-                options=None, html_code=None):
+  def histogram(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -243,14 +252,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'Histogram'}
     options.update(
@@ -259,8 +268,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def area(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-           html_code=None):
+  def area(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -277,14 +287,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'AreaChart'}
     options.update(
@@ -293,8 +303,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def bubble(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-             options=None, html_code=None):
+  def bubble(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+             options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -314,14 +325,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'BubbleChart'}
     options.update(
@@ -330,8 +341,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def pie(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-          html_code=None):
+  def pie(self, record, y_columns=None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+          options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -345,14 +357,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'PieChart'}
     options.update(
@@ -361,8 +373,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def donut(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-            html_code=None):
+  def donut(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+            options: types.OPTION_TYPE = None, html_code: str = None):
     """
     Description:
     ------------
@@ -379,14 +392,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'PieChart'}
     options.update(
@@ -395,8 +408,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def treemap(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-              options=None, html_code=None):
+  def treemap(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+              options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -412,14 +426,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'TreeMap'}
     options.update(
@@ -428,8 +442,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def candlestick(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
-                  options=None, html_code=None):
+  def candlestick(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                  options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -449,25 +464,25 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'CandlestickChart'}
     options.update(
       {'y_columns': y_columns, 'x_column': x_axis, 'colors': self.page.theme.charts, 'attrs': {'fill': None}})
     data = self.page.data.google.y(record, y_columns, x_axis)
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
-
     return line_chart
 
-  def gauge(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-            html_code=None):
+  def gauge(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -484,14 +499,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'Gauge'}
     options.update(
@@ -500,8 +515,9 @@ class ChartGoogle:
     line_chart = graph.GraphGoogle.ChartLine(self.page, data, width, height, html_code, options, profile)
     return line_chart
 
-  def geo(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"), options=None,
-          html_code=None):
+  def geo(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+          options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
     Description:
     ------------
@@ -522,14 +538,14 @@ class ChartGoogle:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {'type': 'GeoChart'}
     options.update(

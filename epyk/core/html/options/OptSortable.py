@@ -170,7 +170,7 @@ class OptionsSortable(Options):
     return self.get(".my-handle")
 
   @handle.setter
-  def handle(self, val):
+  def handle(self, val: str):
     self.set(val)
 
   @property
@@ -187,7 +187,7 @@ class OptionsSortable(Options):
     return self.get(".ignore-elements")
 
   @filter.setter
-  def filter(self, val):
+  def filter(self, val: str):
     self.set(val)
 
   @property
@@ -221,7 +221,7 @@ class OptionsSortable(Options):
     return self.get(".item")
 
   @draggable.setter
-  def draggable(self, val):
+  def draggable(self, val: str):
     self.set(val)
 
   @property
@@ -238,7 +238,7 @@ class OptionsSortable(Options):
     return self.get("data-id")
 
   @dataIdAttr.setter
-  def dataIdAttr(self, val):
+  def dataIdAttr(self, val: str):
     self.set(val)
 
   @property
@@ -306,7 +306,7 @@ class OptionsSortable(Options):
     return self.get(1)
 
   @swapThreshold.setter
-  def swapThreshold(self, val):
+  def swapThreshold(self, val: int):
     self.set(val)
 
   @property
@@ -323,8 +323,8 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @invertSwap.setter
-  def invertSwap(self, val):
-    self.set(val)
+  def invertSwap(self, flag: bool):
+    self.set(flag)
 
   @property
   def invertedSwapThreshold(self):
@@ -340,7 +340,7 @@ class OptionsSortable(Options):
     return self.get(1)
 
   @invertedSwapThreshold.setter
-  def invertedSwapThreshold(self, val):
+  def invertedSwapThreshold(self, val: float):
     self.set(val)
 
   @property
@@ -359,7 +359,7 @@ class OptionsSortable(Options):
     return self.get('horizontal')
 
   @direction.setter
-  def direction(self, val):
+  def direction(self, val: str):
     self.set(val)
 
   @property
@@ -393,7 +393,7 @@ class OptionsSortable(Options):
     return self.get("sortable-fallback")
 
   @fallbackClass.setter
-  def fallbackClass(self, val):
+  def fallbackClass(self, val: str):
     self.set(val)
 
   @property
@@ -410,7 +410,7 @@ class OptionsSortable(Options):
     return self.get(False)
 
   @fallbackOnBody.setter
-  def fallbackOnBody(self, val):
+  def fallbackOnBody(self, val: bool):
     self.set(val)
 
   @property
@@ -427,7 +427,7 @@ class OptionsSortable(Options):
     return self.get(0)
 
   @fallbackTolerance.setter
-  def fallbackTolerance(self, val):
+  def fallbackTolerance(self, val: float):
     self.set(val)
 
   @property

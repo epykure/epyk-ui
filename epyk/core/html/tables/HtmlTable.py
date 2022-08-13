@@ -7,15 +7,12 @@ from epyk.core.html import Html
 from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptTable
 
-# The list of CSS classes
-# from epyk.core.css.styles import CssGrpClsTable
-
 
 class Row(Html.Html):
   name = 'Row'
   _option_cls = OptTable.OptionsTableRow
 
-  def __init__(self, page: primitives.PageModel, cells, options=None):
+  def __init__(self, page: primitives.PageModel, cells, options: dict = None):
     super(Row, self).__init__(page, cells,  options=options)
     self.attr["class"].clear()
 
@@ -24,6 +21,11 @@ class Row(Html.Html):
     """
     Description:
     ------------
+    The DOM attributes.
+
+    Usage::
+
+      row.dom
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -45,12 +47,15 @@ class Row(Html.Html):
     """
     Description:
     -----------
+    Get the cell value.
 
     Usage::
 
+      row.cell(i=1)
+
     Attributes:
     ----------
-    :param i:
+    :param i: The cell index in the tr
     """
     return self[i]
 
@@ -67,6 +72,8 @@ class Cell(Html.Html):
     super(Cell, self).__init__(page, text, options=options)
     self.attr["class"].clear()
     self.is_header = is_header
+
+  _js__builder__ = "htmlObj.innerHTML = data"
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
@@ -117,7 +124,7 @@ class Bespoke(Html.Html):
 
   def __init__(self, page: primitives.PageModel, records, cols, rows, width, height, html_code, options, profile):
     data = []
-    self._fields = rows + cols
+    self._fields, self._header = rows + cols, None
     for rec in records:
       data.append([rec[c] for c in self._fields])
     super(Bespoke, self).__init__(
@@ -175,7 +182,7 @@ class Bespoke(Html.Html):
     """
     Description:
     -----------
-
+    Set the table definition.
     """
     if self.items is None:
       self.items = []
@@ -202,6 +209,8 @@ class Bespoke(Html.Html):
 
     Usage::
 
+      component = self[i]
+
     Attributes:
     ----------
     :param i: The column number
@@ -215,6 +224,8 @@ class Bespoke(Html.Html):
     Get the table rows.
 
     Usage::
+
+      row = self.row(0)
 
     Attributes:
     ----------
@@ -311,7 +322,6 @@ class Bespoke(Html.Html):
 
 class Excel(Html.Html):
   name = 'Excel'
-  # _grpCls = CssGrpClsTable.CssClassTableExcel
 
   def __init__(self, page: primitives.PageModel, records, cols, rows, title,
                width, height, cell_width, delimiter, html_code):

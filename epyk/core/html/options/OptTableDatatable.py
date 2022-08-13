@@ -8,7 +8,7 @@ class EnumStyleOptions(Enums):
   js_conversion = True
   delimiter = " "
 
-  def __wrap(self, name, header_only=False, body_only=False):
+  def __wrap(self, name, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -33,7 +33,7 @@ class EnumStyleOptions(Enums):
 
     return self._add_value(value='dt-%s' % name)
 
-  def left(self, header_only=False, body_only=False):
+  def left(self, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -51,7 +51,7 @@ class EnumStyleOptions(Enums):
     """
     return self.__wrap('left', header_only, body_only)
 
-  def right(self, header_only=False, body_only=False):
+  def right(self, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -69,7 +69,7 @@ class EnumStyleOptions(Enums):
     """
     return self.__wrap('right', header_only, body_only)
 
-  def center(self, header_only=False, body_only=False):
+  def center(self, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -87,7 +87,7 @@ class EnumStyleOptions(Enums):
     """
     return self.__wrap('center', header_only, body_only)
 
-  def justify(self, header_only=False, body_only=False):
+  def justify(self, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -105,7 +105,7 @@ class EnumStyleOptions(Enums):
     """
     return self.__wrap('justify', header_only, body_only)
 
-  def nowrap(self, header_only=False, body_only=False):
+  def nowrap(self, header_only: bool = False, body_only: bool = False):
     """
     Description:
     -----------
@@ -386,7 +386,7 @@ class Column(Options):
     Description:
     -----------
     This property will modify the data that is used by DataTables for various operations as it is read from the data
-    source. columns.render can be considered to be the the read only companion to columns.data which is read / write
+    source. columns.render can be considered to be the read only companion to columns.data which is read / write
     (and therefore more complex).
 
     Related Pages:

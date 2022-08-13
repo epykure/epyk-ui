@@ -17,13 +17,15 @@ class Table(Html.Html):
     self.__options = options
 
   @property
-  def tableId(self):
+  def tableId(self) -> str:
     """
     Description:
     -----------
     Return the Javascript variable of the chart.
 
     Usage::
+
+      table.tableId
     """
     return "%s_obj" % self.htmlCode
 

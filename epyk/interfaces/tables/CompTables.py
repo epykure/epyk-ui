@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 from epyk.core.html import Html
 from epyk.interfaces import Arguments
+from epyk.core.py import types
 from epyk.core.html import tables as html_tables
 from epyk.core.js import JsUtils
 from epyk.core.css import Defaults_css
@@ -109,8 +110,6 @@ class Tables:
     Related Pages:
 
       https://github.com/d3/d3/wiki/Gallery
-
-    :rtype: CompTableD3.D3
     """
     return CompTableD3.D3(self)
 
@@ -127,8 +126,6 @@ class Tables:
     Related Pages:
 
       http://tabulator.info/
-
-    :rtype: CompTabulator.Tabulators
     """
     return CompTablesPlotly.Plotly(self)
 
@@ -145,13 +142,11 @@ class Tables:
     Related Pages:
 
       https://datatables.net/
-
-    :rtype: CompDatatable.Datatables
     """
     return CompDatatable.Datatables(self)
 
   def config(self, html_code: str, visible: bool = False,
-             profile: Union[bool, dict] = None) -> html_tables.HtmlTableConfig.ConfigTable:
+             profile: types.PROFILE_TYPE = None) -> html_tables.HtmlTableConfig.ConfigTable:
     """
     Description:
     -----------
@@ -163,14 +158,15 @@ class Tables:
 
     Attributes:
     ----------
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param visible: Boolean. Optional. A flag to specific if the table is visible or just used as a cache.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param visible: Optional. A flag to specific if the table is visible or just used as a cache
+    :param profile: Optional. A flag to set the component performance storage
     """
     return html_tables.HtmlTableConfig.ConfigTable(self.page, html_code, visible, profile)
 
-  def basic(self, records, cols=None, rows=None, width=(100, '%'), height=(None, 'px'),
-            html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def basic(self, records: List[dict] = None, cols=None, rows=None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+            profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -185,24 +181,25 @@ class Tables:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
+    records = records or []
     if len(records) > 0 and not cols and not rows:
       cols = list(records[0].keys())
     table = html_tables.HtmlTable.Bespoke(
       self.page, records, cols or [], rows or [], width, height, html_code, options, profile)
     return table
 
-  def grid(self, records, cols: list = None, rows: list = None, width: Union[int, tuple] = (None, '%'),
-           height: Union[int, tuple] = (None, 'px'), html_code: str = None, options: dict = None,
-           profile: Union[dict, bool] = None):
+  def grid(self, records, cols: list = None, rows: list = None, width: types.SIZE_TYPE = (None, '%'),
+           height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -214,14 +211,14 @@ class Tables:
 
     Attributes:
     ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%')
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px")
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.:
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width_cells, width_rows_header = 50, 100
     for rec in records:
@@ -245,8 +242,8 @@ class Tables:
     # table.style.add_classes.table.grid_no_header()
     return table
 
-  def menu(self, table: Html.Html = None, height: Union[int, tuple] = (18, 'px'), options: dict = None,
-           update_funcs: list = None, post: Union[list, str] = None, profile: Union[dict, bool] = None,
+  def menu(self, table: Html.Html = None, height: types.SIZE_TYPE = (18, 'px'), options: types.OPTION_TYPE = None,
+           update_funcs: list = None, post: Union[list, str] = None, profile: types.PROFILE_TYPE = None,
            columns: dict = None, title: Union[str, dict] = None,):
     """
     Description:
@@ -263,14 +260,14 @@ class Tables:
 
     Attributes:
     ----------
-    :param table: Component. Optional. The HTML table component.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param update_funcs:
-    :param post: The event used to update the table.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param columns:
-    :param title:
+    :param table: Optional. The HTML table component
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param update_funcs: Optional. JavaScript functions to update the table component
+    :param post: Optional. The event used to update the table
+    :param profile: Optional. A flag to set the component performance storage
+    :param columns: Optional.
+    :param title: Optional. The title value or component
     """
     commands = [("Csv", "fas fa-file-csv"), ("Clear", "fas fa-trash-alt")]
     if columns is not None:
@@ -323,13 +320,17 @@ class Tables:
       container.columns = popup_columns
     if checks is not None:
       container.checks = checks
+
       def table_set_columns(data):
           """
+          Description:
+          ------------
 
           TODO: Add refresh option for the table layout.
 
+          Attributes:
+          ----------
           :param data:
-          :return:
           """
           return JsUtils.jsConvertFncs([
             checks.dom.unSelectAll(), checks.dom.select_item(data),
@@ -351,8 +352,9 @@ class Tables:
       compress.click(table.js.getRows().forEach(["row.treeCollapse()"], value="row"))
     return container
 
-  def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
-          html_code: str = None, options=None, profile: Union[bool, dict] = None):
+  def row(self, components: List[Html.Html] = None, position: str = 'middle', width: types.SIZE_TYPE = (100, '%'),
+          height: types.SIZE_TYPE = (None, 'px'), align: str = None, helper: str = None,
+          html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     record, cols = {}, []

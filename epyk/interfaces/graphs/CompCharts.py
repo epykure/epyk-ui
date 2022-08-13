@@ -134,7 +134,7 @@ class Graphs:
     Attributes:
     ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
-    :param data: String. A String corresponding to a JavaScript object.
+    :param data: A String corresponding to a JavaScript object.
     :param options: Optional. Specific Python options available for this component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -169,8 +169,6 @@ class Graphs:
     Related Pages:
 
       https://plotly.com/javascript/
-
-    :return: A Python Plotly object
     """
     return CompChartsSparkline.Sparkline(self)
 
@@ -227,8 +225,6 @@ class Graphs:
     Related Pages:
 
       https://apexcharts.com/
-
-    :return: A Python ChartJs object
     """
     return CompChartsApex.ApexChart(self)
 
@@ -249,8 +245,6 @@ class Graphs:
     Related Pages:
 
       https://c3js.org/
-
-    :return: A Python C3 object
     """
     return CompChartsC3.C3(self)
 
@@ -278,8 +272,6 @@ class Graphs:
     Related Pages:
 
       https://naver.github.io/billboard.js/
-
-    :return: A Python Billboard Object
     """
     return CompChartsBillboard.Billboard(self)
 
@@ -303,8 +295,6 @@ class Graphs:
     Related Pages:
 
       https://naver.github.io/billboard.js/
-
-    :return: A Python Billboard Object
     """
     return CompChartsBillboard.Billboard(self)
 
@@ -322,8 +312,6 @@ class Graphs:
     Related Pages:
 
       https://visjs.org/
-
-    :return: A Python Vis object
     """
     return CompChartsVis.Vis(self)
 
@@ -341,8 +329,6 @@ class Graphs:
     Related Pages:
 
       http://nvd3.org/
-
-    :return: A Python NVD3 object
     """
     return CompChartsNvd3.Nvd3(self)
 
@@ -508,11 +494,11 @@ class Graphs:
 
     Attributes:
     ----------
-    :param chart: The chart component.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param post:
-    :param profile: Optional. A flag to set the component performance storage.
+    :param chart: The chart component
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param post: Optional.
+    :param profile: Optional. A flag to set the component performance storage
     """
     # ("Csv", "fas fa-file-csv")
     commands = [("Clear", "fas fa-trash-alt", 15)]

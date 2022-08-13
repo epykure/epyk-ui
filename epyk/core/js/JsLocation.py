@@ -38,8 +38,8 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: The url parameter.
-    :param default: Optional. The default value.
+    :param key: The url parameter
+    :param default: Optional. The default value
     """
     key = JsUtils.jsConvertData(key, None)
     default = JsUtils.jsConvertData(default, None)
@@ -59,7 +59,7 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: The url parameter.
+    :param key: The url parameter
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.query, key))
@@ -76,7 +76,7 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: The url parameter.
+    :param key: The url parameter
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.query, key))
@@ -93,8 +93,8 @@ class URLSearchParams:
 
     Attributes:
     ----------
-    :param key: The url parameter.
-    :param value: The value to be appended to the URL.
+    :param key: The url parameter
+    :param value: The value to be appended to the URL
     """
     key = JsUtils.jsConvertData(key, None)
     value = JsUtils.jsConvertData(value, None)
@@ -232,7 +232,7 @@ class JsLocation:
 
     Usage::
 
-      page.js.location.origin + rptObj.js.location.pathname
+      page.js.location.origin + page.js.location.pathname
 
     Related Pages:
 
@@ -240,11 +240,12 @@ class JsLocation:
 
     :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number
       (including the colon sign (:) of the URL. For URL's using the "file:" protocol, the return value differs
-      between browser
+      between browser)
     """
     return JsString.JsString("location.origin", is_py_data=False)
 
-  def href(self, href: Union[str, primitives.JsDataModel] = None, secured: bool = False) -> JsObject.JsObject:
+  @classmethod
+  def href(cls, href: Union[str, primitives.JsDataModel] = None, secured: bool = False) -> JsObject.JsObject:
     """
     Description:
     ------------
@@ -260,8 +261,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param href: Optional. Set the href property.
-    :param secured: Optional.
+    :param href: Optional. Set the href property
+    :param secured: Optional. The secured flag
 
     :return: A String, representing the entire URL of the page, including the protocol (like http://).
     """
@@ -272,9 +273,10 @@ class JsLocation:
       href = r"http:\\%s" % href if not secured else r"https:\\%s" % href
     return JsObject.JsObject("location.href = %s" % JsUtils.jsConvertData(href, None))
 
-  def open_new_tab(self, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
+  @classmethod
+  def open_new_tab(cls, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
                    specs: Union[str, primitives.JsDataModel] = None, replace: Union[str, primitives.JsDataModel] = None,
-                   window_id: str = "window", secured: bool = False) -> JsFncs.JsFunction:
+                   window_id: str = "window", data: dict = None, secured: bool = False) -> JsFncs.JsFunction:
     """
     Description:
     ------------
@@ -292,17 +294,24 @@ class JsLocation:
     ----------
     :param url: Optional. Specifies the URL of the page to open.
       If no URL is specified, a new window/tab with about:blank is opened
-    :param name: Optional. Specifies the target attribute or the name of the window. Default _blank.
-    :param specs: Optional. A comma-separated list of items, no whitespaces.
+    :param name: Optional. Specifies the target attribute or the name of the window. Default _blank
+    :param specs: Optional. A comma-separated list of items, no whitespaces
     :param replace: Optional. Specifies whether the URL creates a new entry or replaces the current entry in the
-      history list.
-    :param window_id: The JavaScript window object
-    :param secured:
+      history list
+    :param window_id: Optional. The JavaScript window object
+    :param data: Optional. The url parameters
+    :param secured: Optional. The secure flag
     """
     if not hasattr(url, 'toStr') and url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
+    if data is not None:
+      attrs = []
+      for k, v in data.items():
+        js_val = JsUtils.jsConvertData(v, None)
+        attrs.append('"%s=" + %s' % (k, js_val))
+      url = str(url) + '+ "?" + %s' % ' +"&"+ '.join(attrs)
     if specs is None:
       return JsFncs.JsFunction("%s.open(%s, %s)" % (window_id, url, name))
 
@@ -310,7 +319,8 @@ class JsLocation:
     replace = JsUtils.jsConvertData(replace, None)
     return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (window_id, url, name, specs, replace))
 
-  def download(self, url: Union[str, primitives.JsDataModel],
+  @classmethod
+  def download(cls, url: Union[str, primitives.JsDataModel],
                name: Union[str, primitives.JsDataModel] = 'download') -> JsObjects.JsVoid:
     """
     Description:
@@ -319,8 +329,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: The url of the image.
-    :param name: Optional. The name of the file.
+    :param url: The url of the image
+    :param name: Optional. The name of the file
     """
     url = JsUtils.jsConvertData(url, None)
     name = JsUtils.jsConvertData(name, None)
@@ -345,9 +355,9 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param mails: The email addresses.
-    :param subject: The email's subject.
-    :param body: The email's content.
+    :param mails: The email addresses
+    :param subject: The email's subject
+    :param body: The email's content
 
     :return: THe Javascript string.
     """
@@ -356,7 +366,8 @@ class JsLocation:
     return self.href(JsString.JsString(
       "'mailto:%s?subject=%s&body='+ encodeURIComponent('%s')" % (mails, subject, body), is_py_data=False))
 
-  def reload(self, force_get: bool = False):
+  @classmethod
+  def reload(cls, force_get: bool = False):
     """
     Description:
     ------------
@@ -371,13 +382,14 @@ class JsLocation:
     Attributes:
     ----------
     :param force_get: Optional. Specifies the type of reloading:
-          false - Default. Reloads the current page from the cache.
-          true - Reloads the current page from the server.
+          false - Default. Reloads the current page from the cache
+          true - Reloads the current page from the server
     """
     force_get = JsUtils.jsConvertData(force_get, None)
     return JsFncs.JsFunction("location.reload(%s)" % force_get)
 
-  def assign(self, url: Union[str, primitives.JsDataModel]) -> JsFncs.JsFunction:
+  @classmethod
+  def assign(cls, url: Union[str, primitives.JsDataModel]) -> JsFncs.JsFunction:
     """
     Description:
     ------------
@@ -389,12 +401,13 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: Specifies the URL of the page to navigate to.
+    :param url: Specifies the URL of the page to navigate to
     """
     data = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.assign(%s)" % data)
 
-  def replace(self, url: Union[str, primitives.JsDataModel], secured: bool = False) -> JsFncs.JsFunction:
+  @classmethod
+  def replace(cls, url: Union[str, primitives.JsDataModel], secured: bool = False) -> JsFncs.JsFunction:
     """
     Description:
     ------------
@@ -410,15 +423,16 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: Specifies the URL of the page to navigate to.
-    :param secured: Optional. If the http is missing. This will be used to fix the url.
+    :param url: Specifies the URL of the page to navigate to
+    :param secured: Optional. If the http is missing. This will be used to fix the url
     """
     if url.startswith("www."):
       url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
     js_data = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunction("location.replace(%s)" % js_data)
 
-  def postTo(self, url: str, data: dict, method: str = "POST", target: str = "_blank"):
+  @classmethod
+  def postTo(cls, url: str, data: dict, method: str = "POST", target: str = "_blank"):
     """
     Description:
     ------------
@@ -430,20 +444,23 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param url: The target url.
-    :param data:
-    :param method: Optional. The method used to send the data. Default POST.
-    :param target: Optional.
+    :param url: The target url
+    :param data: The url parameters
+    :param method: Optional. The method used to send the data. Default POST
+    :param target: Optional. Target method to access the new page
     """
     inputs = []
     for k, v in data.items():
       js_val = JsUtils.jsConvertData(v, None)
-      inputs.append('var input = document.createElement("input"); input.name = "%s"; input.type = "hidden"; input.value = %s; form.appendChild(input);' % (k, js_val))
+      inputs.append('''
+var input = document.createElement("input"); input.name = "%s"; 
+input.type = "hidden"; input.value = %s; form.appendChild(input)''' % (k, js_val))
     return ''' 
       var form = document.createElement("form"); form.method = "%s"; form.target = "%s"; form.action = "%s"; %s;
       document.body.appendChild(form); form.submit()''' % (method, target, url, "".join(inputs))
 
-  def getUrlFromData(self, data: Union[dict, primitives.JsDataModel],
+  @classmethod
+  def getUrlFromData(cls, data: Union[dict, primitives.JsDataModel],
                      options: Optional[Union[dict, primitives.JsDataModel]] = None):
     """
     Description:
@@ -456,8 +473,8 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param data: Input data to be converted.
-    :param options: Optional. Blob definition properties.
+    :param data: Input data to be converted
+    :param options: Optional. Blob definition properties
     """
     data = JsUtils.jsConvertData(data, None)
     if options is not None:
@@ -466,8 +483,12 @@ class JsLocation:
 
     return JsObjects.JsObject.JsObject.get("window.URL.createObjectURL(new Blob([%s]))" % data)
 
-  def getUrlFromArrays(self, data: Union[list, primitives.JsDataModel],
-                       options: Optional[Union[dict, primitives.JsDataModel]] = None):
+  @classmethod
+  def getUrlFromArrays(cls, data: Union[list, primitives.JsDataModel],
+                       delimiter: Union[str, primitives.JsDataModel] = ",",
+                       charset: str = "utf-8",
+                       end_line: Union[str, primitives.JsDataModel] = "\r\n",
+                       ):
     """
     Description:
     ------------
@@ -475,12 +496,15 @@ class JsLocation:
 
     Attributes:
     ----------
-    :param data: A JavaScript array.
-    :param options: Optional. Blob definition properties.
+    :param data: A JavaScript array
+    :param delimiter: Optional. The column delimiter
+    :param charset: Optional.
+    :param end_line: Optional.
     """
     data = JsUtils.jsConvertData(data, None)
+    delimiter = JsUtils.jsConvertData(delimiter, None)
+    end_line = JsUtils.jsConvertData(end_line, None)
     return JsObjects.JsObject.JsObject.get(r'''
       (function(data){let csvContent = "";
-        data.forEach(function(rowArray){let row = rowArray.join(","); csvContent += row + "\r\n"});
-        return 'data:text/csv;charset=utf-8,'+escape(csvContent)})(%s)''' % data)
-
+        data.forEach(function(rowArray){let row = rowArray.join(%s); csvContent += row + %s});
+        return 'data:text/csv;charset=%s,'+escape(csvContent)})(%s)''' % (delimiter, end_line, charset, data))

@@ -4,6 +4,7 @@
 import datetime
 
 from epyk.core.html import graph
+from epyk.core.py import types
 
 
 class Nvd3:
@@ -12,8 +13,9 @@ class Nvd3:
     self.page = ui.page
     self.chartFamily = "NVD3"
 
-  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def plot(self, record=None, y=None, x=None, kind: str = "line", profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           options: types.OPTION_TYPE = None, html_code: str = None):
     """
     Description:
     ------------
@@ -27,23 +29,24 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if y is not None and not isinstance(y, list):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+  def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartScatter:
     """
     Description:
     ------------
@@ -60,14 +63,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -79,8 +82,9 @@ class Nvd3:
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
-  def line(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+           height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartLine:
     """
     Description:
     ------------
@@ -109,14 +113,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -129,8 +133,10 @@ class Nvd3:
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
-  def line_cumulative(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-                      height=(330, "px"), html_code=None):
+  def line_cumulative(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+                      options: types.OPTION_TYPE = None,
+                      width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                      html_code: str = None) -> graph.GraphNVD3.ChartCumulativeLine:
     """
     Description:
     ------------
@@ -147,14 +153,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -167,8 +173,10 @@ class Nvd3:
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
-  def line_focus(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-                 height=(330, "px"), html_code=None):
+  def line_focus(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+                 options: types.OPTION_TYPE = None,
+                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                 html_code: str = None) -> graph.GraphNVD3.ChartFocusLine:
     """
     Description:
     ------------
@@ -185,14 +193,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -205,8 +213,9 @@ class Nvd3:
     line_chart.dom.x(column="x").y(column="y")
     return line_chart
 
-  def bar(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-          height=(330, "px"), html_code=None):
+  def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+          height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartBar:
     """
     Description:
     ------------
@@ -235,14 +244,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -256,8 +265,9 @@ class Nvd3:
       bar_chart.add_trace(d, data['series'][i])
     return bar_chart
 
-  def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           options: types.OPTION_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
     """
     Description:
     ------------
@@ -286,14 +296,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -305,8 +315,9 @@ class Nvd3:
       bar_chart.add_trace(d, data['labels'][i])
     return bar_chart
 
-  def multi(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def multi(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartMultiBar:
     """
     Description:
     ------------
@@ -323,14 +334,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -344,8 +355,10 @@ class Nvd3:
       bar_chart.add_trace(d, data['labels'][i])
     return bar_chart
 
-  def histo(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def histo(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None,
+            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+            html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
     """
     Description:
     ------------
@@ -362,14 +375,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -381,8 +394,10 @@ class Nvd3:
       histo_chart.add_trace(d, data['labels'][i])
     return histo_chart
 
-  def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-                 height=(330, "px"), html_code=None):
+  def timeseries(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+                 options: types.OPTION_TYPE = None,
+                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                 html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
     """
     Description:
     ------------
@@ -399,14 +414,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -418,12 +433,13 @@ class Nvd3:
       histo_chart.add_trace(d, data['labels'][i])
     return histo_chart
 
-  def area(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           html_code: str = None) -> graph.GraphNVD3.ChartArea:
     """
     Description:
     ------------
-    Display a area chart from NVD3.
+    Display an area chart from NVD3.
 
     :tags:
     :categories:
@@ -436,14 +452,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -455,8 +471,9 @@ class Nvd3:
     area_chart.dom.x(column="label").y(column="y")
     return area_chart
 
-  def pie(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-          height=(330, "px"), html_code=None):
+  def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+          options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+          height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
     """
     Description:
     ------------
@@ -473,14 +490,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -492,8 +509,9 @@ class Nvd3:
       pie_chart.add_trace(d, data['labels'][i])
     return pie_chart
 
-  def donut(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
-            height=(330, "px"), html_code=None):
+  def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
     """
     Description:
     ------------
@@ -512,14 +530,14 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns, 'x_axis': x_axis})
@@ -531,8 +549,9 @@ class Nvd3:
       pie_chart.add_trace(d, data['labels'][i])
     return pie_chart
 
-  def gauge(self, value, text=None, total=100, profile=None, options=None, width=(100, "%"), height=(330, "px"),
-            html_code=None):
+  def gauge(self, value: float, text: str = None, total: float = 100, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
     """
     Description:
     ------------
@@ -551,11 +570,11 @@ class Nvd3:
     :param value:
     :param text:
     :param total:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if total != 100:
       value = value / total * 100
@@ -574,8 +593,11 @@ class Nvd3:
     ])
     return pie_chart
 
-  def parallel_coordinates(self, record, dimensions=None, profile=None, options=None, width=(100, "%"),
-                           height=(330, "px"), html_code=None):
+  def parallel_coordinates(self, record, dimensions=None, profile: types.PROFILE_TYPE = None,
+                           options: types.OPTION_TYPE = None,
+                           width: types.SIZE_TYPE = (100, "%"),
+                           height: types.SIZE_TYPE = (330, "px"),
+                           html_code: str = None) -> graph.GraphNVD3.ChartParallelCoord:
     """
     Description:
     ------------
@@ -589,13 +611,13 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param dimensions:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param dimensions: Optional.
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     chart = graph.GraphNVD3.ChartParallelCoord(self.page, width, height, options or {}, html_code, profile)
     chart.set_dimension_names(dimensions)
@@ -603,7 +625,9 @@ class Nvd3:
     chart.add_trace(record)
     return chart
 
-  def sunburst(self, record, name, profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
+  def sunburst(self, record, name: str, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+               html_code: str = None) -> graph.GraphNVD3.ChartSunbrust:
     """
     Description:
     ------------
@@ -617,13 +641,13 @@ class Nvd3:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param name:
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param name: Optional.
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     chart = graph.GraphNVD3.ChartSunbrust(self.page, width, height, options, html_code, profile)

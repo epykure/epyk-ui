@@ -1,5 +1,6 @@
 
 from epyk.core.html.graph import GraphDC
+from epyk.core.py import types
 
 
 class DC:
@@ -8,8 +9,9 @@ class DC:
     self.page = ui.page
     self.chartFamily = "DC"
 
-  def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+  def plot(self, record=None, y=None, x=None, kind: str = "line", profile: types.PROFILE_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+           options: types.OPTION_TYPE = None, html_code: str = None):
     """
     Description:
     ------------
@@ -21,15 +23,15 @@ class DC:
 
     Attributes:
     ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if not isinstance(y, list):
       y = [y]
@@ -49,11 +51,11 @@ class DC:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param varName: String.
-    :param extra_cols: List. Optional.
+    :param record: The Python list of dictionaries
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param varName:
+    :param extra_cols: Optional.
     """
     if not isinstance(y_columns, list):
       y_columns = [y_columns]
@@ -73,8 +75,9 @@ class DC:
     self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_group" % varName] = group.toStr()
     return {"crossfilter": crossfilter, 'dimension': dimension, 'group': group}
 
-  def line(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+  def line(self, record=None, y_columns=None, x_axis: str = None, title: str = None,
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
     """
     Description:
     -----------
@@ -91,15 +94,15 @@ class DC:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if isinstance(y_columns, list):
       line_chart = self.series(
@@ -113,8 +116,9 @@ class DC:
         line_chart.dom.dimension(cross_filter['dimension'].varId).group(cross_filter['group'].varId)
     return line_chart
 
-  def series(self, record=None, y_columns=None, x_axis=None, series_type='line', title=None, profile=None, options=None,
-             width=(100, "%"), height=(330, "px"), html_code=None):
+  def series(self, record=None, y_columns=None, x_axis=None, series_type: str = 'line', title: str = None,
+             profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
     """
     Description:
     -----------
@@ -131,16 +135,16 @@ class DC:
 
     Attributes:
     ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param series_type:
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param series_type: Optional.
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     pivot_rec = []
     for rec in record:

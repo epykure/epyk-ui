@@ -16,7 +16,7 @@ class OptionsSkin(Options):
     return self._config_get(self.page.theme.notch())
 
   @color.setter
-  def color(self, value):
+  def color(self, value: str):
     self._config(value)
 
   @property

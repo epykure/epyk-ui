@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
 from epyk.core.py import types
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
@@ -33,14 +32,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
-    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -73,15 +72,15 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: Optional. The list of dictionaries with the input data.
-    :param y: Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: Optional. The chart type.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. The width of the component in the page, default (100, '%').
-    :param height: Optional. The height of the component in the page, default (330, "px").
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if y is not None and not isinstance(y, list):
       y = [y]
@@ -107,14 +106,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -154,14 +153,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -199,14 +198,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -245,14 +244,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -290,14 +289,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -331,14 +330,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -372,14 +371,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
-    :param y_columns: The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: The column corresponding to a key in the dictionaries in the record.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: The width of the component in the page, default (100, '%').
-    :param height: The height of the component in the page, default (330, "px").
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: The Python list of dictionaries
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: The width of the component in the page, default (100, '%')
+    :param height: The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -417,14 +416,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -462,14 +461,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -501,14 +500,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -539,14 +538,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -577,14 +576,14 @@ class ApexChart:
 
     Attributes:
     ----------
-    :param record: The Python list of dictionaries.
+    :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -615,11 +614,11 @@ class ApexChart:
     ----------
     :param values: The gauge value.
     :param labels: The gauge label.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

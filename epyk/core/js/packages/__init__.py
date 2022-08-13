@@ -130,6 +130,8 @@ class JsPackage(primitives.JsDataModel):
     Base function to allow the creation of function with parameters which are list of dataclasses.
     Basically this will be then transpiled to a list of dictionary.
 
+    Attributes:
+    ----------
     :param name: The function Name.
     :param data_class: The Python Data class
     """

@@ -1,4 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
+from epyk.core.py import types
 from epyk.core.html import graph
 
 
@@ -7,7 +10,8 @@ class Canvas:
   def __init__(self, ui):
     self.page = ui.page
 
-  def new(self, height=(400, "px"), width=(100, "%"), profile=None, options=None, html_code=None):
+  def new(self, height: types.SIZE_TYPE = (400, "px"), width: types.SIZE_TYPE = (100, "%"),
+          profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None, html_code: str = None):
     """
     Description:
     ------------
@@ -32,12 +36,12 @@ class Canvas:
 
     Attributes:
     ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if not isinstance(width, tuple):
       width = (width, "px")

@@ -76,10 +76,10 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param data: Optional, The object data.
-    :param js_code: Optional, The object variable name.
-    :param is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json.
-    :param page: The internal report object.
+    :param data: Optional, The object data
+    :param js_code: Optional, The object variable name
+    :param is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json
+    :param page: The internal report object
 
     :return: The Python Javascript Date primitive
     """
@@ -106,7 +106,7 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param page: The internal report object.
+    :param page: The internal page object
 
     :return: The python Javascript object
     """
@@ -130,9 +130,9 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param js_code: The Javascript object reference.
-    :param page: The internal report object.
-    :param component:
+    :param js_code: The Javascript object reference
+    :param page: The internal report object
+    :param component: Optional. The HTML component object.
 
     :return: The python Javascript object
     """
@@ -157,8 +157,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param js_code: The variable name.
-    :param var_type: The type of variable to be set on the Javascript side.
+    :param js_code: The variable name
+    :param var_type: The type of variable to be set on the Javascript side
 
     :return: The Python Javascript Object
     """
@@ -180,7 +180,7 @@ class JsObject(primitives.JsDataModel):
       self._js.append("%s %s = %s" % (var_type, js_code, self.varData))
     return self
 
-  def prototype(self, name: str, value: Any):
+  def prototype(self, name: str, value: Any) -> str:
     """
     Description:
     ------------
@@ -192,8 +192,8 @@ class JsObject(primitives.JsDataModel):
 
     Attributes:
     ----------
-    :param name: The object property name.
-    :param value: The object property values.
+    :param name: The object property name
+    :param value: The object property values
 
     :return: A reference to the String.prototype object
     """

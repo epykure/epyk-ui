@@ -38,7 +38,7 @@ class Pivottable:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: String. Optional. Display a tooltip info component.
+    :param helper: Optional. Display a tooltip info component.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -54,7 +54,7 @@ class Pivottable:
     """
     Description:
     -----------
-    Create an HTML Pivot table
+    Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -74,10 +74,10 @@ class Pivottable:
     :param cols:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -111,10 +111,10 @@ class Pivottable:
     :param cols:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -151,10 +151,10 @@ class Pivottable:
     :param values:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -191,10 +191,10 @@ class Pivottable:
     :param cols:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -229,10 +229,10 @@ class Pivottable:
     :param cols:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -267,10 +267,10 @@ class Pivottable:
     :param cols:
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. Display a tooltip info component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. Display a tooltip info component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
