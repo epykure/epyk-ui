@@ -1,8 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import logging
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.options import OptTableAgGrid
 
@@ -33,11 +32,17 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param dict cols_def:
+    :param cols_def:
     """
-    for col in self.config['columnDefs']:
-      if col['colId'] in cols_def:
-        col.update(cols_def[col['colId']])
+    defined_cols = []
+    for col in self.options.columns:
+      if col.colId in cols_def:
+        col.update(cols_def[col.colId])
+        defined_cols.append(col.colId)
+    # add the extra columns to the table definition
+    for col_id, col_attrs in cols_def.items():
+      if col_id not in defined_cols:
+        self.add_column(col_id, attrs=col_attrs)
 
   @property
   def style(self) -> GrpClsTable.Aggrid:
@@ -47,7 +52,7 @@ class Table(Html.Html):
 
     Usage::
 
-    :rtype: GrpClsTable.Aggrid
+
     """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Aggrid(self)
@@ -60,23 +65,10 @@ class Table(Html.Html):
     ------------
     Ag Grid table options.
 
-    :rtype: OptTableAgGrid.TableConfig
-    """
-    return super().options
-
-  @property
-  def config(self) -> OptTableAgGrid.TableConfig:
-    """
-    Description:
-    -----------
-
     Usage::
 
-    :rtype: OptTableAgGrid.TableConfig
     """
-    if self.__config is None:
-      self.__config = OptTableAgGrid.TableConfig(component=self, page=self.page)
-    return self.__config
+    return super().options
 
   @property
   def js(self) -> JsAgGrid.AgGrid:
@@ -88,43 +80,50 @@ class Table(Html.Html):
     Usage::
 
     :return: A Javascript object
-
-    :rtype: JsAgGrid.AgGrid
     """
     if self._js is None:
       self._js = JsAgGrid.AgGrid(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
 
-  def add_column(self, field: str, title: str = None):
+  def add_column(self, field: str, title: str = None, attrs: dict = None):
     """
     Description:
     -----------
+    Add a column to the column definition for the table.
 
     Usage::
 
+      table.add_column("test", "Test Column")
+
     Attributes:
     ----------
-    :param str field:
-    :param str title:
+    :param field: The column attribute
+    :param title: Optional. The column title
+    :param attrs: Optional. The specific column properties
     """
     col_def = self.options.columns
     col_def.field = field
     col_def.colId = field
     col_def.headerName = field if title is None else title
+    if attrs is not None:
+      col_def.update(attrs)
     return col_def
 
   @property
-  def tableId(self):
+  def tableId(self) -> str:
     """
     Description:
     -----------
     Return the Javascript variable of the chart.
 
     Usage::
+
+      table.tableId
     """
     return "%s_obj" % self.htmlCode
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
     Description:
     -----------
@@ -133,10 +132,10 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param data:
-    :param options:
-    :param profile:
-    :param component_id:
+    :param data: Optional.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. The object reference ID
     """
     if data:
       return self.js.setRowData(data)

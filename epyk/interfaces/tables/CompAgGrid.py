@@ -23,6 +23,15 @@ class AgGrid:
 
     Usage::
 
+      import epyk as pk
+      from epyk.mocks import urls as data_urls
+
+      page = pk.Page()
+      data = page.py.requests.csv(data_urls.AIRPORT_TRAFFIC)
+      table = page.ui.tables.aggrids.table(data)
+      table.options.paginationPageSize = 10
+      table.options.rowSelection = "single"
+
     Attributes:
     ----------
     :param records: Optional. The list of dictionaries with the input data.
@@ -40,7 +49,7 @@ class AgGrid:
       if records is not None and records:
         cols = list(records[0].keys())
 
-    table_options_dfls = {'headerHeight': 30, 'rowHeight': '50'}
+    table_options_dfls = {'headerHeight': 30, 'rowHeight': 25}
     if options is not None:
       table_options_dfls.update(options)
     table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code, table_options_dfls, profile)

@@ -646,6 +646,22 @@ class RowComponent(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.getData()" % self.toStr(), page=self.page, component=self.component)
 
+  def getDict(self) -> dict:
+    """
+    Description:
+    ------------
+    Return the if columns are defined on the Python side.
+
+    Usage::
+
+      table.js._.getDict()
+    """
+    if not self.component.options.columns:
+      raise ValueError("This method cannot be called to get the python row dictionary")
+
+    return {c.field: JsUtils.jsWrap(
+      "%s.getData()['%s']" % (self.toStr(), c.field)) for c in self.component.options.columns}
+
   def getElement(self) -> JsNodeDom.JsDoms:
     """
     Description:
@@ -832,8 +848,26 @@ class RowComponent(JsPackage):
                                      page=self.page, component=self.component)
 
   def addTreeChildren(self, data):
+    """
+
+    :param data:
+    """
     return JsObjects.JsArray.JsArray("%s.forEach(function(rec){%s.addTreeChild(rec)})" % (
       JsUtils.jsConvertData(data, None), self._selector), page=self.page, component=self.component)
+
+  @JsUtils.fromVersion({'tabulator-tables': '5.3.0'})
+  def watchPosition(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    ------------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    """
+    return "%s.watchPosition(function(value, count, data, group){%s})" % (self._selector, JsUtils.jsConvertFncs(
+        js_funcs, toStr=True, profile=profile))
 
 
 class TabRowContextMenu(JsPackage):

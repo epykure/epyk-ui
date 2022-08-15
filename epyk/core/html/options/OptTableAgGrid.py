@@ -292,7 +292,7 @@ class Column(Options):
     return self._config_get()
 
   @field.setter
-  def field(self, val):
+  def field(self, val: str):
     self._config(val)
 
   @property
@@ -335,7 +335,7 @@ class Column(Options):
     return self._config_get()
 
   @headerName.setter
-  def headerName(self, val):
+  def headerName(self, val: str):
     self._config(val)
 
   @property
@@ -954,7 +954,6 @@ class TableConfig(Options):
     Description:
     -----------
 
-    :rtype: Column
     """
     return self._config_sub_data_enum("columnDefs", Column)
 
@@ -964,7 +963,6 @@ class TableConfig(Options):
     Description:
     -----------
 
-    :rtype: DefaultColDef
     """
     return self._config_sub_data("defaultColDef", DefaultColDef)
 
@@ -974,11 +972,11 @@ class TableConfig(Options):
     Description:
     -----------
     """
-    return self._config_get()
+    return self._config_get(name="rowData")
 
   @data.setter
   def data(self, val):
-    self._config(val)
+    self._config(val, name="rowData")
 
   @property
   def deltaColumnMode(self):
@@ -989,7 +987,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @deltaColumnMode.setter
-  def deltaColumnMode(self, val):
+  def deltaColumnMode(self, val: str):
     self._config(val)
 
   @property
@@ -1001,8 +999,8 @@ class TableConfig(Options):
     return self._config_get()
 
   @enablePivot.setter
-  def enablePivot(self, val):
-    self._config(val)
+  def enablePivot(self, flag: bool):
+    self._config(flag)
 
   @property
   def enableValue(self):
@@ -1013,8 +1011,8 @@ class TableConfig(Options):
     return self._config_get()
 
   @enableValue.setter
-  def enableValue(self, val):
-    self._config(val)
+  def enableValue(self, flag: bool):
+    self._config(flag)
 
   @property
   def enterMovesDown(self):
@@ -1087,8 +1085,9 @@ class TableConfig(Options):
     return self._config_get(100)
 
   @paginationPageSize.setter
-  def paginationPageSize(self, val):
-    self._config(val)
+  def paginationPageSize(self, num: int):
+    self.pagination = num > 0
+    self._config(num)
 
   @property
   def paginationAutoPageSize(self):
@@ -1106,8 +1105,8 @@ class TableConfig(Options):
     return self._config_get()
 
   @paginationAutoPageSize.setter
-  def paginationAutoPageSize(self, val):
-    self._config(val)
+  def paginationAutoPageSize(self, num: int):
+    self._config(num)
 
   @property
   def groupSelectsChildren(self):
@@ -1125,6 +1124,24 @@ class TableConfig(Options):
   @groupSelectsChildren.setter
   def groupSelectsChildren(self, val):
     self._config(val)
+
+  @property
+  def rowHeight(self):
+    """
+    Description:
+    -----------
+    By default, the grid will display rows with a height of 25px. You can change this for each row individually
+    to give each row a different height.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-height/
+    """
+    return self._config_get(25)
+
+  @rowHeight.setter
+  def rowHeight(self, num: int):
+    self._config(int(num))
 
   @property
   def singleClickEdit(self):
@@ -1279,7 +1296,7 @@ class TableConfig(Options):
     Description:
     -----------
     Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
-    By default the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
+    By default, the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
     row is selected in its place).
 
     Related Pages:
@@ -1373,7 +1390,6 @@ class TableConfig(Options):
     Description:
     -----------
 
-    :rtype: TableSideBar
     """
     return self._config_sub_data("sideBar", TableSideBar)
 
@@ -1382,6 +1398,5 @@ class TableConfig(Options):
     Description:
     -----------
 
-    :rtype: TableStatusBar
     """
     return self._config_sub_data("statusBar", TableStatusBar)

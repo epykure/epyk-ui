@@ -737,6 +737,18 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.getSelectedNodes()" % self.varId)
 
+  def getFocusedCell(self):
+    """
+    Description:
+    -----------
+    Returns the focused cell (or the last focused cell if the grid lost focus).
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grid-api/
+    """
+    return JsObjects.JsVoid("%s.api.getFocusedCell()" % self.varId)
+
   def getSelectedRows(self):
     """
     Description:

@@ -2439,13 +2439,27 @@ class ImportModule:
 
     self.page.imports.add(self._name)
     if self._name == 'ag-grid-community':
-      JS_IMPORTS['ag-grid-community']["version"] = "28.1.0"
-      JS_IMPORTS['ag-grid-community']['modules'] =  [
+      version = "28.1.0"
+      JS_IMPORTS['ag-grid-community']["version"] = version
+      JS_IMPORTS['ag-grid-community']['modules'] = [
         {'script': 'ag-grid-enterprise.min.js', 'path': 'ag-grid-enterprise@%(version)s/dist/', 'cdnjs': JSDELIVER},
       ]
+      self._js["main"] = {"%s/ag-grid-enterprise@%s/dist/ag-grid-enterprise.min.js" % (JSDELIVER, version): version}
+      self._js["type"] = {
+        "%s/ag-grid-enterprise@%s/dist/ag-grid-enterprise.min.js" % (JSDELIVER, version): 'text/javascript'}
+      self._js["dep"] = ["/static\\ag-grid/%s/ag-grid-enterprise.min.js" % version]
+      self._js["versions"] = [version]
+
       CSS_IMPORTS['ag-grid-community']['modules'] = [
-        {'script': 'ag-theme-alpine.min.css', 'path': 'ag-grid-enterprise@%(version)s/dist/styles/', 'cdnjs': JSDELIVER},
+        {'script': 'ag-theme-alpine.min.css', 'path': 'ag-grid-enterprise@%(version)s/dist/styles/',
+         'cdnjs': JSDELIVER},
       ]
+      self._css["main"] = {
+        "%s/ag-grid-enterprise@%s/dist/styles/ag-theme-alpine.min.css" % (JSDELIVER, version): version}
+      self._css["type"] = {
+        "%s/ag-grid-enterprise@%s/dist/styles/ag-theme-alpine.min.css" % (JSDELIVER, version): 'text/javascript'}
+      self._css["dep"] = ["/static\\ag-grid/%s/styles/ag-theme-alpine.min.css" % version]
+      self._css["versions"] = [version]
 
   def set_access_token(self, value: str = None, name: str = ""):
     """
