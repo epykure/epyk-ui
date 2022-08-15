@@ -5,6 +5,15 @@ from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 
 
+class EnumSidebar(Enums):
+
+  def filters(self):
+    return self._set_value()
+
+  def columns(self):
+    return self._set_value()
+
+
 class CellEditor(Enums):
 
   def datePicker(self):
@@ -1392,6 +1401,10 @@ class TableConfig(Options):
 
     """
     return self._config_sub_data("sideBar", TableSideBar)
+
+  @property
+  def sideBars(self):
+    return EnumSidebar(self, "sideBar")
 
   def statusBar(self) -> TableStatusBar:
     """
