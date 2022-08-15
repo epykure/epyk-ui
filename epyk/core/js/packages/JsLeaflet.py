@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
 
 
 class LTooltip:
 
-  def __init__(self, latlng=None, options=None, selector=None):
+  def __init__(self, latlng=None, options: dict = None, selector=None):
     self._selector = selector
     self._js, self.__is_attached = [], False
     self.varId = "L.marker(%s)" % latlng
@@ -67,12 +67,12 @@ class Layer:
 
 class LMarker:
 
-  def __init__(self, latlng, options=None, leaflet_map=None):
+  def __init__(self, latlng: list = None, options: dict = None, leaflet_map=None):
     self.leaflet_map, self.latlng = leaflet_map, latlng
     self._js, self.__is_attached, self.options = [], False, options or {}
     self.varId = "L.marker"
 
-  def addTo(self, selector=None):
+  def addTo(self, selector: str = None):
     """
     Description:
     -----------
@@ -80,13 +80,13 @@ class LMarker:
 
     Attributes:
     ----------
-    :param selector: String. Optional. The map reference variable.
+    :param selector: Optional. The map reference variable.
     """
     self._js.append("addTo(%s)" % selector)
     self.__is_attached = True
     return self
 
-  def bindPopup(self, content):
+  def bindPopup(self, content: str):
     """
     Description:
     -----------
@@ -98,14 +98,14 @@ class LMarker:
 
     Attributes:
     ----------
-    :param content: String. The market content.
+    :param content: The market content.
     """
     self._js.append("bindPopup(%s)" % JsUtils.jsConvertData(content, None))
     popup = LPopup()
     popup.varId = self.toStr()
     return popup
 
-  def bindTooltip(self, content):
+  def bindTooltip(self, content: str):
     """
     Description:
     -----------
@@ -117,7 +117,7 @@ class LMarker:
 
     Attributes:
     ----------
-    :param content: String. The tooltip content.
+    :param content: The tooltip content.
     """
     self._js.append("bindTooltip(%s)" % JsUtils.jsConvertData(content, None))
     tooltip = LTooltip()
@@ -130,22 +130,30 @@ class LMarker:
     -----------
     Changes the marker position to the given point.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-setlatlng
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-setlatlng
 
     Attributes:
     ----------
-    :param latlng:
+    :param latlng: The latitude and longitude data
     """
     self._js.append("setLatLng(%s)" % latlng)
     return self
 
-  def setIcon(self, icon):
+  def setLngLat(self, lnglat):
+    self._js.append("setLngLat(%s)" % lnglat)
+    return self
+
+  def setIcon(self, icon: str):
     """
     Description:
     -----------
     Changes the marker icon.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-seticon
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-seticon
 
     Attributes:
     ----------
@@ -154,32 +162,37 @@ class LMarker:
     self._js.append("setIcon(%s)" % icon)
     return self
 
-  def setOpacity(self, opacity):
+  def setOpacity(self, opacity: float):
     """
     Description:
     -----------
     Changes the opacity of the marker.
+    Set the opacity of an element (including old IE support). opacity must be a number from 0 to 1.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-setopacity
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-setopacity
 
     Attributes:
     ----------
-    :param opacity:
+    :param opacity: A number between 0 and 1
     """
     self._js.append("setOpacity(%s)" % opacity)
     return self
 
-  def setZIndexOffset(self, offset):
+  def setZIndexOffset(self, offset: float):
     """
     Description:
     -----------
     Changes the zIndex offset of the marker.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-setzindexoffset
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-setzindexoffset
 
     Attributes:
     ----------
-    :param offset:
+    :param offset: The offset number
     """
     self._js.append("setZIndexOffset(%s)" % offset)
     return self
@@ -189,53 +202,68 @@ class LMarker:
       self.addTo(self.leaflet_map.varName)
     js_fnc = ".".join(self._js)
     self._js = []
+    if self.latlng is None:
+      return "%s(%s).%s" % (self.varId, JsUtils.jsConvertData(self.options, None), js_fnc)
+
     return "%s(%s, %s).%s" % (self.varId, self.latlng, JsUtils.jsConvertData(self.options, None), js_fnc)
 
 
 class LCircle(LMarker):
 
-  def __init__(self, latlng, options=None, shape="circle", leaflet_map=None):
+  def __init__(self, latlng, options: dict = None, shape: str = "circle", leaflet_map=None):
     super(LCircle, self).__init__(latlng, options, leaflet_map)
     self.varId = "L.%s" % shape
 
-  def radius(self, num):
+  def radius(self, num: float):
     """
+    Description:
+    -----------
     Radius of the circle, in meters.
 
-    https://leafletjs.com/reference-1.7.1.html#circle-radius
+    Related Pages:
 
+      https://leafletjs.com/reference-1.7.1.html#circle-radius
+
+    Attributes:
+    ----------
     :param num:
     """
     self.options["radius"] = num
     return self
 
-  def color(self, hexcode):
+  def color(self, hexcode: str):
     """
+    Description:
+    -----------
     Color of the circle.
 
-    https://leafletjs.com/reference-1.7.1.html#path
+    Related Pages:
 
-    :param hexcode:
+      https://leafletjs.com/reference-1.7.1.html#path
+
+    Attributes:
+    ----------
+    :param hexcode: The hexadecimal color code
     """
     self.options["color"] = hexcode
     return self
 
-  def fillOpacity(self, num):
+  def fillOpacity(self, num: float):
     self.options["fillOpacity"] = num
     return self
 
-  def fillColor(self, hexcode):
+  def fillColor(self, hexcode: str):
     self.options["fillColor"] = hexcode
     return self
 
-  def weight(self, num):
+  def weight(self, num: float):
     self.options["weight"] = num
     return self
 
 
 class LPopup:
 
-  def __init__(self, latlng=None, options=None, selector=None):
+  def __init__(self, latlng=None, options: dict = None, selector=None):
     self._selector = selector
     self._js, self.__is_attached = [], False
     self.varId = "L.marker(%s)" % latlng
@@ -246,7 +274,9 @@ class LPopup:
     -----------
     Opens the bound popup at the specified latlng or at the default popup anchor if no latlng is passed.
 
-    https://leafletjs.com/reference-1.7.1.html#layer-openpopup
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#layer-openpopup
     """
     if latlng is not None:
       self.setLatLng(latlng)
@@ -259,7 +289,9 @@ class LPopup:
     -----------
     Changes the marker position to the given point.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-setlatlng
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-setlatlng
 
     Attributes:
     ----------
@@ -268,13 +300,15 @@ class LPopup:
     self._js.append("setLatLng(%s)" % latlng)
     return self
 
-  def setZIndexOffset(self, offset):
+  def setZIndexOffset(self, offset: float):
     """
     Description:
     -----------
     Changes the zIndex offset of the marker.
 
-    https://leafletjs.com/reference-1.7.1.html#marker-setzindexoffset
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#marker-setzindexoffset
 
     Attributes:
     ----------
@@ -283,14 +317,14 @@ class LPopup:
     self._js.append("setZIndexOffset(%s)" % offset)
     return self
 
-  def setContent(self, content):
+  def setContent(self, content: str):
     """
     Description:
     -----------
 
     Attributes:
     ----------
-    :param content: String. The popup content.
+    :param content: The popup content.
     """
     self._js.append("setContent(%s)" % JsUtils.jsConvertData(content, None))
     return self
@@ -314,10 +348,14 @@ class LtileLayer:
     self.srv_url = "%s?access_token=%s" % (url, token)
     self.options, self.__is_attached, self._js = options or {}, False, []
 
-  def attribution(self, text):
+  def attribution(self, text: str):
     """
+    Description:
+    -----------
     The attribution control allows you to display attribution data in a small text box on a map.
 
+    Attributes:
+    ----------
     :param text:
     """
     self.options["attribution"] = text
@@ -325,35 +363,56 @@ class LtileLayer:
 
   def maxBounds(self, latLngBounds):
     """
-    When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the user tries to pan outside the view.
+    Description:
+    -----------
+    When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the
+    user tries to pan outside the view.
     To set the restriction dynamically, use setMaxBounds method.
 
-    https://leafletjs.com/reference-1.7.1.html#map-maxbounds
+    Related Pages:
 
+      https://leafletjs.com/reference-1.7.1.html#map-maxbounds
+
+    Attributes:
+    ----------
     :param latLngBounds:
     """
     self.options["maxBounds"] = latLngBounds
     return self
 
-  def maxZoom(self, num):
+  def maxZoom(self, num: float):
     """
+    Description:
+    -----------
     Maximum zoom level of the map.
-    If not specified and at least one GridLayer or TileLayer is in the map, the highest of their maxZoom options will be used instead.
+    If not specified and at least one GridLayer or TileLayer is in the map, the highest of their maxZoom options will
+    be used instead.
 
-    https://leafletjs.com/reference-1.7.1.html#map-maxzoom
+    Related Pages:
 
-    :param num:
+      https://leafletjs.com/reference-1.7.1.html#map-maxzoom
+
+    Attributes:
+    ----------
+    :param num: Max zoom allowed on this map
     """
     self.options["maxZoom"] = num
     return self
 
-  def minZoom(self, num):
+  def minZoom(self, num: float):
     """
-    Minimum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map, the lowest of their minZoom options will be used instead.
+    Description:
+    -----------
+    Minimum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map,
+    the lowest of their minZoom options will be used instead.
 
-    https://leafletjs.com/reference-1.7.1.html#map-minzoom
+    Related Pages:
 
-    :param num:
+      https://leafletjs.com/reference-1.7.1.html#map-minzoom
+
+    Attributes:
+    ----------
+    :param num: The min zoom allowed on this map
     """
     self.options["minZoom"] = num
     return self
@@ -362,30 +421,51 @@ class LtileLayer:
     self.options["id"] = value
     return self
 
-  def tileSize(self, num):
+  def tileSize(self, num: int):
     """
-    Width and height of tiles in the grid. Use a number if width and height are equal, or L.point(width, height) otherwise.
+    Description:
+    -----------
+    Width and height of tiles in the grid. Use a number if width and height are equal,
+    or L.point(width, height) otherwise.
 
-    https://leafletjs.com/reference-1.7.1.html#gridlayer-tilesize
+    Related Pages:
 
-    :param num:
+      https://leafletjs.com/reference-1.7.1.html#gridlayer-tilesize
+
+    Attributes:
+    ----------
+    :param num: Title font size in pixel
     """
     self.options["tileSize"] = num
     return self
 
-  def zoomOffset(self, num):
+  def zoomOffset(self, num: float):
     """
+    Description:
+    -----------
     The zoom number used in tile URLs will be offset with this value.
 
-    https://leafletjs.com/reference-1.7.1.html#tilelayer-zoomoffset
+    Related Pages:
 
+      https://leafletjs.com/reference-1.7.1.html#tilelayer-zoomoffset
+
+    Attributes:
+    ----------
     :param num:
-    :return:
     """
     self.options["zoomOffset"] = num
     return self
 
-  def accessToken(self, token):
+  def accessToken(self, token: str):
+    """
+    Description:
+    -----------
+    Set the API access token
+
+    Attributes:
+    ----------
+    :param token: The token value
+    """
     self.srv_url = "%s?access_token=%s" % (self.srv_url.split("?")[0], token)
     return self
 
@@ -405,15 +485,18 @@ class LtileLayer:
 
 class LMapAttributionControl:
 
-  def __init__(self, varId=None):
+  def __init__(self, varId: str = None):
     self._js = []
     self.varId = varId
 
   def addAttribution(self, text):
     """
+    Description:
+    -----------
     The attribution control allows you to display attribution data in a small text box on a map.
 
-
+    Attributes:
+    ----------
     :param text:
     """
     return "%s.addAttribution(%s)" % (self.varId, JsUtils.jsConvertData(text, None))
@@ -430,7 +513,7 @@ class LMap:
   def varName(self):
     return self.varId or self.set_var or "window['%s']" % self.component.chartId
 
-  def setView(self, LatLng, zoom=None):
+  def setView(self, LatLng, zoom: float = None):
     """
     Description:
     -----------
@@ -442,8 +525,8 @@ class LMap:
 
     Attributes:
     ----------
-    :param LatLng: List.
-    :param zoom: Integer. Optional.
+    :param LatLng:
+    :param zoom: Optional. The init zoom
     """
     if zoom is not None:
       self._js.append("setView(%s, %s)" % (LatLng, zoom))
@@ -451,56 +534,84 @@ class LMap:
       self._js.append("setView(%s)" % LatLng)
     return self
 
-  def on(self, typeEvent, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def on(self, type_event: types.JS_DATA_TYPES, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
+    Description:
+    -----------
+    Add event / interactivity to the map.
 
-    :param typeEvent:
+    Attributes:
+    ----------
+    :param type_event: Type of events (load, click...)
     :param js_funcs:
     :param profile:
     """
-    return JsUtils.jsWrap("%s; %s.on('%s', function(event){%s})" % (
-      self.toStr(), self.varName, typeEvent, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+    type_event = JsUtils.jsConvertData(type_event, None)
+    return JsUtils.jsWrap("%s; %s.on(%s, function(event){%s})" % (
+      self.toStr(), self.varName, type_event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
-  def locationfound(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def locationfound(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
+    Description:
+    -----------
     Fired when geolocation (using the locate method) went successfully.
 
-    https://leafletjs.com/reference-1.7.1.html#map-locationfound
-    https://leafletjs.com/examples/mobile/
+    Related Pages:
 
+      https://leafletjs.com/reference-1.7.1.html#map-locationfound
+      https://leafletjs.com/examples/mobile/
+
+    Attributes:
+    ----------
     :param js_funcs:
     :param profile:
     """
     return self.on("locationfound", js_funcs, profile)
 
-  def locationerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
+  def locationerror(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
+    Description:
+    -----------
     Fired when geolocation (using the locate method) failed.
 
-    https://leafletjs.com/examples/mobile/
-    https://leafletjs.com/reference-1.7.1.html#map-locationerror
+    Related Pages:
 
+      https://leafletjs.com/examples/mobile/
+      https://leafletjs.com/reference-1.7.1.html#map-locationerror
+
+    Attributes:
+    ----------
     :param js_funcs:
     :param profile:
     """
     return self.on("locationerror", js_funcs, profile)
 
-  def createPane(self, text):
+  def createPane(self, text: str):
     """
+    Description:
+    -----------
     Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
     if map.locate was called with {setView: true}.
 
-    https://leafletjs.com/reference-1.7.1.html#map-createpane
+    Related Pages:
 
+      https://leafletjs.com/reference-1.7.1.html#map-createpane
+
+    Attributes:
+    ----------
     :param text:
     """
     return JsUtils.jsWrap("%s; %s.createPane(%s)" % (self.toStr(), self.varName, JsUtils.jsConvertData(text, None)))
 
   def remove(self):
     """
+    Description:
+    -----------
     Destroys the map and clears all related event listeners.
 
-    https://leafletjs.com/reference-1.7.1.html#map-remove
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#map-remove
     """
     return JsUtils.jsWrap("%s; %s.remove()" % (self.toStr(), self.varName))
 
@@ -518,13 +629,19 @@ class LMap:
     self._js.append("fitWorld()")
     return self
 
-  def locate(self, options=None):
+  def locate(self, options: dict = None):
     """
+    Description:
+    -----------
     Tries to locate the user using the Geolocation API, firing a locationfound event with location data on success or a
     locationerror event on failure, and optionally sets the map view to the user's location with respect to detection accuracy
 
-    https://leafletjs.com/reference-1.7.1.html#map-locate
+    Related Pages:
 
+      hhttps://leafletjs.com/reference-1.7.1.html#map-locate
+
+    Attributes:
+    ----------
     :param options:
     """
     options = options or {"setView": True, "maxZoom": 16}
@@ -533,10 +650,14 @@ class LMap:
 
   def stopLocate(self):
     """
+    Description:
+    -----------
     Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
     if map.locate was called with {setView: true}.
 
-    https://leafletjs.com/reference-1.7.1.html#map-stoplocate
+    Related Pages:
+
+      https://leafletjs.com/reference-1.7.1.html#map-stoplocate
     """
     self._js.append("stopLocate()")
     return self
@@ -558,7 +679,7 @@ class LMap:
 
 class LGeoJSON(LMarker):
 
-  def __init__(self, shapes, options=None, leaflet_map=None):
+  def __init__(self, shapes, options: dict = None, leaflet_map=None):
     super(LGeoJSON, self).__init__(JsUtils.jsConvertData(shapes, None), options, leaflet_map)
     self.varId = "L.geoJSON"
 
@@ -597,18 +718,20 @@ class LControl:
 class LEventlLatlng:
 
   @property
-  def lat(self):
+  def lat(self) -> str:
     """
+    Description:
+    -----------
     Return the latitude.
-
     """
     return "event.latlng.lat"
 
   @property
-  def lng(self):
+  def lng(self) -> str:
     """
+    Description:
+    -----------
     Return the longitude.
-
     """
     return "event.latlng.lng"
 
@@ -622,6 +745,8 @@ class LEvent(JsPackage):
   @property
   def latlng(self):
     """
+    Description:
+    -----------
     Get coordinate from an event on a map.
     """
     return LEventlLatlng()
@@ -647,9 +772,14 @@ class LeafLet(JsPackage):
       self._map = LMap(self.component, set_var=self._selector)
     return self._map
 
-  def control(self, alias, options=None):
+  def control(self, alias, options: dict = None):
     """
+    Description:
+    -----------
 
+
+    Attributes:
+    ----------
     :param alias:
     :param options:
     """
@@ -657,15 +787,15 @@ class LeafLet(JsPackage):
       self._control[alias] = LControl(self.component, options=options, set_var=self._selector)
     return self._control[alias]
 
-  def setZoom(self, zoom):
+  def setZoom(self, zoom: float):
     """
     Description:
     -----------
     Sets the zoom of the map.
 
-    hRelated Pages:
+    Related Pages:
 
-      ttps://leafletjs.com/reference-1.7.1.html#map-example
+      https://leafletjs.com/reference-1.7.1.html#map-example
 
     Attributes:
     ----------
@@ -673,7 +803,7 @@ class LeafLet(JsPackage):
     """
     return JsUtils.jsWrap("%s.setZoom(%s)" % (self._selector, zoom))
 
-  def setView(self, LatLng, zoom=None):
+  def setView(self, LatLng, zoom: float = None):
     """
     Description:
     -----------
@@ -693,7 +823,7 @@ class LeafLet(JsPackage):
 
     return JsUtils.jsWrap("%s.setView(%s)" % (self._selector, LatLng))
 
-  def zoomIn(self, delta):
+  def zoomIn(self, delta: float):
     """
     Description:
     -----------
@@ -705,7 +835,7 @@ class LeafLet(JsPackage):
     """
     return JsUtils.jsWrap("%s.zoomIn(%s)" % (self._selector, delta))
 
-  def marker(self, latlng, options=None):
+  def marker(self, latlng, options: dict = None):
     """
     Description:
     -----------
@@ -721,24 +851,32 @@ class LeafLet(JsPackage):
     """
     return LMarker(latlng, options, leaflet_map=self.map)
 
-  def circle(self, latlng, options=None):
+  def circle(self, latlng, options: dict = None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param latlng:
     :param options:
     """
     return LCircle(latlng, options, leaflet_map=self.map)
 
-  def tileLayer(self, token, options=None, url="https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}"):
+  def tileLayer(self, token: str, options: dict = None, url: str = "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}"):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param token:
     :param options:
     :param url:
     """
     return LtileLayer(self.component, token, url, options, leaflet_map=self.map)
 
-  def popup(self, options=None, source=None):
+  def popup(self, options: dict = None, source=None):
     """
     Description:
     -----------
@@ -754,7 +892,7 @@ class LeafLet(JsPackage):
     """
     pass
 
-  def tooltip(self, options=None, source=None):
+  def tooltip(self, options: dict = None, source=None):
     """
     Description:
     -----------
@@ -778,37 +916,48 @@ class LeafLet(JsPackage):
     Related Pages:
 
       https://leafletjs.com/reference-1.7.1.html#imageoverlay-l-imageoverlay
-
     """
     pass
 
-  def videoOverlay (self):
+  def videoOverlay(self):
     pass
 
   def svgOverlay(self):
     pass
 
-  def polyline(self, latlng1, latlng2, options=None):
+  def polyline(self, latlng1, latlng2, options: dict = None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param latlng1:
     :param latlng2:
     :param options:
     """
     return LCircle([latlng1, latlng2], options, shape="polyline", leaflet_map=self.map)
 
-  def polygon(self, latlng1, latlng2, options=None):
+  def polygon(self, latlng1, latlng2, options: dict = None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param latlng1:
     :param latlng2:
     :param options:
     """
     return LCircle([latlng1, latlng2], options, shape="polygon", leaflet_map=self.map)
 
-  def rectangle(self, latlng1, latlng2, options=None):
+  def rectangle(self, latlng1, latlng2, options: dict = None):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param latlng1:
     :param latlng2:
     :param options:
@@ -824,13 +973,19 @@ class LeafLet(JsPackage):
   def featureGroup(self):
     pass
 
-  def geoJSON(self, shapes, options=None):
+  def geoJSON(self, shapes, options: dict = None) -> LGeoJSON:
     """
+    Description:
+    -----------
 
-    https://leafletjs.com/examples/geojson/
+    Related Pages:
 
+      hhttps://leafletjs.com/examples/geojson/
     """
     return LGeoJSON(shapes, options, leaflet_map=self.map)
 
   def latLng(self):
+    pass
+
+  def onRegionClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     pass

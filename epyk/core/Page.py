@@ -82,6 +82,7 @@ class JsProperties:
     Attributes:
     ----------
     :param builder_def: The builder definition.
+    :param func_dsc:
     """
     if isinstance(builder_def, list):
       for builder in builder_def:

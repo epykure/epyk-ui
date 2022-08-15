@@ -6,6 +6,7 @@ from epyk.interfaces.geo import CompGeoChartJs
 from epyk.interfaces.geo import CompGeoGoogle
 from epyk.interfaces.geo import CompGeoLeaflet
 from epyk.interfaces.geo import CompGeoD3
+from epyk.interfaces.geo import CompGeoMapboxGl
 
 
 class Geo:
@@ -136,3 +137,17 @@ class Geo:
 
     """
     return CompGeoD3.D3(self)
+
+  @property
+  def mapbox(self) -> CompGeoMapboxGl.MapboxMaps:
+    """
+    Description:
+    ------------
+    A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
+
+    Related Pages:
+    --------------
+
+      https://docs.mapbox.com/
+    """
+    return CompGeoMapboxGl.MapboxMaps(self)

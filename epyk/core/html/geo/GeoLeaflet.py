@@ -5,6 +5,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptionsLeaflet
 from epyk.core.js.packages import JsLeaflet
 from epyk.core.js import JsUtils
+from epyk.core.py import types
 
 
 class GeoLeaflet(Html.Html):
@@ -12,7 +13,7 @@ class GeoLeaflet(Html.Html):
   requirements = ('leaflet', )
   _option_cls = OptionsLeaflet.Leaflet
 
-  def __init__(self,  page, width, height, html_code, options, profile):
+  def __init__(self, page, width, height, html_code, options, profile):
     self.height = height[0]
     super(GeoLeaflet, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height})
@@ -20,7 +21,8 @@ class GeoLeaflet(Html.Html):
     self.style.css.display = "inline-block"
     self.__loader_funcs = []
 
-  def click(self,  js_funcs, profile=None, source_event=None, on_ready=False):
+  def click(self,  js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+            source_event: str = None, on_ready: bool = False):
     """
     Description:
     -----------
@@ -36,14 +38,14 @@ class GeoLeaflet(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.options.onRegionClick(js_funcs, profile)
+    self.js.onRegionClick(js_funcs, profile)
     return self
 
   @property
@@ -57,8 +59,6 @@ class GeoLeaflet(Html.Html):
     Usage::
 
     :return: A Javascript Dom object functions.
-
-    :rtype: JsLeaflet.LeafLet
     """
     if self._js is None:
       self._js = JsLeaflet.LeafLet(selector="window['%s']" % self.chartId, component=self, page=self.page)
@@ -73,8 +73,6 @@ class GeoLeaflet(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptionsLeaflet.Leaflet
     """
     return super().options
 
@@ -104,11 +102,21 @@ class GeoLeaflet(Html.Html):
   #     ''' % {
   #     "chartId": self.chartId, "htmlId": self.htmlCode}
 
-  def loader(self, jsFuncs, profile=None):
-    if not isinstance(jsFuncs, list):
-      jsFuncs = [jsFuncs]
-    self.__loader_funcs.append(JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile))
-  #
+  def loader(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param js_funcs:
+    :param profile:
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    self.__loader_funcs.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+    return self
+
   # def build(self, data=None, options=None, profile=False, component_id=None):
   #
   #   """
@@ -177,7 +185,14 @@ class GeoLeaflet(Html.Html):
   #     "chartId": self.chartId, "htmlId": self.htmlCode}
   #
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data=None, options: dict = None, profile: types.PROFILE_TYPE = False, component_id: str = None):
+    """
+
+    :param data:
+    :param options:
+    :param profile:
+    :param component_id:
+    """
     str_frg = JsUtils.jsConvertFncs(self.__loader_funcs, toStr=True, profile=profile)
     self.builder_name = "LeafletBuilder%s" % self.page.py.hash(str_frg)
     self._js__builder__ = str_frg

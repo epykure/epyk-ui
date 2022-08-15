@@ -276,7 +276,7 @@ JS_IMPORTS = {
   # module for tabulator
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
-    'version': '4.9.3',
+    'version': '5.3.1', # '4.9.3',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator-tables'},
     'modules': [
       # core only needed for Jupyter for some reasons
@@ -676,10 +676,10 @@ JS_IMPORTS = {
     'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
     'website': 'http://jquery.com/',
     'repository': 'https://github.com/jquery/jqueryui.com',
-    'version': '1.12.1',
+    'version': '1.13.2',
     'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
     'modules': [
-      {'script': 'jquery-ui.min.js', 'version': '1.12.1', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+      {'script': 'jquery-ui.min.js', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
   # Jquery-bracket package width CDN links
   'jquery-bracket': {
@@ -1403,6 +1403,15 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'vis-timeline-graph2d.min.js', 'path': 'vis-timeline/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # Mapbox GL
+  'mapbox-gl': {
+    'register': {'alias': 'mapbox-gl'},
+    'website': 'https://github.com/mapbox/mapbox-gl-js?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+    'version': '2.9.2',
+    'modules': [
+      {'script': 'mapbox-gl.js', 'path': 'mapbox-gl/%(version)s/', 'cdnjs': CDNJS_REPO}]
+  },
+
   # Javascript package to display mathematical formulas
   # https://codingislove.com/display-maths-formulas-webpage/
   # https://github.com/mathjax/mathjax
@@ -1641,9 +1650,10 @@ JS_IMPORTS = {
 CSS_IMPORTS = {
   'jqueryui': {
     'modules': [
-      {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO},
+      {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/themes/base/', 'cdnjs': CDNJS_REPO},
     ]
   },
+
   'frappe-charts': {
     'modules': [
       {'script': 'frappe-charts.min.css', 'path': 'frappe-charts@%(version)s/dist/',
@@ -1968,6 +1978,11 @@ CSS_IMPORTS = {
     'modules': [
       {'script': 'leaflet.css', 'node_path': 'dist/', 'path': 'leaflet/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # Mapbox modules width CDN links
+  'mapbox-gl': {
+    'modules': [
+      {'script': 'mapbox-gl.min.css', 'path': 'mapbox-gl/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+
   #
   'json-formatter-js': {
     'modules': [
@@ -2206,8 +2221,9 @@ def extend_imports(extension: dict):
 class ImportModule:
   overriden = False
 
-  def __init__(self, name: str, js: dict, css: dict, links: Optional[dict] = None):
+  def __init__(self, name: str, js: dict, css: dict, links: Optional[dict] = None, page=None):
     self._name = name
+    self.page = page
     self._defer, self._async, self.attrs = False, False, {}
     self._js = js[name]
     self._css = css.get(name, {})
@@ -2404,6 +2420,58 @@ class ImportModule:
         new_css["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
       self._css["main"] = new_css
     self.overriden = True
+
+  def set_enterprise(self):
+    """
+    Description:
+    ------------
+    Change the package to the enterprise version.
+    This feature will only work for few modules like AGGrid.
+
+    Usage::
+
+      page = pk.Page()
+      page.imports.pkgs.ag_grid.set_enterprise()
+    """
+    pgks = ("ag-grid-community",)
+    if not self._name in pgks:
+      raise NotImplementedError("Noting implemented for this package %s, please contact epyk team" % self._name)
+
+    self.page.imports.add(self._name)
+    if self._name == 'ag-grid-community':
+      JS_IMPORTS['ag-grid-community']["version"] = "28.1.0"
+      JS_IMPORTS['ag-grid-community']['modules'] =  [
+        {'script': 'ag-grid-enterprise.min.js', 'path': 'ag-grid-enterprise@%(version)s/dist/', 'cdnjs': JSDELIVER},
+      ]
+      CSS_IMPORTS['ag-grid-community']['modules'] = [
+        {'script': 'ag-theme-alpine.min.css', 'path': 'ag-grid-enterprise@%(version)s/dist/styles/', 'cdnjs': JSDELIVER},
+      ]
+
+  def set_access_token(self, value: str = None, name: str = ""):
+    """
+    Description:
+    ------------
+    Set an access token to use this package
+
+    Related Pages:
+
+      https://docs.mapbox.com/mapbox-gl-js/example/globe/
+
+    Usage::
+
+      page = pk.Page()
+      page.imports.pkgs.mapbox.set_access_token(
+        "XXXXXX",
+        "mapboxgl.accessToken"
+      )
+
+    Attributes:
+    ----------
+    :param value: The access token to set to use the library
+    :param name: The access token variable name
+    """
+    self.page.imports.add(self._name)
+    self.page.properties.js.add_text("%s = '%s'" % (name, value))
 
 
 class ImportPackagesPivotExts:
@@ -2980,9 +3048,10 @@ class ImportPackagesTabulatorExts:
 
 class ImportPackages:
 
-  def __init__(self, js: dict, css: dict):
+  def __init__(self, js: dict, css: dict, page=None):
     self._js = js
     self._css = css
+    self.page = page
     self.__linked = {}
 
   def get(self, name: str) -> ImportModule:
@@ -2994,14 +3063,12 @@ class ImportPackages:
 
     Attributes:
     ----------
-    :param name: String. The package alias to be loaded.
-
-    :rtype: ImportModule
+    :param name: The package alias to be loaded
     """
     if name in self.__linked:
       return self.__linked[name]
 
-    return ImportModule(name, self._js, self._css, self.__linked)
+    return ImportModule(name, self._js, self._css, self.__linked, page=self.page)
 
   @property
   def vis(self) -> ImportModule:
@@ -3408,6 +3475,17 @@ class ImportPackages:
     :rtype: ImportModule
     """
     return self.get("mathjax")
+
+  @property
+  def mapbox(self) -> ImportModule:
+    """
+    Description:
+    ------------
+
+    Related Pages:
+
+    """
+    return self.get("mapbox-gl")
 
   @property
   def moment(self) -> ImportModule:
@@ -4532,7 +4610,7 @@ class ImportManager:
     :rtype: ImportPackages
     """
     if self.__pkgs is None:
-      self.__pkgs = ImportPackages(self.jsImports, self.cssImports)
+      self.__pkgs = ImportPackages(self.jsImports, self.cssImports, page=self.page)
     return self.__pkgs
 
   def website(self, alias: str):
