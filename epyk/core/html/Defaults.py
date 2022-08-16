@@ -27,6 +27,7 @@ FAVICON_DEV_URL = "https://raw.githubusercontent.com/epykure/epyk-templates/mast
 # Component defaults
 BUTTONS_CHECK_HEIGHT = 20
 INPUTS_MIN_WIDTH = 140
+INPUTS_POSITION = "center"
 INPUTS_RANGE_THUMB = 10
 TEXTS_SPAN_WIDTH = 100
 TEXTS_SPAN_HEIGHT = 100

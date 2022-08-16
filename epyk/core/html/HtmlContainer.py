@@ -387,6 +387,10 @@ class Div(Html.Html):
         if self.options.get(None, "position") is not None:
           component.style.css.vertical_align = self.options.get(None, "position")
       else:
+        if self.options.html_encode:
+          obj = self.page.py.encode_html(obj)
+        if self.options.multiline:
+          obj = obj.replace("\n", "<br/>")
         self.val.append(obj)
     self.tag = tag
     # Add the component predefined elements

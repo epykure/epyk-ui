@@ -20,6 +20,10 @@ class HtmlGeneric(Html.Html):
     self.tag = tag
     super(HtmlGeneric, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                       options=options, profile=profile)
+    if self.options.html_encode:
+      text = self.page.py.encode_html(text)
+    if self.options.multiline:
+      text = text.replace("\n", "<br/>")
     self.add(text)
     if tooltip:
       self.tooltip(tooltip)

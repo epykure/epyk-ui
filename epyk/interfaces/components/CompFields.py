@@ -502,7 +502,7 @@ class Fields:
   def static(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              helper: str = None, options: types.OPTION_TYPE = None,
-             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
+             profile: types.PROFILE_TYPE = None, input_tag: bool = False) -> html.HtmlInput.FieldInput:
     """
     Description:
     ------------
@@ -513,6 +513,11 @@ class Fields:
     Usage::
 
       page.ui.fields.static(label="readonly field")
+
+      page.ui.fields.static('''
+        Value Formatter €
+        A Value Formatter is...
+        ''', label="toto", options={"html_encode": True, "multiline": True})
 
     Underlying HTML Objects:
 
@@ -534,12 +539,24 @@ class Fields:
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
+    :param input_tag: Optional. Use an input field
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    component = html.HtmlInput.FieldInput(
-      self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
-    component.input.readonly(True)
+    if input_tag:
+      component = html.HtmlInput.FieldInput(
+        self.page, value, label, placeholder, icon, width, height, html_code, helper, options or {}, profile)
+      component.input.readonly(True)
+    else:
+      input_field = self.page.ui.div(value, width=None, align=None, options=options)
+      input_field.style.add_classes.input.basic()
+      input_field.style.css.display = "inline-block"
+      input_field.style.css.border = "1px solid %s" % self.page.theme.dark_or_white()
+      input_field.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
+      component = html.HtmlInput.Field(
+        self.page, input_field, label, icon, width, height, html_code, helper, options or {}, profile)
+      component._sub_htmls[1] = input_field
+      input_field.style.css.background_color = self.page.theme.colors[0]
     html.Html.set_component_skin(component)
     return component
 

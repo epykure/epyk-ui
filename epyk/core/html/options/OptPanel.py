@@ -262,6 +262,32 @@ class OptionsDiv(Options):
   def inline(self, flag: bool):
     self.set(flag)
 
+  @property
+  def html_encode(self):
+    """
+    Description:
+    ------------
+    Encode Python content to HTML format.
+    """
+    return self._config_get(False)
+
+  @html_encode.setter
+  def html_encode(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def multiline(self):
+    """
+    Description:
+    ------------
+    Replace the Python \n to the HTML tag <br/>.
+    """
+    return self._config_get(False)
+
+  @multiline.setter
+  def multiline(self, flag: bool):
+    self._config(flag)
+
 
 class OptionDrawer(Options):
 

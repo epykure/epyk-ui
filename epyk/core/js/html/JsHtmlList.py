@@ -28,7 +28,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -59,11 +59,11 @@ class JsItemsDef:
     """
     Description:
     ------------
-    Add text items to the list
+    Add text items to the list.
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -119,7 +119,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -189,7 +189,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object.
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -246,7 +246,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object
+    :param page: Page object. The internal page object
     """
     item_def = '''
     if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
@@ -300,7 +300,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object.
     """
     page.jsImports.add('font-awesome')
     page.cssImport.add('font-awesome')
@@ -324,7 +324,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -339,8 +339,7 @@ class JsItemsDef:
       event.stopPropagation(); event.cancelBubble = true; span.setAttribute('data-valid', this.checked); 
       var value = span.innerHTML; if(options.click != null){options.click(event, value)}};
     
-    var span = document.createElement("span"); span.style.marginLeft = '5px'; 
-    span.setAttribute('name', 'value'); span.setAttribute('data-valid', false); 
+    var span = document.createElement("label"); span.style.marginLeft = '5px'; span.setAttribute('data-valid', false); 
     
     if(typeof data === 'object'){ 
       if(typeof data.text !== 'undefined'){ span.innerHTML = data.text} else {span.innerHTML = data.value}} 
@@ -349,6 +348,11 @@ class JsItemsDef:
       input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked)};
     if(data.checked){input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked)};
     
+    if (options.position == 'right'){
+      span.innerHTML = ""; var labelTag = document.createElement("span"); labelTag.setAttribute('name', 'value');
+      labelTag.innerHTML = data; labelTag.style.marginLeft = '5px'; labelTag.style.marginRight = '5px'; 
+      item.appendChild(labelTag);
+    } else {span.setAttribute('name', 'value');}
     span.style.verticalAlign = "middle";
     item.appendChild(input); item.appendChild(span);
     '''
@@ -362,7 +366,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -393,7 +397,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV");  
@@ -415,7 +419,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("div"); var link = document.createElement("a"); item.style.whiteSpace = "nowrap";
@@ -444,7 +448,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     item_def = '''
     var item = document.createElement("DIV"); var text = document.createElement("div");
@@ -475,7 +479,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object.
+    :param page: Page object. The internal page object
     """
     page.jsImports.add('font-awesome')
     page.cssImport.add('font-awesome')
@@ -509,7 +513,7 @@ class JsItemsDef:
 
     Attributes:
     ----------
-    :param primitives.PageModel page: Page object. The internal page object
+    :param page: Page object. The internal page object
     """
     item_def = '''
     if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
@@ -554,10 +558,11 @@ class JsItemsDef:
     """
     Description:
     ------------
+    Allow the creation of custom items for list.
 
     Attributes:
     ----------
-    :param str item_def:
+    :param item_def: The JavaScript item definition
     """
     return self._item(item_def)
 
@@ -571,14 +576,17 @@ class JsItem(JsHtml.JsHtmlRich):
           const item = dom.querySelector('[name=value]');
           if (item != null){
             const valid = item.getAttribute("data-valid");
-            if (valid === 'true'){values.push(dom.querySelector('[name=value]').innerHTML)}
+            if (valid == null){
+              const checkItems = dom.querySelector('[data-valid=true]');
+              if (checkItems != null){values.push(item.innerHTML)}
+            } else {if (valid === 'true'){values.push(item.innerHTML)}}
           }
       }); return values})(%s)''' % self.varName)
 
   @property
   def all(self):
     return JsHtml.ContentFormatters(self.page, '''
-(function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
+(function(dom){var values = []; dom.childNodes.forEach(function(dom, k){  
   const item = dom.querySelector('[name=value]'); if (item != null){values.push(dom.querySelector('[name=value]').innerHTML)}
 }); return values})(%s)''' % self.varName)
 
@@ -603,7 +611,10 @@ class JsItem(JsHtml.JsHtmlRich):
           const item = dom.querySelector('[name=value]');
           if (item != null){
             const valid = item.getAttribute("data-valid");
-            if (valid === 'false'){values.push(dom.querySelector('[name=value]').innerHTML)}
+            if (valid == null){
+              const checkItems = dom.querySelector('[data-valid=true]');
+              if (checkItems != null){values.push(item.innerHTML)}
+            } else {if (valid === 'true'){values.push(item.innerHTML)}}
           }
         }); return values })(%s)''' % self.varName)
 
@@ -667,13 +678,13 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: The value to find in the list.
+    :param value: The value to find in the list
     """
     value = JsUtils.jsConvertData(value, None)
     return JsNodeDom.JsDoms.get('''
       (function(dom, value){var children = dom.childNodes; var values = null;
         for (var i = 0; i < children.length; i++) { 
-          if(children[i].querySelector('[name=value]').innerHTML == value){ values = children[i]; break} };
+          if(children[i].querySelector('[name=value]').innerHTML == value){values = children[i]; break} };
         return values })(%s, %s)''' % (self.varName, value))
 
   def selectAll(self, with_input_box: bool = False):
@@ -684,7 +695,7 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param bool with_input_box: If the items have a dedicated input box for the check.
+    :param with_input_box: If the items have a dedicated input box for the check
     """
     if self.component.options.items_type == "radio":
       raise ValueError("It is not possible to select all radios from a same group, use check instead")
@@ -695,7 +706,7 @@ document.body.removeChild(dummy);
           const item = dom.querySelector('[name=input_box]');
           if (item != null){ 
             item.checked = true;
-            dom.querySelector('[name=value]').setAttribute("data-valid", true);
+            dom.querySelector('[data-valid]').setAttribute("data-valid", true);
         }})''' % self.varName)
 
     return JsObjects.JsVoid('''
@@ -712,7 +723,7 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param bool with_input_box: If the items have a dedicated input box for the check.
+    :param with_input_box: If the items have a dedicated input box for the check
     """
     if self.component.options.items_type == "radio":
       raise ValueError("It is not possible to select all radios from a same group, use check instead")
@@ -723,7 +734,7 @@ document.body.removeChild(dummy);
           const item = dom.querySelector('[name=input_box]');
           if (item != null){ 
             dom.querySelector('[name=input_box]').checked = false;
-            dom.querySelector('[name=value]').setAttribute("data-valid", false);
+            dom.querySelector('[data-valid]').setAttribute("data-valid", false);
         }})''' % self.varName)
 
     return JsObjects.JsVoid('''
@@ -732,7 +743,8 @@ document.body.removeChild(dummy);
         dom.querySelector('[name=value]').setAttribute("data-valid", false);
       })''' % (self.varName, self.component.options.items_type))
 
-  def add(self, value, css_attrs: dict = None, css_cls=None, before: bool = False, options: dict = None):
+  def add(self, value: Union[str, dict], css_attrs: dict = None, css_cls: str = None, before: bool = False,
+          options: dict = None):
     """
     Description:
     ------------
@@ -740,11 +752,11 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param value: String | Dictionary.
-    :param dict css_attrs: All the CSS attributes to be added to the LI component.
-    :param css_cls: String. The CSS class to be added to the LI component.
-    :param bool before:
-    :param dict options:
+    :param value:
+    :param css_attrs: All the CSS attributes to be added to the LI component
+    :param css_cls: The CSS class to be added to the LI component
+    :param before:
+    :param options:
     """
     if isinstance(value, dict):
       js_values = []
@@ -780,7 +792,7 @@ document.body.removeChild(dummy);
                'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
                'shape': "%s%s" % (self.component.options.prefix, self.component.options.items_type)})
 
-  def append(self, items: list, css_attrs: dict = None, css_cls=None, options: dict = None):
+  def append(self, items: list, css_attrs: dict = None, css_cls: str = None, options: dict = None):
     """
     Description:
     ------------
@@ -788,9 +800,9 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param items: The items.
-    :param dict css_attrs: Optional. All the CSS attributes to be added to the LI component.
-    :param css_cls: Optional. The CSS class to be added to the LI component.
+    :param items: The items
+    :param css_attrs: Optional. All the CSS attributes to be added to the LI component
+    :param css_cls: Optional. The CSS class to be added to the LI component
     :param options: Optional.
     """
     items = JsUtils.jsConvertData(items, None)
@@ -798,17 +810,17 @@ document.body.removeChild(dummy);
       "%s.forEach(function(newItem){%s})" % (items, self.add(
         JsUtils.jsWrap("newItem"), css_attrs=css_attrs, css_cls=css_cls, before=False, options=options).toStr()))
 
-  def prepend(self, items: str, css_attrs: dict = None, css_cls=None, options: dict = None):
+  def prepend(self, items: str, css_attrs: dict = None, css_cls: str = None, options: dict = None):
     """
     Description:
     ------------
-    Insert items to the begining of the list.
+    Insert items to the beginning of the list.
 
     Attributes:
     ----------
     :param items: The items.
-    :param dict css_attrs: Optional. All the CSS attributes to be added to the LI component.
-    :param css_cls: Optional. The CSS class to be added to the LI component.
+    :param css_attrs: Optional. All the CSS attributes to be added to the LI component
+    :param css_cls: Optional. The CSS class to be added to the LI component
     :param options: Optional.
     """
     items = JsUtils.jsConvertData(items, None)
@@ -816,7 +828,7 @@ document.body.removeChild(dummy);
       "%s.forEach(function(newItem){%s})" % (items, self.add(
         JsUtils.jsWrap("newItem"), css_attrs=css_attrs, css_cls=css_cls, before=True, options=options).toStr()))
 
-  def tags(self, values: list, css_attrs: dict = None, css_cls=None):
+  def tags(self, values: list, css_attrs: dict = None, css_cls: str = None):
     """
     Description:
     ------------
@@ -824,9 +836,9 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param list values: The tags to be added to the current item.
-    :param dict css_attrs: All the CSS attributes to be added to the LI component.
-    :param css_cls: String. The CSS class to be added to the LI component.
+    :param values: The tags to be added to the current item
+    :param css_attrs: All the CSS attributes to be added to the LI component
+    :param css_cls: The CSS class to be added to the LI component
     """
     return JsObjects.JsVoid('''
       var enumTags = %(values)s;
@@ -857,9 +869,10 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param Union[list, str] menu_funcs:
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param menu:
+    :param menu_funcs:
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not hasattr(menu, 'source'):
       menu = self.component.page.ui.menus.contextual(menu)
@@ -904,17 +917,17 @@ document.body.removeChild(dummy);
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] value: The value of the item to be selected.
+    :param value: The value of the item to be selected
     """
     value = JsUtils.jsConvertData(value, None)
     if self.component.options.items_type == "check":
       return JsObjects.JsVoid('''
-        var select_items = %(value)s;
-        %(varName)s.childNodes.forEach(function(dom, k){ 
-          var value = dom.querySelector('[name=value]').innerHTML;
-          if (((typeof select_items === 'string') && value == select_items) || ((Array.isArray(select_items) && (select_items.includes(value))))){
-            dom.querySelector("span").setAttribute('data-valid', true); dom.querySelector("input").checked = true}
-        })''' % {'value': value, 'varName': self.varName})
+var select_items = %(value)s;
+%(varName)s.childNodes.forEach(function(dom, k){ 
+  var value = dom.querySelector('[name=value]').innerHTML;
+  if (((typeof select_items === 'string') && value == select_items) || ((Array.isArray(select_items) && (select_items.includes(value))))){
+    dom.querySelector("span").setAttribute('data-valid', true); dom.querySelector("input").checked = true}
+})''' % {'value': value, 'varName': self.varName})
 
     return JsObjects.JsVoid('''
           %(varName)s.childNodes.forEach(function(dom, k){ 
@@ -950,8 +963,8 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param str text: The item text.
-    :param str category: The item category.
+    :param text: The item text
+    :param category: The item category
     """
     return JsObjects.JsObjects.get(''' 
       (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
@@ -1006,11 +1019,11 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: The value to be added on the filter panel.
-    :param Union[str, primitives.JsDataModel] category:
-    :param str name:
-    :param bool fixed:
-    :param bool no_duplicate:
+    :param text: The value to be added on the filter panel
+    :param category: Optional. The item category
+    :param name: Optional. The item name
+    :param fixed: Optional.
+    :param no_duplicate: Optional. An optional check on duplicated entries
     """
     text = JsUtils.jsConvertData(text, None)
     fixed = JsUtils.jsConvertData(fixed, None)
@@ -1060,7 +1073,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Clear the content of the fitlers panel.
+    Clear the content of the filters panel.
     """
     return self.querySelector("div[name=panel]").empty()
 
@@ -1072,8 +1085,8 @@ class Tags(JsHtml.JsHtmlRich):
 
     Attributes:
     ----------
-    :param Union[str, primitives.JsDataModel] text: The test of the items to be removed.
-    :param Union[str, primitives.JsDataModel] category: The test of the items to be removed.
+    :param text: The test of the items to be removed
+    :param category: The test of the items to be removed
     """
     if category is None:
       category = self.component._jsStyles['category']
@@ -1086,7 +1099,7 @@ class Tags(JsHtml.JsHtmlRich):
     """
     Description:
     ------------
-    Return a count of number of values defined in the filters accross all the categories.
+    Return a count of number of values defined in the filters across all the categories.
     """
     return self.values().length
 

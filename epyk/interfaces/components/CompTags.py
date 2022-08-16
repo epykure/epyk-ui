@@ -1194,6 +1194,13 @@ class Tags:
 
       https://www.w3schools.com/tags/tag_span.asp
 
+    Usage::
+
+      s2 = page.ui.tags.span('''
+        Value Formatter €
+        A Value Formatter is
+        ''', options={"multiline": True})
+
     Attributes:
     ----------
     :param text: String with the content to be added to the component

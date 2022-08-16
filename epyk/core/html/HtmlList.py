@@ -210,8 +210,8 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param style_type. The alias of the style to apply
-    :param css_attrs. The CSS attributes
+    :param style_type. Optional. The alias of the style to apply
+    :param css_attrs. Optional. The CSS attributes
     """
     li_item_style = {}
     if style_type == "bullets":
@@ -289,7 +289,7 @@ class List(Html.Html):
 
     Attributes:
     ----------
-    :param d:  The component to be added.
+    :param d: The component to be added.
     """
     self.items = self.items or []
     li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
@@ -501,8 +501,8 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param style_type. The alias of the style to apply.
-    :param css_attrs.
+    :param style_type. The alias of the style to apply
+    :param css_attrs. Optional. Items CSS attributes
     """
     li_item_style = {}
     if style_type == "bullets":
@@ -556,10 +556,10 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = []
@@ -575,10 +575,10 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: Optional. Javascript functions.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
+    :param js_funcs: Optional. Javascript functions
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -599,10 +599,10 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param name: The reference of this type name in the framework.
-    :param item_def: The definition of the items (examples in JsHtmlList.py).
-    :param func_name: The external function name used to build the items.
-    :param dependencies: Optional. The external module dependencies.
+    :param name: The reference of this type name in the framework
+    :param item_def: Optional. The definition of the items (examples in JsHtmlList.py)
+    :param func_name: Optional. The external function name used to build the items
+    :param dependencies: Optional. The external module dependencies
     """
     if dependencies is not None:
       for d in dependencies:
@@ -624,7 +624,8 @@ class Items(Html.Html):
         item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def)))
     return self
 
-  def select_type(self, name: Optional[str] = None, style: Optional[dict] = None, selected_style: Optional[dict] = None):
+  def select_type(self, name: Optional[str] = None, style: Optional[dict] = None,
+                  selected_style: Optional[dict] = None):
     """
     Description:
     ------------
@@ -635,9 +636,9 @@ class Items(Html.Html):
 
     Attributes:
     ----------
-    :param name: Optional. The list type name to be used.
-    :param style: Optional. The CSS style to be applied to the item.
-    :param selected_style: Optional. The css style to be applied when selected.
+    :param name: Optional. The list type name to be used
+    :param style: Optional. The CSS style to be applied to the item
+    :param selected_style: Optional. The css style to be applied when selected
     """
     li_attrs = self.options.style
     if style is None:
