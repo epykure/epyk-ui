@@ -276,7 +276,7 @@ JS_IMPORTS = {
   # module for tabulator
   'tabulator-tables': {
     'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
-    'version': '5.3.1', # '4.9.3',
+    'version': '4.9.3', # '5.3.1', # '4.9.3',
     'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator-tables'},
     'modules': [
       # core only needed for Jupyter for some reasons

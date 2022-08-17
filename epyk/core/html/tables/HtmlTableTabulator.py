@@ -11,7 +11,6 @@ from epyk.core.js.packages import JsTabulator
 from epyk.core.html.options import OptTableTabulator
 
 # The list of CSS classes
-from epyk.core.css import Defaults as cssDefaults
 from epyk.core.css.styles import GrpClsTable
 
 
