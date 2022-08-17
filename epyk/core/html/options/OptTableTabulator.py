@@ -3060,6 +3060,7 @@ class TableConfig(Options):
   def autoColumns(self, val):
     self._config(val)
 
+  @property
   def autoTables(self):
     """
     Description:

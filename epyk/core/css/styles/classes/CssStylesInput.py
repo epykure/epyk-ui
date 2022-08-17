@@ -14,13 +14,14 @@ class CssInput(CssStyle.Style):
   ------------
   CSS Base style for the input components.
   """
-  _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
+  _attrs = {'border': 'none', 'cursor': 'text', 'margin': 0}
   _focus = {'outline': 0}
 
   def customize(self):
     self.attrs.css({'color': 'inherit',
                     'font-family': self.page.body.style.globals.font.family,
                     'line-height': '%spx' % Defaults_html.LINE_HEIGHT,
+                    'text-align': Defaults_html.INPUTS_POSITION,
                     'border': BORDER_1PX_EXPR.format(self.page.theme.colors[0]),
                     'font-size': self.page.body.style.globals.font.normal()})
     self.hover.css({
