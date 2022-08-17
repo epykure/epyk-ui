@@ -2851,20 +2851,142 @@ class RowContextMenu(Options):
 class TableConfig(Options):
 
   @property
+  def index(self):
+    """
+    Description:
+    -----------
+    A unique index value should be present for each row of data if you want to be able to programmatically alter that
+    data at a later point, this should be either numeric or a string.
+    By default Tabulator will look for this value in the id field for the data.
+    If you wish to use a different field as the index, set this using the index option parameter.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data
+    """
+    return self._config_get()
+
+  @index.setter
+  def index(self, val: str):
+    self._config(val)
+
+  @property
   def ajaxURL(self):
     """
     Description:
     -----------
+    If you wish to retrieve your data from a remote source you can set the URL for the request in the ajaxURL option.
 
     Related Pages:
 
-      http://tabulator.info/docs/4.0/data
+      http://tabulator.info/docs/5.3/data#ajax
     """
     return self._config_get()
 
   @ajaxURL.setter
   def ajaxURL(self, val: str):
     self._config(val)
+
+  @property
+  def ajaxParams(self):
+    """
+    Description:
+    -----------
+    If you would like to generate the parameters with each request you can instead pass a callback to the
+    ajaxParams option.
+    This function will be called every time a request is made and should return an object containing the request
+    parameters.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-params
+    """
+    return self._config_get()
+
+  @ajaxParams.setter
+  def ajaxParams(self, values: dict):
+    self._config(values)
+
+  @property
+  def ajaxConfig(self):
+    """
+    Description:
+    -----------
+    By default Tabulator will make all ajax requests using the HTTP GET request method.
+    If you need to use a different request method you can pass this into the ajaxConfig option
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-methods
+    """
+    return self._config_get()
+
+  @ajaxConfig.setter
+  def ajaxConfig(self, value: str):
+    self._config(value)
+
+  @property
+  def ajaxContentType(self):
+    """
+    Description:
+    -----------
+    When using a request method other than "GET" Tabulator will send any parameters with a content type of form data.
+    You can change the content type with the ajaxContentType option.
+    This will ensure parameters are sent in the format you expect, with the correct headers.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-content
+    """
+    return self._config_get()
+
+  @ajaxContentType.setter
+  def ajaxContentType(self, value: Union[str, dict]):
+    self._config(value)
+
+  @property
+  def ajaxFiltering(self):
+    """
+    Description:
+    -----------
+    If you would prefer to filter your data server side rather than in Tabulator,
+    you can use the ajaxFiltering option to send the filter data to the server instead of processing it client side.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.4/data
+    """
+    return self._config_get()
+
+  @ajaxFiltering.setter
+  def ajaxFiltering(self, flag: bool):
+    self._config(flag)
+
+  def ajaxURLGenerator(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    If you need more control over the url of the request that you can get from the ajaxURL and ajaxParams properties,
+    the you can use the ajaxURLGenerator property to pass in a callback that will generate the URL for you.
+    js_funcs must use url, config, params and return a string
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.4/data
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(url, config, params)") and not func_ref:
+      str_func = "function(url, config, params){%s}" % str_func
+    self._config(str_func, js_type=True)
+    return self
 
   @property
   def ajaxProgressiveLoad(self):
@@ -2938,6 +3060,21 @@ class TableConfig(Options):
   def autoColumns(self, val):
     self._config(val)
 
+  def autoTables(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#import-data
+    """
+    return self._config_get()
+
+  @autoTables.setter
+  def autoTables(self, flag: bool):
+    self._config(flag)
+
   @property
   def addRowPos(self):
     """
@@ -2952,7 +3089,7 @@ class TableConfig(Options):
     return self._config_get()
 
   @addRowPos.setter
-  def addRowPos(self, val):
+  def addRowPos(self, val: str):
     self._config(val)
 
   @property
@@ -3188,6 +3325,36 @@ class TableConfig(Options):
     """
     return self.js_tree.setdefault("columns", [])
 
+  @property
+  def dataSendParams(self):
+    """
+    Description:
+    -----------
+
+    """
+    return self._config_get()
+
+  @dataSendParams.setter
+  def dataSendParams(self, values: dict):
+    self._config(values)
+
+  @property
+  def importFormat(self):
+    """
+    Description:
+    -----------
+    This can be used to import custom data when the table is loaded.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#import-data
+    """
+    return self._config_get()
+
+  @importFormat.setter
+  def importFormat(self, val: str):
+    self._config(val)
+
   def add_column(self, field: str, title: str = None) -> Column:
     """
     Description:
@@ -3261,6 +3428,24 @@ class TableConfig(Options):
 
   @columnVertAlign.setter
   def columnVertAlign(self, val):
+    self._config(val)
+
+  @property
+  def filterMode(self):
+    """
+    Description:
+    -----------
+    If you would prefer to filter your data server side rather than in Tabulator, you can use the filterMode option to
+    send the filter data to the server instead of processing it client side.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-filter
+    """
+    return self._config_get()
+
+  @filterMode.setter
+  def filterMode(self, val: str):
     self._config(val)
 
   @property
@@ -3914,6 +4099,15 @@ class TableConfig(Options):
 
   @property
   def progressiveLoad(self):
+    """
+    Description:
+    ------------
+    In load mode the table will sequentially add each page of data into the table untill all data is loaded.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-progressive
+    """
     return self._config_get()
 
   @progressiveLoad.setter
@@ -3930,6 +4124,16 @@ class TableConfig(Options):
 
   @property
   def progressiveLoadScrollMargin(self):
+    """
+    Description:
+    ------------
+    The progressiveLoadScrollMargin property determines how close to the bottom of the table in pixels,
+    the scroll bar must be before the next page worth of data is loaded, by default it is set to twice the height of the table.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-progressive
+    """
     return self._config_get()
 
   @progressiveLoadScrollMargin.setter
@@ -4433,6 +4637,24 @@ class TableConfig(Options):
     if not str_func.startswith("function(row)") and not func_ref:
       str_func = "function(row){%s}" % str_func
     self._config(str_func, js_type=True)
+
+  @property
+  def sortMode(self):
+    """
+    Description:
+    -----------
+    If you would prefer to sort your data server side rather than in Tabulator,
+    you can use the sortMode option to send the sort data to the server instead of processing it client side.
+
+    Related Pages:
+
+      http://tabulator.info/docs/5.3/data#ajax-sort
+    """
+    return self._config_get()
+
+  @sortMode.setter
+  def sortMode(self, val: str):
+    self._config(val)
 
   @property
   def tooltips(self):
