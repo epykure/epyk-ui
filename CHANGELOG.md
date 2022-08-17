@@ -6,6 +6,24 @@
 
 ### Fixed
 
+## [1.9.0] - 2022-08-17
+
+### Added
+ - Mapbox as a dedicated charting library for Geo charts
+ - Add New import features in the JavaScript internal import manager
+ - Externalise the Icon modules to allow flexibility for web framework (v1)
+ - Add queueMicrotasks
+ - Add encoding features in options for text components
+
+### Changed
+ - Upgrade to new version of modules for Tabulator
+ - Change input fields and encoding features
+ - Add keep_attr to maintain CSS attributes in HTML components
+
+### Fixed
+ - Add more documentation and autocompletion features 
+ - Small bug fixes on components
+
 
 ## [1.8.0] - 2022-07-03
 
