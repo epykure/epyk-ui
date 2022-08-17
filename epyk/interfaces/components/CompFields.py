@@ -555,7 +555,7 @@ class Fields:
       input_field.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
       component = html.HtmlInput.Field(
         self.page, input_field, label, icon, width, height, html_code, helper, options or {}, profile)
-      if len(component._sub_htmls[1]) > 1:
+      if len(component._sub_htmls) > 1:
         component._sub_htmls[1] = input_field
       input_field.style.css.background_color = self.page.theme.colors[0]
     html.Html.set_component_skin(component)
