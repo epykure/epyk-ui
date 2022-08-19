@@ -98,3 +98,15 @@ class JsHtmlTabulator(JsHtml.JsHtml):
 
   def empty(self):
     return self.component.js.clearData()
+
+
+class JsHtmlAggrid(JsHtml.JsHtml):
+
+  @property
+  def content(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsHtml.ContentFormatters(self.page, self.component.js.getRowsData().toStr())

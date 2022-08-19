@@ -6,6 +6,7 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptTableAgGrid
 
 from epyk.core.js.packages import JsAgGrid
+from epyk.core.js.html import JsHtmlTables
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -27,17 +28,22 @@ class Table(Html.Html):
     """
     Description:
     -----------
+    Set columns definition.
 
     Usage::
+
+      grid = page.ui.tables.aggrids.table()
+      grid.add_column("col1", "Column")
+      grid.headers({"col1": {"headerName": "Column 1"}})
 
     Attributes:
     ----------
     :param cols_def:
     """
     defined_cols = []
-    for col in self.options.columns:
+    for col in self.options.js_tree.setdefault("columnDefs", []):
       if col.colId in cols_def:
-        col.update(cols_def[col.colId])
+        col.set_attrs(cols_def[col.colId])
         defined_cols.append(col.colId)
     # add the extra columns to the table definition
     for col_id, col_attrs in cols_def.items():
@@ -49,10 +55,12 @@ class Table(Html.Html):
     """
     Description:
     -----------
+    Add internal CSS classes.
 
     Usage::
 
-
+      grid = page.ui.tables.aggrids.table()
+      grid.style.strip({"color": "blue"})
     """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Aggrid(self)
@@ -67,6 +75,8 @@ class Table(Html.Html):
 
     Usage::
 
+      grid = page.ui.tables.aggrids.table()
+      grid.options.paginationPageSize = 2
     """
     return super().options
 
@@ -77,13 +87,22 @@ class Table(Html.Html):
     -----------
     Return the Javascript internal object.
 
-    Usage::
-
     :return: A Javascript object
     """
     if self._js is None:
       self._js = JsAgGrid.AgGrid(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
+
+  @property
+  def dom(self) -> JsHtmlTables.JsHtmlAggrid:
+    """
+    Description:
+    -----------
+    HTML Dom object.
+    """
+    if self._dom is None:
+      self._dom = JsHtmlTables.JsHtmlAggrid(self, page=self.page)
+    return self._dom
 
   def add_column(self, field: str, title: str = None, attrs: dict = None):
     """
@@ -93,7 +112,8 @@ class Table(Html.Html):
 
     Usage::
 
-      table.add_column("test", "Test Column")
+      grid = page.ui.tables.aggrids.table()
+      grid.add_column("test", "Test Column")
 
     Attributes:
     ----------
@@ -122,13 +142,32 @@ class Table(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
+  def define(self, options: types.JS_DATA_TYPES = None):
+    """
+    Description:
+    ------------
+    Common JavaScript function to set the table columns definition.
+
+    Attributes:
+    ----------
+    :param options: Optional. The header attributes
+    """
+    return self.js.setColumnDefs(options)
+
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
     Description:
     -----------
+    Common JavaScript function to add rows to the table.
 
     Usage::
+
+      grid = page.ui.tables.aggrids.table()
+      grid.add_column("col1", "Column")
+      btn_aggrid = page.ui.button("Aggrid").click([
+        grid.build([{"col1": "row %s" % i}for i in range(n)])
+      ])
 
     Attributes:
     ----------
@@ -142,6 +181,22 @@ class Table(Html.Html):
 
     return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
       'tableId': self.tableId, 'config': self.options.config_js(options), 'htmlCode': component_id or self.dom.varName}
+
+  def loading(self, status: bool = True, color: str = None):
+    """
+    Description:
+    -----------
+    Add loading banner.
+
+    Attributes:
+    ----------
+    :param status: The visibility flag
+    :param color: Not used for the moment
+    """
+    if status:
+      return self.js.showLoadingOverlay()
+
+    return self.js.hideOverlay()
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())

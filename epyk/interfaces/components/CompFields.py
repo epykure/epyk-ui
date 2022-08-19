@@ -9,7 +9,7 @@ from epyk.core.py import types
 from epyk.core.html import Defaults
 from epyk.interfaces import Arguments
 from epyk.core.data import components as cpn
-from epyk.core.css import Defaults as Defaults_css
+from epyk.core.html import Defaults as Defaults_html
 
 HTML_CODE_LABEL = "{}_label"
 FIELD_FULL_WIDTH_VALUE = "calc(100% - 30px)"
@@ -553,6 +553,7 @@ class Fields:
       input_field.style.css.display = "inline-block"
       input_field.style.css.border = "1px solid %s" % self.page.theme.dark_or_white()
       input_field.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
+      input_field.style.css.min_height = "%spx" % Defaults_html.LINE_HEIGHT
       component = html.HtmlInput.Field(
         self.page, input_field, label, icon, width, height, html_code, helper, options or {}, profile)
       if len(component._sub_htmls) > 1:

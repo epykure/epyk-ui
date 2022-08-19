@@ -23,10 +23,11 @@ class DataClass:
     """
     Description:
     ------------
+    Update the opbject internal attributes.
 
     Attributes:
     ----------
-    :param vals: All the attributes to be added to the component.
+    :param vals: All the attributes to be added to the component
     """
     self._attrs.update(vals)
 

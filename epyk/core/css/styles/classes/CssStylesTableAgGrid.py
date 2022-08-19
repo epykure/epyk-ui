@@ -10,10 +10,10 @@ class CssAgHead(CssStyle.Style):
 
   def customize(self):
     self.css({
-      'color': self.page.theme.greys[-1],
+      'color': self.page.body.style.globals.table.header_color,
       'font-weight': 'bold',
       'padding': '0 0 0 5px',
-      'background-color': self.page.theme.greys[2]})
+      'background-color': self.page.body.style.globals.table.header_background})
 
 
 class CssAgOddRow(CssStyle.Style):

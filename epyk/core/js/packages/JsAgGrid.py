@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Any
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 from epyk.core.js.packages import JsPackage
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -748,6 +748,85 @@ class AgGrid(JsPackage):
       https://www.ag-grid.com/javascript-data-grid/grid-api/
     """
     return JsObjects.JsVoid("%s.api.getFocusedCell()" % self.varId)
+
+  def getFilterModel(self):
+    """
+    Description:
+    -----------
+    It is possible to get the state of all filters using the grid API method getFilterModel(),
+    and to set the state using setFilterModel().
+    These methods manage the filters states via the getModel() and setModel() methods of the individual filters.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models
+    """
+    return JsObjects.JsObject.JsObject("%s.api.getFilterModel()" % self.varId)
+
+  def setFilterModel(self, data: types.JS_DATA_TYPES):
+    """
+    Description:
+    -----------
+    Sets the state of all the advanced filters.
+    Provide it with what you get from getFilterModel() to restore filter state.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject("%s.api.setFilterModel(%s)" % (self.varId, data))
+
+  def destroyFilter(self):
+    """
+    Description:
+    -----------
+    Sets the state of all the advanced filters.
+    Provide it with what you get from getFilterModel() to restore filter state.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models
+    """
+    return JsObjects.JsObject.JsObject("%s.api.destroyFilter()" % self.varId)
+
+  def getFilterInstance(self, data: types.JS_DATA_TYPES):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models
+
+    :param data:
+    """
+    raise NotImplementedError("Not yet available")
+
+  def getModel(self):
+    """
+    Description:
+    -----------
+    Get table model.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models
+    """
+    return JsObjects.JsObject.JsObject("%s.api.getModel()" % self.varId)
+
+  def getRowsData(self):
+    """
+    Description:
+    -----------
+    Get all the data in the table.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/accessing-data/
+    """
+    return JsObjects.JsVoid('''
+(function(table) {let rowData = []; table.api.forEachNode(node => rowData.push(node.data)); return rowData})(%s)''' % self.varId)
 
   def getSelectedRows(self):
     """

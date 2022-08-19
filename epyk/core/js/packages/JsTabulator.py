@@ -1672,7 +1672,7 @@ class Tabulator(JsPackage):
     """
     return JsObjects.JsVoid("%s.setSort(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
-  def setColumns(self, data):
+  def setColumns(self, data: types.JS_DATA_TYPES):
     """
     Description:
     ------------
@@ -1816,7 +1816,7 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
          resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
       "varId": self.varId, "formatters": formatters, "data": data}
 
-  def replaceData(self, data=None):
+  def replaceData(self, data: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------

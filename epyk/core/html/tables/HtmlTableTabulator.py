@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Generator
+from typing import Generator, Any
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
 
-from epyk.core.js.html import JsHtmlTabulator
+from epyk.core.js.html import JsHtmlTables
 from epyk.core.js.packages import JsTabulator
 from epyk.core.html.options import OptTableTabulator
 
@@ -34,8 +34,8 @@ class Table(Html.Html):
 
   @property
   @Html.deprecated("Should use .js._. instead to get table core components")
-  def cell(self) -> JsHtmlTabulator.JsHtmlTabulatorCell:
-    return JsHtmlTabulator.JsHtmlTabulatorCell(js_code=self.tableId, page=self.page, component=self)
+  def cell(self) -> JsHtmlTables.JsHtmlTabulatorCell:
+    return JsHtmlTables.JsHtmlTabulatorCell(js_code=self.tableId, page=self.page, component=self)
 
   @property
   def style(self) -> GrpClsTable.Tabulator:
@@ -49,14 +49,14 @@ class Table(Html.Html):
     return self._styleObj
 
   @property
-  def dom(self) -> JsHtmlTabulator.JsHtmlTabulator:
+  def dom(self) -> JsHtmlTables.JsHtmlTabulator:
     """
     Description:
     -----------
     HTML Dom object.
     """
     if self._dom is None:
-      self._dom = JsHtmlTabulator.JsHtmlTabulator(self, page=self.page)
+      self._dom = JsHtmlTables.JsHtmlTabulator(self, page=self.page)
     return self._dom
 
   @property
@@ -93,7 +93,9 @@ class Table(Html.Html):
     """
     Description:
     ------------
-    Return the Javascript internal object.
+    Return the Javascript internal object specific to this package.
+
+    Usage::
 
     :return: A Javascript object
     """
@@ -105,10 +107,11 @@ class Table(Html.Html):
     """
     Description:
     ------------
+    Add data to the table.
 
     Attributes:
     ----------
-    :param data:
+    :param data: Data object
     """
     self.options.data = data
 
@@ -117,6 +120,16 @@ class Table(Html.Html):
     Description:
     ------------
     Add new column to the underlying Tabulator object.
+
+    Usage::
+
+        table = page.ui.table(randoms.languages)
+        c = table.add_column()
+        c.formatter = "rowSelection"
+        c.titleFormatter = "rowSelection"
+        c.hozAlign = "center"
+        c.headerSort = False
+        c.cellClick(["cell.getRow().toggleSelect()"])
 
     Attributes:
     ----------
@@ -132,6 +145,8 @@ class Table(Html.Html):
     Get the column from the underlying Tabulator object by field or by title.
     Pointing by field is recommended as the title might change quite easily.
 
+    This function will only get columns defined from the Python side.
+
     Attributes:
     ----------
     :param by_field: Optional. The field reference for the column.
@@ -144,6 +159,8 @@ class Table(Html.Html):
     Description:
     ------------
     Get a generator with all the columns defined for the table on the Python side.
+
+    This function will only return columns defined from the Python side.
     """
     for c in self.options.columns:
       yield c
@@ -184,14 +201,40 @@ class Table(Html.Html):
     self.options.rowClick(["var %s = row.getData()" % data_ref] + js_funcs)
     return self
 
-  def build(self, data=None, options: dict = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
+  def define(self, options: types.JS_DATA_TYPES = None):
     """
     Description:
     ------------
+    Common JavaScript function to set the table columns definition.
+
+    Usage::
+
+      tab = page.ui.tables.tabulators.table()
+      page.ui.button("Update Tabulator").click([
+        tab.define([{"field": "col1", "title": "Column 1"}]),])
 
     Attributes:
     ----------
-    :param data: A String corresponding to a JavaScript object
+    :param options: Optional. The header attributes
+    """
+    return self.js.setColumns(options)
+
+  def build(self, data: Any = None, options: dict = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
+    """
+    Description:
+    ------------
+    Common JavaScript function to add data to the table.
+
+    Usage::
+
+      tab = page.ui.tables.tabulators.table()
+      page.ui.button("Update Tabulator").click([
+        tab.define([{"field": "col1", "title": "Column 1"}]),
+        tab.build([{"col1": "row %s" % i}for i in range(n)])])
+
+    Attributes:
+    ----------
+    :param data: Optional. A String corresponding to a JavaScript object
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. Change the component id if specific
@@ -237,6 +280,15 @@ class Table(Html.Html):
       ------------
       Display / hide the loading status for this component.
 
+      Usage::
+
+        tab = page.ui.tables.tabulators.table()
+        page.ui.button("Tabulator").click([
+          tab.loading(True),
+          ...
+          tab.loading(False),
+        ])
+
       Attributes:
       ----------
       :param status: Optional. The loading status.
@@ -278,17 +330,6 @@ class TableTree(Table):
     if records is not None:
       self.options.data = records
     self.style.css.background = None
-
-  @property
-  @Html.deprecated("use self.options instead")
-  def config(self) -> OptTableTabulator.TableTreeConfig:
-    """
-    Description:
-    ------------
-    Tabulator configuration options.
-    Deprecated and replaced by component options.
-    """
-    return self.options
 
   @property
   def options(self) -> OptTableTabulator.TableTreeConfig:

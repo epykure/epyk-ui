@@ -1,6 +1,7 @@
 
 import logging
 
+from typing import Union
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 
@@ -846,13 +847,6 @@ class TableToolPanels(Options):
     return self.has_attribute(TableToolPanelsFilters)
 
 
-class TableSideBar(Options):
-
-  def toolPanelsColumn(self):
-    self._config(["columns"], name="toolPanels")
-    return self
-
-
 class EnumStatusPanelsPanels(Options):
   @property
   def statusPanel(self):
@@ -928,12 +922,18 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
+    Each of these animations is turned OFF by default. They are all turned on using the property animateRows=true.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-animation/
     """
     return self._config_get()
 
   @animateRows.setter
-  def animateRows(self, val):
-    self._config(val)
+  def animateRows(self, flag: bool):
+    self._config(flag)
 
   @property
   def colResizeDefault(self):
@@ -962,7 +962,11 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    Set the columnDefs with all the column properties.
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-groups/#column-definitions-vs-column-group-definitions
     """
     return self._config_sub_data_enum("columnDefs", Column)
 
@@ -971,7 +975,11 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    contains properties that all columns will inherit.
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#custom-column-types
     """
     return self._config_sub_data("defaultColDef", DefaultColDef)
 
@@ -980,6 +988,11 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API setRowData().
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/data-update-row-data/
     """
     return self._config_get(name="rowData")
 
@@ -1004,6 +1017,10 @@ class TableConfig(Options):
     """
     Description:
     -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
     """
     return self._config_get()
 
@@ -1016,6 +1033,11 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    This means you can drag the columns to the values section, but you cannot drag them to the group or pivot sections.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
     """
     return self._config_get()
 
@@ -1057,6 +1079,40 @@ class TableConfig(Options):
 
   @enterMovesDownAfterEdit.setter
   def enterMovesDownAfterEdit(self, val):
+    self._config(val)
+
+  @property
+  def overlayLoadingTemplate(self):
+    """
+    Description:
+    -----------
+    Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/overlays/
+    """
+    return self._config_get()
+
+  @overlayLoadingTemplate.setter
+  def overlayLoadingTemplate(self, val: str):
+    self._config(val)
+
+  @property
+  def overlayNoRowsTemplate(self):
+    """
+    Description:
+    -----------
+    Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/overlays/
+    """
+    return self._config_get()
+
+  @overlayNoRowsTemplate.setter
+  def overlayNoRowsTemplate(self, val: str):
     self._config(val)
 
   @property
@@ -1122,17 +1178,20 @@ class TableConfig(Options):
     """
     Description:
     -----------
-
+    Filler groups do not keep their selection state should the filler group be moved.
+    For example if you have groups A->B->C, where C is the only row provided
+    (so the grid creates groups A and B for you), and then you change the patch to D->B->C,
+    group B will not keep it's selection.
 
     Related Pages:
 
-      https://www.ag-grid.com/javascript-grid-pagination/
+      https://www.ag-grid.com/javascript-data-grid/tree-data/#example-selecting-groups-and-children
     """
     return self._config_get()
 
   @groupSelectsChildren.setter
-  def groupSelectsChildren(self, val):
-    self._config(val)
+  def groupSelectsChildren(self, flag: bool):
+    self._config(flag)
 
   @property
   def rowHeight(self):
@@ -1394,13 +1453,17 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def sideBar(self) -> TableSideBar:
+  def sideBar(self):
     """
     Description:
     -----------
 
     """
-    return self._config_sub_data("sideBar", TableSideBar)
+    return self._config_get()
+
+  @sideBar.setter
+  def sideBar(self, val: Union[str, dict]):
+    self._config(val)
 
   @property
   def sideBars(self):

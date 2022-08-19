@@ -6,75 +6,105 @@ from epyk.core.css.styles.classes import CssStylesPivot, CssStylesTableExcel, Cs
 
 class CatalogTable(Catalog.CatalogGroup):
 
-  def table(self):
-    """  """
+  def table(self) -> CssStylesTable.CssTableBasic:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTableBasic)
 
-  def row_hover(self):
-    """  """
+  def row_hover(self) -> CssStylesTable.CssTrHover:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTrHover)
 
-  def new_row(self):
-    """  """
+  def new_row(self) -> CssStylesTable.CssTableNewRow:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTableNewRow)
 
-  def selected(self):
-    """  """
+  def selected(self) -> CssStylesTable.CssTableSelected:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTableSelected)
 
-  def cell_comment(self):
-    """  """
+  def cell_comment(self) -> CssStylesTable.CssCellComment:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssCellComment)
 
-  def cell_save(self):
-    """  """
+  def cell_save(self) -> CssStylesTable.CssCellSave:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssCellSave)
 
-  def editable(self):
-    """  """
+  def editable(self) -> CssStylesTable.CssTdEditor:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTdEditor)
 
-  def row_details(self):
-    """  """
+  def row_details(self) -> CssStylesTable.CssTdDetails:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTdDetails)
 
-  def row_details_shown(self):
-    """  """
+  def row_details_shown(self) -> CssStylesTable.CssTdDetailsShown:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTdDetailsShown)
 
-  def grid_headers(self):
-    """  """
+  def grid_headers(self) -> CssStylesTable.CssTdGridHeaderCols:
+    """
+    Description:
+    ------------
+    """
     return self._set_class(CssStylesTable.CssTdGridHeaderCols)
 
-  def grid_no_header(self):
+  def grid_no_header(self) -> CssStylesTable.CssTdGridNoHeaderCols:
     """  """
     return self._set_class(CssStylesTable.CssTdGridNoHeaderCols)
 
-  def grid_row_header(self):
+  def grid_row_header(self) -> CssStylesTable.CssTdGridHeaderRows:
     """  """
     return self._set_class(CssStylesTable.CssTdGridHeaderRows)
 
-  def grid_vals(self):
+  def grid_vals(self) -> CssStylesTable.CssTdGridVals:
     """  """
     return self._set_class(CssStylesTable.CssTdGridVals)
 
-  def pivot_head(self):
+  def pivot_head(self) -> CssStylesPivot.CssPivotHead:
     """  """
     return self._set_class(CssStylesPivot.CssPivotHead)
 
-  def datatable(self):
+  def datatable(self) -> CssStylesTable.CssDataTable:
     """  """
     return self._set_class(CssStylesTable.CssDataTable)
 
-  def datatable_header(self):
+  def datatable_header(self) -> CssStylesTable.CssDataTableHeader:
     """  """
     return self._set_class(CssStylesTable.CssDataTableHeader)
 
-  def datatable_footer(self):
+  def datatable_footer(self) -> CssStylesTable.CssDataTableFooter:
     """  """
     return self._set_class(CssStylesTable.CssDataTableFooter)
 
-  def datatable_even(self):
+  def datatable_even(self) -> CssStylesTable.CssDataTableEven:
     """  """
     return self._set_class(CssStylesTable.CssDataTableEven)
 
@@ -305,9 +335,12 @@ class CatalogTable(Catalog.CatalogGroup):
     """  """
     return self._set_class(CssStylesTableAgGrid.CssAgOddRow)
 
-  def ag_row_even(self):
+  def ag_row_even(self, attrs: dict = None):
     """  """
-    return self._set_class(CssStylesTableAgGrid.CssAgEvenRow)
+    cls = self._set_class(CssStylesTableAgGrid.CssAgEvenRow)
+    if attrs is not None:
+      cls.css(attrs)
+    return cls
 
   def ag_row(self):
     """  """

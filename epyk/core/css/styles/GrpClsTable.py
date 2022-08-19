@@ -13,6 +13,7 @@ class DataTableThemes:
     """
     Description:
     -----------
+    Add predefined CSS cell border class for DataTable.
 
     Related Pages:
 
@@ -40,6 +41,7 @@ class DataTableThemes:
     """
     Description:
     -----------
+    Add predefined CSS display compact class for DataTable.
 
     Related Pages:
 
@@ -53,6 +55,7 @@ class DataTableThemes:
     """
     Description:
     -----------
+    Add predefined CSS hover class for DataTable.
 
     Related Pages:
 
@@ -114,18 +117,26 @@ class DataTableThemes:
     self.classlist.add("stripe")
     return self
 
-  def bootstrap(self):
+  def bootstrap(self, striped: bool = True, bordered: bool = True):
     """
     Description:
     -----------
+    Set default Bootstrap table style (striped and bordered).
 
     Related Pages:
 
       https://datatables.net/examples/styling/bootstrap4.html
+
+    Attributes:
+    ----------
+    :param striped: Flag to add the striped style to the table
+    :param bordered: Flag to add the bordered style to the table
     """
     self.classlist.add("table")
-    self.classlist.add("table-striped")
-    self.classlist.add("table-bordered")
+    if striped:
+      self.classlist.add("table-striped")
+    if bordered:
+      self.classlist.add("table-bordered")
     return self
 
 
@@ -159,8 +170,7 @@ class Datatable(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
-    :rtype: Classes.CatalogTable.CatalogTable
+    Add CSS class for DataTable table
     """
     if self._css_datatable is None:
       self._css_datatable = Classes.CatalogTable.CatalogTable(
@@ -172,8 +182,7 @@ class Datatable(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
-    :rtype: Classes.CatalogTable.CatalogTable
+    Add CSS class for DataTable header
     """
     if self._css_datatable_header is None:
       self._css_datatable_header = Classes.CatalogTable.CatalogTable(
@@ -185,8 +194,7 @@ class Datatable(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
-    :rtype: Classes.CatalogTable.CatalogTable
+    Add CSS class for DataTable odd rows
     """
     if self._css_datatable_row_odd is None:
       self._css_datatable_row_odd = Classes.CatalogTable.CatalogTable(
@@ -198,8 +206,7 @@ class Datatable(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
-    :rtype: Classes.CatalogTable.CatalogTable
+    Add CSS class for DataTable even rows
     """
     if self._css_datatable_row_even is None:
       self._css_datatable_row_even = Classes.CatalogTable.CatalogTable(
@@ -211,8 +218,7 @@ class Datatable(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
-    :rtype: Classes.CatalogTable.CatalogTable
+    Add CSS class for DataTable footer
     """
     if self._css_datatable_footer is None:
       self._css_datatable_footer = Classes.CatalogTable.CatalogTable(
@@ -290,7 +296,7 @@ class Tabulator(GrpCls.ClassHtml):
     """
     Description:
     -----------
-
+    Add internal CSS class definition for tabulator tables.
     """
     if self._css_tabulator is None:
       self._css_tabulator = Classes.CatalogTable.CatalogTable(
@@ -680,7 +686,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_pop_checks_label is None:
       self._css_pt_pop_checks_label = Classes.CatalogTable.CatalogTable(
@@ -693,7 +698,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_pop_checks is None:
       self._css_pt_pop_checks = Classes.CatalogTable.CatalogTable(
@@ -706,7 +710,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_head is None:
       self._css_pt_head = Classes.CatalogTable.CatalogTable(
@@ -719,7 +722,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_cell is None:
       self._css_pt_cell = Classes.CatalogTable.CatalogTable(
@@ -732,7 +734,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_axis is None:
       self._css_pt_axis = Classes.CatalogTable.CatalogTable(
@@ -745,7 +746,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_box is None:
       self._css_pt_box = Classes.CatalogTable.CatalogTable(
@@ -758,7 +758,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_pop_header is None:
       self._css_pt_pop_header = Classes.CatalogTable.CatalogTable(
@@ -771,7 +770,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_pop_button is None:
       self._css_pt_pop_button = Classes.CatalogTable.CatalogTable(
@@ -784,7 +782,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_pop is None:
       self._css_pt_pop = Classes.CatalogTable.CatalogTable(
@@ -797,7 +794,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_val is None:
       self._css_pt_val = Classes.CatalogTable.CatalogTable(
@@ -810,7 +806,6 @@ class Pivot(GrpCls.ClassHtml):
     Description:
     -----------
 
-    :rtype: Classes.CatalogTable.CatalogTable
     """
     if self._css_pt_label is None:
       self._css_pt_label = Classes.CatalogTable.CatalogTable(
@@ -826,14 +821,38 @@ class Aggrid(GrpCls.ClassHtml):
     self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
     self._css_cell_focus, self._css_cell, self._css_filter, self._css_menu, self._css_popup = 5 * [None]
     self.classList['other'].add(self.cls_head)
-    self.classList['other'].add(self.cls_row_even)
-    self.classList['other'].add(self.cls_row_odd)
     self.classList['other'].add(self.cls_row)
     self.classList['other'].add(self.cls_cell_focus)
     self.classList['other'].add(self.cls_cell)
     self.classList['other'].add(self.css_filter)
     self.classList['other'].add(self.css_menu)
     self.classList['other'].add(self.css_popup)
+
+  def strip(self, attrs: dict = None, important: bool = False):
+    """
+    Description:
+    ------------
+
+
+    Usage::
+
+      grid = page.ui.tables.aggrids.table()
+      grid.style.strip({"color": "blue"})
+
+    Attributes:
+    ----------
+    :param attrs: Optional. The CSS attributes to be added to the class
+    :param important: Optional. Set all the attributes as important
+    """
+    if self._css_row_even is None:
+      if attrs is not None and important:
+        attrs = dict(attrs)
+        for k, v in attrs.items():
+          attrs[k] = "%s !IMPORTANT" % v
+      self._css_row_even = Classes.CatalogTable.CatalogTable(
+        self.component.page, self.classList['other'], component=self.component).ag_row_even(attrs)
+    self.classList['other'].add(self.cls_row_odd)
+    return self._css_row_even
 
   @property
   def css_popup(self) -> Classes.CatalogTable.CatalogTable:

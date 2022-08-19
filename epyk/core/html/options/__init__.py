@@ -39,6 +39,18 @@ class Options(DataClass):
         else:
           self.js_tree[k] = v
 
+  def set_attrs(self, vals: dict):
+    """
+    Description:
+    ------------
+    Set the object internal attributes.
+
+    Attributes:
+    ----------
+    :param vals: All the attributes to be added to the component
+    """
+    self.js_tree.update(vals)
+
   def _config_get(self, dflt: Any = None, name: str = None):
     """
     Description:
