@@ -2849,6 +2849,7 @@ class RowContextMenu(Options):
 
 
 class TableConfig(Options):
+  _struct__schema = {"keybindings": {}, "layouts": {}, "persistence": {}, "rowContextMenu": {}}
 
   @property
   def index(self):
@@ -4244,8 +4245,8 @@ class TableConfig(Options):
 
       http://tabulator.info/docs/4.6/menu#cell-context
     """
-    contextMenu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
-    return contextMenu
+    context_menu = self._config_sub_data_enum("rowContextMenu", RowContextMenu)
+    return context_menu
 
   def rowClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """

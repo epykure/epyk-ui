@@ -237,6 +237,24 @@ class Column(Options):
     self._config(val)
 
   @property
+  def cellClassRules(self):
+    """
+    Description:
+    -----------
+    Rules that return true will have the class applied the second time.
+    Rules that return false will have the class removed second time.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/cell-styles/
+    """
+    return self._config_get()
+
+  @cellClassRules.setter
+  def cellClassRules(self, value: dict):
+    self._config(value)
+
+  @property
   def children(self):
     """
     Description:
@@ -1147,6 +1165,7 @@ class TableStatusBar(Options):
 
 
 class TableConfig(Options):
+  _struct__schema = {"autoGroupColumnDef": {}, "defaultColDef": {}, "TableStatusBar": {}, "columns": []}
 
   @property
   def alignedGrids(self):
@@ -1402,6 +1421,13 @@ class TableConfig(Options):
     """
     pass
 
+  def onPaginationChanged(self):
+    """
+    https://www.ag-grid.com/javascript-data-grid/row-pagination/
+
+    """
+    pass
+
   @property
   def overlayLoadingTemplate(self):
     """
@@ -1435,6 +1461,24 @@ class TableConfig(Options):
   @overlayNoRowsTemplate.setter
   def overlayNoRowsTemplate(self, val: str):
     self._config(val)
+
+  @property
+  def paginateChildRows(self):
+    """
+    Description:
+    -----------
+    Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail. See Pagination & Child Rows.
+    Default: false
+
+    Related Pages:
+
+      hhttps://www.ag-grid.com/javascript-data-grid/row-pagination/
+    """
+    return self._config_get(False)
+
+  @paginateChildRows.setter
+  def paginateChildRows(self, flag: bool):
+    self._config(flag)
 
   @property
   def pagination(self):
@@ -1493,6 +1537,20 @@ class TableConfig(Options):
   @paginationAutoPageSize.setter
   def paginationAutoPageSize(self, num: int):
     self._config(num)
+
+  def paginationNumberFormatter(self):
+    """
+    Description:
+    -----------
+    Allows user to format the numbers in the pagination panel, i.e. 'row count' and 'page number' labels.
+    This is for pagination panel only, to format numbers inside the grid's cells (i.e. your data),
+    then use valueFormatter in the column definitions.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-pagination/
+    """
+    pass
 
   @property
   def popupParent(self):
@@ -1628,11 +1686,11 @@ class TableConfig(Options):
 
       https://www.ag-grid.com/javascript-grid-pagination/
     """
-    return self._config_get()
+    return self._config_get(False)
 
   @suppressPaginationPanel.setter
-  def suppressPaginationPanel(self, val):
-    self._config(val)
+  def suppressPaginationPanel(self, flag: bool):
+    self._config(flag)
 
   @property
   def suppressScrollOnNewData(self):

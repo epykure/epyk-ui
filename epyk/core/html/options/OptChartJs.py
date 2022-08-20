@@ -2094,6 +2094,14 @@ class OptionChartJsPlugins(Options):
 
 
 class ChartJsOptions(OptChart.OptionsChart):
+  _struct__schema = {
+    "elements": {},
+    "scales": {},
+    "layout": {},
+    "title": {},
+    "legend": {},
+    "plugins": {},
+    "size": {}}
 
   @property
   def data(self):

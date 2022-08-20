@@ -820,13 +820,8 @@ class Aggrid(GrpCls.ClassHtml):
     self.classList['main'].clear()
     self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
     self._css_cell_focus, self._css_cell, self._css_filter, self._css_menu, self._css_popup = 5 * [None]
-    self.classList['other'].add(self.cls_row)
-    self.classList['other'].add(self.cls_cell_focus)
-    self.classList['other'].add(self.cls_cell)
-    self.classList['other'].add(self.css_filter)
-    self.classList['other'].add(self.css_popup)
 
-  def theme(self, name: str):
+  def theme(self, name: str, dark: bool = None):
     """
     Description:
     ------------
@@ -852,9 +847,13 @@ class Aggrid(GrpCls.ClassHtml):
     Attributes:
     ----------
     :param name: The theme name
+    :param dark: set the corresponding dark theme
     """
-    self.component.attr["class"].add("ag-theme-%s" % name)
-    self.component.attr["class"].add("ag-theme-%s-dark" % name)
+    dark = dark or self.page.theme.dark
+    if dark:
+      self.component.attr["class"].add("ag-theme-%s-dark" % name)
+    else:
+      self.component.attr["class"].add("ag-theme-%s" % name)
 
   def strip(self, attrs: dict = None, important: bool = False):
     """

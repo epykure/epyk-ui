@@ -1194,7 +1194,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGetRowCount()" % self.varId)
 
-  def paginationGoToPage(self, page_number):
+  def paginationGoToPage(self, page_number: types.JS_DATA_TYPES):
     """
     Description:
     -----------
@@ -1203,6 +1203,10 @@ class AgGrid(JsPackage):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
+
+    Attributes:
+    ----------
+    :param page_number: Page index
     """
     page_number = JsUtils.jsConvertData(page_number, None)
     return JsObjects.JsVoid("%s.api.paginationGoToPage(%s)" % (self.varId, page_number))

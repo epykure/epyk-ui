@@ -20,6 +20,7 @@ from epyk.core.js import JsUtils
 class Options(DataClass):
   component_properties = ()
   with_builder = True
+  _struct__schema = None
 
   def __init__(self, component: primitives.HtmlModel, attrs: dict = None, options: dict = None, js_tree: bool = None,
                page: primitives.PageModel = None):
@@ -50,6 +51,30 @@ class Options(DataClass):
     :param vals: All the attributes to be added to the component
     """
     self.js_tree.update(vals)
+
+  def from_json(self, vals: dict, schema: dict = None):
+    """
+    Description:
+    ------------
+    Load the option schema for a component from a json string
+    TODO: add more feature to handle functions and enumeration
+
+    Attributes:
+    ----------
+    :param vals: The input schema
+    :param schema: The full object schema
+    """
+    if schema is None:
+      schema = self._struct__schema
+    for k, v in vals.items():
+      if hasattr(self, k):
+        if schema is not None and k in schema:
+          prop = getattr(self, k, schema[k])
+          prop.from_json(v)
+        else:
+          setattr(self, k, v)
+      else:
+        self._config(v, k, hasattr(v, "toStr"))
 
   def _config_get(self, dflt: Any = None, name: str = None):
     """
