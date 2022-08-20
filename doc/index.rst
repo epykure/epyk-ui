@@ -80,6 +80,8 @@ Please see below the 2021 road map of notifications on Twitter:
         <li><del>W25:  Chart bug fixes and alignment</del></li>
         <li><del>Chart Shared API - Axis</del></li>
         <li><del>Chart Shared API - Events</del></li>
+        <li>Icons framework - Implementation & Documentation</li>
+        <li>Pyks Modules - Generation of simple and bespoke extensions for Epyk</li>
         <li>Epyk - External Libraries for Layouts & components (Bootstrap, Materials, ToastUI...)</li>
         <li>Epyk with web framework (Vue, Angular or React)</li>
     </ul>

@@ -1,6 +1,5 @@
 
 import json
-import sys
 import collections
 import time
 import inspect

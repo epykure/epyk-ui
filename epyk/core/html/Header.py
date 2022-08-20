@@ -3,6 +3,7 @@
 
 from typing import Union, Optional
 from epyk.core.py import primitives
+from epyk.core.py import PyRest
 import base64
 import logging
 
@@ -35,7 +36,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param Optional[dict] attrs: Optional. The view port attributes.
+    :param attrs: Optional. The view port attributes
     """
     dfl_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
     if attrs is not None:
@@ -61,7 +62,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param str value: Optional. The charset encoding.
+    :param value: Optional. The charset encoding
     """
     common_vals = ("UTF-8", "ISO-8859-1")
     if self.page.verbose and value.upper() not in common_vals:
@@ -86,7 +87,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param int time: A time in second.
+    :param time: A time in second
     """
     self._metas["refresh"] = '<meta http-equiv="refresh" content="%s">' % time
     if "refresh" not in self.__cols:
@@ -109,7 +110,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param str name: The author name.
+    :param name: The author name
     """
     self._metas["author"] = '<meta name="author" content="%s">' % name
     if "author" not in self.__cols:
@@ -132,7 +133,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param str value: The report description.
+    :param value: The report description
     """
     self._metas["description"] = '<meta name="description" content="%s">' % value
     if "description" not in self.__cols:
@@ -155,7 +156,7 @@ class Meta:
 
     Attributes:
     ----------
-    :param Union[list, str] content: The keyword data.
+    :param content: The keyword data
     """
     if isinstance(content, list):
       content = ",".join(content)
@@ -180,8 +181,8 @@ class Meta:
 
     Attributes:
     ----------
-    :param str name: The name for the meta tag.
-    :param str content: The value of the meta tag.
+    :param name: The name for the meta tag
+    :param content: The value of the meta tag
     """
     self._metas[name] = '<meta name="%s" content="%s">' % (name, content)
     if name not in self.__cols:
@@ -204,8 +205,8 @@ class Meta:
 
     Attributes:
     ----------
-    :param str name: The name for the meta tag.
-    :param str content: The value of the meta tag.
+    :param name: The name for the meta tag
+    :param content: The value of the meta tag
     """
     self._metas[name] = '<meta http-equiv="%s" content="%s">' % (name, content)
     if name not in self.__cols:
@@ -244,8 +245,8 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different
+    :param href: The link path for the stylesheet page
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different
     website.
     """
     self.stylesheet(href=href, file_type="", media=None, rel="icon", cross_origin=cross_origin)
@@ -264,8 +265,8 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    :param href: The link path for the stylesheet page
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
     different website.
     """
     self.stylesheet(href=href, file_type="", media=None, rel="pingback", cross_origin=cross_origin)
@@ -282,7 +283,7 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The url path.
+    :param href: The url path
     """
     self.stylesheet(href=href, file_type="", media=None, rel="shortlink", cross_origin=False)
 
@@ -301,11 +302,11 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param str file_type: Optional. The type of the href tag.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param file_type: Optional. The type of the href tag
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     self.stylesheet(href=href, file_type=file_type, media=media, rel="preload", cross_origin=cross_origin)
 
@@ -324,10 +325,10 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     self.stylesheet(href=href, file_type=media, media=media, rel="prefetch", cross_origin=cross_origin)
 
@@ -346,10 +347,10 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="dns-prefetch", cross_origin=cross_origin)
 
@@ -369,10 +370,10 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="prerender", cross_origin=cross_origin)
 
@@ -392,10 +393,10 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     self.stylesheet(href=href, file_type="", media=media, rel="preconnect", cross_origin=cross_origin)
 
@@ -412,10 +413,10 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param str file_type: Optional. The type of the href tag.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param str rel: Optional. This attribute names a relationship of the linked document to the current document.
+    :param href: The link path for the stylesheet page
+    :param file_type: Optional. The type of the href tag
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param rel: Optional. This attribute names a relationship of the linked document to the current document
     """
     self.stylesheet(href, file_type, media, rel)
 
@@ -435,9 +436,9 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param str file_type: Optional. The type of the href tag.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
+    :param href: The link path for the stylesheet page
+    :param file_type: Optional. The type of the href tag
+    :param media: Optional. This resource will then only be loaded if the media condition is true
     """
     if not href.endswith(".json"):
       raise ValueError("Manifest file should be a json file")
@@ -457,12 +458,12 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param str file_type: Optional. The type of the href tag.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
-    :param str rel: Optional. This attribute names a relationship of the linked document to the current document.
-    :param bool cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
-    different website.
+    :param href: The link path for the stylesheet page
+    :param file_type: Optional. The type of the href tag
+    :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param rel: Optional. This attribute names a relationship of the linked document to the current document
+    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+      different website.
     """
     if isinstance(href, list):
       self.__header._links.append({"href": href[0], "rel": rel})
@@ -492,9 +493,9 @@ class Links:
 
     Attributes:
     ----------
-    :param str href: The link path for the stylesheet page.
-    :param str file_type: Optional. The type of the href tag.
-    :param Optional[str] media: Optional. This resource will then only be loaded if the media condition is true.
+    :param href: The link path for the stylesheet page
+    :param file_type: Optional. The type of the href tag
+    :param media: Optional. This resource will then only be loaded if the media condition is true
     """
     self.__header._links.append({"href": href, "rel": "alternate stylesheet"})
     if file_type is not None:
@@ -520,9 +521,9 @@ class Icons:
 
     Attributes:
     ----------
-    :param str url: The url of the icon on the server.
-    :param Optional[str] sizes: Optional. The size of the icon.
-    :param Optional[str] img_type: Optional. The type of picture.
+    :param url: The url of the icon on the server
+    :param sizes: Optional. The size of the icon
+    :param img_type: Optional. The type of picture
     """
     self.__header.favicon(url, rel="icon", sizes=sizes, img_type=img_type)
     return self.__header
@@ -539,8 +540,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param str url: The path for the gif.
-    :param Optional[str] sizes: Optional. The size in a format 25x25.
+    :param url: The path for the gif
+    :param sizes: Optional. The size in a format 25x25
     """
     self.__header.favicon(url, rel="icon", sizes=sizes, img_type="image/gif")
     return self.__header
@@ -556,8 +557,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param str url: The path for the svg file.
-    :param Optional[str] sizes: Optional. The size for 25x25.
+    :param url: The path for the svg file
+    :param sizes: Optional. The size for 25x25
     """
     self.__header.favicon(url, rel="icon", sizes=sizes, img_type="image/svg+xml")
     return self.__header
@@ -574,8 +575,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param str url: The path for the svg file.
-    :param Optional[str] sizes: Optional. The size for 25x25.
+    :param url: The path for the svg file
+    :param sizes: Optional. The size for 25x25
     """
     self.__header.favicon(url, rel="apple-touch-icon", sizes=sizes)
     return self.__header
@@ -592,8 +593,8 @@ class Icons:
 
     Attributes:
     ----------
-    :param str url: The path for the svg file.
-    :param Optional[str] sizes: Optional. The size for 25x25.
+    :param url: The path for the svg file
+    :param sizes: Optional. The size for 25x25
     """
     self.__header.favicon(url, rel="apple-touch-startup-image", sizes=sizes)
     return self.__header
@@ -615,12 +616,12 @@ class Header:
     ".svg": "image/svg+xml",
   }
 
-  def __init__(self, report: Optional[primitives.PageModel] = None):
+  def __init__(self, page: Optional[primitives.PageModel] = None):
     self._headers, self._links, self._styles, self._scripts, self._base, self.__meta = {}, [], [], [], None, None
     self._favicon_url = {}
+    self.page = page
     self.favicon(Defaults.FAVICON_URL)
-    self.page = report
-    if report is not None:
+    if page is not None:
       self.page._props["header"] = self._headers
 
   def dev(self, icon: Optional[str] = None):
@@ -636,7 +637,7 @@ class Header:
 
     Attributes:
     ----------
-    :param Optional[str] icon: Optional. The url path of the icon.
+    :param icon: Optional. The url path of the icon
     """
     self.favicon(icon or Defaults.FAVICON_DEV_URL)
 
@@ -659,8 +660,6 @@ class Header:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_meta.asp
-
-    :rtype: Meta
     """
     if self.__meta is None:
       self.__meta = Meta(self.page)
@@ -676,8 +675,8 @@ class Header:
 
     Attributes:
     ----------
-    :param str src: The script path added to the page.
-    :param Optional[dict] attrs: optional. The various attributes to be added to the script tag.
+    :param src: The script path added to the page
+    :param attrs: optional. The various attributes to be added to the script tag
     """
     attr_list = []
     if attrs is not None:
@@ -695,8 +694,8 @@ class Header:
 
     Attributes:
     ----------
-    :param str code: The JavaScript code to be added to the page.
-    :param Optional[dict] attrs: optional. The various attributes to be added to the script tag.
+    :param code: The JavaScript code to be added to the page
+    :param attrs: optional. The various attributes to be added to the script tag
     """
     base64_bytes = base64.b64encode(code.encode('ascii'))
     base64_message = base64_bytes.decode('ascii')
@@ -720,7 +719,7 @@ class Header:
 
     Attributes:
     ----------
-    :param str value: The title value for the page.
+    :param value: The title value for the page
     """
     self._headers['title'] = value
     return self
@@ -739,7 +738,7 @@ class Header:
 
     Attributes:
     ----------
-    :param str url: The url path.
+    :param url: The url path
     """
     self._base = url
     return self
@@ -763,10 +762,10 @@ class Header:
 
     Attributes:
     ----------
-    :param str url: The url full path.
-    :param str rel: Optional.
-    :param Optional[str] sizes: Optional.
-    :param Optional[str] img_type: Optional.
+    :param url: The url full path
+    :param rel: Optional
+    :param sizes: Optional
+    :param img_type: Optional
     """
     extension = url.split(".")[-1].lower()
     if ".%s" % extension in self.mime_mapping:
@@ -776,6 +775,11 @@ class Header:
         logging.warning("Favicon - Missing extension %s - No default used" % extension)
     else:
       logging.warning("Favicon - Missing extension %s - No default used" % extension)
+    if self.page is not None and self.page.imports.self_contained:
+      r = PyRest.PyRest(self.page)
+      base64_bytes = base64.b64encode(r.request(url, encoding="ascii"))
+      base64_message = base64_bytes.decode('ascii')
+      url = "data:image/x-icon;base64,%s" % base64_message
     self._favicon_url[rel] = {"href": url, "rel": rel}
     if img_type is not None:
       self._favicon_url[rel]["type"] = img_type

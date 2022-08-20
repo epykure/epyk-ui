@@ -14,6 +14,7 @@ import importlib
 import collections
 import logging
 import base64
+import traceback
 from typing import Union, Optional, List
 
 try:
@@ -4076,11 +4077,21 @@ class ImportManager:
             urlModule = "data:text/css;base64,%s" % base64_message
         elif self.self_contained:
           try:
-            with urlopen(urlModule) as response:
+            headers = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+              'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+              'Accept-Encoding': 'none',
+              'Accept-Language': 'en-US,en;q=0.8',
+              'Connection': 'keep-alive'}
+            request = Request(urlModule, None, headers)
+            with urlopen(request) as response:
               base64_bytes = base64.b64encode(response.read())
               base64_message = base64_bytes.decode('ascii')
               urlModule = "data:text/css;base64,%s" % base64_message
-          except: pass
+          except Exception as err:
+            print(urlModule)
+            print(traceback.format_exc())
 
         css.append('<link rel="stylesheet" href="%s" type="text/css">' % urlModule)
     if local_css is not None:
@@ -4154,11 +4165,21 @@ class ImportManager:
             url_module = "data:text/js;base64,%s" % base64_message
         elif self.self_contained:
           try:
-            with urlopen(url_module) as response:
+            headers = {
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+              'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+              'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+              'Accept-Encoding': 'none',
+              'Accept-Language': 'en-US,en;q=0.8',
+              'Connection': 'keep-alive'}
+            request = Request(url_module, None, headers)
+            with urlopen(request) as response:
               base64_bytes = base64.b64encode(response.read())
               base64_message = base64_bytes.decode('ascii')
               url_module = "data:text/js;base64,%s" % base64_message
-          except Exception as err: print(err)
+          except Exception as err:
+            print(url_module)
+            print(traceback.format_exc())
         if self.pkgs.get(js_alias).defer:
           js.append(
             '<script language="javascript" type="%s" src="%s%s" defer></script>' % (mod_type, url_module, extra_configs))
