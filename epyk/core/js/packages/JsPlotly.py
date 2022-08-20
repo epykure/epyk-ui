@@ -1,5 +1,6 @@
 
-from epyk.core.py import primitives
+from typing import Union
+from epyk.core.py import primitives, types
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
 from epyk.core.js.primitives import JsObjects
@@ -9,6 +10,46 @@ from epyk.core.js.packages import JsPackage
 
 class JsPlotly(JsPackage):
 
+  #  -----------------------------------------
+  #  Common table javascript interface
+  #  -----------------------------------------
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    """
+    pass
+
+  def download(self, format: str, filename: str, options: dict = None):
+    """
+    Description:
+    -----------
+    Common download feature for tables.
+
+    Attributes:
+    ----------
+    :param format: File format
+    :param filename: Filename
+    :param options: Download option
+    """
+    pass
+
+  def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
+    pass
+
+  def show_column(self, column: str):
+    pass
+
+  def hide_column(self, column: str):
+    pass
+
+  def redraw(self, flag: bool = False):
+    return ""
+
+  #  -----------------------------------------
+  #  Specific table javascript interface
+  #  -----------------------------------------
   def newPlot(self, data=None, layout=None, config=None, html_code=None):
     """
     Description:

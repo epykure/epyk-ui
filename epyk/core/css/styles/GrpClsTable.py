@@ -820,13 +820,41 @@ class Aggrid(GrpCls.ClassHtml):
     self.classList['main'].clear()
     self._css_head, self._css_row_even, self._css_row_odd, self._css_row = 4 * [None]
     self._css_cell_focus, self._css_cell, self._css_filter, self._css_menu, self._css_popup = 5 * [None]
-    self.classList['other'].add(self.cls_head)
     self.classList['other'].add(self.cls_row)
     self.classList['other'].add(self.cls_cell_focus)
     self.classList['other'].add(self.cls_cell)
     self.classList['other'].add(self.css_filter)
-    self.classList['other'].add(self.css_menu)
     self.classList['other'].add(self.css_popup)
+
+  def theme(self, name: str):
+    """
+    Description:
+    ------------
+    Set a specific theme (alpine, balham or material.
+
+    Usage::
+
+      page.properties.css.add_text('''
+      .ag-theme-balham {
+          /* customise with CSS variables */
+          --ag-grid-size: 8px;
+          --ag-header-background-color: red;
+          --ag-header-foreground-color: white;
+      }
+      ''')
+      grid = page.ui.tables.aggrids.table()
+      grid.style.theme("balham")
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/#reference-variables---ag-header-background-color
+
+    Attributes:
+    ----------
+    :param name: The theme name
+    """
+    self.component.attr["class"].add("ag-theme-%s" % name)
+    self.component.attr["class"].add("ag-theme-%s-dark" % name)
 
   def strip(self, attrs: dict = None, important: bool = False):
     """

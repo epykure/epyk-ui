@@ -1,9 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.html.options import OptPlotly
+
+from epyk.core.py import types
 
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObject
@@ -44,7 +48,7 @@ class Chart(Html.Html):
     return OptPlotly.OptionsChartSharedPlotly(self)
 
   @property
-  def chartId(self):
+  def chartId(self) -> str:
     """
     Description:
     ------------
@@ -52,7 +56,7 @@ class Chart(Html.Html):
     """
     return "%s_obj" % self.htmlCode
 
-  def click_legend(self, js_funcs, profile=False):
+  def click_legend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -63,14 +67,15 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.onReady("%s.on('plotly_legendclick', function(data) {%s})" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+            on_ready: bool = False):
     """
     Description:
     ------------
@@ -82,16 +87,17 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.onReady("%s.on('plotly_click', function(data) {%s})" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def dblclick(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+               on_ready: bool = False):
     """
     Description:
     ------------
@@ -103,16 +109,17 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.onReady("%s.on('plotly_doubleclick', function(data) {%s})" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def hover(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+            on_ready: bool = False):
     """
     Description:
     ------------
@@ -123,16 +130,17 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.onReady("%s.on('plotly_hover', function(data) {%s})" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def unhover(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def unhover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+              on_ready: bool = False):
     """
     Description:
     ------------
@@ -143,10 +151,10 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: String. Optional. The source target for the event.
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.onReady("%s.on('plotly_unhover', function(data) {%s})" % (
       self.dom.varName, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
@@ -158,7 +166,6 @@ class Chart(Html.Html):
     Description:
     ------------
 
-    :rtype: DataChart
     """
     if not self._traces:
       self.add_trace([])
@@ -173,8 +180,6 @@ class Chart(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptPlotly.OptionConfig
     """
     return super().options
 
@@ -234,7 +239,7 @@ class Chart(Html.Html):
           }); result.push(dataSet)})
       }; return result'''
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: List[str]):
     """
     Description:
     -----------
@@ -247,7 +252,7 @@ class Chart(Html.Html):
 
     Attributes:
     ----------
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -330,9 +335,21 @@ class Chart(Html.Html):
     self._traces.append(DataChart(component=self, page=self.page, attrs=c_data))
     return self
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data=None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param options:
+    :param profile:
+    :param component_id:
+    """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.name)
+      js_convertor = js_convertor.replace(" ", "")
       self.page.properties.js.add_constructor(
         js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
       profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
@@ -360,15 +377,26 @@ class Chart(Html.Html):
 class Line(Chart):
 
   @property
-  def dom(self):
+  def dom(self) -> JsPlotly.Line:
     """
-    :rtype: JsPlotly.Line
+    Description:
+    -----------
     """
     if self._dom is None:
       self._dom = JsPlotly.Line(component=self, js_code=self.chartId, page=self.page)
     return self._dom
 
-  def trace(self, data, type=None, mode='lines+markers'):
+  def trace(self, data: types.JS_DATA_TYPES, type: str = None, mode: str = 'lines+markers'):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param data:
+    :param type:
+    :param mode:
+    """
     c_data = dict(data)
     if type is not None:
       c_data['type'] = self.options.type
@@ -376,9 +404,13 @@ class Line(Chart):
       c_data['mode'] = self.options.mode or mode
     return DataXY(page=self.page, attrs=c_data, component=self)
 
-  def add_trace(self, data, type=None, mode='lines+markers'):
+  def add_trace(self, data: types.JS_DATA_TYPES, type: str = None, mode: str = 'lines+markers'):
     """
+    Description:
+    -----------
 
+    Attributes:
+    ----------
     :param data:
     :param type:
     :param mode:
@@ -387,41 +419,6 @@ class Line(Chart):
     self.data.line.color = self.options.colors[len(self._traces)-1]
     self.data.marker.color = self.options.colors[len(self._traces)-1]
     return self
-
-
-class Bar(Chart):
-
-  @property
-  def chart(self) -> JsPlotly.Bar:
-    """
-    :rtype: JsPlotly.Bar
-    """
-    if self._chart is None:
-      self._chart = JsPlotly.Bar(page=self.page, js_code=self.chartId, component=self)
-    return self._chart
-
-  @property
-  def layout(self):
-    if self._layout is None:
-      self._layout = LayoutBar(page=self.page, component=self)
-    return self._layout
-
-  def trace(self, data, type='bar', mode=None):
-    c_data = dict(data)
-    if type is not None:
-      c_data['type'] = self.options.type
-    if mode is not None:
-      c_data['mode'] = self.options.mode or mode
-    return DataXY(component=self, page=self.page, attrs=c_data)
-
-  def add_trace(self, data, type='bar', mode=None):
-    self._traces.append(self.trace(data, type, mode))
-    self.data.line.color = self.options.colors[len(self._traces)-1]
-    self.data.marker.color = self.options.colors[len(self._traces)-1]
-    return self
-
-  def add_dataset(self, data, label, colors=None, opacity=None, kind='bar'):
-    return super().add_dataset(data, label, colors, opacity, kind)
 
 
 class DataFill(DataClass):
@@ -2658,3 +2655,38 @@ class CandleStick(Chart):
       c_data['mode'] = mode
     self._traces.append(DataCandle(page=self.page, component=self, attrs=c_data))
     return self
+
+
+class Bar(Chart):
+
+  @property
+  def chart(self) -> JsPlotly.Bar:
+    """
+    :rtype: JsPlotly.Bar
+    """
+    if self._chart is None:
+      self._chart = JsPlotly.Bar(page=self.page, js_code=self.chartId, component=self)
+    return self._chart
+
+  @property
+  def layout(self) -> LayoutBar:
+    if self._layout is None:
+      self._layout = LayoutBar(page=self.page, component=self)
+    return self._layout
+
+  def trace(self, data: types.JS_DATA_TYPES, type: str = 'bar', mode: str = None):
+    c_data = dict(data)
+    if type is not None:
+      c_data['type'] = self.options.type
+    if mode is not None:
+      c_data['mode'] = self.options.mode or mode
+    return DataXY(component=self, page=self.page, attrs=c_data)
+
+  def add_trace(self, data, type='bar', mode=None):
+    self._traces.append(self.trace(data, type, mode))
+    self.data.line.color = self.options.colors[len(self._traces)-1]
+    self.data.marker.color = self.options.colors[len(self._traces)-1]
+    return self
+
+  def add_dataset(self, data, label, colors=None, opacity=None, kind='bar'):
+    return super().add_dataset(data, label, colors, opacity, kind)

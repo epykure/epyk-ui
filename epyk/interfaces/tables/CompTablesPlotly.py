@@ -10,7 +10,7 @@ class Plotly:
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records, cols: list = None, rows: list = None, header: list = None,
+  def table(self, records=None, cols: list = None, rows: list = None, header: list = None,
             width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
@@ -42,6 +42,7 @@ class Plotly:
     data_rows, _header = [], []
     cols = cols or []
     rows = rows or []
+    records = records or []
     if len(records) > 0 and not cols and not rows:
       cols = list(records[0].keys())
     for r in rows:

@@ -383,7 +383,7 @@ JS_IMPORTS = {
   # Javascript packages to handle DataTables
   'datatables': {
     'req': [{'alias': 'jquery'}],
-    'version': '1.10.19',
+    'version': '1.10.21',
     'register': {'alias': 'datatables', 'module': 'jquery.dataTables.min'},
     'modules': [
       {'reqAlias': 'datatables', 'script': 'jquery.dataTables.min.js', 'path': 'datatables/%(version)s/js/',
@@ -2224,6 +2224,7 @@ class ImportModule:
   def __init__(self, name: str, js: dict, css: dict, links: Optional[dict] = None, page=None):
     self._name = name
     self.page = page
+    self.community_version = True
     self._defer, self._async, self.attrs = False, False, {}
     self._js = js[name]
     self._css = css.get(name, {})
@@ -2434,9 +2435,10 @@ class ImportModule:
       page.imports.pkgs.ag_grid.set_enterprise()
     """
     pgks = ("ag-grid-community",)
-    if not self._name in pgks:
+    if self._name not in pgks:
       raise NotImplementedError("Noting implemented for this package %s, please contact epyk team" % self._name)
 
+    self.community_version = False
     self.page.imports.add(self._name)
     if self._name == 'ag-grid-community':
       version = "28.1.0"

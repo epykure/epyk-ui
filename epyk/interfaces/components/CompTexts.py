@@ -6,6 +6,7 @@ from epyk.core.py import types
 from epyk.core import html
 from epyk.interfaces import Arguments
 from epyk.core.css import Defaults as default_css
+from epyk.core.html import Defaults as default_html
 
 
 class TextReferences:
@@ -292,7 +293,8 @@ class Texts:
     html.Html.set_component_skin(text_comp)
     return text_comp
 
-  def label(self, text: str = "", color: str = None, align: str = 'center', width: types.SIZE_TYPE = (100, "px"),
+  def label(self, text: str = "", color: str = None, align: str = 'center',
+            width: types.SIZE_TYPE = (default_html.INPUTS_MIN_WIDTH, "px"),
             height: types.SIZE_TYPE = ('auto', ""), html_code: str = None, tooltip: str = '',
             profile: types.PROFILE_TYPE = None, options: dict = None) -> html.HtmlText.Label:
     """

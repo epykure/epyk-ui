@@ -24,6 +24,9 @@ class Datatables:
 
     Usage::
 
+      dtt = page.ui.tables.datatables.table(cols=["test"])
+      page.ui.button("Update").click([dt.build([["row %s" % i] for i in range(n)])])
+
     Attributes:
     ----------
     :param records: Optional. The list of dictionaries with the input data.
@@ -38,7 +41,8 @@ class Datatables:
     data = []
     cols = cols or []
     rows = rows or []
-    if not cols and not rows:
+    records = records or []
+    if len(records) > 0 and not cols and not rows:
       cols = list(records[0].keys())
     for rec in records:
       data.append([rec.get(c) for c in cols + rows])

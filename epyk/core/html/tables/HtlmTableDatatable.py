@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.options import OptTableDatatable
 from epyk.core.js.packages import JsDatatable
@@ -40,7 +40,6 @@ class Table(Html.Html):
 
     Usage::
 
-    :rtype: GrpClsTable.Datatable
     """
     if self._styleObj is None:
       self._styleObj = GrpClsTable.Datatable(self)
@@ -52,21 +51,17 @@ class Table(Html.Html):
     Description:
     ------------
     Ag Grid table options.
-
-    :rtype: OptTableDatatable.TableConfig
     """
     return super().options
 
   @property
-  def tableId(self):
+  def tableId(self) -> str:
     """
     Description:
     -----------
     Return the Javascript variable of the chart.
-
-    Usage::
     """
-    return "%s_obj" % self.htmlCode
+    return "window['%s_obj']" % self.htmlCode
 
   def get_column(self, by_title: str):
     """
@@ -78,7 +73,7 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param str by_title:
+    :param by_title:
     """
     for c in self.options.columns:
       if c.title == by_title:
@@ -94,14 +89,20 @@ class Table(Html.Html):
     Usage::
 
     :return: A Javascript object
-
-    :rtype: JsDatatable.DatatableAPI
     """
     if self._js is None:
       self._js = JsDatatable.DatatableAPI(page=self.page, selector=self.tableId, set_var=False, component=self)
     return self._js
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def define(self, options: types.JS_DATA_TYPES = None):
+    """
+
+    :param options:
+    :return:
+    """
+
+  def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
     Description:
     -----------
@@ -110,15 +111,15 @@ class Table(Html.Html):
 
     Attributes:
     ----------
-    :param data: String. A String corresponding to a JavaScript object.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param data: A String corresponding to a JavaScript object.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     :param component_id:
     """
     if data:
       return JsUtils.jsConvertFncs([self.js.clear(), self.js.rows.add(data, update=True)], toStr=True, profile=profile)
 
-    return 'var %s = %s.DataTable(%s)' % (
+    return '%s = %s.DataTable(%s)' % (
       self.tableId, component_id or self.dom.jquery.varId, self.options.config_js(options))
 
   def __str__(self):

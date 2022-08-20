@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Any
+from typing import Any, Union
 from epyk.core.py import primitives, types
 from epyk.core.js.packages import JsPackage
 from epyk.core.js import JsUtils
@@ -151,6 +151,10 @@ class ColumnApi:
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
+    Attributes:
+    ----------
+    :param col_name:
+    :param visible:
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     visible = JsUtils.jsConvertData(visible, None)
@@ -447,6 +451,53 @@ class ColumnApi:
 class AgGrid(JsPackage):
   lib_alias = {"js": "ag-grid-community", "css": "ag-grid-community"}
 
+  #  -----------------------------------------
+  #  Common table javascript interface
+  #  -----------------------------------------
+  def empty(self):
+    """
+    Description:
+    -----------
+
+    """
+    return self.setRowData([])
+
+  def download(self, format: str, filename: str, options: dict = None):
+    """
+    Description:
+    -----------
+    Common download feature for tables.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/download
+
+    Attributes:
+    ----------
+    :param format: File format
+    :param filename: Filename
+    :param options: Download option
+    """
+    return self.exportDataAsCsv()
+
+  def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
+    row = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsVoid(
+      "%(tableId)s.gridOptions.rowData.push(%(row)s); %(tableId)s.gridApi.setRowData(this.gridOptions.rowData)" % {
+        "tableId": self.varId, "row": row})
+
+  def show_column(self, column: str):
+    return self.columnApi.setColumnVisible(column, False)
+
+  def hide_column(self, column: str):
+    return self.columnApi.setColumnVisible(column, True)
+
+  def redraw(self, flag: bool = False):
+    return ""
+
+  #  -----------------------------------------
+  #  Specific table javascript interface
+  #  -----------------------------------------
   def sizeColumnsToFit(self):
     """
     Description:
@@ -470,6 +521,28 @@ class AgGrid(JsPackage):
       https://www.ag-grid.com/javascript-grid-column-definitions/
     """
     return ColumnApi(self.page, "%s.columnApi" % self.varId)
+
+  def collapseAll(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+    """
+    return ColumnApi(self.page, "%s.api.collapseAll" % self.varId)
+
+  def expandAll(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+    """
+    return ColumnApi(self.page, "%s.api.expandAll" % self.varId)
 
   def setColumnDefs(self, col_defs: Any):
     """
@@ -548,6 +621,15 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (
       self.varId, JsUtils.jsConvertData(transaction, None), callback))
+
+  def exportDataAsCsv(self):
+    """
+    Description:
+    -----------
+
+    https://www.ag-grid.com/javascript-data-grid/csv-export/
+    """
+    return JsObjects.JsVoid("%s.api.exportDataAsCsv()" % self.varId)
 
   def getDisplayedRowCount(self):
     """

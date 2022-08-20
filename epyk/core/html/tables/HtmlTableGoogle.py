@@ -30,7 +30,10 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlCode
 
   def add_column(self, c):
-    pass
+    raise NotImplementedError("Not yet available")
+
+  def define(self, options: dict):
+    raise NotImplementedError("Not yet available")
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     return '''

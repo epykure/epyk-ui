@@ -145,25 +145,6 @@ class Tables:
     """
     return CompDatatable.Datatables(self)
 
-  def config(self, html_code: str, visible: bool = False,
-             profile: types.PROFILE_TYPE = None) -> html_tables.HtmlTableConfig.ConfigTable:
-    """
-    Description:
-    -----------
-
-    :tags:
-    :categories:
-
-    Usage::
-
-    Attributes:
-    ----------
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param visible: Optional. A flag to specific if the table is visible or just used as a cache
-    :param profile: Optional. A flag to set the component performance storage
-    """
-    return html_tables.HtmlTableConfig.ConfigTable(self.page, html_code, visible, profile)
-
   def basic(self, records: List[dict] = None, cols=None, rows=None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
@@ -282,16 +263,16 @@ class Tables:
           icon, align="center", tooltip=typ, height=height, width=(15, 'px'), options=options, profile=profile)
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
-        if typ == "Csv":
+        if typ == "Csv" and hasattr(table.js, 'download'):
           r.click([table.js.download("csv", "data.csv")])
           r.icon.style.add_classes.div.color_hover()
-        elif typ == "New":
+        elif typ == "New" and hasattr(table.js, 'addRow'):
           r.click([table.js.addRow(options.get("add", {}), True)])
           r.icon.style.add_classes.div.color_hover()
-        elif typ == "Clear":
-          r.click([table.js.clearData()])
+        elif typ == "Clear" and hasattr(table.js, 'empty'):
+          r.click([table.js.empty()])
           r.icon.style.add_classes.div.danger_hover()
-        elif typ == "Columns" and table is not None:
+        elif typ == "Columns" and table is not None and hasattr(table.js, 'showColumn'):
           checks = self.page.ui.lists.checks([{"value": k, "checked": v} for k, v in columns.items()])
           popup_columns = self.page.ui.modals.popup([checks], title="Columns", options={"background": False})
           popup_columns.window.style.css.border = "1px solid %s" % self.page.theme.greys[3]

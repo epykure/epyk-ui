@@ -3,6 +3,7 @@
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
+from typing import Generator
 from epyk.core.html.options import OptTableAgGrid
 
 from epyk.core.js.packages import JsAgGrid
@@ -49,6 +50,17 @@ class Table(Html.Html):
     for col_id, col_attrs in cols_def.items():
       if col_id not in defined_cols:
         self.add_column(col_id, attrs=col_attrs)
+
+  def get_columns(self) -> Generator[OptTableAgGrid.Column, None, None]:
+    """
+    Description:
+    ------------
+    Get a generator with all the columns defined for the table on the Python side.
+
+    This function will only return columns defined from the Python side.
+    """
+    for c in self.options.js_tree.setdefault("columnDefs", []):
+      yield c
 
   @property
   def style(self) -> GrpClsTable.Aggrid:

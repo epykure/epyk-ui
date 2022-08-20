@@ -922,6 +922,54 @@ class TabRowContextMenu(JsPackage):
 class Tabulator(JsPackage):
   lib_alias = {"js": "tabulator-tables", 'css': "tabulator-tables"}
 
+  #  -----------------------------------------
+  #  Common table javascript interface
+  #  -----------------------------------------
+  def download(self, format: str, filename: str, options: dict = None):
+    """
+    Description:
+    -----------
+    Common download feature for tables.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/download
+
+    Attributes:
+    ----------
+    :param format: File format
+    :param filename: Filename
+    :param options: Download option
+    """
+    if format == "pdf":
+      self.page.jsImports.add("jspdf")
+    format = JsUtils.jsConvertData(format, None)
+    filename = JsUtils.jsConvertData(filename, None)
+    if options is None:
+      return JsObjects.JsVoid("%s.download(%s, %s)" % (self.varId, format, filename))
+
+    options = JsUtils.jsConvertData(options, None)
+    return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
+
+  def empty(self):
+    """
+
+    :return:
+    """
+    return self.clearData()
+
+  def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
+    return self.addRow(data, flag)
+
+  def show_column(self, column: str):
+    return self.showColumn(column)
+
+  def hide_column(self, column: str):
+    return self.hideColumn(column)
+
+  #  -----------------------------------------
+  #  Specific table javascript interface
+  #  -----------------------------------------
   @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
   def alert(self, text: str):
     """
@@ -945,32 +993,7 @@ class Tabulator(JsPackage):
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsVoid("%s.alert(%s)" % (self.varId, text))
 
-  def download(self, format: str, filename: str, options: dict = None):
-    """
-    Description:
-    -----------
-
-    Related Pages:
-
-      http://tabulator.info/docs/4.0/download
-
-    Attributes:
-    ----------
-    :param format:
-    :param filename:
-    :param options:
-    """
-    if format == "pdf":
-      self.page.jsImports.add("jspdf")
-    format = JsUtils.jsConvertData(format, None)
-    filename = JsUtils.jsConvertData(filename, None)
-    if options is None:
-      return JsObjects.JsVoid("%s.download(%s, %s)" % (self.varId, format, filename))
-
-    options = JsUtils.jsConvertData(options, None)
-    return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
-
-  def downloadToTab(self, format: str):
+  def downloadToTab(self, file_format: str):
     """
     Description:
     -----------
@@ -985,12 +1008,12 @@ class Tabulator(JsPackage):
 
     Attributes:
     ----------
-    :param format: The output format
+    :param file_format: The output format
     """
-    if format == "pdf":
+    if file_format == "pdf":
       self.page.jsImports.add("jspdf")
-    format = JsUtils.jsConvertData(format, None)
-    return JsObjects.JsVoid("%s.downloadToTab(%s)" % (self.varId, format))
+    file_format = JsUtils.jsConvertData(file_format, None)
+    return JsObjects.JsVoid("%s.downloadToTab(%s)" % (self.varId, file_format))
 
   @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
   def clearAlert(self):

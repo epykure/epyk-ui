@@ -2,6 +2,7 @@
 import logging
 
 from typing import Union
+from epyk.core.js import JsUtils
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
 
@@ -91,7 +92,7 @@ class ColType(Enums):
 
     Related Pages:
 
-      https://www.ag-grid.com/javascript-grid-column-definitions/
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
     return self._set_value()
 
@@ -102,7 +103,7 @@ class ColType(Enums):
 
     Related Pages:
 
-      https://www.ag-grid.com/javascript-grid-column-definitions/
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
     return self._set_value()
 
@@ -111,6 +112,9 @@ class ColType(Enums):
     Description:
     -----------
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
     return self._set_value()
 
@@ -119,6 +123,9 @@ class ColType(Enums):
     Description:
     -----------
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
     return self._set_value()
 
@@ -127,6 +134,20 @@ class ColType(Enums):
     Description:
     -----------
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+    """
+    return self._set_value()
+
+  def rightAligned(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
     return self._set_value()
 
@@ -204,6 +225,18 @@ class ColOrder(Enums):
 class Column(Options):
 
   @property
+  def aggFunc(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get()
+
+  @aggFunc.setter
+  def aggFunc(self, val: str):
+    self._config(val)
+
+  @property
   def children(self):
     """
     Description:
@@ -242,7 +275,9 @@ class Column(Options):
     -----------
     values closed, open.
 
-    https://www.ag-grid.com/javascript-grid-grouping-headers/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-grouping-headers/
     """
     return self._config_get()
 
@@ -251,7 +286,7 @@ class Column(Options):
     self._config(val)
 
   @property
-  def editor(self):
+  def editor(self) -> CellEditor:
     """
     Description:
     -----------
@@ -260,8 +295,6 @@ class Column(Options):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-cell-editing/
-
-    :rtype: CellEditor
     """
     return CellEditor(self, "cellEditor")
 
@@ -282,6 +315,7 @@ class Column(Options):
     """
     Description:
     -----------
+    Allow every column to be grouped.
 
     Related Pages:
 
@@ -306,7 +340,7 @@ class Column(Options):
     self._config(val)
 
   @property
-  def filters(self):
+  def filters(self) -> ColumnFilter:
     """
     Description:
     -----------
@@ -318,6 +352,18 @@ class Column(Options):
       https://www.ag-grid.com/javascript-grid-filtering/
     """
     return ColumnFilter(self, 'filter')
+
+  @property
+  def groupId(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get()
+
+  @groupId.setter
+  def groupId(self, val: str):
+    self._config(val)
 
   @property
   def hide(self):
@@ -333,8 +379,8 @@ class Column(Options):
     return self._config_get()
 
   @hide.setter
-  def hide(self, val):
-    self._config(val)
+  def hide(self, flag: bool):
+    self._config(flag)
 
   @property
   def headerName(self):
@@ -363,8 +409,8 @@ class Column(Options):
     return self._config_get()
 
   @lockPinned.setter
-  def lockPinned(self, val):
-    self._config(val)
+  def lockPinned(self, flag: bool):
+    self._config(flag)
 
   @property
   def marryChildren(self):
@@ -392,6 +438,87 @@ class Column(Options):
   @sortable.setter
   def sortable(self, val):
     self._config(val)
+
+  @property
+  def suppressColumnsToolPanel(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+    """
+    return self._config_get()
+
+  @suppressColumnsToolPanel.setter
+  def suppressColumnsToolPanel(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def suppressMenu(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @suppressMenu.setter
+  def suppressMenu(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def floatingFilterComponent(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @floatingFilterComponent.setter
+  def floatingFilterComponent(self, data):
+    self._config(data, js_type=True)
+
+  @property
+  def floatingFilterComponentParams(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @floatingFilterComponentParams.setter
+  def floatingFilterComponentParams(self, values: dict):
+    self._config(values)
+
+  @property
+  def toolPanelClass(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+    """
+    return self._config_get()
+
+  @toolPanelClass.setter
+  def toolPanelClass(self, val: str):
+    val = JsUtils.jsConvertData(val, None)
+    self._config(val, js_type=True)
 
   @property
   def filter(self):
@@ -462,7 +589,7 @@ class Column(Options):
     return self._config_get()
 
   @pinned.setter
-  def pinned(self, val):
+  def pinned(self, val: Union[str, bool]):
     self._config(val)
 
   @property
@@ -526,6 +653,18 @@ class Column(Options):
     self._config(val)
 
   @property
+  def rowDrag(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get()
+
+  @rowDrag.setter
+  def rowDrag(self, val):
+    self._config(val)
+
+  @property
   def rowGroup(self):
     """
     Description:
@@ -568,13 +707,28 @@ class Column(Options):
     self._config(val)
 
   @property
-  def type(self):
+  def types(self):
     """
     Description:
     -----------
 
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
     """
-    return ColType(self, self._attrs)
+    return self._config_sub_data("type", ColType)
+
+  @property
+  def type(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get()
+
+  @type.setter
+  def type(self, val: str):
+    self._config(val)
 
   @property
   def enableCellChangeFlash(self):
@@ -641,6 +795,34 @@ class Column(Options):
     """
     return ColOrder(self, 'sort')
 
+  @property
+  def title(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get(name="headerName")
+
+  @title.setter
+  def title(self, val: str):
+    self._config(val, name="headerName")
+
+  @property
+  def valueGetter(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+    """
+    return self._config_get()
+
+  @valueGetter.setter
+  def valueGetter(self, val: str):
+    self._config(val)
+
 
 class DefaultColDef(Options):
 
@@ -649,12 +831,27 @@ class DefaultColDef(Options):
     """
     Description:
     -----------
+    set a filter for every columns.
     """
     return self._config_get()
 
   @filter.setter
-  def filter(self, val):
+  def filter(self, val: str):
     self._config(val)
+
+  @property
+  def filters(self):
+    """
+    Description:
+    -----------
+    Set filtering on a column using the column definition property filter. The property can have one of the following
+    values:
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-filtering/
+    """
+    return ColumnFilter(self, 'filter')
 
   @property
   def flex(self):
@@ -672,7 +869,44 @@ class DefaultColDef(Options):
     return self._config_get()
 
   @flex.setter
-  def flex(self, val):
+  def flex(self, val: int):
+    self._config(val)
+
+  @property
+  def floatingFilter(self):
+    """
+    Description:
+    -----------
+    Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
+    Floating Filter Component to work alongside one of the grid's Provided Filters, or alongside a Custom Filter.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @floatingFilter.setter
+  def floatingFilter(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def groupDefaultExpanded(self):
+    """
+    Description:
+    -----------
+    To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+    """
+    return self._config_get()
+
+  @groupDefaultExpanded.setter
+  def groupDefaultExpanded(self, val: int):
+    if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
+      logging.warning("groupDefaultExpanded not available in the community version")
     self._config(val)
 
   @property
@@ -684,7 +918,7 @@ class DefaultColDef(Options):
     return self._config_get()
 
   @minWidth.setter
-  def minWidth(self, val):
+  def minWidth(self, val: int):
     self._config(val)
 
   @property
@@ -692,12 +926,13 @@ class DefaultColDef(Options):
     """
     Description:
     -----------
+    make every column editable
     """
     return self._config_get()
 
   @editable.setter
-  def editable(self, val):
-    self._config(val)
+  def editable(self, flag: bool):
+    self._config(flag)
 
   @property
   def resizable(self):
@@ -714,8 +949,8 @@ class DefaultColDef(Options):
     return self._config_get()
 
   @resizable.setter
-  def resizable(self, val):
-    self._config(val)
+  def resizable(self, flag: bool):
+    self._config(flag)
 
   @property
   def sortable(self):
@@ -726,8 +961,8 @@ class DefaultColDef(Options):
     return self._config_get()
 
   @sortable.setter
-  def sortable(self, val):
-    self._config(val)
+  def sortable(self, flag: bool):
+    self._config(flag)
 
   @property
   def treeData(self):
@@ -742,11 +977,28 @@ class DefaultColDef(Options):
     return self._config_get()
 
   @treeData.setter
-  def treeData(self, val):
-    if 'ag-grid-community' in self.component.jsImports and self.component.verbose:
+  def treeData(self, flag: bool):
+    if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
       logging.warning("treeData not available in the community version")
 
-    self._config(val)
+    self._config(flag)
+
+  @property
+  def width(self):
+    """
+    Description:
+    -----------
+    set every column width.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+    """
+    return self._config_get()
+
+  @width.setter
+  def width(self, num: int):
+    self._config(num)
 
 
 class TableToolPanelsParams(Options):
@@ -842,7 +1094,6 @@ class TableToolPanels(Options):
     Description:
     -----------
 
-    :return:
     """
     return self.has_attribute(TableToolPanelsFilters)
 
@@ -887,12 +1138,10 @@ class EnumStatusPanelsPanels(Options):
 
 class TableStatusBar(Options):
 
-  def statusPanels(self):
+  def statusPanels(self) -> EnumStatusPanelsPanels:
     """
     Description:
     -----------
-
-    :rtype: EnumStatusPanelsPanels
     """
     return self._config_sub_data_enum('statusPanels', EnumStatusPanelsPanels)
 
@@ -935,6 +1184,9 @@ class TableConfig(Options):
   def animateRows(self, flag: bool):
     self._config(flag)
 
+  def autoGroupColumnDef(self) -> DefaultColDef:
+    return self._config_sub_data("autoGroupColumnDef", DefaultColDef)
+
   @property
   def colResizeDefault(self):
     """
@@ -969,6 +1221,24 @@ class TableConfig(Options):
       https://www.ag-grid.com/javascript-data-grid/column-groups/#column-definitions-vs-column-group-definitions
     """
     return self._config_sub_data_enum("columnDefs", Column)
+
+  @property
+  def columnTypes(self):
+    """
+    Description:
+    -----------
+    Define a column type (you can define as many as you like.
+    Expect a valid Json object.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+    """
+    return self._config_get()
+
+  @columnTypes.setter
+  def columnTypes(self, data: str):
+    self._config(data, js_type=True)
 
   @property
   def defaultColDef(self) -> DefaultColDef:
@@ -1017,6 +1287,7 @@ class TableConfig(Options):
     """
     Description:
     -----------
+    Allow every column to be pivoted
 
     Related Pages:
 
@@ -1044,6 +1315,23 @@ class TableConfig(Options):
   @enableValue.setter
   def enableValue(self, flag: bool):
     self._config(flag)
+
+  @property
+  def ensureDomOrder(self):
+    """
+    Description:
+    -----------
+    ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
+    """
+    return self._config_get()
+
+  @ensureDomOrder.setter
+  def ensureDomOrder(self, val):
+    self._config(val)
 
   @property
   def enterMovesDown(self):
@@ -1080,6 +1368,39 @@ class TableConfig(Options):
   @enterMovesDownAfterEdit.setter
   def enterMovesDownAfterEdit(self, val):
     self._config(val)
+
+  @property
+  def functionsReadOnly(self):
+    """
+    Description:
+    -----------
+    By setting the property functionsReadOnly=true, the grid will prevent changes to group, pivot or values
+    through the GUI. This is useful if you want to show the user the group, pivot and values panel,
+    so they can see which columns are used, but prevent them from making changes to the selection.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-cell-editing/
+    """
+    return self._config_get()
+
+  @functionsReadOnly.setter
+  def functionsReadOnly(self, flag: bool):
+    self._config(flag)
+
+  def isGroupOpenByDefault(self):
+    pass
+
+  def onGridReady(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+    """
+    pass
 
   @property
   def overlayLoadingTemplate(self):
@@ -1172,6 +1493,54 @@ class TableConfig(Options):
   @paginationAutoPageSize.setter
   def paginationAutoPageSize(self, num: int):
     self._config(num)
+
+  @property
+  def popupParent(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/csv-export/
+    """
+    return self._config_get()
+
+  @popupParent.setter
+  def popupParent(self, data: str):
+    self._config(data, js_type=True)
+
+  @property
+  def pivotMode(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+    """
+    return self._config_get()
+
+  @pivotMode.setter
+  def pivotMode(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def pivotPanelShow(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+    """
+    return self._config_get()
+
+  @pivotPanelShow.setter
+  def pivotPanelShow(self, val: str):
+    self._config(val)
 
   @property
   def groupSelectsChildren(self):
@@ -1284,23 +1653,6 @@ class TableConfig(Options):
     self._config(val)
 
   @property
-  def ensureDomOrder(self):
-    """
-    Description:
-    -----------
-    ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
-
-    Related Pages:
-
-      https://www.ag-grid.com/javascript-grid-cell-editing/
-    """
-    return self._config_get()
-
-  @ensureDomOrder.setter
-  def ensureDomOrder(self, val):
-    self._config(val)
-
-  @property
   def suppressColumnVirtualisation(self):
     """
     Description:
@@ -1336,6 +1688,22 @@ class TableConfig(Options):
   @suppressDragLeaveHidesColumns.setter
   def suppressDragLeaveHidesColumns(self, val):
     self._config(val)
+
+  @property
+  def suppressExcelExport(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/csv-export/
+    """
+    return self._config_get()
+
+  @suppressExcelExport.setter
+  def suppressExcelExport(self, flag: bool):
+    self._config(flag)
 
   @property
   def rowMultiSelectWithClick(self):
@@ -1412,6 +1780,24 @@ class TableConfig(Options):
 
   @rowBuffer.setter
   def rowBuffer(self, val):
+    self._config(val)
+
+  @property
+  def rowGroupPanelShow(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+    """
+    return self._config_get()
+
+  @rowGroupPanelShow.setter
+  def rowGroupPanelShow(self, val: str):
+    if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
+      logging.warning("rowGroupPanelShow not available in the community version")
     self._config(val)
 
   @property
