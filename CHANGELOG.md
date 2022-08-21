@@ -6,6 +6,21 @@
 
 ### Fixed
 
+## [1.9.5] - 2022-08-21
+
+### Added
+- New features for Tabulator and Aggrid.
+- new schema definition for component to allow definition from json configuration
+
+### Changed
+- Documentation and types definition.
+- Aggrid default style.
+- Align Tables components with common features.
+
+### Fixed
+- standalone mode for imports
+- Remove configuration table component
+
 
 ## [1.9.2] - 2022-08-17
 
