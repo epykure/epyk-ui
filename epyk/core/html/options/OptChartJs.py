@@ -1,36 +1,46 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import List, Union, Optional
+from typing import List, Optional
+from epyk.core.py import types as etypes
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
+# ChartJs extensions
+from epyk.core.html.graph.exts import ChartJsZoom
+from epyk.core.html.graph.exts import ChartJsDataLabels
+from epyk.core.html.graph.exts import ChartJsCrosshair
+from epyk.core.html.graph.exts import ChartJsAnnotation
+
 
 class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
 
-  def x_format(self, js_funcs, profile: Union[bool, dict] = None):
+  def x_format(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     self.component.options.xAxes.ticks.callback(js_funcs, profile)
     return self
 
-  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def x_format_money(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+                     decimal_sep: etypes.JS_DATA_TYPES = ",", fmt: etypes.JS_DATA_TYPES = "%v %s",
+                     factor: int = None, alias: str = ""):
     self.component.options.scales.xAxes.ticks.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
     return self
 
-  def x_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+  def x_format_number(self, factor: int = 1, alias: str = None, digits: int = 0,
+                      thousand_sep: etypes.JS_DATA_TYPES = "."):
     self.component.options.scales.xAxes.ticks.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def x_label(self, value: str):
+  def x_label(self, value: etypes.JS_DATA_TYPES):
     """
     Description:
     -----------
-    Set the label of the x axis.
+    Set the label of the x-axis.
 
     Attributes:
     ----------
-    :param value: String. The axis label.
+    :param value: The axis label.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
       self.component.options.scales.xAxes.title.text = value
@@ -43,28 +53,29 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     self.component.options.scales.xAxes.ticks.maxTicksLimit = num
     return self
 
-  def y_format(self, js_funcs, profile: Union[bool, dict] = None):
+  def y_format(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     self.component.options.yAxes.ticks.callback(js_funcs, profile)
     return self
 
-  def y_format_money(self, symbol: str = "", digit: int = 0, thousand_sep: int = ".", decimal_sep: int = ",",
-                     fmt: str = "%v %s", factor: int = None, alias: str = ""):
+  def y_format_money(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+                     decimal_sep: int = ",", fmt: etypes.JS_DATA_TYPES = "%v %s", factor: int = None, alias: str = ""):
     self.component.options.scales.yAxes.ticks.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
     return self
 
-  def y_format_number(self, factor: int = 1, alias=None, digits=0, thousand_sep="."):
+  def y_format_number(self, factor: int = 1, alias: str = None, digits: int = 0,
+                      thousand_sep: etypes.JS_DATA_TYPES = "."):
     self.component.options.scales.yAxes.ticks.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def y_label(self, value: str):
+  def y_label(self, value: etypes.JS_DATA_TYPES):
     """
     Description:
     -----------
-    Set the label of the y axis.
+    Set the label of the y-axis.
 
     Attributes:
     ----------
-    :param value: String. The axis label.
+    :param value: The axis label.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
       self.component.options.scales.yAxes.title.text = value
@@ -272,7 +283,6 @@ class OptionAxesTicks(Options):
     Description:
     ------------
 
-    :rtype: OptionAxesTicksMajor
     """
     return self._config_sub_data("major", OptionAxesTicksMajor)
 
@@ -282,7 +292,6 @@ class OptionAxesTicks(Options):
     Description:
     ------------
 
-    :rtype: OptionAxesTicksMajor
     """
     return self._config_sub_data("minor", OptionAxesTicksMajor)
 
@@ -402,7 +411,7 @@ class OptionAxesTicks(Options):
     self._config(val)
 
   @packageImport("accounting")
-  def scale(self, factor: int = 1000, alias: str = None, digits: int = 0, thousand_sep: str = "."):
+  def scale(self, factor: int = 1000, alias: str = None, digits: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
     """
     Description:
     -----------
@@ -416,13 +425,15 @@ class OptionAxesTicks(Options):
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
-    self._config(
-      "function(label, index, labels) {var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'}" % (
+    self._config('''function(label, index, labels){
+var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'}''' % (
         factor, digits, thousand_sep, alias), name="callback", js_type=True)
     return self
 
   @packageImport("accounting")
-  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def toMoney(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+              decimal_sep: etypes.JS_DATA_TYPES = ",", fmt: etypes.JS_DATA_TYPES = "%v %s", factor: float = None,
+              alias: str = ""):
     """
     Description:
     -----------
@@ -433,17 +444,21 @@ class OptionAxesTicks(Options):
     :param digit:
     :param thousand_sep:
     :param decimal_sep:
+    :param fmt:
+    :param factor:
+    :param alias:
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+    fmt = JsUtils.jsConvertData(fmt, None)
     if not alias:
       alias = {1000: "k", 1000000: "m"}.get(factor, alias)
-    self._config("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s, '%s')}" % (
+    self._config("function(label, index, labels) {return accounting.formatMoney(label, %s, %s, %s, %s, %s)}" % (
       "'%s'+ %s" % (alias, symbol), digit, thousand_sep, decimal_sep, fmt), name="callback", js_type=True)
     return self
 
   @packageImport("accounting")
-  def toNumber(self, digit=0, thousand_sep="."):
+  def toNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
     """
     Description:
     -----------
@@ -455,15 +470,15 @@ class OptionAxesTicks(Options):
 
     Attributes:
     ----------
-    :param digit: Integer. The number of digit to be displayed
-    :param thousand_sep: The thousand symbol separator
+    :param digit: Optional. The number of digit to be displayed
+    :param thousand_sep: Optional. The thousand symbol separator
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     self._config("function(label, index, labels) {return accounting.formatNumber(label, %s, %s)}" % (
       digit, thousand_sep), name="callback", js_type=True)
     return self
 
-  def callback(self, js_funcs, profile=None):
+  def callback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -475,11 +490,14 @@ class OptionAxesTicks(Options):
 
     Attributes:
     ----------
+    :param js_funcs:
+    :param profile:
     """
-    self._config("function(val, index) {return (function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().split('T')[0]}", js_type=True)
+    self._config('''function(val, index) {return (
+function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().split('T')[0]}''', js_type=True)
     return self
 
-  def userCallback(self, js_funcs, profile=None):
+  def userCallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -491,6 +509,8 @@ class OptionAxesTicks(Options):
 
     Attributes:
     ----------
+    :param js_funcs:
+    :param profile:
     """
     self._config("function(label, index, labels) {console.log(label); return 1}", js_type=True)
     return self
@@ -543,8 +563,8 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @display.setter
-  def display(self, val: bool):
-    self._config(val)
+  def display(self, flag: bool):
+    self._config(flag)
 
   @property
   def circular(self):
@@ -845,8 +865,8 @@ class OptionAxesScaleLabel(Options):
     return self._config_get()
 
   @display.setter
-  def display(self, val: bool):
-    self._config(val)
+  def display(self, flag: bool):
+    self._config(flag)
 
   @property
   def fontColor(self):
@@ -896,8 +916,6 @@ class OptionAxesTime(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionDisplayFormats
     """
     return self._config_sub_data("displayFormats", OptionDisplayFormats)
 
@@ -1026,12 +1044,11 @@ class OptionTitle(Options):
     self._config(val)
 
   @property
-  def font(self):
+  def font(self) -> OptionLabelFont:
     """
     Description:
     ------------
 
-    :rtype: OptionLabelFont
     """
     return self._config_sub_data("font", OptionLabelFont)
 
@@ -1204,8 +1221,6 @@ class OptionAxes(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionAxesTicks
     """
     return self._config_sub_data("ticks", OptionAxesTicks)
 
@@ -1214,8 +1229,6 @@ class OptionAxes(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionAxesTime
     """
     return self._config_sub_data("time", OptionAxesTime)
 
@@ -1224,8 +1237,6 @@ class OptionAxes(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionAxesGridLine
     """
     return self._config_sub_data("gridLines", OptionAxesGridLine)
 
@@ -1235,21 +1246,21 @@ class OptionAxes(Options):
     Description:
     ------------
 
-    https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+    Related Pages:
 
-    :rtype: OptionAxesGridLine
+      https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
     """
     return self._config_sub_data("grid", OptionAxesGridLine)
 
   @property
-  def ticks(self):
+  def ticks(self) -> OptionAxesTicks:
     """
     Description:
     ------------
 
-    https://www.chartjs.org/docs/latest/axes/styling.html
+    Related Pages:
 
-    :rtype: OptionAxesTicks
+      https://www.chartjs.org/docs/latest/axes/styling.html
     """
     return self._config_sub_data("grid", OptionAxesTicks)
 
@@ -1264,8 +1275,6 @@ class OptionAxes(Options):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/axes/labelling.html
-
-    :rtype: OptionTitle
     """
     return self._config_sub_data("title", OptionTitle)
 
@@ -1274,8 +1283,6 @@ class OptionAxes(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionAxesScaleLabel
     """
     return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
@@ -1284,6 +1291,8 @@ class OptionAxes(Options):
     Description:
     ------------
 
+    Attributes:
+    ----------
     :param text:
     :param color:
     """
@@ -1333,8 +1342,6 @@ class OptionScalePointLabels(Options):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
-
-    :rtype: OptionLabelFont
     """
     return self._config_sub_data("font", OptionLabelFont)
 
@@ -1350,8 +1357,6 @@ class OptionScaleR(Options):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
-
-    :rtype: OptionScalePointLabels
     """
     return self._config_sub_data("pointLabels", OptionScalePointLabels)
 
@@ -1385,20 +1390,17 @@ class OptionScales(Options):
     Description:
     ------------
 
-    :rtype: OptionAxes
     """
     return self._config_sub_data("y", OptionAxes)
 
-  def y_axis(self, i: int = None):
+  def y_axis(self, i: int = None) -> OptionAxes:
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param i: Integer. optional. Default take the latest one.
-
-    :rtype: OptionAxes
+    :param i: optional. Default take the latest one
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
       return self.add_y_axis()
@@ -1411,26 +1413,22 @@ class OptionScales(Options):
 
     return self.js_tree["yAxes"][i]
 
-  def add_x_axis(self):
+  def add_x_axis(self) -> OptionAxes:
     """
     Description:
     ------------
     Add a X axis to a chart component.
-
-    :rtype: OptionAxes
     """
     return self._config_sub_data("x", OptionAxes)
 
-  def x_axes(self, i: int = None):
+  def x_axes(self, i: int = None) -> OptionAxes:
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param i: Integer. optional. Default take the latest one.
-
-    :rtype: OptionAxes
+    :param i: optional. Default take the latest one.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
       return self.add_x_axis()
@@ -1448,8 +1446,6 @@ class OptionScales(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionScaleR
     """
     return self._config_sub_data("r", OptionScaleR)
 
@@ -1458,8 +1454,6 @@ class OptionScales(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionScaleR
     """
     return self._config_sub_data("x", OptionAxes)
 
@@ -1468,8 +1462,6 @@ class OptionScales(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionScaleR
     """
     return self._config_sub_data("y", OptionAxes)
 
@@ -1478,8 +1470,6 @@ class OptionScales(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionScaleR
     """
     return self._config_sub_data("y2", OptionAxes)
 
@@ -1502,7 +1492,7 @@ class OptionScaleGeo(Options):
   def projectionScale(self, num: int):
     self._config(num)
 
-  def set_projection(self, js_funcs, profile: Union[bool, dict] = None):
+  def set_projection(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
     Description:
     -----------
@@ -1524,8 +1514,6 @@ class OptionScalesGeo(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionScaleGeo
     """
     return self._config_sub_data("xy", OptionScaleGeo)
 
@@ -1600,12 +1588,10 @@ class OptionPadding(Options):
 class OptionLayout(Options):
 
   @property
-  def padding(self) -> OptionScaleGeo:
+  def padding(self) -> OptionPadding:
     """
     Description:
     ------------
-
-    :rtype: OptionPadding
     """
     return self._config_sub_data("padding", OptionPadding)
 
@@ -1617,8 +1603,6 @@ class OptionLegend(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionLabels
     """
     return self._config_sub_data("labels", OptionLabels)
 
@@ -1627,8 +1611,6 @@ class OptionLegend(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionTitle
     """
     return self._config_sub_data("title", OptionTitle)
 
@@ -1679,7 +1661,6 @@ class OptionLegend(Options):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/legend.html
-
     """
     return self._config_get()
 
@@ -1697,7 +1678,6 @@ class OptionLegend(Options):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/legend.html
-
     """
     return self._config_get(False)
 
@@ -1720,7 +1700,7 @@ class OptionLegend(Options):
     return self._config_get(False)
 
   @rtl.setter
-  def rtl(self, flag):
+  def rtl(self, flag: bool):
     self._config(flag)
 
 
@@ -1778,8 +1758,6 @@ class OptionElements(Options):
     """
     Description:
     ------------
-
-    :rtype: OptionPoint
     """
     return self._config_sub_data("point", OptionPoint)
 
@@ -1792,7 +1770,6 @@ class OptionElementsLine(OptionElements):
     Description:
     ------------
 
-    :rtype: OptionLine
     """
     return self._config_sub_data("line", OptionLine)
 
@@ -1973,41 +1950,36 @@ class OptionChartJsPlugins(Options):
     Related Pages:
 
       https://github.com/emn178/chartjs-plugin-labels
-
-    :rtype: ChartJsLabels.Labels
     """
     from epyk.core.html.graph.exts import ChartJsLabels
     return self._config_sub_data("labels", ChartJsLabels.Labels)
 
   @property
-  def legend(self):
+  def legend(self) -> OptionLegend:
     """
     Description:
     ------------
 
-    :rtype: OptionLegend
     """
     return self._config_sub_data("legend", OptionLegend)
 
   @property
-  def title(self):
+  def title(self) -> OptionTitle:
     """
     Description:
     ------------
-
-    :rtype: OptionTitle
     """
     return self._config_sub_data("title", OptionTitle)
 
   @property
-  def subtitle(self):
+  def subtitle(self) -> OptionTitle:
     """
     Description:
     ------------
 
-    https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+    Related Pages:
 
-    :rtype: OptionTitle
+      https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
     """
     return self._config_sub_data("subtitle", OptionTitle)
 
@@ -2017,7 +1989,7 @@ class OptionChartJsPlugins(Options):
 
   @property
   @packageImport('chartjs-plugin-datalabels')
-  def datalabels(self):
+  def datalabels(self) -> ChartJsDataLabels.Datalabels:
     """
     Description:
     -----------
@@ -2026,15 +1998,12 @@ class OptionChartJsPlugins(Options):
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/
-
-    :rtype: ChartJsLabels.Datalabels
     """
-    from epyk.core.html.graph.exts import ChartJsDataLabels
     return self._config_sub_data("datalabels", ChartJsDataLabels.Datalabels)
 
   @property
   @packageImport('chartjs-plugin-zoom')
-  def zoom(self):
+  def zoom(self) -> ChartJsZoom.Zoom:
     """
     Description:
     -----------
@@ -2043,15 +2012,12 @@ class OptionChartJsPlugins(Options):
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
-
-    :rtype: ChartJsZoom.Zoom
     """
-    from epyk.core.html.graph.exts import ChartJsZoom
     return self._config_sub_data("zoom", ChartJsZoom.Zoom)
 
   @property
   @packageImport('chartjs-plugin-crosshair')
-  def crosshair(self):
+  def crosshair(self) -> ChartJsCrosshair.Crosshair:
     """
     Description:
     -----------
@@ -2059,15 +2025,12 @@ class OptionChartJsPlugins(Options):
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
-
-    :rtype: ChartJsCrosshair.Crosshair
     """
-    from epyk.core.html.graph.exts import ChartJsCrosshair
     return self._config_sub_data("crosshair", ChartJsCrosshair.Crosshair)
 
   @property
   @packageImport('chartjs-plugin-annotation')
-  def annotation(self):
+  def annotation(self) -> ChartJsAnnotation.Annotation:
     """
     Description:
     -----------
@@ -2082,10 +2045,7 @@ class OptionChartJsPlugins(Options):
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
-
-    :rtype: ChartJsAnnotation.Annotation
     """
-    from epyk.core.html.graph.exts import ChartJsAnnotation
     return self._config_sub_data("annotation", ChartJsAnnotation.Annotation)
 
   @property
@@ -2143,8 +2103,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionElements
     """
     return self._config_sub_data("elements", OptionElements)
 
@@ -2153,8 +2111,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionScales
     """
     return self._config_sub_data("scales", OptionScales)
 
@@ -2163,8 +2119,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionLayout
     """
     return self._config_sub_data("layout", OptionLayout)
 
@@ -2173,8 +2127,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionTitle
     """
     return self._config_sub_data("title", OptionTitle)
 
@@ -2183,8 +2135,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionLegend
     """
     return self._config_sub_data("legend", OptionLegend)
 
@@ -2193,8 +2143,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionChartJsPlugins
     """
     return self._config_sub_data("plugins", OptionChartJsPlugins)
 
@@ -2203,8 +2151,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     ------------
-
-    :rtype: OptionChartJsTooltips
     """
     return self._config_sub_data("tooltips", OptionChartJsTooltips)
 
@@ -2229,8 +2175,6 @@ class ChartJsOptions(OptChart.OptionsChart):
     """
     Description:
     -----------
-
-    :rtype: OptionChartJsSize
     """
     return self._config_sub_data("size", OptionChartJsSize)
 
@@ -2299,8 +2243,6 @@ class OptionsPie(ChartJsOptions):
     """
     Description:
     ------------
-
-    :rtype: OptionChartJsPieTooltips
     """
     return self._config_sub_data("tooltips", OptionChartJsPieTooltips)
 
@@ -2357,8 +2299,6 @@ class OptionsPie(ChartJsOptions):
     """
     Description:
     ------------
-
-    :rtype: OptionPieAnimation
     """
     return self._config_sub_data("animation", OptionPieAnimation)
 
@@ -2435,7 +2375,7 @@ class OptionsLine(ChartJsOptions):
     return self._config_get()
 
   @backgroundColor.setter
-  def backgroundColor(self, val):
+  def backgroundColor(self, val: str):
     self._config(val)
 
   @property
@@ -2541,12 +2481,10 @@ class OptionsLine(ChartJsOptions):
     self._config(val)
 
   @property
-  def interaction(self):
+  def interaction(self) -> OptionInteractionLine:
     """
     Description:
     ------------
-
-    :rtype: OptionInteractionLine
     """
     return self._config_sub_data("interaction", OptionInteractionLine)
 
@@ -2568,12 +2506,11 @@ class OptionsLine(ChartJsOptions):
     self._config(val)
 
   @property
-  def elements(self):
+  def elements(self) -> OptionElementsLine:
     """
     Description:
     ------------
 
-    :rtype: OptionElementsLine
     """
     return self._config_sub_data("elements", OptionElementsLine)
 
@@ -2603,8 +2540,6 @@ class OptionsPolar(ChartJsOptions):
     """
     Description:
     ------------
-
-    :rtype: OptionPieAnimation
     """
     return self._config_sub_data("animation", OptionPieAnimation)
 
@@ -2624,20 +2559,22 @@ class OptionChartJsTooltipsCallbacks(Options):
     return self._config_get()
 
   @label.setter
-  def label(self, val: str):
-    self._config("function(tooltipItem, data) { return '%s' }" % val, js_type=True)
+  def label(self, val: etypes.JS_DATA_TYPES):
+    val = JsUtils.jsConvertData(val, None)
+    self._config("function(tooltipItem, data) { return %s }" % val, js_type=True)
 
   @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep=".", decimal_sep=","):
+  def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+                  decimal_sep: etypes.JS_DATA_TYPES = ","):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param digit: String. Optional. Decimal point separator.
-    :param thousand_sep: String. Optional. thousands separator.
-    :param decimal_sep: String. Optional. Decimal point separator.
+    :param digit: Optional. Decimal point separator.
+    :param thousand_sep: Optional. thousands separator.
+    :param decimal_sep: Optional. Decimal point separator.
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
@@ -2647,27 +2584,30 @@ class OptionChartJsTooltipsCallbacks(Options):
       self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
   @packageImport("accounting")
-  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def labelCurrency(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+                    decimal_sep: etypes.JS_DATA_TYPES = ","):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param symbol: String. Optional. Default currency symbol is ''.
-    :param digit: String. Optional. Decimal point separator.
-    :param thousand_sep: String. Optional. thousands separator.
-    :param decimal_sep: String. Optional. Decimal point separator.
+    :param symbol: Optional. Default currency symbol is ''.
+    :param digit: Optional. Decimal point separator.
+    :param thousand_sep: Optional. thousands separator.
+    :param decimal_sep: Optional. Decimal point separator.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     if self.component.options.type == 'horizontalBar':
-      self._config("function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s) }" % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+      self._config('''function(tooltipItem, data) { 
+return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.xLabel, %s, %s, %s, %s)
+}''' % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
-      self._config(
-        "function(tooltipItem, data) { return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s) }" % (
-        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+      self._config('''function(tooltipItem, data) { 
+return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMoney(tooltipItem.yLabel, %s, %s, %s, %s)
+}''' % (symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
   @property
   def value(self):
@@ -2689,38 +2629,42 @@ class OptionChartJsTooltipsCallbacks(Options):
 class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
 
   @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep="."):
+  def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
+    :param digit: Optional. Decimal point separator
+    :param thousand_sep: Optional. thousands separator
     """
-    self._config(
-        "function(tooltipItem, data) { var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, '%s') }" % (
-        digit, thousand_sep), name="label", js_type=True)
+    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+    self._config('''
+function(tooltipItem, data) {var indice = tooltipItem.index; 
+return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[indice], %s, %s) }''' % (
+      digit, thousand_sep), name="label", js_type=True)
 
   @packageImport("accounting")
-  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def labelCurrency(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
+                    decimal_sep: etypes.JS_DATA_TYPES = ","):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param symbol: String. Optional. Default currency symbol is ''
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
-    :param decimal_sep: String. Optional. Decimal point separator
+    :param symbol: Optional. Default currency symbol is ''
+    :param digit: Optional. Decimal point separator
+    :param thousand_sep: Optional. thousands separator
+    :param decimal_sep: Optional. Decimal point separator
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    self._config(
-        "function(tooltipItem, data) {var indice = tooltipItem.index; return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }" % (
+    self._config('''
+function(tooltipItem, data) {var indice = tooltipItem.index; 
+return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }''' % (
         symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
 

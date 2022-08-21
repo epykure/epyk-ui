@@ -8,6 +8,7 @@ from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
 from epyk.core.py import types
 
+from epyk.interfaces import Arguments
 from epyk.core.html.tables.exts import TbEditors
 from epyk.core.html.tables.exts import TbFormatters
 from epyk.core.html.tables.exts import TbMutators
@@ -129,6 +130,20 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def bespoke(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    """
+    Description:
+    -----------
+    Add bespoke top calculation for the column.
+
+    Related Pages:
+
+      http://tabulator.info/docs/4.0/column-calcs
+
+    Attributes:
+    ----------
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    """
     return self._set_value(value=JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
@@ -302,7 +317,7 @@ class EnumColCss(Enums):
 
     Attributes:
     ----------
-    :param color: The CSS Color.
+    :param color: The CSS Color
     """
     self.component.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self._add_value(value="tb-color-%s" % color)
@@ -315,7 +330,7 @@ class EnumColCss(Enums):
 
     Attributes:
     ----------
-    :param color: The CSS Color.
+    :param color: The CSS Color
     """
     self.component.body.style.custom_class(
       {'_attrs': {'background-color': color}}, classname="tb-background-%s" % color)
@@ -332,6 +347,8 @@ class EnumColCss(Enums):
       page.properties.css.add_text('''.teststyle {background: pink}''')
       c.cssClasses.name("teststyle")
 
+    Attributes:
+    ----------
     :param name: The CSS classname
     """
     return self._add_value(value=name)
@@ -348,8 +365,8 @@ class EnumColCss(Enums):
 
     Attributes:
     ----------
-    :param css_attrs: The CSS attributes for the class.
-    :param css_attrs_hover: Optional. The CSS Hover attributes for the class.
+    :param css_attrs: The CSS attributes for the class
+    :param css_attrs_hover: Optional. The CSS Hover attributes for the class
     :param important: Optional. To set the CSS configuration as important
     """
     has_style = str(hashlib.sha1(str(css_attrs).encode()).hexdigest())
@@ -533,7 +550,8 @@ class Persistence(Options):
 
 class EditorAutocomplete(Enums):
 
-  def startswith(self, values, showListOnEmpty=True, freetext: bool = True, allowEmpty: bool = True):
+  def startswith(self, values: types.JS_DATA_TYPES, show_list_on_empty: types.JS_DATA_TYPES = True,
+                 freetext: types.JS_DATA_TYPES = True, allow_empty: types.JS_DATA_TYPES = True):
     """
     Description:
     -----------
@@ -541,17 +559,17 @@ class EditorAutocomplete(Enums):
     Attributes:
     ----------
     :param values:
-    :param showListOnEmpty: Boolean. Optional.
-    :param freetext: Boolean. Optional.
-    :param allowEmpty: Boolean. Optional.
+    :param show_list_on_empty: Optional.
+    :param freetext: Optional.
+    :param allow_empty: Optional.
     """
-    showListOnEmpty = JsUtils.jsConvertData(showListOnEmpty, None)
+    show_list_on_empty = JsUtils.jsConvertData(show_list_on_empty, None)
     freetext = JsUtils.jsConvertData(freetext, None)
-    allowEmpty = JsUtils.jsConvertData(allowEmpty, None)
+    allow_empty = JsUtils.jsConvertData(allow_empty, None)
     self._set_value('''{values: %s, searchFunc: function(term, values){ var matches = [];
 if (term == ""){return matches}; values.forEach(function(item){if(item.startsWith(term)){matches.push(item);}});
 return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (
-      values, showListOnEmpty, freetext, allowEmpty), js_type=True)
+      values, show_list_on_empty, freetext, allow_empty), js_type=True)
     return self
 
 
@@ -569,8 +587,8 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param search: Optional. Use search type input element with clear button.
-    :param element_attributes: Optional. set attributes directly on the input element.
+    :param search: Optional. Use search type input element with clear button
+    :param element_attributes: Optional. set attributes directly on the input element
     """
     editor_params = {'search': search}
     if element_attributes is not None:
@@ -592,9 +610,9 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param vertical_navigation: Optional. set attributes directly on the textarea element.
-    :param element_attributes: Optional. determine how use of the up/down arrow keys will affect the editor.
-    :param kwargs: Dictionary with extra attributes
+    :param vertical_navigation: Optional. set attributes directly on the textarea element
+    :param element_attributes: Optional. determine how use of the up/down arrow keys will affect the editor
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {'verticalNavigation': vertical_navigation, "elementAttributes": element_attributes}
     if kwargs:
@@ -615,12 +633,12 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param min: Optional. the maximum allowed value.
-    :param max: Optional. the minimum allowed value.
-    :param step: Optional. the step size when incrementing/decrementingthe value (default 1).
-    :param element_attributes: Optional. set attributes directly on the input element.
-    :param vertical_navigation: Optional. determine how use of the up/down arrow keys will affect the editor,
-    :param kwargs: Dictionary with extra attributes
+    :param min: Optional. the maximum allowed value
+    :param max: Optional. the minimum allowed value
+    :param step: Optional. the step size when incrementing/decrementingthe value (default 1)
+    :param element_attributes: Optional. set attributes directly on the input element
+    :param vertical_navigation: Optional. determine how use of the up/down arrow keys will affect the editor
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {'step': step, 'verticalNavigation': vertical_navigation, "elementAttributes": element_attributes}
     if min is not None:
@@ -644,11 +662,11 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param min: Optional. the maximum allowed value.
-    :param max: Optional. the minimum allowed value.
-    :param step: Optional. the step size when incrementing/decrementingthe value (default 1).
-    :param element_attributes: Optional. set attributes directly on the input element.
-    :param kwargs: Dictionary with extra attributes
+    :param min: Optional. the maximum allowed value
+    :param max: Optional. the minimum allowed value
+    :param step: Optional. the step size when incrementing/decrementingthe value (default 1)
+    :param element_attributes: Optional. set attributes directly on the input element
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {'step': step, "elementAttributes": element_attributes}
     if min is not None:
@@ -672,11 +690,11 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param tristate: Optional. allow tristate tickbox (default false).
+    :param tristate: Optional. allow tristate tickbox (default false)
     :param indeterminate_value: Optional. when using tristate tickbox what value should the third indeterminate
       state have (default null)
     :param element_attributes: Optional. set attributes directly on the input element
-    :param kwargs: Dictionary with extra attributes
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {'tristate': tristate, 'indeterminateValue': indeterminate_value}
     if element_attributes is not None:
@@ -701,8 +719,8 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param element_attributes: Optional set attributes directly on the star holder element.
-    :param kwargs: Dictionary with extra attributes
+    :param element_attributes: Optional set attributes directly on the star holder element
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {}
     if element_attributes is not None:
@@ -772,11 +790,11 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param values: a list of values to be displayed to the user
-    :param default_value: set the value that should be selected by default if the cells value is undefined
-    :param element_attributes: set attributes directly on the input element
-    :param vertical_navigation: determine how use of the up/down arrow keys will affect the editor,
-    :param kwargs: Dictionary with extra attributes
+    :param values: Optional. a list of values to be displayed to the user
+    :param default_value: Optional. set the value that should be selected by default if the cells value is undefined
+    :param element_attributes: Optional. set attributes directly on the input element
+    :param vertical_navigation: Optional. determine how use of the up/down arrow keys will affect the editor,
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {"values": json.dumps(values) if values is True else values}
     if element_attributes is not None:
@@ -800,6 +818,7 @@ class Editor(Enums):
     Description:
     -----------
     Predefined autocomplete configurations.
+    # TODO find a way to put Union[Options, Enums] in the type definition Emuns parameters.
     """
     self._set_value()
     return EditorAutocomplete(self, "editorParams")
@@ -822,11 +841,11 @@ class Editor(Enums):
 
     Attributes:
     ----------
-    :param values: a list of values to be displayed to the user
-    :param default_value: set the value that should be selected by default if the cells value is undefined
-    :param element_attributes: set attributes directly on the input element
-    :param vertical_navigation: determine how use of the up/down arrow keys will affect the editor,
-    :param kwargs: Dictionary with extra attributes
+    :param values: Optional. a list of values to be displayed to the user
+    :param default_value: Optional. set the value that should be selected by default if the cells value is undefined
+    :param element_attributes: Optional. set attributes directly on the input element
+    :param vertical_navigation: Optional. determine how use of the up/down arrow keys will affect the editor
+    :param kwargs: Optional. Dictionary with extra attributes
     """
     editor_params = {"values": json.dumps(values) if values is True else values}
     if element_attributes is not None:
@@ -858,7 +877,7 @@ class Editor(Enums):
     ----------
     :param func_name: The function name
     :param js_funcs: Optional. The function definition
-    :param editor_params: The editor parameters
+    :param editor_params: Optional. The editor parameters
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
     """
@@ -894,11 +913,11 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param title_formatter: title formatter
-    :param title_formatter_params: title formatter parameters
-    :param hoz_align: To set the horizontal alignment
-    :param header_sort: Flag to special the sort
-    :param kwargs: Other attributes to be set for the column
+    :param title_formatter: Optional. title formatter
+    :param title_formatter_params: Optional. title formatter parameters
+    :param hoz_align: Optional. To set the horizontal alignment
+    :param header_sort: Optional. Flag to special the sort
+    :param kwargs: Optional. Other attributes to be set for the column
     """
     self._set_value()
     if title_formatter:
@@ -983,20 +1002,20 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param decimal: Symbol to represent the decimal point (default ".")
-    :param thousand: Symbol to represent the thousands separator (default ",")
-    :param precision: the number of decimals to display (default is 2), setting this value to false will display
+    :param decimal: Optional. Symbol to represent the decimal point (default ".")
+    :param thousand: Optional. Symbol to represent the thousands separator (default ",")
+    :param precision: Optional. the number of decimals to display (default is 2), setting this value to false will display
       however many decimals are provided with the number
-    :param symbol: currency symbol (no default)
-    :param symbolAfter: position the symbol after the number (default false)
-    :param kwargs:
+    :param symbol: Optional. currency symbol (no default)
+    :param symbolAfter: Optional. position the symbol after the number (default false)
+    :param kwargs: Optional.
     """
     self._set_value("%sParams" % self.key, "money")
     if kwargs:
       self._set_value("%sParams" % self.key, kwargs)
     return self
 
-  def image(self, height=None, width=None, **kwargs):
+  def image(self, height: types.SIZE_TYPE = None, width: types.SIZE_TYPE = None, **kwargs):
     """
     Description:
     -----------
@@ -1009,16 +1028,16 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param height: Tuple. Optional. A CSS value for the height of the image.
-    :param width: Tuple. Optional. A CSS value for the width of the image.
+    :param height: Optional. A CSS value for the height of the image.
+    :param width: Optional. A CSS value for the width of the image.
     :param kwargs:
     """
     self._set_value()
     format_params = {}
     if height is not None:
-      format_params['height'] = height
+      format_params['height'] = Arguments.size(height, unit="px")
     if width is not None:
-      format_params['width'] = width
+      format_params['width'] = Arguments.size(width, unit="px")
     for k, v in kwargs.items():
       format_params[k] = v
     self._set_value("%sParams" % self.key, format_params)
@@ -1038,16 +1057,16 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param label: a string representing the label, or a function which must return the string for the label,
+    :param label: Optional. A string representing the label, or a function which must return the string for the label,
       the function is passed the Cell Component as its first argument
-    :param url:  a string representing the url, or a function which must return the string for the url,
+    :param url: Optional. A string representing the url, or a function which must return the string for the url,
       the function is passed the Cell Component as its first argument
-    :param target: a string representing the value of the anchor tags target artibute (eg. set to "_blank"
+    :param target: Optional. A string representing the value of the anchor tags target artibute (eg. set to "_blank"
       to open link in new tab)
-    :param url_prefix: a prefix to put before the url value (eg. to turn a emaill address into a clickable
+    :param url_prefix: Optional. A prefix to put before the url value (eg. to turn a emaill address into a clickable
       mailto link you should set this to "mailto:")
-    :param label_field: the field in the row data that should be used for the link lable
-    :param url_field: the field in the row data that should be used for the link url
+    :param label_field: Optional. The field in the row data that should be used for the link lable
+    :param url_field: Optional. The field in the row data that should be used for the link url
     :param kwargs:
     """
     format_params = {k: v for k, v in locals().items() if k != 'self' and v is not None}
@@ -1096,14 +1115,14 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param allow_empty: set to true to cause empty values (undefined, null, "") to display an empty
+    :param allow_empty: Optional. Set to true to cause empty values (undefined, null, "") to display an empty
       cell instead of a cross (default false)
-    :param allow_truthy: set to true to allow any truthy value to show a tick (default false)
-    :param tick_element: custom HTML for the tick element,
+    :param allow_truthy: Optional. Set to true to allow any truthy value to show a tick (default false)
+    :param tick_element: Optional. Custom HTML for the tick element,
       if set to false the tick element will not be shown (it will only show crosses)
-    :param cross_element: custom HTML for the cross element,
+    :param cross_element: Optional. Custom HTML for the cross element,
       if set to false the cross element will not be shown (it will only show ticks)
-    :param kwargs: Extra parameters to be added to this formatter
+    :param kwargs: Optional. Extra parameters to be added to this formatter
     """
     self._set_value(value="tickCross")
     format_params = {
@@ -1130,7 +1149,7 @@ class Formattors(Enums):
       self._set_value("%sParams" % self.key, kwargs)
     return self
 
-  def star(self, starts, **kwargs):
+  def star(self, starts: float, **kwargs):
     """
     Description:
     -----------
@@ -1142,7 +1161,7 @@ class Formattors(Enums):
 
     Attributes:
     ----------
-    :param starts: Number. maximum number of stars to be displayed (default 5).
+    :param starts: maximum number of stars to be displayed (default 5).
     """
     self._set_value()
     format_params = {"starts": starts}
@@ -1227,6 +1246,14 @@ class Formattors(Enums):
     return self
 
   def css(self, attrs: dict):
+    """
+    Description:
+    -----------
+
+    Attributes:
+    ----------
+    :param attrs: CSS attributes
+    """
     self.component.extendModule("format", "formatters", "FormatterPureCss", '''function(cell, formatterParams){   
 Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[key] = formatterParams.css[key] 
 }); return cell.getValue();}''')
@@ -1234,7 +1261,7 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
     self._set_value("%sParams" % self.key, {"css": attrs})
     return self
 
-  def wrapper(self, formatter: str, css_attrs: dict, formatter_params: dict = None):
+  def wrapper(self, formatter: types.JS_DATA_TYPES, css_attrs: dict, formatter_params: dict = None):
     """
     Description:
     -----------
@@ -1253,9 +1280,10 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
     :param css_attrs:
     :param formatter_params:
     """
+    formatter = JsUtils.jsConvertData(formatter, None)
     self._set_value(value='''
 function(cell, formatterParams){const cssAttrs = formatterParams.css;
-  var cell = cell.getTable().modules.format.getFormatter('%s').call(cell.getTable().modules.format, cell, formatterParams);
+  var cell = cell.getTable().modules.format.getFormatter(%s).call(cell.getTable().modules.format, cell, formatterParams);
   let frag = document.createRange().createContextualFragment(cell).firstChild;
   Object.keys(cssAttrs).forEach(function(key){frag.style[key] = cssAttrs[key]}); 
   return frag; }''' % formatter, js_type=True)
@@ -1541,7 +1569,7 @@ class Extensions(Options):
 
 class HeaderMenu(Options):
 
-  def hide(self, label: str = "Hide Column", icon: str = "fas fa-eye-slash", disabled: bool = False):
+  def hide(self, label: str = "Hide Column", icon: Optional[str] = "fas fa-eye-slash", disabled: bool = False):
     """
     Description:
     -----------
@@ -1549,9 +1577,9 @@ class HeaderMenu(Options):
 
     Attributes:
     ----------
-    :param label:
-    :param icon:
-    :param disabled:
+    :param label: Optional. Header menu label
+    :param icon: Optional. Header icon
+    :param disabled: Optional.
     """
     if icon is not None:
       self._attrs['<i class="%s" style="margin-right:5px"></i>%s' % (icon, label)] = "column.hide()"
@@ -1573,8 +1601,8 @@ class HeaderMenu(Options):
     ----------
     :param label:
     :param func: JavaScript expression or entire function starting with function(e, column){
-    :param icon:
-    :param disabled:
+    :param icon: Optional.
+    :param disabled: Optional.
     """
     if not func.startswith("function("):
       func = "function(e, column){%s}" % func
@@ -1633,11 +1661,12 @@ class Column(Options):
     Description:
     ------------
     Add new column to the underlying Tabulator object.
+    # TODO find a way to define return type Column for this method
 
     Attributes:
     ----------
-    :param field: String. Mandatory. The key in the row.
-    :param title: String. Optional. The title for the column. Default to the field.
+    :param field: The key in the row
+    :param title: Optional. The title for the column. Default to the field
     """
     col_def = self._config_sub_data_enum("columns", Column)
     col_def.field = field

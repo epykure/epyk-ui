@@ -569,9 +569,9 @@ class Enums:
 
     Attributes:
     ----------
-    :param name: Optional. The key to be added to the attributes.
-    :param value: Optional. The value to be added to the attributes.
-    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
+    :param name: Optional. The key to be added to the attributes
+    :param value: Optional. The value to be added to the attributes
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment
     """
     self.item._config(value or sys._getframe().f_back.f_code.co_name, name or self.__name)
     if js_type is not None:
@@ -588,9 +588,9 @@ class Enums:
 
     Attributes:
     ----------
-    :param name: Optional. The key to be added to the attributes.
-    :param value: Optional. The value to be added to the attributes.
-    :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
+    :param name: Optional. The key to be added to the attributes
+    :param value: Optional. The value to be added to the attributes
+    :param js_type: Optional. Specify if the parameter is a JavaScript fragment
     """
     key = name or self.__name
     if key not in self.__option.js_tree:

@@ -5,6 +5,7 @@ from typing import Union
 from epyk.core.js import JsUtils
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
+from epyk.core.py import types as etypes
 
 
 class EnumSidebar(Enums):
@@ -233,8 +234,9 @@ class Column(Options):
     return self._config_get()
 
   @aggFunc.setter
-  def aggFunc(self, val: str):
-    self._config(val)
+  def aggFunc(self, val: etypes.JS_DATA_TYPES):
+    val = JsUtils.jsConvertData(val, None)
+    self._config(val, js_type=True)
 
   @property
   def cellClassRules(self):
@@ -838,8 +840,36 @@ class Column(Options):
     return self._config_get()
 
   @valueGetter.setter
-  def valueGetter(self, val: str):
-    self._config(val)
+  def valueGetter(self, val: etypes.JS_DATA_TYPES):
+    self._config(val, js_type=True)
+
+  @property
+  def valueSetter(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-setters/
+    """
+    return self._config_get()
+
+  @valueSetter.setter
+  def valueSetter(self, val: etypes.JS_DATA_TYPES):
+    self._config(val, js_type=True)
+
+  @property
+  def volatile(self):
+    """
+    Description:
+    -----------
+    """
+    return self._config_get()
+
+  @volatile.setter
+  def volatile(self, flag: bool):
+    self._config(flag)
 
 
 class DefaultColDef(Options):
@@ -1407,10 +1437,26 @@ class TableConfig(Options):
   def functionsReadOnly(self, flag: bool):
     self._config(flag)
 
-  def isGroupOpenByDefault(self):
-    pass
+  def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                           func_ref: bool = False):
+    """
+    Description:
+    -----------
 
-  def onGridReady(self):
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def onGridReady(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
     """
     Description:
     -----------
@@ -1418,15 +1464,163 @@ class TableConfig(Options):
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
-    """
-    pass
 
-  def onPaginationChanged(self):
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
     """
-    https://www.ag-grid.com/javascript-data-grid/row-pagination/
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
 
+  def on(self, event_type: str, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+         func_ref: bool = False):
     """
-    pass
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://ag-grid.com/angular-data-grid/grid-interface/
+
+    Attributes:
+    ----------
+    :param event_type: The event type
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    if not event_type.startswith("on"):
+      event_type = "on%s" % event_type.capitalize()
+    self._config(str_func, name=event_type, js_type=True)
+
+  def onCellEditingStopped(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                           func_ref: bool = False):
+    """
+    Description:
+    -----------
+    Editing a cell has stopped.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/cell-editing/
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def onCellValueChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                         func_ref: bool = False):
+    """
+    Description:
+    -----------
+    Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
+    if cell value has changed as a result of paste operation.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/cell-editing/
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def onRowClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                   func_ref: bool = False):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://ag-grid.com/angular-data-grid/grid-interface/
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def onColumnResized(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                      func_ref: bool = False):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://ag-grid.com/angular-data-grid/grid-interface/
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  def onPaginationChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                          func_ref: bool = False):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-pagination/
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
 
   @property
   def overlayLoadingTemplate(self):

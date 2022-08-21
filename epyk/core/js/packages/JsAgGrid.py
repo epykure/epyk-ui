@@ -8,6 +8,100 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 
+class ColumnComponent(JsPackage):
+  lib_alias = {"js": "ag-grid-community", "css": "ag-grid-community"}
+  lib_selector = "column"
+
+  @property
+  def field(self):
+    return JsObjects.JsObject.JsObject("%s.colDef.field" % self.varId)
+
+  def getId(self):
+    return JsObjects.JsString.JsString("%s.getId()" % self.varId)
+
+  def cellStyle(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+    Description:
+    -----------
+    This sub function will use p as sub parameter to not corrupt the main event.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+
+    Attributes:
+    ----------
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(p)") and not func_ref:
+      str_func = "function(p){%s}" % str_func
+    return JsUtils.jsWrap(str_func)
+
+
+class DataComponent(JsPackage):
+  lib_alias = {"js": "ag-grid-community", "css": "ag-grid-community"}
+  lib_selector = "data"
+
+
+class NodeComponent(JsPackage):
+  lib_alias = {"js": "ag-grid-community", "css": "ag-grid-community"}
+  lib_selector = "node"
+
+  @property
+  def id(self):
+    return JsObjects.JsString.JsString("%s.id" % self.varId)
+
+
+class _Export:
+
+  @property
+  def column(self):
+    return ColumnComponent(selector="param.column")
+
+  @property
+  def data(self):
+    return DataComponent(selector="param.data")
+
+  @property
+  def node(self):
+    return NodeComponent(selector="param.node")
+
+  @property
+  def param(self):
+    """
+    Description:
+    -----------
+    Variable received in the aggrid methods.
+    """
+    return JsObjects.JsObject.JsObject("param")
+
+  @property
+  def newValue(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObject.JsObject("param.newValue")
+
+  @property
+  def oldValue(self):
+    """
+    Description:
+    -----------
+
+    """
+    return JsObjects.JsObject.JsObject("param.oldValue")
+
+  def rowIndex(self, js_code: str="param"):
+    return JsObjects.JsNumber.JsNumber("%s.rowIndex" % js_code)
+
+
 class ColumnApi:
 
   def __init__(self, page: primitives.PageModel, js_code: str):
@@ -1284,3 +1378,16 @@ class AgGrid(JsPackage):
 
     """
     return JsObjects.JsVoid("%s.api.getSortModel()" % self.varId)
+
+  @property
+  def _(self):
+    """
+    Description:
+    ------------
+    Aggrid standard components (mainly for events).
+
+    Usage::
+
+      table.js._
+    """
+    return _Export()
