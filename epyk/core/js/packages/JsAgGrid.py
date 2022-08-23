@@ -592,6 +592,35 @@ class AgGrid(JsPackage):
   #  -----------------------------------------
   #  Specific table javascript interface
   #  -----------------------------------------
+  def setDomLayout(self, data: types.JS_DATA_TYPES):
+    """
+    Description:
+    -----------
+    Gets columns to adjust in size to fit the grid horizontally
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-api/
+
+    Attributes:
+    ----------
+    :param data: The layout properties
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsVoid("%s.api.setDomLayout(%s)" % (self.varId, data))
+
+  def setAutoHeight(self):
+    """
+    Description:
+    -----------
+    Gets columns to adjust automatically height.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-api/
+    """
+    return JsObjects.JsVoid("%s.api.setDomLayout('autoHeight')" % self.varId)
+
   def sizeColumnsToFit(self):
     """
     Description:

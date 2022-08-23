@@ -1233,6 +1233,7 @@ class TableConfig(Options):
   def animateRows(self, flag: bool):
     self._config(flag)
 
+  @property
   def autoGroupColumnDef(self) -> DefaultColDef:
     return self._config_sub_data("autoGroupColumnDef", DefaultColDef)
 

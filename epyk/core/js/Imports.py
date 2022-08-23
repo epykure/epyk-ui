@@ -2382,6 +2382,17 @@ class ImportModule:
   def css(self) -> list:
     return list(self._css["main"].keys())
 
+  def add(self):
+    """
+    Description:
+    -----------
+    Force a package to be added to the external requirements.
+    """
+    if self._name in JS_IMPORTS:
+      self.page.jsImports.add(self._name)
+    if self._name in CSS_IMPORTS:
+      self.page.cssImport.add(self._name)
+
   def from_cdnjs(self):
     """
     Description:

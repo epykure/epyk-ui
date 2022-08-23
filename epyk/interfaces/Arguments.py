@@ -25,6 +25,9 @@ def size(value: Any, unit: str = "%", toStr: bool = False):
     return None, ""
 
   if isinstance(value, tuple):
+    if toStr:
+      return "{}{}".format(value[0], value[1])
+
     return value
 
   elif value == "auto":

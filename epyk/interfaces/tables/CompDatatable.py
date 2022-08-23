@@ -3,6 +3,7 @@
 
 from typing import Union
 from epyk.core.py import types
+from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
 
 
@@ -38,6 +39,9 @@ class Datatables:
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+
     data = []
     cols = cols or []
     rows = rows or []

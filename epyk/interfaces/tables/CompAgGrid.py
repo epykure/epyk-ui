@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.py import types
+from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
 
 
@@ -43,6 +44,9 @@ class AgGrid:
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+
     cols = cols or []
     rows = rows or []
     if not cols and not rows:
@@ -55,4 +59,6 @@ class AgGrid:
     table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code, table_options_dfls, profile)
     for c in cols + rows:
       table.add_column(c)
+    if height[0] == "auto":
+      table.options.onGridReady(["param.api.setDomLayout('autoHeight')"])
     return table
