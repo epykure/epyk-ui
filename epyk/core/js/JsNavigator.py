@@ -7,6 +7,7 @@ from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsString
 from epyk.core.js.primitives import JsObject
+from epyk.core.js.primitives import JsObjects
 from epyk.core.js.primitives import JsBoolean
 
 
@@ -173,6 +174,15 @@ class JsGeolocation:
     return JsObject.JsObject("navigator.geolocation.clearWatch(%s)" % watch_id, is_py_data=False)
 
 
+class JsClipboard:
+
+  def __init__(self, page: primitives.PageModel):
+    self.page, self.options = page, {}
+
+  def readText(self):
+    return JsObjects.JsPromise("window.navigator.clipboard.readText()")
+
+
 class JsNavigator:
 
   def __init__(self, page: primitives.PageModel):
@@ -330,3 +340,10 @@ class JsNavigator:
       https://www.w3schools.com/jsref/met_nav_javaenabled.asp
     """
     return JsBoolean.JsBoolean("navigator.javaEnabled()", is_py_data=False)
+
+  @property
+  def clipboard(self) -> JsClipboard:
+    """
+
+    """
+    return JsClipboard(self.page)

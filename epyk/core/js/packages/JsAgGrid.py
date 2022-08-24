@@ -98,7 +98,7 @@ class _Export:
     """
     return JsObjects.JsObject.JsObject("param.oldValue")
 
-  def rowIndex(self, js_code: str="param"):
+  def rowIndex(self, js_code: str = "param"):
     return JsObjects.JsNumber.JsNumber("%s.rowIndex" % js_code)
 
 

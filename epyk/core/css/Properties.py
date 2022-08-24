@@ -1896,6 +1896,26 @@ class CssMixin:
     self.css({"overflow": val})
 
   @property
+  def overflow_wrap(self):
+    """
+    Description:
+    ------------
+    The overflow-wrap property specifies whether or not the browser can break lines with long words,
+    if they overflow the container.
+
+    Related Pages:
+
+      https://www.w3schools.com/cssref/css3_pr_overflow-wrap.asp
+    """
+    return self.css("overflow-wrap")
+
+  @overflow_wrap.setter
+  def overflow_wrap(self, val):
+    val = val if val is not None else 'None'
+    self.css({"overflow-wrap": val})
+    self.css({"word-wrap": val})
+
+  @property
   def overflow_x(self):
     """
     Description:
