@@ -6,6 +6,19 @@
 
 ### Fixed
 
+## [1.9.7] - 2022-09-19
+
+### Added
+- New features for URL definition.
+- Add extra AgGrid options.
+- Extra CSS common properties
+
+### Changed
+- Functions documentation
+- Some static types features
+
+### Fixed
+
 ## [1.9.5] - 2022-08-21
 
 ### Added
