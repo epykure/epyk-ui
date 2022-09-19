@@ -47,6 +47,30 @@ class URLSearchParams:
       "(function(){var pmt = new URLSearchParams(%s).get(%s); if(pmt == null){ return %s } else { return pmt }})()" % (
         self.query, key, default))
 
+  def set(self, key: str, value: Any):
+    """
+    Description:
+    ------------
+    Set the value of a request parameter in the url.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+    Attributes:
+    ----------
+    :param key: The url parameter
+    :param value: The value to set
+    """
+    key = JsUtils.jsConvertData(key, None)
+    value = JsUtils.jsConvertData(value, None)
+    return JsString.JsString.get(
+      "(function(){const urlParams = new URLSearchParams(%s); urlParams.set(%s, %s); window.location.search = urlParams})()" % (
+        self.query, key, value))
+
+  def add(self, component: primitives.HtmlModel):
+    return self.set(component.html_code, component.dom.content)
+
   def getAll(self, key: Union[str, primitives.JsDataModel]):
     """
     Description:
@@ -100,6 +124,26 @@ class URLSearchParams:
     value = JsUtils.jsConvertData(value, None)
     return JsObject.JsObject.get(
       "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.query, key, value))
+
+  def delete(self, key):
+    """
+    Description:
+    ------------
+    The delete() method of the URLSearchParams interface deletes the given search parameter and all its associated
+    values, from the list of all search parameters.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/delete
+
+    Attributes:
+    ----------
+    :param key:
+    """
+    key = JsUtils.jsConvertData(key, None)
+    return JsString.JsString.get(
+      "(function(){const urlParams = new URLSearchParams(%s); urlParams.delete(%s); window.location.search = urlParams})()" % (
+        self.query, key))
 
 
 class JsLocation:

@@ -9,7 +9,7 @@ Related Pages:
 		https://www.w3schools.com/Jsref/prop_win_localstorage.asp
 """
 
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, List
 from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
@@ -526,6 +526,108 @@ class JsHistory:
       ], ["urlKey", "urlValue"])
     return self.pushState("data", "", JsFncs.JsFunction("updateUrl(%s, %s)" % (
       JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None))))
+
+  def updateStateFromComponent(self, component: primitives.HtmlModel):
+    """
+    Description:
+    ------------
+    Add or update the url value for the specific component to keep them in case of refresh.
+
+    Usage::
+
+      dt = page.ui.date(html_code="date")
+      input = page.ui.input(html_code="input")
+      dt.select([
+        page.js.window.history.updateStateFromComponent(dt),
+        page.js.window.history.updateStateFromComponent(input)
+
+    Attributes:
+    ----------
+    :param component: The HTML component
+    """
+    return self.updateState(component.htmlCode, component.dom.content)
+
+  def cleanState(self, keys: List[str]):
+    """
+    Description:
+    ------------
+    Remove all attributes which are not useful or should not be passed.
+
+    Usage::
+
+      btn = page.ui.button("Clean URL")
+      btn.click([page.js.window.history.cleanState(["date"])])
+
+    Attributes:
+    ----------
+    :param keys: The attributes keys
+    """
+    self.page.js.registerFunction("restrictUrl", [
+      self.page.js.objects.new([], js_code="newPmts"),
+      self.page.js.location.search.substr(1).split("&").forEach([
+        self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", js_obj=self.page.js), [
+          self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), js_code="urlPmts"),
+          self.page.js.if_(self.page.js.objects.array.get("urlKeys").includes(self.page.js.objects.array.get("urlPmts")[0].toString()), [
+            self.page.js.objects.get("newPmts").addItem(
+              self.page.js.objects.array.get("urlPmts")[0], self.page.js.objects.array.get("urlPmts")[1])
+          ])
+        ])
+      ]),
+
+      # Then we concatenate the URL
+      self.page.js.objects.array.new([], js_code="pmts"),
+      self.page.js.objects.get("newPmts").entries().forEach([
+        self.page.js.objects.array.get("pmts").push(
+          self.page.js.data.loop().val[0].toString(explicit=False).add("=").add(self.page.js.data.loop().val[1]))
+      ]),
+      # Returns the new URL
+      self.page.js.return_(
+        self.page.js.location.origin + self.page.js.location.pathname + "?" + self.page.js.objects.array.get(
+          "pmts").join("&"))
+      ], ["urlKeys"])
+    return self.pushState("data", "", JsFncs.JsFunction("restrictUrl(%s)" % (
+      JsUtils.jsConvertData(keys, None))))
+
+  def deleteState(self, key: primitives.JsDataModel):
+    """
+    Description:
+    ------------
+    Remove a specific attribute from the url
+
+    Usage::
+
+      btn = page.ui.button("Remove from URL")
+      btn.click([page.js.window.history.deleteState("date")])
+
+    Attributes:
+    ----------
+    :param key: The attribute key.
+    """
+    self.page.js.registerFunction("deleteFromUrl", [
+      self.page.js.objects.new([], js_code="newPmts"),
+      self.page.js.location.search.substr(1).split("&").forEach([
+        self.page.js.if_(self.page.js.data.loop().val.toString(explicit=False).includes("=", js_obj=self.page.js), [
+          self.page.js.objects.array.new(self.page.js.data.loop().val.toString().split("="), js_code="urlPmts"),
+          self.page.js.if_(self.page.js.objects.get("urlKey").toString() != self.page.js.objects.array.get("urlPmts")[0].toString(), [
+            self.page.js.objects.get("newPmts").addItem(
+              self.page.js.objects.array.get("urlPmts")[0], self.page.js.objects.array.get("urlPmts")[1])
+          ])
+        ])
+      ]),
+
+      # Then we concatenate the URL
+      self.page.js.objects.array.new([], js_code="pmts"),
+      self.page.js.objects.get("newPmts").entries().forEach([
+        self.page.js.objects.array.get("pmts").push(
+          self.page.js.data.loop().val[0].toString(explicit=False).add("=").add(self.page.js.data.loop().val[1]))
+      ]),
+      # Returns the new URL
+      self.page.js.return_(
+        self.page.js.location.origin + self.page.js.location.pathname + "?" + self.page.js.objects.array.get(
+          "pmts").join("&"))
+      ], ["urlKey"])
+    return self.pushState("data", "", JsFncs.JsFunction("deleteFromUrl(%s)" % (
+      JsUtils.jsConvertData(key, None))))
 
 
 class JsWindowEvent:
