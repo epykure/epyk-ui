@@ -1216,6 +1216,23 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def allowContextMenuWithControlKey(self):
+    """
+    Description:
+    -----------
+    If you always want the grid's context menu, even when Ctrl is pressed, then set allowContextMenuWithControlKey=true.
+    
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/context-menu/
+    """
+    return self._config_get()
+
+  @allowContextMenuWithControlKey.setter
+  def allowContextMenuWithControlKey(self, flag: bool):
+    self._config(flag)
+
+  @property
   def animateRows(self):
     """
     Description:
@@ -1333,6 +1350,21 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def editType(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+    """
+    return self._config_get()
+
+  @editType.setter
+  def editType(self, value: str):
+    self._config(value)
+
+  @property
   def enablePivot(self):
     """
     Description:
@@ -1347,6 +1379,22 @@ class TableConfig(Options):
 
   @enablePivot.setter
   def enablePivot(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def enableRangeSelection(self):
+    """
+    Description:
+    -----------
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/context-menu/
+    """
+    return self._config_get()
+
+  @enableRangeSelection.setter
+  def enableRangeSelection(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1437,6 +1485,9 @@ class TableConfig(Options):
   @functionsReadOnly.setter
   def functionsReadOnly(self, flag: bool):
     self._config(flag)
+
+  def getContextMenuItems(self):
+    pass
 
   def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):

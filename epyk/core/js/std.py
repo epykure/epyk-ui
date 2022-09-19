@@ -110,7 +110,7 @@ def comment(value: str):
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
-def var(name: str, value: Union[primitives.JsDataModel, str] = None, global_scope: bool = False, depth: bool = False):
+def var(name: str, value: Union[primitives.JsDataModel, str, bool] = None, global_scope: bool = False, depth: bool = False):
   """
   Description:
   ------------

@@ -2172,7 +2172,7 @@ class CssMixin:
   def quotes(self): return self.css("quotes")
 
   @quotes.setter
-  def quotes(self, val):
+  def quotes(self, val: str):
     val = val if val is not None else 'None'
     self.css({"quotes": val})
 
