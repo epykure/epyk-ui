@@ -257,6 +257,48 @@ class Column(Options):
     self._config(value)
 
   @property
+  def cellRenderer(self):
+    """
+    Description:
+    -----------
+    Change the cell rendering.
+
+    Usage::
+
+      c = table.get_column("city")
+      c.cellRenderer = ''' function(param){
+      return '<span><i class="far fa-comments"></i>Test '+ param.value +'</span>'} '''
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+    """
+    return self._config_get()
+
+  @cellRenderer.setter
+  def cellRenderer(self, value: str):
+    self._config(value, js_type=True)
+
+  @property
+  def cellRendererParams(self):
+    """
+    Description:
+    -----------
+    On top of the parameters provided by the grid, you can also provide your own parameters.
+    This is useful if you want to 'configure' your Cell Renderer. For example, you might have a Cell
+    Renderer for formatting currency but you need to provide what currency for your cell renderer to use.
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+    """
+    return self._config_get()
+
+  @cellRendererParams.setter
+  def cellRendererParams(self, values: dict):
+    self._config(values)
+
+  @property
   def children(self):
     """
     Description:

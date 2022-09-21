@@ -62,6 +62,27 @@ class Table(Html.Html):
     for c in self.options.js_tree.setdefault("columnDefs", []):
       yield c
 
+  def get_column(self, by_field: str = None, by_title: str = None) -> OptTableAgGrid.Column:
+    """
+    Description:
+    ------------
+    Get the column from the underlying Tabulator object by field or by title.
+    Pointing by field is recommended as the title might change quite easily.
+
+    This function will only get columns defined from the Python side.
+
+    Attributes:
+    ----------
+    :param by_field: Optional. The field reference for the column.
+    :param by_title: Optional. The title reference for the column.
+    """
+    for c in self.get_columns():
+      if by_field is not None and by_field == c.field:
+        return c
+
+      if by_title is not None and by_title == c.headerName:
+        return c
+
   @property
   def style(self) -> GrpClsTable.Aggrid:
     """
