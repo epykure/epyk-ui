@@ -2,7 +2,9 @@
 import json
 
 from epyk.core.js import JsUtils
+from epyk.core.py import types
 from epyk.core.js.packages import JsPackage
+from typing import Optional, Union, List
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -117,7 +119,7 @@ class JQuery(JsPackage):
   lib_alias = {"js": 'jquery'}
   lib_selector = 'jQuery("body")'
 
-  def this(self, reference=None):
+  def this(self, reference: str = None):
     """
     Description:
     -----------
@@ -139,7 +141,7 @@ class JQuery(JsPackage):
       self._selector = "jQuery('%s')" % reference
     return self
 
-  def new(self, tag=None, reference=None):
+  def new(self, tag=None, reference: str = None):
     """
     Description:
     -----------
@@ -164,7 +166,7 @@ class JQuery(JsPackage):
         self._selector = "jQuery('<%s></%s>')" % (tag, tag)
     return self
 
-  def parseHTML(self, text, context=None, keepScripts=False):
+  def parseHTML(self, text, context=None, keepScripts: bool = False):
     """
     Description:
     -----------
@@ -174,14 +176,14 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param text: HTML string to be parsed.
+    :param text: HTML String to be parsed.
     :param context: Document element to serve as the context in which the HTML fragment will be created.
     :param keepScripts: A Boolean indicating whether to include scripts passed in the HTML string.
     """
     text = JsUtils.jsConvertData(text, None)
     return "%s.parseHTML(%s)" % (JQUERY_ALIAS, text)
 
-  def toggle(self, speed=None, easing=None, jsCallback=None):
+  def toggle(self, speed=None, easing=None, callback=None):
     """
     Description:
     -----------
@@ -190,11 +192,11 @@ class JQuery(JsPackage):
     ----------
     :param speed:
     :param easing:
-    :param jsCallback:
+    :param callback:
     """
     return self.fnc("toggle()")
 
-  def trigger(self, data, js_func=None):
+  def trigger(self, data: types.JS_DATA_TYPES, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -202,12 +204,12 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param data:
-    :param js_func:
+    :param js_func: Javascript functions.
     """
     data = JsUtils.jsConvertData(data, js_func)
     return self.fnc("trigger(%(data)s)" % {"data": data})
 
-  def hide(self, speed=None, callback=None):
+  def hide(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -220,7 +222,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param speed:
-    :param callback:
+    :param callback: Javascript functions.
     """
     if speed is not None:
       if callback is not None:
@@ -233,7 +235,7 @@ class JQuery(JsPackage):
       jq_func = "hide()"
     return self.fnc(jq_func)
 
-  def show(self, speed=None, callback=None):
+  def show(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -246,7 +248,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param speed:
-    :param callback:
+    :param callback: Javascript functions.
     """
     if speed is not None:
       if callback is not None:
@@ -259,7 +261,7 @@ class JQuery(JsPackage):
       jq_func = "show()"
     return self.fnc(jq_func)
 
-  def fadeIn(self, speed=None, callback=None):
+  def fadeIn(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -273,8 +275,6 @@ class JQuery(JsPackage):
     ----------
     :param speed:
     :param callback:
-
-    :return:
     """
     if speed is not None:
       if callback is not None:
@@ -287,7 +287,7 @@ class JQuery(JsPackage):
       jq_func = "fadeIn()"
     return self.fnc(jq_func)
 
-  def fadeOut(self, speed=None, callback=None):
+  def fadeOut(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -300,7 +300,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param speed:
-    :param callback:
+    :param callback: Javascript functions.
     """
     if speed is not None:
       if callback is not None:
@@ -313,7 +313,7 @@ class JQuery(JsPackage):
       jq_func = "fadeOut()"
     return self.fnc(jq_func)
 
-  def fadeToggle(self, speed=None, callback=None):
+  def fadeToggle(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -324,7 +324,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param speed:
-    :param callback:
+    :param callback: Javascript functions.
     """
     if speed is not None:
       if callback is not None:
@@ -373,7 +373,7 @@ class JQuery(JsPackage):
       jq_func = "fadeTo(%(speed)s, %(opacity)s)" % {'speed': duration, 'opacity': opacity}
     return self.fnc(jq_func)
 
-  def slideDown(self, speed=None, callback=None):
+  def slideDown(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -400,7 +400,7 @@ class JQuery(JsPackage):
       jq_func = "slideDown()"
     return self.fnc(jq_func)
 
-  def slideUp(self, speed=None, callback=None):
+  def slideUp(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -427,7 +427,7 @@ class JQuery(JsPackage):
       jq_func = "slideUp()"
     return self.fnc(jq_func)
 
-  def slideToggle(self, speed=None, callback=None):
+  def slideToggle(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -454,7 +454,7 @@ class JQuery(JsPackage):
       jq_func = "slideToggle()"
     return self.fnc(jq_func)
 
-  def animate(self, params, speed=400, easing='swing', callback=None):
+  def animate(self, params, speed: int = 400, easing: str = 'swing', callback: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -482,7 +482,7 @@ class JQuery(JsPackage):
 
     return self.fnc("animate(%s, %s, %s)" % (params, speed, easing))
 
-  def stop(self, stopAll=False, goToEnd=False):
+  def stop(self, stop_all: bool = False, go_to_end: bool = False):
     """
     Description:
     -----------
@@ -495,12 +495,12 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param stopAll: A Boolean indicating whether to remove queued animation as well
-    :param goToEnd: A Boolean indicating whether to complete the current animation immediately
+    :param stop_all: A Boolean indicating whether to remove queued animation as well
+    :param go_to_end: A Boolean indicating whether to complete the current animation immediately
     """
-    stopAll = JsUtils.jsConvertData(stopAll, None)
-    goToEnd = JsUtils.jsConvertData(goToEnd, None)
-    return self.fnc("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stopAll, 'goToEnd': goToEnd})
+    stop_all = JsUtils.jsConvertData(stop_all, None)
+    go_to_end = JsUtils.jsConvertData(go_to_end, None)
+    return self.fnc("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stop_all, 'goToEnd': go_to_end})
 
   def remove(self, selector=None):
     """
@@ -536,7 +536,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("empty()")
 
-  def siblings(self, selector=None):
+  def siblings(self, selector: types.JS_DATA_TYPES = None):
     """
     Description:
     -----------
@@ -557,7 +557,7 @@ class JQuery(JsPackage):
 
     return self.fnc("siblings()")
 
-  def next(self, selector=None):
+  def next(self, selector: types.JS_DATA_TYPES = None):
     """
     Description:
     -----------
@@ -579,7 +579,7 @@ class JQuery(JsPackage):
 
     return self.fnc("next()")
 
-  def prev(self, selector=None):
+  def prev(self, selector: types.JS_DATA_TYPES = None):
     """
     Description:
     -----------
@@ -614,7 +614,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("first()")
 
-  def children(self, selector=None):
+  def children(self, selector: types.JS_DATA_TYPES = None):
     """
     The children() method returns all direct children of the selected element
 
@@ -643,7 +643,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("last()")
 
-  def appendTo(self, dstJqId, js_func=None):
+  def appendTo(self, dstJqId, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -652,14 +652,14 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param dstJqId: A selector, element, HTML string, array of elements, or jQuery object; the matched set of
-    elements will be inserted at the end of the element(s) specified by this parameter.
+      elements will be inserted at the end of the element(s) specified by this parameter.
     :param js_func:
 
     :rtype: str
     """
     return self.fnc("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
-  def append(self, dstJqId, js_func=None):
+  def append(self, dstJqId, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -673,7 +673,7 @@ class JQuery(JsPackage):
     """
     return self.fnc("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
-  def prepend(self, data, js_func=None):
+  def prepend(self, data, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     -----------
@@ -686,11 +686,11 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param data:
-    :param js_func:
+    :param js_func: Javascript functions.
     """
     return self.fnc("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(data, js_func)})
 
-  def eq(self, i):
+  def eq(self, i: int):
     """
     Description:
     -----------
@@ -739,7 +739,7 @@ class JQuery(JsPackage):
     criteria = JsUtils.jsConvertData(criteria, None)
     return self.fnc("find(%s)" % criteria)
 
-  def each(self, js_funcs, profile=None):
+  def each(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -752,6 +752,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param js_funcs: A function to execute for each matched element.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return self.fnc("each(function(index, data){%s})" % js_funcs)
@@ -803,7 +804,27 @@ class JQuery(JsPackage):
     self.component._attrs[key] = value
     return self.component
 
-  def val(self, data=None, js_func=None):
+  def prop(self, key: types.JS_DATA_TYPES, value=None):
+    """
+    Description:
+    ------------
+    The jQuery prop() method gets or sets the value of specified property to the DOM element(s).
+
+    Related Pages:
+
+      https://api.jquery.com/attr/#attr-attributeName
+
+    Attributes:
+    ----------
+    :param key: The name of the attribute to get.
+    :param value: A value to set for the attribute. If null, the specified attribute will be removed
+    """
+    if value is None:
+      return self.fnc("prop()")
+
+    return self.fnc("prop(%s, %s)" % (JsUtils.jsConvertData(key, None), value))
+
+  def val(self, data=None, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     ------------
@@ -816,14 +837,14 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param data:
-    :param js_func:
+    :param js_func: Javascript functions.
     """
     if data is None:
       return self.fnc("val()")
 
     return self.fnc("val(%s)" % JsUtils.jsConvertData(data, js_func))
 
-  def text(self, data, js_func=None):
+  def text(self, data, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     ------------
@@ -837,7 +858,7 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param data:
-    :param js_func:
+    :param js_func: Javascript functions.
     """
     if data is None:
       return self.fnc("text()")
@@ -845,7 +866,7 @@ class JQuery(JsPackage):
     data = JsUtils.jsConvertData(data, js_func)
     return self.fnc("text(%s)" % data)
 
-  def html(self, data=None, js_func=None):
+  def html(self, data=None, js_func: types.JS_FUNCS_TYPES = None):
     """
     Description:
     ------------
@@ -853,21 +874,22 @@ class JQuery(JsPackage):
     Attributes:
     ----------
     :param data:
-    :param js_func:
+    :param js_func: Javascript functions.
     """
     if data is None:
       return self.fnc("html()")
 
     return self.fnc("html(%s)" % JsUtils.jsConvertData(data, js_func))
 
-  def toggleClass(self, clsName, propagate=False):
+  def toggleClass(self, clsName, propagate: bool = False):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-
+    :param clsName:
+    :param propagate:
 
     :rtype: str
     """
@@ -987,7 +1009,7 @@ class JQuery(JsPackage):
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxError(function(event, jqxhr, settings, thrownError) {%s})" % js_funcs
 
-  def ajaxStart(self, js_funcs, profile=None):
+  def ajaxStart(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -999,11 +1021,13 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxStart(function() {%s})" % js_funcs
 
-  def ajaxStop(self, js_funcs, profile=None):
+  def ajaxStop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1015,12 +1039,13 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param js_funcs:
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxStop(function() {%s})" % js_funcs
 
-  def ajaxSuccess(self, js_funcs, profile=None):
+  def ajaxSuccess(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1032,13 +1057,13 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxSuccess(function(event, xhr, settings) {%s})" % js_funcs
 
-  def ajaxSend(self, js_funcs, profile=None):
+  def ajaxSend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -1049,50 +1074,59 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :param profile:
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxSend(function(event, jqxhr, settings) {%s})" % js_funcs
 
-  def ajaxComplete(self, js_funcs, profile=None):
+  def ajaxComplete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param js_funcs:
-    :param profile:
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return "jQuery(document).ajaxComplete(function() {%s})" % js_funcs
 
-  def getParams(self, url, data, success_funcs, errorFncs, options, timeout, props, profile=None):
+  def getParams(self, url, data, success_funcs, error_funcs, options, timeout, props, profile=None):
     """
 
     Attributes:
     ----------
+    :param url:
+    :param data:
+    :param success_funcs:
+    :param error_funcs:
+    :param options:
+    :param timeout:
+    :param props:
+    :param profile:
 
     :return:
     """
-    ajaxData = []
+    ajax_data = []
     if props is not None:
       data["_system"] = props
     if options is not None:
       for k, v in options.items():
-        ajaxData.append("%s: %s" % (k, json.dumps(v)))
-    ajaxData.extend(["data: {data: JSON.stringify(%s)}" % data, "url: '%s'" % url])
+        ajax_data.append("%s: %s" % (k, json.dumps(v)))
+    ajax_data.extend(["data: {data: JSON.stringify(%s)}" % data, "url: '%s'" % url])
     if timeout is not None:
-      ajaxData.append("timeout: %s" % timeout)
+      ajax_data.append("timeout: %s" % timeout)
     if success_funcs is not None:
-      ajaxData.append("success: function(result,status,xhr){%s}" % JsUtils.jsConvertFncs(
+      ajax_data.append("success: function(result,status,xhr){%s}" % JsUtils.jsConvertFncs(
         success_funcs, toStr=True, profile=profile))
-    if errorFncs is not None:
-      ajaxData.append("error: function(xhr, status, error){%s}" % JsUtils.jsConvertFncs(
-        errorFncs, toStr=True, profile=profile))
-    return "{%s}" % ", ".join(ajaxData)
+    if error_funcs is not None:
+      ajax_data.append("error: function(xhr, status, error){%s}" % JsUtils.jsConvertFncs(
+        error_funcs, toStr=True, profile=profile))
+    return "{%s}" % ", ".join(ajax_data)
 
-  def get(self, url, data, success_funcs=None, options=None, timeout=None, props=None):
+  def get(self, url, data, success_funcs=None, options=None, timeout=None, props=None) -> Jsjqxhr:
     """
     Description:
     ------------
@@ -1103,10 +1137,16 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
+    :param url:
+    :param data:
+    :param success_funcs:
+    :param options:
+    :param timeout:
+    :param props:
     """
     return Jsjqxhr("jQuery.get(%s)" % self.getParams(url, data, success_funcs, None, options, timeout, props))
 
-  def post(self, url, data=None, success_funcs=None, options=None, timeout=None, props=None):
+  def post(self, url, data=None, success_funcs=None, options=None, timeout=None, props=None) -> Jsjqxhr:
     """
     Description:
     ------------
@@ -1117,14 +1157,19 @@ class JQuery(JsPackage):
 
     Attributes:
     ----------
-    :rtype: Jsjqxhr
+    :param url:
+    :param data:
+    :param success_funcs:
+    :param options:
+    :param timeout:
+    :param props:
 
     :return:
     """
     data = data or {}
     return Jsjqxhr("jQuery.post(%s)" % self.getParams(url, data, success_funcs, None, options, timeout, props))
 
-  def ajax(self, type, url, data=None, success_funcs=None, errorFncs=None, options=None, timeout=None, props=None):
+  def ajax(self, type, url, data=None, success_funcs=None, error_funcs=None, options=None, timeout=None, props=None):
     """
     Description:
     ------------
@@ -1143,7 +1188,7 @@ class JQuery(JsPackage):
     :param url: Specifies the URL to send the request to. Default is the current page
     :param data: Specifies data to be sent to the server
     :param success_funcs: A function to be run when the request succeeds
-    :param errorFncs: A function to run if the request fails.
+    :param error_funcs: A function to run if the request fails.
     :param options: The other parameters specifies one or more name/value pairs for the AJAX request
     :param timeout: The local timeout (in milliseconds) for the request
     """
@@ -1151,18 +1196,84 @@ class JQuery(JsPackage):
       raise ValueError("Method %s not recognised" % url)
 
     data = data or {}
-    return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, success_funcs, errorFncs, options, timeout, props))
+    return Jsjqxhr("jQuery.ajax(%s)" % self.getParams(url, data, success_funcs, error_funcs, options, timeout, props))
 
-  def click(self, js_func, profile=None):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
 
     Attributes:
     ----------
-    :param js_func:
-
-    :return:
+    :param js_funcs: Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.css("cursor", "pointer")
-    return self.fnc("click(function(){%s})" % JsUtils.jsConvertFncs(js_func, toStr=True, profile=profile))
+    return self.fnc("click(function(event){%s})" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+
+  def on(self, event: Union[str, List[str]], js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+         source_event: Optional[str] = None):
+    """
+    Description:
+    ------------
+
+    Usage::
+
+      btn = page.ui.button("Click")
+      btn.js.jquery.on("click", [
+        btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
+      ])
+
+    Attributes:
+    ----------
+    :param event:
+    :param js_funcs:
+    :param profile:
+    :param source_event:
+    """
+    source_event = source_event or self.varId
+    if isinstance(event, list):
+      event = " ".join(event)
+    js_event = self.component.on(event, js_funcs=js_funcs, profile=profile, source_event=source_event)
+    self.component._browser_data['mouse'][event][source_event]['fncType'] = "on"
+    return js_event
+
+  def after(self, html_frg: types.JS_DATA_TYPES):
+    """
+    Description:
+    ------------
+    Inserts content (new or existing DOM elements) after an element(s) which is specified by a selector.
+
+    Usage::
+
+      btn = page.ui.button("Click")
+      btn.js.jquery.on("click", [
+        btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
+      ])
+
+    Attributes:
+    ----------
+    :param html_frg:
+    """
+    html_frg = JsUtils.jsConvertData(html_frg, None)
+    return self.fnc("after(%s)" % html_frg)
+
+  def before(self, html_frg: types.JS_DATA_TYPES):
+    """
+    Description:
+    ------------
+    Inserts content (new or existing DOM elements) before an element(s) which is specified by a selector.
+
+    Usage::
+
+      btn = page.ui.button("Click")
+      btn.js.jquery.on("click", [
+        btn.js.jquery.before('<div style="background-color:yellow"> New div </div>'),
+      ])
+
+    Attributes:
+    ----------
+    :param html_frg:
+    """
+    html_frg = JsUtils.jsConvertData(html_frg, None)
+    return self.fnc("before(%s)" % html_frg)

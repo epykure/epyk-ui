@@ -272,7 +272,7 @@ class JsBase:
     from epyk.core.js.packages import JsQuery
 
     if self.component is not None:
-      return JsQuery.JQuery(self.component, js_code=JsQuery.decorate_var(self.component.htmlCode), set_var=False)
+      return JsQuery.JQuery(self.component, js_code=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
 
     return JsQuery.JQuery(self._jquery_ref)
 
