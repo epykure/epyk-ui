@@ -1,5 +1,6 @@
-
-![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epykIcon.PNG)
+<div align="center" >
+    <img src="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epykIcon.PNG">
+</div>
 
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/epykure/epyk-ui/graphs/commit-activity)
