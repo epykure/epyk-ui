@@ -3,11 +3,25 @@
 ### Added
 
 ### Changed
-- Improve Readme and documentation
+
+### Fixed
+
+
+## [1.9.9] - 2022-09-25
+
+### Added
+- Add new icons
+- Add more Jquery features for DOM object
+
+### Changed
+- Review Readme and documentation
+- internal picture use (loaded from base64 string directly)
+- Dev icons
 
 ### Fixed
 - Fix Jquery shortcut
 - Bug fix for Collab
+
 
 ## [1.9.7] - 2022-09-19
 

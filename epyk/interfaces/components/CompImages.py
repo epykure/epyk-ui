@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
+import base64
+
 from typing import List, Union
 from epyk.core import html
 from epyk.core.py import types
@@ -893,3 +896,45 @@ class Images:
       grid.add(row)
     grid.style.css.color = self.page.theme.greys[6]
     return grid
+
+  def epyk(self, align="center", width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''),
+           html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None,
+           options: types.OPTION_TYPE = None
+           ):
+    """
+    Description:
+    ------------
+    Add the Epyk Icon.
+
+    Usage::
+
+      page.ui.icons.epyk()
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlImage.Image`
+
+    Templates:
+
+      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+
+    Attributes:
+    ----------
+    :param align: Optional. A string with the horizontal position of the component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
+    """
+    with open(os.path.join(os.path.abspath(
+      os.path.dirname(__file__)), "..", "..", "static", "images", "epykIcon.PNG"), "rb") as fp:
+      base64_bytes = base64.b64encode(fp.read())
+      base64_message = base64_bytes.decode('ascii')
+      img = "data:image/x-icon;base64,%s" % base64_message
+    icon = self.page.ui.img(img, align=align, width=width, height=height, html_code=html_code, profile=profile,
+                            tooltip=tooltip, options=options)
+    icon.css({"text-align": "center", "padding": "auto", "vertical-align": "middle"})
+    html.Html.set_component_skin(icon)
+    return icon
