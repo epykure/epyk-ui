@@ -215,6 +215,6 @@ Please get in touch if there is any feature you feel Epyk-UI needs.
 
 Want to donate? Feel free. Send to [blockchain](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
 
-[<img src="resources/blockchain_qrcode.PNG" alt="Donate" height=40>](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
+[<img src="resources/blockchain_qrcode.PNG" alt="Donate" height=100>](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
 
 
