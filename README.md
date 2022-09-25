@@ -1,5 +1,5 @@
 
-![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_whole_big.png)
+![](https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epykIcon.PNG)
 
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/epykure/epyk-ui/graphs/commit-activity)
