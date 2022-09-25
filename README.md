@@ -1,5 +1,6 @@
 <div align="center" >
     <img src="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epykIcon.PNG">
+<br/><i>A single module to link Python ecosystem to the Web.</i>
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/epykure/epyk-ui/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
@@ -9,14 +10,6 @@
 [![Donate](https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white)](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)  
 
 </div>
-
-
-**A single module to link Python ecosystem to the Web.
-Have a quick look at the [Gallery](https://epykure.github.io/demos/) first to get convinced !**
-
-*FAQ*
-*For any questions, please use [Stackoverflow](https://stackoverflow.com/search?q=epyk) with the tag Epyk we will be happy to answer (unfortunately we cannot yet create tags in this platform)*
-
 
 This project is in active and constant improvement so do not forget to run the below command to always get the latest version install.
 
@@ -117,7 +110,8 @@ Epyk's framework is already composed with multiple categories of components.
 
 - [Documentation](https://epyk-ui.readthedocs.io/en/latest/)
 - [Changelog](CHANGELOG.md)
-
+- [Gallery](https://epykure.github.io/demos/)
+- [Stackoverflow](https://stackoverflow.com/search?q=epyk)
 
 ## Compatibility
 
