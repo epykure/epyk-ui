@@ -6,6 +6,7 @@ from epyk.core.py import primitives
 from epyk.core.py import PyRest
 import base64
 import logging
+import os
 
 from epyk.core.html import Defaults
 
@@ -767,6 +768,16 @@ class Header:
     :param sizes: Optional
     :param img_type: Optional
     """
+    if url in [
+      'https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo.ico',
+      'https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_dev.ico',
+    ]:
+      icon_name = url.split("/")
+      with open(os.path.join(os.path.abspath(
+        os.path.dirname(__file__)), "..", "..", "static", "images", icon_name[-1]), "rb") as fp:
+        base64_bytes = base64.b64encode(fp.read())
+        base64_message = base64_bytes.decode('ascii')
+        url = "data:image/x-icon;base64,%s" % base64_message
     extension = url.split(".")[-1].lower()
     if ".%s" % extension in self.mime_mapping:
       img_type = self.mime_mapping[".%s" % extension]

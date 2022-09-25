@@ -3,8 +3,11 @@
 ### Added
 
 ### Changed
+- Improve Readme and documentation
 
 ### Fixed
+- Fix Jquery shortcut
+- Bug fix for Collab
 
 ## [1.9.7] - 2022-09-19
 

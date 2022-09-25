@@ -296,10 +296,11 @@ class Report:
     self._css = {}
     self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
     self._tags, self._header_obj, self.__import_manage = None, None, None
-    module = inspect.getmodule(inspect.stack()[1][0])
     if script is None:
       frame = inspect.stack()[1]
-      script = inspect.getmodule(frame[0]).__file__
+      if inspect.getmodule(frame[0]) is not None:
+        # Bug fixes for Google Collab
+        script = inspect.getmodule(frame[0]).__file__
     self._props = {'js': {
           # JavaScript framework triggered after the HTML. Impact the entire page
           'onReady': OrderedSet(),

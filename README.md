@@ -30,36 +30,6 @@ Today Epyk is a bit more than a transpiler as it will encompass more than [**100
 
 Most of the popular web libraries (JQuery, Bootstrap, ApexCharts, ChartJs, Tabulator, AgGrid...) are available from the Epyk components. The resulting page transpiled will only import the ones needed for the selected components.
 
-<div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/ui_1.PNG?raw=true">
-</div>
-
-
-### Library's target
-
-Epyk's is to ensure the implementation of a coherent system using a minimum of layers.
-With Epyk the user stays in the Python layer to drive and optimize the data transformation.
-This Framework also encourages the implementation of Micro services and cloud based architecture.
-
-<div align="center" >
-    <img width=400 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/concept.PNG">
-</div>
-
-The full documentation is available on [Read the Docs](https://epyk-ui.readthedocs.io/en/latest/)
-
-In the [Template Repository](https://github.com/epykure/epyk-templates/tree/master/tutos) lot of examples are available to run as static pages or with underlying Python servers:
-
-_ fastapi_viewer.py: A simple interactive web page to display data from pandas_datareader.
-- fastapi_viewer_logs.py: An interactive web page to display log messages based on user inputs/filters
-- fastapi_webscraping.py: An example of report extracting data from a website to analyse the prices
-- fastapi_db.py : An App to display documentation and allow a versioning in a SqLite database.
-
-Also a [Gallery](https://epykure.github.io/demos/) is available to get more visible results
-
-<div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/gallery_1.PNG?raw=true">
-</div>
-
 
 ## Quickstart
 
@@ -100,54 +70,6 @@ select.change([
 
 More information in the doc [Getting started with Epyk](https://epyk-ui.readthedocs.io/en/latest/intro/getting-started-with-epyk.html)
 
-
-## Components
-
-Epyk's framework is already composed with multiple categories of components.
-
-
-## Resources
-
-- [Documentation](https://epyk-ui.readthedocs.io/en/latest/)
-- [Changelog](CHANGELOG.md)
-- [Gallery](https://epykure.github.io/demos/)
-- [Stackoverflow](https://stackoverflow.com/search?q=epyk)
-
-## Compatibility
-
-**No dependency hence  the library can be integrated to any existing Python project**
-
-Epyk is compatible with the most common Web Python Frameworks (Flask and Django).
-By default, the server package embeds a Flask app as it is easier to install and ready to use.
-
-The Framework can be included within a Jupyter or JupyterLab project. But this will lead to some limitations - for example Ajax and Socket will not be available.
-
-The generated Web pages are compatible with the common modern web frameworks.
-
-<div align="center" >
-    <img width=300 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/architecture.PNG">
-</div>
-
-
-But the target is to be full stack developers and be flexible enough to integrate our UI pages to any existing ecosystem.
-Thus some outs features are available to wrap page to be visible on any server.
-
-This encourages the collaboration and breaks the IT silos. It can fully work in an Agile way of working as developers, business analysts, product owners and users can work on the same stack 
-and improve directly the final product. Any work done on the side within Jupyter or standalone Python scripts can be easily integrated !
-
-<div align="center" >
-    <img width=300 src="https://github.com/epykure/epyk-ui/raw/master/epyk/static/images/benefits.PNG">
-</div>
-
-Epyk can be integrated to any Python web servers and can be linked to JavaScript web framework.
-It is collaborative library focusing on the data transformation and promoting the team collaboration.
-
-<div align="center" >
-    <img width=600 src="https://github.com/epykure/epyk-ui/blob/master/doc/_static/design_3.PNG?raw=true">
-</div>
-
-Have a look at the [Design and Architecture](https://epyk-ui.readthedocs.io/en/latest/intro/design-architecture-details.html) documentation to get more details.
-
 ## Usage
 
 First install Epyk to your Python environment
@@ -185,9 +107,6 @@ to Python 3 and asyncio. All the features available in JavaScript (socket, webso
 If the underlying web server is not compatible with those modern features, Ajax (post, get...) are also available.
 More examples are available in the []template / interactive](https://github.com/epykure/epyk-templates/tree/master/interactives) section.
 
-<div align="center" >
-    <img src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/sockets.PNG?raw=true">
-</div>
 
 On the client side
 ```py
@@ -245,6 +164,40 @@ To launch a live notebook server with those notebook using [binder](https://mybi
 
 More examples are available on the [official repository](https://github.com/epykure/epyk-templates)
 
+
+## Compatibility / Open Source Stack
+
+**No dependency hence  the library can be integrated to any existing Python project**
+
+Epyk is compatible with the most common Web Python Frameworks (Flask and Django).
+By default, the server package embeds a Flask app as it is easier to install and ready to use.
+
+The Framework can be included within a Jupyter or JupyterLab project. But this will lead to some limitations - for example Ajax and Socket will not be available.
+
+The generated Web pages are compatible with the common modern web frameworks.
+
+[<img src="resources/python.svg" alt="python" height=40>](https://www.python.org)
+[<img src="resources/flask.png" alt="flask" height=40>](https://flask.palletsprojects.com/en/2.2.x/)
+[<img src="resources/tornado.png" alt="tornad0" height=40>](https://www.tornadoweb.org/en/stable/)
+[<img src="resources/django.png" alt="django" height=40>](https://www.djangoproject.com/)
+[<img src="resources/fastapi.svg" alt="fastapi" height=40>](https://fastapi.tiangolo.com)
+[<img src="resources/jupyter.png" alt="jupyter" height=40>](https://nbviewer.org/github/epykure/epyk-templates-notebooks/blob/master/tutorials/components/00_components.ipynb)
+[<img src="resources/collab.png" alt="collab" height=40>](https://colab.research.google.com/drive/12ZL_PHDItSvfILi5akyUc-thd4J8dx6J)
+[<img src="resources/react.png" alt="react" height=40>](https://reactjs.org/)
+[<img src="resources/angular.png" alt="angular" height=40>](https://angularjs.org/)
+[<img src="resources/vue.png" alt="vue">](https://vuejs.org/)
+[<img src="resources/svelte.svg" alt="svelte" height=40>](https://svelte.dev)
+
+
+## Resources
+
+- [Documentation](https://epyk-ui.readthedocs.io/en/latest/)
+- [Changelog](CHANGELOG.md)
+- [Templates](https://github.com/epykure/epyk-templates/tree/master/tutos)
+- [Gallery](https://epykure.github.io/demos/)
+- [Collab & Jupyter](https://epykure.github.io/demos/)
+- [Stackoverflow](https://stackoverflow.com/search?q=epyk)
+
 ## Coming soon
 
 **Epyk Studio** is a rich and collaborative framework to simplify the use of this library with bespoke configuration / styles. You can start downloading it [here](https://pypi.org/project/epyk-studio/) 
@@ -262,7 +215,6 @@ Please get in touch if there is any feature you feel Epyk-UI needs.
 
 Want to donate? Feel free. Send to [blockchain](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
 
-<div align="center" >
-    <img width=150 src="https://github.com/epykure/epyk-ui/blob/master/epyk/static/images/blockchain_qrcode.PNG?raw=true">
-</div>
+[<img src="resources/blockchain_qrcode.PNG" alt="Donate" height=40>](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
+
 
