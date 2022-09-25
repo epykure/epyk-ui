@@ -1,7 +1,5 @@
 <div align="center" >
     <img src="https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epykIcon.PNG">
-</div>
-
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/epykure/epyk-ui/graphs/commit-activity)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
@@ -9,6 +7,8 @@
 [![Documentation Status](https://readthedocs.org/projects/epyk-ui/badge/?version=latest)](http://epyk-ui.readthedocs.io/?badge=latest)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg)](https://github.com/epykure/epyk-ui/issues)
 [![Donate](https://img.shields.io/badge/Bitcoin-000?style=for-the-badge&logo=bitcoin&logoColor=white)](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)  
+
+</div>
 
 
 **A single module to link Python ecosystem to the Web.
@@ -24,12 +24,10 @@ This project is in active and constant improvement so do not forget to run the b
 pip install epyk --upgrade
 ```
 
+## Presentation
 
-Presentation
-=============
+### About the project
 
-About the project
-*****************
 We started the implementation of Epyk already few years ago in order to help Python developers (from beginner to advanced) to present their work to clients or colleagues. At this time there were only few packages in Python available and it was quite difficult for people to move to web technologies like JS, HTML and CSS.
 
 With this idea we started to create Epyk, a kind of transpiler which is dedicated to assist from Python the developers to develop rich web UI. 
@@ -44,8 +42,8 @@ Most of the popular web libraries (JQuery, Bootstrap, ApexCharts, ChartJs, Tabul
 </div>
 
 
-Library's target
-****************
+### Library's target
+
 Epyk's is to ensure the implementation of a coherent system using a minimum of layers.
 With Epyk the user stays in the Python layer to drive and optimize the data transformation.
 This Framework also encourages the implementation of Micro services and cloud based architecture.
@@ -70,8 +68,7 @@ Also a [Gallery](https://epykure.github.io/demos/) is available to get more visi
 </div>
 
 
-Quickstart
-==========
+## Quickstart
 
 For people impatient to understand the concept, you can test the below minimalist dashboard.
 
@@ -111,8 +108,18 @@ select.change([
 More information in the doc [Getting started with Epyk](https://epyk-ui.readthedocs.io/en/latest/intro/getting-started-with-epyk.html)
 
 
-Compatibility
-================================
+## Components
+
+Epyk's framework is already composed with multiple categories of components.
+
+
+## Resources
+
+- [Documentation](https://epyk-ui.readthedocs.io/en/latest/)
+- [Changelog](CHANGELOG.md)
+
+
+## Compatibility
 
 **No dependency hence  the library can be integrated to any existing Python project**
 
@@ -147,13 +154,11 @@ It is collaborative library focusing on the data transformation and promoting th
 
 Have a look at the [Design and Architecture](https://epyk-ui.readthedocs.io/en/latest/intro/design-architecture-details.html) documentation to get more details.
 
-Usage
-======
+## Usage
 
 First install Epyk to your Python environment
 
-From static pages
-*****************
+### From static pages
 
 ```py
 pip install epyk
@@ -178,8 +183,7 @@ button.click([
 page.outs.html_file(path="/templates", name="test")
 ```
 
-Using a web server
-******************
+### Using a web server
 
 Go to the next level and add real time flux in few lines or code. Epyk allows to integrate concepts of Reactive programming thanks
 to Python 3 and asyncio. All the features available in JavaScript (socket, websocket, observable ...) can be used as long as the underlying webserver is compatible.
@@ -233,8 +237,7 @@ def new_news(message):
 
 ```
 
-From Notebooks
-*****************
+### From Notebooks
 
 We maintain a separate Github repository of Jupyter Notebooks that contain an
 interactive tutorial and examples:
@@ -248,23 +251,20 @@ To launch a live notebook server with those notebook using [binder](https://mybi
 
 More examples are available on the [official repository](https://github.com/epykure/epyk-templates)
 
-Coming soon
-===========
+## Coming soon
 
 **Epyk Studio** is a rich and collaborative framework to simplify the use of this library with bespoke configuration / styles. You can start downloading it [here](https://pypi.org/project/epyk-studio/) 
 or contribute to the project on the [Github repository](https://github.com/epykure/epyk-studio). This is still under development hence it is not yet official released
 
 
-Feedback and Contribution
-=========================
+# Feedback and Contribution
 
 See [CONTRIBUTING.md](CONTRIBUTING.md)
 
 Please get in touch if there is any feature you feel Epyk-UI needs.
 
 
-Donate
-======
+# Donate
 
 Want to donate? Feel free. Send to [blockchain](https://www.blockchain.com/btc/address/bc1qjhlke0q8g4sk9hdza2afx3ytwp7tmlagsjq9sq)
 
