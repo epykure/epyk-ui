@@ -30,15 +30,11 @@ class BubbleMaps:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -64,15 +60,11 @@ class BubbleMaps:
          options: dict = None, width: Union[int, tuple] = (100, "%"),
          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -106,15 +98,11 @@ class Choropleth:
          options: dict = None, width: Union[int, tuple] = (100, "%"),
          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -142,15 +130,11 @@ class Choropleth:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -177,15 +161,11 @@ class Choropleth:
               options: dict = None, width: Union[int, tuple] = (100, "%"),
               height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:

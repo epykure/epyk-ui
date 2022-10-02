@@ -160,10 +160,7 @@ defined = {
 
 
 def getHexToRgb(hex_color: str):
-  """
-  Description:
-  ------------
-  Convert a hexadecimal color to a rgb code.
+  """	Convert a hexadecimal color to a rgb code.
 
   An RGB color value is specified with the rgb() function, which has the following syntax:
   rgb(red, green, blue)
@@ -185,8 +182,6 @@ def getHexToRgb(hex_color: str):
 
       https://www.w3schools.com/cssref/css_colors_legal.asp
 
-  Attributes:
-  ----------
   :param str hex_color: A hexadecimal code color.
 
   :return: The list with the rgb code color
@@ -205,10 +200,7 @@ def getHexToRgb(hex_color: str):
 
 
 def rgba(red: int, green: int, blue: int, alpha: float):
-  """
-  Description:
-  -----------
-  RGBA color values are an extension of RGB color values with an alpha channel which specifies the opacity.
+  """ RGBA color values are an extension of RGB color values with an alpha channel which specifies the opacity.
 
   An RGBA color is specified with the rgba() function, which has the following syntax:
   rgba(red, green, blue, alpha)
@@ -223,8 +215,6 @@ def rgba(red: int, green: int, blue: int, alpha: float):
 
       https://www.w3schools.com/cssref/css_colors_legal.asp
 
-  Attributes:
-  ----------
   :param int red: The red RGB color number.
   :param int green: The green RGB color number.
   :param int blue: The blue RGB color number.
@@ -234,19 +224,14 @@ def rgba(red: int, green: int, blue: int, alpha: float):
 
 
 def getRgbToHex(rgb_color: List[int]):
-  """
-  Description:
-  ------------
-  Convert a RGB color to a hexadecimal code.
+  """	Convert a RGB color to a hexadecimal code.
 
   Usage::
 
       >>> getRgbToHex([255, 0, 0])
       '#ff0000'
 
-  Attributes:
-  ----------
-  :param List[int] rgb_color: A list corresponding to the RGB color code.
+  :param rgb_color: A list corresponding to the RGB color code.
 
   :return: String object defining the hexadecimal color code.
   """
@@ -261,19 +246,14 @@ def getRgbToHex(rgb_color: List[int]):
 
 
 def randColor(seed_no: int = None):
-  """
-  Description:
-  ------------
-  Generate a random hexadecimal color code.
+  """	Generate a random hexadecimal color code.
 
   Usage::
 
       >>> randColor(10)
       '#9693DD'
 
-  Attributes:
-  ----------
-  :param int seed_no: Optional. The seed number used to generate random numbers.
+  :param seed_no: Optional. The seed number used to generate random numbers.
 
   :return: String with Hexadecimal color code
   """
@@ -290,21 +270,16 @@ def randColor(seed_no: int = None):
 
 
 def gradient(start: str, end: str, factor: float):
-  """
-  Description:
-  ------------
-  Deduce the color from a factor in a range of colors.
+  """	Deduce the color from a factor in a range of colors.
 
   Usage::
 
       >>> gradient("#ffffff", "#FF0000", 0.2)
       '#ffcccc'
 
-  Attributes:
-  ----------
-  :param str start: The start hexadecimal color code.
-  :param str end: The end hexadecimal color code.
-  :param float factor: A factor in the range [0, 1].
+  :param start: The start hexadecimal color code.
+  :param end: The end hexadecimal color code.
+  :param factor: A factor in the range [0, 1].
 
   :return: The hexadecimal color code
   """
@@ -317,21 +292,16 @@ def gradient(start: str, end: str, factor: float):
 
 
 def colors(start: str, end: str, steps: int):
-  """
-  Description:
-  ------------
-  Generate a list of colors between two color codes.
+  """	Generate a list of colors between two color codes.
 
   Usage::
 
       >>> colors("#ffffff", "#FF0000", 10)
       ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
-  Attributes:
-  ----------
-  :param str start: The start hexadecimal color code.
-  :param str end: The end hexadecimal color code.
-  :param int steps: The number of colors in the array.
+  :param start: The start hexadecimal color code.
+  :param end: The end hexadecimal color code.
+  :param steps: The number of colors in the array.
 
   :return: A list of hexadecimal color codes.
   """
@@ -347,17 +317,12 @@ def colors(start: str, end: str, steps: int):
 
 
 def transparentize(color: str, alpha: float, is_hex: bool = False):
-  """
-  Description:
-  ------------
-  Change the color opacity.
+  """	Change the color opacity.
 
   Usage::
 
     pk.colors.transparentize(pk.colors.HexColors.BLUE_VIOLET, 0.2, True)
 
-  Attributes:
-  ----------
   :param color: The color code hexa or rgb.
   :param alpha: The opacity factor.
   :param is_hex: Flag to specify if the conversion to rgb will be required.
@@ -368,17 +333,12 @@ def transparentize(color: str, alpha: float, is_hex: bool = False):
 
 
 def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
-  """
-  Description:
-  ------------
-  Change the colors opacity.
+  """	Change the colors opacity.
 
   Usage::
 
     pk.colors.transparentize_all(page.theme.charts, 0.2, True)
 
-  Attributes:
-  ----------
   :param colors: The color codes hexa or rgb.
   :param alpha: The opacity factor.
   :param is_hex: Flag to specify if the conversion to rgb will be required.
@@ -387,13 +347,8 @@ def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
 
 
 def color_from_raw(color: str, data: list):
-  """
-  Description:
-  ------------
-  Get rgba colors based on the values.
+  """	Get rgba colors based on the values.
 
-  Attributes:
-  ----------
   :param color: The base color.
   :param data: The intensities.
   """
@@ -681,10 +636,7 @@ class DefinedColors:
 
   @property
   def hex(self):
-    """
-    Description:
-    ------------
-    Returns the Hexadecimal predefined color codes.
+    """ Returns the Hexadecimal predefined color codes.
 
     Usage::
 
@@ -698,10 +650,7 @@ class DefinedColors:
 
   @property
   def rgb(self):
-    """
-    Description:
-    ------------
-    Returns the RGB predefined color codes.
+    """ Returns the RGB predefined color codes.
 
     Usage::
 

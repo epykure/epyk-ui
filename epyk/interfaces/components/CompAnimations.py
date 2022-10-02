@@ -16,17 +16,12 @@ class Animations:
 
   def loading_line(self, height: types.PROFILE_TYPE = (3, "px"), profile: types.PROFILE_TYPE = None,
                    html_code: str = None, options: dict = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    -----------
-    Add a loading line component.
+    """ Add a loading line component.
 
     Related Pages:
 
       https://codepen.io/ziafatali/pen/mxVwpq
 
-    Attributes:
-    ----------
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param profile: Optional. A flag to set the component performance storage
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
@@ -51,8 +46,6 @@ class Animations:
 
   def progress_cursor(self) -> html.HtmlContainer.Div:
     """
-    Description:
-    -----------
 
     Related Pages:
 

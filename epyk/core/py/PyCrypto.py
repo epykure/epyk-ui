@@ -21,16 +21,11 @@ class PyCrypto:
     self.page = src
 
   def encrypt(self, data: str, token: Optional[str] = None, salt: Optional[str] = None):
-    """
-    Description:
-    ------------
-    This function will use the cryptography to ensure a secured encryption of the different credential and private data.
+    """ This function will use the cryptography to ensure a secured encryption of the different credential and private data.
 
     This can be also used to protect data from the report.
     In order to ensure the right privacy please do not store the token and the salt in the framework.
 
-    Attributes:
-    ----------
     :param str data: The data to be encrypted.
     :param Optional[str] token: Optional. The token used to encrypt the data.
     :param Optional[str] salt: Optional. The salt id.
@@ -55,18 +50,13 @@ class PyCrypto:
     return Fernet(encrypted_key).encrypt(bytes(data.encode('latin1'))).decode('latin1'), salt.decode('latin1')
 
   def decrypt(self, encrypted: str, token: Optional[str] = None, salt: Optional[str] = None, label: str = ''):
-    """
-    Description:
-    ------------
-    This function will use the two keys in order to decrypt the data.
+    """ This function will use the two keys in order to decrypt the data.
     In case of failure this function will raise an exception.
 
     Usage::
 
       PyCrypto().decrypt(encrypted)
 
-    Attributes:
-    ----------
     :param str encrypted: The encrypted data.
     :param Optional[str] token: Optional. The token used to encrypt the data.
     :param Optional[str] salt: Optional. The salt id.
@@ -92,10 +82,7 @@ class PyCrypto:
 
   @property
   def getId(self):
-    """
-    Description:
-    ------------
-    Return a unique token.
+    """ Return a unique token.
 
     Usage::
 
@@ -111,10 +98,7 @@ class PyCrypto:
 
   @property
   def key(self):
-    """
-    Description:
-    ------------
-    Return a Fernet key.
+    """ Return a Fernet key.
 
     Usage::
 
@@ -130,8 +114,6 @@ class PyCrypto:
   @classmethod
   def b64encode(cls, text: str, salt: Optional[str] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -141,8 +123,6 @@ class PyCrypto:
 
       https://cryptography.io/en/latest/hazmat/primitives/key-derivation-functions/
 
-    Attributes:
-    ----------
     :param str text: The text to be encrypted.
     :param Optional[str] salt: Optional. The salt used for the encryption (default None).
     """
@@ -157,13 +137,9 @@ class PyCrypto:
   @classmethod
   def cryptKeyPairs(cls, msg, key1, key2):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param msg:
     :param key1:
     :param key2:
@@ -176,13 +152,9 @@ class PyCrypto:
   @classmethod
   def decryptKeyPairs(cls, encrypted, key1, key2):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param encrypted: The encrypted data
     :param key1:
     :param key2:

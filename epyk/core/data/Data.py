@@ -38,76 +38,51 @@ class DataJs:
     self.page = page
 
   def record(self, js_code: str = None, data=None):
-    """
-    Description:
-    ------------
-    Interface to transform Python records to Javascript objects.
+    """ Interface to transform Python records to Javascript objects.
     This will allow interactivity of the various HTML components.
 
     Usage::
 
-    Attributes:
-    ----------
-    :param str js_code: Optional. The Javascript variable name.
-    :param data: Dictionary | lists. Object passed to the Javascript layer.
+    :param js_code: Optional. The Javascript variable name.
+    :param data: Object passed to the Javascript layer.
 
     :rtype: DataCore.DataGlobal
     """
     return DataCore.DataGlobal(js_code, data, self.page)
 
   def list(self, js_code: str, data):
-    """
-    Description:
-    ------------
-    Transform a Python object to a JavaScript list.
+    """ Transform a Python object to a JavaScript list.
 
-    Attributes:
-    ----------
     :param str js_code: The Javascript variable name.
-    :param data: List. Object passed to the Javascript layer.W
+    :param data: Object passed to the Javascript layer.W
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().array(data, js_code=js_code, set_var=True, page=self.page)
 
   def number(self, js_code: str, value):
-    """
-    Description:
-    ------------
-    Transform a Python number to a JavaScript one.
+    """ Transform a Python number to a JavaScript one.
 
-    Attributes:
-    ----------
-    :param str js_code: The Javascript variable name.
-    :param value: Float | Integer. Object passed to the Javascript layer.
+    :param js_code: The Javascript variable name.
+    :param value: Object passed to the Javascript layer.
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().number(value, js_code=js_code, set_var=True, page=self.page)
 
   def object(self, js_code: str, value: float):
-    """
-    Description:
-    ------------
-    Transform a Python object to a JavaScript object.
+    """ Transform a Python object to a JavaScript object.
 
-    Attributes:
-    ----------
-    :param str js_code: The Javascript variable name.
-    :param float value: Object passed to the Javascript layer.
+    :param js_code: The Javascript variable name.
+    :param value: Object passed to the Javascript layer.
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().new(value, js_code=js_code, page=self.page)
 
   def server(self, hostname: str, port: int = 8080):
-    """
-    Description:
-    ------------
-    Configuration data for server interaction.
+    """ Configuration data for server interaction.
     This will only help on centralising the configuration in the final page.
 
-    Attributes:
-    ----------
-    :param str hostname: The server hostname.
-    :param int port: Optional. The server port.
+    :param hostname: The server hostname.
+    :param port: Optional. The server port.
 
     :rtype: DataCore.ServerConfig
     """
@@ -121,10 +96,7 @@ class DataSrc:
 
   @property
   def vis(self):
-    """
-    Description:
-    ------------
-    Interface to Vis data transformation.
+    """ Interface to Vis data transformation.
 
     This will convert Python object to input data for Vis charts.
 
@@ -134,10 +106,7 @@ class DataSrc:
 
   @property
   def chartJs(self):
-    """
-    Description:
-    ------------
-    Interface to chartJs data transformation.
+    """ Interface to chartJs data transformation.
 
     This will convert Python object to input data for chartJs charts.
 
@@ -147,10 +116,7 @@ class DataSrc:
 
   @property
   def plotly(self):
-    """
-    Description:
-    ------------
-    Interface to Plotly data transformation.
+    """ Interface to Plotly data transformation.
 
     This will convert Python object to input data for Plotly charts.
 
@@ -160,10 +126,7 @@ class DataSrc:
 
   @property
   def c3(self):
-    """
-    Description:
-    ------------
-    Interface to C3 data transformation.
+    """ Interface to C3 data transformation.
 
     This will convert Python object to input data for C3 charts.
 
@@ -173,10 +136,7 @@ class DataSrc:
 
   @property
   def bb(self):
-    """
-    Description:
-    ------------
-    Interface to Billboard data transformation.
+    """ Interface to Billboard data transformation.
 
     This will convert Python object to input data for Billboard charts.
 
@@ -186,10 +146,7 @@ class DataSrc:
 
   @property
   def nvd3(self):
-    """
-    Description:
-    ------------
-    Interface to NVD3 data transformation.
+    """ Interface to NVD3 data transformation.
 
     This will convert Python object to input data for NVD3 charts.
 
@@ -199,10 +156,7 @@ class DataSrc:
 
   @property
   def google(self):
-    """
-    Description:
-    ------------
-    Interface to Google data transformation.
+    """ Interface to Google data transformation.
 
     This will convert Python object to input data for Google charts.
 
@@ -212,10 +166,7 @@ class DataSrc:
 
   @property
   def js(self):
-    """
-    Description:
-    ------------
-    Interface to standard JavaScript transformation.
+    """ Interface to standard JavaScript transformation.
 
     :rtype: DataJs
     """
@@ -223,10 +174,7 @@ class DataSrc:
 
   @property
   def db(self):
-    """
-    Description:
-    ------------
-    Interface to the internal database wrapper.
+    """ Interface to the internal database wrapper.
 
     :rtype: DataDb.DataDb
     """
@@ -235,16 +183,11 @@ class DataSrc:
     return DataDb.DataDb(self.page)
 
   def from_cache(self, code: str, is_secured: bool = False, report_name: str = None):
-    """
-    Description:
-    -----------
-    Loads data from a cached files.
+    """ Loads data from a cached files.
 
-    Attributes:
-    ----------
-    :param str code: The code for the data.
-    :param bool is_secured: Optional, boolean to set if the file should be secured. Default False.
-    :param str report_name: Optional. the environment in which cache are stored. Default current one.
+    :param code: The code for the data.
+    :param is_secured: Optional, boolean to set if the file should be secured. Default False.
+    :param report_name: Optional. the environment in which cache are stored. Default current one.
 
     :return: Return the data
     """
@@ -262,17 +205,12 @@ class DataSrc:
         return pickle.load(file_obj)
 
   def save_cache(self, data, code, is_secured: bool = False, if_missing: bool = True):
-    """
-    Description:
-    -----------
-    Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
+    """ Temporary files are saved in a pickle manner in order to avoid having to parse those files again.
 
-    Attributes:
-    ----------
     :param data: The data to be saved.
-    :param code: String. The code for the data.
-    :param is_secured: Boolean. Optional. boolean to set if the file should be secured. Default False.
-    :param if_missing: Boolean. Optional. boolean to set the fact that caches are only saved if missing.
+    :param code: The code for the data.
+    :param is_secured: Optional. boolean to set if the file should be secured. Default False.
+    :param if_missing: Optional. boolean to set the fact that caches are only saved if missing.
     """
     if getattr(self.page, "run", None) is not None:
       cache_path = os.path.join(self.page.run.local_path, "tmp")
@@ -283,16 +221,11 @@ class DataSrc:
         pickle.dump(data, file_obj)
 
   def from_file(self, filename, isSecured=False, report_name=None):
-    """
-    Description:
-    -----------
-    Return the file.
+    """ Return the file.
 
-    Attributes:
-    ----------
-    :param filename: String. The filename.
-    :param isSecured: Boolean. Optional. Check if the file is secured or not.
-    :param report_name: String. Optional. The environment with the file.
+    :param filename: The filename.
+    :param isSecured: Optional. Check if the file is secured or not.
+    :param report_name: Optional. The environment with the file.
 
     :return: The file object
     """
@@ -309,13 +242,8 @@ class DataSrc:
 
   def from_source(self, http_data, file_name, func_name="getData", report_name=None,
                   folder="sources", path=None):
-    """
-    Description:
-    ------------
-    Returns data from a internal data service defined in the sources folder.
+    """ Returns data from a internal data service defined in the sources folder.
 
-    Attributes:
-    ----------
     :param http_data: The input data for the service
     :param file_name: The service file name
     :param func_ame: Optional, the function name in the service. Default getData
@@ -339,17 +267,12 @@ class DataSrc:
 
   def from_get(self, url, data=None, code=None):
     """
-    Description:
-    -----------
 
     """
     return JsQuery.JQuery(self.page).get(url, data)
 
   def pdf(self, filename, path=None):
-    """
-    Description:
-    -----------
-    Read a pdf file
+    """ Read a pdf file
 
     This will require an external module PyPDF2.
 
@@ -362,8 +285,6 @@ class DataSrc:
 
       https://www.geeksforgeeks.org/working-with-pdf-files-in-python/
 
-    Attributes:
-    ----------
     :param filename: The pdf file name
     :param path: The file path
 
@@ -374,10 +295,7 @@ class DataSrc:
     return pdf_data
 
   def soap(self, wsdl):
-    """
-    Description:
-    -----------
-    Interface to a SOAP server.
+    """ Interface to a SOAP server.
 
     This function will require an external python package zeep to use SOAP
 
@@ -391,8 +309,6 @@ class DataSrc:
       https://en.wikipedia.org/wiki/SOAP
       https://python-zeep.readthedocs.io/en/master/
 
-    Attributes:
-    ----------
     :param wsdl: The wsdl service url
     :rtype: zeep.service
 
@@ -402,10 +318,7 @@ class DataSrc:
     return soap.Client(wsdl).service
 
   def rest(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
-    """
-    Description:
-    -----------
-    Interface to a REST server.
+    """ Interface to a REST server.
 
     Test with a online server can be done here https://jsonplaceholder.typicode.com/
 
@@ -417,8 +330,6 @@ class DataSrc:
 
       https://jsonrpcclient.readthedocs.io/en/latest/api.html
 
-    Attributes:
-    ----------
     :param url: The REST service url
     :param data: The input data for the service
     """
@@ -426,11 +337,7 @@ class DataSrc:
 
   def socket(self, data, host='localhost', port=5000, encoding='utf-8'):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: The input data for the service
     :param host: The service host name (e.g localhost)
     :param port: The service port
@@ -449,10 +356,7 @@ class DataSrc:
     pass
 
   def rss(self, url, proxy=None, method="GET"):
-    """
-    Description:
-    -----------
-    Entry point to retrieve RSS feeds.
+    """ Entry point to retrieve RSS feeds.
 
     This module will require beautifulsoup4 as external package
 
@@ -466,8 +370,6 @@ class DataSrc:
 
       https://pypi.org/project/beautifulsoup4/
 
-    Attributes:
-    ----------
     :param url: The url of the html page
     :param method: Optional, The request method. Default method GET
 
@@ -480,10 +382,7 @@ class DataSrc:
     return xml_soup
 
   def webscrapping(self, url, parser="html.parser", proxy=None, method=None):
-    """
-    Description:
-    -----------
-    Entry point to retrieve data from any website.
+    """ Entry point to retrieve data from any website.
 
     This module will require beautifulsoup4 as external package
 
@@ -496,8 +395,6 @@ class DataSrc:
 
       https://pypi.org/project/beautifulsoup4/
 
-    Attributes:
-    ----------
     :param url: The url of the html page
     :param parser: The output data parser
     :param proxy:
@@ -518,10 +415,7 @@ class DataSrc:
     return xml_soup
 
   def rpc(self, url, data=None, headers=None, is_secured=False):
-    """
-    Description:
-    -----------
-    Interface to a RPC server.
+    """ Interface to a RPC server.
 
     This is using the external python package jsonrpcclient (https://jsonrpcclient.readthedocs.io/en/latest/)
 
@@ -531,8 +425,6 @@ class DataSrc:
       https://gurujsonrpc.appspot.com/
       https://jsonrpcclient.readthedocs.io/en/latest/
 
-    Attributes:
-    ----------
     :param url: The RPC service url
     :param data: The input data for the service
     """
@@ -549,10 +441,7 @@ class DataSrc:
     return client.send(json.dumps(data))
 
   def grpc(self, service_name, path, module, host="localhost", port=50051):
-    """
-    Description:
-    -----------
-    Interface to a GRPC server.
+    """ Interface to a GRPC server.
 
     Usage::
 
@@ -565,8 +454,6 @@ class DataSrc:
       https://grpc.io/docs/tutorials/basic/python/
       https://grpc.io/docs/quickstart/python.html
 
-    Attributes:
-    ----------
     :param service_name: The Service name (the class name in the python module)
     :param path: The path with the GRPC features
     :param module: The python module name for the service

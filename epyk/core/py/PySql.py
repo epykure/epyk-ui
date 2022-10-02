@@ -38,10 +38,7 @@ class SqlConn:
 
   def __init__(self, family, database=None, filename=None, model_path=None, reset=False, migrate=True,
                tables_scope=None, **kwargs):
-    """
-    Description:
-    ------------
-    Here we try to setup as generic as we can all the variable environment variables for the DB.
+    """ Here we try to setup as generic as we can all the variable environment variables for the DB.
     We try to not rely on the rptObj in order to be able to use this interface for various usage
     """
     import sqlalchemy.orm
@@ -84,20 +81,15 @@ class SqlConn:
         self.load_schema(filename=filename, model_path=model_path, reset=reset)
 
   def _load_sql_file(self, filename, reset):
-    """
-    Description:
-    ------------
-    Load a database schema from a python file.
+    """ Load a database schema from a python file.
     This will use the dialect available from SQLAlchemy.
 
     Related Pages:
 
       https://www.sqlalchemy.org/
 
-    Attributes:
-    ----------
-    :param filename: String. The database schema python file name.
-    :param reset: Boolean. flag to specify is the schema needs to be fully reloaded.
+    :param filename: The database schema python file name.
+    :param reset: flag to specify is the schema needs to be fully reloaded.
     """
     on_init_fnc = None
     model_mod = importlib.import_module(filename.replace('.py', ''))
@@ -137,38 +129,28 @@ class SqlConn:
       on_init_fnc(self)
 
   def table(self, table_name):
-    """
-    Description:
-    ------------
-    Return a sqlAlchemy table object. This can be useful in the where clauses.
+    """ Return a sqlAlchemy table object. This can be useful in the where clauses.
 
     Usage::
 
       db.table('table1')
 
-    Attributes:
-    ----------
-    :param table_name: String. The table name.
+    :param table_name: The table name.
 
     :return: Python table object
     """
     if self.engine.has_table(table_name):
       return sqlalchemy.Table(table_name, self.metadata)
 
-    raise Exception('Table %s does not exist in the schema' % table_name)
+    raise ValueError('Table %s does not exist in the schema' % table_name)
 
   def load_schema(self, filename=None, model_path=None, reset=False):
-    """
-    Description:
-    ------------
-    Function that takes care of initialising the DB.
+    """ Function that takes care of initialising the DB.
     Please note that some column names are prohibited such as lst_mod_dt.
 
-    Attributes:
-    ----------
-    :param filename: String. Optional. The python module used to get the database schema.
-    :param model_path: String. Optional. The python path with the model.
-    :param reset: Boolean. Optional. Flag to reset the database. THis will emtpy the tables.
+    :param filename: Optional. The python module used to get the database schema.
+    :param model_path: Optional. The python path with the model.
+    :param reset: Optional. Flag to reset the database. THis will emtpy the tables.
     """
     if not filename and not model_path:
       raise Exception("You need to specify at least a file name or a model path")
@@ -187,17 +169,12 @@ class SqlConn:
       self._load_sql_file(filename, reset)
 
   def table_clone(self, old_table, new_table, mapping=None):
-    """
-    Description:
-    ------------
-    Helps to migrate between two tables.
+    """ Helps to migrate between two tables.
     The mapping argument is used in case the column names differ between the two tables.
 
-    Attributes:
-    ----------
-    :param old_table: String. A SQLAlchemy table class in the current database model
-    :param new_table: String. A SQLAlchemy table class
-    :param mapping: String. Optional. A dictionary for the column names.
+    :param old_table: A SQLAlchemy table class in the current database model
+    :param new_table: A SQLAlchemy table class
+    :param mapping: Optional. A dictionary for the column names.
 
     :return: self for the chaining.
     """
@@ -212,15 +189,10 @@ class SqlConn:
     return self
 
   def table_migrate(self, from_table, to_table):
-    """
-    Description:
-    ------------
-    Copy data from one table to another.
+    """ Copy data from one table to another.
 
-    Attributes:
-    ----------
-    :param from_table: String. The table name.
-    :param to_table: String. The destination table name.
+    :param from_table: The table name.
+    :param to_table: The destination table name.
 
     :return: The Python SQL object
     """
@@ -229,10 +201,7 @@ class SqlConn:
     return self
 
   def table_create(self, table_name, table_def, reset=False):
-    """
-    Description:
-    ------------
-    Create a table in the database.
+    """ Create a table in the database.
 
     Usage::
 
@@ -241,9 +210,7 @@ class SqlConn:
                   sqlalchemy.Column('report', sqlalchemy.String, nullable=False),]
       db.createTable('newTable', tableDef)
 
-    Attributes:
-    ----------
-    :param table_name: String. The table name.
+    :param table_name: The table name.
     :param table_def:
     :param reset:
     """
@@ -258,17 +225,12 @@ class SqlConn:
     return self
 
   def table_empty(self, table_name):
-    """
-    Description:
-    ------------
-    This function will empty an existing table.
+    """ This function will empty an existing table.
 
     Usage::
 
       db.emptyTable('test')
 
-    Attributes:
-    ----------
     :param table_name: A string with the datable name.
 
     :return: self
@@ -280,8 +242,6 @@ class SqlConn:
 
   def table_create_from_file(self, filename, table_name, records=None, path=None, reset=False, commit=True):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -289,8 +249,6 @@ class SqlConn:
       db = page.py.db(database=r"newTest.db").forceCreate()
       dbObj.createTable('myschema.py', 'mytable', records=df)
 
-    Attributes:
-    ----------
     :param filename:
     :param table_name:
     :param records:
@@ -306,10 +264,7 @@ class SqlConn:
     return self
 
   def force_create(self):
-    """
-    Description:
-    ------------
-    Force the creation of the database in the given project.
+    """ Force the creation of the database in the given project.
 
     :return: The python Sql object
     """
@@ -319,16 +274,11 @@ class SqlConn:
     return self
 
   def load_data_file(self, filename, path, reset=False, new_tables=None):
-    """
-    Description:
-    ------------
-    Load a python sql file to the local database.
+    """ Load a python sql file to the local database.
     This will only add records and then commit the changes.
 
     Those data should not be sensitive ones if they are store and committed to the folder.
 
-    Attributes:
-    ----------
     :param filename:
     :param path:
     :param reset:
@@ -354,17 +304,12 @@ class SqlConn:
     return self
 
   def where(self, stmts):
-    """
-    Description:
-    ------------
-    Add a where clause to the SqlAlchemy query.
+    """ Add a where clause to the SqlAlchemy query.
 
     Usage::
 
       db.select().where([db.column("table", 'column') == 'X')
 
-    Attributes:
-    ----------
     :param stmts: The SQL where statement.
 
     :return: The python object itself
@@ -374,10 +319,7 @@ class SqlConn:
     return self
 
   def select(self, table_name=None, columns=None):
-    """
-    Description:
-    ------------
-    Create a SQL statement.
+    """ Create a SQL statement.
 
     Usage::
 
@@ -388,8 +330,6 @@ class SqlConn:
       http://docs.sqlalchemy.org/en/latest/core/selectable.html
       http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
 
-    Attributes:
-    ----------
     :param table_name: String. Optional. The database table name.
     :param columns: String. Optional. The list of columns.
 
@@ -405,10 +345,7 @@ class SqlConn:
     return self
 
   def delete(self, table_name):
-    """
-    Description:
-    ------------
-    Create a SQL delete SQL statement.
+    """  Create a SQL delete SQL statement.
 
     Usage::
 
@@ -418,9 +355,7 @@ class SqlConn:
 
       https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    Attributes:
-    ----------
-    :param table_name: String. Optional. The database table name.
+    :param table_name: Optional. The database table name.
 
     :return: self
     """
@@ -444,10 +379,7 @@ class SqlConn:
     return sqlalchemy.asc(val)
 
   def update(self, table_name, values):
-    """
-    Description:
-    ------------
-    Create a delete SQL statement.
+    """ Create a delete SQL statement.
 
     Usage::
 
@@ -459,9 +391,7 @@ class SqlConn:
       http://docs.sqlalchemy.org/en/latest/core/sqlelement.html
       https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    Attributes:
-    ----------
-    :param table_name: String. The table name.
+    :param table_name: The table name.
     :param values:
 
     :return: self for the chaining.
@@ -471,12 +401,8 @@ class SqlConn:
 
   def distinct(self, columns=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
-    :param columns: List. the list of columns.
+    :param columns: the list of columns.
 
     :return: self for the chaining.
     """
@@ -487,10 +413,7 @@ class SqlConn:
     return self
 
   def get_last_id(self, table_name):
-    """
-    Description:
-    ------------
-    Return the table last primary key ID.
+    """ Return the table last primary key ID.
     This will return an error if the table does not have a primary key defined in its schema.
 
     Usage::
@@ -507,7 +430,7 @@ class SqlConn:
     try:
       row = self.session.query(table).order_by(list(table.primary_key.columns)[0].desc()).first()
     except:
-      raise Exception("No primary key defined for the table %s - db: %s" % (table_name, self.dbPath))
+      raise ValueError("No primary key defined for the table %s - db: %s" % (table_name, self.dbPath))
 
     if row is None:
       return -1
@@ -516,10 +439,7 @@ class SqlConn:
     return rec[list(table.primary_key.columns)[0].key]
 
   def insert(self, table_name, records, commit=False, col_user_name=None, clean_rec=False, getIdCol=False):
-    """
-    Description:
-    ------------
-    insert a list of records to a table.
+    """ insert a list of records to a table.
 
     Usage::
 
@@ -531,13 +451,11 @@ class SqlConn:
       https://docs.sqlalchemy.org/en/13/core/dml.html
       https://docs.sqlalchemy.org/en/13/core/dml.html
 
-    Attributes:
-    ----------
-    :param table_name: String. The database table name.
-    :param records: List. The list of dictionaries with the data to inserts.
-    :param commit: Boolean. Optional. Boolean to commit the insert. Set to False by default.
+    :param table_name: The database table name.
+    :param records: The list of dictionaries with the data to inserts.
+    :param commit: Optional. Boolean to commit the insert. Set to False by default.
     :param col_user_name:
-    :param clean_rec: Boolean, Optional. Remove the key in the dictionaries which are not related to the table. Set to False.
+    :param clean_rec: Optional. Remove the key in the dictionaries which are not related to the table. Set to False.
     :param getIdCol:
 
     :return: The python object itself
@@ -589,17 +507,12 @@ class SqlConn:
     return True, 0, [], last_id
 
   def data(self, limit=None):
-    """
-    Description:
-    ------------
-    Returns the results of the select statement previously instantiated in a pandas dataframe.
+    """ Returns the results of the select statement previously instantiated in a pandas dataframe.
 
     Usage::
 
       rptObj.db().getData()
 
-    Attributes:
-    ----------
     :param limit: Optional. The number of records to be returned.
 
     :return: A pandas dataframe
@@ -620,10 +533,7 @@ class SqlConn:
 
   @property
   def records(self):
-    """
-    Description:
-    ------------
-    Return the records.
+    """ Return the records.
 
     Usage::
 
@@ -642,10 +552,7 @@ class SqlConn:
 
   @property
   def count(self):
-    """
-    Description:
-    ------------
-    Return the number of records.
+    """ Return the number of records.
 
     Usage::
 
@@ -660,13 +567,8 @@ class SqlConn:
     return len(results)
 
   def limit(self, n):
-    """
-    Description:
-    ------------
-    Limit the number of records returned.
+    """ Limit the number of records returned.
 
-    Attributes:
-    ----------
     :param n: Integer, the number of records.
 
     :return: The SQL Query object.
@@ -678,10 +580,7 @@ class SqlConn:
     return self
 
   def first(self, items=False):
-    """
-    Description:
-    ------------
-    Return only the first items from the SQL query.
+    """ Return only the first items from the SQL query.
 
     Usage::
 
@@ -705,44 +604,39 @@ class SqlConn:
 
   @property
   def tables(self):
-    """
-    Description:
-    ------------
-    Return the list of tables defined in the selected database
+    """ Return the list of tables defined in the selected database
 
-    Example
-    rptObj.db().tables()
+    Usage::
+
+      page.db().tables()
 
     :return: A python object with the list of tables
     """
     return self.engine.table_names()
 
   def columns(self, table_name):
-    """
-    Description:
-    ------------
-    Return the list of columns defined in the selected database.
+    """ Return the list of columns defined in the selected database.
 
-    Example
-    rptObj.db().columns("table_name")
+    Usage::
+
+      page.db().columns("table_name")
 
     :param table_name:
+
     :return: A python object with the list of tables
     """
     table = sqlalchemy.Table(table_name, self.metadata)
     if self.engine.has_table(table.name):
       return table.columns
 
-    raise Exception('Table does not exist')
+    raise ValueError('Table does not exist')
 
   def column(self, table_name, column_name):
-    """
-    Description:
-    ------------
-    Return a sqlAlchemy column object. This can be useful in the where clauses
+    """ Return a sqlAlchemy column object. This can be useful in the where clauses
 
-    Example
-    select('table').where([db.column("table", 'column') == 'X')
+    Usage::
+
+      select('table').where([db.column("table", 'column') == 'X')
 
     :param table_name: The database table name
     :param column_name: The column name
@@ -753,16 +647,14 @@ class SqlConn:
       return getattr(table.c, column_name)
 
   def drop(self, table_name, validate=True):
-    """
-    Description:
-    ------------
-    Delete the table from the database.
+    """ Delete the table from the database.
     The pre check can be disabled and the table will be automatically created again when the report will be triggered again.
     No extra function to create a table in the framework this is done by the SQL framework itself
 
-    Example
-    rptObj.db().drop('test')
-    rptObj.db().drop('test', withCheck=False)
+    Usage::
+
+      page.db().drop('test')
+      page.db().drop('test', withCheck=False)
 
     Related Pages:
 
@@ -786,10 +678,7 @@ class SqlConn:
       logging.info("Table %s deleted" % table_name)
 
   def execute(self):
-    """
-    Description:
-    ------------
-    Execute the current SQL query.
+    """ Execute the current SQL query.
 
     Related Pages:
 
@@ -800,8 +689,7 @@ class SqlConn:
     return self.engine.execute(self.query)
 
   def commit(self):
-    """
-    Commit the current transaction.
+    """ Commit the current transaction.
 
     THis will save the results in the database
 
@@ -812,10 +700,7 @@ class SqlConn:
 
 
 class SqlConnOdbc:
-  """
-  Description:
-  ------------
-  Connector to Access databases. This connector will allow you to create, store and retrieve data from any MS Access Database.
+  """ Connector to Access databases. This connector will allow you to create, store and retrieve data from any MS Access Database.
   This will return the SQL database object. It will be possible to reuse the same syntax to then interact with it.
 
   This would need the ODBC driver available here: https://www.microsoft.com/en-us/download/confirmation.aspx?id=13255
@@ -940,14 +825,12 @@ class SqlConnNeo4j:
     return self
 
   def clear(self):
-    """
-    :dsc: Clears all nodes and edges from the Database
+    """ Clears all nodes and edges from the Database
     """
     return self.match().node('n').delete(['n'], detach=True)
 
   def node(self, name='', labels=None, attr=None):
-    """
-    :dsc: adds the node patern to the query
+    """ Adds the node pattern to the query
     """
     if not labels:
       labels = []
@@ -964,8 +847,7 @@ class SqlConnNeo4j:
     return self
 
   def link(self, labels='', attr=None, direction="from"):
-    """
-    :dsc: adds the edge definition to the query
+    """ Adds the edge definition to the query
     """
     if direction == 'from':
       self.query.append('-[%s]->' % labels)
@@ -974,8 +856,7 @@ class SqlConnNeo4j:
     return self
 
   def alias(self, aliases):
-    """
-    :dsc: defines a set of aliases that will appear as WITH a, b, c, d as count(id)
+    """ Defines a set of aliases that will appear as WITH a, b, c, d as count(id)
     The aliases argument will be defined as follows: ['a', 'b', 'c', {'d': 'count(id)'}]
     """
     self.query.append('WITH')
@@ -990,8 +871,7 @@ class SqlConnNeo4j:
     return self
 
   def compose(self, query):
-    """
-    :dsc: Simply joins the query clauses all together
+    """ Simply joins the query clauses all together
     """
     return ' '.join(query)
 

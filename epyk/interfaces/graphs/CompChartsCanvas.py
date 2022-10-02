@@ -12,10 +12,7 @@ class Canvas:
 
   def new(self, height: types.SIZE_TYPE = (400, "px"), width: types.SIZE_TYPE = (100, "%"),
           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    The HTML <canvas> tag is used to draw graphics, on the fly, via scripting (usually JavaScript).
+    """ The HTML <canvas> tag is used to draw graphics, on the fly, via scripting (usually JavaScript).
 
     However, the <canvas> element has no drawing abilities of its own (it is only a container for graphics) -
     you must use a script to actually draw the graphics.
@@ -34,8 +31,6 @@ class Canvas:
 
     Usage::
 
-    Attributes:
-    ----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)

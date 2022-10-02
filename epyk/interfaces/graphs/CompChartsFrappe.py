@@ -14,8 +14,6 @@ class CompChartFrappe:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -24,8 +22,6 @@ class CompChartFrappe:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -45,8 +41,6 @@ class CompChartFrappe:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
     Create a line chart from Frappe Chart libraries.
 
     Usage::
@@ -61,8 +55,6 @@ class CompChartFrappe:
           c.build(pk.events.data)])
       ])
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -86,10 +78,7 @@ class CompChartFrappe:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Create a bar chart from Frappe Chart libraries.
+    """ Create a bar chart from Frappe Chart libraries.
 
     Usage::
 
@@ -103,8 +92,6 @@ class CompChartFrappe:
           c.build(pk.events.data)])
       ])
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -129,8 +116,6 @@ class CompChartFrappe:
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                  options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -146,8 +131,6 @@ class CompChartFrappe:
         ])
       ])
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -172,11 +155,8 @@ class CompChartFrappe:
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
+
     :param record:
     :param y_columns:
     :param x_axis:
@@ -201,11 +181,7 @@ class CompChartFrappe:
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -230,11 +206,7 @@ class CompChartFrappe:
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:

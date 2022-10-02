@@ -15,8 +15,6 @@ class Tabulators:
             height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
             options: dict = None, profile: Union[bool, dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -27,16 +25,14 @@ class Tabulators:
       table = page.ui.tables.tabulators.table(data, cols=["A"], rows=["B"])
       table.on("dblclick", page.js.alert("test"), profile=False)
 
-    Attributes:
-    ----------
-    :param records: Optional. The list of dictionaries with the input data.
-    :param cols: Optional. The list of key from the record to be used as columns in the table.
-    :param rows: Optional. The list of key from the record to be used as rows in the table.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -74,24 +70,20 @@ class Tabulators:
                 height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: Union[bool, dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -126,10 +118,7 @@ class Tabulators:
   def multi(self, records=None, cols: list = None, rows: list = None, width: Union[int, tuple, str] = (100, '%'),
             height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
             options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    -----------
-    Generic Tabulator configuration to get the package plus all the add-ons for Formatters and Editors.
+    """ Generic Tabulator configuration to get the package plus all the add-ons for Formatters and Editors.
     In the basic Tabulator entry point only the ones used on the Python will be added to the JavaScript page.
 
     This configuration will load all the external JavaScript features to allow the full customisation.
@@ -143,16 +132,14 @@ class Tabulators:
 
       https://www.npmjs.com/package/tabulator-extensions
 
-    Attributes:
-    ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.page.jsImports.add('tabulator-numbers')
     self.page.jsImports.add('tabulator-icons')
@@ -191,8 +178,6 @@ class Tabulators:
                     height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
                     options: dict = None, profile: Union[bool, dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -203,16 +188,14 @@ class Tabulators:
 
       https://www.npmjs.com/package/tabulator-extensions
 
-    Attributes:
-    ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.page.jsImports.add('tabulator-numbers')
     self.page.jsImports.add('tabulator-inputs')
@@ -252,8 +235,6 @@ class Tabulators:
               height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
               options: dict = None, profile: Union[bool, dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -264,16 +245,14 @@ class Tabulators:
 
       https://www.npmjs.com/package/tabulator-extensions
 
-    Attributes:
-    ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.page.jsImports.add('tabulator-numbers')
     self.page.jsImports.add('tabulator-icons')
@@ -321,8 +300,6 @@ class Tabulators:
                 height: Union[int, tuple, str] = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: Union[bool, dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -333,16 +310,14 @@ class Tabulators:
 
       https://www.npmjs.com/package/tabulator-extensions
 
-    Attributes:
-    ----------
-    :param records: List. Optional. The list of dictionaries with the input data.
-    :param cols: List. Optional. The list of key from the record to be used as columns in the table.
-    :param rows: List. Optional. The list of key from the record to be used as rows in the table.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean. Optional. A flag to set the component performance storage.
+    :param records: Optional. The list of dictionaries with the input data
+    :param cols: Optional. The list of key from the record to be used as columns in the table
+    :param rows: Optional. The list of key from the record to be used as rows in the table
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.page.jsImports.add('tabulator-numbers')
     self.page.jsImports.add('tabulator-inputs')

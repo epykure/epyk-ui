@@ -16,10 +16,7 @@ class ApexChart:
   def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a line chart from ApexCharts.
+    """ Display a line chart from ApexCharts.
 
     :tags:
     :categories:
@@ -30,8 +27,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -62,16 +57,12 @@ class ApexChart:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: dict = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -90,10 +81,7 @@ class ApexChart:
   def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
               options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a scatter chart from Apexchart.
+    """ Display a scatter chart from Apexchart.
 
     :tags:
     :categories:
@@ -104,8 +92,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -137,10 +123,7 @@ class ApexChart:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
           options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a bar chart from Apexcharts.
+    """ Display a bar chart from Apexcharts.
 
     :tags:
     :categories:
@@ -151,8 +134,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -182,10 +163,7 @@ class ApexChart:
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a horizontal bars chart from ApexCharts.
+    """ Display a horizontal bars chart from ApexCharts.
 
     :tags:
     :categories:
@@ -196,8 +174,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -228,10 +204,7 @@ class ApexChart:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display an area chart from Apexcharts.
+    """ Display an area chart from Apexcharts.
 
     :tags:
     :categories:
@@ -242,8 +215,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -273,10 +244,7 @@ class ApexChart:
   def radar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
             options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a radar chart from Apexcharts.
+    """ Display a radar chart from Apexcharts.
 
     :tags:
     :categories:
@@ -287,8 +255,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -314,10 +280,7 @@ class ApexChart:
   def polar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
             options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a polar chart from ApexCharts.
+    """ Display a polar chart from ApexCharts.
 
     :tags:
     :categories:
@@ -328,8 +291,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -355,10 +316,7 @@ class ApexChart:
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
           options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a pie chart from ApexCharts.
+    """ Display a pie chart from ApexCharts.
 
     :tags:
     :categories:
@@ -369,8 +327,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -400,10 +356,7 @@ class ApexChart:
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
             options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a donut chart from ApexCharts.
+    """ Display a donut chart from ApexCharts.
 
     :tags:
     :categories:
@@ -414,8 +367,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -445,10 +396,7 @@ class ApexChart:
   def radial(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
              options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a radial chart from ApexCharts.
+    """ Display a radial chart from ApexCharts.
 
     :tags:
     :categories:
@@ -459,8 +407,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -484,10 +430,7 @@ class ApexChart:
   def bubble(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
              options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a bubble chart from ApexCharts.
+    """ Display a bubble chart from ApexCharts.
 
     :tags:
     :categories:
@@ -498,8 +441,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -522,10 +463,7 @@ class ApexChart:
   def heatmap(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
               options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a heatmap chart from ApexCharts.
+    """ Display a heatmap chart from ApexCharts.
 
     :tags:
     :categories:
@@ -536,8 +474,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -560,10 +496,7 @@ class ApexChart:
   def treemap(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
               options: dict = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a treemap chart from ApexCharts.
+    """ Display a treemap chart from ApexCharts.
 
     :tags:
     :categories:
@@ -574,8 +507,6 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -598,10 +529,7 @@ class ApexChart:
   def gauge(self, values: float = 0, labels: str = "", profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a gauge chart from ApexCharts.
+    """ Display a gauge chart from ApexCharts.
 
     :tags:
     :categories:
@@ -610,10 +538,8 @@ class ApexChart:
 
       https://apexcharts.com/javascript-chart-demos/radialbar-charts/multiple-radialbars/
 
-    Attributes:
-    ----------
-    :param values: The gauge value.
-    :param labels: The gauge label.
+    :param values: Optional. The gauge value
+    :param labels: Optional. The gauge label
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

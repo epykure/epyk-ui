@@ -14,16 +14,12 @@ class ChartGoogle:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -43,10 +39,7 @@ class ChartGoogle:
            width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (330, "px"), options: types.OPTION_TYPE = None,
            html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A line chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over points.
+    """ A line chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over points.
 
     :tags:
     :categories:
@@ -57,8 +50,6 @@ class ChartGoogle:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -78,10 +69,7 @@ class ChartGoogle:
   def column(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A column chart is a vertical bar chart rendered in the browser using SVG or VML,
+    """ A column chart is a vertical bar chart rendered in the browser using SVG or VML,
     whichever is appropriate for the user's browser.
     Like all Google charts, column charts display tooltips when the user hovers over the data.
     For a horizontal version of this chart, see the bar chart.
@@ -95,8 +83,6 @@ class ChartGoogle:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -117,10 +103,7 @@ class ChartGoogle:
   def bar(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
+    """ Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
     Like all Google charts, bar charts display tooltips when the user hovers over the data. For a vertical version of
     this chart, see the column chart.
 
@@ -133,8 +116,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/barchart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -155,10 +136,7 @@ class ChartGoogle:
   def hbar(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
+    """ Google bar charts are rendered in the browser using SVG or VML, whichever is appropriate for the user's browser.
     Like all Google charts, bar charts display tooltips when the user hovers over the data. For a vertical version of
     this chart, see the column chart.
 
@@ -171,8 +149,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/barchart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries.
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
@@ -193,10 +169,7 @@ class ChartGoogle:
   def scatter(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    Scatter charts plot points on a graph.
+    """ Scatter charts plot points on a graph.
     When the user hovers over the points, tooltips are displayed with more information.
 
     Google scatter charts are rendered within the browser using SVG or VML depending on browser capabilities.
@@ -210,8 +183,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/scatterchart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -231,10 +202,7 @@ class ChartGoogle:
   def histogram(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                 options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A histogram is a chart that groups numeric data into bins, displaying the bins as segmented columns.
+    """ A histogram is a chart that groups numeric data into bins, displaying the bins as segmented columns.
     They're used to depict the distribution of a dataset: how often values fall into ranges.
 
     Google Charts automatically chooses the number of bins for you.
@@ -250,8 +218,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/histogram
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -271,10 +237,7 @@ class ChartGoogle:
   def area(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    An area chart that is rendered within the browser using SVG or VML. Displays tips when hovering over points.
+    """ An area chart that is rendered within the browser using SVG or VML. Displays tips when hovering over points.
 
     :tags:
     :categories:
@@ -285,8 +248,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/areachart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -306,10 +267,7 @@ class ChartGoogle:
   def bubble(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A bubble chart that is rendered within the browser using SVG or VML. Displays tips when hovering over bubbles.
+    """ A bubble chart that is rendered within the browser using SVG or VML. Displays tips when hovering over bubbles.
 
     A bubble chart is used to visualize a data set with two to four dimensions.
     The first two dimensions are visualized as coordinates, the third as color and the fourth as size.
@@ -323,8 +281,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/bubblechart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -344,10 +300,7 @@ class ChartGoogle:
   def pie(self, record, y_columns=None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
+    """ A pie chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
 
     Usage::
 
@@ -355,8 +308,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/piechart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -376,10 +327,7 @@ class ChartGoogle:
   def donut(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    A donut chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
+    """ A donut chart that is rendered within the browser using SVG or VML. Displays tooltips when hovering over slices.
 
     :tags:
     :categories:
@@ -390,8 +338,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/piechart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -412,8 +358,6 @@ class ChartGoogle:
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -424,8 +368,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/treemap
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -445,10 +387,7 @@ class ChartGoogle:
   def candlestick(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                   width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                   options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A candlestick chart is used to show an opening and closing value overlaid on top of a total variance.
+    """ A candlestick chart is used to show an opening and closing value overlaid on top of a total variance.
     Candlestick charts are often used to show stock value behavior.
     In this chart, items where the opening value is less than the closing value (a gain) are drawn as filled boxes,
     and items where the opening value is more than the closing value (a loss) are drawn as hollow boxes.
@@ -462,8 +401,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/candlestickchart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -483,10 +420,7 @@ class ChartGoogle:
   def gauge(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A gauge with a dial, rendered within the browser using SVG or VML.
+    """ A gauge with a dial, rendered within the browser using SVG or VML.
 
     :tags:
     :categories:
@@ -497,8 +431,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/gauge
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -518,10 +450,7 @@ class ChartGoogle:
   def geo(self, record, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphGoogle.ChartLine:
-    """
-    Description:
-    ------------
-    A geochart is a map of a country, a continent, or a region with areas identified in one of three ways:
+    """ A geochart is a map of a country, a continent, or a region with areas identified in one of three ways:
 
       The region mode colors whole regions, such as countries, provinces, or states.
       The markers mode uses circles to designate regions that are scaled according to a value that you specify.
@@ -536,8 +465,6 @@ class ChartGoogle:
 
       https://developers.google.com/chart/interactive/docs/gallery/geochart
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record

@@ -29,13 +29,8 @@ OVERRIDES = None
 
 
 def get_class_override(css_cls):
-  """
-  Description:
-  ------------
-  Hook to override predefined CSS classes for all the reports in the project.
+  """ Hook to override predefined CSS classes for all the reports in the project.
 
-  Attributes:
-  -----------
   :param css_cls: Style. The CSS Class in the framework.
   """
   if OVERRIDES is None:
@@ -68,10 +63,7 @@ class Catalog:
 
   def font_face(self, font_family: str, src: str, stretch: str = "normal", style: str = "normal",
                 weight: str = "normal"):
-    """
-    Description:
-    ------------
-    With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
+    """ With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
 
     In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to
     the font file.
@@ -85,8 +77,6 @@ class Catalog:
 
     Usage::
 
-    Attributes:
-    -----------
     :param font_family: Defines the name of the font.
     :param src: Defines the URL(s) where the font should be downloaded from.
     :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
@@ -97,15 +87,11 @@ class Catalog:
     return self
 
   def _class_type(self, cls_type: str):
-    """
-    Description:
-    ------------
-    Change the current class type to the one defined and return the internal class object.
+    """ Change the current class type to the one defined and return the internal class object.
 
     Usage::
 
-    Attributes:
-    -----------
+ 
     :param cls_type: The alias of the class other or main.
     """
     self.__class_list_type = self.__class_list[cls_type]
@@ -113,10 +99,7 @@ class Catalog:
 
   @property
   def other(self):
-    """
-    Description:
-    ------------
-    Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
+    """ Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
 
     Usage::
 
@@ -128,10 +111,7 @@ class Catalog:
 
   @property
   def main(self):
-    """
-    Description:
-    ------------
-    Get the list of CSS Classes added to the component and to the class tag of the component.
+    """ Get the list of CSS Classes added to the component and to the class tag of the component.
 
     Usage::
 
@@ -143,10 +123,7 @@ class Catalog:
 
   @property
   def std(self) -> CatalogStd.CatalogStd:
-    """
-    Description:
-    ------------
-    Shortcut to standard CSS classes (for layout purposes like margin, padding...).
+    """ Shortcut to standard CSS classes (for layout purposes like margin, padding...).
 
     Usage::
 
@@ -163,10 +140,7 @@ class Catalog:
 
   @property
   def button(self) -> CatalogButton.CatalogButton:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the buttons components.
+    """ CSS Classes specific to the buttons components.
 
     Usage::
 
@@ -179,10 +153,7 @@ class Catalog:
 
   @property
   def select(self) -> CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the select compatibility components.
+    """ CSS Classes specific to the select compatibility components.
 
     Usage::
 
@@ -195,10 +166,7 @@ class Catalog:
 
   @property
   def screens(self) -> CatalogMedia.CatalogMedia:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the screen compatibility components.
+    """ CSS Classes specific to the screen compatibility components.
 
     Usage::
 
@@ -211,10 +179,7 @@ class Catalog:
 
   @property
   def icon(self) -> CatalogIcons.CatalogIcon:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the Icon components.
+    """ CSS Classes specific to the Icon components.
 
     Usage::
 
@@ -227,10 +192,7 @@ class Catalog:
 
   @property
   def layout(self) -> CatalogLayout.CatalogLayout:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Layout / Container components.
+    """ CSS Classes specific to Layout / Container components.
 
     Usage::
 
@@ -243,10 +205,7 @@ class Catalog:
 
   @property
   def dropdown(self) -> CatalogTree.CssStyleDropdown:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the DropDown components.
+    """ CSS Classes specific to the DropDown components.
 
     Usage::
 
@@ -259,10 +218,7 @@ class Catalog:
 
   @property
   def table(self) -> CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
-    CSS Classes specific to the Table components.
+    """ CSS Classes specific to the Table components.
 
     Usage::
 
@@ -275,10 +231,7 @@ class Catalog:
 
   @property
   def chart(self) -> CatalogButton.CatalogButton:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Chart components.
+    """ CSS Classes specific to Chart components.
 
     Usage::
 
@@ -291,10 +244,7 @@ class Catalog:
 
   @property
   def link(self) -> CatalogLink.CatalogLink:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Link components.
+    """ CSS Classes specific to Link components.
 
     Usage::
 
@@ -307,10 +257,7 @@ class Catalog:
 
   @property
   def date(self) -> CatalogInput.CatalogDate:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Date components.
+    """ CSS Classes specific to Date components.
 
     Usage::
 
@@ -323,10 +270,7 @@ class Catalog:
 
   @property
   def text(self) -> CatalogText.CatalogText:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Text components.
+    """ CSS Classes specific to Text components.
 
     Usage::
 
@@ -339,10 +283,7 @@ class Catalog:
 
   @property
   def input(self) -> CatalogInput.CatalogInput:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Input components.
+    """ CSS Classes specific to Input components.
 
     Usage::
 
@@ -355,10 +296,7 @@ class Catalog:
 
   @property
   def image(self) -> CatalogImg.CatalogImg:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Image components.
+    """ CSS Classes specific to Image components.
 
     Usage::
 
@@ -371,10 +309,7 @@ class Catalog:
 
   @property
   def div(self) -> CatalogDiv.CatalogDiv:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Div / Container components.
+    """ CSS Classes specific to Div / Container components.
 
     Usage::
 
@@ -387,10 +322,7 @@ class Catalog:
 
   @property
   def shapes(self) -> CatalogDiv.CatalogShapes:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Div / Container components.
+    """ CSS Classes specific to Div / Container components.
 
     Usage::
 
@@ -403,10 +335,7 @@ class Catalog:
 
   @property
   def radio(self) -> CatalogRadio.CatalogRadio:
-    """
-    Description:
-    ------------
-    CSS Classes specific to Radio button components.
+    """ CSS Classes specific to Radio button components.
 
     Usage::
 
@@ -418,16 +347,12 @@ class Catalog:
     return self.__ctx['radio']
 
   def custom(self, css_cls):
-    """
-    Description:
-    ------------
-    Register a bespoke external class to the report object.
+    """ Register a bespoke external class to the report object.
 
     Usage::
 
 
-    Attributes:
-    ----------
+     
     :param css_cls: Class. The python class to be used as a CSS Class in the framework.
 
     :return: self for the chaining.
@@ -438,16 +363,12 @@ class Catalog:
     return self
 
   def customFile(self, filename: str, path: str = None):
-    """
-    Description:
-    ------------
-    Add an external CSS file to the final HTML report.
+    """ Add an external CSS file to the final HTML report.
     If the file is defined with a local absolute path the content will be endocded and included to the page.
 
     Usage::
 
-    Attributes:
-    -----------
+
     :param filename: The file name.
     :param path: Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
                  will be used.
@@ -468,15 +389,10 @@ class Catalog:
     return self
 
   def customText(self, text: str):
-    """
-    Description:
-    ------------
-    Add a bespoke CSS fragment.
+    """ Add a bespoke CSS fragment.
 
     Usage::
 
-    Attributes:
-    -----------
     :param text: The CSS fragment to be added to the HTML report. This can be a class or a group of class.
 
     :return: self for the chaining.
@@ -485,10 +401,7 @@ class Catalog:
     return self
 
   def anonymous_cls(self, attrs: dict):
-    """
-    Description:
-    ------------
-    Create a bespoke class based on the various attributes.
+    """ Create a bespoke class based on the various attributes.
     This will internal build the class and return it.
 
     Usage::
@@ -498,8 +411,6 @@ class Catalog:
         '_attrs': {'color': 'green', 'cursor': 'pointer'},
         '_hover': {'color': 'red'}})
 
-    Attributes:
-    -----------
     :param attrs: The expected class attributes.
 
     :return: The Python class
@@ -514,18 +425,13 @@ class Catalog:
     return meta_cls
 
   def external(self, classname: str):
-    """
-    Description:
-    ------------
-    Add external CSS classes to a component.
+    """ Add external CSS classes to a component.
 
     Usage::
 
       t1 = page.ui.title("Templates structure")
       t1.style.add_classes.external("cssClassReference")
 
-    Attributes:
-    -----------
     :param classname: The external class name to be added.
 
     :return: self for the chaining.

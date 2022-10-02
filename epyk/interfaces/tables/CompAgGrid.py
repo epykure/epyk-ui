@@ -7,17 +7,17 @@ from epyk.core.html import tables as html_tables
 
 
 class AgGrid:
+  """ AG Grid components module.
+
+  """
 
   def __init__(self, ui):
     self.page = ui.page
 
-  def table(self, records=None, cols: list = None, rows: list = None, width: types.SIZE_TYPE = (100, '%'),
+  def table(self, records: list = None, cols: list = None, rows: list = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (300, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Create a generic Angular Grid table.
+    """ Create a generic Angular Grid table.
 
     :tags:
     :categories:
@@ -33,8 +33,6 @@ class AgGrid:
       table.options.paginationPageSize = 10
       table.options.rowSelection = "single"
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data.
     :param cols: Optional. The list of key from the record to be used as columns in the table.
     :param rows: Optional. The list of key from the record to be used as rows in the table.

@@ -13,10 +13,7 @@ class Plotly:
   def table(self, records=None, cols: list = None, rows: list = None, header: list = None,
             width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Create a Plotly table.
+    """ Create a Plotly table.
 
     :tags:
     :categories:
@@ -27,8 +24,6 @@ class Plotly:
 
       https://plot.ly/javascript/table-subplots/
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data
     :param cols: Optional. The list of key from the record to be used as columns in the table
     :param rows: Optional. The list of key from the record to be used as rows in the table

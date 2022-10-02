@@ -38,48 +38,30 @@ class JsProperties:
 
   @property
   def frgs(self):
-    """
-    Description:
-    ------------
-    Return the extra JavaScript function manually added.
+    """ Return the extra JavaScript function manually added.
     """
     return self._context["text"]
 
   def add_text(self, text: str):
-    """
-    Description:
-    ------------
-    Add JavaScript fragments from String.
+    """ Add JavaScript fragments from String.
 
-    Attributes:
-    ----------
     :param text: JavaScript fragments to be directly included to the page.
     """
     self._context["text"].append(text)
 
   def add_event(self, event: str, value: str):
-    """
-    Description:
-    ------------
-    Add JavaScript fragments from String.
+    """ Add JavaScript fragments from String.
 
-    Attributes:
-    ----------
     :param event: JavaScript fragments to be directly included to the page.
     :param value:
     """
     self._context["events"][event] = value
 
   def add_builders(self, builder_def: str, func_dsc: str = None):
-    """
-    Description:
-    ------------
-    This will use add or extend according to the builder_def type.
+    """ This will use add or extend according to the builder_def type.
 
     #TODO implement func_dsc
 
-    Attributes:
-    ----------
     :param builder_def: The builder definition.
     :param func_dsc:
     """
@@ -94,23 +76,14 @@ class JsProperties:
 
   def add_on_ready(self, builder_def: str):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param builder_def: The builder definition function.
     """
     self._context['onReady'].add(builder_def)
 
   def add_constructor(self, name: str, content: str) -> str:
-    """
-    Description:
-    ------------
-    Register the constructor function and return its reference.
+    """  Register the constructor function and return its reference.
 
-    Attributes:
-    ----------
     :param name:
     :param content:
     """
@@ -119,11 +92,6 @@ class JsProperties:
 
   def has_constructor(self, name: str):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
     :param name:
     """
     return name in self._context['constructors']
@@ -139,33 +107,20 @@ class CssProperties:
 
   @property
   def text(self):
-    """
-    Description:
-    ------------
-    Return the extra CSS styles manually added.
+    """ Return the extra CSS styles manually added.
     """
     return "\n".join(self._context['css']["text"])
 
   def add_text(self, text: str):
-    """
-    Description:
-    ------------
-    Add CSS style from String.
+    """ Add CSS style from String.
 
-    Attributes:
-    ----------
     :param text: CSS Style to be directly included to the page.
     """
     self._context['css']["text"].append(text)
 
   def add_builders(self, builder_def: str):
-    """
-    Description:
-    ------------
-    This will use add or extend to the CSS JavaScript builders according to the builder_def type.
+    """ This will use add or extend to the CSS JavaScript builders according to the builder_def type.
 
-    Attributes:
-    ----------
     :param builder_def: The builder definition.
     """
     if 'builders_css' not in self._context['js']:
@@ -177,23 +132,13 @@ class CssProperties:
 
   def container_style(self, css: dict):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
     :param css: The CSS attributes to be applied.
     """
     self._context['css']['container'].update(css)
 
   def font_face(self, font_family: str, src, stretch: str = "normal", style: str = "normal", weight: str = "normal"):
-    """
-    Description:
-    ------------
-    Set the font.
+    """ Set the font.
 
-    Attributes:
-    ----------
     :param font_family: Defines the name of the font.
     :param src: Defines the URL(s) where the font should be downloaded from.
     :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
@@ -211,38 +156,26 @@ class Properties:
 
   @property
   def context(self):
-    """
-    Description:
-    ------------
-    Return the common Page context.
+    """ Return the common Page context.
     """
     return self._context['context']
 
   @property
   def icon(self):
-    """
-    Description:
-    ------------
-    Return the page icons definition
+    """ Return the page icons definition
     """
     return self._context['icon']
 
   @property
   def js(self) -> JsProperties:
-    """
-    Description:
-    ------------
-    The JavaScript page properties.
+    """ The JavaScript page properties.
     This will keep track of all the global functions used by the components.
     """
     return JsProperties(self._context['js'])
 
   @property
   def css(self) -> CssProperties:
-    """
-    Description:
-    ------------
-    The Css page properties.
+    """ The Css page properties.
     This will keep track of all the global functions used by the components.
 
     CSS Properties will work on both the CSS and JS section of the underlying prop dictionary.
@@ -252,8 +185,6 @@ class Properties:
   @property
   def data(self) -> data.DataProperties:
     """
-    Description:
-    ------------
 
     """
     if "data" in self._context:
@@ -265,8 +196,7 @@ class Properties:
 
 
 class Report:
-  """
-  Main entry point for any web UI.
+  """ Main entry point for any web UI.
 
   This class will store all the HTML components, JavaScript fragments and CSS definition in order to then render
   a rich web page.
@@ -283,12 +213,8 @@ class Report:
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
   def __init__(self, inputs: dict = None, script: str = None):
-    """
-    Description:
-    ------------
+    """=
 
-    Attributes:
-    ----------
     :param inputs: Optional. The global input data for the defined components in the page.
       Passing data for a given component with an htmlCode will override the value.
     :param script: Optional. The origin script for building the page (for investigation purposes)
@@ -343,28 +269,19 @@ class Report:
 
   @property
   def properties(self):
-    """
-    Description:
-    ------------
-    Property to the different Page properties JavaScript and CSS.
+    """ Property to the different Page properties JavaScript and CSS.
     """
     return Properties(self._props)
 
   @property
   def root__script(self) -> str:
-    """
-    Description:
-    ------------
-    Return the name of the script creating the Page object.
+    """ Return the name of the script creating the Page object.
     """
     return self._props["context"]["script"]
 
   @property
   def body(self) -> html.Html.Body:
-    """
-    Description:
-    ------------
-    Property that returns the Body element of the HTML page.
+    """ Property that returns the Body element of the HTML page.
 
     Usage::
 
@@ -385,10 +302,7 @@ class Report:
 
   @property
   def theme(self) -> themes.Theme:
-    """
-    Description:
-    ------------
-    Return the currently used :doc:`report/theme` for the report.
+    """ Return the currently used :doc:`report/theme` for the report.
 
     Usage::
 
@@ -413,23 +327,17 @@ class Report:
 
   @property
   def skins(self) -> skins.Skins:
-    """
-    Description:
-    ------------
-    Add a special skin to the page.
+    """ Add a special skin to the page.
     This could be used for special event or season during the year (Christmas for example).
     """
     return skins.Skins(self)
 
   def node_modules(self, path: str, alias: Optional[str] = None, install: bool = False, update: bool = False):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
+
     :param path: Optional. The nodeJs path.
     :param alias: Optional.
     :param install: Optional.
@@ -440,10 +348,7 @@ class Report:
 
   @property
   def imports(self) -> Imports.ImportManager:
-    """
-    Description:
-    ------------
-    Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to
+    """ Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to
     run.
     By default the imports are retrieved online from CDNJS paths.
 
@@ -460,10 +365,7 @@ class Report:
 
   @property
   def symbols(self) -> symboles.Symboles:
-    """
-    Description:
-    ------------
-    Shortcut to the HTML symbols.
+    """ Shortcut to the HTML symbols.
 
     Those can be added in string in order to improve the render of a text.
 
@@ -481,10 +383,7 @@ class Report:
 
   @property
   def entities(self) -> entities.Entities:
-    """
-    Description:
-    ------------
-    Shortcut to the HTML Entities.
+    """ Shortcut to the HTML Entities.
 
     Those can be added in string in order to improve the render of a text.
 
@@ -501,10 +400,7 @@ class Report:
 
   @property
   def ui(self) -> Interface.Components:
-    """
-    Description:
-    ------------
-    User Interface section.
+    """ User Interface section.
 
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...).
@@ -522,10 +418,7 @@ class Report:
 
   @property
   def web(self) -> Interface.WebComponents:
-    """
-    Description:
-    ------------
-    User Interface section.
+    """ User Interface section.
 
     All the :doc:`components <report/ui>` which can be used in the dashboard to display the data.
     Within this object different categories of items can be used like (list, simple text, charts...).
@@ -545,10 +438,7 @@ class Report:
 
   @property
   def css(self) -> Classes.Catalog:
-    """
-    Description:
-    ------------
-    Returns the set of :doc:`CSS Classes <css>` for the HTML report.
+    """ Returns the set of :doc:`CSS Classes <css>` for the HTML report.
 
     Usage::
 
@@ -561,10 +451,7 @@ class Report:
 
   @property
   def js(self) -> js.Js.JsBase:
-    """
-    Description:
-    ------------
-    Go to the Javascript section. Property to get all the JavaScript features.
+    """ Go to the Javascript section. Property to get all the JavaScript features.
     Most of the standard modules will be available in order to add event and interaction to the Js transpiled.
 
     Usage::
@@ -584,10 +471,7 @@ class Report:
 
   @property
   def py(self) -> PyExt.PyExt:
-    """
-    Description:
-    ------------
-    Python external module section.
+    """ Python external module section.
     Those are pre-defined Python function to simplify the use of the various components.
 
     Usage::
@@ -607,10 +491,7 @@ class Report:
 
   @property
   def auth(self) -> auth.Auth:
-    """
-    Description:
-    ------------
-    Auth interface to allow easy sign-in pages.
+    """ Auth interface to allow easy sign-in pages.
 
     Usage::
 
@@ -629,10 +510,7 @@ class Report:
 
   @property
   def data(self) -> data.Data.DataSrc:
-    """
-    Description:
-    ------------
-    Python internal data source management.
+    """ Python internal data source management.
 
     This can be extended by inheriting from this epyk.core.data.DataSrc.DataSrc and adding extra entry points.
 
@@ -645,10 +523,7 @@ class Report:
     return data.Data.DataSrc(self)
 
   def register(self, ext_components: list):
-    """
-    Description:
-    ------------
-    This function allows you to register external Components (namely coming from Pyk Reports)
+    """ This function allows you to register external Components (namely coming from Pyk Reports)
     by registering them you this will engrave the object within your report.
 
     The example below will add obj1 and obj2 from an external pyk report previously required,
@@ -661,8 +536,6 @@ class Report:
       page.ui.div('this is a div')
       page.register(obj3)
 
-    Attributes:
-    ----------
     :param ext_components: The external components to be added.
     """
     if type(ext_components) != list:
@@ -676,10 +549,7 @@ class Report:
       self.components[comp.htmlCode] = comp
 
   def get_components(self, html_codes: Union[list, str]):
-    """
-    Description:
-    ------------
-    retrieve the components based on their ID.
+    """ Retrieve the components based on their ID.
     This should be used when the htmlCode is defined for a component.
 
     Usage::
@@ -688,8 +558,6 @@ class Report:
       page.ui.button(htmlCode="Button")
       but = page.get_components(["Button"])
 
-    Attributes:
-    ----------
     :param html_codes: The reference of the HTML components loaded on the page.
     """
     if not isinstance(html_codes, list):
@@ -698,10 +566,7 @@ class Report:
     return [self.components[html_code] for html_code in html_codes]
 
   def framework(self, name: str):
-    """
-    Description:
-    ------------
-    Flag to change the way code is transpiled in order to fit with the destination framework.
+    """ Flag to change the way code is transpiled in order to fit with the destination framework.
 
     By default the code transpiled will be used from a browser in plain Vanilla Js but this will be extended to then
     be compatible with other framework in order to simplify the path to production and the collaboration between teams.
@@ -717,18 +582,13 @@ class Report:
       page.ui.text("This is an example")
       page.framework("Vue")
 
-    Attributes:
-    ----------
     :param name: The destination framework for the page.
     """
     self._props['context']['framework'] = name.upper()
 
   @property
   def outs(self) -> PyOuts.PyOuts:
-    """
-    Description:
-    ------------
-    Link to the possible output formats for a page.
+    """ Link to the possible output formats for a page.
     This will transpile the Python code to web artifacts. Those outputs are standard outputs files in web development.
 
     The property framework should be used to link to other web framework.
@@ -743,10 +603,7 @@ class Report:
 
   @property
   def headers(self) -> html.Header.Header:
-    """
-    Description:
-    ------------
-    Property to the HTML page header.
+    """ Property to the HTML page header.
 
     Usage::
 
@@ -761,10 +618,7 @@ class Report:
     return self._header_obj
 
   def dumps(self, result: dict):
-    """
-    Description:
-    ------------
-    Function used to dump the data before being sent to the Javascript layer.
+    """ Function used to dump the data before being sent to the Javascript layer.
 
     This function relies on json.dumps with a special encoder in order to work with Numpy array and Pandas data
     structures.
@@ -781,8 +635,6 @@ class Report:
 
       https://docs.python.org/2/library/json.html
 
-    Attributes:
-    ----------
     :param result: The python dictionary or data structure.
 
     :return: The serialised data
@@ -791,10 +643,7 @@ class Report:
 
   @property
   def apps(self) -> apps.AppRoute:
-    """
-    Description:
-    ------------
-    Change the report to a web application.
+    """ Change the report to a web application.
 
     This will add extra features available on the target framework.
     For example this HTML page can be transformed to an Angular app, a React App or a Vue one.
@@ -810,10 +659,7 @@ class Report:
 
   @property
   def icons(self) -> Icons.IconModel:
-    """
-    Description:
-    ------------
-    Change the icons framework used in the page.
+    """ Change the icons framework used in the page.
     Defaults.py in the CSS module is to change the framework for all the page generated by the framework.
 
     Usage::

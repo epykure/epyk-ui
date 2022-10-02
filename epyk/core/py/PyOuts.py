@@ -19,10 +19,7 @@ class OutBrowsers:
     self._context = context
 
   def codepen(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
-    """
-    Description:
-    ------------
-    Update the Html launcher and send the data to Codepen.
+    """ Update the Html launcher and send the data to Codepen.
     URL used: https://codepen.io/pen/define/
 
     Usage::
@@ -35,11 +32,9 @@ class OutBrowsers:
 
       https://www.debuggex.com/cheatsheet/regex/python
 
-    Attributes:
-    ----------
-    :param Optional[str] path: Optional. Output path in which the static files will be generated.
-    :param str target: Optional. Load the data in a new tab in the browser.
-    :param bool open_browser: Optional. Flag to open the browser automatically.
+    :param path: Optional. Output path in which the static files will be generated.
+    :param target: Optional. Load the data in a new tab in the browser.
+    :param open_browser: Optional. Flag to open the browser automatically.
 
     :return: The output launcher full file name.
     """
@@ -69,10 +64,7 @@ class OutBrowsers:
     return launcher_file
 
   def stackblitz(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
-    """
-    Description:
-    ------------
-    Create an output to be compatible with stackblitz.
+    """ Create an output to be compatible with stackblitz.
 
     Usage::
 
@@ -84,11 +76,9 @@ class OutBrowsers:
 
       https://stackblitz.com/docs
 
-    Attributes:
-    ----------
-    :param Optional[str] path: Optional. Output path in which the static files will be generated.
-    :param str target: Optional. Not used. Load the data in a new tab in the browser.
-    :param bool open_browser: Optional. Flag to open the browser automatically.
+    :param path: Optional. Output path in which the static files will be generated.
+    :param target: Optional. Not used. Load the data in a new tab in the browser.
+    :param open_browser: Optional. Flag to open the browser automatically.
     """
     import webbrowser
 
@@ -135,16 +125,11 @@ class PyOuts:
 
   def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[Dict[str, Any]] = None,
                    split_js: bool = False):
-    """
-    Description:
-    ------------
-    Create the HTML result object from the report definition.
+    """ Create the HTML result object from the report definition.
 
-    Attributes:
-    ----------
-    :param Optional[List[str]] htmlParts: Optional. HTML Content of the page.
-    :param Optional[List[str]] cssParts: Optional. CSS classes content of the page.
-    :param bool split_js: Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
+    :param htmlParts: Optional. HTML Content of the page.
+    :param cssParts: Optional. CSS classes content of the page.
+    :param split_js: Optional. Flag to specify if JS, CSS and HTML need to be written in different files.
 
     :return: A python dictionary with the HTML results
     """
@@ -250,10 +235,7 @@ class PyOuts:
     return results
 
   def _repr_html_(self):
-    """
-    Description:
-    ------------
-    Standard output for Jupyter Notebooks.
+    """ Standard output for Jupyter Notebooks.
 
     This is what will use IPython in order to display the results in cells.
     """
@@ -274,10 +256,7 @@ class PyOuts:
     return self.html_tmpl.strip() % results
 
   def jupyterlab(self):
-    """
-    Description:
-    ------------
-    For a display of the report in JupyterLab.
+    """ For a display of the report in JupyterLab.
     Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
     Usage::
@@ -297,10 +276,7 @@ class PyOuts:
 
   def jupyter(self, verbose: bool = False, requireJs: Optional[dict] = None, closure: bool = True,
               requirejs_path: Optional[dict] = None, requirejs_func: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    For a display of the report in Jupyter.
+    """ For a display of the report in Jupyter.
     Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
     Usage::
@@ -313,13 +289,11 @@ class PyOuts:
 
       https://jupyter.org/
 
-    Attributes:
-    ----------
-    :param bool verbose: Optional. Get the excluded packages.
-    :param Optional[dict] requireJs: Optional. The requirements overrides from the apps property.
-    :param bool closure: Optional.
-    :param Optional[dict] requirejs_path: Optional.
-    :param Optional[str] requirejs_func: Optional.
+    :param verbose: Optional. Get the excluded packages.
+    :param requireJs: Optional. The requirements overrides from the apps property.
+    :param closure: Optional.
+    :param requirejs_path: Optional.
+    :param requirejs_func: Optional.
 
     :return: The output object with the function _repr_html_
     """
@@ -374,10 +348,7 @@ if (typeof icon === "undefined"){
     return self
 
   def w3cTryIt(self, path: Optional[str] = None, name: Optional[str] = None):
-    """
-    Description:
-    ------------
-    This will produce everything in a single page which can be directly copied to the try editor in w3C website.
+    """ This will produce everything in a single page which can be directly copied to the try editor in w3C website.
 
     Usage::
 
@@ -389,10 +360,8 @@ if (typeof icon === "undefined"){
 
       https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic
 
-    Attributes:
-    ----------
-    :param Optional[str] path: Optional. The path in which the output files will be created.
-    :param Optional[str] name: Optional. The filename without the extension.
+    :param path: Optional. The path in which the output files will be created.
+    :param name: Optional. The filename without the extension.
     """
     if path is None:
       path = os.path.join(os.getcwd(), "outs", "w3schools")
@@ -408,10 +377,7 @@ if (typeof icon === "undefined"){
     return file_path
 
   def codepen(self, path: Optional[str] = None, name: Optional[str] = None):
-    """
-    Description:
-    ------------
-    Produce files which will be compatible with codepen.
+    """ Produce files which will be compatible with codepen.
 
     Usage::
 
@@ -425,8 +391,8 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param Optional[str] path: Optional. The path in which the output files will be created.
-    :param Optional[str] name: Optional. The filename without the extension.
+    :param path: Optional. The path in which the output files will be created.
+    :param name: Optional. The filename without the extension.
 
     TODO Try to add the prefill
     https://blog.codepen.io/documentation/api/prefill/
@@ -436,10 +402,7 @@ if (typeof icon === "undefined"){
     self.jsfiddle(path, name, framework="codepen")
 
   def jsfiddle(self, path: Optional[str] = None, name: Optional[str] = None, framework: str = "jsfiddle"):
-    """
-    Description:
-    ------------
-    Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
+    """ Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
 
     The output is always in a sub-directory jsfiddle.
 
@@ -455,9 +418,9 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param Optional[str] path: Optional. The path in which the output files will be created.
-    :param Optional[str] name: Optional. The filename without the extension.
-    :param str framework: optional. The framework in which the result page will be used.
+    :param path: Optional. The path in which the output files will be created.
+    :param name: Optional. The filename without the extension.
+    :param framework: optional. The framework in which the result page will be used.
 
     :return: The file path
     """
@@ -482,10 +445,7 @@ if (typeof icon === "undefined"){
     return path
 
   def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Function used to generate a static HTML page for the report.
+    """ Function used to generate a static HTML page for the report.
 
     Usage::
 
@@ -499,9 +459,9 @@ if (typeof icon === "undefined"){
 
     Attributes:
     ----------
-    :param Optional[str] path: Optional. The path in which the output files will be created.
-    :param Optional[str] name: Optional. The filename without the extension.
-    :param Optional[dict] options: Optional.
+    :param path: Optional. The path in which the output files will be created.
+    :param name: Optional. The filename without the extension.
+    :param options: Optional.
 
     :return: The file full path.
     """
@@ -575,10 +535,7 @@ if (typeof icon === "undefined"){
     return html_file_path
 
   def web(self):
-    """
-    Description:
-    ------------
-    Return the complete page structure to allow the various web framework to split the code accordingly.
+    """ Return the complete page structure to allow the various web framework to split the code accordingly.
     Fragments will then be used by the various framework to create the corresponding pages.
     """
     html_parts = []
@@ -599,10 +556,7 @@ if (typeof icon === "undefined"){
 
   def publish(self, server: str, app_path: str, selector: str, name: Optional[str] = None, module: Optional[str] = None,
               target_folder: str = "apps", auto_route: bool = False):
-    """
-    Description:
-    ------------
-    Publish the HTML page to a distant web server.
+    """ Publish the HTML page to a distant web server.
 
     Usage:
     -----
@@ -610,15 +564,13 @@ if (typeof icon === "undefined"){
       page = Report()
       page.ui.text("This is a text")
 
-    Attributes:
-    ----------
-    :param str server: The webserver type (angular, react, vue, node, deno).
-    :param str app_path: The webserver path.
-    :param str selector:
-    :param Optional[str] name: Optional. The application name in the webserver.
-    :param Optional[str] module:
-    :param str target_folder:
-    :param bool auto_route:
+    :param server: The webserver type (angular, react, vue, node, deno).
+    :param app_path: The webserver path.
+    :param selector:
+    :param name: Optional. The application name in the webserver.
+    :param module:
+    :param target_folder:
+    :param auto_route:
     """
     from epyk.web import angular, node, vue, react, deno
 
@@ -651,15 +603,12 @@ if (typeof icon === "undefined"){
     return app
 
   def markdown_file(self, path: Optional[str] = None, name: Optional[str] = None):
-    """
-    Description:
-    ------------
-    Writes a Markdown file from the report object.
+    """ Writes a Markdown file from the report object.
 
     Attributes:
     ----------
-    :param Optional[str] path: The path in which the output files will be created.
-    :param Optional[str] name: The filename without the extension.
+    :param path: The path in which the output files will be created.
+    :param name: The filename without the extension.
 
     :return: The file path
     """
@@ -685,10 +634,7 @@ if (typeof icon === "undefined"){
       return file_path
 
   def html(self):
-    """
-    Description:
-    ------------
-    Function to get the result HTML page fragments from all the HTML components.
+    """ Function to get the result HTML page fragments from all the HTML components.
 
     Usage:
     -----
@@ -727,10 +673,7 @@ if (typeof icon === "undefined"){
 
   @property
   def browser(self):
-    """
-    Description:
-    ------------
-    This module will require the package web browser.
+    """ This module will require the package web browser.
     It will allow outputs to be created directly in the web pages (without using intermediary text files.
     """
     return OutBrowsers(self)

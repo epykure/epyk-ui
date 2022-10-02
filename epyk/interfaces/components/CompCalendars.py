@@ -17,8 +17,6 @@ class Calendar:
            height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -43,8 +41,6 @@ class Calendar:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
-    Attributes:
-    -----------
     :param month: Optional. The month number
     :param content:
     :param year:
@@ -102,8 +98,6 @@ class Calendar:
             height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None, html_code: str = None,
             profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -112,8 +106,6 @@ class Calendar:
 
     Templates:
 
-    Attributes:
-    -----------
     :param minutes:
     :param text: Optional. The value to be displayed to the timer
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -132,8 +124,6 @@ class Calendar:
   def months(self, content: dict = None, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
              align: str = None, options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -159,8 +149,6 @@ class Calendar:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
-    Attributes:
-    -----------
     :param content: Optional. The Pie charts values
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -199,10 +187,7 @@ class Calendar:
 
   def legend(self, record: list, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
              align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Add a legend to a Calendar component.
+    """ Add a legend to a Calendar component.
 
     :tags:
     :categories:
@@ -218,8 +203,6 @@ class Calendar:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
-    Attributes:
-    -----------
     :param record: Optional. The list of dictionaries with the input data
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -252,10 +235,7 @@ class Calendar:
   def forecast(self, month_period: int, content: str = None, width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (None, "px"), position: str = "top", options: dict = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Display a forecast based on a dictionary containing the values for several months
+    """ Display a forecast based on a dictionary containing the values for several months
 
     Usage::
 
@@ -268,8 +248,6 @@ class Calendar:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
-    Attributes:
-    -----------
     :param month_period: Number of months of forecast
     :param content: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -300,10 +278,7 @@ class Calendar:
   def google(self, task, start: str, end: str, details=None, location=None, icon: str = "google_plus",
              text: str = "Add to Google Calendar", options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Add link to the google calendar. Will add the event to the Calendar.
+    """ Add link to the google calendar. Will add the event to the Calendar.
 
     Usage::
 
@@ -321,8 +296,6 @@ class Calendar:
 
     TODO: improve the time management in this component
 
-    Attributes:
-    -----------
     :param task:
     :param start: Date format YYYYMMDD
     :param end: Date format YYYYMMDD
@@ -356,8 +329,6 @@ class Calendar:
   def agenda(self, task, start, end, details=None, location=None, icon: str = "calendar", text: str = "Add to Calendar",
              options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -373,8 +344,6 @@ class Calendar:
 
     TODO: improve the time management in this component
 
-    Attributes:
-    -----------
     :param task:
     :param start:
     :param end:
@@ -412,8 +381,6 @@ class Calendar:
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
            profile: types.PROFILE_TYPE = None, options: dict = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -425,8 +392,6 @@ class Calendar:
     :tags:
     :categories:
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param value: Optional.
     :param group: Optional.

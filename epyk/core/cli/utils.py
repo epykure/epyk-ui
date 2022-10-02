@@ -8,17 +8,12 @@ from epyk.core.css.themes.Theme import ThemeDefault
 
 
 def get_report_path(project_path, raise_error=True, report=None):
-  """
-  Description:
-  ------------
-  Get the reports path from the command run.
+  """ Get the reports path from the command run.
   This function will try to either find the ui or the reports folder.
 
-  Attributes:
-  ----------
-  :param project_path: String. The project path.
-  :param raise_error. Boolean. Optional. Flag to raise an error.
-  :param report: Page. Optional. The web page object.
+  :param project_path: The project path.
+  :param raise_error: Optional. Flag to raise an error.
+  :param report: Optional. The web page object.
   """
   ui_path, reports_path = os.path.join(project_path, 'ui'), None
   possible_structure = [("ui", ), ("ui", 'reports'), ("reports", )]
@@ -51,16 +46,11 @@ def get_report_path(project_path, raise_error=True, report=None):
 
 
 def get_page(mod, template=False, colors=None):
-  """
-  Description:
-  ------------
-  Get the page object from the imported module.
+  """ Get the page object from the imported module.
 
-  Attributes:
-  ----------
-  :param mod: Module. The Python imported module used to build the page.
-  :param template: Boolean. Optional.
-  :param colors: String. Optional. The list of colors as string commas delimited.
+  :param mod: The Python imported module used to build the page.
+  :param template: Optional.
+  :param colors: Optional. The list of colors as string commas delimited.
   """
 
   if colors is not None:

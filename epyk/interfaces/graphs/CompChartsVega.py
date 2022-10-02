@@ -12,8 +12,6 @@ class VegaEmbedded:
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -30,8 +28,6 @@ class VegaEmbedded:
           c.build(pk.events.data)])
       ])
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.

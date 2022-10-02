@@ -1,7 +1,6 @@
 
 class SipHash:
-    """
-    Generate a unique hash ID from the given string.
+    """ Generate a unique hash ID from the given string.
     This is supposed to be unique with a minimum expectation of collisions.
     This module is only in charge of producing the hash ID and the potential collisions should be monitored in
     the environment by the users.

@@ -14,18 +14,13 @@ class JqueryVertorMap:
     self.chartFamily = "JqV"
 
   def add_map(self, name: str, continent: bool = False):
-    """
-    Description:
-    ------------
-    Add the Javascript external package defining the map to the page.
+    """ Add the Javascript external package defining the map to the page.
 
     Related Pages:
     --------------
 
       https://www.10bestdesign.com/jqvmap/
 
-    Attributes:
-    ----------
     :param name: String. The map alias.
     :param continent: Boolean. Optional.
     """
@@ -42,8 +37,6 @@ class JqueryVertorMap:
            options: dict = None, width: Union[int, tuple] = (100, "%"),
            height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -52,8 +45,6 @@ class JqueryVertorMap:
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -91,8 +82,6 @@ class JqueryVertorMap:
                 options: dict = None, width: Union[int, tuple] = (100, "%"),
                 height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -101,8 +90,6 @@ class JqueryVertorMap:
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -140,8 +127,6 @@ class JqueryVertorMap:
                     options: dict = None, width: Union[int, tuple] = (100, "%"),
                     height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -150,8 +135,6 @@ class JqueryVertorMap:
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -189,8 +172,6 @@ class JqueryVertorMap:
                     options: dict = None, width: Union[int, tuple] = (100, "%"),
                     height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -198,9 +179,6 @@ class JqueryVertorMap:
 
     Usage::
 
-
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -237,8 +215,6 @@ class JqueryVertorMap:
              options: dict = None, width: Union[int, tuple] = (100, "%"),
              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -247,8 +223,6 @@ class JqueryVertorMap:
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -286,8 +260,6 @@ class JqueryVertorMap:
              options: dict = None, width: Union[int, tuple] = (100, "%"),
              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -296,8 +268,6 @@ class JqueryVertorMap:
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -335,8 +305,6 @@ class JqueryVertorMap:
               options: dict = None, width: Union[int, tuple] = (100, "%"),
               height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -344,9 +312,6 @@ class JqueryVertorMap:
 
     Usage::
 
-
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -384,8 +349,6 @@ class JqueryVertorMap:
              options: dict = None, width: Union[int, tuple] = (100, "%"),
              height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -393,8 +356,6 @@ class JqueryVertorMap:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -433,8 +394,6 @@ class JqueryVertorMap:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -442,8 +401,6 @@ class JqueryVertorMap:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -481,8 +438,6 @@ class JqueryVertorMap:
           options: dict = None, width: Union[int, tuple] = (100, "%"),
           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -490,8 +445,6 @@ class JqueryVertorMap:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.
     :param x_axis: String. Optional. The column in the record for the values.
@@ -527,8 +480,6 @@ class JqueryVertorMap:
           options: dict = None, width: Union[int, tuple] = (100, "%"),
           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -536,8 +487,6 @@ class JqueryVertorMap:
 
     Usage::
 
-    Attributes:
-    ----------
     :param name: String. The map alias.
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.

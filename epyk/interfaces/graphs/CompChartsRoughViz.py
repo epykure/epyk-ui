@@ -10,10 +10,7 @@ class CompRoughViz:
 
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz chart component.
+    """ Create a roughViz chart component.
 
     Related Pages:
 
@@ -24,8 +21,6 @@ class CompRoughViz:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -43,10 +38,7 @@ class CompRoughViz:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz line component.
+    """ Create a roughViz line component.
 
     Related Pages:
 
@@ -54,8 +46,6 @@ class CompRoughViz:
 
     TODO: Find answer for https://stackoverflow.com/questions/67456146/input-data-for-line-chart-in-roughviz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -81,17 +71,12 @@ class CompRoughViz:
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz scatter component.
+    """ Create a roughViz scatter component.
 
     Related Pages:
 
       https://github.com/jwilber/roughViz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -116,17 +101,12 @@ class CompRoughViz:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz bar component.
+    """ Create a roughViz bar component.
 
     Related Pages:
 
       https://github.com/jwilber/roughViz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -153,17 +133,12 @@ class CompRoughViz:
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz Horizontal bar component.
+    """ Create a roughViz Horizontal bar component.
 
     Related Pages:
 
       https://github.com/jwilber/roughViz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -190,17 +165,12 @@ class CompRoughViz:
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz pie component.
+    """ Create a roughViz pie component.
 
     Related Pages:
 
       https://github.com/jwilber/roughViz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -227,17 +197,12 @@ class CompRoughViz:
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Create a roughViz donut component.
+    """ Create a roughViz donut component.
 
     Related Pages:
 
       https://github.com/jwilber/roughViz
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.

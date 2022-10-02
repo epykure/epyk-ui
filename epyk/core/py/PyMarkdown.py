@@ -50,13 +50,8 @@ PARAMS = {
 
 
 def doc_string_attrs(func):
-  """
-  Description:
-  ------------
-  Write the attribute section in the framework documentation.
+  """ Write the attribute section in the framework documentation.
 
-  Attributes:
-  ----------
   :param func: Function. A python function.
   """
   dflt_vals = {}
@@ -90,12 +85,8 @@ class MarkDown:
   @classmethod
   def translate(cls, data: str):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
-    :param str data:
+    :param data:
     """
     convert_data = data
     count, map_objs = 0, {}
@@ -117,15 +108,10 @@ class MarkDown:
     return resolved_data
 
   def resolve(self, data: str, css_attrs: dict = None):
-    """
-    Description:
-    -----------
-    Convert a string to a markdown file.
+    """ Convert a string to a markdown file.
 
-    Attributes:
-    ----------
-    :param str data: Data to be converted.
-    :param dict css_attrs: Optional. The CSS Style to be applied to the component.
+    :param data: Data to be converted.
+    :param css_attrs: Optional. The CSS Style to be applied to the component.
     """
     components, css = [], css_attrs
     for line in data.split("\n"):
@@ -170,14 +156,10 @@ class MarkDown:
 
   def all(self, data: str):
     """
-    Description:
-    -----------
 
     TODO: Improve this function.
 
-    Attributes:
-    ----------
-    :param str data: The data to be parsed.
+    :param data: The data to be parsed.
     """
     for r, interface in RULES.items():
       if 'tag' not in interface:

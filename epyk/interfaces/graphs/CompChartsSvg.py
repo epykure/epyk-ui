@@ -10,10 +10,7 @@ class SVG:
     self.page = ui.page
 
   def new(self, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px")):
-    """
-    Description:
-    ------------
-    SVG stands for Scalable Vector Graphics.
+    """ SVG stands for Scalable Vector Graphics.
 
     SVG defines vector-based graphics in XML format.
 
@@ -30,8 +27,6 @@ class SVG:
       https://developer.mozilla.org/en-US/docs/Web/SVG
       https://www.w3schools.com/graphics/svg_intro.asp
 
-    Attributes:
-    ----------
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     """
@@ -43,10 +38,7 @@ class SVG:
   def line(self, x1: float = 0, y1: float = None, x2: float = None, y2: float = None,
            width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"), options: dict = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Entry point to the basic line definition in a SVG HTML Tag.
+    """ Entry point to the basic line definition in a SVG HTML Tag.
 
     :tags:
     :categories:
@@ -59,8 +51,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_line.asp
 
-    Attributes:
-    ----------
     :param x1: The x1 attribute defines the start of the line on the x-axis.
     :param y1: Optional. The y1 attribute defines the start of the line on the y-axis.
     :param x2: Optional. The x2 attribute defines the end of the line on the x-axis.
@@ -81,10 +71,7 @@ class SVG:
 
   def circle(self, x: float, y: float, r: float, width: types.SIZE_TYPE = (500, "px"),
              height: types.SIZE_TYPE = (300, "px"), options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Entry point to the basic line definition in a SVG HTML Tag.
+    """ Entry point to the basic line definition in a SVG HTML Tag.
 
     :tags:
     :categories:
@@ -97,8 +84,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_line.asp
 
-    Attributes:
-    ----------
     :param x: The x attribute defines the start of the line on the x-axis.
     :param y: The y attribute defines the start of the line on the y-axis.
     :param r: The r attribute defines the radius.
@@ -115,8 +100,6 @@ class SVG:
                   width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"), html_code: str = None,
                   options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -125,8 +108,6 @@ class SVG:
 
       page.ui.charts.svg.arrow_right(y1=40)
 
-    Attributes:
-    ----------
     :param x1:
     :param y1:
     :param x2:
@@ -149,8 +130,6 @@ class SVG:
                  width: types.SIZE_TYPE =(500, "px"), height: types.SIZE_TYPE = (300, "px"), html_code: str = None,
                  options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -159,8 +138,6 @@ class SVG:
 
       page.ui.charts.svg.arrow_left()
 
-    Attributes:
-    ----------
     :param x1:
     :param y1:
     :param x2:
@@ -181,10 +158,7 @@ class SVG:
 
   def ellipse(self, cx: float, cy: float, rx: float, ry: float, width: types.SIZE_TYPE = (500, "px"),
               height: types.SIZE_TYPE = (300, "px"), options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    SVG Ellipse - <ellipse>.
+    """ SVG Ellipse - <ellipse>.
 
     :tags:
     :categories:
@@ -197,8 +171,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_ellipse.asp
 
-    Attributes:
-    ----------
     :param cx: The cx attribute defines the x coordinate of the center of the ellipse
     :param cy: The cy attribute defines the y coordinate of the center of the ellipse
     :param rx: The rx attribute defines the horizontal radius
@@ -215,8 +187,6 @@ class SVG:
   def polyline(self, points: List[tuple], width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"),
                options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -229,8 +199,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_polyline.asp
 
-    Attributes:
-    ----------
     :param points: The points attribute defines the list of points (pairs of coordinates)
       required to draw the polyline.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -245,8 +213,6 @@ class SVG:
   def polygone(self, points: List[tuple], width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"),
                options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -259,8 +225,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
 
-    Attributes:
-    ----------
     :param points: The points attribute defines the list of points (pairs of coordinates) required to draw the polyline.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -275,8 +239,6 @@ class SVG:
                width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"), options: dict = None,
                profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -289,8 +251,6 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_polyline.asp
 
-    Attributes:
-    ----------
     :param point1:
     :param point2: Optional.
     :param point3: Optional.
@@ -311,8 +271,6 @@ class SVG:
   def axes(self, size: int = 10, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"),
            html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -326,8 +284,6 @@ class SVG:
       p = svg.path(0, 0, from_origin=True).line_to(50, 100).horizontal_line_to(300).line_to(400, 200)
       p.markers(m.url)
 
-    Attributes:
-    ----------
     :param size: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -349,16 +305,12 @@ class SVG:
   def rectangle(self, x: float, y: float, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"),
                 fill: str = None, rx: float = 0, ry: float = 0, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param x:
     :param y:
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -376,8 +328,6 @@ class SVG:
   def heart(self, w: float, h: float, fill: str = 'none', width: types.SIZE_TYPE = (500, "px"),
             height: types.SIZE_TYPE = (300, "px"), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -387,8 +337,6 @@ class SVG:
       c = page.ui.charts.svg.heart(w=50, h=100, fill="pink")
       c[0].transform("transform", "rotate", "0 100 100", "360 100 10")
 
-    Attributes:
-    ----------
     :param w:
     :param h:
     :param fill:
@@ -405,8 +353,6 @@ class SVG:
   def star(self, fill: str = 'none', width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"),
            options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -417,8 +363,6 @@ class SVG:
 
       https://codepen.io/susanwinters/pen/WxbRJK
 
-    Attributes:
-    ----------
     :param fill:
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -433,8 +377,6 @@ class SVG:
   def path(self, x: float = 0, y: float = 0, fill: Optional[str] = 'none', origin: bool = False, bespoke_path=None,
            options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -443,8 +385,6 @@ class SVG:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param x:
     :param y:
     :param fill:

@@ -16,15 +16,11 @@ class MapboxMaps:
           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
           html_code: str = None) -> geo.GeoMapbox.GeoMapbox:
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/globe/
 
-    Attributes:
-    ----------
     :param record:
     :param y_column:
     :param x_axis:

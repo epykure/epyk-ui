@@ -15,10 +15,7 @@ class Datatables:
   def table(self, records=None, cols: list = None, rows: list = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Create a generic DataTable table.
+    """ Create a generic DataTable table.
 
     :tags:
     :categories:
@@ -28,8 +25,6 @@ class Datatables:
       dtt = page.ui.tables.datatables.table(cols=["test"])
       page.ui.button("Update").click([dt.build([["row %s" % i] for i in range(n)])])
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data.
     :param cols: Optional. The list of key from the record to be used as columns in the table.
     :param rows: Optional. The list of key from the record to be used as rows in the table.

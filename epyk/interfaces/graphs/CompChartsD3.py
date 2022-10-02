@@ -15,8 +15,6 @@ class D3:
   def script(self, name, scripts=None, data=None, d3_version=None, dependencies=None, profile=None, options=None,
              width=(400, "px"), height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -29,8 +27,7 @@ class D3:
 
     Templates:
 
-    Attributes:
-    ----------
+
     :param name: String. The module name.
     :param scripts: List. Optional. The list of scripts.
     :param data: Object. Optional. The chart input data to be serialised.
@@ -69,8 +66,6 @@ class D3:
   def cloud(self, data, width=(100, "%"), height=(330, "px"), html_code=None, options=None, profile=None,
             excluded_words=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -80,8 +75,6 @@ class D3:
     Related Pages:
 
 
-    Attributes:
-    ----------
     :param data: Object. Optional. The chart input data to be serialised.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -135,8 +128,6 @@ function draw(words) {
   def pie(self, record=None, y=None, x=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -152,8 +143,6 @@ function draw(words) {
                 d3.select(this).style("fill", function(d,i) {options.colors[i]})
         })
 
-    Attributes:
-    ----------
     :param record: Object. Optional. The chart input data to be serialised.
     :param y: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -190,8 +179,6 @@ arcs.append("text")
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
     """
-    Description:
-    -----------
 
     TODO: Handle multiple series correctly.
 
@@ -203,8 +190,6 @@ arcs.append("text")
 
       https://gramener.github.io/d3js-playbook/barchart.html
 
-    Attributes:
-    ----------
     :param record: Object. Optional. The chart input data to be serialised.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -245,8 +230,6 @@ chart.selectAll("text")
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
     """
-    Description:
-    -----------
 
     TODO: Handle multiple series correctly.
 
@@ -258,8 +241,6 @@ chart.selectAll("text")
 
       https://gramener.github.io/d3js-playbook/barchart.html
 
-    Attributes:
-    ----------
     :param record: Object. Optional. The chart input data to be serialised.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -297,11 +278,7 @@ svg.selectAll("text")
 
   def svg(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

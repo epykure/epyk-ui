@@ -15,8 +15,6 @@ class C3:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -25,8 +23,6 @@ class C3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -46,8 +42,6 @@ class C3:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
     Display a line chart from C3.
 
     :tags:
@@ -59,8 +53,6 @@ class C3:
 
       https://c3js.org/reference.html#line-connectNull
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -86,10 +78,7 @@ class C3:
   def spline(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a spline line chart from C3.
+    """ Display a spline line chart from C3.
 
     :tags:
     :categories:
@@ -100,8 +89,6 @@ class C3:
 
       https://c3js.org/samples/chart_spline.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -125,8 +112,6 @@ class C3:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
     Display a step line chart from C3.
 
     :tags:
@@ -138,8 +123,6 @@ class C3:
 
       https://c3js.org/samples/chart_step.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -163,10 +146,7 @@ class C3:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display an area line chart from C3.
+    """ Display an area line chart from C3.
 
     :tags:
     :categories:
@@ -177,8 +157,6 @@ class C3:
 
       https://c3js.org/samples/chart_step.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -201,10 +179,7 @@ class C3:
   def area_step(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                 options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a area step line chart from C3.
+    """ Display a area step line chart from C3.
 
     :tags:
     :categories:
@@ -215,8 +190,6 @@ class C3:
 
       https://c3js.org/samples/chart_step.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -240,10 +213,7 @@ class C3:
   def timeseries(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                  options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
                  height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a timeseries chart from C3.
+    """ Display a timeseries chart from C3.
 
     :tags:
     :categories:
@@ -254,8 +224,6 @@ class C3:
 
       https://c3js.org/samples/timeseries.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -273,10 +241,7 @@ class C3:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a bar chart from C3.
+    """ Display a bar chart from C3.
 
     :tags:
     :categories:
@@ -287,8 +252,6 @@ class C3:
 
       https://c3js.org/samples/chart_bar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries.
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
@@ -313,10 +276,7 @@ class C3:
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a horizontal bar chart from C3.
+    """ Display a horizontal bar chart from C3.
 
     :tags:
     :categories:
@@ -327,8 +287,6 @@ class C3:
 
       https://c3js.org/samples/axes_rotated.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -345,10 +303,7 @@ class C3:
   def scatter(self, record=None, y_columns=None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a Scatter chart from C3.
+    """ Display a Scatter chart from C3.
 
     :tags:
     :categories:
@@ -359,8 +314,6 @@ class C3:
 
       https://c3js.org/samples/axes_rotated.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -383,10 +336,7 @@ class C3:
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a pie chart from C3.
+    """ Display a pie chart from C3.
 
     :tags:
     :categories:
@@ -398,8 +348,6 @@ class C3:
       https://c3js.org/samples/chart_pie.html
       https://c3js.org/reference.html#pie-label-show
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -422,10 +370,7 @@ class C3:
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a donut chart from C3.
+    """ Display a donut chart from C3.
 
     :tags:
     :categories:
@@ -436,8 +381,6 @@ class C3:
 
       https://c3js.org/samples/chart_donut.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries.
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
@@ -460,10 +403,7 @@ class C3:
   def gauge(self, value: float = 0, text: str = "", profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a gauge chart from C3.
+    """ Display a gauge chart from C3.
 
     :tags:
     :categories:
@@ -474,8 +414,6 @@ class C3:
 
       https://c3js.org/samples/chart_gauge.html
 
-    Attributes:
-    ----------
     :param value: Optional. The value.
     :param text: Optional. The gauge text.
     :param profile: Optional. A flag to set the component performance storage.
@@ -489,11 +427,11 @@ class C3:
     g_chart.add_dataset(value, text)
     return g_chart
 
-  def stanford(self, record=None, y_columns: list = None, x_axis: str = None, epoch_col=None, profile: types.PROFILE_TYPE = None,
-               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: types.OPTION_TYPE = None, html_code: str = None):
+  def stanford(self, record=None, y_columns: list = None, x_axis: str = None, epoch_col=None,
+               profile: types.PROFILE_TYPE = None,
+               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+               options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -504,8 +442,7 @@ class C3:
 
     Usage::
 
-    Attributes:
-    ----------
+
     :param record: Optional. The Python list of dictionaries.
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.

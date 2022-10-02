@@ -480,10 +480,7 @@ class PyExt:
 
   @property
   def dates(self) -> PyDates.PyDates:
-    """
-    Description:
-    ------------
-    This is a simple wrapper to the datetime Python module.
+    """ This is a simple wrapper to the datetime Python module.
 
     No external package is required to use this interface.
 
@@ -499,10 +496,7 @@ class PyExt:
 
   @property
   def requests(self) -> PyRest.PyRest:
-    """
-    Description:
-    ------------
-    This is a simple wrapper to the internal Python modules to run REST calls.
+    """ This is a simple wrapper to the internal Python modules to run REST calls.
 
     No external package is required to use this interface.
 
@@ -514,10 +508,7 @@ class PyExt:
 
   @property
   def crypto(self) -> PyCrypto.PyCrypto:
-    """
-    Description:
-    ------------
-    Property to the internal cryptography module.
+    """ Property to the internal cryptography module.
 
     This will rely on the package cryptography. This should be added to the python environment before using it.
     This package can be installed using the usual pip install function.
@@ -533,10 +524,7 @@ class PyExt:
 
   @property
   def geo(self) -> PyGeo.PyGeo:
-    """
-    Description:
-    ------------
-    Property to some predefined Geolocation functions.
+    """ Property to some predefined Geolocation functions.
 
     :rtype: PyGeo.PyGeo
     """
@@ -544,31 +532,23 @@ class PyExt:
 
   @property
   def markdown(self) -> PyMarkdown.MarkDown:
-    """
-    Description:
-    ------------
-    Property to the Markdown String conversion.
+    """ Property to the Markdown String conversion.
 
     :rtype: PyMarkdown.MarkDown
     """
     return PyMarkdown.MarkDown(self.page)
 
   def import_lib(self, lib_name: str, folder: str = "libs", report_name: str = None, path: str = None):
-    """
-    Description:
-    ------------
-    Import dynamically a python module.
+    """ Import dynamically a python module.
 
     Usage::
 
       page.py.import_lib("test.py", folder="tables", path=r"filePath")
 
-    Attributes:
-    ----------
-    :param str lib_name: The python module name.
-    :param str folder: Optional. The internal folder with the libraries to be imported.
-    :param str report_name: Optional. the report name in which the library is defined. Default current folder.
-    :param str path: Optional. the path to be added to the classpath.
+    :param lib_name: The python module name.
+    :param folder: Optional. The internal folder with the libraries to be imported.
+    :param report_name: Optional. the report name in which the library is defined. Default current folder.
+    :param path: Optional. the path to be added to the classpath.
 
     :return: The imported Python module.
     """
@@ -582,10 +562,7 @@ class PyExt:
       return importlib.import_module('%s.%s.%s' % (report_name, folder, lib_name))
 
   def import_package(self, package: str, sub_module: str = None):
-    """
-    Description:
-    ------------
-    Install the external Python package.
+    """ Install the external Python package.
     This can automatically install it from the Python Index online repository is missing.
 
     Usage::
@@ -593,10 +570,8 @@ class PyExt:
       >>> PyExt().import_package("sqlalchemy").__name__
       'sqlalchemy'
 
-    Attributes:
-    ----------
-    :param str package: The Python Package Name.
-    :param str sub_module: Optional. The sub module or class within the package.
+    :param package: The Python Package Name.
+    :param sub_module: Optional. The sub module or class within the package.
 
     :return: The installed Python module.
     """
@@ -609,13 +584,9 @@ class PyExt:
   @staticmethod
   def encode_html(text: str, encoding: str = "utf-8"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
-    :param str text: a test to encode with HTML special symbols.
-    :param str encoding: Optional. teh encoding type.
+    :param text: a test to encode with HTML special symbols.
+    :param encoding: Optional. teh encoding type.
     """
     if not isinstance(text, str):
       return text
@@ -632,15 +603,11 @@ class PyExt:
   @staticmethod
   def format_number(value: float, digits: int = 0, thousand_sep: str = ",", decimal_sep: str = "."):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
-    :param float value:
-    :param int digits:
-    :param str thousand_sep:
-    :param str decimal_sep:
+    :param value:
+    :param digits:
+    :param thousand_sep:
+    :param decimal_sep:
     """
     text = "%.2f" % round(value, digits)
     if decimal_sep in text:
@@ -661,17 +628,13 @@ class PyExt:
   def format_money(text: float, digits: int = 0, thousand_sep: str = ",", decimal_sep: str = ".", symbol: str = "£",
                    format: str = "%s%v"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
-    :param float text:
-    :param int digits: Optional.
-    :param str thousand_sep: Optional.
-    :param str decimal_sep: Optional.
-    :param str symbol: Optional.
-    :param str format: Optional.
+    :param text:
+    :param digits: Optional.
+    :param thousand_sep: Optional.
+    :param decimal_sep: Optional.
+    :param symbol: Optional.
+    :param format: Optional.
     """
     text = PyExt.format_number(text, digits, thousand_sep, decimal_sep)
     if symbol not in ["£"]:

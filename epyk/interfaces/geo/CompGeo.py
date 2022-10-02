@@ -16,15 +16,11 @@ class Geo:
 
   @property
   def plotly_map(self) -> CompGeoPlotly.Plotly:
-    """
-    Description:
-    ------------
-    Interface for the Plotly library.
+    """ Interface for the Plotly library.
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://plotly.com/javascript/choropleth-maps/
     """
@@ -33,25 +29,16 @@ class Geo:
   @property
   def dc_choropleth(self) -> CompGeoDc.Dc:
     """
-    Description:
-    ------------
-
-    Related Pages:
-    --------------
     """
     return CompGeoDc.Dc(self)
 
   @property
   def chartJs(self) -> CompGeoChartJs.ChartJs:
-    """
-    Description:
-    ------------
-    Property to the ChartJs Geo API.
+    """ Property to the ChartJs Geo API.
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://github.com/sgratzl/chartjs-chart-geo
     """
@@ -60,13 +47,10 @@ class Geo:
   @property
   def plotly(self) -> CompGeoPlotly.Plotly:
     """
-    Description:
-    ------------
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://plotly.com/javascript/choropleth-maps/
     """
@@ -74,15 +58,11 @@ class Geo:
 
   @property
   def google(self) -> CompGeoGoogle.GeoGoogle:
-    """
-    Description:
-    ------------
-    Property to the google charts API.
+    """ Property to the google charts API.
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://developers.google.com/chart
     """
@@ -93,15 +73,11 @@ class Geo:
 
   @property
   def jqv(self) -> CompGeoJqV.JqueryVertorMap:
-    """
-    Description:
-    ------------
-    Property to the Jquery vector Map API.
+    """ Property to the Jquery vector Map API.
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://www.10bestdesign.com/jqvmap/
     """
@@ -109,15 +85,11 @@ class Geo:
 
   @property
   def leaflet(self) -> CompGeoLeaflet.GeoLeaflet:
-    """
-    Description:
-    ------------
-    Property to the Jquery vector Map API.
+    """ Property to the Jquery vector Map API.
 
     Usage::
 
     Related Pages:
-    --------------
 
       https://www.10bestdesign.com/jqvmap/
     """
@@ -125,13 +97,9 @@ class Geo:
 
   @property
   def d3(self) -> CompGeoD3.D3:
-    """
-    Description:
-    ------------
-    Interactive maps for data visualizations. Bundled into a single Javascript file.
+    """ Interactive maps for data visualizations. Bundled into a single Javascript file.
 
     Related Pages:
-    --------------
 
       https://github.com/markmarkoh/datamaps
 
@@ -140,13 +108,9 @@ class Geo:
 
   @property
   def mapbox(self) -> CompGeoMapboxGl.MapboxMaps:
-    """
-    Description:
-    ------------
-    A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
+    """ A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
 
     Related Pages:
-    --------------
 
       https://docs.mapbox.com/
     """

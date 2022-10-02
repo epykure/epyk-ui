@@ -16,10 +16,7 @@ class Code:
           height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
           options: types.OPTION_TYPE = None, helper: str = None,
           profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    CSS Text editor.
+    """ CSS Text editor.
 
     :tags:
     :categories:
@@ -41,8 +38,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -67,10 +62,7 @@ class Code:
           height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
           options: types.OPTION_TYPE = None, helper: str = None,
           profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    XML Text editor.
+    """ XML Text editor.
 
     :tags:
     :categories:
@@ -87,8 +79,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -113,10 +103,7 @@ class Code:
           height: types.SIZE_TYPE = (200, 'px'), html_code: Optional[str] = None,
           options: types.OPTION_TYPE = None, helper: str = None,
           profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    SQL Text editor.
+    """ SQL Text editor.
 
     :tags:
     :categories:
@@ -133,8 +120,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -158,10 +143,7 @@ class Code:
         height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
         options: types.OPTION_TYPE = None, helper: str = None,
         profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    R Text editor.
+    """ R Text editor.
 
     :tags:
     :categories:
@@ -178,8 +160,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -203,10 +183,7 @@ class Code:
              height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
              options: types.OPTION_TYPE = None, helper: str = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Python Text editor.
+    """ Python Text editor.
 
     :tags:
     :categories:
@@ -223,8 +200,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -248,10 +223,7 @@ class Code:
                  height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
                  options: types.OPTION_TYPE = None, helper: str = None,
                  profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Javascript Text editor.
+    """ Javascript Text editor.
 
     :tags:
     :categories:
@@ -268,8 +240,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -292,10 +262,7 @@ class Code:
                height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
                options: types.OPTION_TYPE = None, helper: str = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Markdown Text editor.
+    """ Markdown Text editor.
 
     Underlying HTML Objects:
 
@@ -309,8 +276,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -333,10 +298,7 @@ class Code:
           height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
           options: types.OPTION_TYPE = None, helper: str = None,
           profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    RestructuredText editor.
+    """ RestructuredText editor.
 
     Underlying HTML Objects:
 
@@ -350,8 +312,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -374,10 +334,7 @@ class Code:
            height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
            options: types.OPTION_TYPE = None, helper: str = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Generic code editor.
+    """ Generic code editor.
 
     Underlying HTML Objects:
 
@@ -391,8 +348,6 @@ class Code:
 
     Templates:
 
-    Attributes:
-    -----------
     :param language: The language
     :param text: Optional. The text
     :param color: Optional. The color code

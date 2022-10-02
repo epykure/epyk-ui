@@ -10,18 +10,13 @@ class PyGeo:
 
   @staticmethod
   def distance(lat1: float, lon1: float, lat2: float, lon2: float, unit: str = "km"):
-    """
-    Description:
-    ------------
-    Calculate the great circle distance between two points on the earth (specified in decimal degrees)
+    """ Calculate the great circle distance between two points on the earth (specified in decimal degrees)
     3956
 
     Related Pages:
 
       https://en.wikipedia.org/wiki/Haversine_formula
 
-    Attributes:
-    ----------
     :param lat1: Float.
     :param lon1: Float.
     :param lat2: Float.

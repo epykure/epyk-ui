@@ -12,10 +12,7 @@ class Plotly:
 
   @property
   def choropleths(self):
-    """
-    Description:
-    -----------
-    Plotly Choropleth charts
+    """ Plotly Choropleth charts
 
     Related Pages:
 
@@ -25,10 +22,7 @@ class Plotly:
 
   @property
   def bubbles(self):
-    """
-    Description:
-    -----------
-    Plotly Bubble charts
+    """ Plotly Bubble charts
 
     Related Pages:
 
@@ -40,8 +34,6 @@ class Plotly:
                     profile: Union[dict, bool] = None, options: dict = None,  width: Union[int, tuple] = (100, "%"),
                     height: Union[int, tuple] = (430, "px"), html_code: str = None):
     """
-    Description:
-    -----------
 
     Underlying HTML Objects:
 
@@ -51,8 +43,6 @@ class Plotly:
 
       https://plot.ly/javascript/mapbox-layers/
 
-    Attributes:
-    ----------
     :param record:
     :param lon_columns:
     :param lat_columns:
@@ -90,8 +80,6 @@ class Plotly:
   def density(self, record, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
               options: dict = None, width=(100, "%"), height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     Underlying HTML Objects:
 
@@ -101,8 +89,6 @@ class Plotly:
 
       https://plot.ly/javascript/mapbox-density-heatmaps/
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -128,8 +114,6 @@ class Plotly:
                options: dict = None, width: Union[int, tuple] = (100, "%"), height: Union[int, tuple] = (330, "px"),
                html_code: str = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    -----------
 
     Underlying HTML Objects:
 
@@ -139,8 +123,6 @@ class Plotly:
 
       https://plotly.com/javascript/mapbox-county-choropleth/
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -199,10 +181,7 @@ class PlotlyBubble:
 
   def bubble(self, scope, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None,
              options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    How to make a D3.js-based bubble map in JavaScript. A bubble map overlays a bubble chart on a map.
+    """ How to make a D3.js-based bubble map in JavaScript. A bubble map overlays a bubble chart on a map.
 
     Underlying HTML Objects:
 
@@ -212,8 +191,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param scope: String. The scope of the chart
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
@@ -254,10 +231,7 @@ class PlotlyBubble:
 
   def usa(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None,
           profile=None, options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for the USA.
+    """ A bubble chart for the USA.
 
     Underlying HTML Objects:
 
@@ -267,8 +241,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -289,10 +261,7 @@ class PlotlyBubble:
 
   def europe(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None,
              options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for Europe
+    """ A bubble chart for Europe
 
     Underlying HTML Objects:
 
@@ -302,8 +271,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -320,10 +287,7 @@ class PlotlyBubble:
 
   def asia(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None, options=None,
            width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for Asia
+    """ A bubble chart for Asia
 
     Underlying HTML Objects:
 
@@ -333,8 +297,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -351,10 +313,7 @@ class PlotlyBubble:
 
   def africa(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None,
              options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for Africa
+    """ A bubble chart for Africa
 
     Underlying HTML Objects:
 
@@ -364,8 +323,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -382,10 +339,7 @@ class PlotlyBubble:
 
   def south_america(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None,
                     options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for South America
+    """ A bubble chart for South America
 
     Underlying HTML Objects:
 
@@ -395,8 +349,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -414,10 +366,7 @@ class PlotlyBubble:
 
   def north_america(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None,
                     options=None, width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A bubble chart for North America
+    """ A bubble chart for North America
 
     Underlying HTML Objects:
 
@@ -427,8 +376,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -446,10 +393,7 @@ class PlotlyBubble:
 
   def world(self, record=None, size_col=None, country_col=None, long_col=None, lat_col=None, profile=None, options=None,
             width=(100, "%"), height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A world bubble chart
+    """ A world bubble chart
 
     Underlying HTML Objects:
 
@@ -459,8 +403,6 @@ class PlotlyBubble:
 
       https://plotly.com/javascript/bubble-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -489,10 +431,7 @@ class PlotlyChoropleth:
 
   def world(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
             height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A world Choropleth Chart
+    """ A world Choropleth Chart
 
     Underlying HTML Objects:
 
@@ -502,8 +441,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -526,10 +463,7 @@ class PlotlyChoropleth:
 
   def europe(self, record=None, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
              height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A Choropleth Chart for European countries
+    """ A Choropleth Chart for European countries
 
     Underlying HTML Objects:
 
@@ -539,8 +473,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -556,10 +488,7 @@ class PlotlyChoropleth:
 
   def asia(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
            height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A Choropleth Chart for asian countries
+    """ A Choropleth Chart for asian countries
 
     Underlying HTML Objects:
 
@@ -569,8 +498,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -586,10 +513,7 @@ class PlotlyChoropleth:
 
   def africa(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
              height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A Choropleth Chart for african countries
+    """ A Choropleth Chart for african countries
 
     Underlying HTML Objects:
 
@@ -599,8 +523,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -616,10 +538,7 @@ class PlotlyChoropleth:
 
   def south_america(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
                     height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A Choropleth Chart for south american countries
+    """ A Choropleth Chart for south american countries
 
     Underlying HTML Objects:
 
@@ -629,8 +548,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -646,10 +563,7 @@ class PlotlyChoropleth:
 
   def north_america(self, record, size_col=None, country_col=None, profile=None, options=None, width=(100, "%"),
                     height=(430, "px"), html_code=None):
-    """
-    Description:
-    -----------
-    A Choropleth Chart for north american countries
+    """ A Choropleth Chart for north american countries
 
     Underlying HTML Objects:
 
@@ -659,8 +573,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code
@@ -677,8 +589,6 @@ class PlotlyChoropleth:
   def usa(self, record, y_column=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
           html_code=None):
     """
-    Description:
-    -----------
 
     Underlying HTML Objects:
 
@@ -688,8 +598,6 @@ class PlotlyChoropleth:
 
       https://plotly.com/javascript/choropleth-maps/
 
-    Attributes:
-    ----------
     :param record: Data. The recordset
     :param size_col: String. The column in the recordset used for the values
     :param country_col: String. The column in the recordset used to retrieve country code

@@ -13,16 +13,13 @@ class DC:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
+
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -39,18 +36,13 @@ class DC:
                                options=options, html_code=html_code)
 
   def set_crossfilter(self, record, y_columns, x_axis, varName, extra_cols=None):
-    """
-    Description:
-    -----------
-    Set a crossfilter object and add the dimensions which will be added to a chart.
+    """ Set a crossfilter object and add the dimensions which will be added to a chart.
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
@@ -79,8 +71,6 @@ class DC:
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -92,8 +82,6 @@ class DC:
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -120,8 +108,6 @@ class DC:
              profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -133,8 +119,6 @@ class DC:
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -174,8 +158,6 @@ class DC:
   def scatter(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
               height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -187,8 +169,6 @@ class DC:
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -212,8 +192,6 @@ class DC:
   def step(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -222,8 +200,6 @@ class DC:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -248,8 +224,6 @@ class DC:
   def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -258,8 +232,6 @@ class DC:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -283,8 +255,6 @@ class DC:
   def hbar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -293,8 +263,6 @@ class DC:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -316,8 +284,6 @@ class DC:
   def pie(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -329,8 +295,6 @@ class DC:
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -351,8 +315,6 @@ class DC:
   def sunburst(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
                height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -364,8 +326,6 @@ class DC:
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -385,8 +345,6 @@ class DC:
   def bubble(self, record=None, y_columns=None, x_axis=None, r_axis=None, title=None, profile=None, options=None,
              width=(100, "%"), height=(330, "px"), html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -399,8 +357,6 @@ class DC:
       https://dc-js.github.io/dc.js/
       https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.

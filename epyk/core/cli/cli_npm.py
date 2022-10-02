@@ -20,14 +20,9 @@ def install_all_parser(subparser):
 
 
 def install_all(args):
-  """
-  Description:
-  ------------
-  Install all the internally defined packages locally.
+  """ Install all the internally defined packages locally.
   This will mimic the structure of NPM in order to facilitate the links.
 
-  Attributes:
-  ----------
   :param parser: -p, The project path
   """
   packages = set(Imports.CSS_IMPORTS.keys()) | set(Imports.JS_IMPORTS.keys())
@@ -53,10 +48,7 @@ def install_parser(subparser):
 
 
 def install(args):
-  """
-  Description:
-  ------------
-  Install only the defined packages locally.
+  """ Install only the defined packages locally.
   Those packages can be only the ones that the React or Vue scripters will be using.
 
   The install will rely on the version and configuration in the Imports module
@@ -67,8 +59,6 @@ def install(args):
 
       epyk_npm.exe install -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
 
-  Attributes:
-  ----------
   :param packages: -pkg. The packages list comma separated.
   :param path: -p. Optional. The project path. Default current path.
   :param force: -f. Optional. Force the update of the already installed packages. Default N.
@@ -84,10 +74,7 @@ def update_parser(subparser):
 
 
 def update(args):
-  """
-  Description:
-  ------------
-  Install only the defined packages locally.
+  """ Install only the defined packages locally.
 
   The install will rely on the version and configuration in the Imports module.
 
@@ -101,8 +88,6 @@ def update(args):
 
       epyk_npm.exe update -pkg=promise-polyfill,@popperjs/core,bootstrap,showdown,jquery,accounting,tabulator-tables,moment,chart.js
 
-  Attributes:
-  ----------
   :param packages: -pkg. The packages list comma separated.
   :param path: -p. Optional. The project path. Default current path.
   """
@@ -117,14 +102,9 @@ def npm_parser(subparser):
 
 
 def npm(args):
-  """
-  Description:
-  ------------
-  Install the external packages relying on the NPM Javascript command line availabke on the NodeJs server.
+  """ Install the external packages relying on the NPM Javascript command line availabke on the NodeJs server.
   This will not install the packages using the definition in Imports but on the ones in the NPM configuration.
 
-  Attributes:
-  ----------
   :param parser: -pkg, String, The packages list comma separated
   :param parser: -s, Path of the NodeJs server
   """
@@ -139,13 +119,8 @@ def requirements_parser(parser):
 
 
 def requirements(args):
-  """
-  Description:
-  ------------
-  Get the list of external modules required for a script.
+  """ Get the list of external modules required for a script.
 
-  Attributes:
-  ----------
   :param path: -p, the workspace path (Optional if run directly in the project root)
   :param exception: -e, Y/N flag
   :param page: -r, The page name (without the .py extension)
@@ -186,13 +161,8 @@ def requirements(args):
 
 
 def angular_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the angular CLI
+  """ Paser for the angular CLI
 
-  Attributes:
-  ----------
   :param subparser: subparser
   """
   parser.set_defaults(func=angular)
@@ -201,14 +171,9 @@ def angular_parser(parser):
 
 
 def angular(args):
-  """
-  Description:
-  ------------
-  Create an Angular application derived from the main NodeJs server.
+  """ Create an Angular application derived from the main NodeJs server.
   Then Angular CLI must be available on the NodeJs server.
 
-  Attributes:
-  ----------
   :param parser: -s, The nodeJs server path
   :param parser: -n, The Angular application name
   """
@@ -221,13 +186,8 @@ def angular(args):
 
 
 def vue_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the vue CLI
+  """ Paser for the vue CLI
 
-  Attributes:
-  ----------
   :param subparser: subparser
   """
   parser.set_defaults(func=vue)
@@ -236,13 +196,8 @@ def vue_parser(parser):
 
 
 def vue(args):
-  """
-  Description:
-  ------------
-  Create the VueJs application
+  """ Create the VueJs application
 
-  Attributes:
-  ----------
   :param parser: -s, The nodeJs server path
   :param parser: -n, The Angular application name
   """
@@ -256,13 +211,8 @@ def vue(args):
 
 
 def react_parser(parser):
-  """
-  Description:
-  ------------
-  Paser for the vue CLI
+  """ Paser for the vue CLI
 
-  Attributes:
-  ----------
   :param subparser: subparser
   """
   parser.set_defaults(func=react)
@@ -271,13 +221,8 @@ def react_parser(parser):
 
 
 def react(args):
-  """
-  Description:
-  ------------
-  Create the React application
+  """ Create the React application
 
-  Attributes:
-  ----------
   :param parser: -s, The nodeJs server path
   :param parser: -n, The Angular application name
   """
@@ -290,8 +235,6 @@ def react(args):
 
 def main():
   """
-  Description:
-  ------------
 
   """
   parser_map = {'npm': (npm_parser, '''Add packages to the Nodejs server'''),

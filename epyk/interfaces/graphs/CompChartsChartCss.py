@@ -14,8 +14,6 @@ class CompChartCss:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -24,8 +22,6 @@ class CompChartCss:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -45,11 +41,7 @@ class CompChartCss:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphChartCss.ChartCss:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -72,11 +64,7 @@ class CompChartCss:
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphChartCss.ChartCssBar:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -97,11 +85,7 @@ class CompChartCss:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphChartCss.ChartCssBarArea:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -122,11 +106,7 @@ class CompChartCss:
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphChartCss.ChartCssBarStacked:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record

@@ -12,8 +12,6 @@ class Sparkline:
 
   def bar(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -24,8 +22,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -42,8 +38,6 @@ class Sparkline:
 
   def line(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -54,8 +48,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -72,8 +64,6 @@ class Sparkline:
 
   def tristate(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -84,8 +74,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -102,8 +90,6 @@ class Sparkline:
 
   def discrete(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -114,8 +100,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -132,8 +116,6 @@ class Sparkline:
 
   def bullet(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -144,8 +126,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -162,8 +142,6 @@ class Sparkline:
 
   def pie(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -174,8 +152,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -192,8 +168,6 @@ class Sparkline:
 
   def box_plot(self, data=None, title=None, options=None, width=(None, "%"), height=(None, "px"), profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -204,8 +178,6 @@ class Sparkline:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param data: String. Optional. A String corresponding to a JavaScript object.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param options: Dictionary. Optional. Specific Python options available for this component.

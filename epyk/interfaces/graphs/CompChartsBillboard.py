@@ -14,8 +14,6 @@ class Billboard:
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -24,17 +22,15 @@ class Billboard:
 
     Related Pages:
 
-    Attributes:
-    ----------
-    :param record: List. Optional. The list of dictionaries with the input data.
-    :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: String. Optional. The chart type.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. The width of the component in the page, default (100, '%').
-    :param height: Tuple. Optional. The height of the component in the page, default (330, "px").
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if y is not None and not isinstance(y, list):
       y = [y]
@@ -43,10 +39,7 @@ class Billboard:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a line chart from Billboard.
+    """ Display a line chart from Billboard.
 
     :tags:
     :categories:
@@ -57,16 +50,14 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -84,10 +75,7 @@ class Billboard:
 
   def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
                  height=(330, "px"), options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a line range chart from Billboard.
+    """ Display a line range chart from Billboard.
 
     :tags:
     :categories:
@@ -96,16 +84,14 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -121,10 +107,7 @@ class Billboard:
 
   def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a bubble chart from Billboard.
+    """ Display a bubble chart from Billboard.
 
     :tags:
     :categories:
@@ -138,16 +121,14 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.BubbleChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -162,10 +143,7 @@ class Billboard:
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a radar chart from Billboard.
+    """ Display a radar chart from Billboard.
 
     :tags:
     :categories:
@@ -176,16 +154,14 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.RadarChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -200,10 +176,7 @@ class Billboard:
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a spline chart from Billboard.
+    """ Display a spline chart from Billboard.
 
     :tags:
     :categories:
@@ -218,16 +191,14 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.SplineChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})
@@ -242,10 +213,7 @@ class Billboard:
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a step chart from Billboard.
+    """ Display a step chart from Billboard.
 
     :tags:
     :categories:
@@ -260,9 +228,7 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.StepChart
 
-    Attributes:
-    ----------
-    :param record: List of dict. Optional. The Python list of dictionaries.
+    :param record: Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -285,10 +251,7 @@ class Billboard:
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a area chart from Billboard.
+    """ Display a area chart from Billboard.
 
     :tags:
     :categories:
@@ -303,8 +266,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.AreaChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -327,10 +288,7 @@ class Billboard:
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
                 options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a area step chart from Billboard.
+    """ Display a area step chart from Billboard.
 
     :tags:
     :categories:
@@ -341,8 +299,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.AreaChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -366,10 +322,7 @@ class Billboard:
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                  height=(330, "px"), html_code=None):
-    """
-    Description:
-    ------------
-    Display a timeseries chart from Billboard.
+    """ Display a timeseries chart from Billboard.
 
     :tags:
     :categories:
@@ -380,8 +333,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -398,10 +349,7 @@ class Billboard:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a bar chart from Billboard.
+    """ Display a bar chart from Billboard.
 
     :tags:
     :categories:
@@ -412,8 +360,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.BarChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -439,10 +385,7 @@ class Billboard:
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a stacked bar chart from Billboard.
+    """ Display a stacked bar chart from Billboard.
 
     :tags:
     :categories:
@@ -458,8 +401,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -483,10 +424,7 @@ class Billboard:
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a horizontal bar chart from Billboard.
+    """ Display a horizontal bar chart from Billboard.
 
     :tags:
     :categories:
@@ -502,8 +440,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.BarChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -519,10 +455,7 @@ class Billboard:
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a scatter chart from Billboard.
+    """ Display a scatter chart from Billboard.
 
     :tags:
     :categories:
@@ -538,8 +471,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -562,10 +493,7 @@ class Billboard:
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a pie chart from Billboard.
+    """ Display a pie chart from Billboard.
 
     :tags:
     :categories:
@@ -576,8 +504,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.PieChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -600,10 +526,7 @@ class Billboard:
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Description:
-    ------------
-    Display a donut chart from Billboard.
+    """ Display a donut chart from Billboard.
 
     :tags:
     :categories:
@@ -614,8 +537,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.DonutChart
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -637,10 +558,7 @@ class Billboard:
     return pie_chart
 
   def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
-    """
-    Description:
-    ------------
-    Display a gauge chart from Billboard.
+    """ Display a gauge chart from Billboard.
 
     :tags:
     :categories:
@@ -651,8 +569,6 @@ class Billboard:
 
       https://naver.github.io/billboard.js/demo/#Chart.GaugeChart
 
-    Attributes:
-    ----------
     :param value: Integer. Optional. The gauge chart value.
     :param text: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.

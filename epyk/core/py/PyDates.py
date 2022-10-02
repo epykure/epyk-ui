@@ -10,10 +10,7 @@ DFL_DATE_FORMAT = '%Y-%m-%d'
 
 
 class PyDates:
-  """
-  Description:
-  ------------
-  Common module for managing dates.
+  """ Common module for managing dates.
 
   This module is a light wrapper on top of datetime in order to perform basic operations on dates.
   This will also standardise the date format to YYYY-MM-DD in the Python layer to simplify the
@@ -27,10 +24,7 @@ class PyDates:
 
   @property
   def today(self):
-    """
-    Description:
-    ------------
-    Return a String date in a format YYYY-MM-DD.
+    """ Return a String date in a format YYYY-MM-DD.
 
     Even if within the property python date object are used, this function will
     always return a string date in a specific format to guarantee and simplify the compatibility between languages
@@ -50,10 +44,7 @@ class PyDates:
 
   @property
   def now(self):
-    """
-    Description:
-    ------------
-    Return the current timestamp in a format YYYY-MM-DD HH:mm:dd.
+    """ Return the current timestamp in a format YYYY-MM-DD HH:mm:dd.
 
     Usage::
 
@@ -69,14 +60,9 @@ class PyDates:
 
   @staticmethod
   def path(with_time: bool = False):
-    """
-    Description:
-    ------------
-    Return a predefined format for date in a file path.
+    """ Return a predefined format for date in a file path.
     Using this method will ensure a consistency in the naming convention of the various files in the project.
 
-    Attributes:
-    ----------
     :param bool with_time: Optional. Specify if the time should be added to the path.
     """
     if with_time:
@@ -86,10 +72,7 @@ class PyDates:
 
   @property
   def cob(self):
-    """
-    Description:
-    ------------
-    Returns the last close of business date.
+    """ Returns the last close of business date.
 
     In this property the parameter weekdays is forced to True.
 
@@ -103,10 +86,7 @@ class PyDates:
 
   @property
   def month_end(self):
-    """
-    Description:
-    ------------
-    Returns the last month end date.
+    """ Returns the last month end date.
 
     In this property the parameter weekdays is forced to True.
 
@@ -120,10 +100,7 @@ class PyDates:
 
   @property
   def months(self):
-    """
-    Description:
-    ------------
-    Returns the list of month end dates from the beginning of the year.
+    """ Returns the list of month end dates from the beginning of the year.
 
     In this property the parameter weekdays is forced to True.
 
@@ -138,10 +115,7 @@ class PyDates:
 
   @property
   def quarters(self):
-    """
-    Description:
-    ------------
-    Return the list of quarter dates since the beginning of the year.
+    """ Return the list of quarter dates since the beginning of the year.
 
     In this property the parameter weekdays is forced to True.
 
@@ -158,20 +132,15 @@ class PyDates:
     return results
 
   def date_from_alias(self, alias: str, from_date: Optional[str] = None):
-    """
-    Description:
-    ------------
-    Return the date corresponding to an alias code like T, T-N, M...
+    """ Return the date corresponding to an alias code like T, T-N, M...
 
     Usage::
 
       >>> PyDates().date_from_alias("T", "2019-08-08")
       '2019-08-07'
 
-    Attributes:
-    ----------
-    :param str alias: The alias of the operation (T-3, M-2....)
-    :param Optional[str] from_date: Optional. The start date from which the time operation is applied. Today by default
+    :param alias: The alias of the operation (T-3, M-2....)
+    :param from_date: Optional. The start date from which the time operation is applied. Today by default
 
     :return: The converted date or a list of dates.
     """
@@ -230,10 +199,7 @@ class PyDates:
 
   @staticmethod
   def date_from_excel(xl_date: int):
-    """
-    Description:
-    ------------
-    Convert a Excel date to a standard date format YYYY-MM-DD.
+    """ Convert an Excel date to a standard date format YYYY-MM-DD.
 
     Usage::
 
@@ -244,9 +210,7 @@ class PyDates:
 
       https://support.office.com/en-gb/article/date-function-e36c0c8c-4104-49da-ab83-82328b832349?ui=en-US&rs=en-GB&ad=GB
 
-    Attributes:
-    ----------
-    :param int xl_date: A date in the Excel format.
+    :param xl_date: A date in the Excel format.
 
     :return: The date as a String in the common format YYYY-MM-DD
     """
@@ -254,21 +218,16 @@ class PyDates:
     return dt.strftime(DFL_DATE_FORMAT)
 
   def month_ends(self, from_dt: str, to_dt: str, weekdays: bool = True):
-    """
-    Description:
-    ------------
-    Return the list of end of month dates between two dates.
+    """ Return the list of end of month dates between two dates.
 
     UUsage::
 
       >>> PyDates().month_ends("2019-01-01", "2019-06-05", False)
       ['2019-01-31', '2019-02-28', '2019-03-31', '2019-04-30', '2019-05-31']
 
-    Attributes:
-    ----------
-    :param str from_dt: The start date in format YYYY-MM-DD.
-    :param str to_dt: The end date in format YYYY-MM-DD.
-    :param bool weekdays: Optional. remove the weekends from the potential dates (take the day before). Default True.
+    :param from_dt: The start date in format YYYY-MM-DD.
+    :param to_dt: The end date in format YYYY-MM-DD.
+    :param weekdays: Optional. remove the weekends from the potential dates (take the day before). Default True.
 
     :return: A list of dates.
     """
@@ -290,10 +249,7 @@ class PyDates:
     return results
 
   def range_dates(self, to_dt: str, from_dt: Optional[str] = None, weekdays: bool = True):
-    """
-    Description:
-    ------------
-    Get the list of dates between two dates.
+    """ Get the list of dates between two dates.
 
     The date should be two string dates in the format YYYY-MM-DD.
     The resulting range of date will always be increasing
@@ -303,11 +259,9 @@ class PyDates:
       >>> PyDates().range_dates("2019-01-01", "2019-01-11")
       ['2019-01-11', '2019-01-10', '2019-01-09', '2019-01-08', '2019-01-07', '2019-01-04', '2019-01-03', '2019-01-02', '2019-01-01']
 
-    Attributes:
-    ----------
-    :param str from_dt: The start date in format YYYY-MM-DD.
-    :param Optional[str] to_dt: Optional. The end date in format YYYY-MM-DD.
-    :param bool weekdays: Optional. Remove the weekends from the potential dates (take the day before). Default True
+    :param from_dt: The start date in format YYYY-MM-DD.
+    :param to_dt: Optional. The end date in format YYYY-MM-DD.
+    :param weekdays: Optional. Remove the weekends from the potential dates (take the day before). Default True
 
     :return: A list of dates.
     """
@@ -329,21 +283,16 @@ class PyDates:
 
   @staticmethod
   def from_timestamp(timestamp: int, offset: int = 0, reference: int = 60, factor: int = 1000):
-    """
-    Description:
-    ------------
-    The default value will be given considering the GMT time.
+    """ The default value will be given considering the GMT time.
 
     Usage::
 
       timestamp_s = page.py.dates.from_timestamp(1573074335010, 0)
 
-    Attributes:
-    ----------
-    :param int timestamp: The timestamp in milliseconds.
-    :param int offset: Optional. The time zone.
-    :param int reference: Optional. The reference shift in minutes.
-    :param int factor:
+    :param timestamp: The timestamp in milliseconds.
+    :param offset: Optional. The time zone.
+    :param reference: Optional. The reference shift in minutes.
+    :param factor:
 
     :return: The server timestamp string
     """
@@ -353,10 +302,7 @@ class PyDates:
 
   @staticmethod
   def to_server_time(timestamp: str, offset: int = 0, reference: int = 60):
-    """
-    Description:
-    ------------
-    Return the converted timestamp to be stored in the database.
+    """ Return the converted timestamp to be stored in the database.
     This conversion will be based on the offset coming from the UI to convert to common time.
 
     Usage::
@@ -364,11 +310,9 @@ class PyDates:
       >>> PyDates().to_server_time("2019-08-20 20:04:10", 2)
       '2019-08-20 21:06:10'
 
-    Attributes:
-    ----------
-    :param str timestamp: The client timestamp.
-    :param int offset: Optional. The client offset time to be applied before storage in hour.
-    :param int reference: Optional. The reference time used on the server side.
+    :param timestamp: The client timestamp.
+    :param offset: Optional. The client offset time to be applied before storage in hour.
+    :param reference: Optional. The reference time used on the server side.
 
     :return: The server timestamp string
     """
@@ -378,10 +322,7 @@ class PyDates:
 
   @staticmethod
   def to_user_time(timestamp: str, offset: int, reference: int = 60):
-    """
-    Description:
-    ------------
-    Return the converted timestamp to be returned to the user.
+    """ Return the converted timestamp to be returned to the user.
     This is converting a stored timestamp to a user one.
 
     Usage::
@@ -389,11 +330,9 @@ class PyDates:
       >>> PyDates().to_user_time('2019-08-20 21:06:10', 2)
       '2019-08-20 20:04:10'
 
-    Attributes:
-    ----------
-    :param str timestamp: The server timestamp.
-    :param int offset: The client offset time to be applied before storage.
-    :param int reference: Optional. The reference time used on the server side (default 20).
+    :param timestamp: The server timestamp.
+    :param offset: The client offset time to be applied before storage.
+    :param reference: Optional. The reference time used on the server side (default 20).
 
     :return: The client timestamp string
     """
@@ -404,11 +343,7 @@ class PyDates:
   @staticmethod
   def delta(from_dt: str, to_dt: str, format_dt: str = "%Y-%m-%d"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param from_dt:
     :param to_dt:
     :param format_dt:
@@ -419,16 +354,11 @@ class PyDates:
 
   @staticmethod
   def elapsed(delta_time, with_time: bool = False):
-    """
-    Description:
-    ------------
-    Get the time between two dates.
+    """ Get the time between two dates.
     This function will only format the result of a delta time object.
 
     # TODO: Fix this method
 
-    Attributes:
-    ----------
     :param delta_time: delta_time. The delta time between two python dates.
     :param bool with_time: Optional. A flag to mention if the time should be computed.
     """

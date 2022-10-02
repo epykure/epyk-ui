@@ -11,16 +11,12 @@ class Vis2D:
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -38,10 +34,7 @@ class Vis2D:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    -----------
-    Graph2d is an interactive visualization chart to draw data in a 2D graph. You can freely move and zoom in the graph
+    """ Graph2d is an interactive visualization chart to draw data in a 2D graph. You can freely move and zoom in the graph
     by dragging and scrolling in the window.
 
     Graph2d uses HTML DOM and SVG for rendering. This allows for flexible customization using css styling.
@@ -57,8 +50,6 @@ class Vis2D:
       http://www.chartjs.org/
       https://visjs.github.io/vis-timeline/examples/graph2d/16_bothAxisTitles.html
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -77,8 +68,6 @@ class Vis2D:
   def scatter(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -90,8 +79,6 @@ class Vis2D:
 
       http://www.chartjs.org/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -111,8 +98,6 @@ class Vis2D:
   def bar(self, record, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -124,8 +109,6 @@ class Vis2D:
 
       http://www.chartjs.org/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -145,8 +128,6 @@ class Vis2D:
   def timeline(self, record=None, start=None, content=None, end=None, type=None, group=None, profile=None,
                width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -158,8 +139,6 @@ class Vis2D:
 
       http://www.chartjs.org/
 
-    Attributes:
-    ----------
     :param record:
     :param start:
     :param content:
@@ -183,16 +162,12 @@ class Vis2D:
 
   def network(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -213,16 +188,12 @@ class Vis3D:
   def line(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"),
            options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -242,16 +213,12 @@ class Vis3D:
   def bar(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"),
           options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -271,16 +238,12 @@ class Vis3D:
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"),
               height=(400, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -300,16 +263,12 @@ class Vis3D:
   def scatter(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"),
               height=(400, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -336,16 +295,12 @@ class Vis(Vis2D):
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"),
               height=(400, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -361,16 +316,12 @@ class Vis(Vis2D):
   def bar3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"),
             options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -386,16 +337,12 @@ class Vis(Vis2D):
   def scatter3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"),
                 height=(400, "px"), options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -411,16 +358,12 @@ class Vis(Vis2D):
   def line3d(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, width=(100, "%"), height=(400, "px"),
              options=None, html_code=None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.

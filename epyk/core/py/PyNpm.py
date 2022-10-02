@@ -30,9 +30,6 @@ class NpmRegisteryScore:
   @property
   def final(self):
     """
-    Description:
-    -----------
-    
     Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
@@ -41,10 +38,7 @@ class NpmRegisteryScore:
 
   @property
   def popularity(self):
-    """
-    Description:
-    -----------
-    Get the package popularity.
+    """ Get the package popularity.
 
     """
     return self.__score['detail']['popularity']
@@ -52,8 +46,6 @@ class NpmRegisteryScore:
   @property
   def maintenance(self):
     """
-    Description:
-    -----------
 
     """
     return self.__score['detail']['maintenance']
@@ -67,8 +59,6 @@ class NpmDistIntegrity:
   @property
   def integrity(self):
     """
-    Description:
-    -----------
 
     """
     return self.__controls["integrity"]
@@ -76,17 +66,12 @@ class NpmDistIntegrity:
   @property
   def shasum(self):
     """
-    Description:
-    -----------
-
     """
     return self.__controls["shasum"]
 
   @property
   def fileCount(self):
     """
-    Description:
-    -----------
 
     """
     return self.__controls["fileCount"]
@@ -94,8 +79,6 @@ class NpmDistIntegrity:
   @property
   def unpackedSize(self):
     """
-    Description:
-    -----------
 
     """
     return self.__controls["unpackedSize"]
@@ -114,10 +97,7 @@ class NpmRegistery:
 
   @property
   def score(self):
-    """
-    Description:
-    -----------
-    Get the final score for the package on the NPM registry website.
+    """ Get the final score for the package on the NPM registry website.
 
     Usage::
 
@@ -129,8 +109,6 @@ class NpmRegistery:
   @property
   def scores(self):
     """
-    Description:
-    -----------
 
     """
     return NpmRegisteryScore(self._meta["score"])
@@ -138,18 +116,13 @@ class NpmRegistery:
   @property
   def controls(self):
     """
-    Description:
-    -----------
 
     """
     return NpmDistIntegrity(self.info()['dist'])
 
   @property
   def searchScore(self):
-    """
-    Description:
-    -----------
-    Get the score search figure on the NPM registry website.
+    """ Get the score search figure on the NPM registry website.
 
     Usage::
 
@@ -160,10 +133,7 @@ class NpmRegistery:
 
   @property
   def date(self):
-    """
-    Description:
-    -----------
-    Get the last update date of the package in NPM.
+    """ Get the last update date of the package in NPM.
 
     Usage::
 
@@ -174,10 +144,7 @@ class NpmRegistery:
 
   @property
   def keywords(self):
-    """
-    Description:
-    -----------
-    Get the list of keywords of the package in NPM.
+    """ Get the list of keywords of the package in NPM.
 
     Usage::
 
@@ -188,10 +155,7 @@ class NpmRegistery:
 
   @property
   def license(self):
-    """
-    Description:
-    -----------
-    Get the package license in NPM.
+    """ Get the package license in NPM.
 
     Usage::
 
@@ -207,55 +171,37 @@ class NpmRegistery:
 
   @property
   def description(self):
-    """
-    Description:
-    -----------
-    Get the package description in NPM.
+    """ Get the package description in NPM.
     """
     return self._meta["package"]["description"]
 
   @property
   def scope(self):
-    """
-    Description:
-    -----------
-    Get the package scope in NPM.
+    """ Get the package scope in NPM.
     """
     return self._meta["package"]["scope"]
 
   @property
   def links(self):
-    """
-    Description:
-    -----------
-    Get the underlying package links.
+    """ Get the underlying package links.
     """
     return self._meta["package"]["links"]
 
   @property
   def json(self):
-    """
-    Description:
-    -----------
-    Get the full package details from the NPM website.
+    """ Get the full package details from the NPM website.
     """
     return self._meta
 
   @property
   def release(self):
-    """
-    Description:
-    -----------
-    Get the current package version date from the NPM website.
+    """ Get the current package version date from the NPM website.
     """
     return self._meta['package']['version']
 
   @property
   def name(self):
-    """
-    Description:
-    -----------
-    Get the package name.
+    """ Get the package name.
 
     Usage::
 
@@ -266,19 +212,14 @@ class NpmRegistery:
     return self._meta['package']['name']
 
   def is_latest(self, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Check if the package version is the last one.
+    """ Check if the package version is the last one.
 
     Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.is_latest())
 
-    Attributes:
-    ----------
-    :param bool verbose: Optional. Display version details (default True).
+    :param verbose: Optional. Display version details (default True).
     """
     result = self.version_no == self.release
     if not result and verbose:
@@ -292,19 +233,14 @@ class NpmRegistery:
     return result
 
   def has_cdnjs(self, version: str = None):
-    """
-    Description:
-    -----------
-    Check if the CDNJS is available.
+    """ Check if the CDNJS is available.
 
     Usage::
 
       pkg = PyNpm.Npm().package('pivottable')
       print(pkg.has_cdnjs())
 
-    Attributes:
-    ----------
-    :param str version: Optional. The package version number (default the current release number from NPM).
+    :param version: Optional. The package version number (default the current release number from NPM).
     """
     version = version or self.version_no
     results = []
@@ -329,10 +265,7 @@ class NpmRegistery:
 
   @property
   def repository(self):
-    """
-    Description:
-    -----------
-    Get the package code repository path (usual Github path if available).
+    """ Get the package code repository path (usual Github path if available).
     If not available this will take the repository defined internally in the framework.
 
     Usage::
@@ -347,10 +280,7 @@ class NpmRegistery:
 
   @property
   def homepage(self):
-    """
-    Description:
-    -----------
-    Get the package homepage from the NPM definition.
+    """ Get the package homepage from the NPM definition.
 
     Usage::
 
@@ -360,19 +290,14 @@ class NpmRegistery:
     return self._meta['package']['links']['homepage']
 
   def info(self, version=None):
-    """
-    Description:
-    -----------
-    Get the NPM package details.
+    """ Get the NPM package details.
 
     Usage::
 
       pkg = PyNpm.Npm().package('bootstrap')
       print(pkg.info())
 
-    Attributes:
-    ----------
-    :param version: String. Optional. The package version number (default the current release number from NPM).
+    :param version: Optional. The package version number (default the current release number from NPM).
     """
     if self._info is None:
       version = version or self.version_no
@@ -383,10 +308,7 @@ class NpmRegistery:
 
   @property
   def dependencies(self):
-    """
-    Description:
-    -----------
-    Get the package dependency packages.
+    """ Get the package dependency packages.
 
     Usage::
 
@@ -401,10 +323,7 @@ class NpmRegistery:
 
   @property
   def version_no(self):
-    """
-    Description:
-    -----------
-    Get the package version number.
+    """ Get the package version number.
     """
     v = Imports.JS_IMPORTS[self._alias]['modules'][0].get(
       "version", Imports.JS_IMPORTS[self._alias].get('version', self.release))
@@ -412,10 +331,7 @@ class NpmRegistery:
 
   @property
   def version(self):
-    """
-    Description:
-    -----------
-    Get the package version tag (it is either the version number of the version number prefixed with v).
+    """ Get the package version tag (it is either the version number of the version number prefixed with v).
     """
     prefix = Imports.JS_IMPORTS[self._alias].get("v_prefix")
     if prefix is not None:
@@ -425,10 +341,7 @@ class NpmRegistery:
 
   @property
   def author_name(self):
-    """
-    Description:
-    -----------
-    Get the package author name defined in NPM.
+    """ Get the package author name defined in NPM.
 
     Usage::
 
@@ -440,10 +353,7 @@ class NpmRegistery:
 
   @property
   def author_mail(self):
-    """
-    Description:
-    -----------
-    Get the email address of the package author from NPM info.
+    """ Get the email address of the package author from NPM info.
 
     Usage::
 
@@ -454,10 +364,7 @@ class NpmRegistery:
     return infos['_npmUser']['email']
 
   def scripts(self):
-    """
-    Description:
-    -----------
-    Get the list of script used from this package in the framework.
+    """ Get the list of script used from this package in the framework.
 
     The framework is not using all the modules like other JavaScript framework would do.
     This framework will only import directly from a pure vanilla JavaScript implementation the various modules mandatory
@@ -476,19 +383,13 @@ class NpmRegistery:
     return results
 
   def get_files(self, version=None, out_path=None, update=True, verbose=True):
-    """
-    Description:
-    -----------
-    Get all the files defined from the package.json files to setup correctly the package from a nodeJs server.
+    """ Get all the files defined from the package.json files to setup correctly the package from a nodeJs server.
 
     The framework will use this setup in order to ease the transition and compatibility with existing popular framework.
 
-    Attributes:
-    ----------
-    :param version: String. Optional. The package version number (default the current release number from NPM).
-    :param out_path: String. Optional. The destination path for the scripts (example the Nodejs modules path).
-    :param update: Boolean. Optional. A flag to specify if the files need to be updated again.
-    :param verbose: Boolean. Optional. Display warning message. Default True.
+    :param version: Optional. The destination path for the scripts (example the Nodejs modules path).
+    :param update: Optional. A flag to specify if the files need to be updated again.
+    :param verbose: Optional. Display warning message. Default True.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     json_req = Request("%s/%s/%s/package.json" % (
@@ -543,14 +444,9 @@ class NpmRegistery:
     return regs
 
   def tree(self, version=None):
-    """
-    Description:
-    -----------
-    Get the Github code structure. Get all the files and folder structure from the repository.
+    """ Get the Github code structure. Get all the files and folder structure from the repository.
 
-    Attributes:
-    ----------
-    :param version: String. Optional. The package version number (default the current release number from NPM).
+    :param version: Optional. The package version number (default the current release number from NPM).
     """
     if self._tree is None:
       version = version or self.version
@@ -573,10 +469,7 @@ class Npm:
     pass
 
   def check(self, name: str, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Compare the current package version defined in the framework with the one in NPM.
+    """ Compare the current package version defined in the framework with the one in NPM.
 
     This shortcut will use the underlying is_latest package function.
 
@@ -584,10 +477,8 @@ class Npm:
 
       result = PyNpm.Npm().check('pivottable')
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
-    :param bool verbose: Optional. Display warning message. Default True.
+    :param name: The package alias name in NPM.
+    :param verbose: Optional. Display warning message. Default True.
     """
     pkg = self.package(name)
     if pkg is not None:
@@ -597,16 +488,11 @@ class Npm:
       logging.warning("{} - Missing reference".format(name))
 
   def meta(self, name: str, indent: int = 4):
-    """
-    Description:
-    -----------
-    Get all the meta information related to the package.
+    """ Get all the meta information related to the package.
     This will use json.dumps to display the output Json with all the details.
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
-    :param int indent: optional. The indent length.
+    :param name: The package alias name in NPM.
+    :param indent: optional. The indent length.
     """
     pkg = self.package(name)
     meta = pkg._meta
@@ -614,52 +500,34 @@ class Npm:
     return json.dumps(meta, indent=indent)
 
   def version(self, name: str):
-    """
-    Description:
-    -----------
-    Get the latest version name from the npm registry.
+    """ Get the latest version name from the npm registry.
 
     Usage::
 
       print(PyNpm.Npm().version('chart.js'))
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
+    :param name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request("%s/-/package/%s/dist-tags" % (self.__HTTP_NPM_REGISTRY, name), method="GET", headers=headers)
     return json.loads(urlopen(request).read())['latest']
 
   def all(self, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Check the version of all the packages currently defined in the framework.
+    """ Check the version of all the packages currently defined in the framework.
 
-    Attributes:
-    ----------
     :param verbose: Optional. Display warning message. Default True.
     """
     return {js: self.check(js, verbose) for js, js_details in Imports.JS_IMPORTS.items()}
 
   def search_url(self, name: str):
-    """
-    Description:
-    -----------
-    Return the search url for the package.
+    """ Return the search url for the package.
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
+    :param name: The package alias name in NPM.
     """
     return "%s/-/v1/search?text=%s" % (self.__HTTP_NPM_REGISTRY, name)
 
   def package(self, name: str):
-    """
-    Description:
-    -----------
-    Get the package information from the NPM registry.
+    """ Get the package information from the NPM registry.
     This will return only the exact match in the repository.
 
     Usage::
@@ -667,9 +535,7 @@ class Npm:
       pkg = PyNpm.Npm().package('chart.js')
       print(pkg.date)
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
+    :param name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request(self.search_url(name), method="GET", headers=headers)
@@ -679,10 +545,7 @@ class Npm:
         return NpmRegistery(pkg, name)
 
   def search(self, name: str):
-    """
-    Description:
-    -----------
-    Get the list of packages from the NPM registry matching the name.
+    """ Get the list of packages from the NPM registry matching the name.
 
     Usage::
 
@@ -693,9 +556,7 @@ class Npm:
 
       https://itnext.io/increasing-an-npm-packages-search-score-fb557f859300
 
-    Attributes:
-    ----------
-    :param str name: The package alias name in NPM.
+    :param name: The package alias name in NPM.
     """
     headers = {"Content-Type": 'application/json', 'Accept': 'application/json', 'Connection': 'keep-alive'}
     request = Request(self.search_url(name), method="GET", headers=headers)
@@ -709,14 +570,11 @@ class Packages:
 
   @classmethod
   def descriptions(cls, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Get all the packages and the short description from NPM.
+    """  Get all the packages and the short description from NPM.
 
     Attributes:
     ----------
-    :param bool verbose: Optional. Display version details (default True).
+    :param verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -730,17 +588,12 @@ class Packages:
 
   @classmethod
   def versions(cls, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Get the current latest version of all the package in NPM.
+    """  Get the current latest version of all the package in NPM.
     This could help on maintaining the internal framework up to date with the improvements.
 
     It is important to align with the new version in order to benefit from the community hard work !
 
-    Attributes:
-    ----------
-    :param bool verbose: Optional. Display version details (default True).
+    :param verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -755,10 +608,7 @@ class Packages:
 
   @classmethod
   def repositories(cls, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Get the repositories used to retrieve the external packages.
+    """ Get the repositories used to retrieve the external packages.
 
     This is a collaborative framework so do not hesitate to contact the author of those packages with ideas
     or even things to fix. It is important to encourage this open source community and to be part of modules
@@ -768,9 +618,7 @@ class Packages:
 
       repos = PyNpm.Packages.repositories()
 
-    Attributes:
-    ----------
-    :param bool verbose: Optional. Display version details (default True).
+    :param verbose: Optional. Display version details (default True).
     """
     npm = Npm()
     results = {}
@@ -789,16 +637,11 @@ class Packages:
 def download(modules_path: str, update: bool = False, verbose: bool = True, packages: list = None,
              page: primitives.PageModel = None):
   """
-  Description:
-  -----------
-
-  Attributes:
-  ----------
-  :param str modules_path: The output path for the modules.
-  :param bool update: Optional. Flag to specify if the files need to be uploaded again.
-  :param bool verbose: Optional. Display version details (default True).
-  :param list packages: Optional. A list of packages to download.
-  :param primitives.PageModel page: optional. Allow filtering on the required modules.
+  :param modules_path: The output path for the modules.
+  :param update: Optional. Flag to specify if the files need to be uploaded again.
+  :param verbose: Optional. Display version details (default True).
+  :param packages: Optional. A list of packages to download.
+  :param page: optional. Allow filtering on the required modules.
   """
   npm = Npm()
   results = {}
@@ -823,24 +666,19 @@ def download(modules_path: str, update: bool = False, verbose: bool = True, pack
 
 def install(path: str, packages: list = None, node_server: bool = False, update: bool = False, verbose: bool = True,
             page: primitives.PageModel = None):
-  """
-  Description:
-  ------------
-  Install files using the npm structure is compatible.
+  """ Install files using the npm structure is compatible.
   This will allow to run the script totally locally (without dependency on internet).
 
   Usage::
 
     PyNpm.install(r"C:\tmps\packages", ['bootstrap'], update=True)
 
-  Attributes:
-  ----------
-  :param list packages: All the packages to be added to the install
-  :param str path: Optional. The install path (if node server, the folder root for /node_modules
-  :param bool node_server: Boolean. Optional. Specify if npm from NodeJs must be used to install the package
-  :param bool update: Optional. Specify is the version of the package needs to be updated
-  :param bool verbose: Optional. Display version details (default True).
-  :param primitives.PageModel page: Optional. The Page / Report object on which the list of packages will be defined.
+  :param packages: All the packages to be added to the install
+  :param path: Optional. The install path (if node server, the folder root for /node_modules
+  :param node_server: Boolean. Optional. Specify if npm from NodeJs must be used to install the package
+  :param update: Optional. Specify is the version of the package needs to be updated
+  :param verbose: Optional. Display version details (default True).
+  :param page: Optional. The Page / Report object on which the list of packages will be defined.
   """
   if packages is None:
     if page is None:

@@ -17,8 +17,6 @@ class Nvd3:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -27,8 +25,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -47,10 +43,7 @@ class Nvd3:
   def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartScatter:
-    """
-    Description:
-    ------------
-    Display a scatter chart from NVD3.
+    """ Display a scatter chart from NVD3.
 
     :tags:
     :categories:
@@ -61,8 +54,6 @@ class Nvd3:
 
       http://nvd3.org/examples/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -85,10 +76,7 @@ class Nvd3:
   def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartLine:
-    """
-    Description:
-    ------------
-    Display a line chart from NVD3.
+    """ Display a line chart from NVD3.
 
     :tags:
     :categories:
@@ -111,8 +99,6 @@ class Nvd3:
 
       http://nvd3.org/examples/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -137,10 +123,7 @@ class Nvd3:
                       options: types.OPTION_TYPE = None,
                       width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                       html_code: str = None) -> graph.GraphNVD3.ChartCumulativeLine:
-    """
-    Description:
-    ------------
-    Display a Cumulative line chart from NVD3.
+    """ Display a Cumulative line chart from NVD3.
 
     :tags:
     :categories:
@@ -151,8 +134,6 @@ class Nvd3:
 
       http://nvd3.org/examples/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -177,10 +158,7 @@ class Nvd3:
                  options: types.OPTION_TYPE = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                  html_code: str = None) -> graph.GraphNVD3.ChartFocusLine:
-    """
-    Description:
-    ------------
-    Display a line chart with focus from NVD3.
+    """ Display a line chart with focus from NVD3.
 
     :tags:
     :categories:
@@ -191,8 +169,6 @@ class Nvd3:
 
       http://nvd3.org/examples/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -216,10 +192,7 @@ class Nvd3:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
           height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartBar:
-    """
-    Description:
-    ------------
-    Display a bars chart from NVD3.
+    """ Display a bars chart from NVD3.
 
     :tags:
     :categories:
@@ -242,8 +215,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -268,10 +239,7 @@ class Nvd3:
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a bars chart from NVD3.
+    """ Display a bars chart from NVD3.
 
     :tags:
     :categories:
@@ -294,8 +262,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -318,10 +284,7 @@ class Nvd3:
   def multi(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartMultiBar:
-    """
-    Description:
-    ------------
-    Display a multi types chart from NVD3.
+    """ Display a multi types chart from NVD3.
 
     :tags:
     :categories:
@@ -332,8 +295,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -359,10 +320,7 @@ class Nvd3:
             options: types.OPTION_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
-    """
-    Description:
-    ------------
-    Display a histo chart from NVD3.
+    """ Display a histo chart from NVD3.
 
     :tags:
     :categories:
@@ -373,8 +331,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -398,10 +354,7 @@ class Nvd3:
                  options: types.OPTION_TYPE = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                  html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
-    """
-    Description:
-    ------------
-    Display a Timseries chart from NVD3.
+    """ Display a Timseries chart from NVD3.
 
     :tags:
     :categories:
@@ -412,8 +365,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -436,10 +387,7 @@ class Nvd3:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            html_code: str = None) -> graph.GraphNVD3.ChartArea:
-    """
-    Description:
-    ------------
-    Display an area chart from NVD3.
+    """ Display an area chart from NVD3.
 
     :tags:
     :categories:
@@ -450,8 +398,6 @@ class Nvd3:
 
       http://nvd3.org/examples/discreteBar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -474,10 +420,7 @@ class Nvd3:
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
           height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
-    """
-    Description:
-    ------------
-    Display a pie chart from NVD3.
+    """ Display a pie chart from NVD3.
 
     :tags:
     :categories:
@@ -488,8 +431,6 @@ class Nvd3:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -512,10 +453,7 @@ class Nvd3:
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
-    """
-    Description:
-    ------------
-    Display a donut chart from NVD3.
+    """ Display a donut chart from NVD3.
 
     :tags:
     :categories:
@@ -528,8 +466,6 @@ class Nvd3:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -553,9 +489,6 @@ class Nvd3:
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
     """
-    Description:
-    ------------
-
     :tags:
     :categories:
 
@@ -565,8 +498,6 @@ class Nvd3:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param value:
     :param text:
     :param total:
@@ -599,8 +530,6 @@ class Nvd3:
                            height: types.SIZE_TYPE = (330, "px"),
                            html_code: str = None) -> graph.GraphNVD3.ChartParallelCoord:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -609,8 +538,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param dimensions: Optional.
     :param profile: Optional. A flag to set the component performance storage
@@ -629,8 +556,6 @@ class Nvd3:
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                html_code: str = None) -> graph.GraphNVD3.ChartSunbrust:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -639,8 +564,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The Python list of dictionaries
     :param name: Optional.
     :param profile: Optional. A flag to set the component performance storage
@@ -658,8 +581,6 @@ class Nvd3:
   def candlestick(self, record, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
                   height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -673,8 +594,6 @@ class Nvd3:
     Related Pages:
 
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param closes:
     :param highs:
@@ -709,8 +628,6 @@ class Nvd3:
   def ohlc(self, record, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -719,8 +636,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param closes:
     :param highs:
@@ -754,8 +669,6 @@ class Nvd3:
 
   def group_box(self, profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -764,8 +677,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -781,8 +692,6 @@ class Nvd3:
 
   def forceDirected(self, profile=None, options=None, width=(400, "px"), height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -791,8 +700,6 @@ class Nvd3:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

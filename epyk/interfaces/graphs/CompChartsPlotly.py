@@ -11,8 +11,6 @@ class Plotly2D:
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
            height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -24,8 +22,6 @@ class Plotly2D:
       https://plot.ly/javascript/
       https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
-    Attributes:
-    ----------
     :param record: List. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -48,8 +44,6 @@ class Plotly2D:
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -60,8 +54,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/bar-charts/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -84,8 +76,6 @@ class Plotly2D:
   def hbar(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
            html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -96,8 +86,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/bar-charts/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -121,8 +109,6 @@ class Plotly2D:
   def scatter(self, record=None, y_columns=None, x_axis=None, text_column=None, profile=None, options=None,
               width=(100, "%"), height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -133,8 +119,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/text-and-annotations/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -164,8 +148,6 @@ class Plotly2D:
   def timeseries(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                  height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -177,8 +159,6 @@ class Plotly2D:
       https://plot.ly/javascript/
       https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -200,8 +180,6 @@ class Plotly2D:
   def scattergl(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                 height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -212,8 +190,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/line-and-scatter/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -235,8 +211,6 @@ class Plotly2D:
   def histogram(self, record, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"),
                 height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -248,8 +222,6 @@ class Plotly2D:
       https://plot.ly/javascript/plotlyjs-function-reference/#common-parameters
       https://plot.ly/javascript/
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_columns: List. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -278,8 +250,6 @@ class Plotly2D:
   def pie(self, record=None, y_columns=None, x_axis=None,  profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -290,8 +260,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/pie-charts/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python records.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -316,8 +284,6 @@ class Plotly2D:
   def donut(self, record=None, y_columns=None, x_axis=None,  profile=None, options=None, width=(100, "%"),
             height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -328,8 +294,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/pie-charts/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -354,10 +318,7 @@ class Plotly2D:
 
   def area(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"), height=(330, "px"),
            html_code=None):
-    """
-    Description:
-    ------------
-    How to make a D3.js-based filled area plot in javascript.
+    """ How to make a D3.js-based filled area plot in javascript.
     An area chart displays a solid color between the traces of a graph.
 
     :tags:
@@ -369,8 +330,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/filled-area-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -393,10 +352,7 @@ class Plotly2D:
 
   def bubble(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
              height=(330, "px"), html_code=None):
-    """
-    Description:
-    ------------
-    How to make a D3.js-based filled area plot in javascript.
+    """ How to make a D3.js-based filled area plot in javascript.
     An area chart displays a solid color between the traces of a graph.
 
     :tags:
@@ -408,8 +364,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/bubble-charts/
 
-    Attributes:
-    ----------
     :param record: List of dict. The Python record.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -431,8 +385,6 @@ class Plotly2D:
 
   def number(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -443,8 +395,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/indicator/
 
-    Attributes:
-    ----------
     :param value:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -461,8 +411,6 @@ class Plotly2D:
   def number_with_delta(self, value, delta=100, profile=None, options=None, width=(100, "%"), height=(330, "px"),
                         html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -473,8 +421,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/indicator/
 
-    Attributes:
-    ----------
     :param value:
     :param delta:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -491,10 +437,7 @@ class Plotly2D:
     return ind
 
   def gauge(self, value, profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
-    """
-    Description:
-    ------------
-    How to make a D3.js-based gauge chart in javascript.
+    """ How to make a D3.js-based gauge chart in javascript.
 
     :tags:
     :categories:
@@ -508,8 +451,6 @@ class Plotly2D:
 
       https://plotly.com/javascript/gauge-charts/
 
-    Attributes:
-    ----------
     :param value:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -526,16 +467,12 @@ class Plotly2D:
   def scatterpolar(self, record, r_columns=None, theta_axis=None, profile=None, options=None, width=(100, "%"),
                    height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param r_columns:
     :param theta_axis:
@@ -562,16 +499,12 @@ class Plotly2D:
   def box(self, record=None, y_columns=None, x_columns=None, profile=None, options=None, width=(100, "%"),
           height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_columns: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -594,8 +527,6 @@ class Plotly2D:
   def group_box(self, record, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                 height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -606,8 +537,6 @@ class Plotly2D:
 
       https://plot.ly/javascript/box-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -630,8 +559,6 @@ class Plotly2D:
   def candlestick(self, record, closes, highs, lows, opens, x_axis, profile=None, options=None, width=(100, "%"),
                   height=(330, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -642,8 +569,6 @@ class Plotly2D:
       sc = page.ui.charts.plotly.candlestick(
           data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param closes:
     :param highs:
@@ -683,8 +608,6 @@ class Plotly3D:
   def scatter(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -693,8 +616,6 @@ class Plotly3D:
 
       https://plot.ly/javascript/3d-line-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -718,8 +639,6 @@ class Plotly3D:
   def line(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
            height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -728,8 +647,6 @@ class Plotly3D:
 
       https://plot.ly/javascript/3d-line-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -752,8 +669,6 @@ class Plotly3D:
   def marker(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
              height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -762,8 +677,6 @@ class Plotly3D:
 
       https://plot.ly/javascript/3d-line-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -786,10 +699,7 @@ class Plotly3D:
 
   def ribbon(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
              height=(500, "px"), html_code=None):
-    """
-    Description:
-    ------------
-    Create ribbons on the x axis.
+    """ Create ribbons on the x axis.
 
     :tags:
     :categories:
@@ -798,8 +708,6 @@ class Plotly3D:
 
       https://plot.ly/javascript/ribbon-plots/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -826,8 +734,6 @@ class Plotly3D:
   def mesh3d(self, record, intensity, x, y, z, i=None, j=None, k=None, profile=None, options=None, width=(100, "%"),
              height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -836,8 +742,6 @@ class Plotly3D:
 
       https://plot.ly/javascript/3d-mesh/
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param intensity:
     :param x:
@@ -878,14 +782,10 @@ class Plotly3D:
   def surface(self, record, y_columns=None, x_axis=None, z_axis=None, profile=None, options=None, width=(100, "%"),
               height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -908,14 +808,10 @@ class Plotly3D:
 
   def maps(self, record, profile=None, options=None, width=(100, "%"), height=(500, "px"), html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
-    Attributes:
-    ----------
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

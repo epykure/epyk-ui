@@ -18,18 +18,13 @@ class ChartJs:
     self.opacity = 0.6
 
   def set_version(self, v: str):
-    """
-    Description:
-    ------------
-    Change the version of the chartJs package.
+    """ Change the version of the chartJs package.
     Use **self.page.imports.pkgs.chart_js.version** to get the current version.
 
     Usage::
 
       page.ui.charts.chartJs.set_version("2.9.4").line(languages, y_columns=['change'], x_axis="name")
 
-    Attributes:
-    ----------
     :param v: The version number.
     """
     if v.startswith("2"):
@@ -50,8 +45,6 @@ class ChartJs:
            height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None) -> graph.GraphChartJs.Chart:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -60,8 +53,6 @@ class ChartJs:
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -80,10 +71,7 @@ class ChartJs:
   def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """
-    Description:
-    ------------
-    Display a line chart from ChartJs.
+    """ Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -94,8 +82,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -122,10 +108,7 @@ class ChartJs:
                  profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
                  height: types.SIZE_TYPE = (330, "px"), options: dict = None,
                  html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """
-    Description:
-    ------------
-    Display a line chart from ChartJs.
+    """ Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -136,8 +119,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -155,10 +136,7 @@ class ChartJs:
   def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartPie:
-    """
-    Description:
-    ------------
-    Display a pie chart from ChartJs.
+    """ Display a pie chart from ChartJs.
 
     :tags:
     :categories:
@@ -169,8 +147,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/pie.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -195,10 +171,7 @@ class ChartJs:
   def donut(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
             html_code: str = None) -> graph.GraphChartJs.ChartPie:
-    """
-    Description:
-    ------------
-    Display a donut chart from ChartJs.
+    """ Display a donut chart from ChartJs.
 
     :tags:
     :categories:
@@ -209,8 +182,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/doughnut.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -240,10 +211,7 @@ class ChartJs:
   def area(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """
-    Description:
-    ------------
-    Display a area chart from ChartJs.
+    """ Display a area chart from ChartJs.
 
     :tags:
     :categories:
@@ -254,8 +222,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/area/line-stacked.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -281,10 +247,7 @@ class ChartJs:
   def step(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None):
-    """
-    Description:
-    ------------
-    Display a step chart from ChartJs.
+    """ Display a step chart from ChartJs.
 
     :tags:
     :categories:
@@ -295,8 +258,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scales/linear/step-size.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -322,10 +283,7 @@ class ChartJs:
   def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartBar:
-    """
-    Description:
-    ------------
-    Display a bar chart from ChartJs.
+    """ Display a bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -336,8 +294,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scriptable/bar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -366,10 +322,7 @@ class ChartJs:
   def custom(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None) -> graph.GraphChartJs.ChartExts:
-    """
-    Description:
-    ------------
-    Display a bar chart from ChartJs.
+    """ Display a bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -380,8 +333,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scriptable/bar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -447,10 +398,7 @@ class ChartJs:
   def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None) -> graph.GraphChartJs.ChartHBar:
-    """
-    Description:
-    ------------
-    Display a horizontal bar chart from ChartJs.
+    """ Display a horizontal bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -461,8 +409,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scriptable/bar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -506,8 +452,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/combo-bar-line.html
 
-    Attributes:
-    ----------
     :param kind: The chart type
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -535,10 +479,7 @@ class ChartJs:
   def scatter(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None) -> graph.GraphChartJs.ChartScatter:
-    """
-    Description:
-    ------------
-    Display a scatter chart from ChartJs.
+    """ Display a scatter chart from ChartJs.
 
     :tags:
     :categories:
@@ -549,8 +490,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/scatter/basic.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -576,10 +515,7 @@ class ChartJs:
              profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None) -> graph.GraphChartJs.ChartBubble:
-    """
-    Description:
-    ------------
-    Display a bubble chart from ChartJs.
+    """ Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -590,8 +526,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/scriptable/bubble.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -618,10 +552,7 @@ class ChartJs:
   def polar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartPolar:
-    """
-    Description:
-    ------------
-    Display a bubble chart from ChartJs.
+    """ Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -632,8 +563,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/polar-area.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -659,10 +588,7 @@ class ChartJs:
   def radar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
             html_code: str = None) -> graph.GraphChartJs.ChartRadar:
-    """
-    Description:
-    ------------
-    Display a bubble chart from ChartJs.
+    """ Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -673,8 +599,6 @@ class ChartJs:
 
       https://www.chartjs.org/samples/latest/charts/radar.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -701,16 +625,13 @@ class ChartJs:
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None) -> graph.GraphChartJs.Fabric:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
+
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -727,10 +648,7 @@ class ChartJs:
   def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None) -> graph.GraphChartJs.ChartTreeMap:
-    """
-    Description:
-    ------------
-    Display a treemap chart from ChartJs.
+    """ Display a treemap chart from ChartJs.
 
     :tags:
     :categories:
@@ -741,8 +659,6 @@ class ChartJs:
 
       https://chartjs-chart-treemap.pages.dev/usage.html
 
-    Attributes:
-    ----------
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record

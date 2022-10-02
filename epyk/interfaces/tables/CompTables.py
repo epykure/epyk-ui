@@ -32,10 +32,7 @@ class Tables:
 
   @property
   def aggrids(self) -> CompAgGrid.AgGrid:
-    """
-    Description:
-    -----------
-    ag-Grid is the industry standard for JavaScript Enterprise Applications.
+    """ AG-Grid is the industry standard for JavaScript Enterprise Applications.
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
     :tags:
@@ -51,10 +48,7 @@ class Tables:
 
   @property
   def tabulators(self) -> CompTabulator.Tabulators:
-    """
-    Description:
-    -----------
-    Interface to the different Tabulator configurations.
+    """ Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -69,10 +63,7 @@ class Tables:
 
   @property
   def google(self) -> CompTableGoogle.Google:
-    """
-    Description:
-    -----------
-    Interface to the Google Table interface.
+    """ Interface to the Google Table interface.
 
     In order to use it, the Google products need to be specially enabled.
     """
@@ -83,10 +74,7 @@ class Tables:
 
   @property
   def pivots(self) -> CompPivot.Pivottable:
-    """
-    Description:
-    -----------
-    Interface to the different Pivot Table configurations.
+    """ Interface to the different Pivot Table configurations.
 
     :tags:
     :categories:
@@ -99,10 +87,7 @@ class Tables:
 
   @property
   def d3(self) -> CompTableD3.D3:
-    """
-    Description:
-    -----------
-    Interface to the different Tabulator configurations.
+    """ Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -115,10 +100,7 @@ class Tables:
 
   @property
   def plotlys(self) -> CompTablesPlotly.Plotly:
-    """
-    Description:
-    -----------
-    Interface to the different Tabulator configurations.
+    """ Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -131,10 +113,7 @@ class Tables:
 
   @property
   def datatables(self) -> CompDatatable.Datatables:
-    """
-    Description:
-    -----------
-    Interface to the different Datatable configurations.
+    """ Interface to the different Datatable configurations.
 
     :tags:
     :categories:
@@ -149,9 +128,6 @@ class Tables:
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    -----------
-
     :tags:
     :categories:
 
@@ -160,8 +136,6 @@ class Tables:
       simple_table = page.ui.tables.basic(df.to_dict("records"), cols=["COL1"], rows=["COL2"])
       simple_table.add({"COL1": "Value"})
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data
     :param cols: Optional. The list of key from the record to be used as columns in the table
     :param rows: Optional. The list of key from the record to be used as rows in the table
@@ -182,16 +156,12 @@ class Tables:
            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data
     :param cols: Optional. The list of key from the record to be used as columns in the table
     :param rows: Optional. The list of key from the record to be used as rows in the table
@@ -226,10 +196,7 @@ class Tables:
   def menu(self, table: Html.Html = None, height: types.SIZE_TYPE = (18, 'px'), options: types.OPTION_TYPE = None,
            update_funcs: list = None, post: Union[list, str] = None, profile: types.PROFILE_TYPE = None,
            columns: dict = None, title: Union[str, dict] = None,):
-    """
-    Description:
-    -----------
-    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+    """ Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
     :tags:
     :categories:
@@ -239,8 +206,6 @@ class Tables:
       hierarchy = page.ui.tables.tabulators.hierarchy(html_code="hierarchy")
       menu = page.ui.tables.menu(hierarchy)
 
-    Attributes:
-    ----------
     :param table: Optional. The HTML table component
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. Specific Python options available for this component
@@ -304,13 +269,9 @@ class Tables:
 
       def table_set_columns(data):
           """
-          Description:
-          ------------
 
           TODO: Add refresh option for the table layout.
 
-          Attributes:
-          ----------
           :param data:
           """
           return JsUtils.jsConvertFncs([

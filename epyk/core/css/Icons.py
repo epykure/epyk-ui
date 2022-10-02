@@ -83,10 +83,7 @@ class IconModel:
 
   @property
   def family(self) -> str:
-    """
-    Description:
-    ------------
-    Set the icon family to be used in the page.
+    """ Set the icon family to be used in the page.
     This will have to be defined first before loading any components.
     """
     return self._family
@@ -96,13 +93,8 @@ class IconModel:
     self._family = fam
 
   def get(self, alias: Optional[str], family: str = None) -> dict:
-    """
-    Description:
-    ------------
-    Return the icon properties based on the
+    """ Return the icon properties based on the
 
-    Attributes:
-    ----------
     :param alias: The full icon definition or an alias from the internal mapping
     :param family: The icon family
     :return: The icon properties
@@ -116,11 +108,7 @@ class IconModel:
 
   def add(self, alias: str, imports: dict, set_default: bool = True):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param alias:
     :param imports:
     :param set_default:

@@ -11,13 +11,10 @@ class Pivottable:
   def __init__(self, ui):
     self.page = ui.page
 
-  def pivot(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
+  def pivot(self, records: list = None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
             helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -30,8 +27,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -48,13 +43,10 @@ class Pivottable:
                                                   helper, options, profile)
     return table
 
-  def ui(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
+  def ui(self, records: list = None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
          height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
          helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -67,8 +59,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -85,13 +75,10 @@ class Pivottable:
                                                     html_code, helper, options, profile)
     return table
 
-  def sub_total(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
+  def sub_total(self, records: list = None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
                 height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
                 helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -104,8 +91,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -123,14 +108,11 @@ class Pivottable:
     table.sub_total()
     return table
 
-  def heatmap(self, records=None, rows: list = None, cols: list = None, values=None,
+  def heatmap(self, records: list = None, rows: list = None, cols: list = None, values=None,
               width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
               html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -143,8 +125,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -168,10 +148,7 @@ class Pivottable:
   def c3(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
          height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
          helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -184,8 +161,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -206,10 +181,7 @@ class Pivottable:
   def d3(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
          height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
          helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create a HTML Pivot table.
+    """ Create a HTML Pivot table.
 
     :tags:
     :categories:
@@ -222,8 +194,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:
@@ -244,10 +214,7 @@ class Pivottable:
   def plotly(self, records=None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
              helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Create an HTML Pivot table.
+    """ Create an HTML Pivot table.
 
     :tags:
     :categories:
@@ -260,8 +227,6 @@ class Pivottable:
       https://react-pivottable.js.org/
       https://jsfiddle.net/nicolaskruchten/w86bgq9o/
 
-    Attributes:
-    ----------
     :param records:
     :param rows:
     :param cols:

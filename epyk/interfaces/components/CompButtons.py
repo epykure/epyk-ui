@@ -20,13 +20,8 @@ class Buttons:
 
   @staticmethod
   def __align(component: html.Html.Html, align: str):
-    """
-    Description:
-    ------------
-    Set the component align in the page.
+    """ Set the component align in the page.
 
-    Attributes:
-    ----------
     :param component: The component to be aligned in the page
     :param align: Optional. The text-align property within this component
     """
@@ -37,14 +32,9 @@ class Buttons:
       component.style.css.float = "right"
 
   def __set_color(self, component: html.Html.Html, color: Union[str, bool]):
-    """
-    Description:
-    ------------
-    Set the background color for the button.
+    """ Set the background color for the button.
     By default, it will use the theme's color.
 
-    Attributes:
-    -----------
     :param component: The component to be aligned in the page
     :param color: The color to set
     """
@@ -62,10 +52,7 @@ class Buttons:
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
              tooltip: str = None, profile: types.PROFILE_TYPE = None,
              options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
-    """
-    Description:
-    ------------
-    Standard button.
+    """ Standard button.
 
     :tags:
     :categories:
@@ -90,8 +77,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -120,10 +105,7 @@ class Buttons:
               width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"), align: str = "left",
               html_code: str = None, tooltip: str = None, profile: types.PROFILE_TYPE = None,
               options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Standard colored button.
+    """ Standard colored button.
 
     :tags:
     :categories:
@@ -148,8 +130,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param color: Optional. The font color in the component. Default inherit
@@ -176,10 +156,7 @@ class Buttons:
             width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
             align: str = "left", html_code: str = None, tooltip: str = None,
             profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Standard clear button with a font-awesome icon.
+    """ Standard clear button with a font-awesome icon.
 
     :tags:
     :categories:
@@ -204,8 +181,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -230,10 +205,7 @@ class Buttons:
   def large(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
             height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
             tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Large button.
+    """ Large button.
 
     :tags:
     :categories:
@@ -258,8 +230,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. The integer for the component width and its unit
     :param height: Optional. The integer for the component height and its unit
@@ -285,10 +255,7 @@ class Buttons:
                left: types.SIZE_TYPE = (50, "%"), bottom=None, width: types.SIZE_TYPE = ('auto', ""),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Display a button on the page regardless the current layout of components.
+    """ Display a button on the page regardless the current layout of components.
     By default, the button will be center on the page.
 
     :tags:
@@ -306,8 +273,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param size_notch: Optional. A value to be added to the number font size
     :param bottom: Optional. The position of the component
@@ -344,10 +309,7 @@ class Buttons:
   def small(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
             height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
             tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Standard button with a small layout.
+    """ Standard button with a small layout.
 
     :tags:
     :categories:
@@ -364,8 +326,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -389,10 +349,7 @@ class Buttons:
   def normal(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
              tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Standard button with a standard layout.
+    """ Standard button with a standard layout.
 
     :tags:
     :categories:
@@ -409,8 +366,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -433,10 +388,7 @@ class Buttons:
   def important(self, text: str = "", icon: str = None, width: Union[tuple, int] = (None, "%"),
                 height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
                 tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Same as Standard button but used to attract user attention.
+    """ Same as Standard button but used to attract user attention.
 
     :tags:
     :categories:
@@ -462,8 +414,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -486,10 +436,7 @@ class Buttons:
   def validate(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
                html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
                profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a validate button with a predefined icon from font awesome.
+    """ Add a validate button with a predefined icon from font awesome.
 
     :tags:
     :categories:
@@ -511,8 +458,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -534,10 +479,7 @@ class Buttons:
   def run(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
           align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
           profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a run button with a predefined icon from font awesome.
+    """ Add a run button with a predefined icon from font awesome.
 
     :tags:
     :categories:
@@ -563,8 +505,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -599,10 +539,7 @@ class Buttons:
   def remove(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
              html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
              profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Button with cross icon.
+    """ Button with cross icon.
 
     :tags:
     :categories:
@@ -624,8 +561,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -649,10 +584,7 @@ class Buttons:
   def cancel(self, text: str = "Cancel", width: Union[tuple, int] = (None, "%"),
              height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None, align: str = "left",
              tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Button with cross icon to cancellation actions.
+    """ Button with cross icon to cancellation actions.
 
     :tags:
     :categories:
@@ -674,8 +606,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -699,10 +629,7 @@ class Buttons:
   def phone(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
             html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
             profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a phone button with a predefined icon from font-awesome.
+    """ Add a phone button with a predefined icon from font-awesome.
 
     :tags:
     :categories:
@@ -724,8 +651,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -746,10 +671,7 @@ class Buttons:
   def mail(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
            html_code: Optional[str] = None, align: str = "left", tooltip=None,
            profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Add a mail button with a predefined icon from font-awesome.
+    """ Add a mail button with a predefined icon from font-awesome.
 
     :tags:
     :categories:
@@ -771,8 +693,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -793,10 +713,7 @@ class Buttons:
   def radio(self, record: List[dict] = None, html_code: Optional[str] = None, group_name: Optional[str] = None,
             width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), align: str = 'left',
             options: Optional[dict] = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
-    Creates a radio HTML component.
+    """ Creates a radio HTML component.
 
     Tips: record data should be in the format expected by the component. If needed a data helper can be used.
     from the data package in the component property, the various functions available for the radio will help.
@@ -820,8 +737,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param record: Optional. The Python list of dictionaries
     :param group_name: Optional. Group name for multi radio buttons
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
@@ -847,10 +762,7 @@ class Buttons:
              width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = "left",
              html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
-    Add a toggle component.
+    """ Add a toggle component.
 
     Component Structure::
 
@@ -878,8 +790,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
 
-    Attributes:
-    -----------
     :param record: Optional. component data
     :param label: Optional. The toggle static label displayed
     :param color: Optional. String. Optional. The font color in the component. Default inherit
@@ -912,10 +822,7 @@ class Buttons:
                  height: types.SIZE_TYPE = (None, "px"), align: str = 'left',
                  html_code: str = None, tooltip: str = '', options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Python wrapper to the HTML checkbox elements.
+    """ Python wrapper to the HTML checkbox elements.
 
     Tips: record data should be in the format expected by the component. If needed a data helper can be used.
     from the data package in the component property, the various functions available for the checkboxes will help.
@@ -943,8 +850,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_checkboxes.py
 
-    Attributes:
-    -----------
     :param record: Optional. The list of dictionaries with the data
     :param color: Optional. The color code
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -965,10 +870,7 @@ class Buttons:
   def check(self, flag: bool = False, tooltip: str = None, width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (20, "px"), label: str = None, icon: str = None,
             html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
-    Wrapper to the checkbox button object.
+    """ Wrapper to the checkbox button object.
 
     :tags:
     :categories:
@@ -988,8 +890,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param flag: Optional. The value of the checkbox. Default False
     :param tooltip: Optional. A string with the value of the tooltip
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1012,10 +912,7 @@ class Buttons:
            width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
            html_code: str = None, tooltip: str = None,
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Button with underlying items menu.
+    """ Button with underlying items menu.
 
     :tags:
     :categories:
@@ -1037,8 +934,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
 
-    Attributes:
-    -----------
     :param record: Optional. The list of dictionaries with the data
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. The icon to be used in the check component
@@ -1060,10 +955,7 @@ class Buttons:
   def store(self, image, url, width: types.SIZE_TYPE = (7.375, "rem"), height: types.SIZE_TYPE = (2.375, "rem"),
             html_code: str = None, align: str = "left", options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Button for a badge which point to the various application stores (Google and Apple).
+    """ Button for a badge which point to the various application stores (Google and Apple).
     The badge must be issued from the Google Play Store.
 
     :tags:
@@ -1083,8 +975,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
-    Attributes:
-    -----------
     :param image: The url of the image
     :param url: The link to the app in the store
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1108,10 +998,7 @@ class Buttons:
   def live(self, time: int, js_funcs: types.JS_FUNCS_TYPES, icon: Optional[Union[str, bool]] = "fas fa-circle",
            width: types.SIZE_TYPE = (15, "px"), height: types.SIZE_TYPE = (15, "px"), align: str = "left",
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Live component which will trigger event every x second.
+    """Live component which will trigger event every x second.
     This will then allow other components to be refreshed in the page.
 
     :tags:
@@ -1126,8 +1013,6 @@ class Buttons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_icon.py
 
-    Attributes:
-    -----------
     :param time: Interval time in second
     :param js_funcs: The Javascript functions
     :param icon: Optional. The font awesome icon reference
@@ -1185,8 +1070,6 @@ class Buttons:
            align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
     """
-    Description:
-    -----------
 
     :tags:
     :categories:
@@ -1195,8 +1078,6 @@ class Buttons:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. A string with the value of the icon to display from font-awesome
     :param tooltip: Optional. A string with the value of the tooltip
@@ -1217,10 +1098,7 @@ class Buttons:
   def thumbs_up(self, width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"),
                 align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
                 profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Button with the font awesome icon far fa-thumbs-up.
+    """ Button with the font awesome icon far fa-thumbs-up.
 
     :tags:
     :categories:
@@ -1231,8 +1109,6 @@ class Buttons:
 
     Templates:
 
-    Attributes:
-    -----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. A string with the horizontal position of the component
@@ -1254,10 +1130,7 @@ class Buttons:
   def thumbs_down(self, width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"),
                   align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
                   profile: Union[dict, bool] = None, options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Button with the font awesome icon far fa-thumbs-down.
+    """ Button with the font awesome icon far fa-thumbs-down.
 
     :tags:
     :categories:
@@ -1266,8 +1139,6 @@ class Buttons:
 
     Templates:
 
-    Attributes:
-    -----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. A string with the horizontal position of the component
@@ -1290,8 +1161,6 @@ class Buttons:
            html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -1300,8 +1169,6 @@ class Buttons:
 
     Templates:
 
-    Attributes:
-    -----------
     :param text: Optional. The text to be displayed to the button
     :param value: Optional. The value to be displayed in the pill
     :param group: Optional. The group value fot the pill
@@ -1335,8 +1202,6 @@ class Buttons:
            tooltip: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None) -> html.HtmlButton.ButtonMore:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -1355,8 +1220,6 @@ class Buttons:
 
     Related Pages:
 
-    Attributes:
-    -----------
     :param items: List of items to be added to the menu
     :param text: Optional. The text visible in the button
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1378,16 +1241,12 @@ class Buttons:
              height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
              tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    -----------
     :param text: Optional. The filter value
     :param is_number: Optional. The filter property type
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1420,10 +1279,7 @@ class Buttons:
               width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"), align: str = "left",
               html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
               options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Standard refresh button with a font-awesome icon.
+    """ Standard refresh button with a font-awesome icon.
 
     :tags:
     :categories:
@@ -1448,8 +1304,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -1478,10 +1332,7 @@ class Buttons:
            width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"), align: str = "left",
            html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
-    """
-    Description:
-    ------------
-    Standard refresh button with a font-awesome icon.
+    """ Standard refresh button with a font-awesome icon.
 
     :tags:
     :categories:
@@ -1506,8 +1357,6 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_link.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    -----------
     :param filename: Optional. The filename
     :param text: Optional. The value to be displayed to the button
     :param width: Optional. A tuple with the integer for the component width and its unit

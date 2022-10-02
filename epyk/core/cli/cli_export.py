@@ -1,7 +1,4 @@
 """
-Description:
-------------
-
 epyk_export.exe
 """
 
@@ -90,13 +87,8 @@ Each of then will be linked to a dedicated parser method.
 
 
 def transpile(args):
-  """
-  Description:
-  ------------
-  Transpile a specific report
+  """ Transpile a specific report
 
-  Attributes:
-  ----------
   :param name: -p, The path where the new environment will be created: -p /foo/bar
   :param path: -n, The name of the page to be transpiled: -n home.
   :param split: -s, Y / N Flag, to specify if the files should be split input 3 modules.
@@ -145,13 +137,8 @@ def transpile(args):
 
 
 def angular(args):
-  """
-  Description:
-  ------------
-  Generate an Angular Application from the Epyk page
+  """ Generate an Angular Application from the Epyk page
 
-  Attributes:
-  ----------
   """
   project_path = args.path or os.getcwd()
   sys.path.append(project_path)
@@ -193,13 +180,8 @@ def deno(args):
 
 
 def html(args):
-  """
-  Description:
-  ------------
-  Transpile a specific report.
+  """ Transpile a specific report.
 
-  Attributes:
-  ----------
   :param path: -p, The path where the new environment will be created: -p /foo/bar
   :param name: -n, The name of the page to be transpiled: -n home
   :param split: -split, Y / N Flag to specify if the result should be splitting in several files
@@ -215,13 +197,8 @@ def html(args):
 
 
 def page(args):
-  """
-  Description:
-  ------------
-  Create a new page.
+  """ Create a new page.
 
-  Attributes:
-  ----------
   :param args:
   """
   project_path = args.path or os.getcwd()
@@ -251,13 +228,8 @@ page = pk.Page()
 
 
 def demo(args):
-  """
-  Description:
-  ------------
-  Create a page to demonstrate a example of report.
+  """ Create a page to demonstrate a example of report.
 
-  Attributes:
-  ----------
   :param args:
   """
   project_path = args.path or os.getcwd()
@@ -303,10 +275,7 @@ toggle.click([
 
 
 def main():
-  """
-  Description:
-  ------------
-  The main function for all the export CLI entry points.
+  """ The main function for all the export CLI entry points.
   """
   parser_map = {
     'demo': (demo_parser, '''Create a demo page'''),

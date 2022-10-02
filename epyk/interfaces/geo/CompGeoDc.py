@@ -14,8 +14,6 @@ class Dc:
           profile: Union[dict, bool] = None, options: dict = None, width: Union[int, tuple] = (100, "%"),
           height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
-    Description:
-    -----------
 
     Underlying HTML Objects:
 
@@ -26,8 +24,6 @@ class Dc:
       https://jsfiddle.net/djmartin_umich/9VJHe/
       http://bl.ocks.org/KatiRG/cccd23dd7a830da0de5c
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:

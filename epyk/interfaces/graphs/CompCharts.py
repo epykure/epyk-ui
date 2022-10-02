@@ -40,26 +40,21 @@ class Graphs:
            profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
            html_code: str = None):
-    """
-    Description:
-    ------------
-    Generic shortcut to plot a chart in the framework.
+    """ Generic shortcut to plot a chart in the framework.
     Family and kind of chart are passed in parameter.
 
     Usage::
 
-    Attributes:
-    ----------
-    :param pkg: Optional. The external chart package reference. Default ApexCharts.
-    :param record: Optional. The list of dictionaries with the input data.
-    :param y: Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x: Optional. The column corresponding to a key in the dictionaries in the record.
-    :param kind: Optional. The chart type.
-    :param profile:  Optional. A flag to set the component performance storage.
-    :param width: Optional. The width of the component in the page, default (100, '%').
-    :param height: Optional. The height of the component in the page, default (330, "px").
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param pkg: Optional. The external chart package reference. Default ApexCharts
+    :param record: Optional. The list of dictionaries with the input data
+    :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x: Optional. The column corresponding to a key in the dictionaries in the record
+    :param kind: Optional. The chart type
+    :param profile:  Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if y is not None and not isinstance(y, list):
       y = [y]
@@ -70,10 +65,7 @@ class Graphs:
   def skillbars(self, records=None, y_column: str = None, x_axis: str = None, title: str = None,
                 width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: types.PROFILE_TYPE = False) -> html.HtmlEvent.SkillBar:
-    """
-    Description:
-    ------------
-    Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
+    """ Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
 
     :Category: Web Application, Analytics
 
@@ -91,15 +83,15 @@ class Graphs:
 
     Attributes:
     ----------
-    :param records: Optional. The Python list of dictionaries.
-    :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: Optional. The chart title.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param records: Optional. The Python list of dictionaries
+    :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if y_column is None or x_axis is None:
       raise ValueError("seriesName and axis must be defined")
@@ -115,10 +107,7 @@ class Graphs:
   def sparkline(self, chart_type: str, data, title: str = None, options: dict = None,
                 width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
                 profile: types.PROFILE_TYPE = False) -> html.graph.GraphSparklines.Sparklines:
-    """
-    Description:
-    ------------
-    Display a sparkline component.
+    """ Display a sparkline component.
 
     :Category: Web Application, Analytics
 
@@ -131,15 +120,13 @@ class Graphs:
 
       https://omnipotent.net/jquery.sparkline/#s-about
 
-    Attributes:
-    ----------
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
-    :param data: A String corresponding to a JavaScript object.
-    :param options: Optional. Specific Python options available for this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param data: A String corresponding to a JavaScript object
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param profile: Optional. A flag to set the component performance storage
 
     :return: A python Sparkline object
     """
@@ -154,10 +141,7 @@ class Graphs:
 
   @property
   def sparklines(self) -> CompChartsSparkline.Sparkline:
-    """
-    Description:
-    ------------
-    Display a sparkline component.
+    """ Display a sparkline component.
 
     :Category: Web Application, Analytics
 
@@ -174,10 +158,7 @@ class Graphs:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly:
-    """
-    Description:
-    ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """ Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Dataviz
@@ -194,10 +175,7 @@ class Graphs:
 
   @property
   def chartJs(self) -> CompChartsChartJs.ChartJs:
-    """
-    Description:
-    ------------
-    Simple yet flexible JavaScript charting for designers & developers.
+    """ Simple yet flexible JavaScript charting for designers & developers.
 
     :Category: Web Application
 
@@ -213,10 +191,7 @@ class Graphs:
 
   @property
   def apex(self) -> CompChartsApex.ApexChart:
-    """
-    Description:
-    ------------
-    Interface for the ApexChart library.
+    """ Interface for the ApexChart library.
 
     :Category: Web application
 
@@ -230,10 +205,7 @@ class Graphs:
 
   @property
   def c3(self) -> CompChartsC3.C3:
-    """
-    Description:
-    ------------
-    Interface to the JavaScript C3 module.
+    """ Interface to the JavaScript C3 module.
 
     :Category: Analytics, Dataviz
 
@@ -250,10 +222,7 @@ class Graphs:
 
   @property
   def bb(self) -> CompChartsBillboard.Billboard:
-    """
-    Description:
-    ------------
-    Interface to the Javascript Billboard module.
+    """ Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js.
@@ -277,10 +246,7 @@ class Graphs:
 
   @property
   def billboard(self) -> CompChartsBillboard.Billboard:
-    """
-    Description:
-    ------------
-    Interface to the Javascript Billboard module.
+    """ Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js.
@@ -300,10 +266,7 @@ class Graphs:
 
   @property
   def vis(self) -> CompChartsVis.Vis:
-    """
-    Description:
-    ------------
-    A dynamic, browser based visualization library.
+    """ A dynamic, browser based visualization library.
 
     :Category: Analytics, Dataviz
 
@@ -317,10 +280,7 @@ class Graphs:
 
   @property
   def nvd3(self) -> CompChartsNvd3.Nvd3:
-    """
-    Description:
-    ------------
-    Interface to the Javascript NVD3 library.
+    """ Interface to the Javascript NVD3 library.
 
     :Category: Analytics, Web application
 
@@ -334,10 +294,7 @@ class Graphs:
 
   @property
   def dc(self) -> CompChartsDc.DC:
-    """
-    Description:
-    ------------
-    dc.js is a javascript charting library with native crossfilter support,
+    """ dc.js is a javascript charting library with native crossfilter support,
     allowing highly efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
 
     :Category: Analytics, Dataviz
@@ -352,10 +309,7 @@ class Graphs:
 
   @property
   def d3(self) -> CompChartsD3.D3:
-    """
-    Description:
-    ------------
-    D3.js is a JavaScript library for manipulating documents based on data.
+    """ D3.js is a JavaScript library for manipulating documents based on data.
 
     :Category: Analytics, Dataviz
 
@@ -369,10 +323,7 @@ class Graphs:
 
   @property
   def google(self) -> CompChartsGoogle.ChartGoogle:
-    """
-    Description:
-    ------------
-    Google chart tools are powerful, simple to use, and free.
+    """ Google chart tools are powerful, simple to use, and free.
     Try out our rich gallery of interactive charts and data tools.
 
     :Category: Analytics, Dataviz
@@ -390,10 +341,7 @@ class Graphs:
 
   @property
   def svg(self) -> CompChartsSvg.SVG:
-    """
-    Description:
-    ------------
-    SVG defines vector-based graphics in XML format.
+    """ SVG defines vector-based graphics in XML format.
 
     Usage::
 
@@ -405,10 +353,7 @@ class Graphs:
 
   @property
   def canvas(self) -> CompChartsCanvas.Canvas:
-    """
-    Description:
-    ------------
-    The HTML <canvas> element is used to draw graphics on a web page.
+    """ The HTML <canvas> element is used to draw graphics on a web page.
 
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
@@ -423,10 +368,7 @@ class Graphs:
 
   @property
   def roughviz(self) -> CompChartsRoughViz.CompRoughViz:
-    """
-    Description:
-    ------------
-    Reusable JavaScript library for creating sketchy/hand-drawn styled charts in the browser.
+    """ Reusable JavaScript library for creating sketchy/hand-drawn styled charts in the browser.
 
     :Category: Web application
 
@@ -438,10 +380,7 @@ class Graphs:
 
   @property
   def frappe(self) -> CompChartsFrappe.CompChartFrappe:
-    """
-    Description:
-    ------------
-    GitHub-inspired simple and modern SVG charts for the web with zero dependencies.
+    """ GitHub-inspired simple and modern SVG charts for the web with zero dependencies.
 
     :Category: Web application
 
@@ -453,10 +392,7 @@ class Graphs:
 
   @property
   def chartCss(self) -> CompChartsChartCss.CompChartCss:
-    """
-    Description:
-    ------------
-    Charts.css is a modern CSS framework. It uses CSS utility classes to style HTML elements as charts.
+    """ Charts.css is a modern CSS framework. It uses CSS utility classes to style HTML elements as charts.
 
     :Category: Web application
 
@@ -468,10 +404,7 @@ class Graphs:
 
   @property
   def vega(self) -> CompChartsVega.VegaEmbedded:
-    """
-    Description:
-    ------------
-    Vega – A Visualization Grammar.
+    """ Vega – A Visualization Grammar.
 
     :Category: Analytics, Dataviz
 
@@ -487,13 +420,8 @@ class Graphs:
 
   def menu(self, chart: html.Html.Html, height: types.SIZE_TYPE = (18, 'px'), options: dict = None,
            post: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
-    """
-    Description:
-    -----------
-    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+    """ Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
-    Attributes:
-    ----------
     :param chart: The chart component
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. Specific Python options available for this component
@@ -533,10 +461,7 @@ class Chart2d:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly2D:
-    """
-    Description:
-    ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """ Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Dataviz
@@ -553,10 +478,7 @@ class Chart2d:
 
   @property
   def nvd3(self) -> CompChartsNvd3.Nvd3:
-    """
-    Description:
-    ------------
-    This project is an attempt to build re-usable charts and chart components for d3.js
+    """ This project is an attempt to build re-usable charts and chart components for d3.js
     without taking away the power that d3.js gives you.
 
     :Category: Analytics, Web application
@@ -573,10 +495,7 @@ class Chart2d:
 
   @property
   def dc(self) -> CompChartsDc.DC:
-    """
-    Description:
-    ------------
-    dc.js is a javascript charting library with native crossfilter support, allowing highly
+    """ dc.js is a javascript charting library with native crossfilter support, allowing highly
     efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
 
     :Category: Analytics, Dataviz
@@ -591,10 +510,7 @@ class Chart2d:
 
   @property
   def d3(self) -> CompChartsD3.D3:
-    """
-    Description:
-    ------------
-    D3.js is a JavaScript library for manipulating documents based on data.
+    """ D3.js is a JavaScript library for manipulating documents based on data.
 
     :Category: Analytics, Dataviz
 
@@ -608,10 +524,7 @@ class Chart2d:
 
   @property
   def svg(self) -> CompChartsSvg.SVG:
-    """
-    Description:
-    ------------
-    SVG stands for Scalable Vector Graphics.
+    """ SVG stands for Scalable Vector Graphics.
 
     SVG defines vector-based graphics in XML format.
 
@@ -625,10 +538,7 @@ class Chart2d:
 
   @property
   def canvas(self) -> CompChartsCanvas.Canvas:
-    """
-    Description:
-    ------------
-    The HTML <canvas> element is used to draw graphics on a web page.
+    """ The HTML <canvas> element is used to draw graphics on a web page.
 
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
@@ -643,10 +553,7 @@ class Chart2d:
 
   @property
   def chartJs(self) -> CompChartsChartJs.ChartJs:
-    """
-    Description:
-    ------------
-    Interface for the ChartJs library
+    """ Interface for the ChartJs library
 
     :Category: Web application
 
@@ -662,10 +569,7 @@ class Chart2d:
 
   @property
   def apex(self) -> CompChartsApex.ApexChart:
-    """
-    Description:
-    ------------
-    Interface for the ApexChart library.
+    """ Interface for the ApexChart library.
 
     :Category: Web application
 
@@ -681,10 +585,7 @@ class Chart2d:
 
   @property
   def c3(self) -> CompChartsC3.C3:
-    """
-    Description:
-    ------------
-    Interface to the JavaScript C3 module.
+    """ Interface to the JavaScript C3 module.
 
     :Category: Analytics, Dataviz
 
@@ -700,10 +601,7 @@ class Chart2d:
 
   @property
   def billboard(self) -> CompChartsBillboard.Billboard:
-    """
-    Description:
-    ------------
-    Interface to the Javascript Billboard module.
+    """ Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from Billboard.js.
@@ -722,10 +620,7 @@ class Chart2d:
 
   @property
   def vis(self) -> CompChartsVis.Vis2D:
-    """
-    Description:
-    ------------
-    Interface for the Vis library.
+    """ Interface for the Vis library.
 
     :Category: Analytics, Dataviz
 
@@ -747,10 +642,7 @@ class Chart3d:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly3D:
-    """
-    Description:
-    ------------
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """ Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Dataviz
@@ -767,10 +659,7 @@ class Chart3d:
 
   @property
   def vis(self) -> CompChartsVis.Vis3D:
-    """
-    Description:
-    ------------
-    Interface for the Vis library.
+    """ Interface for the Vis library.
 
     :Category: Analytics, Dataviz
 

@@ -5,18 +5,13 @@ from typing import Any
 
 
 def size(value: Any, unit: str = "%", toStr: bool = False):
-  """
-  Description:
-  ------------
-  Wrapper to allow size arguments to be more flexible.
+  """ Wrapper to allow size arguments to be more flexible.
   By using this in the interface it is possible to then use float values instead of the usual tuples.
 
   Related Pages:
 
     https://www.w3schools.com/cssref/css_units.asp
 
-  Attributes:
-  ----------
   :param value: The value for this argument
   :param unit: Optional. The unit for the argument. Default %
   :param toStr: Optional. Transform the tuple to string
@@ -53,10 +48,7 @@ def size(value: Any, unit: str = "%", toStr: bool = False):
 
 
 class Align:
-  """
-  Description:
-  ------------
-  A string with the horizontal position of the component.
+  """ A string with the horizontal position of the component.
   """
 
   @property
@@ -73,10 +65,7 @@ class Align:
 
 
 class Position:
-  """
-  Description:
-  ------------
-  A string with the vertical position of the component.
+  """ A string with the vertical position of the component.
   """
 
   @property
@@ -93,10 +82,7 @@ class Position:
 
 
 class Size:
-  """
-  Description:
-  ------------
-  A tuple with the integer for the component size and its unit.
+  """ A tuple with the integer for the component size and its unit.
   """
 
   @property
@@ -113,10 +99,7 @@ class Size:
 
 
 class Color:
-  """
-  Description:
-  ------------
-  The font color in the component. Default inherit.
+  """ The font color in the component. Default inherit.
   """
 
   @property
@@ -125,10 +108,7 @@ class Color:
 
 
 class Profile:
-  """
-  Description:
-  ------------
-  A flag to set the component performance storage.
+  """ A flag to set the component performance storage.
   """
 
   @property

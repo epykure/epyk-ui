@@ -14,13 +14,9 @@ class EpykBoundRptObj(Exception):
 
 
 def requires(pyk_file, autoinstall=None, autoreload=False):
-  """
-  Description:
-  ------------
-
-    This function will allow you to import components from another pyk file.
-    The pyk file can be located on your file system, or it can be on pypi or even github
-    if it's the latter options (pypi or github) you will need to use autoinstall=True
+  """ This function will allow you to import components from another pyk file.
+  The pyk file can be located on your file system, or it can be on pypi or even github
+  if it's the latter options (pypi or github) you will need to use autoinstall=True
 
   Usage::
 
@@ -28,8 +24,6 @@ def requires(pyk_file, autoinstall=None, autoreload=False):
 
     requires('/usr/local/my_pyk_file.py')
 
-  Attributes:
-  ----------
   :param pyk_file: the pyk to be imported into your project, this will be a name if installing from pypi or github or just a path if it's a local pyk)
   :param components: list of objects to import, if None all the objects declared in the pyk file will be available
   :param autoinstall: specify whether we need to check github or pypi
@@ -42,14 +36,10 @@ def requires(pyk_file, autoinstall=None, autoreload=False):
 
 
 def exports(obj_dict):
-  """
-  Description:
-  ------------
-
-    This function requries you to pass a dictionary with the object alias as key and the object as value
-    for as many objects as you wish
-    This will then be used by users who need to require your particular pyk file
-    You can pass epyk object in that dictionary as well as function if you need to
+  """ This function requries you to pass a dictionary with the object alias as key and the object as value
+  for as many objects as you wish
+  This will then be used by users who need to require your particular pyk file
+  You can pass epyk object in that dictionary as well as function if you need to
 
   Usage::
 
@@ -95,13 +85,9 @@ class _Pyk(object):
     _Pyk.__instance = self
 
   def _requires(self, pyk_file, autoinstall=False, autoreload=False):
-    """
-    Description:
-    ------------
-
-      This function will allow you to import components from another pyk file.
-      The pyk file can be located on your file system, or it can be on pypi or even github
-      if it's the latter options (pypi or github) you will need to use autoinstall=True
+    """ This function will allow you to import components from another pyk file.
+    The pyk file can be located on your file system, or it can be on pypi or even github
+    if it's the latter options (pypi or github) you will need to use autoinstall=True
 
     Usage::
 
@@ -137,14 +123,10 @@ class _Pyk(object):
     return pyk_dict[pyk_file]
 
   def _exports(self, obj_dict):
-    """
-    Description:
-    ------------
-
-      This function requries you to pass a dictionary with the object alias as key and the object as value
-      for as many objects as you wish
-      This will then be used by users who need to require your particular pyk file
-      You can pass epyk object in that dictionary as well as function if you need to
+    """ This function requries you to pass a dictionary with the object alias as key and the object as value
+    for as many objects as you wish
+    This will then be used by users who need to require your particular pyk file
+    You can pass epyk object in that dictionary as well as function if you need to
 
     Usage::
 
