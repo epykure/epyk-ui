@@ -1,6 +1,6 @@
 import json
 
-from typing import List
+from typing import List, Union, Callable
 from epyk.core import Page as Rpt
 from epyk._version import __version__
 from epyk.core.data import events
@@ -99,6 +99,15 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
         PACKAGE_STATUS[css_pkg] = {"allowed": False}
       else:
         PACKAGE_STATUS[css_pkg] = {"allowed": True, "info": "Missing from white list"}
+
+
+class Interface:
+
+  def __init__(self, inputs: dict, outputs: dict):
+    self.page = Page()
+
+  def launch(self):
+    pass
 
 
 #

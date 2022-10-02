@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import types
 
 from epyk.core import html
@@ -28,7 +28,7 @@ class Buttons:
     Attributes:
     ----------
     :param component: The component to be aligned in the page
-    :param align: The text-align property within this component
+    :param align: Optional. The text-align property within this component
     """
     if align == "center":
       component.style.css.margin = "auto"
@@ -44,9 +44,9 @@ class Buttons:
     By default, it will use the theme's color.
 
     Attributes:
-    ----------
-    :param component: The component to be aligned in the page.
-    :param color: The color to set.
+    -----------
+    :param component: The component to be aligned in the page
+    :param color: The color to set
     """
     if color is True:
       component.style.css.background = self.page.theme.notch(-5) if self.page.theme.dark else self.page.theme.notch(4)
@@ -91,16 +91,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -149,17 +149,17 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align:  Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align:  Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     dft_options = {"colored": color or True}
     if options is not None:
@@ -205,17 +205,17 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
     component.style.css.background = color or self.page.theme.danger.base
@@ -259,16 +259,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param width: Optional. The integer for the component width and its unit.
-    :param height: Optional. The integer for the component height and its unit.
-    :param align: Optional. The horizontal position of the component.
-    :param icon: Optional. The value of the icon to display from font-awesome.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. The value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. The integer for the component width and its unit
+    :param height: Optional. The integer for the component height and its unit
+    :param align: Optional. The horizontal position of the component
+    :param icon: Optional. The value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. The value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -307,18 +307,18 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param size_notch: Optional. A value to be added to the number font size.
-    :param bottom: Optional. The position of the component.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param top: Optional. A tuple with the integer for the component's distance to the top of the page.
-    :param left: Optional. A tuple with the integer for the component's distance to the left of the page.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param size_notch: Optional. A value to be added to the number font size
+    :param bottom: Optional. The position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param top: Optional. A tuple with the integer for the component's distance to the top of the page
+    :param left: Optional. A tuple with the integer for the component's distance to the left of the page
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     left = Arguments.size(left, unit="%")
     top = Arguments.size(top, unit="%")
@@ -365,16 +365,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -410,16 +410,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -463,16 +463,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -512,15 +512,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param align: String. Optional. The text-align property within this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param align: Optional. The text-align property within this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -564,15 +564,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. The text-align property within this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -625,15 +625,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -675,15 +675,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param align: String. Optional. The text-align property within this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param align: Optional. The text-align property within this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -725,15 +725,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -772,15 +772,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -790,7 +790,7 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def radio(self, record=None, html_code: Optional[str] = None, group_name: Optional[str] = None,
+  def radio(self, record: List[dict] = None, html_code: Optional[str] = None, group_name: Optional[str] = None,
             width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), align: str = 'left',
             options: Optional[dict] = None, profile: Union[dict, bool] = None):
     """
@@ -821,15 +821,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param record: List of dict. The Python list of dictionaries.
-    :param group_name: String. Optional.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param record: Optional. The Python list of dictionaries
+    :param group_name: Optional. Group name for multi radio buttons
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -843,7 +843,7 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def toggle(self, record=None, label: str = None, color: str = None,
+  def toggle(self, record: dict = None, label: str = None, color: str = None,
              width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = "left",
              html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
@@ -879,16 +879,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
 
     Attributes:
-    ----------
-    :param record: Optional. The list of dictionaries with the data.
-    :param label: Optional. The toggle static label displayed.
-    :param color: Optional. String. Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    -----------
+    :param record: Optional. component data
+    :param label: Optional. The toggle static label displayed
+    :param color: Optional. String. Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     record = record or {"off": "Off", "on": "On"}
     width = Arguments.size(width, unit="%")
@@ -944,16 +944,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_checkboxes.py
 
     Attributes:
-    ----------
-    :param record: Optional. The list of dictionaries with the data.
-    :param color: Optional. The color code.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The text-align property within this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    -----------
+    :param record: Optional. The list of dictionaries with the data
+    :param color: Optional. The color code
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -989,16 +989,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param flag: Optional. The value of the checkbox. Default False.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param label: Optional. The component label content.
-    :param icon: Optional. The icon to be used in the check component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param flag: Optional. The value of the checkbox. Default False
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param label: Optional. The component label content
+    :param icon: Optional. The icon to be used in the check component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -1008,14 +1008,14 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def menu(self, record, text: str = "", icon: Optional[Union[str, bool]] = None,
+  def menu(self, record: list = None, text: str = "", icon: Optional[Union[str, bool]] = None,
            width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
            html_code: str = None, tooltip: str = None,
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
     Description:
     -----------
-    Button with an underlying items menu.
+    Button with underlying items menu.
 
     :tags:
     :categories:
@@ -1038,16 +1038,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
 
     Attributes:
-    ----------
-    :param record: Optional. The list of dictionaries with the data.
-    :param text: Optional. The value to be displayed to the button.
-    :param icon: Optional. The icon to be used in the check component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param record: Optional. The list of dictionaries with the data
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. The icon to be used in the check component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1064,7 +1064,7 @@ class Buttons:
     Description:
     -----------
     Button for a badge which point to the various application stores (Google and Apple).
-    The badge must be issued from teh Google play store.
+    The badge must be issued from the Google Play Store.
 
     :tags:
     :categories:
@@ -1084,15 +1084,15 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
 
     Attributes:
-    ----------
-    :param image: The url of the image.
-    :param url: The link to the app in the store.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param align: Optional. The text-align property within this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param image: The url of the image
+    :param url: The link to the app in the store
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param align: Optional. The text-align property within this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="rem")
     height = Arguments.size(height, unit="rem")
@@ -1105,7 +1105,7 @@ class Buttons:
     html.Html.set_component_skin(component)
     return component
 
-  def live(self, time, js_funcs, icon: Optional[Union[str, bool]] = "fas fa-circle",
+  def live(self, time: int, js_funcs: types.JS_FUNCS_TYPES, icon: Optional[Union[str, bool]] = "fas fa-circle",
            width: types.SIZE_TYPE = (15, "px"), height: types.SIZE_TYPE = (15, "px"), align: str = "left",
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """
@@ -1127,16 +1127,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button_icon.py
 
     Attributes:
-    ----------
-    :param time: Integer. Interval time in second.
-    :param js_funcs: String | List. The Javascript functions.
-    :param icon: Optional. The font awesome icon reference.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param time: Interval time in second
+    :param js_funcs: The Javascript functions
+    :param icon: Optional. The font awesome icon reference
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     dflt_options = {"started": True}
     if options is not None:
@@ -1196,16 +1196,16 @@ class Buttons:
     Templates:
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.page.ui.text(
       text, tooltip=tooltip, width=width, html_code=html_code, height=height, profile=profile, options=options)
@@ -1232,14 +1232,14 @@ class Buttons:
     Templates:
 
     Attributes:
-    ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip:  Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.button(
       icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile,
@@ -1267,14 +1267,14 @@ class Buttons:
     Templates:
 
     Attributes:
-    ----------
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
                             profile=profile, options=options, align=align)
@@ -1301,17 +1301,17 @@ class Buttons:
     Templates:
 
     Attributes:
-    ----------
-    :param text: String. Optional. The text to be displayed to the button.
-    :param value: String. Optional. The value to be displayed in the pill.
-    :param group: String. Optional. The group value fot the pill.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The text to be displayed to the button
+    :param value: Optional. The value to be displayed in the pill
+    :param group: Optional. The group value fot the pill
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.page.ui.text(
       text, width=width, height=height, align=align, html_code=html_code, tooltip=tooltip, profile=profile,
@@ -1356,26 +1356,25 @@ class Buttons:
     Related Pages:
 
     Attributes:
-    ----------
-    :param items: List of items to be added to the menu.
-    :param text: Optional. The text visible in the button.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param items: List of items to be added to the menu
+    :param text: Optional. The text visible in the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    # report, record, text, width, height, html_code, tooltip, profile, options
     component = html.HtmlButton.ButtonMore(
       self.page, items, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     html.Html.set_component_skin(component)
     return component
 
-  def filter(self, text: str, is_number: bool = False, width: Union[tuple, int] = ("auto", ""),
+  def filter(self, text: str = "", is_number: bool = False, width: Union[tuple, int] = ("auto", ""),
              height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None,
              tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
     """
@@ -1388,15 +1387,15 @@ class Buttons:
     Usage::
 
     Attributes:
-    ----------
-    :param text:
-    :param is_number:
-    :param width:
-    :param height:
-    :param html_code:
-    :param tooltip:
-    :param profile:
-    :param options:
+    -----------
+    :param text: Optional. The filter value
+    :param is_number: Optional. The filter property type
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1450,16 +1449,16 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -1508,17 +1507,17 @@ class Buttons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
     Attributes:
-    ----------
-    :param filename: String. Optional. The filename.
-    :param text: String. Optional. The value to be displayed to the button.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    -----------
+    :param filename: Optional. The filename
+    :param text: Optional. The value to be displayed to the button
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

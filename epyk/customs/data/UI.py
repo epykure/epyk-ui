@@ -157,7 +157,7 @@ class ProgressComponents:
   def __init__(self, ui):
     self.page = ui.page
 
-  def gauge(self, value: float, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (45, "px"),
+  def gauge(self, value: float = 0, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (45, "px"),
             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     """
     Description:
@@ -181,7 +181,7 @@ class ProgressComponents:
     return HtmlProgress.Gauge(
       value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)
 
-  def circle(self, value: float, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (90, "px"),
+  def circle(self, value: float = 0, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (90, "px"),
              html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
     return HtmlProgress.Circle(
       value, page=self.page, width=width, height=height, html_code=html_code, options=options, profile=profile)

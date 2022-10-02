@@ -32,10 +32,7 @@ class Navigation:
   def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom=None, tooltip: str = None,
          width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
          options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
-    Navigation button to go to the top of the page directly.
+    """ Navigation button to go to the top of the page directly.
 
     :tags:
     :categories:
@@ -44,8 +41,6 @@ class Navigation:
 
       page.ui.navigation.up()
 
-    Attributes:
-    ----------
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
     :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
     :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.

@@ -44,16 +44,16 @@ class Calendar:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
-    ----------
-    :param month: Optional. The month number.
+    -----------
+    :param month: Optional. The month number
     :param content:
     :param year:
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The text-align property within this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -113,7 +113,7 @@ class Calendar:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param minutes:
     :param text: Optional. The value to be displayed to the timer
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -160,14 +160,14 @@ class Calendar:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
-    ----------
-    :param content: Optional. The Pie charts values.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param content: Optional. The Pie charts values
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     today = datetime.date.today()
     content = content or {}
@@ -219,13 +219,13 @@ class Calendar:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
-    ----------
-    :param record: Optional. The list of dictionaries with the input data.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The text-align property within this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    -----------
+    :param record: Optional. The list of dictionaries with the input data
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     data = []
     if isinstance(record, dict):
@@ -269,14 +269,14 @@ class Calendar:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
 
     Attributes:
-    ----------
-    :param month_period: Number of months of forecast.
+    -----------
+    :param month_period: Number of months of forecast
     :param content: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param position: Optional. The position compared to the main component tag.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param position: Optional. The position compared to the main component tag
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     today = datetime.date.today()
     year = today.year
@@ -298,7 +298,8 @@ class Calendar:
     return component
 
   def google(self, task, start: str, end: str, details=None, location=None, icon: str = "google_plus",
-             text: str = "Add to Google Calendar", options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
+             text: str = "Add to Google Calendar", options: types.OPTION_TYPE = None,
+             profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -321,16 +322,16 @@ class Calendar:
     TODO: improve the time management in this component
 
     Attributes:
-    ----------
+    -----------
     :param task:
     :param start: Date format YYYYMMDD
     :param end: Date format YYYYMMDD
     :param details: Optional.
     :param location: Optional.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param text: Optional. The value to be displayed to the button.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param text: Optional. The value to be displayed to the button
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     icon = self.page.ui.icons.awesome(icon, options=options, profile=profile)
     icon.icon.style.css.font_factor(5)
@@ -373,16 +374,16 @@ class Calendar:
     TODO: improve the time management in this component
 
     Attributes:
-    ----------
+    -----------
     :param task:
     :param start:
     :param end:
     :param details: Optional.
     :param location: Optional.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param text: Optional. The value to be displayed to the button.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param text: Optional. The value to be displayed to the button
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     # Default options
     calendar_options = {'CALSCALE': 'GREGORIAN', 'VERSION': '2.0'}
@@ -425,16 +426,16 @@ class Calendar:
     :categories:
 
     Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the button.
+    -----------
+    :param text: Optional. The value to be displayed to the button
     :param value: Optional.
     :param group: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     component = self.page.ui.text(
       text, width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)

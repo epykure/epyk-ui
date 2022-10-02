@@ -474,18 +474,18 @@ class Text(Html.Html):
 
   _js__builder__ = '''
       var content = data;
-      if(options.reset){htmlObj.innerHTML = ""}; 
+      if(options && options.reset){htmlObj.innerHTML = ""}; 
       if(data !== ''){ 
-        if(options.showdown){
+        if(options && options.showdown){
           var converter = new showdown.Converter(options.showdown); content = converter.makeHtml(data)} 
-        if((options.maxlength != undefined) && (data.length > options.maxlength)){
+        if(options && (options.maxlength != undefined) && (data.length > options.maxlength)){
           content = data.slice(0, options.maxlength); 
           if(options.markdown){htmlObj.innerHTML = content +"..."} else {htmlObj.innerHTML = content +"..."}; 
           htmlObj.title = data} 
         else{
-          if(options.markdown){htmlObj.innerHTML = content} 
+          if(options && options.markdown){htmlObj.innerHTML = content} 
           else {htmlObj.innerHTML = content}}};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
+      if(options && typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}};
       '''
 
   def __str__(self):

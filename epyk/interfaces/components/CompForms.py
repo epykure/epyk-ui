@@ -28,7 +28,7 @@ class Forms:
       f = page.ui.form()
 
     Attributes:
-    ----------
+    -----------
     :param helper: Optional. A tooltip helper
     :param components: Optional. The different HTML objects to be added to the component
     """
@@ -57,7 +57,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Attributes:
-    ----------
+    -----------
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
@@ -98,7 +98,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
     Attributes:
-    ----------
+    -----------
     :param html_code: An identifier for the prefix of the date components (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
@@ -134,7 +134,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
-    ----------
+    -----------
     :param html_code: An identifier for this component (on both Python and Javascript side)
     :param value: Optional. The value to be displayed to this component. Default empty
     :param label: Optional. The text of label to be added to the component
@@ -175,7 +175,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
     Attributes:
-    ----------
+    -----------
     :param record: The Python list of dictionaries
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: Optional. A tooltip helper
@@ -212,7 +212,7 @@ class Forms:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty
     :param placeholder: Optional. The text to be displayed when the input is empty
     :param button: Optional. The button component

@@ -53,7 +53,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The string value to be displayed in the component
     :param label: Optional. The text of label to be added to the component
     :param color: Optional. The color of the text
@@ -130,7 +130,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -194,7 +194,7 @@ class Fields:
     :tags: Dates
 
     Attributes:
-    ----------
+    -----------
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -246,7 +246,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
@@ -299,7 +299,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param deltatime: Optional
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -344,7 +344,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -384,7 +384,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -431,7 +431,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -480,7 +480,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -528,7 +528,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -588,7 +588,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -633,7 +633,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -676,7 +676,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -723,7 +723,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -766,7 +766,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -813,7 +813,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -863,7 +863,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default False
     :param label: Optional. The text of label to be added to the component
     :param group_name: Optional. Group different radio together to only have 1 value selected
@@ -922,7 +922,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param min:
     :param max:
@@ -968,7 +968,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to the component. Default False
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1025,7 +1025,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1136,7 +1136,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1187,7 +1187,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1229,7 +1229,7 @@ class Fields:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param label: Optional. The text of label to be added to the component
     :param text: Optional. The string value to be displayed in the component
     :param align: Optional. The text-align property within this component
@@ -1270,7 +1270,7 @@ class Fields:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param label: Optional. The text of label to be added to the component
     :param value: Optional. The value to be displayed to this component. Default T
     :param align: Optional. The text-align property within this component
@@ -1332,7 +1332,7 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
 
     Attributes:
-    ----------
+    -----------
     :param record: Optional. The list of dictionaries with the data
     :param label: Optional. The toggle static label displayed
     :param is_on: Optional.
@@ -1373,7 +1373,7 @@ class Fields:
     ------------
 
     Attributes:
-    ----------
+    -----------
     :param value: Optional. The value to be displayed to this component. Default 0
     :param min: Optional.
     :param max: Optional.
@@ -1437,7 +1437,7 @@ class Fields:
     ------------
 
     Attributes:
-    ----------
+    -----------
     :param items:
     :param button:
     :param width:
@@ -1483,7 +1483,7 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param start_date:
     :param end_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1531,7 +1531,7 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param start_date:
     :param days:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1581,7 +1581,7 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param start_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -1627,13 +1627,13 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param value:
     :param label: Optional.
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param helper: Optional.
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -1663,7 +1663,7 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param completion_date:
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1710,12 +1710,12 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param time:
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1742,7 +1742,7 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param value: The workload percentage.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
@@ -1783,13 +1783,13 @@ class Timelines:
 
 
     Attributes:
-    ----------
+    -----------
     :param records:
-    :param width:
-    :param height:
-    :param options:
-    :param html_code:
-    :param profile:
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     :param helper:
     """
     component = self.page.ui.lists.items(records, width, height, options, html_code, profile, helper)

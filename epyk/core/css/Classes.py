@@ -35,7 +35,7 @@ def get_class_override(css_cls):
   Hook to override predefined CSS classes for all the reports in the project.
 
   Attributes:
-  ----------
+  -----------
   :param css_cls: Style. The CSS Class in the framework.
   """
   if OVERRIDES is None:
@@ -86,7 +86,7 @@ class Catalog:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param font_family: Defines the name of the font.
     :param src: Defines the URL(s) where the font should be downloaded from.
     :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
@@ -105,7 +105,7 @@ class Catalog:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param cls_type: The alias of the class other or main.
     """
     self.__class_list_type = self.__class_list[cls_type]
@@ -447,7 +447,7 @@ class Catalog:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param filename: The file name.
     :param path: Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
                  will be used.
@@ -476,7 +476,7 @@ class Catalog:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param text: The CSS fragment to be added to the HTML report. This can be a class or a group of class.
 
     :return: self for the chaining.
@@ -499,8 +499,8 @@ class Catalog:
         '_hover': {'color': 'red'}})
 
     Attributes:
-    ----------
-    :param attrs: Dictionary. The expected class attributes.
+    -----------
+    :param attrs: The expected class attributes.
 
     :return: The Python class
     """
@@ -525,8 +525,8 @@ class Catalog:
       t1.style.add_classes.external("cssClassReference")
 
     Attributes:
-    ----------
-    :param classname: String | array. The external class name to be added.
+    -----------
+    :param classname: The external class name to be added.
 
     :return: self for the chaining.
     """

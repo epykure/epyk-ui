@@ -1,8 +1,13 @@
 ## [Unreleased]
 
 ### Added
+- Add components section in documentation
+- Add JqueryUI varId property
 
 ### Changed
+- Change documentation in docstring
+- Change slider default behaviour for output display
+- Change type annotation
 
 ### Fixed
 

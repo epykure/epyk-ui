@@ -374,6 +374,15 @@ class JQueryUiDatePicker(JQueryUI):
 
 class Slider(JQueryUI):
 
+  @property
+  def varId(self):
+    """
+    Description:
+    ------------
+    Shortcut to get the Jquery reference.
+    """
+    return self.component.dom.jquery.varId
+
   def destroy(self):
     """
     Description:

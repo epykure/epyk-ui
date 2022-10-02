@@ -49,7 +49,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param image: Optional. The image file name
     :param path: Optional. Optional. The image file path
     :param width: Optional. Optional. The component width in pixel or percentage
@@ -96,7 +96,7 @@ class Images:
         path=picture_path, width=(100, 'px'))
 
     Attributes:
-    ----------
+    -----------
     :param image: Optional. The url path of the image
     :param caption: Optional.
     :param path: Optional. The image file path
@@ -140,7 +140,7 @@ class Images:
 
 
     Attributes:
-    ----------
+    -----------
     :param components: List of HTML Component. internal components
     :param max_width: Optional. The maximum width for this container
     :param align: Optional. A string with the horizontal position of the component
@@ -172,7 +172,7 @@ class Images:
 
 
     Attributes:
-    ----------
+    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -211,7 +211,7 @@ class Images:
 
 
     Attributes:
-    ----------
+    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. Tuple. The component width in pixel or percentage
     :param height: Optional. Tuple. The component height in pixel or percentage
@@ -255,7 +255,7 @@ class Images:
 
 
     Attributes:
-    ----------
+    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. The component width in pixel or percentage
     :param height: Optional. The component height in pixel or percentage
@@ -294,7 +294,7 @@ class Images:
 
 
     Attributes:
-    ----------
+    -----------
     :param video_id: Optional. The youtube video ID
     :param width: Optional. The component width in pixel or percentage
     :param height: Optional. The component height in pixel or percentage
@@ -342,7 +342,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param image: Optional. The image file name
     :param path: Optional. String. The image file path
     :param width: Optional. Tuple. The component width in pixel or percentage
@@ -392,7 +392,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The value to be displayed to the component
     :param image: Optional. The url of the image
     :param path: Optional. String. The image file path
@@ -481,7 +481,7 @@ class Images:
       - :class:`epyk.core.html.HtmlImage.Image`
 
     Attributes:
-    ----------
+    -----------
     :param image: The url of the image
     :param name: The name of the image
     :param title: Optional. A panel title. This will be attached to the title property
@@ -540,7 +540,7 @@ class Images:
       https://tympanus.net/Tutorials/OriginalHoverEffects/
 
     Attributes:
-    ----------
+    -----------
     :param image: Optional. The image file name
     :param text: Optional. String. The image file path
     :param title: Optional. The image title displayed in to the mask on mouse hover the container
@@ -589,7 +589,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param images: Optional. With the different picture file names
     :param path: Optional. The common path for the pictures
     :param width: Optional. Tuple. The component width in pixel or percentage
@@ -634,7 +634,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param symbol: Optional. The emoji code
     :param top: Optional. The number of pixel from the top of the page
     :param options: Optional. Specific Python options available for this component
@@ -671,7 +671,7 @@ class Images:
       https://fontawesome.com/icons?m=free
 
     Attributes:
-    ----------
+    -----------
     :param icon: Optional. The component icon content from font-awesome references
     :param family: Optional. The Icon framework reference
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
@@ -737,7 +737,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The content of the badge
     :param label: Optional. The label to display close to the badge
     :param icon: Optional. A String with the icon to display from font-awesome
@@ -787,7 +787,7 @@ class Images:
       - :class:`epyk.core.html.HtmlContainer.Div`
 
     Attributes:
-    ----------
+    -----------
     :param code: The color code
     :param color: Optional. The font color
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -830,7 +830,7 @@ class Images:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param images: Optional. The list with the pictures
     :param columns: Optional. The number of column for the mosaic component
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -919,7 +919,7 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
     Attributes:
-    ----------
+    -----------
     :param align: Optional. A string with the horizontal position of the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

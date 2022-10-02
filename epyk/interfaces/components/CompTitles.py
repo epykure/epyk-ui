@@ -4,9 +4,13 @@
 from typing import Union
 from epyk.core import html
 from epyk.interfaces import Arguments
+from epyk.core.py import types
 
 
 class Titles:
+  """
+
+  """
 
   def __init__(self, ui):
     self.page = ui.page
@@ -25,9 +29,9 @@ class Titles:
 
     return text
 
-  def head(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
-           html_code: str = None, profile: Union[dict, bool] = False):
+  def head(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+           color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+           html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -44,15 +48,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -73,9 +77,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def headline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: bool = True,
-               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
-               profile: Union[dict, bool] = False):
+  def headline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+               color: bool = True, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+               html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -94,15 +98,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param options: Optional. Specific Python options available for this component.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param align: Optional. The text-align property within this component.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -121,9 +125,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def title(self, text: Union[str, dict] = None, options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-            width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
-            profile: Union[dict, bool] = False):
+  def title(self, text: Union[str, dict] = None, options: dict = None, tooltip: str = "", align: str = "left",
+            color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+            html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -140,15 +144,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. he text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. he text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -168,9 +172,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def section(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-              width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
-              profile: Union[dict, bool] = False):
+  def section(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+              color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+              html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -184,15 +188,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -213,9 +217,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def rubric(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-             width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
-             html_code: str = None, profile: Union[dict, bool] = False):
+  def rubric(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+             color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+             html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -231,15 +235,15 @@ class Titles:
 
     Attributes:
     ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -258,9 +262,10 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def category(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-               width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
-               profile: Union[dict, bool] = False):
+  def category(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+               color: str = None, width: types.SIZE_TYPE = (None, "px"),
+               height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
+               profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -275,16 +280,16 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -308,9 +313,10 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def caption(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-              width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""), html_code: str = None,
-              profile: Union[dict, bool] = False):
+  def caption(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+              color: str = None,
+              width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
+              profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -325,16 +331,16 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -352,9 +358,9 @@ class Titles:
     html.Html.set_component_skin(html_title)
     return html_title
 
-  def underline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-                width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
-                html_code: str = None, profile: Union[dict, bool] = False):
+  def underline(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+                color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+                html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -369,16 +375,16 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param align: String. Optional. The text-align property within this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -400,8 +406,8 @@ class Titles:
     return html_title
 
   def bold(self, text: str = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-           width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
-           html_code: str = None, profile: Union[dict, bool] = False):
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+           html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -414,19 +420,18 @@ class Titles:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
-        http://192.168.0.34:8081/script/home
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -444,9 +449,9 @@ class Titles:
     return html_title
 
   def subtitle(self, text: str = "", name: str = None, contents=None, color: str = None, picture: str = None,
-               icon: str = None, top: int = 5, html_code: str = None, width: Union[tuple, int] = ("auto", ""),
-               height: Union[tuple, int] = (None, "px"), align: str = None, options: dict = None,
-               profile: Union[dict, bool] = None):
+               icon: str = None, top: int = 5, html_code: str = None, width: types.SIZE_TYPE = ("auto", ""),
+               height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None,
+               profile: types.PROFILE_TYPE = None):
     """
     Description:
     ------------
@@ -457,20 +462,20 @@ class Titles:
     Usage::
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
+    -----------
+    :param text: Optional. The value to be displayed to the component
     :param name:
     :param contents:
-    :param color: String. Optional. The font color in the component. Default inherit.
+    :param color: Optional. The font color in the component. Default inherit
     :param picture:
     :param icon:
     :param top:
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. The text-align property within this component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -482,9 +487,9 @@ class Titles:
     html.Html.set_component_skin(title)
     return title
 
-  def upper(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left", color: str = None,
-            width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = ('auto', ""),
-            html_code: str = None, profile: Union[dict, bool] = False):
+  def upper(self, text: Union[str, dict] = "", options: dict = None, tooltip: str = "", align: str = "left",
+            color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
+            html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
     Description:
     ------------
@@ -503,16 +508,16 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
     Attributes:
-    ----------
-    :param text: String. Optional. The value to be displayed to the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param align: String. Optional. The text-align property within this component.
-    :param color: String. Optional. The font color in the component. Default inherit.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    -----------
+    :param text: Optional. The value to be displayed to the component
+    :param options: Optional. Specific Python options available for this component
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param align: Optional. The text-align property within this component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")

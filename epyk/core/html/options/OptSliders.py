@@ -1,5 +1,5 @@
 
-from typing import Union
+from typing import Union, Optional
 from epyk.core.py import types
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
@@ -211,7 +211,7 @@ class OptionsSlider(Options):
     self._config(flag)
 
   def slide(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
-            readout: bool = True, readout_level: str = "handle", readout_format: bool = True,
+            readout: bool = True, readout_level: str = "handle", readout_format: Optional[bool] = True,
             options: types.OPTION_TYPE = None, css: dict = None, precision: int = 0, delay_ms: int = 0):
     """
     Description:
@@ -280,12 +280,12 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
           fmt_html = "accounting.formatNumber(ui.value, %s)" % readout_format
         else:
           fmt_html = "ui.values[0] +' - '+ ui.values[1]" if self.component.is_range else "ui.value"
+        self.force_show_current = True
         value = ''' 
-if ($(ui.handle).children().length > 0){var label = $(ui.handle).children().first()}
-else {var label = $('<span name="slideLabel"></span>'); $(ui.handle).append(label)}
-var options = %(options)s; options.of = ui.handle; label.css(%(css)s);
-$(label).html(%(fmt_html)s).position(options)''' % {
-          "options": options, "fmt_html": fmt_html, "css": dfl_css}
+%(builder)s(document.getElementsByName('out_%(htmlCode)s')[0], %(fmt_html)s, %(builderOptions)s)''' % {
+          "builder": self.component.output.builder_name,
+          "builderOptions": self.component.output.options.config_js(),
+          "fmt_html": fmt_html, "htmlCode": self.component.html_code}
       if js_funcs is None:
         js_funcs = []
       if delay_ms:
@@ -294,7 +294,6 @@ $(label).html(%(fmt_html)s).position(options)''' % {
         js_funcs.append(value)
     self._config(
       "function (event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
-    self.force_show_current = False
 
   def create(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """

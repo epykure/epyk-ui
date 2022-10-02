@@ -316,6 +316,34 @@ class Slider(Html.Html):
       self.style.css.padding = "0 10px"
     self.style.css.margin = "15px 0"
     self.add_helper(helper)
+    self.__output = None
+
+  @property
+  def output(self) -> Html.Html:
+    if self.__output is None:
+      self.__output = self.page.ui.tags.span(html_code="out_%s" % self.html_code)
+      self.__output.attr["class"].clear()
+      self.__output.css({"position": "relative", "top": "15px", "font-size": "14px"})
+      self.__output.attr["name"] = "out_%s" % self.html_code
+      self.__output.onReady(["%(jqId)s.find('.ui-slider-handle').append(%(outComp)s)" % {
+        "jqId": self.js.varId,
+        "outComp": self.__output.js.jquery.varId
+      }])
+      self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
+      self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
+      self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
+        self.__output.builder_name, self.__output._js__builder__))
+    return self.__output
+
+  @output.setter
+  def output(self, component: Html.Html):
+    self.__output = component
+    self.options.force_show_current = True
+    self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
+    self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
+    self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
+      self.__output.builder_name, self.__output._js__builder__))
+    component.attr["name"] = "out_%s" % self.html_code
 
   @property
   def options(self) -> OptSliders.OptionsSlider:
@@ -451,20 +479,22 @@ class Slider(Html.Html):
       self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, page=self.page)
     return self._dom
 
-  _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css)
-      if (typeof options.handler_css !== 'undefined'){
-        %(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
-      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+  _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css);
+if (typeof options.handler_css !== 'undefined'){%(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
+if(typeof options.out_builder_fnc !== "undefined"){
+  window[options.out_builder_fnc](document.getElementsByName('out_'+ htmlObj.id)[0], data, options.out_builder_opts); 
+}''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def __str__(self):
-    if self.options.force_show_current:
-      if self.options.force_show_current is True:
-        self.options.slide([], readout_level="slider", readout_format=None)
-      else:
-        self.options.slide([], readout_level="slider", readout_format=self.options.force_show_current)
+    #if self.options.force_show_current:
+    #  if self.options.force_show_current is True:
+    #    self.options.slide([], readout_level="slider", readout_format=None)
+    #  else:
+    #    self.options.slide([], readout_level="slider", readout_format=self.options.force_show_current)
     self.page.properties.js.add_builders(self.refresh())
     if 'slide' in self.options.js_tree:
       self.page.properties.js.add_builders(self.js.slide(self._vals))
+
     if self.options.show_min_max:
       return '''
         <div %(strAttr)s>

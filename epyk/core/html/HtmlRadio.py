@@ -138,7 +138,7 @@ class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
 
-  def __init__(self, page: primitives.PageModel, records: list, color: str, width: types.SIZE_TYPE,
+  def __init__(self, page: primitives.PageModel, records: dict, color: str, width: types.SIZE_TYPE,
                height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE):
     self.width = width[0]
     super(Switch, self).__init__(page, records, html_code=html_code, options=options, profile=profile,

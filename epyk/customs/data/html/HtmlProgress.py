@@ -97,7 +97,7 @@ class Circle(Html.Html):
   to { --pgPercentage: var(--value); }
 }
 
-div[name="circle_progressbar"] {
+.CircleProgressbar {
   animation: growProgressBar 1s 1 forwards ease-in-out;
   counter-set: percentage var(--pgPercentage);
   border-radius: 50%;
@@ -106,7 +106,7 @@ div[name="circle_progressbar"] {
   place-items: center;
 }
 
-div[name="circle_progressbar"]::after {
+.CircleProgressbar::after {
   content: counter(percentage) '%';
   line-height: 90px;
   text-align: center;
@@ -120,7 +120,7 @@ div[name="circle_progressbar"]::after {
     self.style.css.display = "inline-block"
     self.aria.valuemax = 100
     self.aria.valuemin = 0
-    self.attr["name"] = "circle_progressbar"
+    self.attr["class"].add("CircleProgressbar")
     self.style.css.color = self.page.theme.notch()
     self.style.css.background = 'radial-gradient(closest-side, %(back)s 80%%, transparent 0 99.9%%, %(back)s 0), conic-gradient(%(color)s calc(var(--pgPercentage) * 1%%), %(grey)s 0)' % {
       'color': self.page.theme.notch(), "grey": self.page.theme.greys[1], 'back': self.page.theme.greys[0]}
@@ -135,8 +135,7 @@ div[name="circle_progressbar"]::after {
     htmlObj.style.webkitAnimation = 'none';
     setTimeout(function() {
         htmlObj.style.webkitAnimation = '';
-    }, 1);
-'''
+    }, 1)'''
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])

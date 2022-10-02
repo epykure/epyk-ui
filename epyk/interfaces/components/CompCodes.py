@@ -42,7 +42,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -88,7 +88,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -134,7 +134,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -179,7 +179,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -224,7 +224,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -269,7 +269,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -310,7 +310,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -351,7 +351,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param text: Optional. The text
     :param color: Optional. The color code
     :param width: Optional. The with details in the format(value, unit)
@@ -392,7 +392,7 @@ class Code:
     Templates:
 
     Attributes:
-    ----------
+    -----------
     :param language: The language
     :param text: Optional. The text
     :param color: Optional. The color code

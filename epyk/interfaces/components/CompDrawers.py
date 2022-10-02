@@ -33,7 +33,7 @@ class Drawers:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/drawers.py
 
     Attributes:
-    ----------
+    -----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -61,7 +61,7 @@ class Drawers:
     Usage::
 
     Attributes:
-    ----------
+    -----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -103,7 +103,7 @@ class Drawers:
         ])
 
     Attributes:
-    ----------
+    -----------
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -136,7 +136,7 @@ class Drawers:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/multi_drawers.py
 
     Attributes:
-    ----------
+    -----------
     :param component: Object in charge of managing the panel display
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -171,7 +171,7 @@ class Drawers:
       page.ui.drawers.no_handle(page.ui.button("No Handle"))
 
     Attributes:
-    ----------
+    -----------
     :param component: Object in charge of managing the panel display
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

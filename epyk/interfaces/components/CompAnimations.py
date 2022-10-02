@@ -7,6 +7,9 @@ from epyk.core import html
 
 
 class Animations:
+  """
+
+  """
 
   def __init__(self, ui):
     self.page = ui.page
