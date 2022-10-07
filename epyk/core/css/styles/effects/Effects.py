@@ -10,11 +10,7 @@ class Effects:
   def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel = None,
                ovrs_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param page:
     :param component:
     :param Optional[dict] ovrs_attrs:
@@ -28,8 +24,6 @@ class Effects:
 
   def get_attrs(self) -> dict:
     """
-    Description:
-    ------------
     Return the effect CSS attributes.
     """
     return self.attrs
@@ -38,8 +32,6 @@ class Effects:
            delay: int = 0, iteration_count: str = "infinite", direction: str = "alternate",
            fill_mode: str = 'forwards') -> str:
     """
-    Description:
-    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to
     add the repeatedly glowing effect.
 
@@ -48,8 +40,6 @@ class Effects:
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param str color: The color to use fin the effect
     :param int radius: The length of the radius to display in the animate
     :param int duration: The animation-duration property defines how long time an animation should take to complete.
@@ -78,15 +68,11 @@ class Effects:
             iteration_count="infinite", direction="alternate",
             fill_mode='forwards') -> str:
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param int duration: The animation-duration property defines how long time an animation should take to complete.
     :param str timing_fnc: The animation-timing-function property specifies the speed curve of the animation.
     :param int delay: The animation-delay property specifies a delay for the start of an animation.
@@ -108,8 +94,6 @@ class Effects:
   def shiny_text(self, color, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
                  direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to add
     the repeatedly glowing effect
 
@@ -118,8 +102,6 @@ class Effects:
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param color: String. The color to use fin the effect
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -140,8 +122,6 @@ class Effects:
   def shiny_border(self, color, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
                    direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to
     add the repeatedly glowing effect.
 
@@ -150,8 +130,6 @@ class Effects:
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param color: String. The color to use fin the effect
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -173,16 +151,12 @@ class Effects:
   def spin(self, degree=360, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
            direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param degree: Integer.
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -204,16 +178,12 @@ class Effects:
   def translate(self, start=-100, end=0, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
                 direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param start:
     :param end:
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
@@ -235,16 +205,12 @@ class Effects:
   def down(self, start=-100, end=0, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
            direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param start:
     :param end:
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
@@ -267,16 +233,12 @@ class Effects:
   def up(self, bottom=(20, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
          direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_glowing_text.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param bottom:
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -298,11 +260,7 @@ class Effects:
   def left(self, left=(100, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
            direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param left:
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -324,11 +282,7 @@ class Effects:
   def right(self, right=(100, 'px'), duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
             direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param right:
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
@@ -350,11 +304,7 @@ class Effects:
   def appear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
              fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
     :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
@@ -372,11 +322,7 @@ class Effects:
   def fade_out(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
                fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
     :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
@@ -395,11 +341,7 @@ class Effects:
   def fade_in(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
               fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
     :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
@@ -418,8 +360,6 @@ class Effects:
 
   def reduce(self):
     """
-    Description:
-    ------------
     Reduce the component size when the mouse is hover.
     """
     self.component.style.add_classes.layout.hover_reduce()
@@ -427,12 +367,8 @@ class Effects:
 
   def zoom(self, large: bool = False):
     """
-    Description:
-    ------------
     Zoom on the component when the mouse is hover.
 
-    Attributes:
-    ----------
     :param bool large:
     """
     if large:
@@ -443,8 +379,6 @@ class Effects:
 
   def rotate(self):
     """
-    Description:
-    ------------
     Rotate the component when the mouse is hover.
     """
     self.component.style.add_classes.layout.hover_rotate()
@@ -452,8 +386,6 @@ class Effects:
 
   def colored(self):
     """
-    Description:
-    ------------
     Display the color component when the mouse is hover.
     """
     self.component.style.add_classes.layout.hover_colored()
@@ -462,11 +394,7 @@ class Effects:
   def disappear(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
                 direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
     :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
@@ -486,11 +414,7 @@ class Effects:
   def sliding(self, duration=15, timing_fnc="linear", delay=0, iteration_count="infinite", direction=None,
               fill_mode=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param duration: Integer. The animation-duration property defines how long time an animation should take to complete.
     :param timing_fnc: String. The animation-timing-function property specifies the speed curve of the animation.
     :param delay: Integer. The animation-delay property specifies a delay for the start of an animation.
@@ -512,8 +436,6 @@ class Effects:
   def animate(self, name, targ_css_attrs, orig_css_attrs=None, delay=0, duration=1, timing_fnc="ease-in-out",
               iteration_count="infinite", directions="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
     Use the text-shadow property to create the neon light effect, and then use animation together with keyframes to
     add the repeatedly glowing effect
 
@@ -523,8 +445,6 @@ class Effects:
 
       https://www.w3schools.com/cssref/css_animatable.asp
 
-    Attributes:
-    ----------
     :param name: String. The animation name
     :param targ_css_attrs: Dictionary. The different CSS attributes to animate
     :param orig_css_attrs: Dictionary. The initial state of the attributes to animate

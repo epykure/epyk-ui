@@ -21,19 +21,13 @@ class VegaEmdedCharts(Html.Html):
 
   @property
   def chartId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
     """
     return "window['%s_obj']" % self.htmlCode
 
   @property
   def vega(self):
-    """
-    Description:
-    -----------
-    JavaScript Vega Chart reference API.
+    """   JavaScript Vega Chart reference API.
 
     Related Pages:
 
@@ -49,10 +43,7 @@ class VegaEmdedCharts(Html.Html):
 
   @property
   def js(self):
-    """
-    Description:
-    -----------
-    JavaScript Vega Chart reference API.
+    """   JavaScript Vega Chart reference API.
 
     Related Pages:
 
@@ -72,12 +63,8 @@ class VegaEmdedCharts(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    ------------
     Update the chart with context and / or data changes.
 
-    Attributes:
-    ----------
     :param data: List. Optional. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.

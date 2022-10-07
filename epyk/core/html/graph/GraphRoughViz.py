@@ -21,10 +21,7 @@ class RoughViz(Html.Html):
 
   @property
   def shared(self) -> OptChartRoughViz.OptionsChartSharedRoughViz:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -37,10 +34,7 @@ class RoughViz(Html.Html):
 
   @property
   def options(self) -> OptChartRoughViz.RoughVizLine:
-    """
-    Description:
-    -----------
-    Chart specific options.
+    """   Chart specific options.
 
     :rtype: OptChartRoughViz.RoughVizLine
     """
@@ -48,19 +42,14 @@ class RoughViz(Html.Html):
 
   @property
   def datasets(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._datasets
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """
-    Description:
-    -----------
-    Property to the D3 library.
+    """   Property to the D3 library.
 
     :rtype: JsD3.D3Select
     """
@@ -70,8 +59,6 @@ class RoughViz(Html.Html):
 
   def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
     """
-    Description:
-    ------------
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -79,9 +66,7 @@ class RoughViz(Html.Html):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/updates.html
-
-    Attributes:
-    ----------
+ 
     :param data: List. The list of points (float).
     :param label: List. Optional. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -92,12 +77,8 @@ class RoughViz(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    ------------
     Update the chart with context and / or data changes.
-
-    Attributes:
-    ----------
+ 
     :param data: List. Optional. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.

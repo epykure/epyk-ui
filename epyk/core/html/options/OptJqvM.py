@@ -9,10 +9,7 @@ class OptionsJqVM(Options):
 
   @property
   def map(self):
-    """
-    Description:
-    -----------
-    Map you want to load. Must include the javascript file with the name of the map you want.
+    """   Map you want to load. Must include the javascript file with the name of the map you want.
     Available maps with this library are world_en, usa_en, europe_en and germany_en
 
     Usage::
@@ -21,8 +18,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop value: String. The map alias code.
     """
     return self._config_get(None)
@@ -33,10 +28,7 @@ class OptionsJqVM(Options):
 
   @property
   def multiSelectRegion(self):
-    """
-    Description:
-    -----------
-    Whether to enable more than one region to be selected at a time.
+    """   Whether to enable more than one region to be selected at a time.
 
     Usage::
 
@@ -44,8 +36,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop value: String. The map alias code.
     """
     return self._config_get(False)
@@ -56,10 +46,7 @@ class OptionsJqVM(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    -----------
-    Border Color to use to outline map objects.
+    """   Border Color to use to outline map objects.
 
     Usage::
 
@@ -67,8 +54,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop color: String. The color code.
     """
     return self._config_get(None)
@@ -79,10 +64,7 @@ class OptionsJqVM(Options):
 
   @property
   def borderOpacity(self):
-    """
-    Description:
-    -----------
-    Border Opacity to use to outline map objects ( use anything from 0-1, e.g. 0.5, defaults to 0.25 )
+    """   Border Opacity to use to outline map objects ( use anything from 0-1, e.g. 0.5, defaults to 0.25 )
 
     Usage::
 
@@ -90,8 +72,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop num: Float. The opacity value.
     """
     return self._config_get(0.25)
@@ -102,10 +82,7 @@ class OptionsJqVM(Options):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    -----------
-    Border Width to use to outline map objects ( defaults to 1 ).
+    """   Border Width to use to outline map objects ( defaults to 1 ).
 
     Usage::
 
@@ -113,8 +90,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop num: Float. The border width value in pixel.
     """
     return self._config_get(1)
@@ -125,10 +100,7 @@ class OptionsJqVM(Options):
 
   @property
   def backgroundColor(self):
-    """
-    Description:
-    -----------
-    Background color of map container in any CSS compatible format.
+    """   Background color of map container in any CSS compatible format.
 
     Usage::
 
@@ -136,8 +108,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop color: String. The color code.
     """
     return self._config_get("#fff")
@@ -148,10 +118,7 @@ class OptionsJqVM(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
-    Color of map regions.
+    """   Color of map regions.
 
     Usage::
 
@@ -159,8 +126,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop color: String. The color code.
     """
     return self._config_get("#ffffff")
@@ -171,10 +136,7 @@ class OptionsJqVM(Options):
 
   @property
   def colors(self):
-    """
-    Description:
-    -----------
-    Colors of individual map regions.
+    """   Colors of individual map regions.
     Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
@@ -184,8 +146,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop colors: Dictionary. The color to be used per country.
     """
     return self._config_get(None)
@@ -196,10 +156,7 @@ class OptionsJqVM(Options):
 
   @property
   def hoverColor(self):
-    """
-    Description:
-    -----------
-    Color of the region when mouse pointer is over it.
+    """   Color of the region when mouse pointer is over it.
 
     Usage::
 
@@ -207,8 +164,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop color: String. The color code.
     """
     return self._config_get(self.page.theme.success[1])
@@ -219,10 +174,7 @@ class OptionsJqVM(Options):
 
   @property
   def hoverColors(self):
-    """
-    Description:
-    -----------
-    Colors of individual map regions when mouse pointer is over it.
+    """   Colors of individual map regions when mouse pointer is over it.
     Keys of the colors objects are country codes according to ISO 3166-1 alpha-2 standard.
     Keys of colors must be in lower case.
 
@@ -232,8 +184,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop colors: Dictionary. The color code.
     """
     return self._config_get(None)
@@ -244,10 +194,7 @@ class OptionsJqVM(Options):
 
   @property
   def hoverOpacity(self):
-    """
-    Description:
-    -----------
-    Opacity of the region when mouse pointer is over it.
+    """   Opacity of the region when mouse pointer is over it.
 
     Usage::
 
@@ -255,8 +202,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop num: Float. The opacity value.
     """
     return self._config_get(0.7)
@@ -267,10 +212,7 @@ class OptionsJqVM(Options):
 
   @property
   def selectedColor(self):
-    """
-    Description:
-    -----------
-    Color for a region when you select it.
+    """   Color for a region when you select it.
 
     Related Pages:
 
@@ -284,10 +226,7 @@ class OptionsJqVM(Options):
 
   @property
   def selectedRegions(self):
-    """
-    Description:
-    -----------
-    This is the Region that you are looking to have preselected (two letter ISO code, defaults to null ).
+    """   This is the Region that you are looking to have preselected (two letter ISO code, defaults to null ).
     """
     return self._config_get(None)
 
@@ -297,10 +236,7 @@ class OptionsJqVM(Options):
 
   @property
   def enableZoom(self):
-    """
-    Description:
-    -----------
-    Whether to Enable Map Zoom ( true or false, defaults to true)
+    """   Whether to Enable Map Zoom ( true or false, defaults to true)
     """
     return self._config_get(False)
 
@@ -310,10 +246,7 @@ class OptionsJqVM(Options):
 
   @property
   def showTooltip(self):
-    """
-    Description:
-    -----------
-    Whether to show Tooltips on Mouseover ( true or false, defaults to true )
+    """   Whether to show Tooltips on Mouseover ( true or false, defaults to true )
     """
     return self._config_get(True)
 
@@ -323,10 +256,7 @@ class OptionsJqVM(Options):
 
   @property
   def scaleColors(self):
-    """
-    Description:
-    -----------
-    This option defines colors, with which regions will be painted when you set option values.
+    """   This option defines colors, with which regions will be painted when you set option values.
     Array scaleColors can have more then two elements.
     Elements should be strings representing colors in RGB hex format.
 
@@ -336,8 +266,6 @@ class OptionsJqVM(Options):
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :prop colors: List. The colors codes.
     """
     return self._config_get([self.page.theme.colors[0], self.page.theme.colors[-1]])
@@ -356,10 +284,7 @@ class OptionsJqVM(Options):
 
   @property
   def normalizeFunction(self):
-    """
-    Description:
-    -----------
-    This function can be used to improve results of visualizations for data with non-linear nature.
+    """   This function can be used to improve results of visualizations for data with non-linear nature.
     Function gets raw value as the first parameter and should return value which will be used in calculations of color,
     with which particular region will be painted.
     """
@@ -370,18 +295,13 @@ class OptionsJqVM(Options):
     self._config(value)
 
   def onRegionClick(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Callback function which will be called when the user clicks the region path.
+    """   Callback function which will be called when the user clicks the region path.
     Country code will be passed to the callback as argument.
 
     Related Pages:
 
       https://www.10bestdesign.com/jqvmap/documentation/
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """

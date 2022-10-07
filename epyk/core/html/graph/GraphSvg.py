@@ -26,14 +26,10 @@ class SVG(Html.Html):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
     Add an event on the SVG.
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: List of Js Functions. A Javascript Python function.
     :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
     :param source_event: A String. Optional. The source target for the event.
@@ -44,8 +40,6 @@ class SVG(Html.Html):
 
   def defs(self):
     """
-    Description:
-    ------------
     The <defs> element is used to store graphical objects that will be used at a later time.
     Objects created inside a <defs> element are not rendered directly.
     To display them you have to reference them (with a <use> element for example
@@ -63,8 +57,6 @@ class SVG(Html.Html):
 
   def text(self, text, x, y, fill=None):
     """
-    Description:
-    ------------
     The <text> element can be arranged in any number of sub-groups with the <tspan> element.
     Each <tspan> element can contain different formatting and position.
 
@@ -73,9 +65,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_text.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String. The text to be added to the container.
     :param x: Float. The x coordinate of the starting point of the text baseline.
     :param y: Float. The y coordinate of the starting point of the text baseline.
@@ -90,8 +80,6 @@ class SVG(Html.Html):
 
   def rect(self, x, y, width, height, fill, rx=0, ry=0):
     """
-    Description:
-    ------------
     The <rect> element is used to create a rectangle and variations of a rectangle shape.
 
     Usage::
@@ -99,9 +87,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_rect.asp
-
-    Attributes:
-    ----------
+ 
     :param x:
     :param y:
     :param width:
@@ -118,8 +104,6 @@ class SVG(Html.Html):
 
   def line(self, x1, y1, x2, y2, stroke=None, stroke_width=None):
     """
-    Description:
-    ------------
     The <line> element is used to create a line.
 
     Usage::
@@ -127,9 +111,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_line.asp
-
-    Attributes:
-    ----------
+ 
     :param x1: Float. The x1 attribute defines the start of the line on the x-axis.
     :param y1: Float. The y1 attribute defines the start of the line on the y-axis.
     :param x2: Float. The x2 attribute defines the end of the line on the x-axis.
@@ -148,8 +130,6 @@ class SVG(Html.Html):
 
   def circle(self, x, y, r, fill="None", stroke=None, stroke_width=None):
     """
-    Description:
-    ------------
     The <circle> element is used to create a circle.
 
     Usage::
@@ -157,9 +137,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_circle.asp
-
-    Attributes:
-    ----------
+ 
     :param x: Float. The x coordinate of the circle.
     :param y: Float. The y coordinate of the circle.
     :param r: Float. The r attribute defines the radius of the circle.
@@ -178,8 +156,6 @@ class SVG(Html.Html):
 
   def ellipse(self, cx, cy, rx, ry):
     """
-    Description:
-    ------------
     The <ellipse> element is used to create an ellipse.
 
     Usage::
@@ -187,9 +163,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_ellipse.asp
-
-    Attributes:
-    ----------
+ 
     :param cx: Float. The cx attribute defines the x coordinate of the center of the ellipse.
     :param cy: Float. The cy attribute defines the y coordinate of the center of the ellipse.
     :param rx: Float. The rx attribute defines the horizontal radius.
@@ -203,8 +177,6 @@ class SVG(Html.Html):
 
   def polygon(self, points, fill="None"):
     """
-    Description:
-    ------------
     The <polygon> element is used to create a graphic that contains at least three sides.
 
     Usage::
@@ -212,9 +184,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_polygon.asp
-
-    Attributes:
-    ----------
+ 
     :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon.
     :param fill: String. Optional.
 
@@ -226,8 +196,6 @@ class SVG(Html.Html):
 
   def polyline(self, points, fill="None"):
     """
-    Description:
-    ------------
     The <polyline> element is used to create any shape that consists of only straight lines (that is connected at
     several points).
 
@@ -236,9 +204,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_polyline.asp
-
-    Attributes:
-    ----------
+ 
     :param points:
     :param fill:
 
@@ -251,8 +217,6 @@ class SVG(Html.Html):
 
   def triangle(self, points, fill="None", options=None):
     """
-    Description:
-    ------------
     A polyline element with three points.
 
     Usage::
@@ -260,9 +224,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://www.w3schools.com/graphics/svg_polyline.asp
-
-    Attributes:
-    ----------
+ 
     :param points:
     :param fill:
     :param options:
@@ -275,8 +237,6 @@ class SVG(Html.Html):
 
   def g(self, fill="None", stroke=None, stroke_width=None):
     """
-    Description:
-    ------------
     The <g> SVG element is a container used to group other SVG elements.
 
     Usage::
@@ -284,9 +244,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
-
-    Attributes:
-    ----------
+ 
     :param fill: String. Optional. The color for the component background.
     :param stroke: String. Optional. The color for the border.
     :param stroke_width: Float. Optional. The width of the component's border.
@@ -299,17 +257,13 @@ class SVG(Html.Html):
 
   def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None, stroke=None):
     """
-    Description:
-    ------------
     The <path> element is used to define a path.
 
     Related Pages:
 
       https://www.w3.org/TR/SVG/paths.html
       https://www.w3.org/TR/svg-paths/
-
-    Attributes:
-    ----------
+ 
     :param x: Number.
     :param y: Number.
     :param fill: String. Optional.
@@ -329,8 +283,6 @@ class SVG(Html.Html):
 
   def foreignObject(self, x, y, width, height):
     """
-    Description:
-    ------------
     The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser,
     it is most likely (X)HTML.
 
@@ -339,9 +291,7 @@ class SVG(Html.Html):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
-
-    Attributes:
-    ----------
+ 
     :param x: Float. The x coordinate of the foreignObject.
     :param y: Float. The y coordinate of the foreignObject.
     :param width: Float or Percentage. The width of the foreignObject.
@@ -367,21 +317,15 @@ class LinearGradient(Html.Html):
   @property
   def url(self):
     """
-    Description:
-    -----------
 
     """
     return "url(#%s)" % self.htmlCode
 
   def stop(self, offset, styles):
     """
-    Description:
-    -----------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param offset:
     :param styles:
     """
@@ -404,21 +348,15 @@ class RadialGradient(Html.Html):
   @property
   def url(self):
     """
-    Description:
-    -----------
 
     """
     return "url(#%s)" % self.htmlCode
 
   def stop(self, offset, styles):
     """
-    Description:
-    -----------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param offset:
     :param styles:
     """
@@ -441,8 +379,6 @@ class Marker(SVG):
   @property
   def url(self):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -454,11 +390,7 @@ class Marker(SVG):
 
   def orient(self, orientation):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param orientation:
     """
     self.set_attrs(name="orient", value=orientation)
@@ -466,11 +398,7 @@ class Marker(SVG):
 
   def markerWidth(self, value):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param value:
     """
     self.set_attrs(name="markerWidth", value=value)
@@ -478,11 +406,7 @@ class Marker(SVG):
 
   def markerHeight(self, value):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param value:
     """
     self.set_attrs(name="markerHeight", value=value)
@@ -490,15 +414,11 @@ class Marker(SVG):
 
   def arrow(self, size=None):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
-
-    Attributes:
-    ----------
+ 
     :param size:
     """
     self.html_objs.append("<path d='M 0 0 L 10 5 L 0 10 z' />")
@@ -520,17 +440,13 @@ class Defs(Html.Html):
 
   def linearGradient(self, html_code, x1="0%", y1="0%", x2="100%", y2="0%", gradient_transform=None):
     """
-    Description:
-    ------------
     The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of
     graphical elements.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
-
-    Attributes:
-    ----------
+ 
     :param html_code: String. The HTML id of the component
     :param x1: Float.
     :param y1: Float.
@@ -545,17 +461,13 @@ class Defs(Html.Html):
 
   def radialGradient(self, html_code):
     """
-    Description:
-    ------------
     The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of
     graphical elements.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
-
-    Attributes:
-    ----------
+ 
     :param html_code: String. The HTML id of the component.
 
     :rtype: radialGradient
@@ -564,18 +476,13 @@ class Defs(Html.Html):
     return self.html_objs[-1]
 
   def marker(self, html_code, viewBox, refX, refY):
-    """
-    Description:
-    -----------
-    The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given
+    """   The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given
     <path>, <line>, <polyline> or <polygon> element.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
-
-    Attributes:
-    ----------
+ 
     :param html_code:
     :param viewBox:
     :param refX:
@@ -599,11 +506,7 @@ class ForeignObject(SVG):
 
   def add(self, components):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param components:
     """
     if not isinstance(components, list):
@@ -633,11 +536,7 @@ class SVGItem(Html.Html):
 
   def fill(self, color):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param color:
     """
     self.set_attrs(name="fill", value=color)
@@ -645,11 +544,7 @@ class SVGItem(Html.Html):
 
   def transform(self, attribute_name, type, from_pos, to_pos, duration=4, repeat_count="indefinite"):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param attribute_name:
     :param type:
     :param from_pos:
@@ -701,11 +596,7 @@ class Line(SVGItem):
 
   def markers(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -715,33 +606,21 @@ class Line(SVGItem):
 
   def marker_start(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
 
   def marker_mid(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-mid", value=marker_code)
 
   def marker_end(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-end", value=marker_code)
@@ -765,11 +644,7 @@ class Polyline(SVGItem):
 
   def markers(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -779,31 +654,21 @@ class Polyline(SVGItem):
 
   def marker_start(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
 
   def marker_mid(self, marker_code):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-mid", value=marker_code)
 
   def marker_end(self, marker_code):
     """
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-end", value=marker_code)
@@ -850,17 +715,13 @@ class Text(SVGItem):
 
   def line(self, text, x, y):
     """
-    Description:
-    ------------
     The SVG <tspan> element defines a subtext within a <text> element or another <tspan> element.
     It allows for adjustment of the style and/or position of that subtext as needed.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
-
-    Attributes:
-    ----------
+ 
     :param text: String. The text to be added to the container
     :param x: Float. The x coordinate of the starting point of the text baseline.
     :param y: Float. The y coordinate of the starting point of the text baseline.
@@ -907,11 +768,7 @@ class Path(SVGItem):
 
   def markers(self, marker_code):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param marker_code:
     """
     self.set_attrs(name="marker-start", value=marker_code)
@@ -921,11 +778,7 @@ class Path(SVGItem):
 
   def line_to(self, x, y):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param x: Number.
     :param y: Number.
     """
@@ -937,11 +790,7 @@ class Path(SVGItem):
 
   def horizontal_line_to(self, x):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param x: Number.
     """
     if self.origin is not None:
@@ -951,11 +800,7 @@ class Path(SVGItem):
 
   def vertical_line_to(self, y):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param y: Number.
     """
     if self.origin is not None:
@@ -965,11 +810,7 @@ class Path(SVGItem):
 
   def move_to(self, x, y):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param x: Number.
     :param y: Number.
     """
@@ -981,15 +822,11 @@ class Path(SVGItem):
 
   def curve_to(self, x1, y1, x2, y2):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3.org/TR/svg-paths/
-
-    Attributes:
-    ----------
+ 
     :param x1: Number.
     :param y1: Number.
     :param x2: Number.
@@ -1005,15 +842,11 @@ class Path(SVGItem):
 
   def smooth_curve_to(self, x1, y1, x2, y2):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3.org/TR/svg-paths/
-
-    Attributes:
-    ----------
+ 
     :param x1: Number.
     :param y1: Number.
     :param x2: Number.
@@ -1029,15 +862,11 @@ class Path(SVGItem):
 
   def quadratic_bezier_curve_to(self, x1, y1, x2, y2):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3.org/TR/svg-paths/
-
-    Attributes:
-    ----------
+ 
     :param x1: Number.
     :param y1: Number.
     :param x2: Number.
@@ -1053,15 +882,11 @@ class Path(SVGItem):
 
   def smooth_quadratic_bezier_curve_to(self, x, y, absolute=True):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3.org/TR/svg-paths/
-
-    Attributes:
-    ----------
+ 
     :param x: Number.
     :param y: Number.
     :param absolute: Boolean. Optional.
@@ -1074,8 +899,6 @@ class Path(SVGItem):
 
   def close_path(self):
     """
-    Description:
-    -----------
 
     """
     self.__path.append("Z")

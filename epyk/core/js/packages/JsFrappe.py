@@ -25,12 +25,8 @@ class FrappeCharts(JsPackage):
     self._js = []
 
   def new(self, html_code, options, js_code):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options:
     :param js_code:
@@ -42,17 +38,12 @@ class FrappeCharts(JsPackage):
     return JsObjects.JsVoid('new frappe.Chart("#%s", %s)' % (html_code, options))
 
   def addDataPoint(self, label, value_from_each_dataset, position=None):
-    """
-    Description:
-    -----------
-    Add a data point to the chart, increasing the length of the dataset.
+    """   Add a data point to the chart, increasing the length of the dataset.
 
     Related Pages:
 
       https://frappe.io/charts/docs/reference/api
-
-    Attributes:
-    ----------
+ 
     :param label:
     :param value_from_each_dataset:
     :param position:
@@ -65,26 +56,18 @@ class FrappeCharts(JsPackage):
     return JsObjects.JsVoid("%s.addDataPoint(%s, %s, %s)" % (self.varName, label, value_from_each_dataset, position))
 
   def removeDataPoint(self, n):
-    """
-    Description:
-    -----------
-    Remove a data point from the chart, reducing the length of the dataset.
+    """   Remove a data point from the chart, reducing the length of the dataset.
 
     Related Pages:
 
       https://frappe.io/charts/docs/reference/api
-
-    Attributes:
-    ----------
+ 
     :param n: Number. the index of the points to be removed
     """
     return JsObjects.JsVoid("%s.removeDataPoint(%s)" % (self.varName, n))
 
   def update(self, data):
-    """
-    Description:
-    -----------
-    Update the entire data, including annotations, by passing the entire new data object to update.
+    """   Update the entire data, including annotations, by passing the entire new data object to update.
 
     Related Pages:
 
@@ -94,10 +77,7 @@ class FrappeCharts(JsPackage):
     return JsObjects.JsVoid("%s.update(%s)" % (self.varName, data))
 
   def export(self):
-    """
-    Description:
-    -----------
-    Frappe charts are exportable to an SVG format, in which they are natively rendered.
+    """   Frappe charts are exportable to an SVG format, in which they are natively rendered.
 
     Related Pages:
 

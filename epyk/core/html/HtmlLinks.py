@@ -30,8 +30,6 @@ class ExternalLink(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlLink:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -44,8 +42,6 @@ class ExternalLink(Html.Html):
   @property
   def options(self) -> OptText.OptionsLink:
     """
-    Description:
-    ------------
     Property to set all the possible object for a button.
     """
     return super().options
@@ -67,13 +63,9 @@ class ExternalLink(Html.Html):
 
   def anchor(self, component: Html.Html):
     """
-    Description:
-    ------------
     Create a link to an HTML component defined in the page.
     This will create a shortcut to directly scroll to this component.
 
-    Attributes:
-    ----------
     :param component: A link to this HTML component.
     """
     self.val["url"] = "#%s" % component.htmlCode
@@ -81,13 +73,8 @@ class ExternalLink(Html.Html):
     return self
 
   def no_decoration(self, color: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Property to remove the list default style.
+    """   Property to remove the list default style.
 
-    Attributes:
-    ----------
     :param color: Optional. The color code.
     """
     self.style.css.text_decoration = None
@@ -99,13 +86,8 @@ class ExternalLink(Html.Html):
 
   def build(self, data: types.JS_FUNCS_TYPES = None, options: dict = None,
             profile: types.PROFILE_TYPE = False, component_id: str = None):
-    """
-    Description:
-    -----------
-    Return the JavaScript fragment to refresh the component content.
+    """   Return the JavaScript fragment to refresh the component content.
 
-    Attributes:
-    ----------
     :param data: The component expected content.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
@@ -134,10 +116,7 @@ class DataLink(Html.Html):
 
   @property
   def no_decoration(self):
-    """
-    Description:
-    -----------
-    Property to remove the list default style.
+    """   Property to remove the list default style.
     """
     self.style.css.text_decoration = None
     self.style.css.list_style_type = None

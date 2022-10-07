@@ -16,10 +16,7 @@ class Choropleth(GraphChartJs.Chart):
 
   @property
   def options(self):
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -62,10 +59,7 @@ class ChoroplethUs(Choropleth):
 
   @property
   def options(self):
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -98,8 +92,6 @@ class ChoroplethUs(Choropleth):
 
   def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None):
     """
-    Description:
-    ------------
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -108,8 +100,6 @@ class ChoroplethUs(Choropleth):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -135,10 +125,7 @@ class ChoroplethCountry(Choropleth):
 
   @property
   def options(self):
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.

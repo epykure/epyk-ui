@@ -7,8 +7,6 @@ class OptionsSortable(Options):
   @property
   def group(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -23,8 +21,6 @@ class OptionsSortable(Options):
   @property
   def sort(self):
     """
-    Description:
-    ------------
     sorting inside list
 
     Related Pages:
@@ -40,8 +36,6 @@ class OptionsSortable(Options):
   @property
   def delay(self):
     """
-    Description:
-    ------------
     Time in milliseconds to define when the sorting should start
 
     Related Pages:
@@ -57,8 +51,6 @@ class OptionsSortable(Options):
   @property
   def delayOnTouchOnly(self):
     """
-    Description:
-    ------------
     Only delay if user is using touch
 
     Related Pages:
@@ -74,8 +66,6 @@ class OptionsSortable(Options):
   @property
   def touchStartThreshold(self):
     """
-    Description:
-    ------------
     px, how many pixels the point should move before cancelling a delayed drag event
 
     Related Pages:
@@ -91,8 +81,6 @@ class OptionsSortable(Options):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     Disables the sortable if set to true.
 
     Related Pages:
@@ -108,8 +96,6 @@ class OptionsSortable(Options):
   @property
   def store(self):
     """
-    Description:
-    ------------
     Disables the sortable if set to true.
 
     Related Pages:
@@ -125,8 +111,6 @@ class OptionsSortable(Options):
   @property
   def animation(self):
     """
-    Description:
-    ------------
     ms, animation speed moving items when sorting, `0` — without animation
 
     Related Pages:
@@ -142,8 +126,6 @@ class OptionsSortable(Options):
   @property
   def easing(self):
     """
-    Description:
-    ------------
     Easing for animation. Defaults to null. See https://easings.net/ for examples.
 
     Related Pages:
@@ -159,8 +141,6 @@ class OptionsSortable(Options):
   @property
   def handle(self):
     """
-    Description:
-    ------------
     Drag handle selector within list items
 
     Related Pages:
@@ -176,8 +156,6 @@ class OptionsSortable(Options):
   @property
   def filter(self):
     """
-    Description:
-    ------------
     Selectors that do not lead to dragging (String or Function)
 
     Related Pages:
@@ -193,8 +171,6 @@ class OptionsSortable(Options):
   @property
   def preventOnFilter(self):
     """
-    Description:
-    ------------
     Call `event.preventDefault()` when triggered `filter`
 
     Related Pages:
@@ -210,8 +186,6 @@ class OptionsSortable(Options):
   @property
   def draggable(self):
     """
-    Description:
-    ------------
     Specifies which items inside the element should be draggable
 
     Related Pages:
@@ -227,8 +201,6 @@ class OptionsSortable(Options):
   @property
   def dataIdAttr(self):
     """
-    Description:
-    ------------
     Specifies which items inside the element should be draggable
 
     Related Pages:
@@ -244,8 +216,6 @@ class OptionsSortable(Options):
   @property
   def ghostClass(self):
     """
-    Description:
-    ------------
     Class name for the drop placeholder
 
     Related Pages:
@@ -261,8 +231,6 @@ class OptionsSortable(Options):
   @property
   def chosenClass(self):
     """
-    Description:
-    ------------
     Class name for the chosen item
 
     Related Pages:
@@ -278,8 +246,6 @@ class OptionsSortable(Options):
   @property
   def dragClass(self):
     """
-    Description:
-    ------------
     Class name for the dragging item
 
     Related Pages:
@@ -295,8 +261,6 @@ class OptionsSortable(Options):
   @property
   def swapThreshold(self):
     """
-    Description:
-    ------------
     Threshold of the swap zone
 
     Related Pages:
@@ -312,8 +276,6 @@ class OptionsSortable(Options):
   @property
   def invertSwap(self):
     """
-    Description:
-    ------------
     Will always use inverted swap zone if set to true
 
     Related Pages:
@@ -329,8 +291,6 @@ class OptionsSortable(Options):
   @property
   def invertedSwapThreshold(self):
     """
-    Description:
-    ------------
     Threshold of the inverted swap zone (will be set to swapThreshold value by default)
 
     Related Pages:
@@ -346,8 +306,6 @@ class OptionsSortable(Options):
   @property
   def direction(self):
     """
-    Description:
-    ------------
     Direction that the Sortable should sort in. Can be set to 'vertical', 'horizontal', or a function,
     which will be called whenever a target is dragged over.
     Must return 'vertical' or 'horizontal'.
@@ -365,8 +323,6 @@ class OptionsSortable(Options):
   @property
   def forceFallback(self):
     """
-    Description:
-    ------------
     ignore the HTML5 DnD behaviour and force the fallback to kick in
 
     Related Pages:
@@ -382,8 +338,6 @@ class OptionsSortable(Options):
   @property
   def fallbackClass(self):
     """
-    Description:
-    ------------
     Class name for the cloned DOM Element when using forceFallback
 
     Related Pages:
@@ -399,8 +353,6 @@ class OptionsSortable(Options):
   @property
   def fallbackOnBody(self):
     """
-    Description:
-    ------------
     Appends the cloned DOM Element into the Document's Body
 
     Related Pages:
@@ -416,8 +368,6 @@ class OptionsSortable(Options):
   @property
   def fallbackTolerance(self):
     """
-    Description:
-    ------------
     Specify in pixels how far the mouse should move before it's considered as a drag.
 
     Related Pages:
@@ -433,8 +383,6 @@ class OptionsSortable(Options):
   @property
   def dragoverBubble(self):
     """
-    Description:
-    ------------
     Specify in pixels how far the mouse should move before it's considered as a drag.
 
     Related Pages:
@@ -450,8 +398,6 @@ class OptionsSortable(Options):
   @property
   def removeCloneOnHide(self):
     """
-    Description:
-    ------------
     Remove the clone element when it is not showing, rather than just hiding it
 
     Related Pages:
@@ -467,8 +413,6 @@ class OptionsSortable(Options):
   @property
   def emptyInsertThreshold(self):
     """
-    Description:
-    ------------
     px, distance mouse must be from empty sortable to insert drag element into it
 
     Related Pages:

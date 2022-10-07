@@ -10,9 +10,7 @@ class ClassDiv(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsContainer.AttrDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrDiv
@@ -23,9 +21,7 @@ class ClassDiv(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -42,9 +38,7 @@ class ClassModal(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsContainer.AttrModal:
-    """
-    Description:
-    ------------
+    """  
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrModal
@@ -55,9 +49,7 @@ class ClassModal(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -82,9 +74,7 @@ class ClassDrawer(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsContainer.AttrDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: AttrClsContainer.AttrDiv
@@ -95,9 +85,7 @@ class ClassDrawer(GrpCls.ClassHtml):
 
   @property
   def css_class_drawer(self) -> Classes.CatalogDiv.CatalogDrawer:
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -111,9 +99,7 @@ class ClassDrawer(GrpCls.ClassHtml):
 
   @property
   def css_class_nav(self):
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -127,9 +113,7 @@ class ClassDrawer(GrpCls.ClassHtml):
 
   @property
   def css_class_handle(self) -> Classes.CatalogDiv.CatalogDrawer:
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -143,9 +127,7 @@ class ClassDrawer(GrpCls.ClassHtml):
 
   @property
   def css_class_content(self) -> Classes.CatalogDiv.CatalogDrawer:
-    """
-    Description:
-    ------------
+    """  
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 

@@ -16,9 +16,7 @@ class AttrSelect(Attrs):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
     The width property sets the width of an element.
 
     The width of an element does not include padding, borders, or margins!
@@ -39,9 +37,7 @@ class AttrSelect(Attrs):
 
   @property
   def background(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self.component.attr.get("data-background")
@@ -53,9 +49,7 @@ class AttrSelect(Attrs):
 
   @property
   def color(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self.component.attr.get("data-color")
@@ -66,9 +60,7 @@ class AttrSelect(Attrs):
     self.css({"color": val})
 
   def hide(self):
-    """
-    Description:
-    ------------
+    """  
     Hide the select Picker object.
     """
     self.component.page.body.onReady([self.component.dom.hide()])
@@ -91,9 +83,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrSelect:
-    """
-    Description:
-    ------------
+    """  
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -108,9 +98,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_item_selected(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -121,9 +109,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_select(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -134,9 +120,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_select_button(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -147,9 +131,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_select_outline(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -160,9 +142,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_item_options(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -173,9 +153,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_item_option(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -186,9 +164,7 @@ class ClassSelect(GrpCls.ClassHtml):
 
   @property
   def cls_select_input(self) -> Classes.CatalogSelect.CatalogSelect:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogSelect.CatalogSelect
     """
@@ -214,9 +190,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_base(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -227,9 +201,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_menu(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -240,9 +212,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_menu_li(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -253,9 +223,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_menu_after(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -266,9 +234,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_menu_hover(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -279,9 +245,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_menu_pull_left(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -292,9 +256,7 @@ class ClassDropDown(GrpCls.ClassHtml):
 
   @property
   def cls_caret(self) -> Classes.CatalogTree.CatalogDropDown:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: Classes.CatalogTree.CatalogDropDown
     """
@@ -310,13 +272,9 @@ class DefinedStyleItems:
     self.page, self.component = page, component
 
   def selected_text_background_color(self, background=None, color=None):
-    """
-    Description:
-    ------------
+    """  
     Set the color of the text component.
 
-    Attributes:
-    ----------
     :param background: String. Optional. The background color.
     :param color: String. Optional. The hexadecimal color code.
     """
@@ -328,17 +286,13 @@ class ClassItems(GrpCls.ClassHtml):
 
   @property
   def defined(self):
-    """
-    Description:
-    ------------
+    """  
     Shortcut property to pre defined CSS configurations for list of items.
     """
     return DefinedStyleItems(self.component.page, component=self.component)
 
   def hover_border(self):
-    """
-    Description:
-    ------------
+    """  
 
     :return: self to allow the chaining.
     """
@@ -346,9 +300,7 @@ class ClassItems(GrpCls.ClassHtml):
     return self
 
   def hover_background(self) -> CssStylesList.CssListItemsBackground:
-    """
-    Description:
-    ------------
+    """  
 
     :return: self to allow the chaining.
     """

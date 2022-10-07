@@ -34,20 +34,14 @@ class HtmlNavBar(Html.Html):
 
   @property
   def style(self) -> GrpClsMenu.ClassNav:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassNav(self)
     return self._styleObj
 
   def move(self):
-    """
-    Description:
-    -----------
-    Move the object to this position in the final page.
+    """   Move the object to this position in the final page.
     """
     super(HtmlNavBar, self).move()
     self.style.css.position = None
@@ -76,13 +70,8 @@ class HtmlNavBar(Html.Html):
     return self
 
   def no_background(self, to_top: bool = True):
-    """
-    Description:
-    -----------
-    remove the default navigation bar background and remove the padding.
-
-    Attributes:
-    ----------
+    """   remove the default navigation bar background and remove the padding.
+ 
     :param to_top: Optional. To define if the padding must be removed.
     """
     self.background = False
@@ -93,9 +82,7 @@ class HtmlNavBar(Html.Html):
     return self
 
   def set_theme(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     self.style.css.background_color = self.page.theme.colors[0]
@@ -103,13 +90,8 @@ class HtmlNavBar(Html.Html):
     return self
 
   def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False) -> Html.Html:
-    """
-    Description:
-    -----------
-    Add component to the right.
-
-    Attributes:
-    ----------
+    """   Add component to the right.
+ 
     :param component: Internal component to the framework.
     :param css: Optional. The CSS attributes.
     :param prepend: Optional.
@@ -142,13 +124,8 @@ class HtmlNavBar(Html.Html):
     return component
 
   def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
-    """
-    Description:
-    -----------
-    Add an item to the nav bar.
-
-    Attributes:
-    ----------
+    """   Add an item to the nav bar.
+ 
     :param text: The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
@@ -190,9 +167,7 @@ class HtmlFooter(Html.Html):
 
   @property
   def sections(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     if not self.__col_lst:
@@ -201,22 +176,15 @@ class HtmlFooter(Html.Html):
 
   @sections.setter
   def sections(self, col_lst):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param col_lst:
     """
     self.__col_lst = col_lst
 
   @property
   def style(self) -> GrpClsMenu.ClassFooter:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassFooter(self)
@@ -232,13 +200,8 @@ class HtmlFooter(Html.Html):
     return self
 
   def __getitem__(self, i: int) -> Html.Html:
-    """
-    Description:
-    -----------
-    Return the internal column in the row for the given index.
-
-    Attributes:
-    ----------
+    """   Return the internal column in the row for the given index.
+ 
     :param i: the column index.
     """
     return self.val[i]
@@ -275,10 +238,7 @@ class ContextMenu(Html.Html):
 
   @property
   def options(self) -> OptList.OptionsLi:
-    """
-    Description:
-    -----------
-    Component options.
+    """   Component options.
     """
     return super().options
 
@@ -291,13 +251,9 @@ class ContextMenu(Html.Html):
       '''
 
   def add_item(self, value: str, icon: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Add Item to the context menu.
-
-    Attributes:
-    ----------
+ 
     :param value:
     :param icon: Optional. The Font awesome icon.
     """
@@ -305,24 +261,16 @@ class ContextMenu(Html.Html):
     return self
 
   def add(self, component: Html.Html) -> Html.Html:
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param component: Internal component to the framework.
     """
     self.__add__(component)
     return self.val[-1].val
 
   def __add__(self, component: Html.Html):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param component: The new HTML component to be added to the main component.
     """
     if not hasattr(component, 'options'):
@@ -403,13 +351,9 @@ class PanelsBar(Html.Html):
     self.menus.style.css.padding = '5px 0'
 
   def add_panel(self, text: str, content: Html.Html):
-    """
-    Description:
-    ------------
+    """  
     Add a panel to the panel bar.
-
-    Attributes:
-    ----------
+ 
     :param text: The anchor visible linked to a panel.
     :param content: The panel.
     """
@@ -472,10 +416,7 @@ class Shortcut(Html.Html):
 
   @property
   def style(self) -> GrpClsMenu.ClassShortcut:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassShortcut(self)
@@ -510,12 +451,8 @@ class Shortcut(Html.Html):
 
   def add_logo(self, icon: str, path: Optional[str] = None, align: str = "center",
                width: tuple = (32, 'px'), height: tuple = (32, 'px')):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param icon: The component icon content from font-awesome references
     :param path: Optional.
     :param align: Optional. A string with the horizontal position of the component

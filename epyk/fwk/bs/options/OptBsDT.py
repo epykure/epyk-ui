@@ -7,8 +7,6 @@ class EnumFormatTypes(Enums):
 
   def time_only(self):
     """
-    Description:
-    ------------
     Display only the time for the component.
 
     Usage::
@@ -23,8 +21,6 @@ class EnumFormatTypes(Enums):
 
   def date_only(self):
     """
-    Description:
-    ------------
     Display only the date for the component.
 
     Usage::
@@ -39,8 +35,6 @@ class EnumFormatTypes(Enums):
 
   def mm_yyyy(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -53,8 +47,6 @@ class EnumViewMode(Enums):
 
   def years(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -64,8 +56,6 @@ class EnumViewMode(Enums):
 
   def decades(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -75,8 +65,6 @@ class EnumViewMode(Enums):
 
   def months(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -86,8 +74,6 @@ class EnumViewMode(Enums):
 
   def days(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -97,8 +83,6 @@ class EnumViewMode(Enums):
 
   def times(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -111,9 +95,7 @@ class DTIcons(Options):
 
   @property
   def time(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -128,9 +110,7 @@ class DTIcons(Options):
 
   @property
   def date(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://getdatepicker.com/5-4/Usage/#custom-icons
 
@@ -143,9 +123,7 @@ class DTIcons(Options):
 
   @property
   def up(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://getdatepicker.com/5-4/Usage/#custom-icons
 
@@ -158,9 +136,7 @@ class DTIcons(Options):
 
   @property
   def down(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://getdatepicker.com/5-4/Usage/#custom-icons
 
@@ -176,10 +152,7 @@ class DTButtons(Options):
 
   @property
   def showToday(self):
-    """
-    Description:
-    -----------
-    Change the default toolbar buttons for the pickers functions.
+    """   Change the default toolbar buttons for the pickers functions.
 
     https://getdatepicker.com/5-4/Options/
 
@@ -192,10 +165,7 @@ class DTButtons(Options):
 
   @property
   def showClear(self):
-    """
-    Description:
-    -----------
-    Change the default toolbar buttons for the pickers functions.
+    """   Change the default toolbar buttons for the pickers functions.
 
     https://getdatepicker.com/5-4/Options/
 
@@ -208,10 +178,7 @@ class DTButtons(Options):
 
   @property
   def showClose(self):
-    """
-    Description:
-    -----------
-    Change the default toolbar buttons for the pickers functions.
+    """   Change the default toolbar buttons for the pickers functions.
 
     https://getdatepicker.com/5-4/Options/
 
@@ -227,10 +194,7 @@ class DT(Options):
 
   @property
   def allowMultidate(self):
-    """
-    Description:
-    -----------
-    Allows the setting of multiple dates.
+    """   Allows the setting of multiple dates.
 
     Related Pages:
 
@@ -247,10 +211,7 @@ class DT(Options):
 
   @property
   def daysOfWeekDisabled(self):
-    """
-    Description:
-    -----------
-    Disables the section of days of the week, e.g. weekends.
+    """   Disables the section of days of the week, e.g. weekends.
     Returns an array with the options.daysOfWeekDisabled configuration setting of the component.
 
     Related Pages:
@@ -265,10 +226,7 @@ class DT(Options):
 
   @property
   def locale(self):
-    """
-    Description:
-    -----------
-    See momentjs for valid locales.
+    """   See momentjs for valid locales.
 
     You must include moment-with-locales.js or a local js file.
     Returns the currently set locale of the options.locale
@@ -285,10 +243,7 @@ class DT(Options):
 
   @property
   def collapse(self):
-    """
-    Description:
-    -----------
-    Using a Bootstraps collapse to switch between date/time pickers.
+    """   Using a Bootstraps collapse to switch between date/time pickers.
     Returns a boolean of the options.sideBySide.
     Takes a boolean. If set to false the picker will display similar to sideBySide except vertical.
 
@@ -304,10 +259,7 @@ class DT(Options):
 
   @property
   def format(self):
-    """
-    Description:
-    -----------
-    See momentjs' docs for valid formats. Format also dictates what components are shown, e.g.
+    """   See momentjs' docs for valid formats. Format also dictates what components are shown, e.g.
     MM/dd/YYYY will not display the time picker.
     Returns the component's options.format string
 
@@ -332,10 +284,7 @@ class DT(Options):
 
   @property
   def icons(self):
-    """
-    Description:
-    -----------
-    Change the default icons for the pickers functions.
+    """   Change the default icons for the pickers functions.
 
     Related Pages:
 
@@ -347,10 +296,7 @@ class DT(Options):
 
   @property
   def buttons(self):
-    """
-    Description:
-    -----------
-    Change the default toolbar buttons for the pickers functions.
+    """   Change the default toolbar buttons for the pickers functions.
 
     Related Pages:
 
@@ -362,10 +308,7 @@ class DT(Options):
 
   @property
   def multidateSeparator(self):
-    """
-    Description:
-    -----------
-    Used with allowMultidate. E.g. 1/1/2017,1/2/2017
+    """   Used with allowMultidate. E.g. 1/1/2017,1/2/2017
 
     Related Pages:
 
@@ -380,10 +323,7 @@ class DT(Options):
 
   @property
   def sideBySide(self):
-    """
-    Description:
-    -----------
-    Shows the picker side by side when using the time and date together.
+    """   Shows the picker side by side when using the time and date together.
 
     Returns a boolean of the options.sideBySide.
     Takes a boolean.
@@ -401,10 +341,7 @@ class DT(Options):
 
   @property
   def viewMode(self):
-    """
-    Description:
-    -----------
-    The default view to display when the picker is shown.
+    """   The default view to display when the picker is shown.
 
     https://getdatepicker.com/5-4/Usage/#custom-icons
 
@@ -421,10 +358,7 @@ class DT(Options):
 
   @property
   def useCurrent(self):
-    """
-    Description:
-    -----------
-    On show, will set the picker to the current date/time.
+    """   On show, will set the picker to the current date/time.
     Returns a boolean or string with the options.useCurrent option configuration
 
     Related Pages:
@@ -439,10 +373,7 @@ class DT(Options):
 
   @property
   def useStrict(self):
-    """
-    Description:
-    -----------
-    Defines if moment should use strict date parsing when considering a date to be valid.
+    """   Defines if moment should use strict date parsing when considering a date to be valid.
     Returns a boolean of the options.useStrict
     Takes a boolean. If useStrict is true, moment.js parsing rules will be stricter when determining if a date is
     valid or not.
@@ -459,10 +390,7 @@ class DT(Options):
 
   @property
   def viewDate(self):
-    """
-    Description:
-    -----------
-    This will change the viewDate without changing or setting the selected date.
+    """   This will change the viewDate without changing or setting the selected date.
 
     Related Pages:
 
@@ -476,10 +404,7 @@ class DT(Options):
 
   @property
   def disabledHours(self):
-    """
-    Description:
-    -----------
-    Returns an array variable with the currently set options.en/disabledHours option.
+    """   Returns an array variable with the currently set options.en/disabledHours option.
 
     Usage::
 
@@ -498,10 +423,7 @@ class DT(Options):
 
   @property
   def enabledHours(self):
-    """
-    Description:
-    -----------
-    Returns an array variable with the currently set options.en/disabledHours option.
+    """   Returns an array variable with the currently set options.en/disabledHours option.
 
     Usage::
 
@@ -520,10 +442,7 @@ class DT(Options):
 
   @property
   def focusOnShow(self):
-    """
-    Description:
-    -----------
-    Returns a boolean variable with the currently set options.focusOnShow option.
+    """   Returns a boolean variable with the currently set options.focusOnShow option.
     Takes a boolean value.
 
     If false, the textbox will not be given focus when the picker is shown
@@ -540,10 +459,7 @@ class DT(Options):
 
   @property
   def allowInputToggle(self):
-    """
-    Description:
-    -----------
-    If true, the picker will show on textbox focus and icon click when used in a button group.
+    """   If true, the picker will show on textbox focus and icon click when used in a button group.
     Returns a boolean variable with the currently set options.allowInputToggle option
 
     Related Pages:
@@ -558,10 +474,7 @@ class DT(Options):
 
   @property
   def disabledTimeIntervals(self):
-    """
-    Description:
-    -----------
-    Disables time selection between the given moments.
+    """   Disables time selection between the given moments.
     Returns an array variable with the currently set options.disabledTimeIntervals option.
 
     Takes a array value.
@@ -579,10 +492,7 @@ class DT(Options):
 
   @property
   def ignoreReadonly(self):
-    """
-    Description:
-    -----------
-    Allow date picker show event to fire even when the associated input element has the readonly="readonly" property.
+    """   Allow date picker show event to fire even when the associated input element has the readonly="readonly" property.
     Returns a boolean variable with the currently set options.ignoreReadonly option.
     Takes a boolean value.
 
@@ -601,10 +511,7 @@ class DT(Options):
 
   @property
   def debug(self):
-    """
-    Description:
-    -----------
-    Will cause the date picker to stay open after a blur event.
+    """   Will cause the date picker to stay open after a blur event.
 
     Related Pages:
 
@@ -622,10 +529,7 @@ class DT(Options):
 
   @property
   def keepInvalid(self):
-    """
-    Description:
-    -----------
-    Will cause the date picker to not revert or overwrite invalid dates.
+    """   Will cause the date picker to not revert or overwrite invalid dates.
     Returns a string variable with the currently set options.keepInvalid option.
 
     Takes a boolean value.
@@ -643,10 +547,7 @@ class DT(Options):
 
   @property
   def inline(self):
-    """
-    Description:
-    -----------
-    Will display the picker inline without the need of a input field. This will also hide borders and shadows.
+    """   Will display the picker inline without the need of a input field. This will also hide borders and shadows.
 
     Returns a boolean variable with the currently set options.inline option.
 
@@ -662,10 +563,7 @@ class DT(Options):
 
   @property
   def keepOpen(self):
-    """
-    Description:
-    -----------
-    Will cause the date picker to stay open after selecting a date.
+    """   Will cause the date picker to stay open after selecting a date.
     Returns a boolean variable with the currently set options.keepOpen option.
     Takes a boolean value.
 
@@ -681,10 +579,7 @@ class DT(Options):
 
   @property
   def toolbarplacement(self):
-    """
-    Description:
-    -----------
-    Changes the placement of the icon toolbar.
+    """   Changes the placement of the icon toolbar.
 
     Returns a string variable with the currently set options.toolbarplacement option.
     Takes a string value. Valid values are 'default', 'top' and 'bottom'.
@@ -703,10 +598,7 @@ class DT(Options):
 
   @property
   def calendarWeeks(self):
-    """
-    Description:
-    -----------
-    Shows the week of the year to the left of first day of the week.
+    """   Shows the week of the year to the left of first day of the week.
     Returns a boolean with the current options.calendarWeeks option configuration
     Takes a boolean variable to set if the week numbers will appear to the left on the days view
 
@@ -722,10 +614,7 @@ class DT(Options):
 
   @property
   def enabledDates(self):
-    """
-    Description:
-    -----------
-    Returns an array with the currently set enabled dates on the component.
+    """   Returns an array with the currently set enabled dates on the component.
     Takes an [ string or Date or moment ] of values and allows the user to select only from those days.
 
     Related Pages:
@@ -740,10 +629,7 @@ class DT(Options):
 
   @property
   def disabledDates(self):
-    """
-    Description:
-    -----------
-    Returns an array with the currently set disabled dates on the component.
+    """   Returns an array with the currently set disabled dates on the component.
     Takes an [ string or Date or moment ] of values and allows the user to select only from those days.
 
     Related Pages:
@@ -758,10 +644,7 @@ class DT(Options):
 
   @property
   def defaultDate(self):
-    """
-    Description:
-    -----------
-    Sets the picker default date/time. Overrides useCurrent
+    """   Sets the picker default date/time. Overrides useCurrent
     Returns a moment with the options.defaultDate option configuration or false if not set
 
     Related Pages:
@@ -776,10 +659,7 @@ class DT(Options):
 
   @property
   def maxDate(self):
-    """
-    Description:
-    -----------
-    Prevents date/time selections before this date.
+    """   Prevents date/time selections before this date.
     Will override defaultDate and useCurrent if either of these settings are the same day since both options are
     invalid according to the rules you've selected.
 
@@ -799,10 +679,7 @@ class DT(Options):
 
   @property
   def minDate(self):
-    """
-    Description:
-    -----------
-    Prevents date/time selections before this date.
+    """   Prevents date/time selections before this date.
     Will override defaultDate and useCurrent if either of these settings are the same day since both options are
     invalid according to the rules you've selected.
 
@@ -822,10 +699,7 @@ class DT(Options):
 
   @property
   def stepping(self):
-    """
-    Description:
-    -----------
-    Number of minutes the up/down arrow's will move the minutes value in the time picker.
+    """   Number of minutes the up/down arrow's will move the minutes value in the time picker.
     Returns a number with the options.stepping option configuration.
 
     Related Pages:
@@ -840,10 +714,7 @@ class DT(Options):
 
   @property
   def extraFormats(self):
-    """
-    Description:
-    -----------
-    Allows for several input formats to be valid.
+    """   Allows for several input formats to be valid.
     Returns a boolean or array with the options.extraFormats option configuration.
     Takes an array of valid input moment format options.
 
@@ -859,10 +730,7 @@ class DT(Options):
 
   @property
   def dayViewHeaderFormat(self):
-    """
-    Description:
-    -----------
-    Changes the heading of the date picker when in "days" view.
+    """   Changes the heading of the date picker when in "days" view.
     Returns a string variable with the currently set options.dayViewHeaderFormat option.
 
     Related Pages:
@@ -877,10 +745,7 @@ class DT(Options):
 
   @property
   def date(self):
-    """
-    Description:
-    -----------
-    Returns the component's model current date, a moment object or null if not set.
+    """   Returns the component's model current date, a moment object or null if not set.
     Takes string, Date, moment, null parameter and sets the components model current moment to it.
 
     Related Pages:

@@ -24,8 +24,6 @@ class NpxCli:
 
   def create(self, name=None):
     """
-    Description:
-    ------------
     The create-react-app is an officially supported way to create React applications.
 
     Related Pages:
@@ -33,8 +31,6 @@ class NpxCli:
       https://fr.reactjs.org/docs/create-a-new-react-app.html
     https://www.w3schools.com/react/default.asp
 
-    Attributes:
-    ----------
     :param name:
     """
     if name is None:
@@ -44,8 +40,6 @@ class NpxCli:
 
   def build(self):
     """
-    Description:
-    ------------
     Builds the app for production to the build folder.
     It correctly bundles React in production mode and optimizes the build for the best performance.
 
@@ -57,8 +51,6 @@ class NpxCli:
 
   def start(self):
     """
-    Description:
-    ------------
     Runs the app in development mode. Open http://localhost:3000 to view it in the browser.
 
     Related Pages:
@@ -69,8 +61,6 @@ class NpxCli:
 
   def test(self):
     """
-    Description:
-    ------------
     Runs the test watcher in an interactive mode. By default, runs tests related to files changed since the last commit.
 
     Related Pages:
@@ -81,13 +71,9 @@ class NpxCli:
 
   def npm(self, packages):
     """
-    Description:
-    ------------
     This will add the npm requirements to the Angular app but also update directly the angular.json for anything needed
     at the start of the application.
 
-    Attributes:
-    ----------
     :param packages: List. The packages names to install
     """
     if self.envs is not None:
@@ -109,8 +95,6 @@ class App:
   @property
   def name(self):
     """
-    Description:
-    ------------
     Return the prefix of the component module (without any extension)
     """
     return self.className
@@ -118,21 +102,15 @@ class App:
   @property
   def path(self):
     """
-    Description:
-    ------------
     Return the full path of the component modules
     """
     return os.path.join("./", self.__path, self.name).replace("\\", "/")
 
   def route(self, component, alias, path):
     """
-    Description:
-    ------------
     Add the app to the routing mechanism.
     By default all the views are in a view folder within the Raact App.
 
-    Attributes:
-    ----------
     :param component: String. The module name
     :param alias: String. The url route
     :param path: String. The .js module path
@@ -162,11 +140,7 @@ class App:
 
   def export(self, path=None, target_path=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param path:
     :param target_path: for example ['src', 'app']
     """
@@ -215,16 +189,12 @@ class React(node.Node):
 
   def create(self, name):
     """
-    Description:
-    ------------
     To create a new project, run:
 
     Related Pages:
 
       https://create-react-app.dev/docs/getting-started/
 
-    Attributes:
-    ----------
     :param name: String. The application name
     """
     if name is None:
@@ -234,16 +204,12 @@ class React(node.Node):
 
   def serve(self, app_name, port=8081):
     """
-    Description:
-    ------------
     Return the version of React.js on the server
 
     Related Pages:
 
       https://create-react-app.dev/docs/getting-started/
 
-    Attributes:
-    ----------
     :param app_name:
     :param port:
     """
@@ -252,8 +218,6 @@ class React(node.Node):
 
   def cli(self, app_name=None):
     """
-    Description:
-    ------------
     Create React App is an officially supported way to create single-page React applications.
     It offers a modern build setup with no configuration.
 
@@ -261,8 +225,6 @@ class React(node.Node):
 
       https://create-react-app.dev/docs/getting-started
 
-    Attributes:
-    ----------
     :param app_name: String. The React.js application name
     """
     app_name = app_name or self._app_name
@@ -270,8 +232,6 @@ class React(node.Node):
 
   def router(self, app_name):
     """
-    Description:
-    ------------
     React Router is the de-facto React routing library, and it’s one of the most popular projects built on top of React.
     This function will also update the module index.js in order to add the router automatically is missing
 
@@ -279,8 +239,6 @@ class React(node.Node):
 
       https://flaviocopes.com/react-router/
 
-    Attributes:
-    ----------
     :param app_name:
     """
     path = os.path.join(self._app_path, app_name, 'src', 'index.js')
@@ -314,14 +272,10 @@ ReactDOM.render(
 
   def page(self, selector=None, name=None, page=None, auto_route=False, target_folder="apps"):
     """
-    Description:
-    ------------
     Create a specific Application as a component in the Angular framework.
 
     Unlike a basic component, the application will be routed to be accessed directly.
 
-    Description:
-    ------------
     :param page: Object. A report object
     :param selector: String. The url route for this report in the Angular app
     :param name: String. The component classname in the Angular framework
@@ -338,12 +292,8 @@ ReactDOM.render(
 
   def publish(self, app_name=None, target_path=None):
     """
-    Description:
-    ------------
     Publishh the Vue.js application
 
-    Attributes:
-    ----------
     :param app_name:
     :param target_path: List  for example ['src', 'app']
     """
@@ -354,12 +304,8 @@ ReactDOM.render(
 
   def home_page(self, page, app_name=None, with_router=False):
     """
-    Description:
-    ------------
     Change the Angular App home page
 
-    Attributes:
-    ----------
     :param page:
     :param app_name:
     :param with_router:

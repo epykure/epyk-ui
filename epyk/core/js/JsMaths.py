@@ -1,11 +1,3 @@
-"""
-Wrapper for the Javascript Math module
-
-Related Pages:
-
-      https://www.w3schools.com/jsref/jsref_obj_math.asp
-"""
-
 from typing import Union
 from epyk.core.py import primitives
 
@@ -14,12 +6,17 @@ from epyk.core.js.primitives import JsNumber
 
 
 class JsMaths:
+  """
+  Wrapper for the Javascript Math module
+
+  Related Pages:
+
+        https://www.w3schools.com/jsref/jsref_obj_math.asp
+  """
 
   @property
   def E(self) -> JsNumber.JsNumber:
     """
-    Description:
-    ------------
     The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
     Usage::
@@ -37,8 +34,6 @@ class JsMaths:
   @property
   def LN2(self):
     """
-    Description:
-    ------------
     The LN2 property returns the natural logarithm of 2, approximately 0.693.
 
     Usage::
@@ -56,8 +51,6 @@ class JsMaths:
   @property
   def LN10(self):
     """
-    Description:
-    ------------
     The LN10 property returns the natural logarithm of 10, approximately 2.302.
 
     Usage::
@@ -75,8 +68,6 @@ class JsMaths:
   @property
   def LOG2E(self):
     """
-    Description:
-    ------------
     The LOG2E property returns the base-2 logarithm of E, approximately 1.442
 
     Usage::
@@ -94,8 +85,6 @@ class JsMaths:
   @property
   def SQRT1_2(self):
     """
-    Description:
-    ------------
     The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
 
     Usage::
@@ -113,8 +102,6 @@ class JsMaths:
   @property
   def SQRT2(self) -> JsNumber:
     """
-    Description:
-    ------------
     The SQRT2 property returns the square root of 2, approximately 1.414.
 
     Usage::
@@ -132,8 +119,6 @@ class JsMaths:
   @property
   def PI(self):
     """
-    Description:
-    ------------
     The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14.
 
     Related Pages:
@@ -144,8 +129,6 @@ class JsMaths:
 
   def random(self, min_val: Union[int, primitives.JsDataModel] = 0, max_val: Union[int, primitives.JsDataModel] = 1):
     """
-    Description:
-    ------------
     Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
 
     Usage::
@@ -157,8 +140,6 @@ class JsMaths:
 
       https://www.w3schools.com/js/js_random.asp
 
-    Attributes:
-    ----------
     :param Union[int, primitives.JsDataModel] min_val: Optional The minimum value for the random function.
     :param Union[int, primitives.JsDataModel] max_val: Optional The maximum value for the random function.
 
@@ -173,8 +154,6 @@ class JsMaths:
 
   def min(self, *args):
     """
-    Description:
-    ------------
     The min() method returns the number with the lowest value.
 
     Usage::
@@ -185,8 +164,6 @@ class JsMaths:
 
       https://www.w3schools.com/jsref/jsref_min.asp
 
-    Attributes:
-    ----------
     :param args: Optional. One or more numbers to compare.
 
     :return: A Number, representing the lowest number of the arguments, or Infinity
@@ -197,8 +174,6 @@ class JsMaths:
 
   def max(self, *args):
     """
-    Description:
-    ------------
     The max() method returns the number with the highest value.
 
     Usage::
@@ -210,8 +185,6 @@ class JsMaths:
       https://www.w3schools.com/jsref/jsref_max.asp
       https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
-    Attributes:
-    ----------
     :param args: Optional. One or more numbers to compare.
 
     :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
@@ -225,8 +198,6 @@ class JsMaths:
 
   def floor(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
 
     Usage::
@@ -237,8 +208,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_floor.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Required. The number you want to round.
 
     :return: A Number, representing the nearest integer when rounding downwards
@@ -248,8 +217,6 @@ class JsMaths:
 
   def trunc(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The trunc() method returns the integer part of a number.
 
     Usage::
@@ -260,8 +227,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_trunc.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
 
     :return: Returns the integer part of a number (x).
@@ -271,16 +236,12 @@ class JsMaths:
 
   def abs(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The abs() method returns the absolute value of a number.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_abs.asp
 
-    Attributes:
-    ----------
     :param Union[infloatt, primitives.JsDataModel] number: A number.
 
     :return: Returns the absolute value of x.
@@ -290,16 +251,12 @@ class JsMaths:
 
   def cos(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The acos() method returns the cosinus of a number as a value value between 0 and PI radians.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_cos.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Returns the cosine of x (x is in radians).
 
     :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
@@ -309,16 +266,12 @@ class JsMaths:
 
   def sin(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The sin() method returns the sinus of a number as a value value between 0 and PI radians.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_sin.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Returns the sinus of x (x is in radians).
 
     :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
@@ -328,16 +281,12 @@ class JsMaths:
 
   def log(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The log() method returns the natural logarithm (base E) of a number.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_log.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
 
     :return: Returns the natural logarithm (base E) of x.
@@ -347,8 +296,6 @@ class JsMaths:
 
   def exp(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the
     number passed to it.
 
@@ -356,8 +303,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_exp.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: Number. Required. A number,
 
     :return: Returns the value of exponential of x,
@@ -367,8 +312,6 @@ class JsMaths:
 
   def round(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The round() method rounds a number to the nearest integer.
 
     Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
@@ -382,8 +325,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_round.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: The number to be rounded.
 
     :return: Rounds x to the nearest integer.
@@ -393,8 +334,6 @@ class JsMaths:
 
   def sqrt(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The sqrt() method returns the square root of a number.
 
     Usage::
@@ -406,8 +345,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_sqrt.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: A number.
 
     :return: A Number. If x is a negative number, NaN is returned.
@@ -417,8 +354,6 @@ class JsMaths:
 
   def ceil(self, number: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
 
     Usage::
@@ -429,8 +364,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_ceil.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: The number you want to round.
 
     :return: Returns x, rounded upwards to the nearest integer.
@@ -441,8 +374,6 @@ class JsMaths:
   @staticmethod
   def pow(number: Union[primitives.JsDataModel, float], power: Union[primitives.JsDataModel, int]):
     """
-    Description:
-    ------------
     The pow() method returns the value of x to the power of y (xy).
 
     Usage::
@@ -454,8 +385,6 @@ class JsMaths:
 
       https//www.w3schools.com/jsref/jsref_pow.asp
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] number: The base.
     :param Union[int, primitives.JsDataModel] power: The exponent.
 

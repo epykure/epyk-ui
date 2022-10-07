@@ -23,34 +23,24 @@ class OptionsChartSharedApex(OptChart.OptionsChartShared):
     return self
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/xaxis/
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.xaxis.title.text = value
     return self
 
   def x_tick_count(self, num):
-    """
-    Description:
-    -----------
-    Number of Tick Intervals to show.
+    """   Number of Tick Intervals to show.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/xaxis/
 
-    Attributes:
-    ----------
     :param num: Integer. The number of ticks
     """
     self.component.options.xaxis.tickAmount = num
@@ -61,34 +51,24 @@ class OptionsChartSharedApex(OptChart.OptionsChartShared):
     return self
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
+    """   Set the label of the y axis.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/yaxis/
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.yaxis.title.text = value
     return self
 
   def y_tick_count(self, num):
-    """
-    Description:
-    -----------
-    Number of Tick Intervals to show.
+    """   Number of Tick Intervals to show.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/yaxis/
 
-    Attributes:
-    ----------
     :param num: Integer. The number of ticks
     """
     self.component.options.yaxis.tickAmount = num
@@ -158,9 +138,7 @@ class OptionMarkers(Options):
 
   @property
   def hover(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionHover
     """
@@ -240,12 +218,8 @@ class OptionDropShadow(Options):
 class OptionLabels(Options):
 
   def formatter(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -253,9 +227,7 @@ class OptionLabels(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionStyle
     """
@@ -324,9 +296,7 @@ class OptionXaxis(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTitle
     """
@@ -334,27 +304,21 @@ class OptionXaxis(Options):
 
   @property
   def labels(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionLabels
     """
     return self._config_sub_data("labels", OptionLabels)
 
   def axisTicks(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionAxisTicks
     """
     return self._config_sub_data("axisTicks", OptionAxisTicks)
 
   def axisBorder(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionAxisBorder
     """
@@ -397,9 +361,7 @@ class OptionYaxis(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTitle
     """
@@ -407,9 +369,7 @@ class OptionYaxis(Options):
 
   @property
   def labels(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionLabels
     """
@@ -440,9 +400,7 @@ class OptionYaxis(Options):
     self._config(flag)
 
   def axisTicks(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionAxisTicks
     """
@@ -507,9 +465,7 @@ class OptionGrid(Options):
 
   @property
   def row(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionRow
     """
@@ -517,9 +473,7 @@ class OptionGrid(Options):
 
   @property
   def padding(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionPadding
     """
@@ -595,9 +549,7 @@ class OptionAnimations(Options):
 
   @property
   def dynamicAnimation(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDynamicAnimations
     """
@@ -607,17 +559,12 @@ class OptionAnimations(Options):
 class OptionEvents(Options):
 
   def click(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user clicks on any area of the chart.
+    """   Fires when user clicks on any area of the chart.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -626,17 +573,12 @@ class OptionEvents(Options):
         js_funcs, toStr=True, profile=profile), js_type=True)
 
   def mouseMove(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user moves mouse on any area of the chart.
+    """   Fires when user moves mouse on any area of the chart.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -644,17 +586,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def legendClick(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user clicks on legend.
+    """   Fires when user clicks on legend.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#legendClick
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -662,17 +599,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def markerClick(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user clicks on the markers.
+    """   Fires when user clicks on the markers.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#markerClick
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -680,18 +612,13 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def selection(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user selects rect using the selection tool.
+    """   Fires when user selects rect using the selection tool.
     The second argument contains the yaxis and xaxis coordinates where user made the selection
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#selection
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -699,18 +626,13 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def zoomed(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user zooms in/out the chart using either the selection zooming tool or zoom in/out buttons.
+    """   Fires when user zooms in/out the chart using either the selection zooming tool or zoom in/out buttons.
     The 2nd argument includes information of the new xaxis/yaxis generated after zooming.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#zoomed
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -718,18 +640,13 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def scrolled(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when user drags the brush in a brush chart.
+    """   Fires when user drags the brush in a brush chart.
     The 2nd argument includes information of the new axes generated after scrolling the brush.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#scrolled
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -737,17 +654,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def animationEnd(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when the chart’s initial animation is finished.
+    """   Fires when the chart’s initial animation is finished.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#animationEnd
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -755,17 +667,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def updated(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when the chart has been dynamically updated either with updateOptions() or updateSeries() functions.
+    """   Fires when the chart has been dynamically updated either with updateOptions() or updateSeries() functions.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#updated
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -773,17 +680,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def mounted(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires after the chart has been drawn on screen.
+    """   Fires after the chart has been drawn on screen.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#mounted
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -791,17 +693,12 @@ class OptionEvents(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def beforeMount(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires before the chart has been drawn on screen.
+    """   Fires before the chart has been drawn on screen.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/#beforeMount
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -837,9 +734,7 @@ class OptionChart(Options):
 
   @property
   def zoom(self) -> OptionZoom:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionZoom
     """
@@ -847,9 +742,7 @@ class OptionChart(Options):
 
   @property
   def events(self) -> OptionEvents:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionEvents
     """
@@ -857,9 +750,7 @@ class OptionChart(Options):
 
   @property
   def animations(self) -> OptionAnimations:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionAnimations
     """
@@ -867,9 +758,7 @@ class OptionChart(Options):
 
   @property
   def dropShadow(self) -> OptionDropShadow:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDropShadow
     """
@@ -877,9 +766,7 @@ class OptionChart(Options):
 
   @property
   def toolbar(self) -> OptionToolbar:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionToolbar
     """
@@ -895,9 +782,7 @@ class OptionChart(Options):
 
   @property
   def sparkline(self) -> OptionSparkline:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionSparkline
     """
@@ -950,12 +835,8 @@ class OptionValue(Options):
     self._config("%spx" % num)
 
   def formatter(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -986,12 +867,8 @@ class OptionTotal(Options):
     self._config(value)
 
   def formatter(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1011,12 +888,8 @@ class OptionFormatters:
 
   @packageImport("accounting")
   def toNumber(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param digit: Integer. Optional.
     :param thousand_sep: String. Optional.
     """
@@ -1026,12 +899,8 @@ class OptionFormatters:
 
   @packageImport("accounting")
   def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param symbol: String. Optional.
     :param digit: Integer. Optional.
     :param thousand_sep: String. Optional.
@@ -1050,12 +919,8 @@ class OptionFormatters:
 
   @packageImport("accounting")
   def toPercent(self, symbol="%", digit=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -1069,12 +934,8 @@ class OptionFormatters:
 
   @packageImport("accounting")
   def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param factor:
     :param alias:
     :param digits:
@@ -1087,12 +948,8 @@ class OptionFormatters:
       factor, digits, thousand_sep, alias), self.__name, True)
 
   def mapTo(self, mapping):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param mapping:
     """
     self.__option._config(
@@ -1112,9 +969,7 @@ class OptionDataLabels(Options):
 
   @property
   def textAnchor(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1136,9 +991,7 @@ class OptionDataLabels(Options):
 
   @property
   def name(self) -> OptionName:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionName
     """
@@ -1146,9 +999,7 @@ class OptionDataLabels(Options):
 
   @property
   def value(self) -> OptionValue:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionValue
     """
@@ -1156,9 +1007,7 @@ class OptionDataLabels(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionStyle
     """
@@ -1166,21 +1015,15 @@ class OptionDataLabels(Options):
 
   @property
   def total(self) -> OptionTotal:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTotal
     """
     return self._config_sub_data("total", OptionTotal)
 
   def formatter(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1273,9 +1116,7 @@ class OptionTitle(Options):
 
   @property
   def style(self) -> OptionStyle:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionStyle
     """
@@ -1337,9 +1178,7 @@ class OptionLegend(Options):
 
   @property
   def labels(self) -> OptionLabels:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionLabels
     """
@@ -1349,12 +1188,8 @@ class OptionLegend(Options):
 class OptionY(Options):
 
   def formatter(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1412,9 +1247,7 @@ class OptionTooltip(Options):
 
   @property
   def y(self) -> OptionY:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionY
     """
@@ -1422,9 +1255,7 @@ class OptionTooltip(Options):
 
   @property
   def fixed(self) -> OptionFixed:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionFixed
     """
@@ -1510,9 +1341,7 @@ class OptionFill(Options):
 
   @property
   def gradient(self) -> OptionGradient:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionGradient
     """
@@ -1550,9 +1379,7 @@ class OptionResponsive(Options):
 
   @property
   def opts(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionsLine
     """
@@ -1590,9 +1417,7 @@ class OptionTheme(Options):
 
   @property
   def monochrome(self) -> OptionMonochrome:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionMonochrome
     """
@@ -1630,9 +1455,7 @@ class OptionPlotOptionsBar(Options):
 
   @property
   def dataLabels(self) -> OptionDataLabels:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDataLabels
     """
@@ -1643,9 +1466,7 @@ class OptionsPlotRadialBar(Options):
 
   @property
   def hollow(self) -> OptionHollow:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionHollow
     """
@@ -1677,9 +1498,7 @@ class OptionsPlotRadialBar(Options):
 
   @property
   def dataLabels(self) -> OptionDataLabels:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDataLabels
     """
@@ -1690,9 +1509,7 @@ class OptionPlotOptions(Options):
 
   @property
   def bar(self) -> OptionPlotOptionsBar:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionPlotOptionsBar
     """
@@ -1703,9 +1520,7 @@ class OptionsPlotRadial(Options):
 
   @property
   def radialBar(self) -> OptionsPlotRadialBar:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionsPlotRadialBar
     """
@@ -1713,9 +1528,7 @@ class OptionsPlotRadial(Options):
 
   @property
   def dataLabels(self) -> OptionDataLabels:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDataLabels
     """
@@ -1726,9 +1539,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def chart(self) -> OptionChart:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionChart
     """
@@ -1736,9 +1547,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def grid(self) -> OptionGrid:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionGrid
     """
@@ -1746,9 +1555,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def markers(self) -> OptionMarkers:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionMarkers
     """
@@ -1756,9 +1563,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def title(self) -> OptionTitle:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTitle
     """
@@ -1766,9 +1571,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def subtitle(self) -> OptionTitle:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTitle
     """
@@ -1776,9 +1579,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def stroke(self) -> OptionStroke:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionStroke
     """
@@ -1786,9 +1587,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def dataLabels(self) -> OptionDataLabels:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionDataLabels
     """
@@ -1796,9 +1595,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def legend(self) -> OptionLegend:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionLegend
     """
@@ -1806,9 +1603,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def xaxis(self) -> OptionXaxis:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionXaxis
     """
@@ -1816,9 +1611,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def yaxis(self) -> OptionYaxis:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionYaxis
     """
@@ -1826,9 +1619,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def tooltip(self) -> OptionTooltip:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionTooltip
     """
@@ -1836,9 +1627,7 @@ class OptionsLine(OptChart.OptionsChart):
 
   @property
   def theme(self) -> OptionTheme:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1849,9 +1638,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self._config_sub_data("theme", OptionTheme)
 
   def add_series(self) -> OptionSeries:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionSeries
     """
@@ -1865,9 +1652,7 @@ class OptionsLine(OptChart.OptionsChart):
     return self.js_tree.get("series", [])
 
   def add_responsive(self) -> OptionResponsive:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionResponsive
     """
@@ -1881,9 +1666,7 @@ class OptionsArea(OptionsLine):
 
   @property
   def fill(self) -> OptionFill:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionFill
     """
@@ -1895,9 +1678,7 @@ class OptionsBar(OptionsLine):
 
   @property
   def plotOptions(self) -> OptionPlotOptions:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionPlotOptions
     """
@@ -1924,9 +1705,7 @@ class OptionsPie(OptionsLine):
 
   @property
   def plotOptions(self) -> OptionsPlotRadial:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptionsPlotRadial
     """

@@ -14,17 +14,12 @@ from epyk.core.js.statements import JsWhile
 
 
 def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]) -> JsIf.JsIf:
-  """
-  Description:
-  ------------
-  Conditional statements are used to perform different actions based on different conditions.
+  """  Conditional statements are used to perform different actions based on different conditions.
 
   Related Pages:
 
     https://www.w3schools.com/js/js_if_else.asp
 
-  Attributes:
-  ----------
   :param condition: The JavaScript conditions.
   :param js_funcs: The Javascript functions.
   """
@@ -34,17 +29,12 @@ def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], j
 
 
 def switch(variable: Union[primitives.JsDataModel, str]) -> JsSwitch.JsSwitch:
-  """
-  Description:
-  ------------
-  switch statement is used to perform different actions based on different conditions.
+  """  switch statement is used to perform different actions based on different conditions.
 
   Related Pages:
 
     https://www.w3schools.com/js/js_switch.asp
 
-  Attributes:
-  ----------
   :param variable:
   """
   if hasattr(variable, 'dom'):
@@ -63,8 +53,6 @@ def while_(pivot, js_funcs: Optional[Union[list, str]] = None, options: Optional
 
     https://www.w3schools.com/js/js_loop_while.asp
 
-  Attributes:
-  ----------
   :param pivot: The JavaScript expression.
   :param js_funcs: The Javascript functions.
   :param options: Optional. Specific Python options available for this component.
@@ -86,8 +74,6 @@ def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Opti
 
     https://www.w3schools.com/js/js_loop_while.asp
 
-  Attributes:
-  ----------
   :param iterable:
   :param js_funcs: The Javascript functions.
   :param options: Optional. Specific Python options available for this component.
@@ -103,17 +89,12 @@ def whileOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Opti
 
 def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
          profile: Optional[Union[dict, bool]] = None) -> JsFor.JsFor:
-  """
-  Description:
-  ------------
-  Loops can execute a block of code a number of times.
+  """  Loops can execute a block of code a number of times.
 
   Related Pages:
 
     https://www.w3schools.com/js/js_loop_for.asp
 
-  Attributes:
-  ----------
   :param end:
   :param js_funcs: The Javascript functions.
   :param options: Optional. Specific Python options available for this component.
@@ -129,13 +110,8 @@ def for_(end, js_funcs: Optional[Union[list, str]] = None, options: Optional[dic
 
 def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
           profile: Optional[Union[dict, bool]] = None) -> JsFor.JsIterable:
-  """
-  Description:
-  ------------
-  The JavaScript for/in statement loops through the properties of an object
+  """  The JavaScript for/in statement loops through the properties of an object
 
-  Attributes:
-  ----------
   :param js_obj:
   :param js_funcs: The Javascript functions.
   :param options: Optional. Specific Python options available for this component.
@@ -151,13 +127,8 @@ def forIn(js_obj, js_funcs: Optional[Union[list, str]] = None, options: Optional
 
 def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Optional[dict] = None,
           profile: Optional[Union[dict, bool]] = None) -> JsFor.JsIterable:
-  """
-  Description:
-  ------------
-  The JavaScript for/of statement loops through the values of an iterable objects.
+  """  The JavaScript for/of statement loops through the values of an iterable objects.
 
-  Attributes:
-  ----------
   :param iterable:
   :param js_funcs: The Javascript functions.
   :param options: Optional. Specific Python options available for this component.
@@ -175,17 +146,12 @@ def forOf(iterable, js_funcs: Optional[Union[list, str]] = None, options: Option
 
 
 def typeof(data: Union[primitives.JsDataModel, str], type: Optional[Union[primitives.JsDataModel, str]] = None):
-  """
-  Description:
-  ------------
-  The typeof function
+  """  The typeof function
 
   Related Pages:
 
     https://www.w3schools.com/js/js_datatypes.asp
 
-  Attributes:
-  ----------
   :param data: A String corresponding to a JavaScript object.
   :param type: The type of object.
   """
@@ -196,30 +162,20 @@ def typeof(data: Union[primitives.JsDataModel, str], type: Optional[Union[primit
 
 
 def not_(condition: Union[primitives.JsDataModel, str]):
-  """
-  Description:
-  ------------
-  Add a not JavaScript expression to a JavaScript string.
+  """  Add a not JavaScript expression to a JavaScript string.
 
-  Attributes:
-  ----------
   :param Union[primitives.JsDataModel, str] condition: The JavaScript expression.
   """
   return "!(%s)" % JsUtils.jsConvertData(condition, None)
 
 
 def try_(js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-  """
-  Description:
-  ------------
-  Block of code to try.
+  """  Block of code to try.
 
   Related Pages:
 
     https://www.w3schools.com/js/js_errors.asp
 
-  Attributes:
-  ----------
   :param Union[list, str] js_funcs: The PyJs functions.
   :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
   """
@@ -229,23 +185,15 @@ def try_(js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None
 
 
 def and_(*args):
-  """
-  Description:
-  ------------
-  Add a and expression to a JavaScript chain.
+  """  Add a and expression to a JavaScript chain.
 
-  Attributes:
-  ----------
   :param args:
   """
   return "(%s)" % ") && (".join([JsUtils.jsConvertData(x, None) for x in args])
 
 
 def throw(value: Union[primitives.JsDataModel, str]):
-  """
-  Description:
-  ------------
-  The throw statement allows you to create a custom error.
+  """  The throw statement allows you to create a custom error.
 
   Technically you can throw an exception (throw an error).
 
@@ -253,21 +201,14 @@ def throw(value: Union[primitives.JsDataModel, str]):
 
     https://www.w3schools.com/js/js_errors.asp
 
-  Attributes:
-  ----------
   :param Union[primitives.JsDataModel, str] value: The message displayed with the exception.
   """
   return JsObjects.JsObject.JsObject.get("throw %s" % JsUtils.jsConvertData(value, None))
 
 
 def or_(*args):
-  """
-  Description:
-  ------------
-  Add a Or expression to a JavaScript chain.
+  """  Add a Or expression to a JavaScript chain.
 
-  Attributes:
-  ----------
   :param args:
   """
   return "(%s)" % ") || (".join([JsUtils.jsConvertData(x, None) for x in args])

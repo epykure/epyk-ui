@@ -54,8 +54,6 @@ class Li(Html.Html):
 
   def no_decoration(self):
     """
-    Description:
-    ------------
     Remove the list default style.
     """
     self.css({"text-decoration": "none", "list-style-type": 'none'})
@@ -64,16 +62,12 @@ class Li(Html.Html):
   def add_label(self, text: str, css: Optional[dict] = None, position: str = "before",
                 for_: Optional[Html.Html] = None, html_code: Optional[str] = None, options: Optional[dict] = None):
     """
-    Description:
-    ------------
     Add an elementary label component.
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_label.asp
 
-    Attributes:
-    ----------
     :param text: The label content.
     :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param position: Optional. The position.
@@ -100,12 +94,8 @@ class Li(Html.Html):
 
   def set_html_content(self, component: Html.Html):
     """
-    Description:
-    ------------
     Set the cell content to be an HTML object.
 
-    Attributes:
-    ----------
     :param component: Python HTML object.
 
     :return: self, the cell object to allow the chaining
@@ -122,12 +112,8 @@ class Li(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
-    Description:
-    ------------
     Add a click event to the component.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -144,8 +130,6 @@ class Li(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlLi:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -181,8 +165,6 @@ class List(Html.Html):
   @property
   def options(self) -> OptList.OptionsLi:
     """
-    Description:
-    ------------
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -193,8 +175,6 @@ class List(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlList:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
     """
@@ -204,12 +184,8 @@ class List(Html.Html):
 
   def items_style(self, style_type: str = None, css_attrs: dict = None):
     """
-    Description:
-    ------------
     Function to load a predefined style for the items of the components.
 
-    Attributes:
-    ----------
     :param style_type. Optional. The alias of the style to apply
     :param css_attrs. Optional. The CSS attributes
     """
@@ -229,12 +205,8 @@ class List(Html.Html):
   def drop(self, js_funcs: types.JS_FUNCS_TYPES = None, prevent_default: bool = True,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add a drop feature to the component.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param prevent_default: Optional. Cancels the event if it is cancelable, meaning that the default action
       that belongs to the event will not occur.
@@ -264,12 +236,8 @@ class List(Html.Html):
 
   def __getitem__(self, i: int) -> Li:
     """
-    Description:
-    ------------
     Python function to get the elements of the lists which will be passed to the JavaScript.
 
-    Attributes:
-    ----------
     :param i: Get an element from the Python list.
     """
     return self.items[i] if self.items is not None else None
@@ -283,12 +251,8 @@ class List(Html.Html):
 
   def add_item(self, d: Union[Html.Html, str]):
     """
-    Description:
-    ------------
     Add an element to the list before passing the list to the Javascript.
 
-    Attributes:
-    ----------
     :param d: The component to be added.
     """
     self.items = self.items or []
@@ -315,8 +279,6 @@ class List(Html.Html):
 
   def set_items(self):
     """
-    Description:
-    ------------
     Reset all the items in the list by applying the default styles,
     """
     self.items = self.items or []
@@ -334,12 +296,8 @@ class List(Html.Html):
 
   def on_items(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add event to the list items.
 
-    Attributes:
-    ----------
     :param event: The event type.
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -350,12 +308,8 @@ class List(Html.Html):
 
   def click_items(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add click events on the list items.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -431,23 +385,15 @@ class Items(Html.Html):
 
   @property
   def style(self) -> GrpClsList.ClassItems:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsList.ClassItems(self)
     return self._styleObj
 
   def record(self, values: types.JS_FUNCS_TYPES):
-    """
-    Description:
-    -----------
-    A function helper to set values from Python in this object.
+    """   A function helper to set values from Python in this object.
 
-    Attributes:
-    ----------
     :param values: The items to be added to the list.
     """
     records = []
@@ -495,12 +441,8 @@ class Items(Html.Html):
 
   def items_style(self, style_type: str = None, css_attrs: dict = None):
     """
-    Description:
-    ------------
     Function to load a predefined style for the items of the components.
 
-    Attributes:
-    ----------
     :param style_type. The alias of the style to apply
     :param css_attrs. Optional. Items CSS attributes
     """
@@ -517,8 +459,6 @@ class Items(Html.Html):
   @property
   def options(self) -> OptList.OptionsItems:
     """
-    Description:
-    ------------
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -529,8 +469,6 @@ class Items(Html.Html):
   @property
   def dom(self) -> JsHtmlList.JsItem:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
     """
@@ -541,8 +479,6 @@ class Items(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
-    Description:
-    ------------
     The onclick event occurs when the user clicks on an element of the list.
 
     Tips: Use the pk.events.value to get the item value.
@@ -554,8 +490,6 @@ class Items(Html.Html):
         page.js.console.log("value", skip_data_convert=True)
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param source_event: Optional. The source target for the event
@@ -569,12 +503,8 @@ class Items(Html.Html):
   def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param js_funcs: Optional. Javascript functions
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -591,14 +521,10 @@ class Items(Html.Html):
   def add_type(self, name: str, item_def: Optional[str] = None, func_name: Optional[str] = None,
                dependencies: list = None):
     """
-    Description:
-    ------------
     Add a bespoke item type with it is specific style and components.
 
     TODO: Create a tutorial to explain how to extend list types.
 
-    Attributes:
-    ----------
     :param name: The reference of this type name in the framework
     :param item_def: Optional. The definition of the items (examples in JsHtmlList.py)
     :param func_name: Optional. The external function name used to build the items
@@ -627,15 +553,11 @@ class Items(Html.Html):
   def select_type(self, name: Optional[str] = None, style: Optional[dict] = None,
                   selected_style: Optional[dict] = None):
     """
-    Description:
-    ------------
     Set the CSS Style of the items in the list.
     It is possible to use predefined style or to pass bespoke ones.
 
     Style will be set at list type level so all the list in the page will be using it.
 
-    Attributes:
-    ----------
     :param name: Optional. The list type name to be used
     :param style: Optional. The CSS style to be applied to the item
     :param selected_style: Optional. The css style to be applied when selected

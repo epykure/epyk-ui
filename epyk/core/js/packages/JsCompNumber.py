@@ -8,8 +8,6 @@ class CompNumber(JsPackage):
 
   def set(self, num: float):
     """
-    Description:
-    ------------
     Set the number value.
 
     Usage::
@@ -17,8 +15,6 @@ class CompNumber(JsPackage):
       num = page.ui.number(5977, label="test")
       num.click([num.js.set(18)])
 
-    Attributes:
-    ----------
     :param num: The value.
     """
     return self.component.build(
@@ -26,8 +22,6 @@ class CompNumber(JsPackage):
 
   def add(self, num: float = 1):
     """
-    Description:
-    ------------
     Add a value.
 
     Usage::
@@ -36,8 +30,6 @@ class CompNumber(JsPackage):
       num = page.ui.number(10, label="test")
       num.click([num.js.add(inp.dom.content)])
 
-    Attributes:
-    ----------
     :param num: The value
     """
     num = JsUtils.jsConvertData(num, None)
@@ -48,8 +40,6 @@ class CompNumber(JsPackage):
 
   def sub(self, num: float = 1):
     """
-    Description:
-    ------------
     Substract a value.
 
     Usage::
@@ -58,8 +48,6 @@ class CompNumber(JsPackage):
       num = page.ui.number(10, label="test")
       num.click([num.js.sub()])
 
-    Attributes:
-    ----------
     :param num: The value
     """
     num = JsUtils.jsConvertData(num, None)

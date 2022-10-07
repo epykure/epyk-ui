@@ -24,10 +24,7 @@ class MapBoxMap(JsPackage):
     self.varName = self.component.chartId
 
   def marker(self, lng: float, lat: float, options: dict = None) -> JsLeaflet.LMarker:
-    """
-    Description:
-    -----------
-    Add a market to a map.
+    """   Add a market to a map.
 
     Usage::
 
@@ -39,8 +36,6 @@ class MapBoxMap(JsPackage):
 
       https://leafletjs.com/reference-1.7.1.html#marker
 
-    Attributes:
-    ----------
     :param lng: The longitude value
     :param lat: The latitude value
     :param options: Market options
@@ -51,31 +46,21 @@ class MapBoxMap(JsPackage):
     return l_marker
 
   def set_accessToken(self, value: str):
-    """
-    Description:
-    -----------
-    Set the library access token.
+    """   Set the library access token.
     This can be done at chart level or directly at the library level.
 
-    Attributes:
-    ----------
     :param value: Token value
     """
     self.component.options.accessToken = value
 
   def addControl(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Adds an IControl to the map, calling control.onAdd(this).
+    """   Adds an IControl to the map, calling control.onAdd(this).
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/map/#map#addcontrol
       https://docs.mapbox.com/mapbox-gl-js/example/fullscreen/
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -83,32 +68,24 @@ class MapBoxMap(JsPackage):
       self.component.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def addLayer(self, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/canvas-source/
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.addLayer(%s)" % (self.component.chartId, data))
 
   def addSource(self, name: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/canvas-source/
 
-    Attributes:
-    ----------
     :param name:
     :param data:
     """
@@ -117,16 +94,12 @@ class MapBoxMap(JsPackage):
     return JsUtils.jsWrap("%s.addSource(%s, %s)" % (self.component.chartId, name, data))
 
   def addImage(self, name: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/add-image-generated/
 
-    Attributes:
-    ----------
     :param name:
     :param data:
     """
@@ -135,10 +108,7 @@ class MapBoxMap(JsPackage):
     return JsUtils.jsWrap("%s.addImage(%s, %s)" % (self.component.chartId, name, data))
 
   def getBearing(self):
-    """
-    Description:
-    -----------
-    Returns the map's current bearing. The bearing is the compass direction that is "up"; for example, a bearing of 90°
+    """   Returns the map's current bearing. The bearing is the compass direction that is "up"; for example, a bearing of 90°
     orients the map so that east is up.
 
     Related Pages:
@@ -149,10 +119,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsNumber.JsNumber("%s.getBearing()" % self.component.chartId)
 
   def getZoom(self):
-    """
-    Description:
-    -----------
-    Returns the map's current zoom level.
+    """   Returns the map's current zoom level.
 
     Related Pages:
 
@@ -161,10 +128,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsNumber.JsNumber("%s.getZoom()" % self.component.chartId)
 
   def getContainer(self):
-    """
-    Description:
-    -----------
-    Returns the map's containing HTML element.
+    """   Returns the map's containing HTML element.
 
     Related Pages:
 
@@ -173,10 +137,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getContainer()" % self.component.chartId)
 
   def getCanvasContainer(self):
-    """
-    Description:
-    -----------
-    Returns the HTML element containing the map's <canvas> element.
+    """   Returns the HTML element containing the map's <canvas> element.
 
     If you want to add non-GL overlays to the map, you should append them to this element.
 
@@ -187,10 +148,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getCanvasContainer()" % self.component.chartId)
 
   def getCanvas(self):
-    """
-    Description:
-    -----------
-    Returns the map's <canvas> element.
+    """   Returns the map's <canvas> element.
 
     Related Pages:
 
@@ -216,10 +174,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.resize(%s)" % (self.component.chartId, data))
 
   def getSource(self, js_code: str):
-    """
-    Description:
-    -----------
-    Returns the source with the specified ID in the map's style.
+    """   Returns the source with the specified ID in the map's style.
 
     Related Pages:
 
@@ -232,10 +187,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getSource(%s)" % (self.component.chartId, _id))
 
   def getBounds(self):
-    """
-    Description:
-    -----------
-    Returns the map's geographical bounds.
+    """   Returns the map's geographical bounds.
     When the bearing or pitch is non-zero, the visible region is not an axis-aligned rectangle,
     and the result is the smallest bounds that encompasses the visible region.
     If a padding is set on the map, the bounds returned are for the inset.
@@ -248,10 +200,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getBounds()" % self.component.chartId)
 
   def getMaxBounds(self):
-    """
-    Description:
-    -----------
-    Returns the maximum geographical bounds the map is constrained to, or null if none set.
+    """   Returns the maximum geographical bounds the map is constrained to, or null if none set.
 
     Related Pages:
 
@@ -260,17 +209,12 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getMaxBounds()" % self.component.chartId)
 
   def setMaxBounds(self, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Sets or clears the map's geographical bound.
+    """   Sets or clears the map's geographical bound.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/map/#map#getcontainer
 
-    Attributes:
-    ----------
     :param data: The maximum bounds to set.
       If null or undefined is provided, the function removes the map's maximum bounds.
     """
@@ -278,18 +222,13 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.setMaxBounds(%s)" % (self.component.chartId, data))
 
   def setMinZoom(self, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Sets or clears the map's minimum zoom level. If the map's current zoom level is lower than the new minimum,
+    """   Sets or clears the map's minimum zoom level. If the map's current zoom level is lower than the new minimum,
     the map will zoom to the new minimum.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/map/#map#getcontainer
 
-    Attributes:
-    ----------
     :param data: The maximum bounds to set.
       If null or undefined is provided, the function removes the map's maximum bounds.
     """
@@ -297,18 +236,13 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.setMinZoom(%s)" % (self.component.chartId, data))
 
   def setMaxZoom(self, data: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Sets or clears the map's maximum zoom level. If the map's current zoom level is higher than the new maximum,
+    """   Sets or clears the map's maximum zoom level. If the map's current zoom level is higher than the new maximum,
     the map will zoom to the new maximum.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/map/#map#getcontainer
 
-    Attributes:
-    ----------
     :param data: The maximum bounds to set.
       If null or undefined is provided, the function removes the map's maximum bounds.
     """
@@ -316,10 +250,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.setMaxZoom(%s)" % (self.component.chartId, data))
 
   def getMinZoom(self):
-    """
-    Description:
-    -----------
-    Returns the map's minimum allowable zoom level.
+    """   Returns the map's minimum allowable zoom level.
 
     Related Pages:
 
@@ -328,10 +259,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsNumber.JsNumber("%s.getMinZoom()" % self.component.chartId)
 
   def getMaxZoom(self):
-    """
-    Description:
-    -----------
-    Returns the map's maximum allowable zoom level.
+    """   Returns the map's maximum allowable zoom level.
 
     Related Pages:
 
@@ -340,10 +268,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsNumber.JsNumber("%s.getMaxZoom()" % self.component.chartId)
 
   def getStyle(self):
-    """
-    Description:
-    -----------
-    Returns the map's Mapbox style object, a JSON object which can be used to recreate the map's style.
+    """   Returns the map's Mapbox style object, a JSON object which can be used to recreate the map's style.
 
     Related Pages:
 
@@ -353,10 +278,7 @@ class MapBoxMap(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getMaxZoom()" % self.component.chartId)
 
   def setBearing(self, bearing: int, event_data):
-    """
-    Description:
-    -----------
-    Sets the map's bearing (rotation).
+    """   Sets the map's bearing (rotation).
     The bearing is the compass direction that is "up"; for example, a bearing of 90° orients the map so that east is up.
 
 
@@ -365,35 +287,25 @@ class MapBoxMap(JsPackage):
       https://docs.mapbox.com/mapbox-gl-js/api/map
       https://docs.mapbox.com/mapbox-gl-js/example/dancing-buildings/
 
-    Attributes:
-    ----------
     :param bearing:
     :param event_data:
     """
     return JsUtils.jsWrap("%s.setBearing(%s)" % (self.component.chartId, bearing))
 
   def setFog(self, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Set the default atmosphere style.
+    """   Set the default atmosphere style.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param options: Optional. The fog properties
     """
     options = options or {}
     return JsUtils.jsWrap("%s.setFog(%s)" % (self.component.chartId, options))
 
   def setLight(self, light: str = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Sets the any combination of light values.
+    """   Sets the any combination of light values.
 
     Related Pages:
 
@@ -417,10 +329,7 @@ class MapBoxMap(JsPackage):
       return JsUtils.jsWrap("%s.setLight(%s)" % (self.component.chartId, options))
 
   def setPaintProperty(self, layer_id: str, name: str, value: str, options: dict = None):
-    """
-    Description:
-    -----------
-    Sets the value of a paint property in the specified style layer.
+    """   Sets the value of a paint property in the specified style layer.
 
     Related Pages:
 
@@ -438,10 +347,7 @@ class MapBoxMap(JsPackage):
       self.component.chartId, layer_id, name, value, options))
 
   def setLayoutProperty(self, layer_id: str, name: str, value: str, options: dict = None):
-    """
-    Description:
-    -----------
-    Sets the value of a layout property in the specified style layer.
+    """   Sets the value of a layout property in the specified style layer.
 
     Related Pages:
 
@@ -459,17 +365,12 @@ class MapBoxMap(JsPackage):
       self.component.chartId, layer_id, name, value, options))
 
   def setStyle(self, style: str, options: dict = None):
-    """
-    Description:
-    -----------
-    Updates the map's Mapbox style object with a new value.
+    """   Updates the map's Mapbox style object with a new value.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param style: A JSON object conforming to the schema described in the Mapbox Style Specification ,
       or a URL to such JSON.
     :param options: Options object.
@@ -482,18 +383,13 @@ class MapBoxMap(JsPackage):
     return JsUtils.jsWrap("%s.setStyle(%s, %s)" % (self.component.chartId, style, options))
 
   def setTerrain(self, terrain: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Sets the terrain property of the style.
+    """   Sets the terrain property of the style.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
       https://docs.mapbox.com/mapbox-gl-js/example/free-camera-path/
 
-    Attributes:
-    ----------
     :param terrain: Terrain properties to set. Must conform to the Terrain Style Specification .
     """
     terrain = JsUtils.jsConvertData(terrain, None)
@@ -502,8 +398,6 @@ class MapBoxMap(JsPackage):
   @property
   def _(self):
     """
-    Description:
-    ------------
     Tabulator standard components.
 
     Usage::
@@ -521,8 +415,6 @@ class _Export:
 
   def FullscreenControl(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -532,15 +424,11 @@ class _Export:
 
   def GeolocateControl(self, options: dict = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/markers/
 
-    Attributes:
-    ----------
     :param options:
     """
     if options is not None:
@@ -551,15 +439,11 @@ class _Export:
 
   def AttributionControl(self, options: dict = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/markers/
 
-    Attributes:
-    ----------
     :param options:
     """
     if options is not None:
@@ -570,15 +454,11 @@ class _Export:
 
   def NavigationControl(self, options: dict = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/markers/
 
-    Attributes:
-    ----------
     :param options:
     """
     if options is not None:
@@ -589,15 +469,11 @@ class _Export:
 
   def ScaleControl(self, options: dict = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/api/markers/
 
-    Attributes:
-    ----------
     :param options:
     """
     if options is not None:

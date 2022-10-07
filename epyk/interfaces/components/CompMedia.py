@@ -16,10 +16,7 @@ class Media:
   def video(self, value: str = "", align: str = "center", path: str = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
             profile: types.PROFILE_TYPE = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Add a video from the server to the page.
+    """   Add a video from the server to the page.
     The format for the video must be MP4.
 
     Usage::
@@ -37,9 +34,7 @@ class Media:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The name of the video.
     :param path: Optional. THe path to the video.
     :param align: Optional. A string with the horizontal position of the component.
@@ -64,10 +59,7 @@ class Media:
   def audio(self, value: str = "", path: str = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, profile: types.PROFILE_TYPE = None,
             options: dict = None):
-    """
-    Description:
-    -----------
-    Add a audio track from the server to the page.
+    """   Add a audio track from the server to the page.
     The format for the video must be mpeg.
 
     Usage::
@@ -85,9 +77,7 @@ class Media:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The name of the audio object.
     :param path: Optional. THe path to the audio object.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -108,10 +98,7 @@ class Media:
   def youtube(self, link: str, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
               profile: types.PROFILE_TYPE = None, options: dict = None):
-    """
-    Description:
-    -----------
-    This will add a youtube video using the shared line to embedded to a website.
+    """   This will add a youtube video using the shared line to embedded to a website.
 
     Usage::
 
@@ -128,9 +115,7 @@ class Media:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/
-
-    Attributes:
-    ----------
+ 
     :param link: The youtube link.
     :param align: Optional. A string with the horizontal position of the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -154,10 +139,7 @@ class Media:
   def camera(self, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
              profile: types.PROFILE_TYPE = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Add a video from the server to the page.
+    """   Add a video from the server to the page.
     The format for the video must be MP4.
 
     Usage::
@@ -176,9 +158,7 @@ class Media:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/
-
-    Attributes:
-    ----------
+ 
     :param align: Optional. A string with the horizontal position of the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.

@@ -10,8 +10,6 @@ class EnumStyleOptions(Enums):
 
   def __wrap(self, name, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -19,8 +17,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param name:
     :param header_only:
     :param body_only:
@@ -35,8 +31,6 @@ class EnumStyleOptions(Enums):
 
   def left(self, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -44,8 +38,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param header_only:
     :param body_only:
     """
@@ -53,8 +45,6 @@ class EnumStyleOptions(Enums):
 
   def right(self, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -62,8 +52,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param header_only:
     :param body_only:
     """
@@ -71,8 +59,6 @@ class EnumStyleOptions(Enums):
 
   def center(self, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -80,8 +66,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param header_only:
     :param body_only:
     """
@@ -89,8 +73,6 @@ class EnumStyleOptions(Enums):
 
   def justify(self, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -98,8 +80,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param header_only:
     :param body_only:
     """
@@ -107,8 +87,6 @@ class EnumStyleOptions(Enums):
 
   def nowrap(self, header_only: bool = False, body_only: bool = False):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -116,8 +94,6 @@ class EnumStyleOptions(Enums):
 
       https://datatables.net/manual/styling/classes
 
-    Attributes:
-    ----------
     :param header_only:
     :param body_only:
     """
@@ -128,10 +104,7 @@ class ColumnDef(Options):
 
   @property
   def targets(self):
-    """
-    Description:
-    -----------
-    The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a
+    """   The columnDefs option allows a column definition object to be defined and then assigned to one or more columns in a
     DataTable, regardless of the order of the column definitions array, or the order of the columns in the table.
 
     Related Pages:
@@ -146,10 +119,7 @@ class ColumnDef(Options):
 
   @property
   def visible(self):
-    """
-    Description:
-    -----------
-    Enable or disable the display of this column.
+    """   Enable or disable the display of this column.
 
     Related Pages:
 
@@ -163,10 +133,7 @@ class ColumnDef(Options):
 
   @property
   def searchable(self):
-    """
-    Description:
-    -----------
-    Enable or disable search on the data in this column.
+    """   Enable or disable search on the data in this column.
 
     Related Pages:
 
@@ -180,10 +147,7 @@ class ColumnDef(Options):
 
   @property
   def orderData(self):
-    """
-    Description:
-    -----------
-    Define multiple column ordering as the default order for a column.
+    """   Define multiple column ordering as the default order for a column.
 
     Related Pages:
 
@@ -200,10 +164,7 @@ class Column(Options):
 
   @property
   def cellType(self):
-    """
-    Description:
-    -----------
-    Change the cell type created for the column - either TD cells or TH cells.
+    """   Change the cell type created for the column - either TD cells or TH cells.
 
     Related Pages:
 
@@ -217,10 +178,7 @@ class Column(Options):
 
   @property
   def className(self):
-    """
-    Description:
-    -----------
-    Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM,
+    """   Quite simply this option adds a class to each cell in a column, regardless of if the table source is from DOM,
     Javascript or Ajax. This can be useful for styling columns.
 
     Related Pages:
@@ -234,10 +192,7 @@ class Column(Options):
 
   @property
   def contentPadding(self):
-    """
-    Description:
-    -----------
-    Add padding to the text content used when calculating the optimal width for a table.
+    """   Add padding to the text content used when calculating the optimal width for a table.
 
     Related Pages:
 
@@ -251,10 +206,7 @@ class Column(Options):
 
   @property
   def defaultContent(self):
-    """
-    Description:
-    -----------
-    Set default, static, content for a column.
+    """   Set default, static, content for a column.
 
     Related Pages:
 
@@ -268,10 +220,7 @@ class Column(Options):
 
   @property
   def name(self):
-    """
-    Description:
-    -----------
-    When working with DataTables' API, it is very common to want to be able to address individual columns so you can
+    """   When working with DataTables' API, it is very common to want to be able to address individual columns so you can
     work with them (you wish to sum the numeric content of a column for example). DataTables has two basic methods of
     addressing columns.
 
@@ -287,10 +236,7 @@ class Column(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
-    Set the column title.
+    """   Set the column title.
 
     Related Pages:
 
@@ -312,10 +258,7 @@ class Column(Options):
 
   @property
   def orderable(self):
-    """
-    Description:
-    -----------
-    Using this parameter, you can remove the end user's ability to order upon a column.
+    """   Using this parameter, you can remove the end user's ability to order upon a column.
     This might be useful for generated content columns, for example if you have 'Edit' or 'Delete' buttons in the table.
 
     Related Pages:
@@ -330,10 +273,7 @@ class Column(Options):
 
   @property
   def orderData(self):
-    """
-    Description:
-    -----------
-    Define multiple column ordering as the default order for a column.
+    """   Define multiple column ordering as the default order for a column.
 
     Related Pages:
 
@@ -347,10 +287,7 @@ class Column(Options):
 
   @property
   def orderDataType(self):
-    """
-    Description:
-    -----------
-    Live DOM sorting type assignment.
+    """   Live DOM sorting type assignment.
 
     Related Pages:
 
@@ -364,10 +301,7 @@ class Column(Options):
 
   @property
   def orderSequence(self):
-    """
-    Description:
-    -----------
-    You can control the default ordering direction, and even alter the behaviour of the order handler
+    """   You can control the default ordering direction, and even alter the behaviour of the order handler
     (i.e. only allow ascending sorting etc) using this parameter.
 
     Related Pages:
@@ -382,10 +316,7 @@ class Column(Options):
 
   @property
   def render(self):
-    """
-    Description:
-    -----------
-    This property will modify the data that is used by DataTables for various operations as it is read from the data
+    """   This property will modify the data that is used by DataTables for various operations as it is read from the data
     source. columns.render can be considered to be the read only companion to columns.data which is read / write
     (and therefore more complex).
 
@@ -409,10 +340,7 @@ class Column(Options):
 
   @property
   def searchable(self):
-    """
-    Description:
-    -----------
-    Using this parameter, you can define if DataTables should include this column in the filterable data in the table.
+    """   Using this parameter, you can define if DataTables should include this column in the filterable data in the table.
     You may want to use this option to disable search on generated columns such as 'Edit' and 'Delete' buttons for
     example.
 
@@ -428,10 +356,7 @@ class Column(Options):
 
   @property
   def visible(self):
-    """
-    Description:
-    -----------
-    Enable or disable the display of this column.
+    """   Enable or disable the display of this column.
 
     Related Pages:
 
@@ -445,10 +370,7 @@ class Column(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    Column width assignment.
+    """   Column width assignment.
 
     Related Pages:
 
@@ -475,8 +397,6 @@ class Ajax(Options):
   @property
   def url(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -492,8 +412,6 @@ class Ajax(Options):
   @property
   def type(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -510,10 +428,7 @@ class Language(Options):
 
   @property
   def decimal(self):
-    """
-    Description:
-    -----------
-    Decimal place character.
+    """   Decimal place character.
 
     Related Pages:
 
@@ -528,8 +443,6 @@ class Language(Options):
   @property
   def url(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -554,10 +467,7 @@ class Search(Options):
 
   @property
   def caseInsensitive(self):
-    """
-    Description:
-    -----------
-    Flag to indicate if the filtering should be case insensitive or not.
+    """   Flag to indicate if the filtering should be case insensitive or not.
 
     Related Pages:
 
@@ -571,10 +481,7 @@ class Search(Options):
 
   @property
   def search(self):
-    """
-    Description:
-    -----------
-    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
+    """   The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
     initial global filter.
 
     Related Pages:
@@ -589,10 +496,7 @@ class Search(Options):
 
   @property
   def regex(self):
-    """
-    Description:
-    -----------
-    Regular expressions can be used to build fantastically complex filtering terms, but also it is perfectly valid for
+    """   Regular expressions can be used to build fantastically complex filtering terms, but also it is perfectly valid for
     users to enter characters such as * into the filter, so a decision needs to be made if you wish to escape regular
     expression special characters or not.
 
@@ -610,10 +514,7 @@ class Search(Options):
 
   @property
   def smart(self):
-    """
-    Description:
-    -----------
-    DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches
+    """   DataTables' built-in filtering is "smart" in that it breaks the user's input into individual words and then matches
     those words in any position and in any order in the table (rather than simple doing a simple string compare).
 
     Related Pages:
@@ -633,8 +534,6 @@ class TableConfig(Options):
   @packageImport('datatables-autoFill', 'datatables-autoFill')
   def autoFill(self):
     """
-    Description:
-    -----------
 
     :rtype: DtAutoFill.AutoFill
     """
@@ -644,10 +543,7 @@ class TableConfig(Options):
 
   @property
   def autoWidth(self):
-    """
-    Description:
-    -----------
-    Enable or disable automatic column width calculation.
+    """   Enable or disable automatic column width calculation.
     This can be disabled as an optimisation (it takes a finite amount of time to calculate the widths) if the tables
     widths are passed in using
 
@@ -664,10 +560,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-buttons', 'datatables-buttons')
   def buttons(self):
-    """
-    Description:
-    -----------
-    A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may
+    """   A common UI paradigm to use with interactive tables is to present buttons that will trigger some action - that may
     be to alter the table's state, modify the data in the table, gather the data from the table or even to activate some
     external process.
 
@@ -687,8 +580,6 @@ class TableConfig(Options):
   @packageImport('datatables-buttons', 'datatables-buttons')
   def colReorder(self):
     """
-    Description:
-    -----------
 
     :rtype: DtColReorder.ColReorder
     """
@@ -697,10 +588,7 @@ class TableConfig(Options):
 
   @property
   def deferRender(self):
-    """
-    Description:
-    -----------
-    By default, when DataTables loads data from an Ajax or Javascript data source (ajax and data respectively)
+    """   By default, when DataTables loads data from an Ajax or Javascript data source (ajax and data respectively)
 
     Related Pages:
 
@@ -716,10 +604,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-fixed-header', 'datatables-fixed-header')
   def fixedHeader(self):
-    """
-    Description:
-    -----------
-    When displaying tables with a particularly large amount of data shown on each page, it can be useful to have the
+    """   When displaying tables with a particularly large amount of data shown on each page, it can be useful to have the
     table's header and / or footer fixed to the top or bottom of the scrolling window.
     This lets your users quickly determine what each column refers to rather than needing to scroll back to the top of
     the table.
@@ -737,8 +622,6 @@ class TableConfig(Options):
   @packageImport('datatables-fixed-columns', 'datatables-fixed-columns')
   def fixedColumns(self):
     """
-    Description:
-    -----------
 
     :rtype: DtFixedColumns.FixedColumns
     """
@@ -749,8 +632,6 @@ class TableConfig(Options):
   @packageImport('datatables-keytable', 'datatables-keytable')
   def keys(self):
     """
-    Description:
-    -----------
 
     :rtype: DtKeyTable.KeyTable
     """
@@ -759,10 +640,7 @@ class TableConfig(Options):
 
   @property
   def lengthChange(self):
-    """
-    Description:
-    -----------
-    When pagination is enabled, this option will control the display of an option for the end user to change the number
+    """   When pagination is enabled, this option will control the display of an option for the end user to change the number
     of records to be shown per page.
     The options shown in the list are controlled by the lengthMenu configuration option.
 
@@ -778,10 +656,7 @@ class TableConfig(Options):
 
   @property
   def columnDefs(self):
-    """
-    Description:
-    -----------
-    Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in
+    """   Very similar to columns, this parameter allows you to assign specific options to columns in the table, although in
     this case the column options defined can be applied to one or more columns. Additionally, not every column need be
     specified, unlike columns.
 
@@ -795,10 +670,7 @@ class TableConfig(Options):
 
   @property
   def columns(self):
-    """
-    Description:
-    -----------
-    The columns option in the initialisation parameter allows you to define details about the way individual columns
+    """   The columns option in the initialisation parameter allows you to define details about the way individual columns
     behave. For a full list of column options that can be set, please see the related parameters below.
 
     Related Pages:
@@ -811,10 +683,7 @@ class TableConfig(Options):
 
   @property
   def language(self):
-    """
-    Description:
-    -----------
-    Language configuration options for DataTables.
+    """   Language configuration options for DataTables.
 
     Related Pages:
 
@@ -826,10 +695,7 @@ class TableConfig(Options):
 
   @property
   def ajax(self):
-    """
-    Description:
-    -----------
-    DataTables can obtain the data that it is to display in the table body from a number of sources, including from an
+    """   DataTables can obtain the data that it is to display in the table body from a number of sources, including from an
     Ajax data source, using this initialisation parameter.
     As with other dynamic data sources, arrays or objects can be used for the data source for each row,
     with columns.data employed to read from specific object properties.
@@ -846,10 +712,7 @@ class TableConfig(Options):
 
   @property
   def processing(self):
-    """
-    Description:
-    -----------
-    Enable or disable the display of a 'processing' indicator when the table is being processed (e.g. a sort).
+    """   Enable or disable the display of a 'processing' indicator when the table is being processed (e.g. a sort).
     This is particularly useful for tables with large amounts of data where it can take a noticeable amount of time
     to sort the entries.
 
@@ -865,10 +728,7 @@ class TableConfig(Options):
 
   @property
   def search(self):
-    """
-    Description:
-    -----------
-    The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
+    """   The search option allows the way DataTables performs filtering to be set during the initialisation, and to set an
     initial global filter.
 
     Related Pages:
@@ -881,10 +741,7 @@ class TableConfig(Options):
 
   @property
   def serverSide(self):
-    """
-    Description:
-    -----------
-    By default DataTables operates in client-side processing mode, but can be switched to server-side processing mode
+    """   By default DataTables operates in client-side processing mode, but can be switched to server-side processing mode
     using this option.
     Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a
     database engine can be used to perform the sorting etc calculations - operations that modern database engines are
@@ -902,10 +759,7 @@ class TableConfig(Options):
 
   @property
   def deferLoading(self):
-    """
-    Description:
-    -----------
-    When using server-side processing, the default mode of operation for DataTables is to simply throw away any data
+    """   When using server-side processing, the default mode of operation for DataTables is to simply throw away any data
     that currently exists in the table and make a request to the server to get the first page of data to display.
     This is fine for an empty table, but if you already have the first page of data displayed in the plain HTML, it is
     a waste of resources.
@@ -924,10 +778,7 @@ class TableConfig(Options):
 
   @property
   def destroy(self):
-    """
-    Description:
-    -----------
-    Initialise a new DataTable as usual, but if there is an existing DataTable which matches the selector, it will be
+    """   Initialise a new DataTable as usual, but if there is an existing DataTable which matches the selector, it will be
     destroyed and replaced with the new table.
     This can be useful if you want to change a property of the table which cannot be altered through the API.
 
@@ -943,10 +794,7 @@ class TableConfig(Options):
 
   @property
   def displayStart(self):
-    """
-    Description:
-    -----------
-    Define the starting point for data display when using DataTables with pagination.
+    """   Define the starting point for data display when using DataTables with pagination.
 
     Related Pages:
 
@@ -960,10 +808,7 @@ class TableConfig(Options):
 
   @property
   def dom(self):
-    """
-    Description:
-    -----------
-    DataTables will add a number of elements around the table to both control the table and show additional information
+    """   DataTables will add a number of elements around the table to both control the table and show additional information
     about it.
     The position of these elements on screen are controlled by a combination of their order in the document (DOM) and
     the CSS applied to the elements.
@@ -981,10 +826,7 @@ class TableConfig(Options):
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    DataTables can obtain the data it is to display in the table's body from a number of sources, including being
+    """   DataTables can obtain the data it is to display in the table's body from a number of sources, including being
     passed in as an array of row data using this initialisation parameter.
     As with other dynamic data sources, arrays or objects can be used for the data source for each row, with
     columns.data employed to read from specific object properties.
@@ -1001,10 +843,7 @@ class TableConfig(Options):
 
   @property
   def paging(self):
-    """
-    Description:
-    -----------
-    DataTables can split the rows in tables into individual pages, which is an efficient method of showing a large
+    """   DataTables can split the rows in tables into individual pages, which is an efficient method of showing a large
     number of records in a small space.
     The end user is provided with controls to request the display of different data as the navigate through the data.
     This feature is enabled by default, but if you wish to disable it, you may do so with this parameter.
@@ -1021,10 +860,7 @@ class TableConfig(Options):
 
   @property
   def info(self):
-    """
-    Description:
-    -----------
-    When this option is enabled, Datatables will show information about the table including information about filtered
+    """   When this option is enabled, Datatables will show information about the table including information about filtered
     data if that action is being performed.
     This option allows that feature to be enabled or disabled.
 
@@ -1040,10 +876,7 @@ class TableConfig(Options):
 
   @property
   def orderCellsTop(self):
-    """
-    Description:
-    -----------
-    Allows control over whether DataTables should use the top (true) unique cell that is found for a single column, or
+    """   Allows control over whether DataTables should use the top (true) unique cell that is found for a single column, or
     the bottom (false - default) to attach the default order listener.
     This is useful when using complex headers.
 
@@ -1059,10 +892,7 @@ class TableConfig(Options):
 
   @property
   def orderClasses(self):
-    """
-    Description:
-    -----------
-    DataTables highlight the columns which are used to order the content in the table's body by adding a class to the
+    """   DataTables highlight the columns which are used to order the content in the table's body by adding a class to the
     cells in that column, which in turn has CSS applied to those classes to highlight those cells.
 
     Related Pages:
@@ -1077,10 +907,7 @@ class TableConfig(Options):
 
   @property
   def orderFixed(self):
-    """
-    Description:
-    -----------
-    The option works in tandem with the order option which provides an initial ordering state for the table which can
+    """   The option works in tandem with the order option which provides an initial ordering state for the table which can
     then be modified by the user clicking on column headings, while the ordering specified by this option will always
     be applied to the table, regardless of user interaction.
 
@@ -1096,10 +923,7 @@ class TableConfig(Options):
 
   @property
   def orderMulti(self):
-    """
-    Description:
-    -----------
-    When ordering is enabled (ordering), by default DataTables allows users to sort multiple columns by shift clicking
+    """   When ordering is enabled (ordering), by default DataTables allows users to sort multiple columns by shift clicking
     upon the header cell for each column.
     Although this can be quite useful for users, it can also increase the complexity of the order, potentiality
     increasing the processing time of ordering the data.
@@ -1117,10 +941,7 @@ class TableConfig(Options):
 
   @property
   def ordering(self):
-    """
-    Description:
-    -----------
-    Enable or disable ordering of columns - it is as simple as that! DataTables, by default, allows end users to click
+    """   Enable or disable ordering of columns - it is as simple as that! DataTables, by default, allows end users to click
     on the header cell for each column, ordering the table by the data in that column.
     The ability to order data can be disabled using this option.
 
@@ -1135,10 +956,7 @@ class TableConfig(Options):
     self._config(val)
 
   def order(self, column, direction):
-    """
-    Description:
-    -----------
-    If ordering is enabled (ordering), then DataTables will perform a first pass order during initialisation.
+    """   If ordering is enabled (ordering), then DataTables will perform a first pass order during initialisation.
     Using this parameter you can define which column(s) the order is performed upon, and the ordering direction.
     The order must be an array of arrays, each inner array comprised of two elements:
 
@@ -1146,8 +964,6 @@ class TableConfig(Options):
 
       https://datatables.net/reference/option/order
 
-    Attributes:
-    ----------
     :param column: String. The column name
     :param direction: String the direction (asc, desc)
     """
@@ -1159,8 +975,6 @@ class TableConfig(Options):
   @property
   def aoColumns(self):
     """
-    Description:
-    -----------
 
     :rtype: AOColumns
     """
@@ -1169,10 +983,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-responsive', 'datatables-responsive')
   def responsive(self):
-    """
-    Description:
-    -----------
-    In the modern world of responsive web design tables can often cause a particular problem for designers due to their
+    """   In the modern world of responsive web design tables can often cause a particular problem for designers due to their
     row based layout.
     Responsive is an extension for DataTables that resolves that problem by optimising the table's layout for different
     screen sizes through the dynamic insertion and removal of columns from the table.
@@ -1188,10 +999,7 @@ class TableConfig(Options):
 
   @property
   def stateSave(self):
-    """
-    Description:
-    -----------
-    Enable or disable state saving.
+    """   Enable or disable state saving.
     When enabled aDataTables will store state information such as pagination position, display length, filtering and
     sorting.
     When the end user reloads the page the table's state will be altered to match what they had previously set up.
@@ -1208,10 +1016,7 @@ class TableConfig(Options):
 
   @property
   def scrollY(self):
-    """
-    Description:
-    -----------
-    Enable vertical scrolling.
+    """   Enable vertical scrolling.
     Vertical scrolling will constrain the DataTable to the given height, and enable scrolling for any data which
     overflows the current viewport. This can be used as an alternative to paging to display a lot of data in a small
     area (although paging and scrolling can both be enabled at the same time if desired).
@@ -1228,10 +1033,7 @@ class TableConfig(Options):
 
   @property
   def scrollX(self):
-    """
-    Description:
-    -----------
-    Enable horizontal scrolling.
+    """   Enable horizontal scrolling.
     When a table is too wide to fit into a certain layout, or you have a large number of columns in the table, you can
     enable horizontal (x) scrolling to show the table in a viewport, which can be scrolled.
 
@@ -1247,10 +1049,7 @@ class TableConfig(Options):
 
   @property
   def scrollCollapse(self):
-    """
-    Description:
-    -----------
-    When vertical (y) scrolling is enabled through the use of the scrollY option, DataTables will force the height of
+    """   When vertical (y) scrolling is enabled through the use of the scrollY option, DataTables will force the height of
     the table's viewport to the given height at all times (useful for layout).
     However, this can look odd when filtering data down to a small data set, and the footer is left "floating" further
     down.
@@ -1275,10 +1074,7 @@ class TableConfig(Options):
 
   @property
   def lengthMenu(self):
-    """
-    Description:
-    -----------
-    This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows
+    """   This parameter allows you to readily specify the entries in the length drop down select list that DataTables shows
     when pagination is enabled. It can be either:
 
     Related Pages:
@@ -1294,8 +1090,6 @@ class TableConfig(Options):
   @property
   def select(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1309,10 +1103,7 @@ class TableConfig(Options):
 
   @property
   def pageLength(self):
-    """
-    Description:
-    -----------
-    Number of rows to display on a single page when using pagination.
+    """   Number of rows to display on a single page when using pagination.
 
     Related Pages:
 
@@ -1326,10 +1117,7 @@ class TableConfig(Options):
 
   @property
   def pagingType(self):
-    """
-    Description:
-    -----------
-    The pagination option of DataTables will display a pagination control below the table (by default, its position can
+    """   The pagination option of DataTables will display a pagination control below the table (by default, its position can
     be changed using dom and CSS) with buttons that the end user can use to navigate the pages of the table.
     Which buttons are shown in the pagination control are defined by the option given here.
 
@@ -1345,10 +1133,7 @@ class TableConfig(Options):
 
   @property
   def renderer(self):
-    """
-    Description:
-    -----------
-    DataTables adds complex components to your HTML page, such as the pagination control.
+    """   DataTables adds complex components to your HTML page, such as the pagination control.
     The business logic used to calculate what information should be displayed (what buttons in the case of the
     pagination buttons) is core to DataTables and generally doesn't vary how the buttons are actually displayed based
     on the styling requirements of the page.
@@ -1365,10 +1150,7 @@ class TableConfig(Options):
 
   @property
   def retrieve(self):
-    """
-    Description:
-    -----------
-    Retrieve the DataTables object for the given selector.
+    """   Retrieve the DataTables object for the given selector.
     Note that if the table has already been initialised, this parameter will cause DataTables to simply return the
     object that has already been set up - it will not take account of any changes you might have made to the
     initialisation object passed to DataTables
@@ -1385,10 +1167,7 @@ class TableConfig(Options):
 
   @property
   def rowId(self):
-    """
-    Description:
-    -----------
-    It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source
+    """   It can often be useful to have a id attribute on each tr element in a DataTable for row selection and data source
     identification, particularly when using events.
 
     Related Pages:
@@ -1405,8 +1184,6 @@ class TableConfig(Options):
   @packageImport('datatables-row-group', 'datatables-row-group')
   def rowGroup(self):
     """
-    Description:
-    -----------
 
     :rtype: DtFixedColumns.FixedColumns
     """
@@ -1435,10 +1212,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-select', 'datatables-select')
   def select(self):
-    """
-    Description:
-    -----------
-    Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected
+    """   Select adds item selection capabilities to a DataTable. Items can be rows, columns or cells, which can be selected
     independently, or together. Item selection can be particularly useful in interactive tables where users can perform
     some action on the table, such as editing rows or marking items to perform an action on.
 
@@ -1454,10 +1228,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-scroller', 'datatables-scroller')
   def scroller(self):
-    """
-    Description:
-    -----------
-    Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very
+    """   Scroller is a virtual rendering plug-in for DataTables which allows large datasets to be drawn on screen very
     quickly.
     What the virtual rendering means is that only the visible portion of the table (and a bit to either side to make
     the scrolling smooth) is drawn, while the scrolling container gives the visual impression that the whole table
@@ -1475,10 +1246,7 @@ class TableConfig(Options):
   @property
   @packageImport('datatables-searchPanes', 'datatables-searchPanes')
   def searchPanes(self):
-    """
-    Description:
-    -----------
-    SearchPanes adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes.
+    """   SearchPanes adds panes to the DataTable with the capability to search the DataTable by selecting rows in the panes.
     This is very useful when it comes to adding a more accessible searching feature and custom search capabilities.
     SearchPanes can search DataTables for multiple values that have been selected across multiple panes.
     They also provide the ability to define custom search functions which cannot be achieved through a simple searchBox.
@@ -1496,10 +1264,7 @@ class TableConfig(Options):
 
   @property
   def searchCols(self):
-    """
-    Description:
-    -----------
-    Basically the same as the search option, but in this case for individual columns, rather than the global filter,
+    """   Basically the same as the search option, but in this case for individual columns, rather than the global filter,
     this option defined the filtering to apply to the table during initialisation.
 
     Related Pages:
@@ -1514,10 +1279,7 @@ class TableConfig(Options):
 
   @property
   def searchDelay(self):
-    """
-    Description:
-    -----------
-    The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the
+    """   The built-in DataTables global search (by default at the top right of every DataTable) will instantly search the
     table on every keypress when in client-side processing mode and reduce the search call frequency automatically to
     400mS when in server-side processing mode.
 
@@ -1533,10 +1295,7 @@ class TableConfig(Options):
 
   @property
   def stateDuration(self):
-    """
-    Description:
-    -----------
-    Duration for which the saved state information is considered valid. After this period has elapsed the state will be
+    """   Duration for which the saved state information is considered valid. After this period has elapsed the state will be
     returned to the default.
 
     Related Pages:
@@ -1551,10 +1310,7 @@ class TableConfig(Options):
 
   @property
   def stripeClasses(self):
-    """
-    Description:
-    -----------
-    An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and
+    """   An array of CSS classes that should be applied to displayed rows, in sequence. This array may be of any length, and
     DataTables will apply each class sequentially, looping when required.
 
     Related Pages:
@@ -1569,10 +1325,7 @@ class TableConfig(Options):
 
   @property
   def tabIndex(self):
-    """
-    Description:
-    -----------
-    By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex
+    """   By default DataTables allows keyboard navigation of the table (sorting, paging, and filtering) by adding a tabindex
     attribute to the required elements.
 
     Related Pages:

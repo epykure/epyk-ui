@@ -23,10 +23,7 @@ class ChartJsActivePoints:
 
   @property
   def index(self):
-    """
-    Description:
-    -----------
-    Get the index of the clicked series in teh datasets.
+    """   Get the index of the clicked series in teh datasets.
 
     Usage::
 
@@ -43,10 +40,7 @@ class ChartJsActivePoints:
 
   @property
   def x(self):
-    """
-    Description:
-    -----------
-    Get the name of the selected series.
+    """   Get the name of the selected series.
 
     Usage::
 
@@ -57,10 +51,7 @@ class ChartJsActivePoints:
 
   @property
   def labels(self):
-    """
-    Description:
-    -----------
-    Get the series label name.
+    """   Get the series label name.
 
     Usage::
 
@@ -72,10 +63,7 @@ class ChartJsActivePoints:
 
   @property
   def model(self):
-    """
-    Description:
-    -----------
-    Get the series value.
+    """   Get the series value.
 
     Usage::
 
@@ -86,10 +74,7 @@ class ChartJsActivePoints:
 
   @property
   def datasetLabel(self):
-    """
-    Description:
-    -----------
-    Get the series name.
+    """   Get the series name.
 
     Usage::
 
@@ -101,9 +86,7 @@ class ChartJsActivePoints:
 
   @property
   def label(self):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -119,10 +102,7 @@ class ChartJsActivePoints:
 
   @property
   def dataset(self):
-    """
-    Description:
-    -----------
-    Get the series dataset.
+    """   Get the series dataset.
 
     Usage::
 
@@ -131,10 +111,7 @@ class ChartJsActivePoints:
 
   @property
   def value(self):
-    """
-    Description:
-    -----------
-    Get the point value.
+    """   Get the point value.
 
     Usage::
 
@@ -164,10 +141,7 @@ class Chart(Html.Html):
     self.attr["class"].add("chart-container")
 
   def activePoints(self, i: int = None):
-    """
-    Description:
-    -----------
-    The current active points selected by an event on a chart.
+    """   The current active points selected by an event on a chart.
 
     Usage::
 
@@ -177,18 +151,13 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param i: Integer. Optional. The series index. Default it is the series clicked.
     """
     return ChartJsActivePoints(self.chartId, i, self.page)
 
   @property
   def shared(self):
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -200,10 +169,7 @@ class Chart(Html.Html):
 
   @property
   def js(self) -> JsChartJs.ChartJs:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined in the framework.
+    """   Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     Usage::
@@ -221,10 +187,7 @@ class Chart(Html.Html):
 
   @property
   def dom(self) -> JsHtmlCharts.ChartJs:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Usage::
@@ -239,10 +202,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptChartJs.ChartJsOptions:
-    """
-    Description:
-    -----------
-    Property to the series options.
+    """   Property to the series options.
 
     Usage::
 
@@ -252,10 +212,7 @@ class Chart(Html.Html):
 
   @property
   def plugins(self):
-    """
-    Description:
-    -----------
-    Shortcut property to all the external plugins defined in the framework.
+    """   Shortcut property to all the external plugins defined in the framework.
 
     Related Pages:
 
@@ -265,10 +222,7 @@ class Chart(Html.Html):
 
   @packageImport('chartjs-plugin-dragdata')
   def dragData(self):
-    """
-    Description:
-    -----------
-    A plugin for Chart.js >= 2.4.0.
+    """   A plugin for Chart.js >= 2.4.0.
 
     Makes data points draggable. Supports touch events.
 
@@ -282,10 +236,7 @@ class Chart(Html.Html):
     return self.options
 
   def labels(self, labels):
-    """
-    Description:
-    -----------
-    Set the labels of the different series in the chart.
+    """   Set the labels of the different series in the chart.
 
     Usage::
 
@@ -293,23 +244,16 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/axes/labelling.html
 
-    Attributes:
-    ----------
     :param labels: List. An array of labels.
     """
     self._data_attrs['labels'] = labels
     return self
 
   def label(self, i: int, name: str):
-    """
-    Description:
-    -----------
-    Change the series name.
+    """   Change the series name.
 
     Usage::
 
-    Attributes:
-    ----------
     :param i: Integer. The series index according to the y_columns.
     :param name: String. The new name to be set.
     """
@@ -317,10 +261,7 @@ class Chart(Html.Html):
     return self
 
   def dataset(self, i: int = None) -> JsChartJs.DataSetPie:
-    """
-    Description:
-    -----------
-    The data property of a ChartJs chart.
+    """   The data property of a ChartJs chart.
 
     Usage::
 
@@ -328,8 +269,6 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/master/general/data-structures
 
-    Attributes:
-    ----------
     :param i: Integer. Optional. The series index according to the y_columns.
 
     :rtype: JsChartJs.DataSetPie
@@ -340,18 +279,13 @@ class Chart(Html.Html):
     return self._datasets[i]
 
   def colors(self, hex_values):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -378,17 +312,12 @@ class Chart(Html.Html):
       rec.borderWidth = 1
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
-    Add a click event on the chart.
+    """   Add a click event on the chart.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    Attributes:
-    ----------
     :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -405,17 +334,12 @@ class Chart(Html.Html):
     return super(Chart, self).click(tmp_js_funcs, profile)
 
   def dblclick(self, js_funcs, profile=False, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
-    Add a double click event on the chart.
+    """   Add a double click event on the chart.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    Attributes:
-    ----------
     :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -432,17 +356,12 @@ class Chart(Html.Html):
     return super(Chart, self).dblclick(tmp_js_funcs, profile)
 
   def hover(self, js_funcs, profile=False, source_event=None):
-    """
-    Description:
-    -----------
-    Add an on mouse hover event on the chart.
+    """   Add an on mouse hover event on the chart.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    Attributes:
-    ----------
     :param js_funcs: List. Set of Javascript function to trigger on this event.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -459,26 +378,19 @@ class Chart(Html.Html):
 
   @property
   def datasets(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._datasets
 
   def getCtx(self, options=None):
-    """
-    Description:
-    -----------
-    Get the ChartJs context. The internal configuration of the chart.
+    """   Get the ChartJs context. The internal configuration of the chart.
     The context is a dictionary object with javascript fragments.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/
 
-    Attributes:
-    ----------
     :param options: Dictionary. Optional. The chart options.
     """
     obj_datasets = "[%s]" % ", ".join([d.toStr() for d in self._datasets])
@@ -490,13 +402,9 @@ class Chart(Html.Html):
     return str_ctx
 
   def build(self, data=None, options=None, profile=None, component_id=None):
-    """
-    Description:
-    ------------
+    """  
     Update the chart with context and / or data changes.
 
-    Attributes:
-    ----------
     :param data: List. Optional. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -519,9 +427,7 @@ class Chart(Html.Html):
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
   def loading(self, status=True):
-    """
-    Description:
-    ------------
+    """  
     Loading component on a chart.
 
     Usage::
@@ -530,8 +436,6 @@ class Chart(Html.Html):
         ....
         chart_obj.loading(False)
 
-    Attributes:
-    ----------
     :param status: Boolean. Optional. Specific the status of the display of the loading component.
     """
     if status:
@@ -574,9 +478,7 @@ class Fabric(Html.Html):
     self.chart.chartId = "window['%s_' + %s]" % (self.htmlCode, self.dom.getAttribute("data-current"))
 
   def new(self):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -589,14 +491,10 @@ class Fabric(Html.Html):
       return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
   def build(self, data=None, options=None, profile=False, component_id=None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -608,14 +506,10 @@ class Fabric(Html.Html):
       "data": self.chart.build(data, options, profile)}
 
   def create(self, data=None, options=None, attrs=None, profile=False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param attrs: Dictionary. Optional.
@@ -642,15 +536,11 @@ class Datasets:
     self.page, self.__data = page, []
 
   def add(self, data):
-    """
-    Description:
-    ------------
+    """  
     Add a series to an existing dataset.
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: List. A list of numbers.
     """
     self.__data.append(data)
@@ -663,9 +553,7 @@ class ChartLine(Chart):
 
   @property
   def options(self):
-    """
-    Description:
-    ------------
+    """  
     Property to the specific ChartJs Line chart.
 
     Usage::
@@ -679,9 +567,7 @@ class ChartLine(Chart):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -693,8 +579,6 @@ class ChartLine(Chart):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    Attributes:
-    ----------
     :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
@@ -719,9 +603,7 @@ class ChartLine(Chart):
     return data
 
   def add_dataset(self, data, label="", colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -730,8 +612,6 @@ class ChartLine(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: List. Optional. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -781,9 +661,7 @@ class ChartBubble(Chart):
   _chart__type = 'bubble'
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -793,8 +671,6 @@ class ChartBubble(Chart):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    Attributes:
-    ----------
     :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
@@ -816,9 +692,7 @@ class ChartBubble(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -827,8 +701,6 @@ class ChartBubble(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: List. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -871,9 +743,7 @@ class ChartBar(ChartLine):
 
   @property
   def options(self):
-    """
-    Description:
-    ------------
+    """  
     Property to the bar chart options.
 
     Usage::
@@ -887,9 +757,7 @@ class ChartBar(ChartLine):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -899,8 +767,6 @@ class ChartBar(ChartLine):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    Attributes:
-    ----------
     :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
@@ -924,9 +790,7 @@ class ChartBar(ChartLine):
     return data
 
   def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -935,8 +799,6 @@ class ChartBar(ChartLine):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -961,9 +823,7 @@ class ChartPolar(Chart):
 
   @property
   def options(self):
-    """
-    Description:
-    ------------
+    """  
     Property to the Polar chart options.
 
     Usage::
@@ -977,9 +837,7 @@ class ChartPolar(Chart):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -987,8 +845,6 @@ class ChartPolar(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param index: Integer. The index of the dataset in the chart list of datasets.
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
@@ -1012,9 +868,7 @@ class ChartPolar(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -1022,8 +876,6 @@ class ChartPolar(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -1075,10 +927,7 @@ class ChartPie(Chart):
 
   @property
   def options(self):
-    """
-    Description:
-    -----------
-    Property to the Pie Chart options.
+    """   Property to the Pie Chart options.
 
     Usage::
 
@@ -1087,14 +936,10 @@ class ChartPie(Chart):
     return super().options
 
   def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
-    Attributes:
-    ----------
     :param index: Integer.
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
@@ -1116,14 +961,10 @@ class ChartPie(Chart):
     return data
 
   def add_dataset(self, data, label="", colors=None, opacity=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -1169,14 +1010,10 @@ class ChartRadar(Chart):
   _chart__type = 'radar'
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param index: Integer.
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
@@ -1199,14 +1036,10 @@ class ChartRadar(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -1251,14 +1084,10 @@ class ChartScatter(Chart):
   _chart__type = 'scatter'
 
   def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param index: Integer.
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
@@ -1279,14 +1108,10 @@ class ChartScatter(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -1329,14 +1154,10 @@ class ChartTreeMap(Chart):
   _option_cls = OptChartJs.OptionsTreeMap
 
   def add_dataset(self, tree, label, colors=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param tree: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -1346,14 +1167,10 @@ class ChartTreeMap(Chart):
     return data
 
   def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param index: Integer.
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).

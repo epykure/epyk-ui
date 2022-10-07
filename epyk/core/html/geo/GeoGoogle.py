@@ -21,19 +21,13 @@ class ChartGeoGoogle(Html.Html):
 
   @property
   def chartId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
   @property
   def js(self) -> JsGoogleAPI.GoogleMapsAPI:
-    """
-    Description:
-    -----------
-    Javascript base function.
+    """   Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
@@ -48,10 +42,7 @@ class ChartGeoGoogle(Html.Html):
 
   @property
   def options(self) -> OptGoogle.OptionMaps:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -61,12 +52,8 @@ class ChartGeoGoogle(Html.Html):
     return super().options
 
   def build(self, data=None, options=None, profile=None, component_id=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param options:
     :param profile:

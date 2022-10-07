@@ -13,8 +13,6 @@ class ClsConfigs:
 
   def margins(self, h: Union[tuple, int, str] = (10, '%'), v: Union[tuple, int, str] = (0, 'px'), background: str = None):
     """
-    Description:
-    ------------
     Add a vertical and horizontal margin to the underlying template added to the body component.
 
     Usage::
@@ -23,8 +21,6 @@ class ClsConfigs:
       page.body.template.style.configs.margins(h=5)
       page.body.template.style.css.background = "white"
 
-    Attributes:
-    ----------
     :param tuple h: Optional. The horizontal (left and right) margin.
     :param tuple v: Optional. The vertical (top, bottom) margin.
     :param str background: Optional. The background color.
@@ -39,8 +35,6 @@ class ClsConfigs:
   def box(self, hexa_color: str = None, opacity: float = 0.6, size: int = 5, margin_v: tuple = (10, 'px'),
           margin_h: tuple = (10, 'px'), background: str = "white"):
     """
-    Description:
-    ------------
     Add a box shadow layout to the component.
 
     Usage::
@@ -48,8 +42,6 @@ class ClsConfigs:
         page = pk.Page()
         page.body.template.style.configs.box()
 
-    Attributes:
-    ----------
     :param str hexa_color: Optional. The color code in hexadecimal format.
     :param float opacity: Optional. The opacity value between 0 and 1.
     :param int size: Optional. The border size.
@@ -70,10 +62,7 @@ class ClsConfigs:
     return self
 
   def parallax(self, url: str):
-    """
-    Description:
-    -----------
-    Parallax scrolling is a website trend where the background content (i.e. an image) is moved at a different
+    """   Parallax scrolling is a website trend where the background content (i.e. an image) is moved at a different
     speed than the foreground content while scrolling.
 
     Usage::
@@ -85,8 +74,6 @@ class ClsConfigs:
 
       https://www.w3schools.com/howto/howto_css_parallax.asp
 
-    Attributes:
-    ----------
     :param str url: The path of the picture visible in the background.
     """
     self.component.style.css.background_image = 'url("%s")' % url
@@ -99,8 +86,6 @@ class ClsConfigs:
   def shadow(self, hexa_color: str = None, opacity: float = 0.5, size: int = 10, position: str = None,
              radius: int = 10):
     """
-    Description:
-    ------------
     Set the box shadow color.
 
     Related Pages:
@@ -108,8 +93,6 @@ class ClsConfigs:
       https://www.w3schools.com/css/css3_shadows.asp
       https://gist.github.com/ocean90/1268328
 
-    Attributes:
-    ----------
     :param str hexa_color: Optional. A hexadecimal color code.
     :param str opacity: Optional. The shadow opacity. Default 0.5.
     :param int size: Optional. The size of the shadow effect.
@@ -133,12 +116,8 @@ class ClsConfigs:
 
   def rounded_icons(self, padding: int = 8):
     """
-    Description:
-    ------------
     Add rounded border to the component.
 
-    Attributes:
-    ----------
     :param int padding: Optional. The padding (top, right, bottom and left) in pixel.
     """
     self.component.style.add_classes.div.border_hover()
@@ -149,8 +128,6 @@ class ClsConfigs:
   def doc(self, percent: int = 5, max_width: int = 650, padding: bool = True, background: str = None,
           header: str = None, header_path: str = "/static", top: int = 60):
     """
-    Description:
-    ------------
 
     TODO: Find way to set the container to the middle of the page.
 
@@ -159,8 +136,6 @@ class ClsConfigs:
        page = pk.Page()
        page.body.template.style.configs.doc(background="white")
 
-    Attributes:
-    ----------
     :param int percent: Optional. The percentage of space on the left and right.
     :param int max_width: Optional. The max size of the page in pixel.
     :param bool padding: Optional. The top and bottom padding in the doc.

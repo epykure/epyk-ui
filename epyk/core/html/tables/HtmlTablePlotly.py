@@ -27,8 +27,6 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def line(self) -> GraphPlotly.DataMarkersLine:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -39,8 +37,6 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def font(self) -> GraphPlotly.DataFont:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -51,8 +47,6 @@ class DataHeader(GraphPlotly.DataChart):
   @property
   def fill(self) -> GraphPlotly.DataFill:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -82,8 +76,6 @@ class DataCells(GraphPlotly.DataChart):
   @property
   def line(self) -> GraphPlotly.DataMarkersLine:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -94,8 +86,6 @@ class DataCells(GraphPlotly.DataChart):
   @property
   def font(self) -> GraphPlotly.DataFont:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -106,8 +96,6 @@ class DataCells(GraphPlotly.DataChart):
   @property
   def fill(self) -> GraphPlotly.DataFill:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -140,8 +128,6 @@ class DataTable(GraphPlotly.DataChart):
   @property
   def domain(self) -> DataDomain:
     """
-    Description:
-    ------------
 
     """
     return self.sub_data("domain", DataDomain)
@@ -169,8 +155,6 @@ class DataTable(GraphPlotly.DataChart):
   @property
   def header(self) -> DataHeader:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -181,8 +165,6 @@ class DataTable(GraphPlotly.DataChart):
   @property
   def cells(self) -> DataCells:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -200,8 +182,6 @@ class Table(GraphPlotly.Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
     """
     if self._chart is None:
       self._chart = JsPlotly.Pie(self, js_code=self.chartId, page=self.page)
@@ -210,8 +190,6 @@ class Table(GraphPlotly.Chart):
   @property
   def layout(self) -> GraphPlotly.Layout:
     """
-    Description:
-    ------------
 
     """
     if self._layout is None:
@@ -224,12 +202,8 @@ class Table(GraphPlotly.Chart):
 
   def headers_color(self, colors: list):
     """
-    Description:
-    ------------
     Set the background color of the header
 
-    Attributes:
-    ----------
     :param colors:
     """
     self.data.header.fill.color = colors
@@ -237,11 +211,7 @@ class Table(GraphPlotly.Chart):
 
   def headers_font_color(self, colors):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param colors:
     """
     self.data.header.font.color = colors
@@ -249,11 +219,7 @@ class Table(GraphPlotly.Chart):
 
   def columns_color(self, colors):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param colors:
     """
     self.data.cells.fill.color = colors
@@ -261,11 +227,7 @@ class Table(GraphPlotly.Chart):
 
   def columns_font_color(self, colors):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param colors:
     """
     self.data.cells.font.color = colors
@@ -273,11 +235,7 @@ class Table(GraphPlotly.Chart):
 
   def add_trace(self, data, type: str = 'table', mode=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param type:
     :param mode:

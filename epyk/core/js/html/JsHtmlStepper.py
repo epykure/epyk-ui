@@ -19,11 +19,7 @@ class JsShapes:
 
   def _svg(self, shape_def):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param shape_def:
     """
     return '''
@@ -77,8 +73,6 @@ class JsShapes:
 
   def triangle(self):
     """
-    Description:
-    ------------
     Put a triangle shape to the step.
     """
     shape_def = '''
@@ -90,8 +84,6 @@ class JsShapes:
 
   def rectangle(self):
     """
-    Description:
-    ------------
 
     """
     shape_def = '''
@@ -105,8 +97,6 @@ class JsShapes:
 
   def circle(self):
     """
-    Description:
-    ------------
 
     """
     shape_def = '''
@@ -121,8 +111,6 @@ class JsShapes:
 
   def arrow(self):
     """
-    Description:
-    ------------
 
     """
     shape_def = '''
@@ -134,11 +122,7 @@ class JsShapes:
 
   def custom(self, shape_def: str):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param str shape_def:
     """
     return self._svg(shape_def)
@@ -153,11 +137,7 @@ class Step(JsNodeDom.JsDoms):
 
   def colors(self, colors: Union[list, str, dict], status: str = 'bespoke', clear_gradient: bool = True):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[list, str, dict] colors: The list of colors to be used.
     :param str status: Optional. The status code for the step item.
     :param clear_gradient: Boolean. Optional. Specify if the color need a gradient.
@@ -191,32 +171,24 @@ class Step(JsNodeDom.JsDoms):
 
   def success(self):
     """
-    Description:
-    ------------
 
     """
     return self.colors(self.component.options.success, status='success')
 
   def error(self):
     """
-    Description:
-    ------------
 
     """
     return self.colors(self.component.options.error, status='error')
 
   def pending(self):
     """
-    Description:
-    ------------
 
     """
     return self.colors(self.component.options.pending, status='pending')
 
   def waiting(self):
     """
-    Description:
-    ------------
 
     """
     return self.colors(self.component.options.waiting, status='waiting')
@@ -224,8 +196,6 @@ class Step(JsNodeDom.JsDoms):
   @property
   def status(self):
     """
-    Description:
-    ------------
 
     """
     return JsObjects.JsObjects.get('%s.getAttribute("data-status")' % self.varName)
@@ -233,12 +203,8 @@ class Step(JsNodeDom.JsDoms):
   def shape(self, shape: str, status: str = 'success', step: Union[primitives.JsDataModel, dict] = None,
             options: dict = None):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param str shape: The shape alias of the step.
     :param str status: Optional. The status of the step.
     :param Union[primitives.JsDataModel, dict] step: Optional.
@@ -253,12 +219,8 @@ class Step(JsNodeDom.JsDoms):
 
   def triangle(self, status: str = 'error', step: Union[primitives.JsDataModel, dict] = None, options: dict = None):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
 
-    Attributes:
-    ----------
     :param str status: Optional. The status of the step.
     :param Union[primitives.JsDataModel, dict] step: Optional.
     :param dict options: The stepper options to be changed.
@@ -270,16 +232,12 @@ class Step(JsNodeDom.JsDoms):
 
   def rectangle(self, status: str = 'success', step: Union[primitives.JsDataModel, dict] = None, options: dict = None):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
 
     Usage::
 
       component.querySelector('svg').remove()
 
-    Attributes:
-    ----------
     :param str status: Optional. The status of the step.
     :param Union[primitives.JsDataModel, dict] step: Optional.
     :param dict options: The stepper options to be changed.
@@ -291,12 +249,8 @@ class Step(JsNodeDom.JsDoms):
 
   def arrow(self, status: str = 'success', step: Union[primitives.JsDataModel, dict] = None, options: dict = None):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
 
-    Attributes:
-    ----------
     :param str status: Optional. The status of the step.
     :param Union[primitives.JsDataModel, dict] step: Optional.
     :param dict options: The stepper options to be changed.
@@ -308,12 +262,8 @@ class Step(JsNodeDom.JsDoms):
 
   def circle(self, status: str = 'waiting', step: Union[primitives.JsDataModel, dict] = None, options: dict = None):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
 
-    Attributes:
-    ----------
     :param str status: Optional. The status of the step.
     :param Union[primitives.JsDataModel, dict] step: Optional.
     :param dict options: The stepper options to be changed.
@@ -325,12 +275,8 @@ class Step(JsNodeDom.JsDoms):
 
   def label(self, value: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Add a text label below the shape.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] value: The text to be added.
     """
     return self.querySelector('span[name=label]').innerHTML(value)
@@ -338,12 +284,8 @@ class Step(JsNodeDom.JsDoms):
   def text(self, text: Union[str, primitives.JsDataModel], x: float = None, y: float = None,
            css: dict = None, color: str = None):
     """
-    Description:
-    ------------
     Add a text on the shape.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel text: The text to be added.
     :param float x: Optional. The x position.
     :param float y: Optional. The y position.
@@ -373,11 +315,7 @@ class Step(JsNodeDom.JsDoms):
 
   def blink(self, color: str = "#FFDEB3", border: str = "#FF9200"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param str color: Optional. The hexadecimal color code.
     :param str border: Optional. The hexadecimal color code.
     """
@@ -400,12 +338,8 @@ class Step(JsNodeDom.JsDoms):
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None, source_event: str = None,
             on_ready: bool = False):
     """
-    Description:
-    ------------
     Add a click event on a specific step.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param str source_event: Optional. The source target for the event.
@@ -415,10 +349,7 @@ class Step(JsNodeDom.JsDoms):
       "src": source_event or self.varName, "fncs": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def css(self, type, jsObject=None, duration: int = None):
-    """
-    Description:
-    -----------
-    Replicate in plain Js the Jquery CSS function.
+    """   Replicate in plain Js the Jquery CSS function.
 
     Usage::
 
@@ -428,8 +359,6 @@ class Step(JsNodeDom.JsDoms):
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
 
-    Attributes:
-    ----------
     :param type: A String with the type of parameter or a python dictionary
     :param jsObject: A JsObj with the value to be set
     :param duration: Integer
@@ -460,18 +389,13 @@ class Step(JsNodeDom.JsDoms):
 class Stepper(JsHtml.JsHtmlRich):
 
   def _get_index(self) -> str:
-    """
-    Description:
-    -----------
-    Attach the internal StepByName JavaScript function and return its reference.
+    """   Attach the internal StepByName JavaScript function and return its reference.
     """
     return self.page.properties.js.add_constructor('StepByName', "function StepByName(doms, label){var index_svg = -1; doms.childNodes.forEach(function(dom, i){if(dom.querySelector('[name=label]').innerHTML == label){ index_svg = i}}); return index_svg}")
 
   @property
   def val(self):
     """
-    Description:
-    -----------
 
     """
     return JsObjects.JsObjects.get(
@@ -481,8 +405,6 @@ class Stepper(JsHtml.JsHtmlRich):
   @property
   def content(self):
     """
-    Description:
-    -----------
 
     """
     return JsHtml.ContentFormatters(self.page, "%s.innerHTML" % self.varName)
@@ -492,11 +414,7 @@ class Stepper(JsHtml.JsHtmlRich):
 
   def getByLabel(self, label: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] label: The label value.
     """
     label = JsUtils.jsConvertData(label, None)
@@ -508,11 +426,7 @@ class Stepper(JsHtml.JsHtmlRich):
               shape: Union[str, primitives.JsDataModel] = 'circle',
               status: Union[str, primitives.JsDataModel] = "waiting"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] label:
     :param Union[str, primitives.JsDataModel] tooltip:
     :param Union[str, primitives.JsDataModel] shape:
@@ -541,12 +455,8 @@ class Stepper(JsHtml.JsHtmlRich):
 
   def delete(self, i: int):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param int i:
     """
     return self[i].remove()
@@ -557,8 +467,6 @@ class Drawer(JsHtml.JsHtmlRich):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
     """
     return JsHtml.ContentFormatters(self.page, ''' 
@@ -568,8 +476,6 @@ class Drawer(JsHtml.JsHtmlRich):
 
   def hide(self):
     """
-    Description:
-    ------------
     Hide all the panels in the drawer component.
     """
     return JsObjects.JsObjects.get(''' 
@@ -578,11 +484,7 @@ class Drawer(JsHtml.JsHtmlRich):
 
   def add(self, link: str, panel: str = ""):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param str link:
     :param str panel: Optional
     """
@@ -591,11 +493,7 @@ class Drawer(JsHtml.JsHtmlRich):
 
   def delete(self, i: int):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param int i:
     """
     return JsObjects.JsObjects.get(''' 

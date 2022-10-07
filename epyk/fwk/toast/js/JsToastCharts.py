@@ -16,17 +16,12 @@ class Charts(JsPackage):
     self._js, self._jquery = [], None
 
   def addData(self, data: Union[list, primitives.JsDataModel], category: str = None):
-    """
-    Description:
-    -----------
-    Add data.
+    """   Add data.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#addData
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] data: Array of data to be added.
     :param str category: Optional. The data type.
     """
@@ -34,27 +29,19 @@ class Charts(JsPackage):
     return JsUtils.jsWrap("%s.addData(%s)" % (self.component.var, data))
 
   def addSeries(self, data: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Add series.
+    """   Add series.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#addSeries
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] data: Data to be added.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.addSeries(%s)" % (self.component.var, data))
 
   def hideTooltip(self):
-    """
-    Description:
-    -----------
-    Hide tooltip.
+    """   Hide tooltip.
 
     Related Pages:
 
@@ -63,78 +50,55 @@ class Charts(JsPackage):
     return JsUtils.jsWrap("%s.hideTooltip(%s)" % self.component.var)
 
   def setData(self, data: Union[list, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Convert the chart data to new data.
+    """   Convert the chart data to new data.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#setData
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] data: Data to be set.
     """
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.setData(%s)" % (self.component.var, data))
 
   def setOptions(self, options: Union[dict, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Convert the chart options to new options.
+    """   Convert the chart options to new options.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#setOptions
 
-    Attributes:
-    ----------
     :param Union[dict, primitives.JsDataModel] options: Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
     return JsUtils.jsWrap("%s.setOptions(%s)" % (self.component.var, options))
 
   def showTooltip(self, series_info: Union[dict, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Show tooltip.
+    """   Show tooltip.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#showTooltip
 
-    Attributes:
-    ----------
     :param Union[dict, primitives.JsDataModel] series_info: Information of the series for the tooltip to be displayed.
     """
     series_info = JsUtils.jsConvertData(series_info, None)
     return JsUtils.jsWrap("%s.showTooltip(%s)" % (self.component.var, series_info))
 
   def updateOptions(self, options: Union[dict, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Update chart options.
+    """   Update chart options.
 
     Related Pages:
 
       https://nhn.github.io/tui.chart/latest/BubbleChart#updateOptions
 
-    Attributes:
-    ----------
     :param Union[dict, primitives.JsDataModel] options: Chart options.
     """
     options = JsUtils.jsConvertData(options, None)
     return JsUtils.jsWrap("%s.updateOptions(%s)" % (self.component.var, options))
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Destroys the instance.
+    """   Destroys the instance.
 
     Related Pages:
 

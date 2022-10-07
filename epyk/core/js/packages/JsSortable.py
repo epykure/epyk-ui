@@ -18,8 +18,6 @@ class Sortable(JsPackage):
   @property
   def options(self) -> OptSortable.OptionsSortable:
     """
-    Description:
-    ------------
     Sortable options
 
     Related Pages:
@@ -32,16 +30,12 @@ class Sortable(JsPackage):
 
   def create(self, htmlElement, options: dict = None):
     """
-    Description:
-    ------------
     Create new instance
 
     Related Pages:
 
       https://github.com/SortableJS/Sortable
 
-    Attributes:
-    ----------
     :param dom:
     :param dict options: Optional. Dictionary with the sortable options
     """
@@ -50,8 +44,6 @@ class Sortable(JsPackage):
 
   def toArray(self):
     """
-    Description:
-    ------------
     Serializes the sortable's item data-id's (dataIdAttr option) into an array of string.
 
     Related Pages:
@@ -62,16 +54,12 @@ class Sortable(JsPackage):
 
   def sort(self, data):
     """
-    Description:
-    ------------
     Sorts the elements according to the array.
 
     Related Pages:
 
       https://github.com/SortableJS/Sortable
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -79,8 +67,6 @@ class Sortable(JsPackage):
 
   def save(self):
     """
-    Description:
-    ------------
     Save the current sorting
 
     Related Pages:
@@ -91,8 +77,6 @@ class Sortable(JsPackage):
 
   def destroy(self):
     """
-    Description:
-    ------------
     Removes the sortable functionality completely.
 
     Related Pages:

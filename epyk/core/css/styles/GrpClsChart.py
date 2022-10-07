@@ -12,8 +12,6 @@ class ClassBSpartlines(GrpCls.ClassHtml):
   @property
   def css(self) -> AttrClsChart.AttrSkarkline:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -29,8 +27,6 @@ class ClassBSpartlines(GrpCls.ClassHtml):
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
-    Description:
-    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 

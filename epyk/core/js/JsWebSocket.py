@@ -33,14 +33,10 @@ class WebSocket:
 
   def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
                secured: bool = False):
-    """
-    Description:
-    ------------
+    """  
     The WebSocket object provides the API for creating and managing a WebSocket connection to a server,
     as well as for sending and receiving data on the connection.
 
-    Attributes:
-    ----------
     :param Optional[str] html_code: Optional. The Id of the script.
     :param Optional[Union[str, primitives.PageModel]] src: Optional.
     :param bool secured: Optional.
@@ -50,9 +46,7 @@ class WebSocket:
 
   @property
   def readyState(self):
-    """
-    Description:
-    ------------
+    """  
     The WebSocket.readyState read-only property returns the current state of the WebSocket connection.
 
     Related Pages:
@@ -63,9 +57,7 @@ class WebSocket:
 
   @property
   def states(self):
-    """
-    Description:
-    ------------
+    """  
     To get connection state, additionally there’s socket.readyState property with values:
 
     Related Pages:
@@ -76,9 +68,7 @@ class WebSocket:
 
   @property
   def http_codes(self):
-    """
-    Description:
-    ------------
+    """  
     To get connection state, additionally there’s socket.readyState property with values:
 
     Related Pages:
@@ -89,9 +79,7 @@ class WebSocket:
 
   @property
   def message(self):
-    """
-    Description:
-    ------------
+    """  
     Fired when data is received through a WebSocket. Also available via the onmessage property.
 
     Related Pages:
@@ -101,9 +89,7 @@ class WebSocket:
     return JsObjects.JsObject.JsObject.get("event.data")
 
   def reconnect(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsVoid("if(%(varName)s.readyState > 1){ %(varName)s = %(connect)s}" % {
@@ -111,9 +97,7 @@ class WebSocket:
 
   def connect(self, url: str = None, port: Optional[int] = None, protocol: Union[list, str] = None,
               from_config=None):
-    """
-    Description:
-    ------------
+    """  
     In order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will automatically
     attempt to open the connection to the server.
 
@@ -121,8 +105,6 @@ class WebSocket:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param str url: The URL to which to connect; this should be the URL to which the WebSocket server will respond.
         This should use the URL scheme wss://, although some software may allow you to use the insecure ws:// for
         local connections.
@@ -149,17 +131,13 @@ class WebSocket:
     return JsObjects.JsVoid("var %s = new WebSocket('%s://%s:%s', %s)" % (self._selector, prefix, url, port, protocol))
 
   def onopen(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     Fired when a connection with a WebSocket is opened. Also available via the onopen property.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param Optional[Union[list, str]] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -171,17 +149,13 @@ class WebSocket:
     return self
 
   def onmessage(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     Fired when data is received through a WebSocket. Also available via the onmessage property.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param Optional[Union[list, str]] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -192,9 +166,7 @@ class WebSocket:
     return self
 
   def onerror(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     Fired when a connection with a WebSocket has been closed because of an error,
     such as when some data couldn't be sent. Also available via the onerror property.
 
@@ -202,8 +174,6 @@ class WebSocket:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param Optional[Union[list, str]] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -214,17 +184,13 @@ class WebSocket:
     return self
 
   def onclose(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     Fired when a connection with a WebSocket is closed. Also available via the onclose property.
 
     Related Pages:
 
       https://javascript.info/websocket
 
-    Attributes:
-    ----------
     :param Optional[Union[list, str]] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -235,13 +201,9 @@ class WebSocket:
     return self
 
   def receive(self, js_funcs: Optional[Union[list, str]], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     Fired when data is received through a WebSocket. Also available via the onmessage property.
 
-    Attributes:
-    ----------
     :param Optional[Union[list, str]] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -249,17 +211,13 @@ class WebSocket:
       "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def send(self, data):
-    """
-    Description:
-    ------------
+    """  
     Basic way to send a text message to the server.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param data: String. The message to be sent
     """
     data = JsUtils.jsConvertData(data, None)
@@ -267,17 +225,13 @@ class WebSocket:
       "varName": self._selector, "connect": self.__connect, "data": data})
 
   def sendText(self, components: List[primitives.HtmlModel], attrs: dict = None):
-    """
-    Description:
-    ------------
+    """  
     Send a complex message from components.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param List[primitives.HtmlModel] components: The list of HTML components (it will get the dom.content
       automatically)
     :param dict attrs: Optional. Attach some static attributes to the request
@@ -293,17 +247,13 @@ class WebSocket:
       "varName": self._selector, "connect": self.__connect, "data": data})
 
   def close(self, code: int = 1000, reason: Optional[Union[str, primitives.JsDataModel]] = None):
-    """
-    Description:
-    ------------
+    """  
     When you've finished using the WebSocket connection, call the WebSocket method close()
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param int code: Optional. The HTTP code to be sent to the server for the closure
     :param Optional[str] reason: Optional. The message to be sent to the server for the closure
     """
@@ -318,12 +268,8 @@ class Worker:
 
   def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
                server: bool = False):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param Optional[str] html_code: Optional. The Id of the script.
     :param Optional[Union[str, primitives.PageModel]] src: Optional.
     :param bool server: Optional. Specify if the page is running on a server.
@@ -334,17 +280,13 @@ class Worker:
 
   @property
   def message(self):
-    """
-    Description:
-    ------------
+    """  
     Get the event data from the web worker
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
   def connect(self, script: Optional[str] = None, content: Optional[str] = None, url: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Create the worker content.
 
     Only one of the three parameter is needed.
@@ -360,8 +302,6 @@ class Worker:
       https://www.w3schools.com/html/html5_webworkers.asp
       https://www.html5rocks.com/en/tutorials/workers/basics/
 
-    Attributes:
-    ----------
     :param Optional[str] script: Optional. The full path of the file with the javaScript content.
     :param Optional[str] content: Optional. The JavaScript content.
     :param Optional[str] url: Optional. The link of the worker module to be included to the page.
@@ -389,9 +329,7 @@ class Worker:
     return JsObjects.JsVoid("%s = new Worker('%s')" % (self._selector, script))
 
   def postMessage(self, data, components: List[primitives.HtmlModel] = None):
-    """
-    Description:
-    ------------
+    """  
     Post a message to the webworker.
 
     Usage::
@@ -402,8 +340,6 @@ class Worker:
 
       https://www.html5rocks.com/en/tutorials/workers/basics/
 
-    Attributes:
-    ----------
     :param data:
     :param List[primitives.HtmlModel] components: A list of html component or tuples with the alias
     """
@@ -414,12 +350,8 @@ class Worker:
     return JsObjects.JsVoid("%s.postMessage(%s)" % (self._selector, data))
 
   def on(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -427,12 +359,8 @@ class Worker:
     self.page.js.onReady(self.addEventListener(event_type, js_funcs, profile))
 
   def addEventListener(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -442,12 +370,8 @@ class Worker:
         JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -455,9 +379,7 @@ class Worker:
       "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def terminate(self):
-    """
-    Description:
-    ------------
+    """  
     When a web worker object is created, it will continue to listen for messages (even after the external script is
     finished) until it is terminated.
 
@@ -468,9 +390,7 @@ class Worker:
     return JsObjects.JsVoid("%s.terminate(); %s = undefined" % (self._selector, self._selector))
 
   def close(self):
-    """
-    Description:
-    ------------
+    """  
     Proxy to the terminate method.
     """
     return self.terminate()
@@ -480,12 +400,8 @@ class ServerSentEvent:
 
   def __init__(self, html_code: Optional[str] = None, src: Optional[Union[str, primitives.PageModel]] = None,
                server: Optional[str] = False):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param Optional[str] html_code: Optional. The Id of the script.
     :param Optional[Union[str, primitives.PageModel]] src: Optional.
     :param bool server: Optional. Specify if the page is running on a server.
@@ -496,9 +412,7 @@ class ServerSentEvent:
 
   @property
   def readyState(self):
-    """
-    Description:
-    ------------
+    """  
     A number representing the state of the connection. Possible values are CONNECTING (0), OPEN (1), or CLOSED (2).
 
     Related Pages:
@@ -509,9 +423,7 @@ class ServerSentEvent:
 
   @property
   def url(self):
-    """
-    Description:
-    ------------
+    """  
     A DOMString representing the URL of the source.
 
     Related Pages:
@@ -522,9 +434,7 @@ class ServerSentEvent:
 
   @property
   def withCredentials(self):
-    """
-    Description:
-    ------------
+    """  
     A boolean value indicating whether the EventSource object was instantiated with cross-origin (CORS) credentials
     set (true), or not (false, the default).
 
@@ -536,18 +446,14 @@ class ServerSentEvent:
 
   @property
   def message(self):
-    """
-    Description:
-    ------------
+    """  
     Get the data object from an event on the JavaScript part.
     Point to the variable: event.data.
     """
     return JsObjects.JsObject.JsObject.get("event.data")
 
   def connect(self, url: Optional[str] = None, port: Optional[int] = None, from_config=None, options: dict = None):
-    """
-    Description:
-    ------------
+    """  
     In order to communicate using the WebSocket protocol, you need to create a WebSocket object; this will
     automatically attempt to open the connection to the server.
 
@@ -555,8 +461,6 @@ class ServerSentEvent:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
 
-    Attributes:
-    ----------
     :param Optional[str] url: The URL to which to connect; this should be the URL to which the WebSocket server will
       respond. This should use the URL scheme wss://, although some software may allow you to use the insecure
       ws:// for local connections.
@@ -576,17 +480,13 @@ class ServerSentEvent:
     return JsObjects.JsVoid("%s = %s" % (self._selector, self.__connect))
 
   def onmessage(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     The EventSource object is used to receive server-sent event notifications:
 
     Related Pages:
 
       https://www.w3schools.com/html/html5_serversentevents.asp
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -597,17 +497,13 @@ class ServerSentEvent:
     return self
 
   def onerror(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     When an error occurs.
 
     Related Pages:
 
       https://www.w3schools.com/html/html5_serversentevents.asp
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -618,17 +514,13 @@ class ServerSentEvent:
     return self
 
   def onopen(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     When a connection to the server is opened.
 
     Related Pages:
 
       https://www.w3schools.com/html/html5_serversentevents.asp
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -639,12 +531,8 @@ class ServerSentEvent:
     return self
 
   def addEventListener(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -655,12 +543,8 @@ class ServerSentEvent:
       "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def on(self, event_type: str, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str event_type: The event type.
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -668,17 +552,13 @@ class ServerSentEvent:
     self.page.js.onReady(self.addEventListener(event_type, js_funcs, profile))
 
   def receive(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    ------------
+    """  
     The EventSource object is used to receive server-sent event notifications:
 
     Related Pages:
 
       https://www.w3schools.com/html/html5_serversentevents.asp
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -686,9 +566,7 @@ class ServerSentEvent:
       "varName": self._selector, "data": JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)})
 
   def close(self):
-    """
-    Description:
-    ------------
+    """  
     By default, if the connection between the client and server closes, the connection is restarted.
     The connection is terminated with the .close() method.
 

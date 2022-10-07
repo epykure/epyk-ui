@@ -14,10 +14,7 @@ class Accordion(JsPackage):
     self._js, self._jquery = [], None
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Removes the accordion functionality completely. This will return the element back to its pre-init state.
+    """   Removes the accordion functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
 
@@ -26,10 +23,7 @@ class Accordion(JsPackage):
     return JsUtils.jsWrap("%s.accordion('destroy')" % self.component.var)
 
   def disable(self):
-    """
-    Description:
-    -----------
-    Disables the accordion.
+    """   Disables the accordion.
 
     Related Pages:
 
@@ -38,10 +32,7 @@ class Accordion(JsPackage):
     return JsUtils.jsWrap("%s.accordion('disable')" % self.component.var)
 
   def enable(self):
-    """
-    Description:
-    -----------
-    Enables the accordion.
+    """   Enables the accordion.
 
     Related Pages:
 
@@ -50,18 +41,13 @@ class Accordion(JsPackage):
     return JsUtils.jsWrap("%s.accordion('enable')" % self.component.var)
 
   def options(self, option_name=None):
-    """
-    Description:
-    -----------
-    Gets / Set the value currently associated with the specified optionName.
+    """   Gets / Set the value currently associated with the specified optionName.
     Or gets an object containing key/value pairs representing the current tabs options hash.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param option_name: String. Optional. The name of the option to set.
     """
     if option_name is None:
@@ -71,17 +57,12 @@ class Accordion(JsPackage):
     return JsObjects.JsObjects.get("%s.accordion('option', %s)" % (self.component.var, option_name))
 
   def set_options(self, option_name, value):
-    """
-    Description:
-    -----------
-    Sets the value of the accordion option associated with the specified.
+    """   Sets the value of the accordion option associated with the specified.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param option_name: String. The name of the option to set.
     :param value: Object. A value to set for the option.
     """
@@ -90,10 +71,7 @@ class Accordion(JsPackage):
     return JsObjects.JsObjects.get("%s.accordion('option', %s, %s)" % (self.component.var, option_name, value))
 
   def refresh(self):
-    """
-    Description:
-    -----------
-    Process any tabs that were added or removed directly in the DOM and recompute the height of the tab panels.
+    """   Process any tabs that were added or removed directly in the DOM and recompute the height of the tab panels.
     Related Pages:
 
       https://api.jqueryui.com/accordion/
@@ -101,16 +79,12 @@ class Accordion(JsPackage):
     return JsUtils.jsWrap("%s.accordion('refresh')" % self.component.var)
 
   def on(self, event, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param event: String. The JavaScript DOM source for the event (can be a sug item).
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -122,51 +96,39 @@ class Accordion(JsPackage):
       self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def onCreate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered directly before a panel is activated. Can be canceled to prevent the panel from activating.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("accordioncreate", js_funcs, profile)
 
   def onActivate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a panel has been activated (after animation completes). If the accordion was previously collapsed,
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("accordionactivate", js_funcs, profile)
 
   def onBeforeActivate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered directly before a panel is activated. Can be canceled to prevent the panel from activating.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -181,10 +143,7 @@ class Tabs(JsPackage):
     self._js, self._jquery = [], None
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Removes the tabs functionality completely. This will return the element back to its pre-init state.
+    """   Removes the tabs functionality completely. This will return the element back to its pre-init state.
 
     Related Pages:
 
@@ -193,17 +152,12 @@ class Tabs(JsPackage):
     return JsUtils.jsWrap("%s.tabs('destroy')" % self.component.var)
 
   def disable(self, i=None):
-    """
-    Description:
-    -----------
-    Disables all tabs. This signature does not accept any arguments.
+    """   Disables all tabs. This signature does not accept any arguments.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param i: Array<Integer>. Optional. The zero-based index of the tab to disable.
     """
     if i is None:
@@ -212,17 +166,12 @@ class Tabs(JsPackage):
     return JsUtils.jsWrap("%s.tabs('disable', %s)" % (self.component.var, i))
 
   def enable(self, i=None):
-    """
-    Description:
-    -----------
-    Enables a tab.
+    """   Enables a tab.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param i: Array<Integer>. Optional. The zero-based index of the tab to disable.
     """
     if i is None:
@@ -231,35 +180,25 @@ class Tabs(JsPackage):
     return JsUtils.jsWrap("%s.tabs('enable', %s)" % (self.component.var, i))
 
   def load(self, value):
-    """
-    Description:
-    -----------
-    Loads the panel content of a remote tab.
+    """   Loads the panel content of a remote tab.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param value: Number | String. The href of the tab to load.
     """
     value = JsUtils.jsConvertData(value, None)
     return JsUtils.jsWrap("%s.tabs('load', %s)" % (self.component.var, value))
 
   def options(self, option_name=None):
-    """
-    Description:
-    -----------
-    Gets / Set the value currently associated with the specified optionName.
+    """   Gets / Set the value currently associated with the specified optionName.
     Or gets an object containing key/value pairs representing the current tabs options hash.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param option_name: String. Optional. The name of the option to set.
     """
     if option_name is None:
@@ -269,17 +208,12 @@ class Tabs(JsPackage):
     return JsObjects.JsObjects.get("%s.tabs('option', %s)" % (self.component.var, option_name))
 
   def set_options(self, option_name, value):
-    """
-    Description:
-    -----------
-    Sets the value of the tabs option associated with the specified.
+    """   Sets the value of the tabs option associated with the specified.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param option_name: String. The name of the option to set.
     :param value: Object. A value to set for the option.
     """
@@ -288,10 +222,7 @@ class Tabs(JsPackage):
     return JsObjects.JsObjects.get("%s.tabs('option', %s, %s)" % (self.component.var, option_name, value))
 
   def refresh(self):
-    """
-    Description:
-    -----------
-    Process any tabs that were added or removed directly in the DOM and recompute the height of the tab panels.
+    """   Process any tabs that were added or removed directly in the DOM and recompute the height of the tab panels.
     Related Pages:
 
       https://api.jqueryui.com/tabs/
@@ -299,16 +230,12 @@ class Tabs(JsPackage):
     return JsUtils.jsWrap("%s.tabs('refresh')" % self.component.var)
 
   def on(self, event, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param event: String. The JavaScript DOM source for the event (can be a sug item).
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -320,86 +247,66 @@ class Tabs(JsPackage):
       self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def onCreate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered when the tabs are created.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("tabscreate", js_funcs, profile)
 
   def onActivate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a tab has been activated (after animation completes).
     If the tabs were previously collapsed, ui.oldTab and ui.oldPanel will be empty jQuery objects.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("tabsactivate", js_funcs, profile)
 
   def onBeforeActivate(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered when a remote tab is about to be loaded, after the beforeActivate event.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("tabsbeforeload", js_funcs, profile)
 
   def onBeforeLoad(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered when a remote tab is about to be loaded, after the beforeActivate event.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("tabsbeforeload", js_funcs, profile)
 
   def onLoad(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a remote tab has been loaded.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """

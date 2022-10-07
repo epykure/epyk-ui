@@ -69,10 +69,7 @@ class CatalogLayout(Catalog.CatalogGroup):
     return self._set_class(CssStylesSearch.CssSearch)
 
   def search_extension(self, max_width=(100, '%')):
-    """
-    Description:
-    -----------
-    Attached the div extension class to the component.
+    """   Attached the div extension class to the component.
 
     :param max_width: Tuple. Optional. The maximum with for the component. Default 100%.
     """

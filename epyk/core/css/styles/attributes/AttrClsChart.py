@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrSkarkline(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the SparkLine.
+  """  CSS pre defined properties for the SparkLine.
 
   CSS Properties:
 

@@ -7,10 +7,7 @@ class ClassNav(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsMenu.NavBar:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -27,10 +24,7 @@ class ClassFooter(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsMenu.Footer:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -47,10 +41,7 @@ class ClassShortcut(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsMenu.Footer:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 

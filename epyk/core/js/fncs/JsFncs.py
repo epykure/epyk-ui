@@ -15,11 +15,7 @@ class FncToObject:
 
   def __init__(self, data, js_src, data_schema=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param js_src:
     :param data_schema:
@@ -28,12 +24,8 @@ class FncToObject:
 
   def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None):
     """
-    Description:
-    ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Attributes:
-    ----------
     :param fnc_name: The JavaScript function name
     :param fnc_def: The JavaScript function definition
     :param fnc_pmts: The JavaScript function parameters
@@ -46,8 +38,6 @@ class FncToObject:
   @property
   def d3(self):
     """
-    Description:
-    ------------
     Data transformation to the D3 package.
     """
     return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
@@ -55,8 +45,6 @@ class FncToObject:
   @property
   def dc(self):
     """
-    Description:
-    ------------
     Data transformation to the DC package.
     """
     from epyk.core.js.objects import JsChartDC
@@ -71,12 +59,8 @@ class FncRoAggRec:
 
   def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None):
     """
-    Description:
-    ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Attributes:
-    ----------
     :param fnc_name:
     :param fnc_def:
     :param fnc_pmts: Optional.
@@ -95,8 +79,6 @@ class FncOnRecords:
   @property
   def o(self):
     """
-    Description:
-    ------------
     Property to the data final object.
     Those items help to the link to external packages.
     """
@@ -104,12 +86,8 @@ class FncOnRecords:
 
   def __register_records_fnc(self, fnc_name: str, fnc_def, fnc_pmts: list = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     This function will attach to the report object only the javascript functions used during the report.
 
-    Attributes:
-    ----------
     :param fnc_name:
     :param fnc_def:
     :param fnc_pmts: Optional.
@@ -122,12 +100,8 @@ class FncOnRecords:
 
   def custom(self, fnc_name: str, fnc_content, fnc_pmts: dict = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     The function content should use data and produce an object record.
 
-    Attributes:
-    ----------
     :param fnc_name: A string for the Javascript function name.
     :param fnc_content: The javascript function content.
     :param fnc_pmts: Optional. The Javascript function parameters.
@@ -140,8 +114,6 @@ class FncOnRecords:
 
   def url(self):
     """
-    Description:
-    ------------
 
     """
     fnc_name = JsFncsRecords.JsToUrl.__name__
@@ -155,16 +127,12 @@ class FncOnRecords:
 
   def count(self, keys, values=None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     The Javascript function are using the main data as a first parameter.
 
     If values is defined, the Javascript will aggregate the data based on the composite key and the values will be
     available in the record. Also the count will be displayed.
     The values will be one in the record and not the sum.
 
-    Attributes:
-    ----------
     :param keys: List | String. The column names.
     :param values: List. Optional. The values to keep in the result record.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -188,11 +156,7 @@ class FncOnRecords:
 
   def count_with_kpi(self, keys: Union[list, str], values, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param keys: The column names.
     :param values: Optional. The values to keep in the result record.
     :param profile: Optional. A flag to set the component performance storage.
@@ -205,11 +169,7 @@ class FncOnRecords:
 
   def count_distinct(self, keys: Union[list, str], profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param keys: The column names.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -226,12 +186,8 @@ class FncOnRecords:
   def top(self, column: Union[str, primitives.JsDataModel], n: int = 1, order: str = 'desc',
           profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     The Javascript function are using the main data as a first parameter.
 
-    Attributes:
-    ----------
     :param column:
     :param n: Optional.
     :param order: Optional.
@@ -261,11 +217,7 @@ class FncFiltere:
 
   def custom(self, column: str, val: Any, compare_type: str, all_if_empty: bool = True):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param val:
     :param compare_type:
@@ -278,8 +230,6 @@ class FncFiltere:
 
   def not_in_(self, column: str, val: Any):
     """
-    Description:
-    ------------
 
     #TODO: Think about the implementation
     """
@@ -287,11 +237,7 @@ class FncFiltere:
 
   def not_range_(self, column: str, val: Any, compare_type: str = "in", all_if_empty: bool = True):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param val:
     :param compare_type: Optional.
@@ -300,11 +246,7 @@ class FncFiltere:
 
   def in_(self, column: str, val: Any):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param val:
     """
@@ -312,11 +254,7 @@ class FncFiltere:
 
   def range_(self, column: str, val: Any, strict_left: bool = False, strict_right: bool = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param val:
     :param strict_left: Optional.
@@ -338,11 +276,7 @@ class FncFiltere:
 
   def eq_(self, column: str, val: Any):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param val:
     """
@@ -350,12 +284,8 @@ class FncFiltere:
 
   def sup_(self, column: str, val: Any, strict: bool = False):
     """
-    Description:
-    ------------
     Filter only the data above the value for the given key in the record.
 
-    Attributes:
-    ----------
     :param column: The column name.
     :param val: The value in the dictionary.
     :param strict: Optional. A flag to specify if the value should be included.
@@ -367,12 +297,8 @@ class FncFiltere:
 
   def inf_(self, column: str, val: Any, strict: bool = False):
     """
-    Description:
-    ------------
     Filter only the data below the value for the given key in the record.
 
-    Attributes:
-    ----------
     :param column: The column name.
     :param val: The value in the dictionary.
     :param strict: Optional. A flag to specify if the value should be included.
@@ -391,11 +317,7 @@ class JsRegisteredFunctions:
 
   def cssStyle(self, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param params:
     """
     self._js_src.setdefault('functions', {})["cssStyle"] = {
@@ -405,8 +327,6 @@ class JsRegisteredFunctions:
 
   def service(self):
     """
-    Description:
-    ------------
     Create and store a function to do simple services calls and return a temporary message.
 
     TODO: To be improved and extended.
@@ -420,8 +340,6 @@ class JsRegisteredFunctions:
 
   def anonymous(self, js_funcs: Union[str, list], pmts: dict = None):
     """
-    Description:
-    ------------
     Create a anonymous / lambda function.
     Those functions are directly called when they are defined.
 
@@ -429,8 +347,6 @@ class JsRegisteredFunctions:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param pmts: Optional. The function parameters.
     """
@@ -441,12 +357,8 @@ class JsRegisteredFunctions:
 
   def get(self, func_name: str, *args):
     """
-    Description:
-    ------------
     Call a bespoke functions on the Javascript side.
 
-    Attributes:
-    ----------
     :param func_name: The function name.
     :param args: The different arguments in the function definition.
 
@@ -456,16 +368,12 @@ class JsRegisteredFunctions:
 
   def inline(self, func_name: str, js_funcs: Union[str, list], pmts: dict = None):
     """
-    Description:
-    ------------
     Create a name function which can be then called later.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_function_definition.asp
 
-    Attributes:
-    ----------
     :param func_name: The function name.
     :param js_funcs: Javascript functions.
     :param pmts: Optional. The function parameters.
@@ -479,8 +387,6 @@ class JsRegisteredFunctions:
   @property
   def records(self):
     """
-    Description:
-    ------------
     Javascript pre-defined function dedicated to transform a records.
     Namely a list of dictionaries.
     """
@@ -509,22 +415,14 @@ class JsFunctions(list):
 
   def append(self, func: str):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param func:
     """
     self.__str_funcs.append(func)
 
   def extend(self, funcs: list):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param funcs:
     """
     self.__str_funcs.extend(funcs)
@@ -565,11 +463,7 @@ class JsAnonymous(primitives.JsDataModel):
 
   def return_(self, value):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param value:
     """
     self.__returnFnc = value
@@ -577,11 +471,7 @@ class JsAnonymous(primitives.JsDataModel):
 
   def params(self, pmts: dict):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param pmts: The function parameters.
     """
     self.__paramsFnc = pmts
@@ -589,11 +479,7 @@ class JsAnonymous(primitives.JsDataModel):
 
   def call(self, *args, **kwargs):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param args:
     :param kwargs:
     """

@@ -6,9 +6,7 @@ class Style:
     self.cls = component_cls
 
   def clearfix(self):
-    """
-    Description:
-    ------------
+    """  
     Easily clear floats by adding .clearfix to the parent element. Can also be used as a mixin.
 
     Related Pages:
@@ -19,9 +17,7 @@ class Style:
     return self
 
   def link(self, category: str):
-    """
-    Description:
-    ------------
+    """  
     You can use the .link-* classes to colorize links. Unlike the .text-* classes, these classes have a :hover
     and :focus state.
 
@@ -29,25 +25,19 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/helpers/colored-links/
 
-    Attributes:
-    ----------
     :param category: The link CSS category
     """
     self.cls.add("link-%s" % category)
     return self
 
   def ratio(self, x: int, y: int):
-    """
-    Description:
-    ------------
+    """  
     Aspect ratios can be customized with modifier classes. By default the following ratio classes are provided:
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/helpers/ratio/
 
-    Attributes:
-    ----------
     :param x:
     :param y:
     """
@@ -56,16 +46,12 @@ class Style:
     return self
 
   def sticky(self, position, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/helpers/position/
 
-    Attributes:
-    ----------
     :param position:
     :param breakpoint: String. Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -80,16 +66,12 @@ class Style:
     return self
 
   def fixed(self, position, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/helpers/position/
 
-    Attributes:
-    ----------
     :param position:
     :param breakpoint: String. Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -103,17 +85,13 @@ class Style:
       self.cls.add("fixed-%s" % position)
 
   def visually_hidden(self, focusable: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Use .visually-hidden-focusable to visually hide an element by default, but to display it when it’s focused.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/helpers/visually-hidden/
 
-    Attributes:
-    ----------
     :param focusable: A boolean to activate the focusable property
     """
     if not focusable:
@@ -122,9 +100,7 @@ class Style:
       self.cls.add("visually-hidden-focusable")
 
   def text_truncate(self):
-    """
-    Description:
-    ------------
+    """  
     For longer content, you can add a .text-truncate class to truncate the text with an ellipsis.
 
     Related Pages:
@@ -135,9 +111,7 @@ class Style:
     return self
 
   def font_size(self, n: int):
-    """
-    Description:
-    ------------
+    """  
     Quickly change the font-size of text. While our heading classes (e.g., .h1–.h6) apply font-size, font-weight,
     and line-height, these utilities only apply font-size.
 
@@ -145,17 +119,13 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/text/
 
-    Attributes:
-    ----------
     :param n: The font-size number.
     """
     self.cls.add("fs-%s" % n)
     return self
 
   def text_break(self):
-    """
-    Description:
-    ------------
+    """  
     Prevent long strings of text from breaking your components' layout by using .text-break to set word-wrap:
     break-word and word-break: break-word.
 
@@ -167,9 +137,7 @@ class Style:
     return self
 
   def text(self, category: str):
-    """
-    Description:
-    ------------
+    """  
     Colorize text with color utilities.
     If you want to colorize links, you can use the .link-* helper classes which have :hover and :focus states.
 
@@ -177,25 +145,19 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/colors/
 
-    Attributes:
-    ----------
     :param category:
     """
     self.cls.add("text-%s" % category)
     return self
 
   def border(self, category, position=None):
-    """
-    Description:
-    ------------
+    """  
     Change the border color using utilities built on our theme colors.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/utilities/borders/
 
-    Attributes:
-    ----------
     :param category:
     :param position:
     """
@@ -203,9 +165,7 @@ class Style:
     return self
 
   def bg(self, category):
-    """
-    Description:
-    ------------
+    """  
     Similar to the contextual text color classes, set the background of an element to any contextual class.
     Background utilities do not set color, so in some cases you’ll want to use .text-* color utilities.
 
@@ -213,17 +173,13 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/background/
 
-    Attributes:
-    ----------
     :param category:
     """
     self.cls.add("bg-%s" % category)
     return self
 
   def shadow(self, kind: str = ""):
-    """
-    Description:
-    ------------
+    """  
     While shadows on components are disabled by default in Bootstrap and can be enabled via $enable-shadows,
     you can also quickly add or remove a shadow with our box-shadow utility classes
 
@@ -231,8 +187,6 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/shadows/
 
-    Attributes:
-    ----------
     :param kind: The CSS category
     """
     if kind is None:
@@ -247,9 +201,7 @@ class Style:
     return self
 
   def float(self, position: str = None, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
     These utility classes float an element to the left or right, or disable floating, based on the current viewport
     size using the CSS float property.
 
@@ -257,8 +209,6 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/utilities/float/
 
-    Attributes:
-    ----------
     :param position:
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -275,9 +225,7 @@ class Style:
     return self
 
   def user_select_all(self):
-    """
-    Description:
-    ------------
+    """  
     Change the way in which the content is selected when the user interacts with it.
 
     Related Pages:
@@ -288,9 +236,7 @@ class Style:
     return self
 
   def user_select_auto(self):
-    """
-    Description:
-    ------------
+    """  
     Change the way in which the content is selected when the user interacts with it.
 
     Related Pages:
@@ -301,9 +247,7 @@ class Style:
     return self
 
   def user_select_none(self):
-    """
-    Description:
-    ------------
+    """  
     Change the way in which the content is selected when the user interacts with it.
 
     Related Pages:
@@ -314,9 +258,7 @@ class Style:
     return self
 
   def glutters(self, n: int, vertical: bool = False, horizontal: bool = True, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
     Gutters are the gaps between column content, created by horizontal padding.
     We set padding-right and padding-left on each column, and use negative margin to offset that at the start and end
     of each row to align content.
@@ -325,8 +267,6 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/layout/gutters/
 
-    Attributes:
-    ----------
     :param n:
     :param vertical:
     :param horizontal:
@@ -350,9 +290,7 @@ class Style:
     return self
 
   def no_glutter(self):
-    """
-    Description:
-    ------------
+    """  
     The gutters between columns in our predefined grid classes can be removed with .g-0
 
     Related Pages:
@@ -363,26 +301,20 @@ class Style:
     return self
 
   def order(self, val):
-    """
-    Description:
-    ------------
+    """  
     Use .order- classes for controlling the visual order of your content.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/layout/columns/
 
-    Attributes:
-    ----------
     :param val:
     """
     self.cls.add("order-%s" % val)
     return self
 
   def offset(self, val, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
     Move columns to the right using .offset-md-* classes.
     These classes increase the left margin of a column by * columns.
     For example, .offset-md-4 moves .col-md-4 over four columns.
@@ -391,8 +323,6 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/layout/columns/
 
-    Attributes:
-    ----------
     :param val:
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -407,9 +337,7 @@ class Style:
     return self
 
   def margin(self, val, breakpoint: str = None):
-    """
-    Description:
-    ------------
+    """  
     With the move to flexbox in v4, you can use margin utilities like .me-auto to force sibling columns away from
     one another.
 
@@ -417,8 +345,6 @@ class Style:
 
       https://getbootstrap.com/docs/5.0/layout/columns/
 
-    Attributes:
-    ----------
     :param val:
     :param breakpoint: String. Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -433,16 +359,12 @@ class Style:
     return self
 
   def width(self, percent, from_viewport: bool = False):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/utilities/sizing/
 
-    Attributes:
-    ----------
     :param percent:
     :param from_viewport:
     """
@@ -453,16 +375,12 @@ class Style:
     return self
 
   def height(self, percent, from_viewport: bool = False):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/utilities/sizing/
 
-    Attributes:
-    ----------
     :param percent:
     :param from_viewport:
     """
@@ -473,9 +391,7 @@ class Style:
     return self
 
   def visible(self):
-    """
-    Description:
-    ------------
+    """  
     Set the visibility of elements with our visibility utilities.
     These utility classes do not modify the display value at all and do not affect layout – .invisible elements still
     take up space in the page.
@@ -488,9 +404,7 @@ class Style:
     return self
 
   def invisible(self):
-    """
-    Description:
-    ------------
+    """  
     Set the visibility of elements with our visibility utilities.
     These utility classes do not modify the display value at all and do not affect layout – .invisible elements still
     take up space in the page.
@@ -503,17 +417,13 @@ class Style:
     return self
 
   def sizing(self, breakpoint: str):
-    """
-    Description:
-    ------------
+    """  
     Set the size of the component.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/buttons/
 
-    Attributes:
-    ----------
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
@@ -524,17 +434,13 @@ class Style:
     return self
 
   def justify_content(self, position: str):
-    """
-    Description:
-    ------------
+    """  
     Align component content (start, center, end)
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/navs-tabs/#horizontal-alignment
 
-    Attributes:
-    ----------
     :param position: The position.
     """
     self.cls.add("justify-content-%s" % position)

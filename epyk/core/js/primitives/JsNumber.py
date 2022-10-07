@@ -33,8 +33,6 @@ class JsNumber(JsObject.JsObject):
   @property
   def NEGATIVE_INFINITY(self):
     """
-    Description:
-    ------------
     The NEGATIVE_INFINITY property represents negative infinity.
     Negative infinity can be explained as something that is lower than any other number.
 
@@ -51,8 +49,6 @@ class JsNumber(JsObject.JsObject):
   @classmethod
   def POSITIVE_INFINITY(cls):
     """
-    Description:
-    ------------
     The POSITIVE_INFINITY property represents positive infinity.
     Positive infinity can be explained as something that is higher than any other number.
 
@@ -69,8 +65,6 @@ class JsNumber(JsObject.JsObject):
   @classmethod
   def MAX_VALUE(cls):
     """
-    Description:
-    ------------
     The MAX_VALUE property returns the largest number possible in JavaScript.
 
     This static property has a value of 1.7976931348623157e+308.
@@ -88,8 +82,6 @@ class JsNumber(JsObject.JsObject):
   @property
   def MIN_VALUE(self):
     """
-    Description:
-    ------------
     The MIN_VALUE property returns the smallest positive number possible in JavaScript.
 
     This static property has a value of 5e-324.
@@ -106,8 +98,6 @@ class JsNumber(JsObject.JsObject):
 
   def isNaN(self):
     """
-    Description:
-    ------------
     Check whether the value is NaN.
 
     Usage::
@@ -125,8 +115,6 @@ class JsNumber(JsObject.JsObject):
 
   def add(self, n: Union[primitives.JsDataModel, float]):
     """
-    Description:
-    ------------
     Add a value to a Javascript Number.
     The value will be added and it will return a new number object on the Javascript side.
 
@@ -134,8 +122,6 @@ class JsNumber(JsObject.JsObject):
 
       jsNumber.add(34.5)
 
-    Attributes:
-    ----------
     :param n: The number value.
 
     :return: A new Python Javascript Number
@@ -144,34 +130,24 @@ class JsNumber(JsObject.JsObject):
 
   def min(self, value: Union[primitives.JsDataModel, float]):
     """
-    Description:
-    ------------
     Add a cap to the value using the min function.
 
-    Attributes:
-    ----------
     :param value: The maximum value for this object.
     """
     return JsNumber("Math.min(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def max(self, value: Union[primitives.JsDataModel, float]):
     """
-    Description:
-    ------------
     Add a floor to the value using the max function.
 
     Usage::
 
-    Attributes:
-    ----------
     :param value: The minimum value for this object.
     """
     return JsNumber("Math.max(%s, %s)" % (self.varId, JsUtils.jsConvertData(value, None)), is_py_data=False)
 
   def sub(self, n: Union[primitives.JsDataModel, float]):
     """
-    Description:
-    ------------
     Subtract a value to a Javascript Number.
     The value will be subtracted and it will return a new number object on the Javascript side.
 
@@ -179,8 +155,6 @@ class JsNumber(JsObject.JsObject):
 
       jsNumber.sub(34.5)
 
-    Attributes:
-    ----------
     :param n: The number value.
 
     :return: A new Python Javascript Number.
@@ -189,8 +163,6 @@ class JsNumber(JsObject.JsObject):
 
   def toExponential(self):
     """
-    Description:
-    ------------
     Convert a number into an exponential notation.
 
     Usage::
@@ -207,8 +179,6 @@ class JsNumber(JsObject.JsObject):
 
   def toFixed(self, digits: Union[primitives.JsDataModel, int] = 2):
     """
-    Description:
-    ------------
     Convert a number into a string, keeping only two decimals.
 
     Usage::
@@ -219,8 +189,6 @@ class JsNumber(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/jsref_tofixed.asp
 
-    Attributes:
-    ----------
     :param Union[primitives.JsDataModel, int] digits: Optional. The number of digits after the decimal point.
     Default is 2 (2 digits after the decimal point)
 
@@ -230,8 +198,6 @@ class JsNumber(JsObject.JsObject):
 
   def isFinite(self):
     """
-    Description:
-    ------------
     Check whether a value is a finite number.
 
     Usage::
@@ -250,8 +216,6 @@ class JsNumber(JsObject.JsObject):
 
   def toPrecision(self, n: Union[primitives.JsDataModel, int]):
     """
-    Description:
-    ------------
     Format a number into a specified length:
 
     Usage::
@@ -262,8 +226,6 @@ class JsNumber(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/jsref_toprecision.asp
 
-    Attributes:
-    ----------
     :param n: Optional. The number of digits. If omitted, it returns the entire number (without any formatting).
 
     :return: A Javascript Number
@@ -303,13 +265,9 @@ class JsNumber(JsObject.JsObject):
   @classmethod
   def proto(cls, js_obj, func_name):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param js_obj: The base Javascript Python object
     :param func_name: The function name.
     """
@@ -322,8 +280,6 @@ return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(
 
   def formatMoney(self, js_obj, dec_places: Union[int, primitives.JsDataModel] = 0, country_code: str = 'UK'):
     """
-    Description:
-    ------------
     Wrapper function.
 
     Related Pages:
@@ -331,8 +287,6 @@ return sign + (j ? i.substr(0, j) + thouSeparator : "") + i.substr(j).replace(/(
       https://en.wikipedia.org/wiki/Decimal_separator
       https://docs.oracle.com/cd/E19455-01/806-0169/overview-9/index.html
 
-    Attributes:
-    ----------
     :param js_obj: The base Javascript Python object
     :param dec_places: Optional. The number of decimal.
     :param country_code: Optional. The country code. Default uk.

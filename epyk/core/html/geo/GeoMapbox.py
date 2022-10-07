@@ -25,10 +25,7 @@ class GeoMapbox(Html.Html):
 
   @property
   def js(self) -> JsMapbox.MapBoxMap:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     Usage::
@@ -48,10 +45,7 @@ class GeoMapbox(Html.Html):
 
   @property
   def options(self) -> OptMapbox.OptionsMapbox:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -63,18 +57,13 @@ class GeoMapbox(Html.Html):
     return super().options
 
   def load(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired immediately after all necessary resources have been downloaded and the first visually complete rendering
+    """   Fired immediately after all necessary resources have been downloaded and the first visually complete rendering
     of the map has occurred.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -82,17 +71,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def loading(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when any map data loads or changes. See MapDataEvent for more information.
+    """   Fired when any map data loads or changes. See MapDataEvent for more information.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -100,17 +84,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def resize(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired immediately after the map has been resized.
+    """   Fired immediately after the map has been resized.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -118,17 +97,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def remove(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired immediately after the map has been removed with Map.event:remove.
+    """   Fired immediately after the map has been removed with Map.event:remove.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -136,17 +110,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def mousedown(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when a pointing device (usually a mouse) is pressed within the map.
+    """   Fired when a pointing device (usually a mouse) is pressed within the map.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -154,17 +123,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def mouseup(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when a pointing device (usually a mouse) is released within the map.
+    """   Fired when a pointing device (usually a mouse) is released within the map.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -172,18 +136,13 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when a pointing device (usually a mouse) is pressed and released twice at the same point
+    """   Fired when a pointing device (usually a mouse) is pressed and released twice at the same point
     on the map in rapid succession.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -191,17 +150,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when a pointing device (usually a mouse) is pressed and released at the same point on the map.
+    """   Fired when a pointing device (usually a mouse) is pressed and released at the same point on the map.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -209,17 +163,12 @@ class GeoMapbox(Html.Html):
       self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
   def on(self, event_type: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Fired when a pointing device (usually a mouse) is pressed and released at the same point on the map.
+    """   Fired when a pointing device (usually a mouse) is pressed and released at the same point on the map.
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
 
-    Attributes:
-    ----------
     :param event_type: The JavaScript event type
     :param js_funcs: The Javascript function definition
     :param profile: Optional. A flag to set the component performance storage

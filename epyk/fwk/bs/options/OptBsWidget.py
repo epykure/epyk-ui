@@ -8,10 +8,7 @@ class Carousel(Options):
 
   @property
   def interval(self):
-    """
-    Description:
-    -----------
-    The amount of time to delay between automatically cycling an item. If false, carousel will not automatically cycle.
+    """   The amount of time to delay between automatically cycling an item. If false, carousel will not automatically cycle.
 
     Related Pages:
 
@@ -25,10 +22,7 @@ class Carousel(Options):
 
   @property
   def keyboard(self):
-    """
-    Description:
-    -----------
-    Whether the carousel should react to keyboard events.
+    """   Whether the carousel should react to keyboard events.
 
     Related Pages:
 
@@ -42,10 +36,7 @@ class Carousel(Options):
 
   @property
   def pause(self):
-    """
-    Description:
-    -----------
-    If set to 'hover', pauses the cycling of the carousel on mouseenter and resumes the cycling of the carousel on
+    """   If set to 'hover', pauses the cycling of the carousel on mouseenter and resumes the cycling of the carousel on
     mouseleave. If set to false, hovering over the carousel won't pause it..
 
     Related Pages:
@@ -60,10 +51,7 @@ class Carousel(Options):
 
   @property
   def ride(self):
-    """
-    Description:
-    -----------
-    Autoplays the carousel after the user manually cycles the first item. If set to 'carousel',
+    """   Autoplays the carousel after the user manually cycles the first item. If set to 'carousel',
     autoplays the carousel on load.
 
     Related Pages:
@@ -78,10 +66,7 @@ class Carousel(Options):
 
   @property
   def wrap(self):
-    """
-    Description:
-    -----------
-    Whether the carousel should cycle continuously or have hard stops.
+    """   Whether the carousel should cycle continuously or have hard stops.
 
     Related Pages:
 
@@ -95,10 +80,7 @@ class Carousel(Options):
 
   @property
   def touch(self):
-    """
-    Description:
-    -----------
-    Whether the carousel should support left/right swipe interactions on touchscreen devices..
+    """   Whether the carousel should support left/right swipe interactions on touchscreen devices..
 
     Related Pages:
 
@@ -115,9 +97,7 @@ class OffCanvas(Options):
 
   @property
   def show(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -133,10 +113,7 @@ class OffCanvas(Options):
 
   @property
   def backdrop(self):
-    """
-    Description:
-    -----------
-    Apply a backdrop on body while offcanvas is open.
+    """   Apply a backdrop on body while offcanvas is open.
 
     Related Pages:
 
@@ -150,10 +127,7 @@ class OffCanvas(Options):
 
   @property
   def scroll(self):
-    """
-    Description:
-    -----------
-    Allow body scrolling while offcanvas is open.
+    """   Allow body scrolling while offcanvas is open.
 
     Related Pages:
 
@@ -167,10 +141,7 @@ class OffCanvas(Options):
 
   @property
   def keyboard(self):
-    """
-    Description:
-    -----------
-    Closes the offcanvas when escape key is pressed.
+    """   Closes the offcanvas when escape key is pressed.
 
     Related Pages:
 
@@ -187,9 +158,7 @@ class Modal(Options):
 
   @property
   def fade(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -206,10 +175,7 @@ class Modal(Options):
 
   @property
   def focus(self):
-    """
-    Description:
-    -----------
-    Puts the focus on the modal when initialized.
+    """   Puts the focus on the modal when initialized.
 
     Related Pages:
 
@@ -223,10 +189,7 @@ class Modal(Options):
 
   @property
   def keyboard(self):
-    """
-    Description:
-    -----------
-    Closes the modal when escape key is pressed.
+    """   Closes the modal when escape key is pressed.
 
     Related Pages:
 
@@ -240,10 +203,7 @@ class Modal(Options):
 
   @property
   def backdrop(self):
-    """
-    Description:
-    -----------
-    Includes a modal-backdrop element. Alternatively, specify static for a backdrop which doesn't close the modal
+    """   Includes a modal-backdrop element. Alternatively, specify static for a backdrop which doesn't close the modal
     on click.
 
     Related Pages:
@@ -258,10 +218,7 @@ class Modal(Options):
 
   @property
   def scroll(self):
-    """
-    Description:
-    -----------
-    Allow the scrolling for long content.
+    """   Allow the scrolling for long content.
 
     Related Pages:
 
@@ -277,10 +234,7 @@ class Modal(Options):
 
   @property
   def centered(self):
-    """
-    Description:
-    -----------
-    Vertically center the modal.
+    """   Vertically center the modal.
 
     Related Pages:
 
@@ -295,25 +249,15 @@ class Modal(Options):
     self._config(flag)
 
   def size(self, breakpoint):
-    """
-    Description:
-    -----------
-    Set the size for the modal.
+    """   Set the size for the modal.
 
-    Attributes:
-    ----------
     :param breakpoint: String. The alias for the bootstrap breakpoint.
     """
     self.component.attr["class"].add("modal-%s" % breakpoint)
 
   def full_screen(self, breakpoint):
-    """
-    Description:
-    -----------
-    Set the size for the modal in full screen mode.
+    """   Set the size for the modal in full screen mode.
 
-    Attributes:
-    ----------
     :param breakpoint: String. The alias for the bootstrap breakpoint.
     """
     self.component.attr["class"].add("modal-fullscreen-%s-down" % breakpoint)
@@ -323,9 +267,7 @@ class Toast(Options):
 
   @property
   def show(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -341,9 +283,7 @@ class Toast(Options):
 
   @property
   def hide(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 

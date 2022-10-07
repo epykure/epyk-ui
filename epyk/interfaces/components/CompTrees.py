@@ -15,8 +15,6 @@ class Trees:
   def tree(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
            html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -44,9 +42,7 @@ class Trees:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param width:
     :param height:
@@ -64,17 +60,13 @@ class Trees:
   def inputs(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
              html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTrees.TreeInput`
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param width:
     :param height:
@@ -157,8 +149,6 @@ class Trees:
                height: Union[tuple, int] = (None, 'px'), html_code: str = None, helper: str = None,
                options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -175,9 +165,7 @@ class Trees:
       https://codepen.io/raneio/pen/NbbZEM
       https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
       https://codepen.io/antoniputra/pen/BzyWmb
-
-    Attributes:
-    ----------
+ 
     :param record:
     :param text:
     :param width:

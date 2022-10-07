@@ -17,17 +17,13 @@ class Selector:
     self.__element = False
 
   def elements(self, element_types: Union[str, list]):
-    """
-    Description:
-    ------------
+    """  
     Selects all <div> elements and all <p> elements.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_comma.asp
 
-    Attributes:
-    ----------
     :param Union[str, list] element_types: All the element tags.
     """
     if not isinstance(element_types, list):
@@ -40,17 +36,13 @@ class Selector:
     return self
 
   def sub_element(self, element: str, direct_parent: bool = False, class_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Selects all <p> elements inside <div> elements.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_element.asp
 
-    Attributes:
-    ----------
     :param str element: The element tag.
     :param bool direct_parent: Optional. the link with the main component.
     :param str class_name: Optional. The CSS class name.
@@ -62,17 +54,13 @@ class Selector:
     return self
 
   def parent_element(self, element: str, direct_parent: bool = False, class_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Selects all <p> elements inside <div> elements.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_element.asp
 
-    Attributes:
-    ----------
     :param str element: The element tag.
     :param bool direct_parent: Optional. the link with the main component.
     :param str class_name: Optional. The CSS class name.
@@ -84,17 +72,13 @@ class Selector:
     return self
 
   def with_next_element(self, element: str, class_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Selects all <p> elements that are placed immediately after <div> elements
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_pluss.asp
 
-    Attributes:
-    ----------
     :param str element: The element tag.
     :param str class_name: Optional. The CSS class name.
     """
@@ -102,17 +86,13 @@ class Selector:
     return self
 
   def with_prev_element(self, element: str, class_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Selects every <ul> element that are preceded by a <p> element.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_gen_sibling.asp
 
-    Attributes:
-    ----------
     :param str element: The element tag.
     :param str class_name: Optional. The CSS class name.
     """
@@ -120,43 +100,31 @@ class Selector:
     return self
 
   def join_class(self, class_name: str):
-    """
-    Description:
-    ------------
+    """  
     Selects all elements with both name1 and name2 set within its class attribute.
 
-    Attributes:
-    ----------
     :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s.%s" % (self.__this, class_name)
     return self
 
   def add_class(self, class_name: str):
-    """
-    Description:
-    ------------
+    """  
     Selects all elements with name2 that is a descendant of an element with name.
 
-    Attributes:
-    ----------
     :param str class_name: Optional. The CSS class name.
     """
     self.__this = "%s .%s" % (self.__this, class_name)
     return self
 
   def sub_class(self, class_name: str, direct_parent: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Selects all <p> elements inside <div> elements.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_element_element.asp
 
-    Attributes:
-    ----------
     :param str class_name: Optional. The CSS class name.
     :param bool direct_parent: Optional. the link with the main component.
     """
@@ -167,13 +135,9 @@ class Selector:
     return self
 
   def element(self, flag: bool = None):
-    """
-    Description:
-    ------------
+    """  
     Add a flag to put the element tag when the CSS class will be built.
 
-    Attributes:
-    ----------
     :param bool flag: Optional. Define if the element tag needs to be added.
     """
     if flag is None:
@@ -183,43 +147,33 @@ class Selector:
     return self
 
   def add_element_id(self, component: primitives.HtmlModel):
-    """
-    Description:
-    ------------
+    """  
     Selects the element with id="firstname".
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_id.asp
 
-    Attributes:
-    ----------
     :param primitives.HtmlModel component: The component.
     """
     self.__this = "%s%s" % (component.htmlCode, self.__this)
     return self
 
   def not_element(self, element: str):
-    """
-    Description:
-    ------------
+    """  
     Selects every element that is not a <p> element.
 
     Related Pages:
 
        https://www.w3schools.com/cssref/sel_not.asp
 
-    Attributes:
-    ----------
     :param str element: The element reference (tag).
     """
     self.__this = "%s:not(%s)" % (self.__this, element)
     return self
 
   def first_child(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the first child of its parent.
 
     Related Pages:
@@ -230,9 +184,7 @@ class Selector:
     return self
 
   def first_letter(self):
-    """
-    Description:
-    ------------
+    """  
     Selects the first letter of every <p> element.
 
     Related Pages:
@@ -243,9 +195,7 @@ class Selector:
     return self
 
   def first_line(self):
-    """
-    Description:
-    ------------
+    """  
     Selects the first line of every <p> element.
 
     Related Pages:
@@ -256,9 +206,7 @@ class Selector:
     return self
 
   def first_of_type(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the first <p> element of its parent.
 
     Related Pages:
@@ -269,9 +217,7 @@ class Selector:
     return self
 
   def in_range(self):
-    """
-    Description:
-    ------------
+    """  
     Selects input elements with a value within a specified range.
 
     Related Pages:
@@ -282,9 +228,7 @@ class Selector:
     return self
 
   def last_child(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the last child of its parent.
 
     Related Pages:
@@ -295,9 +239,7 @@ class Selector:
     return self
 
   def last_of_type(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the last <p> element of its parent.
 
     Related Pages:
@@ -308,9 +250,7 @@ class Selector:
     return self
 
   def link(self):
-    """
-    Description:
-    ------------
+    """  
     Selects all unvisited links.
 
     Related Pages:
@@ -321,77 +261,59 @@ class Selector:
     return self
 
   def nth_child(self, n: int):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the second child of its parent.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_nth-child.asp
 
-    Attributes:
-    ----------
     :param int n: The child index from the start.
     """
     self.__this = "%s:nth-child(%s)" % (self.__this, n)
     return self
 
   def nth_last_child(self, n: int):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the second child of its parent, counting from the last child.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_nth-last-child.asp
 
-    Attributes:
-    ----------
     :param int n: The index from the end for a list of elements.
     """
     self.__this = "%s:nth-last-child(%s)" % (self.__this, n)
     return self
 
   def nth_last_of_type(self, n: int):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the second <p> element of its parent, counting from the last child.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_nth-last-of-type.asp
 
-    Attributes:
-    ----------
     :param int n: The index from the end for a list of element types.
     """
     self.__this = "%s:nth-last-of-type(%s)" % (self.__this, n)
     return self
 
   def nth_of_type(self, n: int):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the second <p> element of its parent.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/sel_nth-of-type.asp
 
-    Attributes:
-    ----------
     :param int n: The index from the start for a list of element types.
     """
     self.__this = "%s:nth-of-type(%s)" % (self.__this, n)
     return self
 
   def only_of_type(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the only <p> element of its parent.
 
     Related Pages:
@@ -402,9 +324,7 @@ class Selector:
     return self
 
   def only_child(self):
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that is the only child of its parent.
 
     Related Pages:
@@ -415,9 +335,7 @@ class Selector:
     return self
 
   def placeholder(self):
-    """
-    Description:
-    ------------
+    """  
     Selects input elements with placeholder text.
 
     Related Pages:
@@ -428,9 +346,7 @@ class Selector:
     return self
 
   def read_only(self):
-    """
-    Description:
-    ------------
+    """  
     Selects input elements with the "readonly" attribute specified.
 
     Related Pages:
@@ -441,9 +357,7 @@ class Selector:
     return self
 
   def read_write(self):
-    """
-    Description:
-    ------------
+    """  
     Selects input elements with the "readonly" attribute NOT specified.
 
     Related Pages:
@@ -454,13 +368,9 @@ class Selector:
     return self
 
   def suffix(self, data):
-    """
-    Description:
-    ------------
+    """  
     Add a bespoke prefix to a class name.
 
-    Attributes:
-    ----------
     :param data: String. The class name reference.
     """
     self._suffix = "%s " % data.strip()
@@ -477,13 +387,9 @@ class Data(Properties.CssMixin):
     self.has_changed = False
 
   def css(self, k: Union[str, dict], v: str = None, important: bool = False, change: bool = True):
-    """
-    Description:
-    ------------
+    """  
     Set multiple CSS attributes to the HTML component.
 
-    Attributes:
-    ----------
     :param Union[str, dict] k: Optional. The attributes to be added.
     :param str v: Optional. The value for a given item.
     :param bool important: Optional. Specify if the style is important.
@@ -500,9 +406,7 @@ class Data(Properties.CssMixin):
     return self
 
   def clear(self):
-    """
-    Description:
-    ------------
+    """  
     Clear all the CSS attributes defined for this class.
 
     :return: Self to allow the chaining.
@@ -581,21 +485,15 @@ class Style:
           self.attrs.css(k, v)
 
   def customize(self):
-    """
-    Description:
-    ------------
+    """  
     Define for child classes to define some CSS attributes.
     This parent class is just there to define the structure of all the child ones, it is not used directly.
     """
     pass
 
   def transition(self, attribute: str, duration: int = 2, delay: int = None, iteration=None, timing_fnc : str = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str attribute:
     :param int duration: Optional. The duration of the transition effect.
     :param int delay: Optional. The time delay before starting the transition.
@@ -621,15 +519,12 @@ class Style:
 
   def animation(self, name=None, attrs=None, duration=2, delay=None, iteration='infinite', timing_fnc=None,
                 effect=None, fill_mode=None):
-    """
-    Description:
-    ------------
+    """  
     The @keyframes rule specifies the animation code.
 
     The animation is created by gradually changing from one set of CSS classes to another.
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.button("Ok").style.css_class.animation('test', {
         "from": {"border-color": "white"},
@@ -641,8 +536,6 @@ class Style:
       https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
       https://www.w3schools.com/css/css3_animations.asp
 
-    Attributes:
-    ----------
     :param effect: Effect Class.
     :param name: String. Required. Defines the name of the animation.
     :param attrs: String. Required. Percentage of the animation duration.
@@ -685,9 +578,7 @@ class Style:
 
   @property
   def hover(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects links on mouse over.
 
     Related Pages:
@@ -700,9 +591,7 @@ class Style:
 
   @property
   def checked(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects every checked <input> element.
 
     Related Pages:
@@ -715,9 +604,7 @@ class Style:
 
   @property
   def disabled(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects every disabled <input> element.
 
     Related Pages:
@@ -730,9 +617,7 @@ class Style:
 
   @property
   def focus(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects the input element which has focus.
 
     Related Pages:
@@ -745,9 +630,7 @@ class Style:
 
   @property
   def empty(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects every <p> element that has no children (including text nodes).
 
     Related Pages:
@@ -760,9 +643,7 @@ class Style:
 
   @property
   def enabled(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects every enabled <input> element.
 
     Related Pages:
@@ -775,9 +656,7 @@ class Style:
 
   @property
   def invalid(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects all input elements with an invalid value.
 
     Related Pages:
@@ -790,9 +669,7 @@ class Style:
 
   @property
   def valid(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects all input elements with a valid value.
 
     Related Pages:
@@ -805,9 +682,7 @@ class Style:
 
   @property
   def visited(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects all visited links.
 
     Related Pages:
@@ -820,9 +695,7 @@ class Style:
 
   @property
   def before(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Insert something before the content of each <p> element.
 
     Related Pages:
@@ -835,9 +708,7 @@ class Style:
 
   @property
   def after(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Insert something after the content of each <p> element.
 
     Related Pages:
@@ -850,9 +721,7 @@ class Style:
 
   @property
   def webkit_slider_thumb(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     """
     if self.__webkit_slider_thumb is None or isinstance(self.__webkit_slider_thumb, dict):
       self.__webkit_slider_thumb = Data(self.__webkit_slider_thumb or {}, self.selector)
@@ -860,9 +729,7 @@ class Style:
 
   @property
   def active(self) -> Data:
-    """
-    Description:
-    ------------
+    """  
     Selects the active link.
 
     Related Pages:
@@ -875,9 +742,7 @@ class Style:
 
   @property
   def has_changed(self) -> bool:
-    """
-    Description:
-    ------------
+    """  
     Set an internal flag to specify if the class has changed from the creation in the framework.
 
     If the state of the class has changed, the class will not be generic anymore so it will change the CSS class
@@ -892,13 +757,9 @@ class Style:
     return self.__has_changed
 
   def css(self, key: Union[str, dict], value: str = None, important: bool = False, change: bool = True):
-    """
-    Description:
-    ------------
+    """  
     Add a CSS attribute to a class.
 
-    Attributes:
-    ----------
     :param Union[str, dict] key: The CSS attribute.
     :param str value: Optional. The CSS value.
     :param bool important: Optional. The level of priority for this attribute.
@@ -907,13 +768,10 @@ class Style:
     return self.attrs.css(key, value, important, change)
 
   def media(self, attrs: dict, rule=None, media_type=None, media_feature=None, change=True, this_class=False):
-    """
-    Description:
-    ------------
+    """  
     The @media is used in media queries to apply different styles for different media types/devices.
 
-    Usage:
-    -----
+    Usage::
 
       page.style.media({"body": {"background-color": "lightblue"}}, "only", "screen",
         {'and': [{'height': '100px'}, {'min-width': '600px'}]})
@@ -924,8 +782,6 @@ class Style:
 
       https://www.w3schools.com/cssref/css3_pr_mediaquery.asp
 
-    Attributes:
-    ----------
     :param dict attrs: Percentage of the animation duration.
     :param rule: String. Optional. not or only or and see documentation for more info.
     :param media_type: String. Optional. the media to which the rule will need to be applied.
@@ -953,15 +809,12 @@ class Style:
     return name
 
   def keyframes(self, name: str, attrs: dict, effects=None, change: bool = True):
-    """
-    Description:
-    ------------
+    """  
     The @keyframes rule specifies the animation code.
 
     The animation is created by gradually changing from one set of CSS styles to another.
 
-    Usage:
-    -----
+    Usage::
 
       page.style.keyframes("test", {
         "50%": {"transform": "scale(1.5, 1.5)", "opacity": 0},
@@ -973,8 +826,6 @@ class Style:
 
       https://www.w3schools.com/cssref/css3_pr_animation-keyframes.asp
 
-    Attributes:
-    ----------
     :param effects: Effect Class.
     :param str name: Defines the name of the animation.
     :param dict attrs: Percentage of the animation duration.
@@ -989,9 +840,7 @@ class Style:
     return name
 
   def get_ref(self) -> str:
-    """
-    Description:
-    ------------
+    """  
     Get the style class reference.
     """
     # dedicated unique ID if it is not the original style
@@ -1038,9 +887,7 @@ class Style:
     return "\n".join(style)
 
   def _repr_html_(self):
-    """
-    Description:
-    ------------
+    """  
     Display for Jupyter.
     """
     value = str(self)

@@ -70,10 +70,7 @@ class D3Select(JsPackage):
   lib_alias = {"js": 'd3'}
 
   def data(self, datasets: Union[list, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Binds the specified array of data with the selected elements,
+    """   Binds the specified array of data with the selected elements,
     returning a new selection that represents the update selection: the elements successfully bound to data.
 
     The data is specified for each group in the selection.
@@ -84,8 +81,6 @@ class D3Select(JsPackage):
 
       https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_data
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] datasets: The data set object.
     """
     if datasets is None:
@@ -96,39 +91,27 @@ class D3Select(JsPackage):
     return self
 
   def dataRecord(self, columns: Union[list, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Convert a list of dictionaries to an iterator which will return ordered arrays based on the columns definition.
+    """   Convert a list of dictionaries to an iterator which will return ordered arrays based on the columns definition.
 
     Related Pages:
 
       http://bl.ocks.org/gka/17ee676dc59aa752b4e6
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] columns: The columns to be retrieved for each row.
     """
     return self.fnc('''data(function(row, i) { var cell = []; %s.forEach(function(k) { cell.push(row[k]);
         }); return cell; }) ''' % JsUtils.jsConvertData(columns, None))
 
   def dataFncRows(self, columns):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param columns:
     """
     self.fnc("data(function(row) {return %s.map(function(c, i) {return {column: c, value: row[i]}; }); })" % columns)
     return self
 
   def datum(self, datasets: Union[list, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Gets or sets the bound data for each selected element.
+    """   Gets or sets the bound data for each selected element.
     Unlike selection.data, this method does not compute a join and does not affect indexes or the enter and
     exit selections.
 
@@ -136,8 +119,6 @@ class D3Select(JsPackage):
 
       https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selection_datum
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] datasets: If a value is not specified, returns the bound datum for the first (non-null) element in the selection.
     """
     if datasets is None:
@@ -147,10 +128,7 @@ class D3Select(JsPackage):
     return self
 
   def filter(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    You can filter a selection using D3’s .filter method.
+    """   You can filter a selection using D3’s .filter method.
     The first argument is a function which returns true if the element should be included.
     The filtered selection is returned by the filter method so you can continue chaining selection methods.
 
@@ -158,8 +136,6 @@ class D3Select(JsPackage):
 
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript events when the DatePicker selection changes.
     :param Union[dict, bool] profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
@@ -167,16 +143,12 @@ class D3Select(JsPackage):
       JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def sort(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
@@ -184,10 +156,7 @@ class D3Select(JsPackage):
       JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def enter(self):
-    """
-    Description:
-    -----------
-    Returns the enter selection: placeholder nodes for each datum that had no corresponding DOM element in the
+    """   Returns the enter selection: placeholder nodes for each datum that had no corresponding DOM element in the
     selection. (The enter selection is empty for selections not returned by selection.data.)
 
     Related Pages:
@@ -197,10 +166,7 @@ class D3Select(JsPackage):
     return self.fnc("enter()")
 
   def exit(self):
-    """
-    Description:
-    -----------
-    Returns the exit selection: existing DOM elements in the selection for which no new datum was found.
+    """   Returns the exit selection: existing DOM elements in the selection for which no new datum was found.
     (The exit selection is empty for selections not returned by selection.data.)
 
     Related Pages:
@@ -210,31 +176,21 @@ class D3Select(JsPackage):
     return self.fnc("exit()")
 
   def append(self, html_type, set_var=True):
-    """
-    Description:
-    -----------
-    If the specified type is a string, appends a new element of this type (tag name) as the last child of each
+    """   If the specified type is a string, appends a new element of this type (tag name) as the last child of each
     selected element, or before the next following sibling in the update selection if this is an enter selection.
 
     Related Pages:
 
       https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
-    Attributes:
-    ----------
     :param html_type:
     :param bool set_var:
     """
     return self.fnc("append(%s)" % JsUtils.jsConvertData(html_type, None))
 
   def rappend(self, html_type):
-    """
-    Description:
-    -----------
-    Recursive append function without defining the variable on the javascript side.
+    """   Recursive append function without defining the variable on the javascript side.
 
-    Attributes:
-    ----------
     :param html_type:
     """
     return self.append(html_type, set_var=False)
@@ -243,17 +199,12 @@ class D3Select(JsPackage):
     pass
 
   def style(self, key, val=None, callback=None):
-    """
-    Description:
-    -----------
-    Update the style.
+    """   Update the style.
 
     Related Pages:
 
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param key: String. The attribute key.
     :param val: String. Optional. The attribute value.
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
@@ -267,17 +218,12 @@ class D3Select(JsPackage):
     return self.fnc("style(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
 
   def property(self, key, val=None, callback=None):
-    """
-    Description:
-    -----------
-    Update an element's property.
+    """   Update an element's property.
 
     Related Pages:
 
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param key: String. The attribute key.
     :param val: String. Optional. The attribute value.
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
@@ -291,18 +237,13 @@ class D3Select(JsPackage):
     return self.fnc("property(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
 
   def attr(self, key, val=None, callback=None):
-    """
-    Description:
-    -----------
-    Update an attribute.
+    """   Update an attribute.
 
     Related Pages:
 
       https://gramener.github.io/d3js-playbook/events.html
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param key: String. The attribute key.
     :param val: String. Optional. The attribute value.
     :param callback: String. Optional. A javascript callback function using d (data) and i (index).
@@ -316,17 +257,12 @@ class D3Select(JsPackage):
     return self.fnc("attr(%s, %s)" % (JsUtils.jsConvertData(key, None), JsUtils.jsConvertData(val, None)))
 
   def text(self, data=None, column=None):
-    """
-    Description:
-    -----------
-    Update the text content.
+    """   Update the text content.
 
     Related Pages:
 
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param data: Value. Optional. A Javascript function or a fixed value.
     :param column: String. Optional. the column name in the record.
     """
@@ -339,16 +275,12 @@ class D3Select(JsPackage):
     return self.fnc("text(%s)" % JsUtils.jsConvertData(data, None))
 
   def transition(self, duration=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://gramener.github.io/d3js-playbook/events.html
 
-    Attributes:
-    ----------
     :param duration: Integer. Optional. The time in ms used for the transition state.
     """
     if duration is None:
@@ -357,12 +289,8 @@ class D3Select(JsPackage):
     return self.fnc("transition().duration(%s)" % duration)
 
   def html(self, data=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     """
     if data is None:
@@ -371,36 +299,22 @@ class D3Select(JsPackage):
     return self.fnc("html(function(d) { return %s; })" % data)
 
   def htmlByKey(self, data):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     """
     return self.fnc("html(function(d) {console.log('rrr'+ d); return d[%s]; })" % JsUtils.jsConvertData(data, None))
 
   def call(self, fnc_name):
-    """
-    Description:
-    -----------
-    The .call method allows a function to be called into which the selection itself is passed as the first argument.
+    """   The .call method allows a function to be called into which the selection itself is passed as the first argument.
 
-    Attributes:
-    ----------
     :param fnc_name: String. A function name.
     """
     return self.fnc("call(%s)" % fnc_name)
 
   def on(self, event_type, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    Add an event to the component.
+    """   Add an event to the component.
 
-    Attributes:
-    ----------
     :param event_type: String. The event name.
     :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
@@ -410,46 +324,33 @@ class D3Select(JsPackage):
       JsUtils.jsConvertData(event_type, None), JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def hover(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    Mouse pointer has moved onto the element or its children.
+    """   Mouse pointer has moved onto the element or its children.
 
     Related Pages:
 
       https://gramener.github.io/d3js-playbook/events.html
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return self.on("mouseover", js_funcs, profile)
 
   def click(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    Element has been clicked.
+    """   Element has been clicked.
 
     Related Pages:
 
       https://gramener.github.io/d3js-playbook/events.html
       https://www.d3indepth.com/selections/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript events when the DatePicker selection changes.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
     return self.on("click", js_funcs, profile)
 
   def remove(self):
-    """
-    Description:
-    -----------
-    Removes the selected elements from the document.
+    """   Removes the selected elements from the document.
     Returns this selection (the removed elements) which are now detached from the DOM.
     There is not currently a dedicated API to add removed elements back to the document; however, you can pass a
     function to selection.append or selection.insert to re-add elements.
@@ -461,27 +362,19 @@ class D3Select(JsPackage):
     return self.fnc("remove()")
 
   def clone(self, deep: bool = False):
-    """
-    Description:
-    -----------
-    Inserts clones of the selected elements immediately following the selected elements and returns a selection of
+    """   Inserts clones of the selected elements immediately following the selected elements and returns a selection of
     the newly added clones.
 
     Related Pages:
 
       https://github.com/d3/d3-selection/blob/v1.4.0/README.md#selecting-elements
 
-    Attributes:
-    ----------
     :param bool deep: Optional. If deep is truthy, the descendant nodes of the selected elements will be cloned as well.
     """
     return self.fnc("clone(%s)" % JsUtils.jsConvertData(deep, None))
 
   def order(self):
-    """
-    Description:
-    -----------
-    Re-inserts elements into the document such that the document order of each group matches the selection order.
+    """   Re-inserts elements into the document such that the document order of each group matches the selection order.
     This is equivalent to calling selection.sort if the data is already sorted, but much faster.
 
     Related Pages:
@@ -494,12 +387,8 @@ class D3Select(JsPackage):
   #   return 'd3.select("%s")' % id
 
   def selectAll(self, d3_type):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param d3_type:
     """
     return self.fnc("selectAll(%s)" % JsUtils.jsConvertData(d3_type, None))
@@ -581,10 +470,7 @@ class D3ForceCollide:
     pass
 
   def radius(self, func):
-    """
-    Description:
-    -----------
-    If radius is specified, sets the radius accessor to the specified number or function,
+    """   If radius is specified, sets the radius accessor to the specified number or function,
     re-evaluates the radius accessor for each node, and returns this force.
     If radius is not specified, returns the current radius accessor
 
@@ -592,42 +478,30 @@ class D3ForceCollide:
 
       https://github.com/d3/d3-force#forceCollide
 
-    Attributes:
-    ----------
     :param func:
     """
     pass
 
   def strength(self, strength):
-    """
-    Description:
-    -----------
-    If strength is specified, sets the force strength to the specified number in the range [0,1] and returns this force.
+    """   If strength is specified, sets the force strength to the specified number in the range [0,1] and returns this force.
     If strength is not specified, returns the current strength which defaults to 0.
 
     Related Pages:
 
       https://github.com/d3/d3-force#forceCollide
 
-    Attributes:
-    ----------
     :param strength:
     """
     pass
 
   def iterations(self, iterations):
-    """
-    Description:
-    -----------
-    If iterations is specified, sets the number of iterations per application to the specified number and returns this
+    """   If iterations is specified, sets the number of iterations per application to the specified number and returns this
     force.
 
     Related Pages:
 
       https://github.com/d3/d3-force#forceCollide
 
-    Attributes:
-    ----------
     :param iterations:
     """
     raise NotImplementedError()
@@ -686,27 +560,19 @@ class D3Pack:
     pass
 
   def size(self, number):
-    """
-    Description:
-    -----------
-    If size is specified, sets this pack layout’s size to the specified two-element array of numbers [width, height]
+    """   If size is specified, sets this pack layout’s size to the specified two-element array of numbers [width, height]
     and returns this pack layout. If size is not specified, returns the current size, which defaults to [1, 1]
 
     Related Pages:
 
       https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
 
-    Attributes:
-    ----------
     :param number:
     """
     pass
 
   def padding(self, number):
-    """
-    Description:
-    -----------
-    If padding is specified, sets this pack layout’s padding accessor to the specified number or function and returns
+    """   If padding is specified, sets this pack layout’s padding accessor to the specified number or function and returns
     this pack layout. If padding is not specified, returns the current padding accessor, which defaults to the constant
     zero.
 
@@ -718,10 +584,7 @@ class D3Pack:
     pass
 
   def packSiblings(self, circles):
-    """
-    Description:
-    -----------
-    Packs the specified array of circles, each of which must have a circle.r property specifying the circle’s radius.
+    """   Packs the specified array of circles, each of which must have a circle.r property specifying the circle’s radius.
 
     Documentation:
       - https://github.com/d3/d3-hierarchy/blob/v1.1.8/README.md#pack
@@ -731,10 +594,7 @@ class D3Pack:
     pass
 
   def packEnclose(self, circles):
-    """
-    Description:
-    -----------
-    Computes the smallest circle that encloses the specified array of circles, each of which must have a circle.r
+    """   Computes the smallest circle that encloses the specified array of circles, each of which must have a circle.r
     property specifying the circle’s radius, and circle.x and circle.y properties specifying the circle’s center
 
     Documentation:
@@ -758,12 +618,8 @@ class D3Band:
     self._js = []
 
   def domain(self, domain=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param domain:
     """
     if domain is None:
@@ -771,22 +627,14 @@ class D3Band:
     return self
 
   def range(self, range=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param range:
     """
 
   def rangeRound(self, range):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param range:
     """
 
@@ -822,24 +670,16 @@ class D3File:
       self.page = self.component.page
 
   def records(self, js_code: str):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param str js_code: The variable id to store the records.
     """
     self._js_frg.append("%s.push(row)" % js_code)
     return self
 
   def unpack(self, js_code: str, column: Union[str, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param str js_code: The variable id to store the records.
     :param Union[str, primitives.JsDataModel] column: The column name.
     """
@@ -850,17 +690,12 @@ class D3File:
     return JsObject.JsObject(js_code, is_py_data=False)
 
   def filter(self, rules: list, keep: bool = True):
-    """
-    Description:
-    -----------
-    Add a filter on a row. The rule needs to be fully defined.
+    """   Add a filter on a row. The rule needs to be fully defined.
 
     Usage::
 
       csv.filter("row['direction'] != 'Decreasing'")
 
-    Attributes:
-    ----------
     :param list rules: The javascript if expressions.
     :param bool keep: Boolean. Optional.
     """
@@ -873,10 +708,7 @@ class D3File:
     return self
 
   def filterCol(self, column: Union[str, primitives.JsDataModel], value: Any, operator: str = "==", keep: bool = True):
-    """
-    Description:
-    -----------
-    Add a filter on a specific column. Those functions can be chained.
+    """   Add a filter on a specific column. Those functions can be chained.
 
     Usage::
 
@@ -886,8 +718,6 @@ class D3File:
             page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
         ])
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] column: The column name.
     :param Any value: The column value.
     :param str operator: Optional. The comparison operator.
@@ -902,12 +732,8 @@ class D3File:
     return self
 
   def callback(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: String. Javascript function.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -916,10 +742,7 @@ class D3File:
     return self
 
   def then(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
-    """
-    Description:
-    -----------
-    As the file loading with D3 is a promise, it is possible to put events when the response is received.
+    """   As the file loading with D3 is a promise, it is possible to put events when the response is received.
     This could allow the loading of components.
 
     Add a post process after on the entire data.
@@ -934,8 +757,6 @@ class D3File:
             page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
         ])
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -946,12 +767,8 @@ class D3File:
     return self
 
   def cast(self, columns: list, to: str = "float", profile: Union[bool, dict] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param list columns:
     :param str to:
     :param Union[dict, bool] profile:
@@ -966,12 +783,8 @@ class D3File:
     return self
 
   def row(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
@@ -981,9 +794,7 @@ class D3File:
     return self
 
   def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -997,8 +808,6 @@ class D3File:
           page.js.console.log("row", skip_data_convert=True)).get(page.js.console.log("data", skip_data_convert=True))
       ])
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: Javascript functions.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
     """
@@ -1044,12 +853,8 @@ class D3Svg:
     return self
 
   def selectAll(self, tag):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param tag:
     """
     self._js.append("selectAll(%s)" % JsUtils.jsConvertData(tag, None))
@@ -1066,12 +871,8 @@ class D3Svg:
 class D3Request(JsPackage):
 
   def header(self, key, value):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param key:
     :param value:
     """
@@ -1080,10 +881,7 @@ class D3Request(JsPackage):
     return self.fnc('header(%s, %s)' % (key, value))
 
   def timeout(self, value):
-    """
-    Description:
-    -----------
-    If timeout is specified, sets the timeout attribute of the request to the specified number of milliseconds and
+    """   If timeout is specified, sets the timeout attribute of the request to the specified number of milliseconds and
     returns this request instance. If timeout is not specified, returns the current response timeout,
     which defaults to 0.
 
@@ -1091,18 +889,13 @@ class D3Request(JsPackage):
 
       https://github.com/d3/d3-request
 
-    Attributes:
-    ----------
     :param value:
     """
     value = JsUtils.jsConvertData(value, None)
     return self.fnc('timeout(%s)' % value)
 
   def mimeType(self, mine_type):
-    """
-    Description:
-    -----------
-    If type is specified, sets the request mime type to the specified value and returns this request instance.
+    """   If type is specified, sets the request mime type to the specified value and returns this request instance.
     If type is null, clears the current mime type (if any) instead.
     If type is not specified, returns the current mime type, which defaults to null.
     The mime type is used to both set the "Accept" request header and for overrideMimeType, where supported.
@@ -1112,17 +905,13 @@ class D3Request(JsPackage):
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
       https://github.com/d3/d3-request
 
-    Attributes:
-    ----------
     :param mine_type:
     """
     mine_type = JsUtils.jsConvertData(mine_type, None)
     return self.fnc('mimeType(%s)' % mine_type)
 
   def response(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
+    """   
 
     The response text object is in the variable data.
 
@@ -1130,8 +919,6 @@ class D3Request(JsPackage):
 
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1142,9 +929,7 @@ class D3Request(JsPackage):
         js_funcs, toStr=True, profile=profile))
 
   def get(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
+    """   
 
     The function parameters is defined with tee variable data
 
@@ -1152,8 +937,6 @@ class D3Request(JsPackage):
 
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -1166,19 +949,12 @@ class D3GeoProjection(JsPackage):
   lib_alias = {"js": 'd3'}
 
   def center(self, lat, long):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self.fnc("center([%s, %s])" % (lat, long))
 
   def scale(self, num):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param num:
     """
     return self.fnc("scale(%s)" % num)
@@ -1220,46 +996,33 @@ class JsD3(JsPackage):
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def csv(self, url):
-    """
-    Description:
-    -----------
-    Sends http request to the specified url to load .csv file or data and executes callback function with parsed
+    """   Sends http request to the specified url to load .csv file or data and executes callback function with parsed
     csv data objects.
 
     Related Pages:
 
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.csv
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(component=self.component, filename=url, selector="%s.csv" % self._selector, page=self.page)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def tsv(self, url):
-    """
-    Description:
-    -----------
-    Sends http request to the specified url to load a .tsv file or data and executes callback function with parsed
+    """   Sends http request to the specified url to load a .tsv file or data and executes callback function with parsed
     tsv data objects.
 
     Related Pages:
 
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.tsv
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.tsv" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def xml(self, url):
-    """
-    Description:
-    -----------
-    Sends http request to the specified url to load an .xml file or data and executes callback function with parsed
+    """   Sends http request to the specified url to load an .xml file or data and executes callback function with parsed
     xml data objects.
 
     Related Pages:
@@ -1267,103 +1030,73 @@ class JsD3(JsPackage):
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.xml
       https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.tsv" % self._selector)
 
   @JsUtils.fromVersion({"d3": "4.0.0"})
   def json(self, url):
-    """
-    Description:
-    -----------
-    Sends http request to the specified url to load .json file or data and executes callback function with parsed
+    """   Sends http request to the specified url to load .json file or data and executes callback function with parsed
     json data objects.
 
     Related Pages:
 
       https://www.tutorialsteacher.com/d3js/loading-data-from-file-in-d3js#d3.json
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.json" % self._selector)
 
   def text(self, url):
-    """
-    Description:
-    -----------
-    Returns a new request to get the text file at the specified url with the default mime type text/plain.
+    """   Returns a new request to get the text file at the specified url with the default mime type text/plain.
     If no callback is specified, this is equivalent to:
 
     Related Pages:
 
         https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.text" % self._selector)
 
   def blob(self, url):
-    """
-    Description:
-    -----------
-    Fetches the binary file at the specified input URL as a Blob.
+    """   Fetches the binary file at the specified input URL as a Blob.
     If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
 
     Related Pages:
 
         https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.blob" % self._selector)
 
   def html(self, url):
-    """
-    Description:
-    -----------
-    Fetches the file at the specified input URL as text and then parses it as HTML.
+    """   Fetches the file at the specified input URL as text and then parses it as HTML.
     f init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
 
     Related Pages:
 
         https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.html" % self._selector)
 
   def image(self, url):
-    """
-    Description:
-    -----------
-    Fetches the image at the specified input URL.
+    """   Fetches the image at the specified input URL.
     If init is specified, sets any additional properties on the image before loading.
 
     Related Pages:
 
         https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.image" % self._selector)
 
   def dsv(self, url):
-    """
-    Description:
-    -----------
-    Fetches the DSV file at the specified input URL.
+    """   Fetches the DSV file at the specified input URL.
     If init is specified, it is passed along to the underlying call to fetch; see RequestInit for allowed fields.
     An optional row conversion function may be specified to map and filter row objects to a more-specific
     representation; see dsv.parse for details.
@@ -1372,8 +1105,6 @@ class JsD3(JsPackage):
 
         https://github.com/d3/d3-fetch
 
-    Attributes:
-    ----------
     :param url: String. The url path of the file.
     """
     return D3File(self.component, url, selector="%s.tsv" % self._selector)
@@ -1398,15 +1129,10 @@ class JsD3(JsPackage):
     return D3ScaleLinear(range)
 
   def scaleBand(self, range=None) -> D3Band:
-    """
-    Description:
-    -----------
-    Constructs a new band scale with the specified domain and range, no padding, no rounding and center alignment.
+    """   Constructs a new band scale with the specified domain and range, no padding, no rounding and center alignment.
     If domain is not specified, it defaults to the empty domain.
     If range is not specified, it defaults to the unit range [0, 1].
 
-    Attributes:
-    ----------
     :param range:
 
     :rtype: D3Band

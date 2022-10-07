@@ -29,17 +29,12 @@ class FmtNumber:
     self.selector = selector
 
   def toFixed(self, value: Optional[int] = None):
-    """
-    Description:
-    -----------
-    The toFixed() method converts a number into a string, keeping a specified number of decimals.
+    """   The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_tofixed.asp
 
-    Attributes:
-    ----------
     :param value: Optional. The number of digit to be displayed.
     """
     if value is None:
@@ -48,17 +43,12 @@ class FmtNumber:
     return JsObjects.JsObjects.get("%s = %s.toFixed(%s)" % (self.selector, self._val, value))
 
   def toPrecision(self, value: Optional[int] = None):
-    """
-    Description:
-    -----------
-    The toPrecision() method formats a number to a specified length.
+    """   The toPrecision() method formats a number to a specified length.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_toprecision.asp
 
-    Attributes:
-    ----------
     :param value: Optional. The number of digit to be displayed.
     """
     if value is None:
@@ -67,10 +57,7 @@ class FmtNumber:
     return JsObjects.JsObjects.get("%s = %s.toPrecision(%s)" % (self.selector, self._val, value))
 
   def toExponential(self):
-    """
-    Description:
-    -----------
-    The toExponential() method converts a number into an exponential notation.
+    """   The toExponential() method converts a number into an exponential notation.
 
     Related Pages:
 
@@ -87,10 +74,7 @@ class Formatters:
 
   @property
   def number(self):
-    """
-    Description:
-    -----------
-    Standard conversion to number.
+    """   Standard conversion to number.
 
     Related Pages:
 
@@ -100,17 +84,12 @@ class Formatters:
 
   @packageImport("accounting")
   def toNumber(self, digit: int = 0, thousand_sep: List[Union[str, primitives.JsDataModel]] = "."):
-    """
-    Description:
-    -----------
-    Convert to number using the accounting Javascript module.
+    """   Convert to number using the accounting Javascript module.
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param digit: Optional. The number of digit to be displayed.
     :param thousand_sep: Optional. The thousand symbol separator.
     """
@@ -120,17 +99,12 @@ class Formatters:
 
   @packageImport("accounting")
   def toMoney(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
-    """
-    Description:
-    -----------
-    Convert to number with a symbol using the accounting Javascript module.
+    """   Convert to number with a symbol using the accounting Javascript module.
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param symbol: Optional. The currency symbol.
     :param digit: Optional. The number of digit to be displayed.
     :param thousand_sep: Optional. The thousand symbol separator.
@@ -179,8 +153,6 @@ class ContentFormatters:
   @packageImport("showdown")
   def fromMarkdown(self, options: dict = None):
     """
-    Description:
-    ------------
     Convert markdown to HTML string.
 
     Usage::
@@ -191,8 +163,6 @@ class ContentFormatters:
 
       https://github.com/showdownjs/showdown
 
-    Attributes:
-    ----------
     :param options: Optional. Options allowed in the showdown module.
     """
     options = JsUtils.jsConvertData(options or {}, None)
@@ -202,17 +172,12 @@ class ContentFormatters:
 
   @packageImport("accounting")
   def toNumber(self, digit: int = 0, thousand_sep: str = "."):
-    """
-    Description:
-    -----------
-    Convert to number using the accounting Javascript module.
+    """   Convert to number using the accounting Javascript module.
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param digit: Optional. The number of digit to be displayed.
     :param thousand_sep: Optional. The thousand symbol separator.
     """
@@ -222,16 +187,12 @@ class ContentFormatters:
   @packageImport("accounting")
   def toMoney(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
     """
-    Description:
-    ------------
     Convert to number with a symbol using the accounting Javascript module.
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param symbol: Optional. The currency symbol.
     :param digit: Optional. The number of digit to be displayed.
     :param thousand_sep: Optional. The thousand symbol separator.
@@ -246,8 +207,6 @@ class ContentFormatters:
   @packageImport("accounting")
   def unformat(self):
     """
-    Description:
-    ------------
     parse a value from any formatted number/currency string.
 
     Related Pages:
@@ -259,8 +218,6 @@ class ContentFormatters:
   @property
   def number(self):
     """
-    Description:
-    ------------
     Standard conversion to number.
     """
     return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
@@ -268,8 +225,6 @@ class ContentFormatters:
   @property
   def string(self):
     """
-    Description:
-    ------------
     Standard conversion to string.
     """
     return JsObjects.JsString.JsString("String(%s)" % self.selector, is_py_data=False)
@@ -277,8 +232,6 @@ class ContentFormatters:
   @property
   def date(self):
     """
-    Description:
-    ------------
     Standard conversion to Date object.
     """
     return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
@@ -313,10 +266,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Return a Javascript val object.
+    """   Return a Javascript val object.
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -324,9 +274,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def by_name(self) -> JsNodeDom.JsDomsList:
-    """
-    Description:
-    -----------
+    """   
 
     """
     if self.component.attr.get('name') is not None:
@@ -337,10 +285,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def isInViewPort(self) -> JsBoolean.JsBoolean:
-    """
-    Description:
-    -----------
-    Check if the component is in the visible part of the page (the viewport).
+    """   Check if the component is in the visible part of the page (the viewport).
 
     :return: A Javascript boolean
     """
@@ -351,25 +296,15 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
   def onViewPort(self, js_funcs:  types.JS_FUNCS_TYPES):
-    """
-    Description:
-    -----------
-    Trigger some code when the component is visible on the visible part of the page (the viewpport).
+    """   Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript events.
     """
     return self.page.js.if_(self.isInViewPort, js_funcs)
 
   def copyToClipboard(self, include_html: bool = False):
-    """
-    Description:
-    -----------
-    Copy the component content to the clipboard.
+    """   Copy the component content to the clipboard.
 
-    Attributes:
-    ----------
     :param include_html: Optional. Store the full HTML (Default False).
     """
     if include_html:
@@ -379,9 +314,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def content(self) -> ContentFormatters:
-    """
-    Description:
-    -----------
+    """   
 
     """
     if self.component.attr.get('type') == "number":
@@ -390,28 +323,20 @@ class JsHtml(JsNodeDom.JsDoms):
     return ContentFormatters(self.page, "%s.value" % self.varName)
 
   def empty(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return '%s.value = ""' % self.varName
 
   @property
   def events(self) -> JsNodeDom.JsDomEvents:
-    """
-    Description:
-    -----------
-    Link to the events attached to a Javascript DOM object.
+    """   Link to the events attached to a Javascript DOM object.
     """
     return JsNodeDom.JsDomEvents(self.component)
 
   @property
   def jquery(self) -> JsQuery.JQuery:
-    """
-    Description:
-    -----------
-    Link to the JQuery functions.
+    """   Link to the JQuery functions.
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(
@@ -420,10 +345,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """
-    Description:
-    -----------
-    Wrapper to the D3 library.
+    """   Wrapper to the D3 library.
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(
@@ -432,10 +354,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def jquery_ui(self) -> JsQueryUi.JQueryUI:
-    """
-    Description:
-    -----------
-    Wrapper to the JqueryUI component.
+    """   Wrapper to the JqueryUI component.
     """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(
@@ -445,19 +364,13 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def objects(self) -> JsObjects.JsObjects:
-    """
-    Description:
-    -----------
-    Interface to the main Javascript Classes and Primitives.
+    """   Interface to the main Javascript Classes and Primitives.
     """
     return JsObjects.JsObjects(page=self.page, component=self.component)
 
   @property
   def crossfilter(self):
-    """
-    Description:
-    -----------
-    Interface to CrossFilter package.
+    """   Interface to CrossFilter package.
 
     Related Pages:
 
@@ -468,17 +381,12 @@ class JsHtml(JsNodeDom.JsDoms):
   @property
   def format(self) -> Formatters:
     """
-    Description:
-    ------------
     Specific formatters for the HTML components.
     """
     return Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
-    """
-    Description:
-    -----------
-    Style property to change from the javascript the CSS attributes of an HTML object.
+    """   Style property to change from the javascript the CSS attributes of an HTML object.
 
     Usage::
 
@@ -489,8 +397,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
 
-    Attributes:
-    ----------
     :param attrs: The CSS attributes.
     """
     styles = []
@@ -503,16 +409,11 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def registerFunction(self, fnc_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[list] = None,
                        profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Javascript Framework extension.
+    """   Javascript Framework extension.
 
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
 
-    Attributes:
-    ----------
     :param fnc_name: The function name.
     :param js_funcs: The Javascript function definition.
     :param pmts: Optional. The parameters for the function.
@@ -524,10 +425,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return self
 
   def hide(self):
-    """
-    Description:
-    -----------
-    Hide the component.
+    """   Hide the component.
 
     Usage::
 
@@ -540,10 +438,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return self.css("display", "none")
 
   def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Show the component.
+    """   Show the component.
 
     This will use the display attribute of the component.
 
@@ -555,8 +450,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
-    Attributes:
-    ----------
     :param inline: Optional. Set the CSS display attribute to inline-block instead of block.
     :param duration: Optional. A time in second for the component display.
     :param display_value: Optional. The value to display. Default inline-block.
@@ -568,17 +461,12 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
   def display(self, flag: bool, inline: Optional[str] = None, display_value: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Change the CSS display attribute.
+    """   Change the CSS display attribute.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/pr_class_display.asp
 
-    Attributes:
-    ----------
     :param flag: A flag to specify the display type show or None.
     :param inline: Optional. Set the CSS display attribute to inline-block instead of block.
     :param display_value: Optional. The default CSS attribute for this component.
@@ -588,10 +476,7 @@ class JsHtml(JsNodeDom.JsDoms):
       flag, self.show(inline, display_value=display_value).r, self.hide().r))
 
   def visible(self, flag: bool = True, inverse: bool = False):
-    """
-    Description:
-    -----------
-    The visibility property specifies whether or not an element is visible.
+    """   The visibility property specifies whether or not an element is visible.
 
     Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
     the document layout!
@@ -607,8 +492,6 @@ class JsHtml(JsNodeDom.JsDoms):
         icon.dom.visible(mode_switch.input.dom.content)
       ])
 
-    Attributes:
-    ----------
     :param flag: Optional. specify the state of the component. Default True.
     :param inverse: Optional. To specify the effect of the data flag.
     """
@@ -621,10 +504,7 @@ class JsHtml(JsNodeDom.JsDoms):
       "(function(flag){if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % flag)).r
 
   def invisible(self):
-    """
-    Description:
-    -----------
-    The visibility property specifies whether or not an element is visible.
+    """   The visibility property specifies whether or not an element is visible.
 
     Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
     the document layout!
@@ -641,25 +521,17 @@ class JsHtml(JsNodeDom.JsDoms):
     return self.css("visibility", "hidden").r
 
   def select(self):
-    """
-    Description:
-    -----------
-    Select the content of the HTMl component.
+    """   Select the content of the HTMl component.
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
   def focus(self, prevent_scroll: bool = False):
-    """
-    Description:
-    -----------
-    Add focus to the content of the HTMl component.
+    """   Add focus to the content of the HTMl component.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
 
-    Attributes:
-    ----------
     :param prevent_scroll: A Boolean value indicating whether or not the browser should scroll the document to bring
       the newly-focused element into view. A value of false for preventScroll (the default) means that the browser will
       scroll the element into view after focusing it. If preventScroll is set to true, no scrolling will occur.
@@ -669,8 +541,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def toggle(self, attr: str = "display", val_1: Optional[str] = None, val_2: str = "none"):
     """
-    Description:
-    ------------
     Toggle (hide / show) the display of the component.
 
     Usage::
@@ -682,8 +552,6 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
 
-    Attributes:
-    ----------
     :param attr:
     :param val_1:
     :param val_2:
@@ -696,16 +564,12 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def highlight(self, css_attrs: Optional[dict] = None, time_event: int = 1000):
     """
-    Description:
-    ------------
 
     Usage::
 
       s.dom.highlight()
       s.dom.highlight(css_attrs={"background": "red"}),
 
-    Attributes:
-    ----------
     :param css_attrs: Optional. The CSS attributes.
     :param time_event: Optional. The time of the event.
     """
@@ -735,8 +599,6 @@ class JsHtml(JsNodeDom.JsDoms):
   def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
                profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Load during a Javascript event a component within the one using this method.
     This cannot be tested during the Python execution and should be tested in the browser.
 
@@ -751,8 +613,6 @@ class JsHtml(JsNodeDom.JsDoms):
         d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
       ])
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param append: Mention if the component should replace or append the data.
     :param profile: Optional. A flag to set the component performance storage.
@@ -771,15 +631,11 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def options(self, options: Optional[dict] = None):
     """
-    Description:
-    ------------
     Return the builder options used to generate the object on the Javascript side.
     This is not necessarily the same object as the component options as some can be only used on the Python side.
 
     This will not change the original option object used during the first object creation.
 
-    Attributes:
-    ----------
     :param options: Optional. The value to be changed.
     """
     opt = dict(self.component._jsStyles)
@@ -789,16 +645,12 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def trigger(self, event: str):
     """
-    Description:
-    ------------
     Shortcut to the trigger event.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Document/createEvent
 
-    Attributes:
-    ----------
     :param event: The event to be triggered for the component.
     """
     return self.events.trigger(event)
@@ -808,10 +660,7 @@ class JsHtmlRich(JsHtml):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Return the val object.
+    """   Return the val object.
     """
     values = ["'%s': %s" % (k, self.page.components[k].dom.content.toStr()) for k in self.component._internal_components]
     return JsObjects.JsObjects.get(
@@ -819,9 +668,7 @@ class JsHtmlRich(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     if hasattr(self.component.options, "markdown") and self.component.options.markdown:
@@ -837,21 +684,14 @@ class JsHtmlRich(JsHtml):
   @property
   def format(self):
     """
-    Description:
-    ------------
     Specific formatters for the HTML components.
     """
     return Formatters(self.page, "%s.innerHTML" % self.varName)
 
   def toggleContent(self, current_val: str, new_val: str, current_funcs: types.JS_FUNCS_TYPES = None,
                     new_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Toggle (change) the content of the HTML component.
+    """   Toggle (change) the content of the HTML component.
 
-    Attributes:
-    ----------
     :param current_val: The content of the HTML component.
     :param new_val: The new content of the HTML component.
     :param current_funcs: Optional. The functions to be triggered when currentVal is visible.
@@ -869,10 +709,7 @@ class JsHtmlRich(JsHtml):
              })
 
   def select(self):
-    """
-    Description:
-    -----------
-    Select the content of the HTMl component.
+    """   Select the content of the HTMl component.
     """
     return JsObjects.JsObjects.get('''
      (function(node){
@@ -885,11 +722,7 @@ class JsHtmlRich(JsHtml):
 
   def append(self, value, new_line: bool = True, options: Optional[dict] = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param value:
     :param new_line: Boolean. Optional.
     :param options: Optional.
@@ -909,8 +742,6 @@ class JsHtmlRich(JsHtml):
 
   def empty(self):
     """
-    Description:
-    ------------
     Empty the content of the HTML component using the innerHTML JavaScript property.
     """
     return '%s.innerHTML = ""' % self.varName
@@ -920,20 +751,14 @@ class JsHtmlImg(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return ContentFormatters(self.page, "%s.src" % self.varName)
 
   def src(self, image: str):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param image:
     """
     image = JsUtils.jsConvertData(image, None)
@@ -944,9 +769,7 @@ class JsHtmlButton(JsHtml):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
@@ -955,18 +778,13 @@ class JsHtmlButton(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return ContentFormatters(self.page, "%s.innerHTML" % self.varName)
 
   def loading(self, flag: bool, multiple: bool = False):
-    """
-    Description:
-    -----------
-    Add a loading icon to the button.
+    """   Add a loading icon to the button.
 
     Usage::
 
@@ -978,8 +796,6 @@ class JsHtmlButton(JsHtml):
         ], 5000),
       ])
 
-    Attributes:
-    ----------
     :param flag:
     :param multiple: Optional.
     """
@@ -992,12 +808,8 @@ class JsHtmlButton(JsHtml):
     return fnc
 
   def error(self, time: int, color: str = "red"):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param time:
     :param color: Optional.
     """
@@ -1006,24 +818,16 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
       self.varName, self.varName, color, self.varName, time))
 
   def disable(self, flag: bool = True):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param flag: Optional.
     """
     flag = JsUtils.jsConvertData(flag, None)
     return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, flag))
 
   def release(self, by_name: bool = False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param by_name: Optional.
     """
     if by_name:
@@ -1039,12 +843,8 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
     return funcs
 
   def lock(self, not_allowed: bool = True):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param not_allowed: Optional.
     """
     funcs = JsFncs.JsFunctions(self.css("color", self.getComputedStyle('color')))
@@ -1058,9 +858,7 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
     return funcs
 
   def empty(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return '%s.innerHTML = ""' % self.varName
@@ -1070,10 +868,7 @@ class JsHtmlButtonChecks(JsHtml):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Get the full content of the list.
+    """   Get the full content of the list.
 
     This will return the current list status. Selected items but also the full content.
     It will return also the common parameters.
@@ -1082,19 +877,14 @@ class JsHtmlButtonChecks(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
-    Get the content of the list.
+    """   Get the content of the list.
 
     This will return all the selected items in a list.
     """
     return ""
 
   def disable(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get('''
@@ -1102,10 +892,7 @@ class JsHtmlButtonChecks(JsHtml):
 
   def add(self, data: Union[str, primitives.JsDataModel, float, dict, list], is_unique: bool = True,
           css_style: Optional[dict] = None, position: str = "bottom"):
-    """
-    Description:
-    -----------
-    Add an item to the list.
+    """   Add an item to the list.
 
     THis will add the item at the end of the list by default.
     By default the list will not add duplicated entries.
@@ -1121,8 +908,6 @@ class JsHtmlButtonChecks(JsHtml):
       a = page.ui.button("Add")
       a.click([cb.dom.add([{"value": "test"}])])
 
-    Attributes:
-    ----------
     :param data: The Python Javascript data.
     :param is_unique: Optional. Flag to specify if only distinct values should be added (no duplicates).
     :param css_style: Optional. The CSS style of the added item.
@@ -1148,10 +933,7 @@ class JsHtmlButtonChecks(JsHtml):
       }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": data})
 
   def empty(self):
-    """
-    Description:
-    -----------
-    Empty the list content.
+    """   Empty the list content.
 
     Usage::
 
@@ -1167,10 +949,7 @@ class JsHtmlButtonChecks(JsHtml):
     return '%s.empty()' % self.jquery.varId
 
   def delete(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
-    """
-    Description:
-    -----------
-    Delete an item to the checkbox butttons.
+    """   Delete an item to the checkbox butttons.
 
     Usage::
 
@@ -1183,8 +962,6 @@ class JsHtmlButtonChecks(JsHtml):
       d = page.ui.button("Delete")
       d.click([cb.dom.delete("test 2")])
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -1196,10 +973,7 @@ class JsHtmlButtonChecks(JsHtml):
       })}''' % {"jsData": data, "jqId": self.jquery.varId, "dataRef": data_ref})
 
   def check(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
-    """
-    Description:
-    -----------
-    Check an a checkbox.
+    """   Check an a checkbox.
 
     Usage::
 
@@ -1212,8 +986,6 @@ class JsHtmlButtonChecks(JsHtml):
       d = page.ui.button("Check")
       d.click([cb.dom.check("test 2")])
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -1229,18 +1001,12 @@ class JsHtmlButtonChecks(JsHtml):
 
   @property
   def current(self):
-    """
-    Description:
-    -----------
-    Return the current value in the list.
+    """   Return the current value in the list.
     """
     return JsObjects.JsVoid("$(this).find('p').text()")
 
   def css_label(self, data: types.JS_DATA_TYPES, attrs: dict, data_ref: str = "compData"):
-    """
-    Description:
-    -----------
-    Change the CSS style of a given item.
+    """   Change the CSS style of a given item.
 
     Usage::
 
@@ -1253,8 +1019,6 @@ class JsHtmlButtonChecks(JsHtml):
       s = page.ui.button("Style")
       s.click([cb.dom.css_label("Test 2", {"color": 'orange'})])
 
-    Attributes:
-    ----------
     :param data:
     :param dict attrs:
     """
@@ -1272,9 +1036,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get('''
@@ -1283,9 +1045,7 @@ class JsHtmlButtonMenu(JsHtmlButton):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     check = self.component.options.icon_check.split(" ")[-1]
@@ -1296,9 +1056,7 @@ class JsHtmlIcon(JsHtml):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get(
@@ -1307,21 +1065,14 @@ class JsHtmlIcon(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self.component.dom.getAttribute("class")
 
   def spin(self, status: bool = True):
-    """
-    Description:
-    -----------
-    Add spin class to the font awesome.
+    """   Add spin class to the font awesome.
 
-    Attributes:
-    ----------
     :param status: Optional. The spin status.
     """
     if status:
@@ -1330,13 +1081,8 @@ class JsHtmlIcon(JsHtml):
     return self.component.dom.classList.remove("fa-spin")
 
   def pulse(self, status: bool = True):
-    """
-    Description:
-    -----------
-    Add pulse class to the font awesome.
+    """   Add pulse class to the font awesome.
 
-    Attributes:
-    ----------
     :param status: Optional. The spin status.
     """
     if status:
@@ -1350,8 +1096,6 @@ class JsHtmlList(JsHtml):
   @property
   def val(self):
     """
-    Description:
-    ------------
     Return the standard value object with the fields (value, timestamp, offset).
     """
     return JsObjects.JsObjects.get(
@@ -1361,8 +1105,6 @@ class JsHtmlList(JsHtml):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Return the values of the items in the list.
     """
     return JsObjects.JsArray.JsArray.get('''
@@ -1374,20 +1116,14 @@ class JsHtmlList(JsHtml):
   @property
   def classList(self):
     """
-    Description:
-    ------------
     Return the class name of the list item.
     """
     return self.component.dom.getAttribute("class")
 
   def add(self, item: str, unique: bool = True, draggable: bool = False):
     """
-    Description:
-    ------------
     Add a new item to the list.
 
-    Attributes:
-    ----------
     :param item: The Item to be added to the list.
     :param unique: Optional. Only add the item if it is not already in the list.
     :param draggable: Optional. Set the new entry as draggable.
@@ -1428,12 +1164,8 @@ class JsHtmlList(JsHtml):
 
   def append(self, items: list, unique: bool = True, draggable: bool = False):
     """
-    Description:
-    ------------
     Add new items to the list.
 
-    Attributes:
-    ----------
     :param items: The Items to be added to the list.
     :param unique: Optional. Only add the item if it is not already in the list.
     :param draggable: Optional. Set the new entry as draggable.
@@ -1445,8 +1177,6 @@ class JsHtmlList(JsHtml):
 
   def clear(self):
     """
-    Description:
-    ------------
     Clear all the items in the list.
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self.component.dom.varName)
@@ -1454,18 +1184,13 @@ class JsHtmlList(JsHtml):
   @property
   def dropped_value(self):
     """
-    Description:
-    ------------
     Get the current dropped values to the list.
     Object can be structure (DOM) so the text content is wrapped in a specific variable.
     """
     return JsObjects.JsString.JsString.get("wrapper.innerText")
 
   def unactive(self, current_index: int = -1, data_ref: str = "list_items"):
-    """
-    Description:
-    -----------
-    Set to unactive all the items in the list.
+    """   Set to unactive all the items in the list.
 
     Usage::
 
@@ -1473,8 +1198,6 @@ class JsHtmlList(JsHtml):
       for i, bnt in enumerate(bnts):
         bnt.click([bnts.dom.unactive(i)])
 
-    Attributes:
-    ----------
     :param int current_index: Optional. The item of the current item.
     """
     return JsObjects.JsVoid('''
@@ -1487,9 +1210,7 @@ class JsHtmlBackground(JsHtml):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get("{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -1497,9 +1218,7 @@ class JsHtmlBackground(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return ContentFormatters(self.page, self.component.dom.querySelector("div").css("backgroundColor").toStr())
@@ -1509,11 +1228,7 @@ class JsHtmlNumeric(JsHtmlRich):
 
   def to(self, number: float, timer: int = 1, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param number:
     :param timer: The time spent for the increase in millisecond.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1533,12 +1248,8 @@ class JsHtmlNumeric(JsHtmlRich):
 
   def add(self, item: float):
     """
-    Description:
-    ------------
     Add a value to the component value.
 
-    Attributes:
-    ----------
     :param item: The value to be added.
     """
     return JsObjects.JsVoid('''
@@ -1550,62 +1261,42 @@ class JsHtmlLink(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return ContentFormatters(self.page, "%s.innerText" % self.varName)
 
   def url(self, url: str):
-    """
-    Description:
-    -----------
-    The href attribute specifies the URL of the page the link goes to.
+    """   The href attribute specifies the URL of the page the link goes to.
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://www.w3schools.com/tags/att_a_href.asp
 
-    Attributes:
-    ----------
     :param url: The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
 
   def href(self, url: str):
-    """
-    Description:
-    -----------
-    The href attribute specifies the URL of the page the link goes to.
+    """   The href attribute specifies the URL of the page the link goes to.
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://www.w3schools.com/tags/att_a_href.asp
 
-    Attributes:
-    ----------
     :param url: The url path.
     """
     url = JsUtils.jsConvertData(url, None)
     return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
 
   def target(self, name: str):
-    """
-    Description:
-    -----------
-    The target attribute specifies where to open the linked document.
+    """   The target attribute specifies where to open the linked document.
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://www.w3schools.com/tags/att_a_target.asp
 
-    Attributes:
-    ----------
     :param name: The target name.
     """
     name = JsUtils.jsConvertData(name, None)
@@ -1617,14 +1308,10 @@ class JsMedia(JsHtml):
   # TODO: Implement properly this with JsMediaRecorder
 
   def start(self):
-    """
-    Description:
-    -----------
-    Start the camera.
+    """   Start the camera.
     This can only work with https and localhost urls.
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
     """
@@ -1649,13 +1336,10 @@ class JsMedia(JsHtml):
     } ''' % {"varId": self.varId}
 
   def stop(self):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
     """
@@ -1670,13 +1354,10 @@ class JsMedia(JsHtml):
     return '''%s.play()''' % self.varId
 
   def takepicture(self, width: int = 50, height: int = 50):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
     """
@@ -1689,12 +1370,9 @@ class JsMedia(JsHtml):
       ''' % {"varId": self.varId, "width": width, "height": height}
 
   def record(self, start: bool = True):
-    """
-    Description:
-    -----------
+    """   
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
     """
@@ -1734,9 +1412,7 @@ class JsHtmlButtonFilter(JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     if self.component.options.is_number:
@@ -1771,14 +1447,9 @@ class JsHtmlTable(JsHtml):
 class JsHtmlLi(JsHtmlRich):
 
   def has_state(self, state: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Check if the item in the list has a specific class.
+    """   Check if the item in the list has a specific class.
     If it is the case it will run the function.
 
-    Attributes:
-    ----------
     :param state: The CSS class.
     :param js_funcs: The function to run if the state is defined.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1787,13 +1458,8 @@ class JsHtmlLi(JsHtmlRich):
       self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
 
   def is_active(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Check if the item in the list has the class active.
+    """   Check if the item in the list has the class active.
 
-    Attributes:
-    ----------
     :param js_funcs: The function to run if the state is defined.
     :param profile: Optional. A flag to set the component performance storage.
     """

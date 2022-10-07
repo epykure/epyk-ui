@@ -34,10 +34,7 @@ class Chart(Html.Html):
 
   @property
   def shared(self) -> OptPlotly.OptionsChartSharedPlotly:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -50,23 +47,17 @@ class Chart(Html.Html):
   @property
   def chartId(self) -> str:
     """
-    Description:
-    ------------
     Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
   def click_legend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://plotly.com/javascript/plotlyjs-events/
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -77,16 +68,12 @@ class Chart(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
     """
-    Description:
-    ------------
     The onclick event occurs when the user clicks on an element.
 
     Related Pages:
 
       https://plotly.com/javascript/click-events/
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     :param source_event: Optional. The source target for the event
@@ -99,16 +86,12 @@ class Chart(Html.Html):
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
                on_ready: bool = False):
     """
-    Description:
-    ------------
     The onDblclick event occurs when the user double clicks on an element.
 
     Related Pages:
 
       https://plotly.com/javascript/click-events/
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     :param source_event: Optional. The source target for the event
@@ -121,15 +104,11 @@ class Chart(Html.Html):
   def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://plotly.com/javascript/hover-events/
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     :param source_event: Optional. The source target for the event
@@ -142,15 +121,11 @@ class Chart(Html.Html):
   def unhover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://plotly.com/javascript/hover-events/
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     :param source_event: Optional. The source target for the event
@@ -163,8 +138,6 @@ class Chart(Html.Html):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     """
     if not self._traces:
@@ -174,8 +147,6 @@ class Chart(Html.Html):
   @property
   def options(self) -> OptPlotly.OptionConfig:
     """
-    Description:
-    ------------
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -185,8 +156,6 @@ class Chart(Html.Html):
 
   def traces(self, i: int = None):
     """
-    Description:
-    ------------
 
     :rtype: JsChartJs.DataSetPie
     """
@@ -240,18 +209,13 @@ class Chart(Html.Html):
       }; return result'''
 
   def colors(self, hex_values: List[str]):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -276,10 +240,7 @@ class Chart(Html.Html):
 
   @property
   def js(self) -> JsPlotly.JsPlotly:
-    """
-    Description:
-    -----------
-    Javascript base function.
+    """   Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
@@ -294,9 +255,7 @@ class Chart(Html.Html):
 
   @property
   def layout(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Layout
     """
@@ -306,9 +265,7 @@ class Chart(Html.Html):
 
   @property
   def d3(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsD3.D3Select
     """
@@ -317,12 +274,8 @@ class Chart(Html.Html):
     return self._d3
 
   def add_trace(self, data, type=None, mode=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param type:
     :param mode:
@@ -336,12 +289,8 @@ class Chart(Html.Html):
     return self
 
   def build(self, data=None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param options:
     :param profile:
@@ -378,21 +327,14 @@ class Line(Chart):
 
   @property
   def dom(self) -> JsPlotly.Line:
-    """
-    Description:
-    -----------
-    """
+    """   """
     if self._dom is None:
       self._dom = JsPlotly.Line(component=self, js_code=self.chartId, page=self.page)
     return self._dom
 
   def trace(self, data: types.JS_DATA_TYPES, type: str = None, mode: str = 'lines+markers'):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param type:
     :param mode:
@@ -405,12 +347,8 @@ class Line(Chart):
     return DataXY(page=self.page, attrs=c_data, component=self)
 
   def add_trace(self, data: types.JS_DATA_TYPES, type: str = None, mode: str = 'lines+markers'):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param type:
     :param mode:
@@ -1804,8 +1742,6 @@ class DataChart(DataClass):
   @property
   def marker(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/bubble-charts/
 
@@ -1955,8 +1891,6 @@ class DataZ(DataChart):
   @property
   def project(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -1970,8 +1904,6 @@ class DataContours(DataChart):
   @property
   def z(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -2004,8 +1936,6 @@ class DataMove(DataChart):
   @property
   def line(self):
     """
-    Description:
-    ------------
 
     :rtype: DataLine
 
@@ -2027,8 +1957,6 @@ class DataSurface(DataChart):
   @property
   def contours(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -2039,8 +1967,6 @@ class DataSurface(DataChart):
   @property
   def line(self):
     """
-    Description:
-    ------------
 
     :rtype: DataLine
 
@@ -2119,8 +2045,6 @@ class DataGauge(DataChart):
   @property
   def axis(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2141,8 +2065,6 @@ class DataIndicator(DataChart):
 
   def domain(self, x, y):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2154,8 +2076,6 @@ class DataIndicator(DataChart):
   @property
   def title(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2166,8 +2086,6 @@ class DataIndicator(DataChart):
   @property
   def number(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2178,8 +2096,6 @@ class DataIndicator(DataChart):
   @property
   def gauge(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/indicator/
 
@@ -2210,8 +2126,6 @@ class DataIndicator(DataChart):
   @property
   def delta(self):
     """
-    Description:
-    ------------
 
     https://plot.ly/javascript/3d-surface-plots/
 
@@ -2300,8 +2214,6 @@ class DataCandle(DataChart):
   @property
   def increasing(self):
     """
-    Description:
-    ------------
 
     :rtype: DataMove
 
@@ -2312,8 +2224,6 @@ class DataCandle(DataChart):
   @property
   def decreasing(self):
     """
-    Description:
-    ------------
 
     :rtype: DataMove
 
@@ -2327,8 +2237,6 @@ class Pie(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2339,8 +2247,6 @@ class Pie(Chart):
   @property
   def data(self) -> DataPie:
     """
-    Description:
-    ------------
 
     :rtype: DataPie
 
@@ -2405,8 +2311,6 @@ class Surface(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2446,8 +2350,6 @@ class Scatter3D(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2504,8 +2406,6 @@ class Mesh3d(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2532,8 +2432,6 @@ class Indicator(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2562,8 +2460,6 @@ class ScatterPolar(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2587,8 +2483,6 @@ class Box(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2599,8 +2493,6 @@ class Box(Chart):
   @property
   def layout(self) -> LayoutBox:
     """
-    Description:
-    ------------
 
     :rtype: LayoutBox
     """
@@ -2626,8 +2518,6 @@ class CandleStick(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     """
-    Description:
-    ------------
 
     :rtype: JsPlotly.Pie
     """
@@ -2638,8 +2528,6 @@ class CandleStick(Chart):
   @property
   def layout(self) -> LayoutBox:
     """
-    Description:
-    ------------
 
     :rtype: LayoutBox
     """

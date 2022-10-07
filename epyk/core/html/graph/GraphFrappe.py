@@ -23,10 +23,7 @@ class Frappe(Html.Html):
 
   @property
   def shared(self) -> OptChartFrappe.OptionsChartSharedFrappe:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -38,10 +35,7 @@ class Frappe(Html.Html):
 
   @property
   def js(self) -> JsFrappe.FrappeCharts:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     Usage::
@@ -60,28 +54,20 @@ class Frappe(Html.Html):
 
   @property
   def options(self) -> OptChartFrappe.FrappeLine:
-    """
-    Description:
-    -----------
-    Chart specific options.
+    """   Chart specific options.
 
     :rtype: OptChartFrappe.FrappeLine
     """
     return super().options
 
   def colors(self, hex_values: list):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param list hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -100,11 +86,7 @@ class Frappe(Html.Html):
 
   def labels(self, values: list):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param list values: The different values for the x axis.
     """
     self.options.data.labels = values
@@ -138,12 +120,8 @@ class Frappe(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    ------------
     Update the chart with context and / or data changes.
 
-    Attributes:
-    ----------
     :param data: List. Optional. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.

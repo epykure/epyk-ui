@@ -32,9 +32,7 @@ class HtmlGeneric(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
     """
     return super().options
@@ -61,9 +59,7 @@ class HtmlGeneric(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -96,13 +92,9 @@ class HtmlGenericLInk(HtmlGeneric):
   name = 'tag'
 
   def preview(self, url: str, profile: Optional[Union[bool, dict]] = None):
-    """
-    Description:
-    ------------
+    """  
 
 
-    Attributes:
-    ----------
     :param url: The url path.
     :param profile: Optional. A flag to set the component performance storage.
     """

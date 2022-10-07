@@ -19,8 +19,6 @@ class Msg:
 
   def status(self, timer: int = 3000, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
     This function will display a popup message using the key status from the service return.
     If content.status is empty or False the message won't be triggered.
 
@@ -28,9 +26,7 @@ class Msg:
 
       page.js.msg.status()
       page.js.msg.status(200, {"color": "red"})
-
-    Attributes:
-    ----------
+ 
     :param int timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
@@ -61,16 +57,12 @@ class Msg:
 
   def mouse(self, content: str, timer: int = 3000, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
     Display a popup message close to the mouse.
 
     Usage::
 
       page.js.msg.mouse("This is a message")
-
-    Attributes:
-    ----------
+ 
     :param str content: The content of the popup.
     :param int timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
@@ -94,16 +86,12 @@ class Msg:
   def text(self, content: str, timer: int = 3000, fixed: bool = True, css_attrs: Optional[dict] = None,
            options: Optional[dict] = None):
     """
-    Description:
-    ------------
     Display a text message from a Javascript event for a specific period of time.
 
     Usage::
 
       page.js.msg.text("This is a message")
-
-    Attributes:
-    ----------
+ 
     :param str content: The content of the popup.
     :param int timer: Optional. The time the popup will be displayed.
     :param bool fixed: Optional.
@@ -135,11 +123,7 @@ class Msg:
 
   def count(self, value: int, content: Optional[str] = None, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param int value:
     :param Optional[str] content: Optional. The content of the popup.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
@@ -184,11 +168,7 @@ class Msg:
 
   def fixed(self, content: str, fixed: bool = True, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str content: The content of the popup.
     :param bool fixed: Optional.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
@@ -219,11 +199,7 @@ class Msg:
 
   def center(self, content: str, timer: int = None, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str content: The content of the popup.
     :param int timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
@@ -258,11 +234,7 @@ class Msg:
 
   def banner(self, content: str, timer: Optional[int] = None, css_attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str content: The content of the popup.
     :param Optional[int] timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.

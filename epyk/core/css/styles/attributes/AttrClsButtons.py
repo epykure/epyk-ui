@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrButton(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Button.
+  """  CSS pre defined properties for the Button.
 
   CSS Properties:
 
@@ -19,10 +16,7 @@ class AttrButton(Attrs):
 
 
 class AttrBadge(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Badge.
+  """  CSS pre defined properties for the Badge.
 
   CSS Properties:
 

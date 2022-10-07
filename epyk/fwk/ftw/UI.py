@@ -28,18 +28,13 @@ class Components:
 
   def label(self, text=None, width=(100, "px"), height=(None, "px"), html_code=None, tooltip='', options=None,
             profile=None):
-    """
-    Description:
-    -----------
-    Labels give a name or title to a component or group of components.
+    """   Labels give a name or title to a component or group of components.
     Labels should be in close proximity to the component or group they are paired with.
 
     Related Pages:
 
       https://developer.microsoft.com/en-us/fabric-js/components/label/label
-
-    Attributes:
-    ----------
+ 
     :param text:
     :param width:
     :param height:
@@ -58,16 +53,12 @@ class Components:
 
   def link(self, text="", url="", icon=None, align="left", tooltip=None, helper=None, height=(None, 'px'),
            decoration=False, html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://developer.microsoft.com/en-us/fabric-js/components/link/link
-
-    Attributes:
-    ----------
+ 
     :param text:
     :param url:
     :param icon:
@@ -87,19 +78,14 @@ class Components:
 
   def loading(self, text="Loading...", width=(None, "%"), height=(None, "%"), options=None,
               profile=None):
-    """
-    Description:
-    -----------
-    A Spinner is an outline of a circle which animates around itself indicating to the user that things are processing.
+    """   A Spinner is an outline of a circle which animates around itself indicating to the user that things are processing.
     A Spinner is shown when it's unsure how long a task will take making it the indeterminate version of a
     ProgressIndicator.
 
     Related Pages:
 
       https://developer.microsoft.com/en-us/fabric-js/components/spinner/spinner
-
-    Attributes:
-    ----------
+ 
     :param text: String. Optional. The value to be displayed to the component.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -116,8 +102,6 @@ class Components:
   @property
   def buttons(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -128,8 +112,6 @@ class Components:
   @property
   def lists(self):
     """
-    Description:
-    ------------
     Customize the native <select>s with custom CSS that changes the element’s initial appearance.
 
     Related Pages:

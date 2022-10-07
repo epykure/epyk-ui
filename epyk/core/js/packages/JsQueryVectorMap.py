@@ -34,10 +34,7 @@ class JQVMap(JsPackage):
   lib_set_var = False
 
   def zoomIn(self):
-    """
-    Description:
-    -----------
-    Zoom one step in.
+    """   Zoom one step in.
 
     Related Pages:
 
@@ -46,10 +43,7 @@ class JQVMap(JsPackage):
     return JsUtils.jsWrap("%s.vectorMap('zoomIn')" % self.varName)
 
   def zoomOut(self):
-    """
-    Description:
-    -----------
-    Zoom one step out.
+    """   Zoom one step out.
 
     Related Pages:
 
@@ -58,10 +52,7 @@ class JQVMap(JsPackage):
     return JsUtils.jsWrap("%s.vectorMap('zoomOut')" % self.varName)
 
   def getPin(self, alias):
-    """
-    Description:
-    -----------
-    Returns the html attribute "id" of the pin placed on the country whose country code is provided in "cc".
+    """   Returns the html attribute "id" of the pin placed on the country whose country code is provided in "cc".
 
     Related Pages:
 
@@ -70,10 +61,7 @@ class JQVMap(JsPackage):
     return JsUtils.jsWrap("%s.vectorMap('getPin', %s)" % (self.varName, JsUtils.jsConvertData(alias, None)))
 
   def removePin(self, alias):
-    """
-    Description:
-    -----------
-    Removes the pin from the country whose country code is specified in "cc".
+    """   Removes the pin from the country whose country code is specified in "cc".
 
     Related Pages:
 
@@ -82,10 +70,7 @@ class JQVMap(JsPackage):
     return JsUtils.jsWrap("%s.vectorMap('getPin', %s)" % (self.varName, JsUtils.jsConvertData(alias, None)))
 
   def getPins(self):
-    """
-    Description:
-    -----------
-    Returns an associative JSON string containing stringified HTML of all the pins.
+    """   Returns an associative JSON string containing stringified HTML of all the pins.
 
     Related Pages:
 
@@ -94,10 +79,7 @@ class JQVMap(JsPackage):
     return JsUtils.jsWrap("%s.vectorMap('getPins')" % self.varName)
 
   def removePins(self):
-    """
-    Description:
-    -----------
-    Removes all the pins from the map.
+    """   Removes all the pins from the map.
 
     Related Pages:
 
@@ -107,8 +89,6 @@ class JQVMap(JsPackage):
 
   def set(self, key, value):
     """
-    Description:
-    -----------
 
     :param key:
     :param value:

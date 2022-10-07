@@ -11,13 +11,9 @@ class Aria:
     self.component = component
 
   def set(self, arias):
-    """
-    Description:
-    ------------
+    """  
     Set multiple aria properties
 
-    Attributes:
-    ----------
     :param arias:
     """
     for k, v in arias.items():
@@ -25,25 +21,17 @@ class Aria:
       setattr(self, k, v)
 
   def custom(self, key, val):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param key:
     :param val:
     """
     self.component.attr["aria-%s" % key] = val
 
   def get(self, key: str, dfl=None):
-    """
-    Description:
-    ------------
+    """  
     Get the value of a custom aria.
 
-    Attributes:
-    ----------
     :param key: The key definition of the aria.
     :param dfl: The default value.
     """
@@ -51,9 +39,7 @@ class Aria:
 
   @property
   def role(self):
-    """
-    Description:
-    ------------
+    """  
 
     Example of roles
     Roles: button, checkbox, menuitem, menuitemcheckbox, menuitemradio, option, radio, switch, tab or treeitem
@@ -66,9 +52,7 @@ class Aria:
 
   @property
   def atomic(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether assistive technologies will present all, or only parts of, the changed region based on the
     change notifications defined by the aria-relevant attribute.
 
@@ -84,9 +68,7 @@ class Aria:
 
   @property
   def autocomplete(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether inputting text could trigger display of one or more predictions of the user's intended value
     for an input and specifies how predictions would be presented if they are made.
 
@@ -112,9 +94,7 @@ class Aria:
 
   @property
   def busy(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications
     are complete before exposing them to the user.
 
@@ -134,9 +114,7 @@ class Aria:
 
   @property
   def checked(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the current "checked" state of checkboxes, radio buttons, and other widgets. See related aria-pressed and
     aria-selected.
 
@@ -157,9 +135,7 @@ class Aria:
 
   @property
   def colcount(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the total number of columns in a table, grid, or treegrid. See related aria-colindex.
 
     If all of the columns are present in the DOM, it is not necessary to set this attribute as the user agent can
@@ -179,9 +155,7 @@ class Aria:
 
   @property
   def colindex(self):
-    """
-    Description:
-    ------------
+    """  
     Defines an element's column index or position with respect to the total number of columns within a table, grid, or
     treegrid. See related aria-colcount and aria-colspan.
 
@@ -202,9 +176,7 @@ class Aria:
 
   @property
   def colspan(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid. See related
     aria-colindex and aria-rowspan.
 
@@ -227,9 +199,7 @@ class Aria:
 
   @property
   def controls(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the element (or elements) whose contents or presence are controlled by the current element.
     See related aria-owns.
 
@@ -245,9 +215,7 @@ class Aria:
 
   @property
   def current(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the element that represents the current item within a container or set of related elements.
 
     The aria-current attribute is an enumerated type. Any value not included in the list of allowed values SHOULD be
@@ -267,9 +235,7 @@ class Aria:
 
   @property
   def describedby(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the element (or elements) that describes the object. See related aria-labelledby.
 
     The aria-labelledby attribute is similar to the aria-describedby in that both reference other elements to calculate
@@ -288,9 +254,7 @@ class Aria:
 
   @property
   def details(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the element that provides a detailed, extended description for the object. See related aria-describedby.
 
     The aria-details attribute references a single element that provides more detailed information than would normally
@@ -310,9 +274,7 @@ class Aria:
 
   @property
   def disabled(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable. See related
     aria-hidden and aria-readonly.
 
@@ -334,9 +296,7 @@ class Aria:
 
   @property
   def errormessage(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the element that provides an error message for the object. See related aria-invalid and aria-describedby.
 
     Related Pages:
@@ -351,9 +311,7 @@ class Aria:
 
   @property
   def expanded(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed.
 
     For example, this indicates whether a portion of a tree is expanded or collapsed.
@@ -374,9 +332,7 @@ class Aria:
 
   @property
   def flowto(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
     allows assistive technology to override the general default of reading in document source order.
 
@@ -397,9 +353,7 @@ class Aria:
 
   @property
   def haspopup(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by
     an element.
 
@@ -419,9 +373,7 @@ class Aria:
 
   @property
   def hidden(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether the element is exposed to an accessibility API. See related aria-disabled.
 
     User agents determine an element's hidden status based on whether it is rendered, and the rendering is usually
@@ -441,9 +393,7 @@ class Aria:
 
   @property
   def invalid(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the entered value does not conform to the format expected by the application.
     See related aria-errormessage.
 
@@ -463,9 +413,7 @@ class Aria:
 
   @property
   def keyshortcuts(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element.
 
     The value of the aria-keyshortcuts attribute is a space-delimited list of keyboard shortcuts that can be pressed
@@ -486,9 +434,7 @@ class Aria:
 
   @property
   def label(self):
-    """
-    Description:
-    ------------
+    """  
     Defines a string value that labels the current element. See related aria-labelledby.
 
     The purpose of aria-label is the same as that of aria-labelledby.
@@ -507,9 +453,7 @@ class Aria:
 
   @property
   def labelledby(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies the element (or elements) that labels the current element. See related aria-describedby.
 
     The purpose of aria-labelledby is the same as that of aria-label.
@@ -528,9 +472,7 @@ class Aria:
 
   @property
   def level(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the hierarchical level of an element within a structure.
 
     This can be applied inside trees to tree items, to headings inside a document, to nested grids, nested tablists
@@ -549,9 +491,7 @@ class Aria:
 
   @property
   def live(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates that an element will be updated, and describes the types of updates the user agents, assistive
     technologies, and user can expect from the live region.
 
@@ -573,9 +513,7 @@ class Aria:
 
   @property
   def modal(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether an element is modal when displayed.
 
     The aria-modal attribute is used to indicate that the presence of a "modal" element precludes usage of other
@@ -594,9 +532,7 @@ class Aria:
 
   @property
   def multiline(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether a text box accepts multiple lines of input or only a single line.
 
     Related Pages:
@@ -611,9 +547,7 @@ class Aria:
 
   @property
   def multiselectable(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates that the user may select more than one item from the current selectable descendants.
 
     Authors SHOULD ensure that selected descendants have the aria-selected attribute set to true, and selectable
@@ -633,9 +567,7 @@ class Aria:
 
   @property
   def orientation(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous.
 
     Related Pages:
@@ -650,9 +582,7 @@ class Aria:
 
   @property
   def owns(self):
-    """
-    Description:
-    ------------
+    """  
     Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child
     relationship between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
     See related aria-controls.
@@ -673,9 +603,7 @@ class Aria:
 
   @property
   def placeholder(self):
-    """
-    Description:
-    ------------
+    """  
     Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no
     value. A hint could be a sample value or a brief description of the expected format.
 
@@ -695,9 +623,7 @@ class Aria:
 
   @property
   def posinset(self):
-    """
-    Description:
-    ------------
+    """  
     Defines an element's number or position in the current set of listitems or treeitems. Not required if all elements
     in the set are present in the DOM. See related aria-setsize.
 
@@ -718,9 +644,7 @@ class Aria:
 
   @property
   def pressed(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the current "pressed" state of toggle buttons. See related aria-checked and aria-selected.
 
     Toggle buttons require a full press-and-release cycle to change their value. Activating it once changes the value
@@ -741,9 +665,7 @@ class Aria:
 
   @property
   def readonly(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates that the element is not editable, but is otherwise operable. See related aria-disabled.
 
     This means the user can read but not set the value of the widget.
@@ -763,9 +685,7 @@ class Aria:
 
   @property
   def relevant(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates what notifications the user agent will trigger when the accessibility tree within a live region is
     modified. See related aria-atomic.
 
@@ -784,9 +704,7 @@ class Aria:
 
   @property
   def roledescription(self):
-    """
-    Description:
-    ------------
+    """  
     Defines a human-readable, author-localized description for the role of an element.
 
     Some assistive technologies, such as screen readers, present the role of an element as part of the user experience.
@@ -806,9 +724,7 @@ class Aria:
 
   @property
   def rowindex(self):
-    """
-    Description:
-    ------------
+    """  
     Defines an element's row index or position with respect to the total number of rows within a table, grid, or
     treegrid. See related aria-rowcount and aria-rowspan.
 
@@ -829,9 +745,7 @@ class Aria:
 
   @property
   def rowspan(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid. See related
     aria-rowindex and aria-colspan.
 
@@ -853,9 +767,7 @@ class Aria:
 
   @property
   def selected(self):
-    """
-    Description:
-    ------------
+    """  
     Indicates the current "selected" state of various widgets. See related aria-checked and aria-pressed.
 
     Related Pages:
@@ -870,9 +782,7 @@ class Aria:
 
   @property
   def setsize(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the number of items in the current set of listitems or treeitems. Not required if all elements in the set
     are present in the DOM. See related aria-posinset.
 
@@ -892,9 +802,7 @@ class Aria:
 
   @property
   def sort(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the maximum allowed value for a range widget.
 
     Related Pages:
@@ -909,9 +817,7 @@ class Aria:
 
   @property
   def valuemin(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the minimum allowed value for a range widget.
 
     Related Pages:
@@ -926,9 +832,7 @@ class Aria:
 
   @property
   def valuemax(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the maximum allowed value for a range widget.
 
     Related Pages:
@@ -943,9 +847,7 @@ class Aria:
 
   @property
   def valuenow(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the current value for a range widget. See related aria-valuetext.
 
     Related Pages:
@@ -960,9 +862,7 @@ class Aria:
 
   @property
   def valuetext(self):
-    """
-    Description:
-    ------------
+    """  
     Defines the human-readable text alternative of aria-valuenow for a range widget.
 
     Related Pages:

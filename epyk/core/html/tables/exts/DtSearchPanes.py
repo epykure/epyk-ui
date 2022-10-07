@@ -94,10 +94,7 @@ class SearchPanes(Options):
 
   @property
   def cascadePanes(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will display all of the options for that column throughout its operation.
+    """   As standard, SearchPanes will display all of the options for that column throughout its operation.
     When searchPanes.cascadePanes is set to true, the panes will remove options which are no longer present in the
     currently displayed DataTable.
     The cascade action will occur when a selection or a deselection is made in one of the panes.
@@ -117,10 +114,7 @@ class SearchPanes(Options):
 
   @property
   def clear(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will display the buttons which allow selections to be cleared in individual panes and
+    """   As standard, SearchPanes will display the buttons which allow selections to be cleared in individual panes and
     across all panes.
     When searchPanes.clear is set to false, the clear buttons will not be present.
 
@@ -140,10 +134,7 @@ class SearchPanes(Options):
 
   @property
   def columns(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will consider all of the columns when creating searchPanes.
+    """   As standard, SearchPanes will consider all of the columns when creating searchPanes.
     When searchPanes.columns is defined with an array of numbers, then only the columns with those indexes will be
     considered when creating panes.
     Note they still may not be displayed based upon the calculations of searchPanes.threshold or
@@ -165,10 +156,7 @@ class SearchPanes(Options):
 
   @property
   def controls(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will be displayed with the control buttons included in the interface with searching
+    """   As standard, SearchPanes will be displayed with the control buttons included in the interface with searching
     enabled.
     However if the value of searchPanes.controls is set to false then the control buttons will no longer be displayed
     and searching will be disabled in all of the panes.
@@ -188,10 +176,7 @@ class SearchPanes(Options):
 
   @property
   def dataLength(self):
-    """
-    Description:
-    -----------
-    This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains
+    """   This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains
     long strings.
 
     Related Pages:
@@ -206,10 +191,7 @@ class SearchPanes(Options):
 
   @property
   def emptyMessage(self):
-    """
-    Description:
-    -----------
-    Empty cells will be represented in the panes by the option searchPanes.emptyMessage. This is useful as it's a more
+    """   Empty cells will be represented in the panes by the option searchPanes.emptyMessage. This is useful as it's a more
     user-friendly way than just having a blank cell.
 
     Related Pages:
@@ -224,10 +206,7 @@ class SearchPanes(Options):
 
   @property
   def hideCount(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will be displayed with the count column included in the table.
+    """   As standard, SearchPanes will be displayed with the count column included in the table.
     However if the value of searchPanes.hideCount is set to true then the count column won't be displayed in any of
     the panes.
 
@@ -243,10 +222,7 @@ class SearchPanes(Options):
 
   @property
   def layout(self):
-    """
-    Description:
-    -----------
-    By setting the searchPanes.layout parameter to columns-3, the panes will be displayed in 3 columns.
+    """   By setting the searchPanes.layout parameter to columns-3, the panes will be displayed in 3 columns.
 
     There are 6 sizes supported from 1 pane in a row to 6 panes in a row. Altering the number at the end of columns-
     will alter the number of panes on a row.
@@ -263,10 +239,7 @@ class SearchPanes(Options):
 
   @property
   def orderable(self):
-    """
-    Description:
-    -----------
-    As standard, SearchPanes will be displayed with the ordering buttons included in the interface, allowing the user
+    """   As standard, SearchPanes will be displayed with the ordering buttons included in the interface, allowing the user
     to change the order of the selections in each pane.
     However if the value of searchPanes.orderable is set to false then the ordering buttons will no longer be displayed
     in any of the panes.
@@ -283,10 +256,7 @@ class SearchPanes(Options):
 
   @property
   def threshold(self):
-    """
-    Description:
-    -----------
-    Set the minimum number of unique values needed in the columns to display that pane.
+    """   Set the minimum number of unique values needed in the columns to display that pane.
     As standard, columns must have a uniqueness ratio of 0.6. This is the ratio of different values throughout the
     column to the number of total rows.
     If all rows are unique, this will be 1; as the value drops towards 0, this means values are more often repeated.
@@ -303,10 +273,7 @@ class SearchPanes(Options):
 
   @property
   def viewTotal(self):
-    """
-    Description:
-    -----------
-    Update the count column when searching to show visible count.
+    """   Update the count column when searching to show visible count.
     By setting the searchPanes.viewTotal parameter to true, the message displayed in the count column will change when
     a search is applied to the DataTable.
 
@@ -327,10 +294,7 @@ class SearchPanes(Options):
 
   @property
   def dtOpts(self):
-    """
-    Description:
-    -----------
-    This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains
+    """   This is useful as it prevents the searchPanes cells becoming mishapen and overpopulated when the table contains
     long strings.
 
     Related Pages:
@@ -341,10 +305,7 @@ class SearchPanes(Options):
 
   @property
   def panes(self):
-    """
-    Description:
-    -----------
-    Define custom panes to filter across all columns.
+    """   Define custom panes to filter across all columns.
 
     Related Pages:
 

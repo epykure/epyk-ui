@@ -11,12 +11,8 @@ class JsChartDCLinks:
 
   def __register_records_fnc(self, fnc_name, fnc_def, fnc_pmts=None, profile=False):
     """
-    Description:
-    ------------
     This function will attach to the report object only the javascript functions used during the report
-
-    Attributes:
-    ----------
+ 
     :param fnc_name: A String with the Javascript function name to be defined
     :param fnc_def: A String with the Javascript function content
     :param fnc_pmts: A list of parameters
@@ -41,12 +37,8 @@ class JsBase(JsPackage):
 
   def version(self, no=None):
     """
-    Description:
-    ------------
     Return or change the underlying Javascript package version.
-
-    Attributes:
-    ----------
+ 
     :param no: Optional. The new package version to force
 
     :return: The package version used
@@ -58,16 +50,12 @@ class JsBase(JsPackage):
 
   def addFilterHandler(self, addFilterHandler):
     """
-    Description:
-    ------------
     Set or get the add filter handler. The add filter handler is a function that adds a filter to the chart's filter
     list.
     Using a custom add filter handler allows you to change the way filters are added or perform additional work when
     adding a filter, e.g.
     when using a filter server other than crossfilter.
-
-    Attributes:
-    ----------
+ 
     :param addFilterHandler:
     """
     self._js.append("addFilterHandler(%s)" % addFilterHandler)
@@ -75,8 +63,6 @@ class JsBase(JsPackage):
 
   def chartGroup(self, groupId=None):
     """
-    Description:
-    ------------
     Get or set the chart group to which this chart belongs.
     Chart groups are rendered or redrawn together since it is expected they share the same underlying crossfilter
     data set.
@@ -84,30 +70,22 @@ class JsBase(JsPackage):
     Related Pages:
 
       https://dc-js.github.io/dc.js/docs/html/dc.baseMixin.html
-
-    Attributes:
-    ----------
+ 
     :param groupId: Optional. The group ID
     """
     return
 
   def data(self, callback):
     """
-    Description:
-    ------------
     Set the data callback or retrieve the chart's data set.
     The data callback is passed the chart's group and by default will return group.all. This behavior may be modified
     to, for instance, return only the top 5 groups.
-
-    Attributes:
-    ----------
+ 
     :param callback: Optinal
     """
 
   def chartID(self):
     """
-    Description:
-    ------------
     Returns the internal numeric ID of the chart.
 
     Related Pages:
@@ -117,8 +95,6 @@ class JsBase(JsPackage):
 
   def x(self, xScale):
     """
-    Description:
-    ------------
 
     """
     self._js.append("x(%s)" % xScale)
@@ -126,8 +102,6 @@ class JsBase(JsPackage):
 
   def y(self, yScale):
     """
-    Description:
-    ------------
     Get or set the y scale. The y scale is typically automatically determined by the chart implementation.
     """
     self._js.append("y(%s)" % yScale)
@@ -135,8 +109,6 @@ class JsBase(JsPackage):
 
   def yAxis(self, yAxis=None):
     """
-    Description:
-    ------------
     Set or get the y axis used by the coordinate grid chart instance. This function is most useful when y axis
     customization is required.
     Depending on useRightYAxis the y axis in dc.js is an instance of either d3.axisLeft or d3.axisRight; therefore
@@ -147,8 +119,6 @@ class JsBase(JsPackage):
 
   def xUnits(self, unit=None):
     """
-    Description:
-    ------------
     Set or get the xUnits function.
     The coordinate grid chart uses the xUnits function to calculate the number of data projections on the x axis such
     as the number of bars for a bar chart or the number of dots for a line chart.
@@ -158,8 +128,6 @@ class JsBase(JsPackage):
 
   def brushOn(self, brushOn=True):
     """
-    Description:
-    ------------
     urn on/off the brush-based range filter.
     When brushing is on then user can drag the mouse across a chart with a quantitative scale to perform range
     filtering based on the extent of the brush, or click on the bars of an ordinal bar chart or slices of a pie
@@ -168,9 +136,7 @@ class JsBase(JsPackage):
     Related Pages:
 
       https://dc-js.github.io/dc.js/docs/html/dc.coordinateGridMixin.html
-
-    Attributes:
-    ----------
+ 
     :param brushOn:
     """
     self._js.append("brushOn(%s)")
@@ -178,45 +144,31 @@ class JsBase(JsPackage):
 
   def dimension(self, dimension):
     """
-    Description:
-    ------------
     Set or get the dimension attribute of a chart. In dc, a dimension can be any valid crossfilter dimension
-
-    Attributes:
-    ----------
+ 
     :param: A Cross filter dimension.
     """
 
   def expireCache(self):
     """
-    Description:
-    ------------
     Expire the internal chart cache. dc charts cache some data internally on a per chart basis to speed up rendering
     and avoid unnecessary calculation
     """
 
   def filter(self, filter):
     """
-    Description:
-    ------------
     Filter the chart by the given parameter, or return the current filter if no input parameter is given.
-
-    Attributes:
-    ----------
+ 
     :param filter: Filter can be an Array, a single value or a DC filter object
     """
 
   def filterAll(self):
     """
-    Description:
-    ------------
     Clear all filters associated with this chart. The same effect can be achieved by calling chart.filter(null).
     """
 
   def filterHandler(self, filterHandler):
     """
-    Description:
-    ------------
     Set or get the filter handler.
     The filter handler is a function that performs the filter action on a specific dimension.
     Using a custom filter handler allows you to perform additional logic before or after filtering.
@@ -224,22 +176,16 @@ class JsBase(JsPackage):
 
   def filterPrinter(self, filterPrinter):
     """
-    Description:
-    ------------
     Set or get the filter printer function.
     The filter printer function is used to generate human friendly text for filter value(s) associated with the
     chart instance.
     The text will get shown in the `.filter element; see turnOnControls.
-
-    Attributes:
-    ----------
+ 
     :param filterPrinter:
     """
 
   def filters(self):
     """
-    Description:
-    ------------
     Returns all current filters.
     This method does not perform defensive cloning of the internal filter array before returning, therefore any
     modification of the returned array will effect the chart's internal filter storage.
@@ -247,8 +193,6 @@ class JsBase(JsPackage):
 
   def group(self):
     """
-    Description:
-    ------------
     Set or get the group attribute of a chart.
     In dc a group is a crossfilter group.
     Usually the group should be created from the particular dimension associated with the same chart.
@@ -257,27 +201,19 @@ class JsBase(JsPackage):
 
   def hasFilter(self, filter=None):
     """
-    Description:
-    ------------
     Check whether any active filter or a specific filter is associated with particular chart instance.
     This function is not
-
-    Attributes:
-    ----------
+ 
     :param filter:
     """
 
   def height(self, height=None):
     """
-    Description:
-    ------------
     Set or get the height attribute of a chart.
     The height is applied to the SVGElement generated by the chart when rendered (or re-rendered).
     If a value is given, then it will be used to calculate the new height and the chart returned for method chaining.
     The value can either be a numeric, a function, or falsy.
-
-    Attributes:
-    ----------
+ 
     :param height:
     """
     self._js.append("height(%s)" % height)
@@ -285,11 +221,7 @@ class JsBase(JsPackage):
 
   def width(self, width=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param width:
     """
     self._js.append("width(%s)" % width)
@@ -297,8 +229,6 @@ class JsBase(JsPackage):
 
   def label(self):
     """
-    Description:
-    ------------
     Set or get the label function. The chart class will use this function to render labels for each child element in
     the chart, e.g. slices in a pie chart or bubbles in a bubble chart.
     Not every chart supports the label function, for example line chart does not use this function at all.
@@ -307,8 +237,6 @@ class JsBase(JsPackage):
 
   def render(self):
     """
-    Description:
-    ------------
     Invoking this method will force the chart to re-render everything from scratch.
     Generally it should only be used to render the chart for the first time on the page or if you want to make sure
     everything is redrawn from scratch instead of relying on the default incremental redrawing behaviour.
@@ -338,14 +266,10 @@ class JsBar(JsBase):
 
   def xAxisLabel(self, labelText=None, padding=None):
     """
-    Description:
-    ------------
     Set or get the x axis label.
     If setting the label, you may optionally include additional padding to the margin to make room for the label.
     By default the padded is set to 12 to accomodate the text height.
-
-    Attributes:
-    ----------
+ 
     :param labelText:
     :param padding:
     """
@@ -354,14 +278,10 @@ class JsBar(JsBase):
 
   def yAxisLabel(self, labelText=None, padding=None):
     """
-    Description:
-    ------------
     Set or get the x axis label.
     If setting the label, you may optionally include additional padding to the margin to make room for the label.
     By default the padded is set to 12 to accomodate the text height.
-
-    Attributes:
-    ----------
+ 
     :param labelText:
     :param padding:
     """
@@ -383,16 +303,12 @@ class JsPie(JsBase):
 
   def emptyTitle(self, title):
     """
-    Description:
-    ------------
     Title to use for the only slice when there is no data.
 
     Related Pages:
 
       https://dc-js.github.io/dc.js/docs/html/dc.pieChart.html
-
-    Attributes:
-    ----------
+ 
     :param title:
     """
     return

@@ -11,10 +11,7 @@ class OptionsChart(Options):
 
   @property
   def get_width(self):
-    """
-    Description:
-    -----------
-    Get the container available with in pixel (including the padding).
+    """   Get the container available with in pixel (including the padding).
     """
     return self._config_get(JsUtils.jsWrap(
       "function(component){return component.clientWidth - (parseFloat(component.style.paddingLeft) + parseFloat(component.style.paddingRight)) }"))
@@ -25,10 +22,7 @@ class OptionsChart(Options):
 
   @property
   def get_height(self):
-    """
-    Description:
-    -----------
-    Get the container available height in pixel (including the padding).
+    """   Get the container available height in pixel (including the padding).
     """
     return self._config_get(JsUtils.jsWrap(
       "function(component){return component.clientHeight - (parseFloat(component.style.paddingTop) + parseFloat(component.style.paddingBottom))}"))
@@ -48,8 +42,6 @@ class OptionsChart(Options):
   @property
   def opacity(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -63,8 +55,6 @@ class OptionsChart(Options):
   @property
   def type(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(None)
@@ -76,8 +66,6 @@ class OptionsChart(Options):
   @property
   def colors(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(None)
@@ -89,8 +77,6 @@ class OptionsChart(Options):
   @property
   def background_colors(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(None)
@@ -102,8 +88,6 @@ class OptionsChart(Options):
   @property
   def y_columns(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(None)
@@ -115,8 +99,6 @@ class OptionsChart(Options):
   @property
   def x_axis(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(None)
@@ -128,8 +110,6 @@ class OptionsChart(Options):
   @property
   def props(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get({})
@@ -141,8 +121,6 @@ class OptionsChart(Options):
   @property
   def commons(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get({})
@@ -161,24 +139,16 @@ class OptionsChartShared(abc.ABC):
 
   @abc.abstractmethod
   def x_format(self, js_funcs, profile: Union[dict, bool] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
 
   @abc.abstractmethod
   def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -190,12 +160,8 @@ class OptionsChartShared(abc.ABC):
 
   @abc.abstractmethod
   def x_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param factor:
     :param alias:
     :param digits:
@@ -204,47 +170,30 @@ class OptionsChartShared(abc.ABC):
 
   @abc.abstractmethod
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
 
   @abc.abstractmethod
   def x_tick_count(self, num):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param num:
     """
 
   @abc.abstractmethod
   def y_format(self, js_funcs, profile: Union[dict, bool] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
 
   @abc.abstractmethod
   def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -256,12 +205,8 @@ class OptionsChartShared(abc.ABC):
 
   @abc.abstractmethod
   def y_format_number(self, factor=1000, alias=None, digits=0, thousand_sep="."):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param factor:
     :param alias:
     :param digits:
@@ -270,24 +215,15 @@ class OptionsChartShared(abc.ABC):
 
   @abc.abstractmethod
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
+    """   Set the label of the y axis.
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
 
   @abc.abstractmethod
   def y_tick_count(self, num):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param num:
     """
 

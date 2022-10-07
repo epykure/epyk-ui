@@ -14,10 +14,7 @@ import datetime
 
 
 class Encoder(json.JSONEncoder):
-  """
-  Description:
-  ------------
-  Python to Js Encoding.
+  """  Python to Js Encoding.
 
   Class in charge of encoding the data to be written on the Javascript side.
   In most of the function the simple json module is used but this module is there to encode more complex object

@@ -34,9 +34,7 @@ URL = "https://vega.github.io/vega/docs/transforms/aggregate/"
 
 DOC_ENUM = '''
   def %(label)s(self):
-    """
-    Description:
-    ------------
+    """  
     %(description)s
     
     Related Pages:
@@ -48,9 +46,7 @@ DOC_ENUM = '''
 
 DOC_ENUM_NAME = '''
   def %(name)s(self):
-    """
-    Description:
-    ------------
+    """  
     %(description)s
 
     Related Pages:

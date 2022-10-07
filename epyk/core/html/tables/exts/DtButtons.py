@@ -6,10 +6,7 @@ class InnerButtons(Options):
 
   @property
   def text(self):
-    """
-    Description:
-    -----------
-    Being able to let your users know what will happen when they activate a button is obviously fundamentally important
+    """   Being able to let your users know what will happen when they activate a button is obviously fundamentally important
     to the Buttons extension and this option provides exactly that ability.
 
     Related Pages:
@@ -24,10 +21,7 @@ class InnerButtons(Options):
 
   @property
   def action(self):
-    """
-    Description:
-    -----------
-    This function defined the action that the button will take when activated by the end user.
+    """   This function defined the action that the button will take when activated by the end user.
     This will normally be to perform some operation on the DataTable, but can be absolutely anything since the
     function can be defined by yourself.
 
@@ -43,10 +37,7 @@ class InnerButtons(Options):
 
   @property
   def attr(self):
-    """
-    Description:
-    -----------
-    This option provides the ability to set any arbitrary attribute on the button's HTML element in the document.
+    """   This option provides the ability to set any arbitrary attribute on the button's HTML element in the document.
     This can be useful for customisation of attributes such as ARIA assistive attributes, setting a custom id for
     selection / styling, custom data parameters, etc.
 
@@ -62,10 +53,7 @@ class InnerButtons(Options):
 
   @property
   def className(self):
-    """
-    Description:
-    -----------
-    Set the class name for the button.
+    """   Set the class name for the button.
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.className
@@ -78,10 +66,7 @@ class InnerButtons(Options):
 
   @property
   def available(self):
-    """
-    Description:
-    -----------
-    Ensure that any requirements have been satisfied before initialising a button
+    """   Ensure that any requirements have been satisfied before initialising a button
     Related Pages:
 
       https://datatables.net/reference/option/buttons.buttons.available
@@ -94,10 +79,7 @@ class InnerButtons(Options):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    This option provides the ability to set the initial enabled state of a button using a boolean value.
+    """   This option provides the ability to set the initial enabled state of a button using a boolean value.
     It is most likely to be of use when using the API methods that can control the button's enabled state after
     initialisation:
 
@@ -113,10 +95,7 @@ class InnerButtons(Options):
 
   @property
   def extend(self):
-    """
-    Description:
-    -----------
-    Define which button type the button should be based on.
+    """   Define which button type the button should be based on.
 
     Related Pages:
 
@@ -130,10 +109,7 @@ class InnerButtons(Options):
 
   @property
   def key(self):
-    """
-    Description:
-    -----------
-    Define an activation key for a button.
+    """   Define an activation key for a button.
 
     Related Pages:
 
@@ -147,10 +123,7 @@ class InnerButtons(Options):
 
   @property
   def name(self):
-    """
-    Description:
-    -----------
-    Define a name for a button.
+    """   Define a name for a button.
 
     Related Pages:
 
@@ -164,10 +137,7 @@ class InnerButtons(Options):
 
   @property
   def tag(self):
-    """
-    Description:
-    -----------
-    Define a tag  for a button.
+    """   Define a tag  for a button.
 
     Related Pages:
 
@@ -181,10 +151,7 @@ class InnerButtons(Options):
 
   @property
   def titleAttr(self):
-    """
-    Description:
-    -----------
-    This option provides the ability to set the title attribute for the button.
+    """   This option provides the ability to set the title attribute for the button.
     This can be used to provide a detailed description of the button, or a simple text name if you choose to display
     an icon in the button rather than text (using the buttons.buttons.text option).
 
@@ -352,10 +319,7 @@ class Buttons(Options):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    This option provides the ability to set the initial enabled state of a button using a boolean value.
+    """   This option provides the ability to set the initial enabled state of a button using a boolean value.
     It is most likely to be of use when using the API methods that can control the button's enabled state after
     initialisation:
 
@@ -383,10 +347,7 @@ class Buttons(Options):
 
   @property
   def name(self):
-    """
-    Description:
-    -----------
-    Set a name for the instance for the group selector.
+    """   Set a name for the instance for the group selector.
 
     Related Pages:
 

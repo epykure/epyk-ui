@@ -40,8 +40,6 @@ class Comments(Html.Html):
   @property
   def options(self) -> OptNet.OptionsChat:
     """
-    Description:
-    ------------
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -51,10 +49,7 @@ class Comments(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object
@@ -85,12 +80,8 @@ class Comments(Html.Html):
 
   def add(self, text: str, time: str):
     """
-    Description:
-    ------------
     Add a text message.
-
-    Attributes:
-    ----------
+ 
     :param text: The text message.
     :param time: the timestamp.
     """
@@ -100,12 +91,8 @@ class Comments(Html.Html):
   def enter(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """
-    Description:
-    ------------
     Define the function when the user press enter.
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -125,11 +112,7 @@ class Comments(Html.Html):
 
   def send(self, socket, channel=None, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param socket:
     :param channel:
     :param js_funcs: The Javascript functions.
@@ -149,8 +132,6 @@ class Comments(Html.Html):
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
     """
-    Description:
-    ------------
     Subscribe to a socket channel.
     Data received from the socket are defined as a dictionary with a field data.
 
@@ -159,9 +140,7 @@ class Comments(Html.Html):
     Related Pages:
 
       https://timepicker.co/options/
-
-    Attributes:
-    ----------
+ 
     :param socket: Socket. A python socket object
     :param channel: The channel on which events will be received
     :param data:
@@ -209,8 +188,6 @@ class Bot(Html.Html):
   @property
   def style(self) -> GrpClsNetwork.ClassNetworkBot:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -282,8 +259,6 @@ class Chat(Html.Html):
   @property
   def options(self) -> OptNet.OptionsChat:
     """
-    Description:
-    ------------
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -293,10 +268,7 @@ class Chat(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -320,11 +292,7 @@ class Chat(Html.Html):
 
   def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -339,11 +307,7 @@ class Chat(Html.Html):
 
   def send(self, socket, channel=None, js_funcs=None, profile=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param socket:
     :param channel:
     :param js_funcs: The Javascript functions.
@@ -358,8 +322,6 @@ class Chat(Html.Html):
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
     """
-    Description:
-    ------------
     Subscribe to a socket channel.
     Data received from the socket are defined as a dictionary with a field data.
 
@@ -368,9 +330,7 @@ class Chat(Html.Html):
     Related Pages:
 
       https://timepicker.co/options/
-
-    Attributes:
-    ----------
+ 
     :param socket: Socket. A python socket object
     :param channel: The channel on which events will be received
     :param data:
@@ -409,8 +369,6 @@ class Alert(Html.Html):
   @property
   def options(self) -> OptNet.OptionsAlert:
     """
-    Description:
-    ------------
     Property to the component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -473,10 +431,7 @@ class News(Html.Html):
 
   @property
   def js(self) -> JsComponents.News:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -486,8 +441,6 @@ class News(Html.Html):
   @property
   def options(self) -> OptNet.OptionsNews:
     """
-    Description:
-    ------------
     Property to the component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -532,10 +485,7 @@ class Room(Html.Html):
 
   @property
   def js(self) -> JsComponents.Room:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -612,8 +562,6 @@ class DropFile(Html.Html):
   @property
   def dom(self) -> JsHtmlNetwork.JsHtmlDropFiles:
     """
-    Description:
-    ------------
 
     """
     if self._dom is None:
@@ -623,8 +571,6 @@ class DropFile(Html.Html):
   @property
   def options(self) -> OptNet.OptionFiles:
     """
-    Description:
-    ------------
     Property to the component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -633,13 +579,8 @@ class DropFile(Html.Html):
     return super().options
 
   def transfer(self, url: str):
-    """
-    Description:
-    -----------
-    Create a Ajax transfer to a distant server.
-
-    Attributes:
-    ----------
+    """   Create a Ajax transfer to a distant server.
+ 
     :param url: The transfer end point on the server.
     """
     # TODO add if else statement for the allowed and forbidden extensions
@@ -648,19 +589,14 @@ class DropFile(Html.Html):
     return post
 
   def drop(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """
-    Description:
-    -----------
-    Add a drag and drop property to the element.
+    """   Add a drag and drop property to the element.
 
     Usage::
 
       drop_area.drop([
         drop_area.transfer("<URL>")
       ], components=[])
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript series of functions.
     :param js_data: Optional. A datamap objection of a dictionary.
     :param components: The different HTML objects to be added to the component.
@@ -693,22 +629,15 @@ class DropFile(Html.Html):
     return self
 
   def loading(self, label="Processing data"):
-    """
-    Description:
-    -----------
+    """   
 
-
-    Attributes:
-    ----------
+ 
     :param label: Optional.
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
   def load(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """
-    Description:
-    -----------
-    Load the content of the file.
+    """   Load the content of the file.
 
     This function will first use as underlying the drop method to get the file dropped.
 
@@ -717,9 +646,7 @@ class DropFile(Html.Html):
       drop_area.load([
         drop_area.transfer("<URL>")
       ], components=[])
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript series of functions.
     :param js_data: Optional. A datamap objection of a dictionary.
     :param components: Optional. The different HTML objects to be added to the component.
@@ -746,12 +673,8 @@ class DropFile(Html.Html):
        )], js_data=js_data, components=components, prevent_default=prevent_default, profile=profile)
 
   def paste(self, js_funcs, components=None, profile=None, source_event=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param js_funcs: Javascript functions.
     :param components: The different HTML objects to be added to the component.
     :param profile: Optional. A flag to set the component performance storage.

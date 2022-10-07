@@ -11,12 +11,8 @@ class TinySlider(JsPackage):
 
   def goTo(self, n: int):
     """
-    Description:
-    ------------
     Go to specific slide by number or keywords.
-
-    Attributes:
-    ----------
+ 
     :param int n: the depth of the tree at start.
 
     Related Pages:
@@ -27,8 +23,6 @@ class TinySlider(JsPackage):
 
   def getInfo(self):
     """
-    Description:
-    ------------
     Get slider information.
 
     Related Pages:
@@ -39,8 +33,6 @@ class TinySlider(JsPackage):
 
   def next(self):
     """
-    Description:
-    ------------
     Go to specific slide by number or keywords.
 
     Related Pages:
@@ -51,8 +43,6 @@ class TinySlider(JsPackage):
 
   def previous(self):
     """
-    Description:
-    ------------
     Go to specific slide by number or keywords.
 
     Related Pages:
@@ -63,8 +53,6 @@ class TinySlider(JsPackage):
 
   def last(self):
     """
-    Description:
-    ------------
     Go to specific slide by number or keywords.
 
     Related Pages:
@@ -75,8 +63,6 @@ class TinySlider(JsPackage):
 
   def first(self):
     """
-    Description:
-    ------------
     Go to specific slide by number or keywords.
 
     Related Pages:
@@ -87,8 +73,6 @@ class TinySlider(JsPackage):
 
   def pause(self):
     """
-    Description:
-    ------------
     Programmatically stop slider autoplay when autoplay: true.
 
     Related Pages:
@@ -99,8 +83,6 @@ class TinySlider(JsPackage):
 
   def play(self):
     """
-    Description:
-    ------------
     Programmatically start slider autoplay when autoplay: true.
 
     Related Pages:
@@ -111,8 +93,6 @@ class TinySlider(JsPackage):
 
   def updateSliderHeight(self):
     """
-    Description:
-    ------------
     Manually adjust slider height when autoHeight is true.
 
     Related Pages:
@@ -123,8 +103,6 @@ class TinySlider(JsPackage):
 
   def destroy(self):
     """
-    Description:
-    ------------
     Destroy the slider.
 
     Related Pages:
@@ -135,8 +113,6 @@ class TinySlider(JsPackage):
 
   def rebuild(self):
     """
-    Description:
-    ------------
     Rebuild the slider after destroy.
 
     Related Pages:

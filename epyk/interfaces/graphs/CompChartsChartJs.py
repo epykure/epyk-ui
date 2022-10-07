@@ -439,8 +439,6 @@ class ChartJs:
             profile: types.PROFILE_TYPE = None, options: dict = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphChartJs.ChartBar:
     """
-    Description:
-    ------------
     Display a multi chart from ChartJs.
 
     :tags:

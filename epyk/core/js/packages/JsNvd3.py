@@ -17,16 +17,12 @@ class JsNvd3Axis:
 
   def axisLabel(self, text: str):
     """
-    Description:
-    ------------
     Chart axis settings.
 
     Usage::
 
       chart.xAxis.axisLabel('Time (ms)')
 
-    Attributes:
-    ----------
     :param text: String.
     """
     text = JsUtils.jsConvertData(text, None)
@@ -35,16 +31,12 @@ class JsNvd3Axis:
 
   def tickFormat(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
     Chart axis settings
 
     Usage::
 
       chart.xAxis.tickFormat(d3.format(',r'))
 
-    Attributes:
-    ----------
     :param js_funcs:
     """
     self._js.append("tickFormat(tickFormat(function(d,i){ %s })" % JsUtils.jsConvertFncs(
@@ -53,11 +45,7 @@ class JsNvd3Axis:
 
   def tickNumberFormat(self, digit: int = 1):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param digit:
     """
     self._js.append("tickFormat(function(d,i){ return d3.format(',.%sf')(d); })" % digit)
@@ -65,11 +53,7 @@ class JsNvd3Axis:
 
   def tickCurrencyFormat(self, currency):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param currency:
     """
     currency = JsUtils.jsConvertData(currency, None)
@@ -78,8 +62,6 @@ class JsNvd3Axis:
 
   def tickDateFormat(self):
     """
-    Description:
-    ------------
 
     """
     self._js.append("tickFormat(function(d,i){ return d3.time.format('%x')(new Date(d * 86400000)); })")
@@ -88,11 +70,7 @@ class JsNvd3Axis:
   @packageImport("accounting")
   def tickNumber(self, digit=0, thousand_sep=",", factor=None, alias=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param digit:
     :param thousand_sep:
     :param factor:
@@ -111,11 +89,7 @@ class JsNvd3Axis:
   @packageImport("accounting")
   def tickSymbol(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -137,16 +111,12 @@ class JsNvd3Axis:
 
   def tickValues(self, values):
     """
-    Description:
-    ------------
     Chart axis settings.
 
     Usage::
 
        chart.xAxis.tickValues(10)
 
-    Attributes:
-    ----------
     :param values:
     """
     values = JsUtils.jsConvertData(values, None)
@@ -155,8 +125,6 @@ class JsNvd3Axis:
 
   def toStr(self):
     """
-    Description:
-    ------------
     Javascript representation.
 
     :return: Return the Javascript String
@@ -176,12 +144,8 @@ class JsNvd3Utils:
 
   def windowResize(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
     Update the chart when window resizes.
 
-    Attributes:
-    ----------
     :param js_funcs:
     """
     return "nv.utils.windowResize(%s)" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
@@ -210,8 +174,6 @@ class JsNvd3(JsPackage):
   @property
   def varId(self):
     """
-    Description:
-    ------------
     The Javascript and Python reference ID.
 
     :return: The Javascript String of the object variable name
@@ -223,8 +185,6 @@ class JsNvd3(JsPackage):
 
   def width(self, value):
     """
-    Description:
-    ------------
     The width the graph or component created inside the SVG should be made.
     The width of the container element (normally the svg itself).
 
@@ -232,16 +192,12 @@ class JsNvd3(JsPackage):
 
       https://nvd3-community.github.io/nvd3/examples/documentation.html
 
-    Attributes:
-    ----------
     :param value: A python integer.
     """
     return self.fnc("width(%s)" % value)
 
   def height(self, value: float):
     """
-    Description:
-    ------------
     The height the graph or component created inside the SVG should be made.
     The height of the container element (normally the svg itself)
 
@@ -249,16 +205,12 @@ class JsNvd3(JsPackage):
 
       https://nvd3-community.github.io/nvd3/examples/documentation.html
 
-    Attributes:
-    ----------
     :param float value:
     """
     return self.fnc("height(%s)" % value)
 
   def margin(self, options: dict):
     """
-    Description:
-    ------------
     Object containing the margins for the chart or component.
     You can specify only certain margins in the object to change just those parts.
     Default options: { "top": 15, "right": 10, "bottom": 50, "left": 60 }
@@ -267,8 +219,6 @@ class JsNvd3(JsPackage):
 
       https://nvd3-community.github.io/nvd3/examples/documentation.html
 
-    Attributes:
-    ----------
     :param dict options: A python dictionary with the options.
     """
     options = JsUtils.jsConvertData(options, None)
@@ -277,12 +227,8 @@ class JsNvd3(JsPackage):
 
   def useInteractiveGuideline(self, flag: bool):
     """
-    Description:
-    ------------
     Tooltips which show all data points.
 
-    Attributes:
-    ----------
     :param flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -290,11 +236,7 @@ class JsNvd3(JsPackage):
 
   def transitionDuration(self, time):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param time:
     """
     time = JsUtils.jsConvertData(time, None)
@@ -302,11 +244,7 @@ class JsNvd3(JsPackage):
 
   def showLegend(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -315,8 +253,6 @@ class JsNvd3(JsPackage):
   @property
   def xAxis(self) -> JsNvd3Axis:
     """
-    Description:
-    ------------
 
     :rtype: JsNvd3Axis
     """
@@ -327,8 +263,6 @@ class JsNvd3(JsPackage):
   @property
   def yAxis(self) -> JsNvd3Axis:
     """
-    Description:
-    ------------
 
     :rtype: JsNvd3Axis
     """
@@ -338,11 +272,7 @@ class JsNvd3(JsPackage):
 
   def showYAxis(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -350,11 +280,7 @@ class JsNvd3(JsPackage):
 
   def showXAxis(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -365,12 +291,8 @@ class JsNvd3(JsPackage):
 
   def showControls(self, flag: bool):
     """
-    Description:
-    ------------
     Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -388,11 +310,7 @@ class JsNvd3Area(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column: String.
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -408,11 +326,7 @@ class JsNvd3Area(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -434,12 +348,8 @@ class JsNvd3Area(JsNvd3):
 
   def rightAlignYAxis(self, flag: bool):
     """
-    Description:
-    ------------
     Move the y-axis to the right side.
 
-    Attributes:
-    ----------
     :param flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -447,11 +357,7 @@ class JsNvd3Area(JsNvd3):
 
   def clipEdge(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -459,8 +365,6 @@ class JsNvd3Area(JsNvd3):
 
   def controlLabels(self, attrs: dict):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -470,8 +374,6 @@ class JsNvd3Area(JsNvd3):
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/stackedAreaChart.html
 
-    Attributes:
-    ----------
     :param dict attrs:
     """
     self.fnc("controlLabels(%s)" % JsUtils.jsConvertData(attrs, None))
@@ -483,15 +385,11 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 
   def dimensionNames(self, categories: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
 
-    Attributes:
-    ----------
     :param list categories:
     """
     self.fnc("dimensionNames(%s)" % JsUtils.jsConvertData(categories, None))
@@ -499,15 +397,11 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 
   def dimensionFormats(self, formats):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
 
-    Attributes:
-    ----------
     :param formats:
     """
     self.fnc("dimensionFormats(%s)" % JsUtils.jsConvertData(formats, None))
@@ -515,15 +409,11 @@ class JsNvd3ParallelCoordinates(JsNvd3):
 
   def lineTension(self, val):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/parallelCoordinates.html
 
-    Attributes:
-    ----------
     :param val:
     """
     self.fnc("lineTension(%s)" % JsUtils.jsConvertData(val, None))
@@ -535,11 +425,7 @@ class JsNvd3CandlestickBar(JsNvd3):
 
   def x(self, column=None, jsFnc=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param jsFnc: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -552,11 +438,7 @@ class JsNvd3CandlestickBar(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -573,11 +455,7 @@ class JsNvd3OhlcBar(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -590,11 +468,7 @@ class JsNvd3OhlcBar(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -615,11 +489,7 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -632,15 +502,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def staggerLabels(self, flag):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
 
-    Attributes:
-    ----------
     :param flag:
     """
     self.fnc("staggerLabels(%s)" % JsUtils.jsConvertData(flag, None))
@@ -648,15 +514,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def yDomain(self, values):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlot.html
 
-    Attributes:
-    ----------
     :param values:
     """
     self.fnc("yDomain(%s)" % JsUtils.jsConvertData(values, None))
@@ -664,16 +526,12 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def maxBoxWidth(self, value):
     """
-    Description:
-    ------------
     Prevent boxes from being incredibly wide.
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param value:
     """
     self.fnc("maxBoxWidth(%s)" % JsUtils.jsConvertData(value, None))
@@ -681,15 +539,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def itemColor(self, series_color):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param series_color:
     """
     self.fnc("itemColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(series_color, None))
@@ -697,15 +551,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outliers(self, outlData):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param outlData:
     """
     self.fnc("outliers(function (d) { return d[%s] })" % JsUtils.jsConvertData(outlData, None))
@@ -713,15 +563,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outlierValue(self, data):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param data:
     """
     self.fnc("outlierValue(function (d) { return d[%s] })" % JsUtils.jsConvertData(data, None))
@@ -729,15 +575,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def outlierColor(self, color: str):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param color: String.
     """
     self.fnc("outlierColor(function (d) { return d[%s] })" % JsUtils.jsConvertData(color, None))
@@ -745,15 +587,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q1(self, q1_col):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param q1_col:
     """
     self.fnc("q1(function (d) { return d[%s] })" % JsUtils.jsConvertData(q1_col, None))
@@ -761,15 +599,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q2(self, q2_col):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param q2_col:
     """
     self.fnc("q2(function (d) { return d[%s] })" % JsUtils.jsConvertData(q2_col, None))
@@ -777,15 +611,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def q3(self, q3_col):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param q3_col:
     """
     self.fnc("q3(function (d) { return d[%s] })" % JsUtils.jsConvertData(q3_col, None))
@@ -793,15 +623,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def wl(self, wl_col):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param wl_col:
     """
     self.fnc("wl(function (d) { return d[%s] })" % JsUtils.jsConvertData(wl_col, None))
@@ -809,15 +635,11 @@ class JsNvd3BoxPlot(JsNvd3):
 
   def wh(self, wh_col):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param wh_col:
     """
     self.fnc("wh(function (d) { return d[%s] })" % JsUtils.jsConvertData(wh_col, None))
@@ -832,11 +654,7 @@ class JsNvd3Bar(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -849,11 +667,7 @@ class JsNvd3Bar(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -866,15 +680,11 @@ class JsNvd3Bar(JsNvd3):
 
   def color(self, colors: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
 
-    Attributes:
-    ----------
     :param colors:
     """
     self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
@@ -882,16 +692,12 @@ class JsNvd3Bar(JsNvd3):
 
   def rotateLabels(self, value):
     """
-    Description:
-    ------------
     Rotates the X axis labels by the specified degree.
 
     Related Pages:
 
       https://nvd3-community.github.io/nvd3/examples/documentation.html
 
-    Attributes:
-    ----------
     :param value:
     """
     self.fnc("rotateLabels(%s)" % value)
@@ -899,45 +705,29 @@ class JsNvd3Bar(JsNvd3):
 
   def reduceXTicks(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param flag:
     """
 
   def staggerLabels(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param flag:
     """
 
   def tooltips(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param flag:
     """
 
   def showValues(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/discreteBarChart.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("showValues(%s)" % JsUtils.jsConvertData(flag, None))
@@ -952,11 +742,7 @@ class JsNvd3MultiBar(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -969,11 +755,7 @@ class JsNvd3MultiBar(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -986,15 +768,11 @@ class JsNvd3MultiBar(JsNvd3):
 
   def barColor(self, colors: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart.html
 
-    Attributes:
-    ----------
     :param list colors:
     """
     self.fnc("barColor(%s)" % JsUtils.jsConvertData(colors, None))
@@ -1002,15 +780,11 @@ class JsNvd3MultiBar(JsNvd3):
 
   def stacked(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarChart2.html
 
-    Attributes:
-    ----------
     :param bool flag: Stack the series in the chart.
     """
     self.fnc("stacked(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1022,8 +796,6 @@ class JsNvd3MultiBarHorizontal(JsNvd3Bar):
 
   def yErr(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1033,15 +805,11 @@ class JsNvd3MultiBarHorizontal(JsNvd3Bar):
 
   def barColor(self, colors: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/multiBarHorizontalChart.html
 
-    Attributes:
-    ----------
     :param colors: List. The list of color for the bar series.
     """
     self.fnc("barColor(%s)" % JsUtils.jsConvertData(colors, None))
@@ -1061,15 +829,11 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def showDistX(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
-    Attributes:
-    ----------
     :param flag: Boolean.
     """
     self.fnc("showDistX(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1077,15 +841,11 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def showDistY(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
-    Attributes:
-    ----------
     :param flag: Boolean.
     """
     self.fnc("showDistY(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1093,15 +853,11 @@ class JsNvd3Scatter(JsNvd3Bar):
 
   def useVoronoi(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/scatterChart.html
 
-    Attributes:
-    ----------
     :param flag: Boolean.
     """
     self.fnc("useVoronoi(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1113,15 +869,11 @@ class JsNvd3LineWithFocus(JsNvd3Line):
 
   def brushExtent(self, values: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/lineWithFocusChart.html
 
-    Attributes:
-    ----------
     :param values:
     """
     self.fnc("brushExtent(%s)" % JsUtils.jsConvertData(values, None))
@@ -1133,15 +885,11 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
   def average(self, mean: str):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
 
-    Attributes:
-    ----------
     :param str mean: The column name corresponding to the mean value
     """
     self.fnc("average(function(d) { return d.[%s] / 100; })" % JsUtils.jsConvertData(mean, None))
@@ -1149,15 +897,11 @@ class JsNvd3CumulativeLine(JsNvd3Line):
 
   def clipVoronoi(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/cumulativeLineChart.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("clipVoronoi(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1169,15 +913,11 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def legendRightAxisHint(self, text: str):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
-    Attributes:
-    ----------
     :param text: String.
     """
     self.fnc("legendRightAxisHint(%s)" % JsUtils.jsConvertData(text, None))
@@ -1185,15 +925,11 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def forceY(self, indices):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
-    Attributes:
-    ----------
     :param indices:
     """
     self.fnc("forceY(%s)" % JsUtils.jsConvertData(indices, None))
@@ -1201,15 +937,11 @@ class JsNvd3LinePlusBar(JsNvd3Bar):
 
   def padData(self, flag: bool):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/linePlusBarChart.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("padData(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1221,8 +953,6 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
   def xScale(self, d3_func):
     """
-    Description:
-    ------------
     Use a time scale instead of plain numbers in order to get nice round default values in the axis.
 
     Usage::
@@ -1233,8 +963,6 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
 
-    Attributes:
-    ----------
     :param d3_func:
     """
     self.fnc("xScale(%s)" % JsUtils.jsConvertData(d3_func, None))
@@ -1242,12 +970,8 @@ class JsNvd3HistoricalBar(JsNvd3Bar):
 
   def forceX(self, values: list):
     """
-    Description:
-    ------------
     fix half-bar problem on the first and last bars.
 
-    Attributes:
-    ----------
     :param values:
     """
     self.fnc("forceX(%s)" % JsUtils.jsConvertData(values, None))
@@ -1259,8 +983,6 @@ class JsDataArcRadius(DataAttrs):
   @property
   def inner(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["inner"]
 
@@ -1271,8 +993,6 @@ class JsDataArcRadius(DataAttrs):
   @property
   def outer(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["outer"]
 
@@ -1286,16 +1006,12 @@ class JsNvd3Pie(JsNvd3):
 
   def arcsRadius(self, values=None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
 
-    Attributes:
-    ----------
     :param values:
     """
     if values is not None:
@@ -1309,11 +1025,7 @@ class JsNvd3Pie(JsNvd3):
 
   def x(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1326,11 +1038,7 @@ class JsNvd3Pie(JsNvd3):
 
   def y(self, column=None, js_funcs=None, profile=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param column:
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -1343,16 +1051,12 @@ class JsNvd3Pie(JsNvd3):
 
   def showLabels(self, flag: bool):
     """
-    Description:
-    ------------
     Display pie labels.
 
     Related Pages:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("showLabels(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1360,16 +1064,12 @@ class JsNvd3Pie(JsNvd3):
 
   def labelThreshold(self, value):
     """
-    Description:
-    ------------
     Configure the minimum slice size for labels to show up.
 
     Related Pages:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param value:
     """
     self.fnc("labelThreshold(%s)" % JsUtils.jsConvertData(value, None))
@@ -1377,16 +1077,12 @@ class JsNvd3Pie(JsNvd3):
 
   def labelSunbeamLayout(self, flag: bool):
     """
-    Description:
-    ------------
     Change the label orientation for each category.
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/monitoringChart.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("labelSunbeamLayout(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1397,11 +1093,7 @@ class JsNvd3Pie(JsNvd3):
 
   def donutLabelsOutside(self, flag: bool):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("donutLabelsOutside(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1409,15 +1101,11 @@ class JsNvd3Pie(JsNvd3):
 
   def color(self, colors: list):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/TimeSeries.html
 
-    Attributes:
-    ----------
     :param list colors:
     """
     self.fnc("color(%s)" % JsUtils.jsConvertData(colors, None))
@@ -1425,16 +1113,12 @@ class JsNvd3Pie(JsNvd3):
 
   def donut(self, flag: bool):
     """
-    Description:
-    ------------
     Turn on Donut mode. Makes pie chart look tasty!
 
     Related Pages:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     value = "donut(%s)" % JsUtils.jsConvertData(flag, None)
@@ -1443,9 +1127,7 @@ class JsNvd3Pie(JsNvd3):
     return self
 
   def startAngle(self, angle: str):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -1455,24 +1137,18 @@ class JsNvd3Pie(JsNvd3):
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
-    Attributes:
-    ----------
     :param str angle: The javaScript expression.
     """
     self.fnc("startAngle(function(d) { return %s; } )" % angle)
     return self
 
   def endAngle(self, angle: str):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
-    Attributes:
-    ----------
     :param str angle:
     """
     self.fnc("endAngle(function(d) { return %s })" % angle)
@@ -1483,16 +1159,12 @@ class JsNvd3Pie(JsNvd3):
 
   def donutRatio(self, value):
     """
-    Description:
-    ------------
     Configure how big you want the donut hole size to be.
 
     Related Pages:
 
       http://nvd3.org/examples/pie.html
 
-    Attributes:
-    ----------
     :param value:
     """
     self.donut(True)
@@ -1501,16 +1173,12 @@ class JsNvd3Pie(JsNvd3):
 
   def padAngle(self, val: float):
     """
-    Description:
-    ------------
     Add a padding (space) between the different categories of the chart.
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
-    Attributes:
-    ----------
     :param float val: The padding value.
     """
     self.fnc("padAngle(%s)" % JsUtils.jsConvertData(val, None))
@@ -1518,16 +1186,12 @@ class JsNvd3Pie(JsNvd3):
 
   def cornerRadius(self, val: float):
     """
-    Description:
-    ------------
     Change the angle corner radius
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
-    Attributes:
-    ----------
     :param float val: The rounding to be set to the angles
     """
     self.fnc("cornerRadius(%s)" % JsUtils.jsConvertData(val, None))
@@ -1535,28 +1199,20 @@ class JsNvd3Pie(JsNvd3):
 
   def id(self, class_name):
     """
-    Description:
-    ------------
     allow custom CSS for this one svg.
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/donutChart.html
 
-    Attributes:
-    ----------
     :param class_name:
     """
     self.fnc("id(%s)" % JsUtils.jsConvertData(class_name, None))
     return self
 
   def growOnHover(self, flag: bool):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param bool flag:
     """
     self.fnc("growOnHover(%s)" % JsUtils.jsConvertData(flag, None))
@@ -1578,17 +1234,12 @@ class JsNvd3Pie(JsNvd3):
     pass
 
   def title(self, text: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Text to include within the middle of a donut chart.
+    """   Text to include within the middle of a donut chart.
 
     Related Pages:
 
       https://nvd3-community.github.io/nvd3/examples/documentation.html
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] text:
     """
     self.fnc("title(%s)" % JsUtils.jsConvertData(JsUtils.jsConvertData(text, None), None))
@@ -1602,28 +1253,20 @@ class JsNvd3ForceDirectedGraph(JsNvd3Bar):
   chartFnc = "forceDirectedGraph"
 
   def color(self, column: str):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param column:
     """
     self.fnc("color(function(d) { return d.%s })" % column)
     return self
 
   def nodeExtras(self, text: str):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/forceDirected.html
 
-    Attributes:
-    ----------
     :param text:
     """
     self.fnc("nodeExtras(function(node) {node.append('text').attr('dx', 12).attr('dy', '.35em').text(function(d) { return d.%s }) })" % text)

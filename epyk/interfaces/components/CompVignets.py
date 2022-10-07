@@ -17,8 +17,6 @@ class Vignets:
              color: str = None, background_color: str = None, helper: str = None, options: dict = None,
              profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
     The bubbles event property returns a Boolean value that indicates whether or not an event is a bubbling event.
     Event bubbling directs an event to its intended target, it works like this:
     A button is clicked and the event is directed to the button
@@ -43,8 +41,6 @@ class Vignets:
 
       https://www.w3schools.com/jsref/event_bubbles.asp
 
-    Attributes:
-    ----------
     :param records: List. Optional. The list of dictionaries.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -89,8 +85,6 @@ class Vignets:
              height: Union[tuple, int] = (None, "px"), profile: Union[dict, bool] = None, options: dict = None,
              helper: str = None):
     """
-    Description:
-    ------------
     The <input type="number"> defines a field for entering a number.
     Use the following attributes to specify restrictions:
     max - specifies the maximum value allowed
@@ -115,8 +109,6 @@ class Vignets:
 
       https://www.w3schools.com/tags/att_input_type_number.asp
 
-    Attributes:
-    ----------
     :param number: Integer. The value.
     :param label: String. Optional. The label text.
     :param title: String | Component. Optional. A panel title. This will be attached to the title property.
@@ -163,8 +155,6 @@ class Vignets:
             height: Union[tuple, int] = (None, 'px'), helper: str = None, options: dict = None,
             profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
     Every HTML element has a default display value depending on what type of element it is.
     The two display values are: block and inline.
 
@@ -184,8 +174,6 @@ class Vignets:
 
       https://www.w3schools.com/htmL/html_blocks.asp
 
-    Attributes:
-    ----------
     :param records: List. Optional. The list of dictionaries with the input data.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param border:
@@ -204,8 +192,6 @@ class Vignets:
            align: str = 'center', helper: str = None, options: dict = None,
            profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -219,8 +205,6 @@ class Vignets:
 
       - :class:`epyk.core.html.HtmlTextComp.TextWithBorder`
 
-    Attributes:
-    ----------
     :param records: List. Optional. The list of dictionaries with the input data.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -237,16 +221,12 @@ class Vignets:
             width: Union[tuple, int] = (90, '%'), height: Union[tuple, int] = (None, "px"), options: dict = None,
             profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param image:
@@ -327,8 +307,6 @@ class Vignets:
             width: Union[tuple, int] = (90, '%'), height: Union[tuple, int] = (None, "px"),
             options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
     Component to allow creation of a vignet embedding a video.
 
     :tags:
@@ -336,16 +314,13 @@ class Vignets:
 
     Usage::
 
-    Related Pages:
-    --------------
+    Related Pages::
 
     Issue:
     ------
 
       https://github.com/epykure/epyk-ui/issues/92
 
-    Attributes:
-    ----------
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content:
     :param video:
@@ -408,16 +383,12 @@ class Vignets:
                  size: str = "contain", margin: int = 0, align: str = "center",
                  position: str = "middle", options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param url: String. The url string.
     :param align: String. Optional. The text-align property within this component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -443,16 +414,12 @@ class Vignets:
   def vignet(self, title: str, content: str, icon: str = None, render: str = "col", align: str = "center",
              width: Union[tuple, int] = (200, 'px'), options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
@@ -512,8 +479,6 @@ class Vignets:
             height: Union[tuple, int] = ("auto", ''), currency: str = "£", options: dict = None,
             profile: Union[dict, bool] = None, helper: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -522,8 +487,6 @@ class Vignets:
 
       page.ui.vignets.price(10, "This is the price", [])
 
-    Attributes:
-    ----------
     :param value:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param items:
@@ -573,16 +536,12 @@ class Vignets:
   def slides(self, start: int = 0, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, "%"),
              options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param start:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

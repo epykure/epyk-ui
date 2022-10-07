@@ -26,10 +26,7 @@ class Table(Html.Html):
       self.options.data = records
 
   def headers(self, cols_def: dict):
-    """
-    Description:
-    -----------
-    Set columns definition.
+    """   Set columns definition.
 
     Usage::
 
@@ -37,8 +34,6 @@ class Table(Html.Html):
       grid.add_column("col1", "Column")
       grid.headers({"col1": {"headerName": "Column 1"}})
 
-    Attributes:
-    ----------
     :param cols_def:
     """
     defined_cols = []
@@ -53,8 +48,6 @@ class Table(Html.Html):
 
   def get_columns(self) -> Generator[OptTableAgGrid.Column, None, None]:
     """
-    Description:
-    ------------
     Get a generator with all the columns defined for the table on the Python side.
 
     This function will only return columns defined from the Python side.
@@ -64,15 +57,11 @@ class Table(Html.Html):
 
   def get_column(self, by_field: str = None, by_title: str = None) -> OptTableAgGrid.Column:
     """
-    Description:
-    ------------
     Get the column from the underlying Tabulator object by field or by title.
     Pointing by field is recommended as the title might change quite easily.
 
     This function will only get columns defined from the Python side.
 
-    Attributes:
-    ----------
     :param by_field: Optional. The field reference for the column.
     :param by_title: Optional. The title reference for the column.
     """
@@ -85,10 +74,7 @@ class Table(Html.Html):
 
   @property
   def style(self) -> GrpClsTable.Aggrid:
-    """
-    Description:
-    -----------
-    Add internal CSS classes.
+    """   Add internal CSS classes.
 
     Usage::
 
@@ -102,8 +88,6 @@ class Table(Html.Html):
   @property
   def options(self) -> OptTableAgGrid.TableConfig:
     """
-    Description:
-    ------------
     Ag Grid table options.
 
     Usage::
@@ -115,10 +99,7 @@ class Table(Html.Html):
 
   @property
   def js(self) -> JsAgGrid.AgGrid:
-    """
-    Description:
-    -----------
-    Return the Javascript internal object.
+    """   Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -128,28 +109,20 @@ class Table(Html.Html):
 
   @property
   def dom(self) -> JsHtmlTables.JsHtmlAggrid:
-    """
-    Description:
-    -----------
-    HTML Dom object.
+    """   HTML Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlTables.JsHtmlAggrid(self, page=self.page)
     return self._dom
 
   def add_column(self, field: str, title: str = None, attrs: dict = None):
-    """
-    Description:
-    -----------
-    Add a column to the column definition for the table.
+    """   Add a column to the column definition for the table.
 
     Usage::
 
       grid = page.ui.tables.aggrids.table()
       grid.add_column("test", "Test Column")
 
-    Attributes:
-    ----------
     :param field: The column attribute
     :param title: Optional. The column title
     :param attrs: Optional. The specific column properties
@@ -164,10 +137,7 @@ class Table(Html.Html):
 
   @property
   def tableId(self) -> str:
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
 
     Usage::
 
@@ -177,22 +147,15 @@ class Table(Html.Html):
 
   def define(self, options: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Common JavaScript function to set the table columns definition.
 
-    Attributes:
-    ----------
     :param options: Optional. The header attributes
     """
     return self.js.setColumnDefs(options)
 
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
-    """
-    Description:
-    -----------
-    Common JavaScript function to add rows to the table.
+    """   Common JavaScript function to add rows to the table.
 
     Usage::
 
@@ -202,8 +165,6 @@ class Table(Html.Html):
         grid.build([{"col1": "row %s" % i}for i in range(n)])
       ])
 
-    Attributes:
-    ----------
     :param data: Optional.
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -216,13 +177,8 @@ class Table(Html.Html):
       'tableId': self.tableId, 'config': self.options.config_js(options), 'htmlCode': component_id or self.dom.varName}
 
   def loading(self, status: bool = True, color: str = None):
-    """
-    Description:
-    -----------
-    Add loading banner.
+    """   Add loading banner.
 
-    Attributes:
-    ----------
     :param status: The visibility flag
     :param color: Not used for the moment
     """

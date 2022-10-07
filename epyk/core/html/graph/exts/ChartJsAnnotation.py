@@ -7,10 +7,7 @@ class Annotations(Options):
 
   @property
   def drawTime(self):
-    """
-    Description:
-    -----------
-    Overrides annotation.drawTime if set.
+    """   Overrides annotation.drawTime if set.
 
     Related Pages:
 
@@ -24,9 +21,7 @@ class Annotations(Options):
 
   @property
   def type(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -40,9 +35,7 @@ class Annotations(Options):
 
   @property
   def mode(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -56,9 +49,7 @@ class Annotations(Options):
 
   @property
   def scaleID(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -72,9 +63,7 @@ class Annotations(Options):
 
   @property
   def value(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -88,9 +77,7 @@ class Annotations(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -104,9 +91,7 @@ class Annotations(Options):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -119,17 +104,12 @@ class Annotations(Options):
     self._config(num)
 
   def onClick(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Fires when the user clicks this annotation on the chart (be sure to enable the event in the events array below).
+    """   Fires when the user clicks this annotation on the chart (be sure to enable the event in the events array below).
     
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-annotation
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -142,9 +122,7 @@ class Annotation(Options):
 
   @property
   def drawTime(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -158,9 +136,7 @@ class Annotation(Options):
 
   @property
   def events(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -174,9 +150,7 @@ class Annotation(Options):
 
   @property
   def dblClickSpeed(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -190,10 +164,7 @@ class Annotation(Options):
 
   @property
   def annotations(self):
-    """
-    Description:
-    -----------
-    The plugin allows for horizontal zooming by clicking and dragging over the chart.
+    """   The plugin allows for horizontal zooming by clicking and dragging over the chart.
 
     Related Pages:
 

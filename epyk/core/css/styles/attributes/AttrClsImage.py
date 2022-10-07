@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrIcon(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Icon.
+  """  CSS pre defined properties for the Icon.
 
   CSS Properties:
 

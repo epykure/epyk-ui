@@ -18,10 +18,7 @@ class ApexActivePoints:
 
   @property
   def index(self):
-    """
-    Description:
-    -----------
-    Get the active series index.
+    """   Get the active series index.
 
     :return: A javaScript number.
     """
@@ -29,10 +26,7 @@ class ApexActivePoints:
 
   @property
   def config(self):
-    """
-    Description:
-    -----------
-    Get the event / chart detailed configuration.
+    """   Get the event / chart detailed configuration.
 
     Related Pages:
 
@@ -44,10 +38,7 @@ class ApexActivePoints:
 
   @property
   def datasetLabel(self):
-    """
-    Description:
-    -----------
-    Return the name of the selected dataset.
+    """   Return the name of the selected dataset.
 
     Related Pages:
 
@@ -59,10 +50,7 @@ class ApexActivePoints:
 
   @property
   def dataset(self):
-    """
-    Description:
-    -----------
-    Return the selected dataset.
+    """   Return the selected dataset.
 
     Related Pages:
 
@@ -74,10 +62,7 @@ class ApexActivePoints:
 
   @property
   def value(self):
-    """
-    Description:
-    -----------
-    Return the value for the selected point of the dataset.
+    """   Return the value for the selected point of the dataset.
 
     Related Pages:
 
@@ -89,10 +74,7 @@ class ApexActivePoints:
 
   @property
   def label(self):
-    """
-    Description:
-    -----------
-    Return the x label for the selected point.
+    """   Return the x label for the selected point.
 
     Related Pages:
 
@@ -104,10 +86,7 @@ class ApexActivePoints:
 
   @property
   def dataPointIndex(self):
-    """
-    Description:
-    -----------
-    Get the index of the selected point.
+    """   Get the index of the selected point.
 
     Related Pages:
 
@@ -119,10 +98,7 @@ class ApexActivePoints:
 
   @property
   def event(self):
-    """
-    Description:
-    -----------
-    Get the original JavaScript event object.
+    """   Get the original JavaScript event object.
 
     Related Pages:
 
@@ -134,10 +110,7 @@ class ApexActivePoints:
 
   @property
   def chartContext(self):
-    """
-    Description:
-    -----------
-    Get the full chart context.
+    """   Get the full chart context.
 
     Related Pages:
 
@@ -163,10 +136,7 @@ class Chart(Html.Html):
     self.chartId = "%s_obj" % self.htmlCode
 
   def activePoints(self, i: int = None):
-    """
-    Description:
-    -----------
-    The current active points selected by an event on a chart.
+    """   The current active points selected by an event on a chart.
 
     Usage::
 
@@ -182,18 +152,13 @@ class Chart(Html.Html):
 
       https://apexcharts.com/docs/options/chart/events/
 
-    Attributes:
-    ----------
     :param int i: Optional. The series index. Default it is the series clicked.
     """
     return ApexActivePoints(self.chartId, i, self.page)
 
   @property
   def shared(self) -> OptChartApex.OptionsChartSharedApex:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -204,17 +169,12 @@ class Chart(Html.Html):
     return OptChartApex.OptionsChartSharedApex(self)
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
-    Add a click event to the Apex chart.
+    """   Add a click event to the Apex chart.
 
     Related Pages:
 
       https://apexcharts.com/docs/options/chart/events/
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
@@ -226,13 +186,8 @@ class Chart(Html.Html):
     return self
 
   def zoomable(self, flag: bool = True):
-    """
-    Description:
-    -----------
-    Set the chart zoomable.
+    """   Set the chart zoomable.
 
-    Attributes:
-    ----------
     :param bool flag: Optional. Add the zoom option to the chart.
     """
     if flag:
@@ -243,10 +198,7 @@ class Chart(Html.Html):
       self.options.chart.zoom.enabled = False
 
   def colors(self, hex_values: list):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
@@ -256,8 +208,6 @@ class Chart(Html.Html):
       line = page.ui.charts.apex.line(height=250)
       line.colors(["#FFA500", "#FF7F50"])
 
-    Attributes:
-    ----------
     :param list hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -282,10 +232,7 @@ class Chart(Html.Html):
 
   @property
   def js(self) -> JsApexChart.ApexChart:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     Usage::
@@ -300,10 +247,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptChartApex.OptionsLine:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -313,28 +257,19 @@ class Chart(Html.Html):
     return super().options
 
   def labels(self, labels):
-    """
-    Description:
-    -----------
-    Set the labels of the different series in the chart.
+    """   Set the labels of the different series in the chart.
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param labels: List. An array of labels.
     """
     self.options.xaxis.categories = labels
     return self
 
   def add_dataset(self, data, label="", colors=None, opacity=None, kind=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: List. Optional. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -384,14 +319,10 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    ------------
     Update the chart with context and / or data changes.
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: Dictionary of dictionary. The full datasets object expected by ChartJs.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -425,10 +356,7 @@ class Bar(Chart):
 
   @property
   def options(self) -> OptChartApex.OptionsBar:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -443,10 +371,7 @@ class Area(Chart):
 
   @property
   def options(self) -> OptChartApex.OptionsArea:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -461,10 +386,7 @@ class Pie(Chart):
 
   @property
   def options(self) -> OptChartApex.OptionsPie:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -488,10 +410,7 @@ class RadialBar(Chart):
 
   @property
   def options(self) -> OptChartApex.OptionsPie:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -541,10 +460,7 @@ class Bubble(Chart):
 
   @property
   def options(self) -> OptChartApex.OptionsArea:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.

@@ -5,9 +5,7 @@ from epyk.core import Page
 class IntSlider:
 
   def __init__(self, value, min=0, max=10, step=1, description='Test:', disabled=False, continuous_update=False, orientation='horizontal', readout=True, readout_format='d'):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -47,9 +45,7 @@ class IntSlider:
 
 class FloatSlider:
   def __init__(self, value, min=0, max=10, step=0.1, description='Test:', disabled=False, continuous_update=False, orientation='horizontal', readout=True, readout_format='d'):
-    """
-    Description:
-    ------------
+    """  
 
     https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20List.html
     """
@@ -77,9 +73,7 @@ class FloatSlider:
 class FloatLogSlider:
   def __init__(self, value=10, base=10, min=-10, max=10, step=0.2, description='Test:', disabled=False, continuous_update=False,
                orientation='horizontal', readout=True, readout_format='d'):
-    """
-    Description:
-    ------------
+    """  
 
     https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20List.html
 
@@ -99,9 +93,7 @@ class FloatLogSlider:
 
 class IntRangeSlider:
   def __init__(self, values, min=0, max=10, step=1, description='Test:', disabled=False, continuous_update=False, orientation='horizontal', readout=True, readout_format='d'):
-    """
-    Description:
-    ------------
+    """  
 
     https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20List.html
     """
@@ -128,9 +120,7 @@ class IntRangeSlider:
 
 class FloatRangeSlider:
   def __init__(self, values, min=0, max=10, step=0.1, description='Test:', disabled=False, continuous_update=False, orientation='horizontal', readout=True, readout_format='d'):
-    """
-    Description:
-    ------------
+    """  
 
     https://ipywidgets.readthedocs.io/en/latest/examples/Widget%20List.html
     """

@@ -11,12 +11,8 @@ class Deno:
 
   def router(self, target_path: str):
     """
-    Description:
-    ------------
     Create a simple router file for your different views on your server.
 
-    Attributes:
-    ----------
     :param str target_path: The target path where the views are stored
     """
     router_path = os.path.join(self._app_path, "server.ts")
@@ -41,12 +37,8 @@ for await (const req of server) {
 
   def launcher(self, app_name: str, target_path: str):
     """
-    Description:
-    ------------
     Create a single launcher for the application.
 
-    Attributes:
-    ----------
     :param str app_name: The deno path (This should contain the deno.exe file)
     :param str target_path: The target path for the views
     """
@@ -77,13 +69,9 @@ for await (const req of server) {
 
   def page(self, selector=None, name=None, page=None, auto_route=False, target_folder="views"):
     """
-    Description:
-    ------------
     Publish a new application on the deno server.
     This will create a static rich HTML file.
 
-    Attributes:
-    ----------
     :param selector:
     :param name:
     :param page:
@@ -98,12 +86,8 @@ for await (const req of server) {
 
   def publish(self, target_path: str = None):
     """
-    Description:
-    ------------
     Publish the application to the target path within the Deno Server
 
-    Attributes:
-    ----------
     :param str target_path: The target path for the transpiled views
     """
     out_path = os.path.join(self._app_path, target_path or self.target_folder)

@@ -19,19 +19,14 @@ class CM(JsPackage):
 
   def setSize(self, width: Union[tuple, int, primitives.JsDataModel] = None,
               height: Union[tuple, int, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Programmatically set the size of the editor (overriding the applicable CSS rules).
+    """   Programmatically set the size of the editor (overriding the applicable CSS rules).
     width and height can be either numbers (interpreted as pixels) or CSS units ("100%", for example).
     You can pass null for either of them to indicate that that dimension should not be changed.
 
     Related Pages:
 
       https://codemirror.net/doc/manual.html#option_viewportMargin
-
-    Attributes:
-    ----------
+ 
     :param Union[tuple, int, primitives.JsDataModel] width: The width of the component.
     :param Union[tuple, int, primitives.JsDataModel] height: The height of the component.
 
@@ -42,17 +37,12 @@ class CM(JsPackage):
     return self.fnc_closure("setSize(%s, %s)" % (width, height))
 
   def scrollTo(self, x: int = None, y: int = None):
-    """
-    Description:
-    -----------
-    Scroll the editor to a given (pixel) position. Both arguments may be left as null or undefined to have no effect.
+    """   Scroll the editor to a given (pixel) position. Both arguments may be left as null or undefined to have no effect.
 
     Related Pages:
 
       https://codemirror.net/doc/manual.html#option_viewportMargin
-
-    Attributes:
-    ----------
+ 
     :param int x: The x position of the scrollbar.
     :param int y: The y position of the scrollbar.
 
@@ -61,10 +51,7 @@ class CM(JsPackage):
     return self.fnc_closure("scrollTo(%s, %s)" % (x, y))
 
   def hasFocus(self):
-    """
-    Description:
-    -----------
-    Tells you whether the editor currently has focus.
+    """   Tells you whether the editor currently has focus.
 
     Related Pages:
 
@@ -75,18 +62,13 @@ class CM(JsPackage):
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasFocus()" % self.varId)
 
   def setOption(self, option: Union[dict, primitives.JsDataModel], value: Any):
-    """
-    Description:
-    -----------
-    Change the configuration of the editor.
+    """   Change the configuration of the editor.
     option should the name of an option, and value should be a valid value for that option.
 
     Related Pages:
 
       https://codemirror.net/doc/manual.html#option_viewportMargin
-
-    Attributes:
-    ----------
+ 
     :param Union[dict, primitives.JsDataModel] option: The editor option name.
     :param Any value: The editor option value
 
@@ -97,10 +79,7 @@ class CM(JsPackage):
     return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.varId, option, value))
 
   def getOption(self):
-    """
-    Description:
-    -----------
-    Retrieves the current value of the given option for this editor instance.
+    """   Retrieves the current value of the given option for this editor instance.
 
     Related Pages:
 
@@ -111,10 +90,7 @@ class CM(JsPackage):
     return JsObjects.JsObjects.get("%s.getOption()" % self.varId)
 
   def refresh(self):
-    """
-    Description:
-    -----------
-    If your code does something to change the size of the editor element (window resizes are already listened for),
+    """   If your code does something to change the size of the editor element (window resizes are already listened for),
     or unhides it, you should probably follow up by calling this method to ensure CodeMirror is still looking as
     intended. See also the autorefresh addon.
 
@@ -127,29 +103,21 @@ class CM(JsPackage):
     return self.fnc_closure("refresh()")
 
   def execCommand(self, command: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Runs the command with the given name on the editor.
+    """   Runs the command with the given name on the editor.
 
     Related Pages:
 
       https://codemirror.net/doc/manual.html#commands
 
     :return: The Javascript string fragment
-
-    Attributes:
-    ----------
+ 
     :param Union[str, primitives.JsDataModel] command:
     """
     command = JsUtils.jsConvertData(command, None)
     return self.fnc_closure("execCommand(%s)" % command)
 
   def focus(self):
-    """
-    Description:
-    -----------
-    Give the editor focus.
+    """   Give the editor focus.
 
     Related Pages:
 
@@ -160,17 +128,13 @@ class CM(JsPackage):
     return self.fnc_closure("focus()")
 
   def undo(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self.fnc_closure("undo()")
 
   def redo(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self.fnc_closure("redo()")

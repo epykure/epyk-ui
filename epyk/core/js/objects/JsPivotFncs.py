@@ -41,15 +41,10 @@ class JsPivotAggFnc:
   __slots__ = ['keyAgg', 'key2Agg', 'numInputs', 'push', 'value', 'format']
 
   def toJs(self, options: dict):
-    """
-    Description:
-    -----------
-    Convert the aggregator object to a Javascript dictionary usable in the Pivot Table javascript library.
+    """   Convert the aggregator object to a Javascript dictionary usable in the Pivot Table javascript library.
     All the parameters will be standard to the Js module and this will convert the Python object to the
     corresponding Javascript ones.
 
-    Attributes:
-    ----------
     :param options:
     """
     js_pivot = ["tmpVal: 0"]

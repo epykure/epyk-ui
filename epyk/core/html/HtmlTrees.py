@@ -35,8 +35,6 @@ class Tree(Html.Html):
   @property
   def dom(self) -> JsHtmlTree.JsHtmlTree:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -50,10 +48,7 @@ class Tree(Html.Html):
 
   @property
   def options(self) -> OptTrees.OptionsTree:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -169,12 +164,8 @@ class Tree(Html.Html):
       })'''
 
   def click_node(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
@@ -183,12 +174,8 @@ class Tree(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param Optional[str] source_event: The JavaScript DOM source for the event (can be a sug item).
@@ -205,12 +192,8 @@ class Tree(Html.Html):
 class TreeInput(Tree):
 
   def set(self, ul, data: list):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param ul:
     :param list data:
     """
@@ -255,10 +238,7 @@ class DropDown(Html.Html):
 
   @property
   def style(self) -> GrpClsList.ClassDropDown:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     :rtype: GrpClsList.ClassDropDown
@@ -269,10 +249,7 @@ class DropDown(Html.Html):
 
   @property
   def options(self) -> OptTrees.OptDropDown:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a DropDown.
+    """   Property to set all the possible object for a DropDown.
 
     :rtype: OptTrees.OptDropDown
     """
@@ -280,13 +257,8 @@ class DropDown(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    The onclick event occurs when the user clicks on an element.
+    """   The onclick event occurs when the user clicks on an element.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: A Javascript Python function
     :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
     Javascript console.

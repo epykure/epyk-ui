@@ -47,23 +47,15 @@ class JsString(JsObject.JsObject):
 
   def __getitem__(self, value):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param value:
     """
     return JsString(None, "%s[%s]" % (self.varId, value), set_var=False)
 
   def startswith(self, val: Union[str, primitives.JsDataModel], position: int = None):
     """
-    Description:
-    ------------
     Proxy to the Python method startswith.
-
-    Attributes:
-    ----------
+ 
     :param val: The Python value.
     :param position:
 
@@ -80,8 +72,6 @@ class JsString(JsObject.JsObject):
   @property
   def length(self):
     """
-    Description:
-    ------------
     The length property of an array returns the length of an array (the number of array elements).
 
     Related Pages:
@@ -98,12 +88,8 @@ class JsString(JsObject.JsObject):
 
   def prepend(self, data: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Prepend Object to the String Javascript Object.
-
-    Attributes:
-    ----------
+ 
     :param data: Object. String or other Javascript objects.
     """
     self.varData = "%s + %s" % (JsUtils.jsConvertData(data, None), self.varData)
@@ -111,17 +97,13 @@ class JsString(JsObject.JsObject):
 
   def padStart(self, num: Union[int, primitives.JsDataModel], text: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The padStart() method pads the current string with another string (multiple times,
     if needed) until the resulting string reaches the given length.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart
-
-    Attributes:
-    ----------
+ 
     :param num: The length of the resulting string once the current str has been padded.
     :param text: The string to pad the current str with.
     """
@@ -130,8 +112,6 @@ class JsString(JsObject.JsObject):
 
   def padEnd(self, num: Union[int, primitives.JsDataModel], text: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The padEnd() method pads the current string with a given string (repeated,
     if needed) so that the resulting string reaches a given length.
     The padding is applied from the end of the current string.
@@ -139,9 +119,7 @@ class JsString(JsObject.JsObject):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd
-
-    Attributes:
-    ----------
+ 
     :param num: The length of the resulting string once the current str has been padded.
     :param text: The string to pad the current str with.
     """
@@ -150,12 +128,8 @@ class JsString(JsObject.JsObject):
 
   def add(self, value: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Add object to the String Javascript object.
-
-    Attributes:
-    ----------
+ 
     :param value: String or other Javascript objects.
 
     :return: return a new JString object
@@ -164,16 +138,12 @@ class JsString(JsObject.JsObject):
 
   def indexOf(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0):
     """
-    Description:
-    ------------
     The indexOf() method returns the position of the first occurrence of a specified value in a string.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_indexof.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: The string to search for.
     :param start:  Optional. Default 0. At which position to start the search.
 
@@ -187,16 +157,12 @@ class JsString(JsObject.JsObject):
   def lastIndexOf(self, search_value: Union[str, primitives.JsDataModel],
                   start: Union[int, primitives.JsDataModel] = 0):
     """
-    Description:
-    ------------
     The lastIndexOf() method returns the position of the last occurrence of a specified value in a string.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_lastindexof.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: The string to search for.
     :param start: Integer. Optional. Default 0. At which position to start the search.
 
@@ -210,17 +176,13 @@ class JsString(JsObject.JsObject):
   def substring(self, start: Union[int, primitives.JsDataModel] = 0,
                 end: Optional[Union[int, primitives.JsDataModel]] = None):
     """
-    Description:
-    ------------
     The substring() method extracts the characters from a string, between two specified indices, and returns the new
     sub string.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_substring.asp
-
-    Attributes:
-    ----------
+ 
     :param start: The position where to start the extraction. First character is at index 0.
     :param end: Optional. The position (up to, but not including) where to end the extraction.
       If omitted, it extracts the rest of the string
@@ -232,17 +194,13 @@ class JsString(JsObject.JsObject):
   def substr(self, start: Union[int, primitives.JsDataModel] = 0,
              length: Optional[Union[int, primitives.JsDataModel]] = None):
     """
-    Description:
-    ------------
     The substr() method extracts parts of a string, beginning at the character at the specified position, and returns
     the specified number of characters.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_substr.asp
-
-    Attributes:
-    ----------
+ 
     :param start: The position where to start the extraction. First character is at index 0.
     :param length: Optional. The number of characters to extract.
     If omitted, it extracts the rest of the string.
@@ -255,8 +213,6 @@ class JsString(JsObject.JsObject):
   def replace(self, search_value: Union[str, primitives.JsDataModel], new_value: Union[str, primitives.JsDataModel],
               is_py_data: bool = True):
     """
-    Description:
-    ------------
     The replace() method replaces a specified value with another value in a string
 
     The replace() method does not change the string it is called on. It returns a new string.
@@ -264,9 +220,7 @@ class JsString(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_string_methods.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: Required. The value, or regular expression, that will be replaced by the new value.
     :param new_value: Required. The value to replace the search value with.
     :param is_py_data: Optional.
@@ -278,16 +232,12 @@ class JsString(JsObject.JsObject):
 
   def slice(self, start: Union[int, primitives.JsDataModel], end: Optional[Union[int, primitives.JsDataModel]]):
     """
-    Description:
-    ------------
     The slice() method extracts parts of a string and returns the extracted parts in a new string.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_slice_string.asp
-
-    Attributes:
-    ----------
+ 
     :param start: The position where to begin the extraction. First character is at position 0.
     :param end: Optional. The position (up to, but not including) where to end the extraction.
       If omitted, slice() selects all characters from the start-position to the end of the string
@@ -296,16 +246,12 @@ class JsString(JsObject.JsObject):
 
   def search(self, search_value: Union[str, primitives.JsDataModel], is_py_data: bool = True):
     """
-    Description:
-    ------------
     The search() method searches a string for a specified value, and returns the position of the match.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_search.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: A regular expression. A string will automatically be converted to a regular expression..
     :param is_py_data: Optional.
     """
@@ -317,16 +263,12 @@ class JsString(JsObject.JsObject):
 
   def concat(self, *args, new_var_name: Optional[str] = None, is_py_data: bool = True):
     """
-    Description:
-    ------------
     The concat() method is used to join two or more strings.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_concat_string.asp
-
-    Attributes:
-    ----------
+ 
     :param args: Required. The strings to be joined.
     :param new_var_name: The new Javascript Variable Name.
     :param is_py_data: The data input type.
@@ -347,8 +289,6 @@ class JsString(JsObject.JsObject):
 
   def clean(self):
     """
-    Description:
-    ------------
     Remove the special characters in a string and only keep the ones necessary to be considered as a valid Javascript
     variable name.
 
@@ -369,16 +309,12 @@ class JsString(JsObject.JsObject):
 
   def leftTrim(self):
     """
-    Description:
-    ------------
 
     """
     return JsString("%s.leftTrim()" % self.varId, is_py_data=False)
 
   def trim(self):
     """
-    Description:
-    ------------
     The trim() method removes whitespace from both sides of a string.
 
     Related Pages:
@@ -391,8 +327,6 @@ class JsString(JsObject.JsObject):
 
   def trimStart(self):
     """
-    Description:
-    ------------
     The trimStart() method removes whitespace from the beginning of a string. trimLeft() is an alias of this method.
 
     Related Pages:
@@ -405,8 +339,6 @@ class JsString(JsObject.JsObject):
 
   def trimEnd(self):
     """
-    Description:
-    ------------
     The trimEnd() method removes whitespace from the end of a string. trimRight() is an alias of this method.
 
     Related Pages:
@@ -419,16 +351,12 @@ class JsString(JsObject.JsObject):
 
   def charAt(self, i: Union[int, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The charAt() method returns the character at the specified index in a string.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_charat.asp
-
-    Attributes:
-    ----------
+ 
     :param i: An integer representing the index of the character you want to return.
 
     :return: A String, representing the character at the specified index, or an empty string if the index number
@@ -438,16 +366,12 @@ class JsString(JsObject.JsObject):
 
   def charCodeAt(self, i: Union[int, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The charCodeAt() method returns the Unicode of the character at the specified index in a string.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_charcodeat.asp
-
-    Attributes:
-    ----------
+ 
     :param i: A number representing the index of the character you want to return.
 
     :return: A Number, representing the unicode of the character at the specified index.
@@ -458,8 +382,6 @@ class JsString(JsObject.JsObject):
 
   def toLowerCase(self):
     """
-    Description:
-    ------------
     The toLocaleLowerCase() method converts a string to lowercase letters, according to the host's current locale.
 
     Related Pages:
@@ -472,8 +394,6 @@ class JsString(JsObject.JsObject):
 
   def toUpperCase(self):
     """
-    Description:
-    ------------
     The toUpperCase() method converts a string to uppercase letters.
 
     Related Pages:
@@ -486,17 +406,13 @@ class JsString(JsObject.JsObject):
 
   def toLocaleUpperCase(self, locale: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The toLocaleUpperCase() method returns the calling string value converted to upper case,
     according to any locale-specific case mappings.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLocaleUpperCase
-
-    Attributes:
-    ----------
+ 
     :param locale: The locale parameter indicates the locale to be used to convert to upper case according
       to any locale-specific case mappings.
 
@@ -507,17 +423,13 @@ class JsString(JsObject.JsObject):
   def includes(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0,
                js_funcs: Optional[Union[list, str]] = None, js_obj=None):
     """
-    Description:
-    ------------
     The includes() method determines whether a string contains the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_includes.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: The string to search for.
     :param start: Optional. Default 0. At which position to start the search.
     :param js_obj: Optional. The base Javascript object to add the pollyfill to the Javascript imports.
@@ -536,17 +448,13 @@ class JsString(JsObject.JsObject):
   def startsWith(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0,
                  js_funcs: Optional[Union[list, str]] = None, js_obj=None):
     """
-    Description:
-    ------------
     The startsWith() method determines whether a string begins with the characters of a specified string.
     This function might not work with older browser, so to guarantee a good compatibility the jsObj must be defined.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_startswith.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: The string to search for
     :param start: Optional. Default 0. At which position to start the search
     :param js_funcs: Optional. Javascript functions
@@ -566,16 +474,12 @@ class JsString(JsObject.JsObject):
                length: Optional[Union[int, primitives.JsDataModel]] = None,
                js_funcs: Optional[Union[list, str]] = None):
     """
-    Description:
-    ------------
     The endsWith() method determines whether a string ends with the characters of a specified string.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_endswith.asp
-
-    Attributes:
-    ----------
+ 
     :param search_value: The string to search for
     :param length: Optional. Specify the length of the string to search. If omitted,
       the default value is the length of the string
@@ -593,16 +497,12 @@ class JsString(JsObject.JsObject):
 
   def repeat(self, count: Union[int, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The repeat() method returns a new string with a specified number of copies of the string it was called on.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_repeat.asp
-
-    Attributes:
-    ----------
+ 
     :param count: The number of times the original string value should be repeated in the new string.
 
     :return: A String, a new string containing copies of the original string
@@ -611,17 +511,13 @@ class JsString(JsObject.JsObject):
 
   def split(self, separator: str = "", limit: Optional[int] = None):
     """
-    Description:
-    ------------
     The split() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is a List with as a first value an emtpy String.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/jsref_split.asp
-
-    Attributes:
-    ----------
+ 
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
       If omitted, the entire string will be returned (an array with only one item)
     :param limit: Optional. An integer that specifies the number of splits, items after the split limit
@@ -639,17 +535,13 @@ class JsString(JsObject.JsObject):
   def splitEmptyArray(self, page: primitives.PageModel, separator: str,
                       limit: Optional[Union[int, primitives.JsDataModel]] = None):
     """
-    Description:
-    ------------
     The splitEmptyArray() method is used to split a string into an array of substrings, and returns the new array.
     The empty value is an emtpy list.
 
     Related Pages:
 
       https://stackoverflow.com/questions/5164883/the-confusion-about-the-split-function-of-javascript
-
-    Attributes:
-    ----------
+ 
     :param page: The report object in order to register the prototype extension
     :param separator: Optional. Specifies the character, or the regular expression, to use for splitting the string.
                       If omitted, the entire string will be returned (an array with only one item)
@@ -670,12 +562,8 @@ class JsString(JsObject.JsObject):
   def formatMoney(self, js_obj, dec_places: Union[int, primitives.JsDataModel],
                   country_code: str = 'UK', profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
 
-
-    Attributes:
-    ----------
+ 
     :param js_obj:
     :param dec_places: Optional. The number of decimal
     :param country_code: Optional. The country code. Default uk
@@ -688,8 +576,6 @@ class JsString(JsObject.JsObject):
 
   def parseFloat(self):
     """
-    Description:
-    ------------
     Convert the object to float on the JavaScript side.
 
     :return: A Python Javascript Number
@@ -700,8 +586,6 @@ class JsString(JsObject.JsObject):
 
   def parseInt(self):
     """
-    Description:
-    ------------
     Convert the object to integer on the JavaScript side.
 
     :return: A Python Javascript Integer
@@ -712,14 +596,10 @@ class JsString(JsObject.JsObject):
 
   def toDate(self, js_format: str = "YYYY-MM-DD"):
     """
-    Description:
-    ------------
     Convert the object to a date object on the JavaScript side.
 
     TODO: Implement the use of the date format.
-
-    Attributes:
-    ----------
+ 
     :param js_format: The date format.
     """
     from epyk.core.js.primitives import JsDate

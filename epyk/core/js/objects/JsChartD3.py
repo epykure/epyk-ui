@@ -15,12 +15,8 @@ class JsChartD3Links:
   def __register_records_fnc(self, func_name: str, func_def: Union[str, primitives.JsDataModel],
                              func_pmts: list = None, profile: Optional[Union[bool, dict]] = False):
     """
-    Description:
-    ------------
     This function will attach to the report object only the javascript functions used during the report,
-
-    Attributes:
-    ----------
+ 
     :param func_name: A String with the Javascript function name to be defined.
     :param func_def: A String with the Javascript function content.
     :param func_pmts: A list of parameters.

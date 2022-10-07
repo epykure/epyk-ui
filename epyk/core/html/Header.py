@@ -22,8 +22,6 @@ class Meta:
 
   def viewport(self, attrs: Optional[dict] = None):
     """
-    Description:
-    ------------
     Setting the viewport to make your website look good on all devices.
 
     Usage::
@@ -35,8 +33,6 @@ class Meta:
       https://www.w3schools.com/html/html_head.asp
       https://www.w3schools.com/tags/tag_meta.asp
 
-    Attributes:
-    ----------
     :param attrs: Optional. The view port attributes
     """
     dfl_attrs = {"width": "device-width", "height": "device-height", "initial-scale": "1.0"}
@@ -48,8 +44,6 @@ class Meta:
 
   def charset(self, value: str = "utf-8"):
     """
-    Description:
-    ------------
     Define the character set used.
 
     Usage::
@@ -61,8 +55,6 @@ class Meta:
       https://www.w3schools.com/tags/tag_meta.asp
       https://www.w3schools.com/tags/att_meta_charset.asp
 
-    Attributes:
-    ----------
     :param value: Optional. The charset encoding
     """
     common_vals = ("UTF-8", "ISO-8859-1")
@@ -74,8 +66,6 @@ class Meta:
 
   def refresh(self, time: int):
     """
-    Description:
-    ------------
     Refresh document every X seconds.
 
     Usage::
@@ -86,8 +76,6 @@ class Meta:
 
       https://www.w3schools.com/tags/tag_meta.asp
 
-    Attributes:
-    ----------
     :param time: A time in second
     """
     self._metas["refresh"] = '<meta http-equiv="refresh" content="%s">' % time
@@ -97,8 +85,6 @@ class Meta:
 
   def author(self, name: str):
     """
-    Description:
-    ------------
     Define the author of the page.
 
     Usage::
@@ -109,8 +95,6 @@ class Meta:
 
       https://www.w3schools.com/tags/att_meta_name.asp
 
-    Attributes:
-    ----------
     :param name: The author name
     """
     self._metas["author"] = '<meta name="author" content="%s">' % name
@@ -120,8 +104,6 @@ class Meta:
 
   def description(self, value: str):
     """
-    Description:
-    ------------
     Define a description of your web page.
 
     Usage::
@@ -132,8 +114,6 @@ class Meta:
 
       https://www.w3schools.com/html/html_head.asp
 
-    Attributes:
-    ----------
     :param value: The report description
     """
     self._metas["description"] = '<meta name="description" content="%s">' % value
@@ -143,8 +123,6 @@ class Meta:
 
   def keywords(self, content: Union[list, str]):
     """
-    Description:
-    ------------
     Define keywords for search engine.
 
     Usage::
@@ -155,8 +133,6 @@ class Meta:
 
       https://www.w3schools.com/html/html_head.asp
 
-    Attributes:
-    ----------
     :param content: The keyword data
     """
     if isinstance(content, list):
@@ -168,8 +144,6 @@ class Meta:
 
   def custom(self, name: str, content: str):
     """
-    Description:
-    ------------
     Bespoke function to add other meta tags.
 
     Usage::
@@ -180,8 +154,6 @@ class Meta:
 
       https://www.w3schools.com/tags/att_meta_name.asp
 
-    Attributes:
-    ----------
     :param name: The name for the meta tag
     :param content: The value of the meta tag
     """
@@ -192,8 +164,6 @@ class Meta:
 
   def http_equiv(self, name: str, content: str):
     """
-    Description:
-    ------------
     Bespoke function to add other http-equiv tags to the meta section.
 
     Usage::
@@ -204,8 +174,6 @@ class Meta:
 
       https://www.w3schools.com/tags/att_meta_http_equiv.asp
 
-    Attributes:
-    ----------
     :param name: The name for the meta tag
     :param content: The value of the meta tag
     """
@@ -229,8 +197,6 @@ class Links:
 
   def icon(self, href: str, cross_origin: bool = False):
     """
-    Description:
-    ------------
     Defines a resource for representing the page in the user interface, usually an icon (auditory or visual).
     In the browser, it is usually referred to as the favicon.
 
@@ -244,8 +210,6 @@ class Links:
 
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from different
     website.
@@ -254,8 +218,6 @@ class Links:
 
   def pingback(self, href: str, cross_origin: bool = False):
     """
-    Description:
-    ------------
     Pingbacks (also known as trackbacks) are a form of automated comment for a page or post,
     created when another WordPress blog links to that page or post.
 
@@ -264,8 +226,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://wordpress.stackexchange.com/questions/116079/what-is-rel-pingback-and-what-is-the-use-of-this-in-my-website
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
     different website.
@@ -274,24 +234,18 @@ class Links:
 
   def shortlink(self, href: str):
     """
-    Description:
-    ------------
     Some websites create short links to make sharing links via instant messaging easier.
 
     Related Pages:
 
       https://www.keycdn.com/blog/resource-hints
 
-    Attributes:
-    ----------
     :param href: The url path
     """
     self.stylesheet(href=href, file_type="", media=None, rel="shortlink", cross_origin=False)
 
   def preload(self, href: str, file_type: str = "", media: Optional[str] = None, cross_origin: bool = False):
     """
-    Description:
-    ------------
     The preload keyword for the rel attribute of the <link> element indicates the user is highly likely to require
     the target resource for the current navigation, and therefore the browser must preemptively fetch and cache
     the resource.
@@ -301,8 +255,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preload
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
@@ -313,8 +265,6 @@ class Links:
 
   def prefetch(self, href: str, media: Optional[str] = None, cross_origin: bool = False):
     """
-    Description:
-    ------------
     The prefetch keyword for the rel attribute of the <link> element is a hint to browsers that the user is likely to
     need the target resource for future navigations, and therefore the browser can likely improve the user experience
     by preemptively fetching and caching the resource.
@@ -324,8 +274,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/prefetch
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param media: Optional. This resource will then only be loaded if the media condition is true
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
@@ -335,8 +283,6 @@ class Links:
 
   def dns_prefetch(self, href: str, media: Optional[str] = None, cross_origin: bool = False):
     """
-    Description:
-    ------------
     The dns-prefetch keyword for the rel attribute of the <link> element is a hint to browsers that the user is likely
     to need resources from the target resource's origin, and therefore the browser can likely improve the user
     experience by preemptively performing DNS resolution for that origin.
@@ -346,8 +292,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/dns-prefetch
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param media: Optional. This resource will then only be loaded if the media condition is true
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
@@ -357,8 +301,6 @@ class Links:
 
   def prerender(self, href: str, media: Optional[str] = None, cross_origin: bool = False):
     """
-    Description:
-    ------------
     The prerender keyword for the rel attribute of the <link> element is a hint to browsers that the user might need
     the target resource for the next navigation, and therefore the browser can likely improve the user experience
     by preemptively fetching and processing the resource — for example, by fetching its subresources or performing
@@ -369,8 +311,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/prerender
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param media: Optional. This resource will then only be loaded if the media condition is true
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
@@ -380,8 +320,6 @@ class Links:
 
   def preconnect(self, href: str, media: Optional[str] = None, cross_origin: bool = False):
     """
-    Description:
-    ------------
     The preconnect directive allows the browser to setup early connections before an HTTP request is actually sent
     to the server.
     This includes DNS lookups, TLS negotiations, TCP handshakes.
@@ -392,8 +330,6 @@ class Links:
       https://www.keycdn.com/blog/resource-hints
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/preconnect
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param media: Optional. This resource will then only be loaded if the media condition is true
     :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
@@ -403,8 +339,6 @@ class Links:
 
   def imports(self, href: str, file_type: str = "", media: Optional[str] = None, rel: str = "import"):
     """
-    Description:
-    ------------
     HTML Imports is intended to be the packaging mechanism for web components, but you can also use HTML Imports by
     itself.
 
@@ -412,8 +346,6 @@ class Links:
 
       https://developer.mozilla.org/en-US/docs/Web/Web_Components/HTML_Imports
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
@@ -423,8 +355,6 @@ class Links:
 
   def manifest(self, href: str, file_type: str = "", media: Optional[str] = None):
     """
-    Description:
-    ------------
     The manifest keyword for the rel attribute of the <link> element indicates that the target resource is a Web app
     manifest.
 
@@ -435,8 +365,6 @@ class Links:
       https://developer.mozilla.org/en-US/docs/Web/HTML/Link_types/manifest
       https://developer.mozilla.org/en-US/docs/Web/Manifest
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
@@ -449,16 +377,12 @@ class Links:
   def stylesheet(self, href: str, file_type: str = "text/css", media: Optional[str] = None, rel: str = "stylesheet",
                  cross_origin: bool = False):
     """
-    Description:
-    ------------
     Link the page to a style sheet.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
@@ -483,8 +407,6 @@ class Links:
 
   def alternative(self, href: str, file_type: str = "text/css", media: Optional[str] = None):
     """
-    Description:
-    ------------
     Specifying alternative style sheets in a web page provides a way for users to see multiple versions of a page,
     based on their needs or preferences.
 
@@ -492,8 +414,6 @@ class Links:
 
       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link
 
-    Attributes:
-    ----------
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
@@ -512,16 +432,12 @@ class Icons:
 
   def icon(self, url: str, sizes: Optional[str] = None, img_type: Optional[str] = None):
     """
-    Description:
-    ------------
     Set the icon for the page.
 
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 
-    Attributes:
-    ----------
     :param url: The url of the icon on the server
     :param sizes: Optional. The size of the icon
     :param img_type: Optional. The type of picture
@@ -531,16 +447,12 @@ class Icons:
 
   def gif(self, url: str, sizes: Optional[str] = None):
     """
-    Description:
-    ------------
 
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_link_sizes.asp
 
-    Attributes:
-    ----------
     :param url: The path for the gif
     :param sizes: Optional. The size in a format 25x25
     """
@@ -549,15 +461,11 @@ class Icons:
 
   def svg(self, url: str, sizes: Optional[str] = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_link_sizes.asp
 
-    Attributes:
-    ----------
     :param url: The path for the svg file
     :param sizes: Optional. The size for 25x25
     """
@@ -566,16 +474,12 @@ class Icons:
 
   def apple_touch_icon(self, url: str, sizes: Optional[str] = None):
     """
-    Description:
-    ------------
 
 
     Related Pages:
 
       https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW4
 
-    Attributes:
-    ----------
     :param url: The path for the svg file
     :param sizes: Optional. The size for 25x25
     """
@@ -584,16 +488,12 @@ class Icons:
 
   def apple_touch_startup_icon(self, url: str, sizes: Optional[str] = None):
     """
-    Description:
-    ------------
 
 
     Related Pages:
 
       https://developer.apple.com/library/archive/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html#//apple_ref/doc/uid/TP40002051-CH3-SW4
 
-    Attributes:
-    ----------
     :param url: The path for the svg file
     :param sizes: Optional. The size for 25x25
     """
@@ -627,8 +527,6 @@ class Header:
 
   def dev(self, icon: Optional[str] = None):
     """
-    Description:
-    ------------
     Change the tab icon to highlight this page is still in dev mode.
 
     Usage::
@@ -636,8 +534,6 @@ class Header:
       page = Report()
       page.headers.dev()
 
-    Attributes:
-    ----------
     :param icon: Optional. The url path of the icon
     """
     self.favicon(icon or Defaults.FAVICON_DEV_URL)
@@ -645,8 +541,6 @@ class Header:
   @property
   def meta(self) -> Meta:
     """
-    Description:
-    ------------
     Property to the Meta data dictionary for the HTML page.
 
     Metadata is data (information) about data.
@@ -667,15 +561,10 @@ class Header:
     return self.__meta
 
   def add_script(self, src: str, attrs: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a JavaScript tag to the HTML page.
+    """   Add a JavaScript tag to the HTML page.
 
     The script will be added in a script tag.
 
-    Attributes:
-    ----------
     :param src: The script path added to the page
     :param attrs: optional. The various attributes to be added to the script tag
     """
@@ -686,15 +575,10 @@ class Header:
     self._scripts.append('<script src="%s" %s></script>' % (src, ' '.join(attr_list)))
 
   def add_code(self, code: str, attrs: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a JavaScript tag to the HTML page.
+    """   Add a JavaScript tag to the HTML page.
 
     The code will be added in a script tag.
 
-    Attributes:
-    ----------
     :param code: The JavaScript code to be added to the page
     :param attrs: optional. The various attributes to be added to the script tag
     """
@@ -704,8 +588,6 @@ class Header:
 
   def title(self, value: str):
     """
-    Description:
-    ------------
     The <title> tag is required in all HTML documents and it defines the title of the document.
 
     You can NOT have more than one <title> element in an HTML document.
@@ -718,8 +600,6 @@ class Header:
 
       https://www.w3schools.com/tags/tag_title.asp
 
-    Attributes:
-    ----------
     :param value: The title value for the page
     """
     self._headers['title'] = value
@@ -727,8 +607,6 @@ class Header:
 
   def base(self, url: str):
     """
-    Description:
-    ------------
     Specify a dedicated path for the relative paths in the page.
 
     Basically the images will use this path as base if present in the page.
@@ -737,8 +615,6 @@ class Header:
 
       https://www.w3schools.com/tags/tag_base.asp
 
-    Attributes:
-    ----------
     :param url: The url path
     """
     self._base = url
@@ -746,8 +622,6 @@ class Header:
 
   def favicon(self, url: str, rel: str = "icon", sizes: Optional[str] = None, img_type: Optional[str] = None):
     """
-    Description:
-    ------------
     The <link> tag defines a link between a document and an external resource.
 
     The <link> tag is used to link to external style sheets.
@@ -761,8 +635,6 @@ class Header:
       https://developer.mozilla.org/fr/docs/Web/HTML/Element/link
       https://www.w3schools.com/tags/tag_link.asp
 
-    Attributes:
-    ----------
     :param url: The url full path
     :param rel: Optional
     :param sizes: Optional
@@ -801,8 +673,6 @@ class Header:
   @property
   def links(self):
     """
-    Description:
-    ------------
     The various HTML page header links.
 
     Related Pages:
@@ -815,8 +685,6 @@ class Header:
   @property
   def icons(self):
     """
-    Description:
-    ------------
     Property to defined / add more icons to the page header.
     Some browsers (like Safari or Opera) could require specify tags in the page.
     """

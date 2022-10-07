@@ -14,9 +14,7 @@ class Menus:
 
   def top(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (30, 'px'), html_code: str = None,
           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Add a menu item at the top of the page.
     The menu will be fixed on the page, always visible
 
@@ -38,8 +36,6 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    Attributes:
-    ----------
     :param data:
     :param color: String. Optional. The font color in the component. Default inherit
     :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit
@@ -103,9 +99,7 @@ class Menus:
   def bottom(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
              height: Union[tuple, int] = (30, 'px'), html_code: str = None,
              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Add a menu item at the bottom of the page.
     The menu will be fixed on the page, always visible.
 
@@ -126,8 +120,6 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    Attributes:
-    ----------
     :param data:
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -191,9 +183,7 @@ class Menus:
   def menu(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
            height: Union[tuple, int] = (None, 'px'), html_code: str = None,
            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -216,8 +206,6 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    Attributes:
-    ----------
     :param data:
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -271,9 +259,7 @@ class Menus:
   def bar(self, data=None, align: str = "left", position: str = "top", color: str = None,
           width: Union[tuple, int] = (350, "px"), height: Union[tuple, int] = (None, 'px'), options: dict = None,
           profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -292,8 +278,6 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    Attributes:
-    ----------
     :param data:
     :param align: String. Optional. A string with the horizontal position of the component
     :param position: String. Optional. A string with the vertical position of the component
@@ -346,17 +330,13 @@ class Menus:
 
   def icons(self, data, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
             options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
     Add a menu bar with font awesome icons.
 
     Usage::
 
       page.ui.lists.
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -377,9 +357,7 @@ class Menus:
   def buttons(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
               height: Union[tuple, int] = (None, 'px'), html_code: str = None,
               helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -392,8 +370,6 @@ class Menus:
 
       - :class:`epyk.core.html.HtmlButton.Buttons`
 
-    Attributes:
-    ----------
     :param data:
     :param color: String. Optional. The font color in the component. Default inherit
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -417,16 +393,12 @@ class Menus:
   def images(self, data, path: str = None, width: Union[tuple, int] = (100, '%'),
              height: Union[tuple, int] = (None, 'px'), align: str = "center",
              options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       page.ui.menus.images(["https://jupyter.org/favicon.ico", "https://codepen.io//favicon.ico"])
 
-    Attributes:
-    ----------
     :param path:
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -463,16 +435,12 @@ class Menus:
   def right(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
             height: Union[tuple, int] = (30, 'px'), html_code: str = None,
             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       page.ui.lists.
 
-    Attributes:
-    ----------
     :param data:
     :param color:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -535,9 +503,7 @@ class Menus:
   def divisor(self, data, divider: bool = None, width: Union[tuple, int] = (100, '%'),
               height: Union[tuple, int] = (None, 'px'), options: dict = None,
               profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
     Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
     The components will be based on Links.
 
@@ -551,8 +517,6 @@ class Menus:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlText.link`
 
-    Attributes:
-    ----------
     :param data:
     :param divider: symbols.shape | String. The symbol between the links.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -579,9 +543,7 @@ class Menus:
   def button(self, value, components: Union[html.Html.Html, List[html.Html.Html]], symbol: str = None,
              width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'), options: dict = None,
              profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -593,8 +555,6 @@ class Menus:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlButton.Button`
 
-    Attributes:
-    ----------
     :param value:
     :param components:
     :param symbol:
@@ -623,9 +583,7 @@ class Menus:
 
   def toolbar(self, data, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'),
               options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -643,8 +601,6 @@ class Menus:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlImage.Badge`
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -674,9 +630,7 @@ class Menus:
 
   def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code: str = None,
                  helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Menu using Jquery UI external module.
 
     Usage::
@@ -699,8 +653,6 @@ class Menus:
 
       https://jqueryui.com/menu/
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -724,9 +676,7 @@ class Menus:
 
   def contextual(self, record=None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'),
                  html_code: str = None, visible: bool = False, options: dict = None, profile: Union[bool, dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work.
 
@@ -739,8 +689,6 @@ class Menus:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
 
-    Attributes:
-    ----------
     :param record: Optional.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -759,16 +707,12 @@ class Menus:
   def pills(self, data, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (50, 'px'),
             html_code: str = None, helper: str = None,
             options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       page.ui.lists.
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit

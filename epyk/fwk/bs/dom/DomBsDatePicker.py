@@ -6,8 +6,6 @@ class DomDate(JsHtml.JsHtmlRich):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Common function to get the component content.
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.querySelector("input").varId)

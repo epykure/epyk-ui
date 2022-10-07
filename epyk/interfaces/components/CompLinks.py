@@ -16,9 +16,7 @@ class Links:
   def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
                height: types.SIZE_TYPE = (None, 'px'), decoration=False, html_code: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -36,8 +34,6 @@ class Links:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param url: Optional. The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -64,9 +60,7 @@ class Links:
   def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None,
              height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
              options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Underlying HTML Objects:
 
@@ -80,8 +74,6 @@ class Links:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param url: The destination page when clicked
     :param icon: Optional. The component icon content from font-awesome references
@@ -106,9 +98,7 @@ class Links:
   def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
            helper: str = None, height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
            options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Python interface to the common Hyperlink.
 
     Usage::
@@ -122,8 +112,6 @@ class Links:
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component.
     :param url: Optional. The string url of the link.
     :param align: Optional. The text-align property within this component.
@@ -153,9 +141,7 @@ class Links:
 
   def data(self, text: str, value, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'),
            fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Python interface to the Hyperlink to retrieve data.
 
     Usage::
@@ -171,8 +157,6 @@ class Links:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    ----------
     :param text: The string value to be displayed in the component
     :param value: The value to be displayed to this component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -190,17 +174,13 @@ class Links:
   def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
               height: types.SIZE_TYPE =(None, 'px'), decoration: bool = False, html_code: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Display a link with the same layout than a buttons.colored HTML component.
 
     Usage::
 
         page.ui.links
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component.
     :param url: Optional. The string url of the link.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
@@ -234,17 +214,13 @@ class Links:
   def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None,
              height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
              html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     HTML component to upload files.
 
     Usage::
 
       page.ui.links
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param url: Optional. The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -282,17 +258,13 @@ class Links:
   def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
                height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
                html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     HTML component to upload files.
 
     Usage::
 
       page.ui.links
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param url: Optional. The string url of the link
     :param icon: Optional. A string with the value of the icon to display from font-awesome

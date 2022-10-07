@@ -25,8 +25,6 @@ class Fields:
            tooltip: str = None, options: types.OPTION_TYPE = None, helper: str = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
     """
-    Description:
-    ------------
     Add the HTML text component to the page.
 
     :tags:
@@ -52,8 +50,6 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
 
-    Attributes:
-    -----------
     :param text: Optional. The string value to be displayed in the component
     :param label: Optional. The text of label to be added to the component
     :param color: Optional. The color of the text
@@ -105,8 +101,6 @@ class Fields:
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            helper: str = None) -> html.HtmlDates.DatePicker:
     """
-    Description:
-    ------------
     This component is based on the Jquery Date Picker object.
 
     :tags:
@@ -129,8 +123,6 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -165,8 +157,6 @@ class Fields:
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
     """
-    Description:
-    ------------
     This component is based on the Jquery Date Picker object.
 
     :tags:
@@ -193,8 +183,6 @@ class Fields:
     :categories: Inputs,Texts
     :tags: Dates
 
-    Attributes:
-    -----------
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -222,8 +210,6 @@ class Fields:
           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
     """
-    Description:
-    ------------
     This component is based on the Jquery Date Picker object.
 
     :tags:
@@ -245,8 +231,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
     :param color: Optional. The font color in the component. Default inherit
@@ -274,8 +258,6 @@ class Fields:
           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
           helper: str = None) -> html.HtmlDates.TimePicker:
     """
-    Description:
-    ------------
     This component is based on the Jquery Time Picker object.
 
     :tags:
@@ -298,8 +280,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param deltatime: Optional
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -319,8 +299,6 @@ class Fields:
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            helper: str = None) -> html.HtmlDates.TimePicker:
     """
-    Description:
-    ------------
     This component is based on the Jquery Time Picker object.
 
     :tags:
@@ -343,8 +321,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -365,8 +341,6 @@ class Fields:
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -383,8 +357,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -412,8 +384,6 @@ class Fields:
              helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -430,8 +400,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -461,8 +429,6 @@ class Fields:
                    html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldAutocomplete:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -479,8 +445,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -504,8 +468,6 @@ class Fields:
              helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None, input_tag: bool = False) -> html.HtmlInput.FieldInput:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -527,8 +489,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -567,8 +527,6 @@ class Fields:
              helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
     """
-    Description:
-    ------------
     Create a hidden HTML component.
     This is used to store values which are not visible on the page.
 
@@ -587,8 +545,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -614,8 +570,6 @@ class Fields:
               helper: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInteger:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -632,8 +586,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -657,8 +609,6 @@ class Fields:
            helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldFile:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -675,8 +625,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -704,8 +652,6 @@ class Fields:
                helper: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldPassword:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -722,8 +668,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -747,8 +691,6 @@ class Fields:
                helper: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldTextArea:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -765,8 +707,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param placeholder: Optional. The text to be displayed when the input is empty
@@ -790,8 +730,6 @@ class Fields:
                options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldCheckBox:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -812,8 +750,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -836,8 +772,6 @@ class Fields:
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
     """
-    Description:
-    ------------
     The <input type="radio"> defines a radio button.
     Radio buttons are normally presented in radio groups (a collection of radio buttons describing a set of
     related options).
@@ -862,8 +796,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default False
     :param label: Optional. The text of label to be added to the component
     :param group_name: Optional. Group different radio together to only have 1 value selected
@@ -893,8 +825,6 @@ class Fields:
             options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldRange:
     """
-    Description:
-    ------------
     The <input type="range"> defines a control for entering a number whose exact value is not important.
     Default range is 0 to 100. However, you can set restrictions on what numbers are accepted with the attributes below.
     - max - specifies the maximum value allowed
@@ -921,8 +851,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param min:
     :param max:
@@ -949,8 +877,6 @@ class Fields:
              helper: str = None, options: types.OPTION_TYPE = None, multiple: bool = False,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -967,8 +893,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to the component. Default False
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1006,8 +930,6 @@ class Fields:
              options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -1024,8 +946,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1059,8 +979,6 @@ class Fields:
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -1077,8 +995,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1116,14 +1032,11 @@ class Fields:
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
       page.ui.fields.select(["a", "b"], label="Check")
 
@@ -1134,9 +1047,7 @@ class Fields:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
-
-    Attributes:
-    -----------
+ -
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1168,8 +1079,6 @@ class Fields:
            helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -1186,8 +1095,6 @@ class Fields:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1220,16 +1127,12 @@ class Fields:
                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                   options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    -----------
     :param label: Optional. The text of label to be added to the component
     :param text: Optional. The string value to be displayed in the component
     :param align: Optional. The text-align property within this component
@@ -1261,16 +1164,12 @@ class Fields:
                   height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                   options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    -----------
     :param label: Optional. The text of label to be added to the component
     :param value: Optional. The value to be displayed to this component. Default T
     :param align: Optional. The text-align property within this component
@@ -1306,8 +1205,6 @@ class Fields:
              html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add a toggle component.
 
     :tags:
@@ -1331,8 +1228,6 @@ class Fields:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
 
-    Attributes:
-    -----------
     :param record: Optional. The list of dictionaries with the data
     :param label: Optional. The toggle static label displayed
     :param is_on: Optional.
@@ -1369,11 +1264,7 @@ class Fields:
              html_code: str = None, options: types.OPTION_TYPE = None, range: bool = False,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
-    Attributes:
-    -----------
     :param value: Optional. The value to be displayed to this component. Default 0
     :param min: Optional.
     :param max: Optional.
@@ -1433,11 +1324,7 @@ class Fields:
               options: types.OPTION_TYPE = None, autocomplete: bool = False, kind: str = 'select',
               profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    -----------
     :param items:
     :param button:
     :param width:
@@ -1472,18 +1359,13 @@ class Timelines:
   def view(self, start_date: types.DATE_TYPES, end_date: types.DATE_TYPES, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param start_date:
     :param end_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1520,18 +1402,13 @@ class Timelines:
   def period(self, start_date: types.DATE_TYPES, days: int, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"),
              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param start_date:
     :param days:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1570,18 +1447,13 @@ class Timelines:
   def week(self, start_date: types.DATE_TYPES, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"),
            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param start_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -1616,18 +1488,13 @@ class Timelines:
                  height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                  helper: str = None, options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param value:
     :param label: Optional.
     :param icon: Optional.
@@ -1652,18 +1519,13 @@ class Timelines:
                 width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
                 options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param completion_date:
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1699,18 +1561,13 @@ class Timelines:
   def meeting(self, time, icon: str = None, width: types.SIZE_TYPE = (25, 'px'),
               height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param time:
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -1731,18 +1588,13 @@ class Timelines:
 
   def workload(self, value, width: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param value: The workload percentage.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
@@ -1772,18 +1624,13 @@ class Timelines:
   def issues(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
              options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None,
              helper: str = None) -> html.HtmlList.Items:
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param records:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

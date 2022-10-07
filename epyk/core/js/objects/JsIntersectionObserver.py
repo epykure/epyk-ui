@@ -17,8 +17,6 @@ class IntersectionObserverEntry:
   @property
   def boundingClientRect(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only boundingClientRect property returns a DOMRectReadOnly
     which in essence describes a rectangle describing the smallest rectangle that contains the entire target element.
 
@@ -31,8 +29,6 @@ class IntersectionObserverEntry:
   @property
   def intersectionRatio(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only intersectionRatio property tells you how much of
     the target element is currently visible within the root's intersection ratio, as a value between 0.0 and 1.0.
 
@@ -45,8 +41,6 @@ class IntersectionObserverEntry:
   @property
   def intersectionRect(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only intersectionRect property is a DOMRectReadOnly object
     which describes the smallest rectangle that contains the entire portion of the target element which is currently
     visible within the intersection root.
@@ -60,8 +54,6 @@ class IntersectionObserverEntry:
   @property
   def isIntersecting(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only isIntersecting property is a Boolean value which is true
     if the target element intersects with the intersection observer's root.
 
@@ -74,8 +66,6 @@ class IntersectionObserverEntry:
   @property
   def rootBounds(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only rootBounds property is a DOMRectReadOnly corresponding to the
     target's root intersection rectangle, offset by the IntersectionObserver.rootMargin if one is specified.
 
@@ -88,8 +78,6 @@ class IntersectionObserverEntry:
   @property
   def target(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only target property indicates which targeted Element has changed
     its amount of intersection with the intersection root.
 
@@ -102,8 +90,6 @@ class IntersectionObserverEntry:
   @property
   def time(self):
     """
-    Description:
-    ------------
     The IntersectionObserverEntry interface's read-only time property is a DOMHighResTimeStamp that indicates the time
     at which the intersection change occurred relative to the time at which the document was created.
 
@@ -131,11 +117,7 @@ class IntersectionObserver:
 
   def entry(self, i: int = 0, entry_code: str = "entry") -> IntersectionObserverEntry:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param i: Optional.
     :param entry_code: Optional. The entry variable name on JavaScript side.
     """
@@ -144,11 +126,7 @@ class IntersectionObserver:
   def new(self, callback, options: dict = None, observe_once: bool = False, profile: types.PROFILE_TYPE = None,
           entry_code: str = "entry"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param callback:
     :param observe_once:
     :param options:
@@ -169,8 +147,6 @@ class IntersectionObserver:
   @property
   def POLL_INTERVAL(self):
     """
-    Description:
-    ------------
     """
     return JsObject.JsObject("%s.POLL_INTERVAL" % self.varId, is_py_data=False)
 
@@ -181,8 +157,6 @@ class IntersectionObserver:
   @property
   def USE_MUTATION_OBSERVER(self):
     """
-    Description:
-    ------------
     """
     return JsObject.JsObject("%s.USE_MUTATION_OBSERVER" % self.varId, is_py_data=False)
 
@@ -193,8 +167,6 @@ class IntersectionObserver:
   @property
   def root(self):
     """
-    Description:
-    ------------
     The IntersectionObserver interface's read-only root property identifies the Element whose bounds are treated as
     the bounding box of the viewport for the element which is the observer's target.
     If the root is null, then the bounds of the actual document viewport are used.
@@ -208,8 +180,6 @@ class IntersectionObserver:
   @property
   def rootMargin(self):
     """
-    Description:
-    ------------
     The IntersectionObserver interface's read-only rootMargin property is a string with syntax similar to that of
     the CSS margin property.
 
@@ -222,8 +192,6 @@ class IntersectionObserver:
   @property
   def thresholds(self):
     """
-    Description:
-    ------------
     The IntersectionObserver interface's read-only thresholds property returns the list of intersection thresholds that
     was specified when the observer was instantiated with IntersectionObserver().
     If only one threshold ratio was provided when instantiating the object, this will be an array containing
@@ -237,8 +205,6 @@ class IntersectionObserver:
 
   def observe(self, target_element: Union[primitives.HtmlModel, str]):
     """
-    Description:
-    ------------
     The IntersectionObserver method observe() adds an element to the set of target elements being watched by the
     IntersectionObserver.
 
@@ -246,8 +212,6 @@ class IntersectionObserver:
 
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/observe
 
-    Attributes:
-    ----------
     :param target_element: An element whose visibility within the root is to be monitored.
                           This element must be a descendant of the root element (or contained wtihin the current
                           document, if the root is the document's viewport).
@@ -261,8 +225,6 @@ class IntersectionObserver:
 
   def disconnect(self):
     """
-    Description:
-    ------------
     The IntersectionObserver method disconnect() stops watching all of its target elements for visibility changes.
 
     Related Pages:
@@ -274,8 +236,6 @@ class IntersectionObserver:
 
   def takeRecords(self, js_code: str = None):
     """
-    Description:
-    ------------
     The IntersectionObserver method takeRecords() returns an array of IntersectionObserverEntry objects, one for each
     targeted element which has experienced an intersection change since the last time the intersections were checked,
     either explicitly through a call to this method or implicitly by an automatic call to the observer's callback.
@@ -285,8 +245,6 @@ class IntersectionObserver:
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/takeRecords
       https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/takeRecords
 
-    Attributes:
-    ----------
     :param js_code: Optional. The entries variable name.
 
     :return: An array of IntersectionObserverEntry objects, one for each target element whose intersection with the
@@ -296,11 +254,7 @@ class IntersectionObserver:
 
   def eachRecord(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, entry_code: str = "entry"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param entry_code: Optional. The entry variable name on JavaScript side.
@@ -310,8 +264,6 @@ class IntersectionObserver:
 
   def unobserve(self, target_element: Union[primitives.HtmlModel, str]):
     """
-    Description:
-    ------------
     The IntersectionObserver method unobserve() instructs the IntersectionObserver to stop observing the specified
     target element.
 
@@ -322,8 +274,6 @@ class IntersectionObserver:
       https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/unobserve
       https://w3c.github.io/IntersectionObserver/#dom-intersectionobserver-intersectionobserver
 
-    Attributes:
-    ----------
     :param target_element: The Element to cease observing.
         If the specified element isn't being observed, this method does nothing and no exception is thrown.
     """

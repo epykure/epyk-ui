@@ -24,8 +24,6 @@ class Config(DataAttrs):
   @property
   def duration(self):
     """
-    Description:
-    ------------
     Time for the animation of the redraw in milliseconds.
 
     Related Pages:
@@ -41,8 +39,6 @@ class Config(DataAttrs):
   @property
   def lazy(self):
     """
-    Description:
-    ------------
     If true, the animation can be interrupted by other animations.
 
     Related Pages:
@@ -58,8 +54,6 @@ class Config(DataAttrs):
   @property
   def easing(self):
     """
-    Description:
-    ------------
     Set the easing option.
 
     Related Pages:
@@ -95,14 +89,9 @@ class ChartJs(JsPackage):
     self._js = []
 
   def getElementsAtEvent(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
-    """
-    Description:
-    -----------
-    Calling getElementsAtEvent(event) on your Chart instance passing an argument of an event,
+    """   Calling getElementsAtEvent(event) on your Chart instance passing an argument of an event,
     or jQuery event, will return the point elements that are at that the same position of that event.
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -117,10 +106,7 @@ class ChartJs(JsPackage):
   @JsUtils.fromVersion({'chart.js': '3.0.0'})
   def getElementsAtEventForMode(self, js_funcs: Union[list, str], mode: str = "nearest", options: dict = None,
                                 use_final_position: bool = True, profile: Optional[Union[dict, bool]] = False):
-    """
-    Description:
-    -----------
-    Calling getElementsAtEventForMode(e, mode, options, useFinalPosition) on your Chart instance passing an event and a
+    """   Calling getElementsAtEventForMode(e, mode, options, useFinalPosition) on your Chart instance passing an event and a
     mode will return the elements that are found. The options and useFinalPosition arguments are passed through to the
     handlers.
 
@@ -128,8 +114,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript functions.
     :param str mode:
     :param dict options:
@@ -147,10 +131,7 @@ class ChartJs(JsPackage):
         js_funcs, toStr=True, profile=profile), mode, options, use_final_position), is_py_data=False)
 
   def add(self, point: Union[str, primitives.JsDataModel], values: Union[dict, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Add point to an exiting chart on existing series.
+    """   Add point to an exiting chart on existing series.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -158,8 +139,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param point: Object. The point to add on the x-axis.
     :param values: Dictionary. The value per series name.
     """
@@ -177,10 +156,7 @@ class ChartJs(JsPackage):
       'varName': self.varName, 'point': point, 'values': values})
 
   def remove(self, point=None, series_names: Union[list, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Remove point to existing series.
+    """   Remove point to existing series.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -188,8 +164,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param point: Object. Optional. The point to be removed on the series. If none the last one will be removed.
     :param series_names: List. Optional. The series name.
     """
@@ -217,27 +191,19 @@ class ChartJs(JsPackage):
       'varName': self.varName, 'point': point, 'seriesNames': series_names})
 
   def empty(self):
-    """
-    Description:
-    -----------
-    Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
+    """   Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
     This will also update the chart to trigger the animation.
     """
     return JsObjects.JsVoid(
       "%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
   def data(self, datasets: dict, options: dict = None, profile=None):
-    """
-    Description:
-    -----------
-    Update all the data in the chart.
+    """   Update all the data in the chart.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param dict datasets: The full datasets object expected by ChartJs.
     :param dict options: Optional. Specific Python options available for this component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -246,10 +212,7 @@ class ChartJs(JsPackage):
       JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
   def load(self, name: str, points: Union[List[dict], primitives.JsDataModel], options: dict = None, color: str = ""):
-    """
-    Description:
-    -----------
-    Loads new series on an existing chart.
+    """   Loads new series on an existing chart.
     existing x axis will not be changed and they will be used to add the points.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
@@ -258,8 +221,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param name: String. The series name.
     :param List[dict] points: The list of points ({x: , y: }) to be added to the chart.
     :param dict options: Optional. Specific Python options available for this series.
@@ -287,10 +248,7 @@ class ChartJs(JsPackage):
               "htmlCode": self.component.htmlCode, "color": color})
 
   def unload(self, names: list = None):
-    """
-    Description:
-    -----------
-    Remove series from the chart.
+    """   Remove series from the chart.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -298,8 +256,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    Attributes:
-    ----------
     :param list names: Optional. The series names to be removed from the chart. If none all series will be removed.
     """
     if names is None:
@@ -315,18 +271,13 @@ class ChartJs(JsPackage):
 
   @property
   def label(self):
-    """
-    Description:
-    -----------
-    Return the series label.
+    """   Return the series label.
     """
     return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, is_py_data=False)
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObject.JsObject(
@@ -334,9 +285,7 @@ class ChartJs(JsPackage):
 
   @property
   def value(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {
@@ -344,16 +293,12 @@ class ChartJs(JsPackage):
 
   def update(self, config: Union[dict, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     Triggers an update of the chart. This can be safely called after updating the data object.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param Union[dict, primitives.JsDataModel] config: Optional. A config object can be provided with additional
       configuration for the process.
     """
@@ -365,8 +310,6 @@ class ChartJs(JsPackage):
 
   def reset(self):
     """
-    Description:
-    ------------
     Reset the chart to it's state before the initial animation.
     A new animation can then be triggered using update.
 
@@ -382,8 +325,6 @@ class ChartJs(JsPackage):
 
   def stop(self):
     """
-    Description:
-    ------------
     Use this to stop any current animation loop. This will pause the chart during any current animation frame.
 
     Usage::
@@ -401,8 +342,6 @@ class ChartJs(JsPackage):
 
   def resize(self):
     """
-    Description:
-    ------------
     Use this to manually resize the canvas element.
 
     This is run each time the canvas container is resized, but you can call this method manually if you change the size
@@ -419,8 +358,6 @@ class ChartJs(JsPackage):
 
   def clear(self):
     """
-    Description:
-    ------------
     Will clear the chart canvas. Used extensively internally between animation frames, but you might find it useful.
 
     Usage::
@@ -437,8 +374,6 @@ class ChartJs(JsPackage):
 
   def toBase64Image(self):
     """
-    Description:
-    ------------
     This returns a base 64 encoded string of the chart in it's current state.
 
     Related Pages:
@@ -451,8 +386,6 @@ class ChartJs(JsPackage):
 
   def generateLegend(self):
     """
-    Description:
-    ------------
     Returns an HTML string of a legend for that chart. The legend is generated from the legendCallback in the options.
 
     Related Pages:
@@ -465,8 +398,6 @@ class ChartJs(JsPackage):
 
   def getElementAtEvent(self, event: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Calling getElementAtEvent(event) on your Chart instance passing an argument of an event, or jQuery event,
     will return the single element at the event position
 
@@ -474,8 +405,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] event: The javascript event.
 
     :return: the first element at the event point.
@@ -485,16 +414,12 @@ class ChartJs(JsPackage):
 
   def getDatasetAtEvent(self, event: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Looks for the element under the event point, then returns all elements from that dataset.
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] event: The javascript event.
 
     :return: an array of elements
@@ -504,8 +429,6 @@ class ChartJs(JsPackage):
 
   def getDatasetMeta(self, index: int):
     """
-    Description:
-    ------------
     Looks for the dataset that matches the current index and returns that metadata.
 
     Usage::
@@ -516,16 +439,12 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param int index: The index value of the series.
     """
     return JsObjects.JsObject.JsObject("%s.getDatasetMeta(%s)" % (self.toStr(), index))
 
   def render(self, config: Union[dict, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     Triggers a redraw of all chart elements. Note, this does not update elements for new data.
     Use .update() in that case.
 
@@ -537,8 +456,6 @@ class ChartJs(JsPackage):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    Attributes:
-    ----------
     :param Union[dict, primitives.JsDataModel] config: Optional. A python dictionary as config object.
     """
     if config is None:
@@ -549,8 +466,6 @@ class ChartJs(JsPackage):
 
   def destroy(self):
     """
-    Description:
-    ------------
     Use this to destroy any chart instances that are created.
 
     Related Pages:
@@ -561,11 +476,7 @@ class ChartJs(JsPackage):
 
   def download(self, format, filename, options=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param format: String. The file format.
     :param filename: String. The file name.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -574,16 +485,12 @@ class ChartJs(JsPackage):
 
   def clearData(self):
     """
-    Description:
-    ------------
 
     """
     return self.clear()
 
   def toStr(self):
     """
-    Description:
-    ------------
     Javascript representation.
 
     :return: Return the Javascript String.
@@ -612,11 +519,7 @@ class ChartJsOptTicks(DataAttrs):
 
   def beginAtZero(self, flag: Union[bool, primitives.JsDataModel]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: A flag to activate the start to zero of the series.
     """
     self._attrs["beginAtZero"] = JsUtils.jsConvertData(flag, None)
@@ -624,11 +527,7 @@ class ChartJsOptTicks(DataAttrs):
 
   def display(self, flag: Union[bool, primitives.JsDataModel]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Show the series.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
@@ -639,12 +538,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def display(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
-    Description:
-    ------------
     If false, do not display grid lines for this axis.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
@@ -652,12 +547,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def circular(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
-    Description:
-    ------------
     If true, gridlines are circular (on radar chart only).
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["circular"] = JsUtils.jsConvertData(flag, None)
@@ -665,14 +556,10 @@ class ChartJsOptGridLines(DataAttrs):
 
   def color(self, colors: Union[str, primitives.JsDataModel] = ""):
     """
-    Description:
-    ------------
     The color of the grid lines.
     If specified as an array, the first color applies to the first grid line,
     the second to the second grid line and so on.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] colors: Optional. The color code.
     """
     self._attrs["color"] = JsUtils.jsConvertData(colors, None)
@@ -680,11 +567,7 @@ class ChartJsOptGridLines(DataAttrs):
 
   def borderDash(self, narray: Union[list, primitives.JsDataModel]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] narray:
     """
     self._attrs["borderDash"] = JsUtils.jsConvertData(narray, None)
@@ -692,12 +575,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def borderDashOffset(self, n: Union[float, primitives.JsDataModel] = 0.0):
     """
-    Description:
-    ------------
     Offset for line dashes.
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] n: Optional. The dash offset number.
     """
     self._attrs["borderDashOffset"] = JsUtils.jsConvertData(n, None)
@@ -705,12 +584,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def lineWidth(self, num: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Stroke width of grid lines.
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] num: The line width.
     """
     self._attrs["lineWidth"] = JsUtils.jsConvertData(num, None)
@@ -718,12 +593,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def drawBorder(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     If true, draw border at the edge between the axis and the chart area.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional. Flag to draw the border.
     """
     self._attrs["drawBorder"] = JsUtils.jsConvertData(flag, None)
@@ -731,13 +602,9 @@ class ChartJsOptGridLines(DataAttrs):
 
   def drawOnChartArea(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     If true, draw lines on the chart area inside the axis lines.
     This is useful when there are multiple axes and you need to control which grid lines are drawn.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["drawOnChartArea"] = JsUtils.jsConvertData(flag, None)
@@ -745,12 +612,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def drawTicks(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     If true, draw lines beside the ticks in the axis area beside the chart.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["drawTicks"] = JsUtils.jsConvertData(flag, None)
@@ -758,12 +621,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def tickMarkLength(self, n: Union[int, primitives.JsDataModel] = 10):
     """
-    Description:
-    ------------
     Length in pixels that the grid lines will draw into the axis area.
 
-    Attributes:
-    ----------
     :param Union[int, primitives.JsDataModel] n: Optional.
     """
     self._attrs["tickMarkLength"] = JsUtils.jsConvertData(n, None)
@@ -771,12 +630,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def zeroLineWidth(self, n: Union[int, primitives.JsDataModel] = 1):
     """
-    Description:
-    ------------
     Stroke width of the grid line for the first index (index 0).
 
-    Attributes:
-    ----------
     :param Union[int, primitives.JsDataModel] n: Optional.
     """
     self._attrs["zeroLineWidth"] = JsUtils.jsConvertData(n, None)
@@ -784,12 +639,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def zeroLineColor(self, color: Union[str, primitives.JsDataModel] = "rgba(0, 0, 0, 0.25)"):
     """
-    Description:
-    ------------
     Stroke color of the grid line for the first index (index 0).
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] color: Optional. The RGBA color code.
     """
     self._attrs["zeroLineColor"] = JsUtils.jsConvertData(color, None)
@@ -797,12 +648,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def zeroLineBorderDash(self, narray: Union[list, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Length and spacing of dashes of the grid line for the first index (index 0).
 
-    Attributes:
-    ----------
     :param Union[list, primitives.JsDataModel] narray:
     """
     self._attrs["zeroLineBorderDash"] = JsUtils.jsConvertData(narray, None)
@@ -810,12 +657,8 @@ class ChartJsOptGridLines(DataAttrs):
 
   def zeroLineBorderDashOffset(self, n: Union[float, primitives.JsDataModel] = 0.0):
     """
-    Description:
-    ------------
     Offset for line dashes of the grid line for the first index (index 0).
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] n: Optional.
     """
     self._attrs["zeroLineBorderDashOffset"] = JsUtils.jsConvertData(n, None)
@@ -823,15 +666,11 @@ class ChartJsOptGridLines(DataAttrs):
 
   def offsetGridLines(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     If true, the bars for a particular data point fall between the grid lines.
     The grid line will move to the left by one half of the tick interval, which is the space between the grid lines.
     If false, the grid line will go right down the middle of the bars.
     This is set to true for a category scale in a bar chart while false for other scales or chart types by default.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["offsetGridLines"] = JsUtils.jsConvertData(flag, None)
@@ -848,8 +687,6 @@ class ChartJsOptScale(DataAttrs):
   @property
   def gridLines(self) -> ChartJsOptGridLines:
     """
-    Description:
-    ------------
 
     :rtype: ChartJsOptGridLines
     """
@@ -865,13 +702,9 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def barPercentage(self, n: Union[float, primitives.JsDataModel] = 0.9):
     """
-    Description:
-    ------------
     Percent (0-1) of the available width each bar should be within the category width.
     1.0 will take the whole category width and put the bars right next to each other.
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] n: Optional.
     """
     if n > 1:
@@ -882,12 +715,8 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def categoryPercentage(self, n: Union[float, primitives.JsDataModel] = 0.8):
     """
-    Description:
-    ------------
     Percent (0-1) of the available width each category should be within the sample width.
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] n: Optional.
     """
     self._attrs["categoryPercentage"] = JsUtils.jsConvertData(n, None)
@@ -895,15 +724,11 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def barThickness(self, width: Union[str, primitives.JsDataModel] = "flex"):
     """
-    Description:
-    ------------
     Manually set width of each bar in pixels.
 
     If set to 'flex', it computes "optimal" sample widths that globally arrange bars side by side.
     If not set (default), bars are equally sized based on the smallest interval.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] width: Optional.
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
@@ -911,12 +736,8 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def maxBarThickness(self, width: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Set this to ensure that bars are not sized thicker than this.
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] width: A float
     """
     self._attrs["barThickness"] = JsUtils.jsConvertData(width, None)
@@ -924,11 +745,7 @@ class ChartJsOptScaleBar(ChartJsOptScale):
 
   def minBarLength(self, width: Union[float, primitives.JsDataModel]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[float, primitives.JsDataModel] width:
     """
     self._attrs["minBarLength"] = JsUtils.jsConvertData(width, None)
@@ -944,8 +761,6 @@ class ChartJsOptLabels(DataAttrs):
   @property
   def fontColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -962,8 +777,6 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def left(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -978,8 +791,6 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def right(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -994,8 +805,6 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def top(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1010,8 +819,6 @@ class ChartJsOptPadding(DataAttrs):
   @property
   def bottom(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1027,16 +834,12 @@ class ChartJsOptPadding(DataAttrs):
 class OptionsLegend(DataAttrs):
   def display(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     Is the legend shown?
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/configuration/legend.html
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
     self._attrs["display"] = JsUtils.jsConvertData(flag, None)
@@ -1044,12 +847,8 @@ class OptionsLegend(DataAttrs):
 
   def position(self, location: Union[str, primitives.JsDataModel] = "top"):
     """
-    Description:
-    ------------
     Position of the legend.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] location: Optional.
     """
     self._attrs["position"] = JsUtils.jsConvertData(location, None)
@@ -1057,23 +856,15 @@ class OptionsLegend(DataAttrs):
 
   def fullWidth(self, flag: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Optional.
     """
 
   def onClick(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
               profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     A callback that is called when a click event is registered on a label item.
 
-    Attributes:
-    ----------
     :param Union[List[Union[str, primitives.JsDataModel]], str] callback: The Javascript functions
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -1083,12 +874,8 @@ class OptionsLegend(DataAttrs):
   def onHover(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
               profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     A callback that is called when a 'mousemove' event is registered on top of a label item.
 
-    Attributes:
-    ----------
     :param Union[List[Union[str, primitives.JsDataModel]], str] callback: The Javascript functions
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -1098,11 +885,7 @@ class OptionsLegend(DataAttrs):
   def onLeave(self, callback: Union[List[Union[str, primitives.JsDataModel]], str],
               profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param callback: String | List. The Javascript functions
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -1111,12 +894,8 @@ class OptionsLegend(DataAttrs):
 
   def reverse(self, flag: Union[bool, primitives.JsDataModel] = False):
     """
-    Description:
-    ------------
     Legend will show datasets in reverse order.
 
-    Attributes:
-    ----------
     :param Union[bool, primitives.JsDataModel] flag: Boolean. Optional.
     """
     self._attrs["reverse"] = JsUtils.jsConvertData(flag, None)
@@ -1125,8 +904,6 @@ class OptionsLegend(DataAttrs):
   @property
   def labels(self) -> ChartJsOptLabels:
     """
-    Description:
-    ------------
 
     :rtype: ChartJsOptLabels
     """
@@ -1139,8 +916,6 @@ class OptionsTitle(DataAttrs):
   @property
   def display(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1155,8 +930,6 @@ class OptionsTitle(DataAttrs):
   @property
   def text(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["text"]
 
@@ -1167,8 +940,6 @@ class OptionsTitle(DataAttrs):
   @property
   def position(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["position"]
 
@@ -1179,8 +950,6 @@ class OptionsTitle(DataAttrs):
   @property
   def fontSize(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["fontSize"]
 
@@ -1191,8 +960,6 @@ class OptionsTitle(DataAttrs):
   @property
   def fontFamily(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["fontFamily"]
 
@@ -1203,8 +970,6 @@ class OptionsTitle(DataAttrs):
   @property
   def fontColor(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["fontColor"]
 
@@ -1215,8 +980,6 @@ class OptionsTitle(DataAttrs):
   @property
   def fontStyle(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["fontStyle"]
 
@@ -1227,8 +990,6 @@ class OptionsTitle(DataAttrs):
   @property
   def padding(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["padding"]
 
@@ -1239,8 +1000,6 @@ class OptionsTitle(DataAttrs):
   @property
   def lineHeight(self):
     """
-    Description:
-    ------------
     """
     return self._attrs["lineHeight"]
 
@@ -1254,8 +1013,6 @@ class OptionsLabels(DataAttrs):
   @property
   def display(self):
     """
-    Description:
-    ------------
     Display the labels.
 
     Related Pages:
@@ -1271,8 +1028,6 @@ class OptionsLabels(DataAttrs):
   @property
   def align(self):
     """
-    Description:
-    ------------
     The align property specifies the text horizontal alignment used when drawing the label.
 
     Related Pages:
@@ -1288,8 +1043,6 @@ class OptionsLabels(DataAttrs):
   @property
   def color(self):
     """
-    Description:
-    ------------
     The label align position.
 
     Related Pages:
@@ -1305,8 +1058,6 @@ class OptionsLabels(DataAttrs):
   @property
   def hoverColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1321,8 +1072,6 @@ class OptionsLabels(DataAttrs):
   @property
   def padding(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1337,8 +1086,6 @@ class OptionsLabels(DataAttrs):
   @property
   def position(self):
     """
-    Description:
-    ------------
     The position property specifies the text vertical alignment used when drawing the label.
 
     Related Pages:
@@ -1365,8 +1112,6 @@ class Options(DataAttrs):
 
   def title(self):
     """
-    Description:
-    ------------
 
     """
     if self._attrs.get("title") is None:
@@ -1379,8 +1124,6 @@ class DataSet(DataAttrs):
   @property
   def backgroundColor(self):
     """
-    Description:
-    ------------
     Arc background color.
 
     Related Pages:
@@ -1397,8 +1140,6 @@ class DataSet(DataAttrs):
   @property
   def borderColor(self):
     """
-    Description:
-    ------------
     Arc border color.
 
     Related Pages:
@@ -1414,8 +1155,6 @@ class DataSet(DataAttrs):
   @property
   def borderWidth(self):
     """
-    Description:
-    ------------
     Arc border width (in pixels).
 
     Related Pages:
@@ -1431,8 +1170,6 @@ class DataSet(DataAttrs):
   @property
   def fillOpacity(self):
     """
-    Description:
-    ------------
     Convert the hexadecimal color to the corresponding RGB one with the opacity.
 
     Related Pages:
@@ -1461,11 +1198,7 @@ class DataSet(DataAttrs):
 
   def set_style(self, background_color=None, fill_opacity=None, border_width=None, border_color=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param background_color: String. Optional. The background color code.
     :param fill_opacity: Number. Optional. The opacity factor.
     :param border_width: Number. Optional. The border width.
@@ -1487,8 +1220,6 @@ class DataSetPie(DataSet):
   @property
   def borderAlign(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1503,8 +1234,6 @@ class DataSetPie(DataSet):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1519,8 +1248,6 @@ class DataSetPie(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
     Arc background color when hovered.
 
     Related Pages:
@@ -1536,8 +1263,6 @@ class DataSetPie(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
     Arc border color when hovered.
 
     Related Pages:
@@ -1553,8 +1278,6 @@ class DataSetPie(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
     Arc border width when hovered (in pixels).
 
     Related Pages:
@@ -1570,8 +1293,6 @@ class DataSetPie(DataSet):
   @property
   def weight(self):
     """
-    Description:
-    ------------
     The relative thickness of the dataset.
     Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the
     sum of all the dataset weight values.
@@ -1588,11 +1309,7 @@ class DataSetPie(DataSet):
 
   def set_style(self, background_colors=None, fill_opacity=None, border_width=None, border_colors=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param background_colors: List. Optional.
     :param fill_opacity: Number. Optional. The opacity factor.
     :param border_width:
@@ -1613,8 +1330,6 @@ class DataSetScatterLine(DataSet):
   @property
   def borderCapStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1629,8 +1344,6 @@ class DataSetScatterLine(DataSet):
   @property
   def borderDash(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1645,8 +1358,6 @@ class DataSetScatterLine(DataSet):
   @property
   def borderDashOffset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1661,8 +1372,6 @@ class DataSetScatterLine(DataSet):
   @property
   def borderJoinStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1677,8 +1386,6 @@ class DataSetScatterLine(DataSet):
   @property
   def cubicInterpolationMode(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1693,8 +1400,6 @@ class DataSetScatterLine(DataSet):
   @property
   def clip(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1709,8 +1414,6 @@ class DataSetScatterLine(DataSet):
   @property
   def fill(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1725,8 +1428,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1741,8 +1442,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderCapStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1757,8 +1456,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1773,8 +1470,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderDash(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1789,8 +1484,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderDashOffset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1805,8 +1498,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderJoinStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1821,8 +1512,6 @@ class DataSetScatterLine(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1837,8 +1526,6 @@ class DataSetScatterLine(DataSet):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1853,8 +1540,6 @@ class DataSetScatterLine(DataSet):
   @property
   def lineTension(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1869,8 +1554,6 @@ class DataSetScatterLine(DataSet):
   @property
   def order(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1885,8 +1568,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1901,8 +1582,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1917,8 +1596,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1933,8 +1610,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointHitRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1949,8 +1624,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointHoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1965,8 +1638,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointHoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1981,8 +1652,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointHoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1997,8 +1666,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointHoverRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2013,8 +1680,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2029,8 +1694,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointRotation(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2045,8 +1708,6 @@ class DataSetScatterLine(DataSet):
   @property
   def pointStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2061,8 +1722,6 @@ class DataSetScatterLine(DataSet):
   @property
   def showLine(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2077,8 +1736,6 @@ class DataSetScatterLine(DataSet):
   @property
   def spanGaps(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2093,8 +1750,6 @@ class DataSetScatterLine(DataSet):
   @property
   def steppedLine(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2109,8 +1764,6 @@ class DataSetScatterLine(DataSet):
   @property
   def xAxisID(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2125,8 +1778,6 @@ class DataSetScatterLine(DataSet):
   @property
   def yAxisID(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2140,11 +1791,7 @@ class DataSetScatterLine(DataSet):
 
   def set_style(self, background_color=None, fill_opacity=None, border_width=None, border_color=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param background_color:
     :param fill_opacity:
     :param border_width:
@@ -2166,8 +1813,6 @@ class DataSetBar(DataSet):
   @property
   def barPercentage(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2182,8 +1827,6 @@ class DataSetBar(DataSet):
   @property
   def barThickness(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2198,8 +1841,6 @@ class DataSetBar(DataSet):
   @property
   def maxBarThickness(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2214,8 +1855,6 @@ class DataSetBar(DataSet):
   @property
   def minBarLength(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2230,8 +1869,6 @@ class DataSetBar(DataSet):
   @property
   def borderSkipped(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2246,8 +1883,6 @@ class DataSetBar(DataSet):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2262,8 +1897,6 @@ class DataSetBar(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2278,8 +1911,6 @@ class DataSetBar(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2294,8 +1925,6 @@ class DataSetBar(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2310,8 +1939,6 @@ class DataSetBar(DataSet):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2326,8 +1953,6 @@ class DataSetBar(DataSet):
   @property
   def order(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2342,8 +1967,6 @@ class DataSetBar(DataSet):
   @property
   def xAxisID(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2358,8 +1981,6 @@ class DataSetBar(DataSet):
   @property
   def yAxisID(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2377,8 +1998,6 @@ class DataSetPolar(DataSet):
   @property
   def borderAlign(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2393,8 +2012,6 @@ class DataSetPolar(DataSet):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2409,8 +2026,6 @@ class DataSetPolar(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2425,8 +2040,6 @@ class DataSetPolar(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2441,8 +2054,6 @@ class DataSetPolar(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2460,8 +2071,6 @@ class DataSetRadar(DataSet):
   @property
   def borderCapStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2476,8 +2085,6 @@ class DataSetRadar(DataSet):
   @property
   def borderDash(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2492,8 +2099,6 @@ class DataSetRadar(DataSet):
   @property
   def borderDashOffset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2508,8 +2113,6 @@ class DataSetRadar(DataSet):
   @property
   def borderJoinStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2524,8 +2127,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2540,8 +2141,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderCapStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2556,8 +2155,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2572,8 +2169,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderDash(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2588,8 +2183,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderDashOffset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2604,8 +2197,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderJoinStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2620,8 +2211,6 @@ class DataSetRadar(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2636,8 +2225,6 @@ class DataSetRadar(DataSet):
   @property
   def fill(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2652,8 +2239,6 @@ class DataSetRadar(DataSet):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2668,8 +2253,6 @@ class DataSetRadar(DataSet):
   @property
   def order(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2684,8 +2267,6 @@ class DataSetRadar(DataSet):
   @property
   def lineTension(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2700,8 +2281,6 @@ class DataSetRadar(DataSet):
   @property
   def pointBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2716,8 +2295,6 @@ class DataSetRadar(DataSet):
   @property
   def pointBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2732,8 +2309,6 @@ class DataSetRadar(DataSet):
   @property
   def pointBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2748,8 +2323,6 @@ class DataSetRadar(DataSet):
   @property
   def pointHitRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2764,8 +2337,6 @@ class DataSetRadar(DataSet):
   @property
   def pointHoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2780,8 +2351,6 @@ class DataSetRadar(DataSet):
   @property
   def pointHoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2796,8 +2365,6 @@ class DataSetRadar(DataSet):
   @property
   def pointHoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2812,8 +2379,6 @@ class DataSetRadar(DataSet):
   @property
   def pointHoverRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2828,8 +2393,6 @@ class DataSetRadar(DataSet):
   @property
   def pointRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2844,8 +2407,6 @@ class DataSetRadar(DataSet):
   @property
   def pointRotation(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2860,8 +2421,6 @@ class DataSetRadar(DataSet):
   @property
   def pointStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2876,8 +2435,6 @@ class DataSetRadar(DataSet):
   @property
   def spanGaps(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2895,8 +2452,6 @@ class DataSetBubble(DataSet):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2911,8 +2466,6 @@ class DataSetBubble(DataSet):
   @property
   def hoverBackgroundColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2927,8 +2480,6 @@ class DataSetBubble(DataSet):
   @property
   def hoverBorderColor(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2943,8 +2494,6 @@ class DataSetBubble(DataSet):
   @property
   def hoverBorderWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2959,8 +2508,6 @@ class DataSetBubble(DataSet):
   @property
   def hoverRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2975,8 +2522,6 @@ class DataSetBubble(DataSet):
   @property
   def hitRadius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -2991,8 +2536,6 @@ class DataSetBubble(DataSet):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3007,8 +2550,6 @@ class DataSetBubble(DataSet):
   @property
   def order(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3023,8 +2564,6 @@ class DataSetBubble(DataSet):
   @property
   def pointStyle(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3039,8 +2578,6 @@ class DataSetBubble(DataSet):
   @property
   def rotation(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3055,8 +2592,6 @@ class DataSetBubble(DataSet):
   @property
   def radius(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3073,8 +2608,6 @@ class DataSetTreeMap(DataSet):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3089,8 +2622,6 @@ class DataSetTreeMap(DataSet):
   @property
   def spacing(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -3105,8 +2636,6 @@ class DataSetTreeMap(DataSet):
   @property
   def rtl(self):
     """
-    Description:
-    ------------
     If true, the treemap elements are rendering from right to left.
 
     Related Pages:
@@ -3122,8 +2651,6 @@ class DataSetTreeMap(DataSet):
   @property
   def tree(self):
     """
-    Description:
-    ------------
     Tree data should be provided in tree property of dataset. data is then automatically build.
 
     Related Pages:
@@ -3139,8 +2666,6 @@ class DataSetTreeMap(DataSet):
   @property
   def key(self):
     """
-    Description:
-    ------------
     Define the key name in data objects to use for value.
 
     Related Pages:
@@ -3156,8 +2681,6 @@ class DataSetTreeMap(DataSet):
   @property
   def groups(self):
     """
-    Description:
-    ------------
     Define how to display multiple levels of hierarchy. Data is summarized to groups internally.
 
     Related Pages:
@@ -3179,8 +2702,6 @@ class DataSetTreeMap(DataSet):
   @property
   def labels(self) -> OptionsLabels:
     """
-    Description:
-    ------------
 
     """
     if self._attrs.get("labels") is None:

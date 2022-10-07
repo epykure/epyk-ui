@@ -44,8 +44,7 @@ class Vis2D:
 
     Usage::
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       http://www.chartjs.org/
       https://visjs.github.io/vis-timeline/examples/graph2d/16_bothAxisTitles.html
@@ -74,8 +73,7 @@ class Vis2D:
 
     Usage::
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       http://www.chartjs.org/
 
@@ -104,8 +102,7 @@ class Vis2D:
 
     Usage::
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       http://www.chartjs.org/
 
@@ -134,8 +131,7 @@ class Vis2D:
 
     Usage::
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       http://www.chartjs.org/
 

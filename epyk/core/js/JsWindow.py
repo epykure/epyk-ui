@@ -26,15 +26,11 @@ class JsUrl:
 
   def createObjectURL(self, data: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Blob
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -45,8 +41,6 @@ class JsLocalStorage:
 
   def key(self, i: Union[primitives.JsDataModel, int]):
     """
-    Description:
-    ------------
     The key() method returns name of the key with the specified index.
 
     The localStorage object stores data with no expiration date.
@@ -59,9 +53,7 @@ class JsLocalStorage:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_storage_key.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, int] i: A Number representing the index of the key you want to get the name of.
 
     :return: A String, representing the name of the specified key
@@ -71,11 +63,7 @@ class JsLocalStorage:
 
   def __setitem__(self, key: str, data):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str key: The key attribute.
     :param data: Object. The value to store.
     """
@@ -83,24 +71,18 @@ class JsLocalStorage:
 
   def __getitem__(self, item: str):
     """
-    Description:
-    ------------
     Python wrapper to getItem.
 
     Usage::
 
       jsObj.console.log(jsObj.sessionStorage["lastname"])
-
-    Attributes:
-    ----------
+ 
     :param str item: The item name.
     """
     return self.getItem(item)
 
   def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
     """
-    Description:
-    ------------
     Syntax for SAVING data to localStorage.
 
     The localStorage object stores data with no expiration date.
@@ -113,9 +95,7 @@ class JsLocalStorage:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_storage_setitem.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] key: A String specifying the name of the key you want to set the value of.
     :param Aby data: A String specifying the value of the key you want to set the value of.
 
@@ -127,8 +107,6 @@ class JsLocalStorage:
 
   def getItem(self, key: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
     Syntax for READING data from localStorage:
 
     The localStorage object stores data with no expiration date.
@@ -141,9 +119,7 @@ class JsLocalStorage:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_storage_getitem.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] key: A String specifying the name of the key you want to get the value of.
 
     :return: A String, representing the value of the specified key.
@@ -153,8 +129,6 @@ class JsLocalStorage:
 
   def removeItem(self, key: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
     The removeItem() method removes the specified Storage Object item.
 
     The localStorage object stores data with no expiration date.
@@ -167,9 +141,7 @@ class JsLocalStorage:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_storage_removeitem.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] key: A String specifying the name of the item you want to remove.
 
     :return: Void
@@ -179,8 +151,6 @@ class JsLocalStorage:
 
   def clear(self):
     """
-    Description:
-    ------------
     The clear() method removes all the Storage Object item for this domain.
 
     The localStorage object stores data with no expiration date.
@@ -200,27 +170,18 @@ class JsLocalStorage:
 
 
 class JsSessionStorage:
-  """
-  Description:
-  ------------
-  The localStorage and sessionStorage properties allow to save key/value pairs in a web browser.
+  """  The localStorage and sessionStorage properties allow to save key/value pairs in a web browser.
 
   The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
 
-  Related Pages:
-  --------------
 
     https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
   """
 
   def key(self, i: Union[primitives.JsDataModel, int]):
     """
-    Description:
-    ------------
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, int] i: The key number.
     """
     i = JsUtils.jsConvertData(i, None)
@@ -228,11 +189,7 @@ class JsSessionStorage:
 
   def __setitem__(self, key: str, data):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str key: The key attribute.
     :param data: Object. The value to store.
     """
@@ -240,24 +197,18 @@ class JsSessionStorage:
 
   def __getitem__(self, item):
     """
-    Description:
-    ------------
     Python wrapper to getItem.
 
     Usage::
 
       jsObj.console.log(jsObj.sessionStorage["lastname"])
-
-    Attributes:
-    ----------
+ 
     :param item:
     """
     return self.getItem(item)
 
   def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
     """
-    Description:
-    ------------
     Syntax for SAVING data to sessionStorage.
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -270,9 +221,7 @@ class JsSessionStorage:
     Related Pages:
 
       https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] key: The key used to store the data in the session cache.
     :param Any data:
     """
@@ -282,8 +231,6 @@ class JsSessionStorage:
 
   def getItem(self, key: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
     Syntax for READING data from sessionStorage
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -292,9 +239,7 @@ class JsSessionStorage:
 
       jsObj.sessionStorage.getItem("lastname")
       jsObj.console.log(jsObj.sessionStorage.getItem("lastname"))
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] key:
     """
     key = JsUtils.jsConvertData(key, None)
@@ -303,8 +248,6 @@ class JsSessionStorage:
   def removeItem(self, data, key: Union[str, primitives.JsDataModel] = None, is_py_data: bool = False,
                  js_funcs: Union[list, str] = None):
     """
-    Description:
-    ------------
     Syntax for REMOVING ALL saved data from sessionStorage.
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -316,9 +259,7 @@ class JsSessionStorage:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_storage_removeitem.asp
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param key:
     :param bool is_py_data:
@@ -329,8 +270,6 @@ class JsSessionStorage:
 
   def clear(self):
     """
-    Description:
-    ------------
     Syntax for REMOVING ALL saved data from sessionStorage
 
     The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -343,13 +282,9 @@ class JsSessionStorage:
 
 
 class JsHistory:
-  """
-  Description:
-  ------------
-  Interface to the Javascript history module.
+  """  Interface to the Javascript history module.
 
-  Related Pages:
-  --------------
+  Related Pages::
 
     https://www.w3schools.com/js/js_window_history.asp
   """
@@ -360,8 +295,6 @@ class JsHistory:
   @property
   def length(self):
     """
-    Description:
-    ------------
     The length property returns the number of URLs in the history list of the current browser window.
 
     Usage::
@@ -378,8 +311,6 @@ class JsHistory:
 
   def back(self):
     """
-    Description:
-    ------------
     The back() method loads the previous URL in the history list.
 
     Usage::
@@ -396,8 +327,6 @@ class JsHistory:
 
   def forward(self):
     """
-    Description:
-    ------------
     The forward() method loads the next URL in the history list.
 
     Related Pages:
@@ -410,16 +339,12 @@ class JsHistory:
 
   def go(self, number: Union[primitives.JsDataModel, int]):
     """
-    Description:
-    ------------
     The go() method loads a specific URL from the history list.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_his_go.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, int] number: The parameter can either be a number which goes to the URL within
     the specific position (-1 goes back one page, 1 goes forward one page), or a string.
 
@@ -429,8 +354,6 @@ class JsHistory:
 
   def pushState(self, state, title, url):
     """
-    Description:
-    ------------
     Pushes the given data onto the session history stack with the specified title and, if provided, URL.
 
     Note that pushState() never causes a hashchange event to be fired, even if the new URL differs from the old URL
@@ -439,9 +362,7 @@ class JsHistory:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/History_API
-
-    Attributes:
-    ----------
+ 
     :param state: The state object is a JavaScript object which is associated with the new history entry created by
       pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
@@ -456,17 +377,13 @@ class JsHistory:
 
   def replaceState(self, state, title, url):
     """
-    Description:
-    ------------
     history.replaceState() operates exactly like history.pushState() except that replaceState() modifies the current
     history entry instead of creating a new one.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/History_API
-
-    Attributes:
-    ----------
+ 
     :param state: The state object is a JavaScript object which is associated with the new history entry created by
       pushState()
     :param title: Firefox currently ignores this parameter, although it may use it in the future
@@ -479,8 +396,6 @@ class JsHistory:
 
   def updateState(self, key: str, val: str):
     """
-    Description:
-    ------------
     Wrapper function
 
     This function is a simple wrapping function on top of the pushState history method.
@@ -493,9 +408,7 @@ class JsHistory:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/History_API
-
-    Attributes:
-    ----------
+ 
     :param str key: The key to be added or updated in the current URL.
     :param str val: The value to be changed to the current URL.
 
@@ -529,8 +442,6 @@ class JsHistory:
 
   def updateStateFromComponent(self, component: primitives.HtmlModel):
     """
-    Description:
-    ------------
     Add or update the url value for the specific component to keep them in case of refresh.
 
     Usage::
@@ -540,26 +451,20 @@ class JsHistory:
       dt.select([
         page.js.window.history.updateStateFromComponent(dt),
         page.js.window.history.updateStateFromComponent(input)
-
-    Attributes:
-    ----------
+ 
     :param component: The HTML component
     """
     return self.updateState(component.htmlCode, component.dom.content)
 
   def cleanState(self, keys: List[str]):
     """
-    Description:
-    ------------
     Remove all attributes which are not useful or should not be passed.
 
     Usage::
 
       btn = page.ui.button("Clean URL")
       btn.click([page.js.window.history.cleanState(["date"])])
-
-    Attributes:
-    ----------
+ 
     :param keys: The attributes keys
     """
     self.page.js.registerFunction("restrictUrl", [
@@ -590,17 +495,13 @@ class JsHistory:
 
   def deleteState(self, key: primitives.JsDataModel):
     """
-    Description:
-    ------------
     Remove a specific attribute from the url
 
     Usage::
 
       btn = page.ui.button("Remove from URL")
       btn.click([page.js.window.history.deleteState("date")])
-
-    Attributes:
-    ----------
+ 
     :param key: The attribute key.
     """
     self.page.js.registerFunction("deleteFromUrl", [
@@ -636,11 +537,7 @@ class JsWindowEvent:
                        window_id: str = "window", sub_events: list = None,
                        profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] event_type:
     :param js_funcs: The PyJs functions.
     :param str window_id: The window object reference.
@@ -655,11 +552,7 @@ class JsWindowEvent:
 
   def addScrollListener(self, js_funcs: Union[list, str], window_id: str = "window"):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str window_id: The window object reference.
     """
@@ -667,8 +560,6 @@ class JsWindowEvent:
 
   def addContentLoaded(self, js_funcs: Union[list, str], window_id: str = "window"):
     """
-    Description:
-    ------------
     The DOMContentLoaded event fires when the initial HTML document has been completely loaded and parsed,
     without waiting for stylesheets, images, and subframes to finish loading.
 
@@ -680,9 +571,7 @@ class JsWindowEvent:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Window/DOMContentLoaded_event
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str window_id: The window object reference.
     """
@@ -690,11 +579,7 @@ class JsWindowEvent:
 
   def addClickListener(self, js_funcs: Union[list, str], window_id: str = "window", sub_events: list = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str window_id: The window object reference.
     :param list sub_events:
@@ -703,33 +588,25 @@ class JsWindowEvent:
 
 
 class JsWindow:
-  """
-  Description:
-  ------------
-  The window object represents an open window in a browser.
+  """  The window object represents an open window in a browser.
 
   If a document contain frames (<iframe> tags), the browser creates one window object for the HTML document,
   and one additional window object for each frame.
 
-  Related Pages:
-  --------------
+  Related Pages::
   https://www.w3schools.com/Jsref/obj_window.asp
   """
 
   @property
   def scrollY(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The read-only scrollY property of the Window interface returns the number of pixels that the document is
     currently scrolled vertically.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollY
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The window reference.
     """
     return JsNumber.JsNumber("%s.scrollY" % window_id)
@@ -737,16 +614,12 @@ class JsWindow:
   @property
   def innerHeight(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The innerHeight property returns the height of a window's content area.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_win_innerheight.asp
-
-    Attributes:
-    ----------
+ 
     :param str window_id: String. Optional. The window reference.
     """
     return JsNumber.JsNumber("%s.innerHeight" % window_id)
@@ -754,12 +627,8 @@ class JsWindow:
   @property
   def scrollEndPage(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The scrollEndPage property indicates if the page is scrolled to the end.
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The window reference.
     """
     return JsBoolean.JsBoolean("(%s.scrollY + %s.innerHeight > document.body.clientHeight)? true: false" % (
@@ -768,12 +637,8 @@ class JsWindow:
   @property
   def scrollPercentage(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The scrollPercentage property return the percentage of the page scrolled.
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The window reference.
     """
     return JsNumber.JsNumber(
@@ -783,17 +648,13 @@ class JsWindow:
   @property
   def scrollMaxY(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The Window.scrollMaxY read-only property returns the maximum number of pixels that the document can be
     scrolled vertically.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Window/scrollMaxY
-
-    Attributes:
-    ----------
+ 
     :param window_id: Optional. The window reference.
     """
     return JsNumber.JsNumber(
@@ -801,11 +662,7 @@ class JsWindow:
 
   def __init__(self, page: primitives.PageModel = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param primitives.PageModel page:
     """
     self.page = page
@@ -814,8 +671,6 @@ class JsWindow:
   @property
   def document(self):
     """
-    Description:
-    ------------
     Interface to the DOM object on the current window.
 
     :return: A Python JsDoms object wrapping the DOM Js interface.
@@ -825,8 +680,6 @@ class JsWindow:
   @property
   def history(self):
     """
-    Description:
-    ------------
     Interface to the History object.
 
     :return: A Python Js History object.
@@ -835,16 +688,12 @@ class JsWindow:
 
   def close(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     Closes the current window.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_close.asp
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: The String representing the Javascript function.
@@ -854,8 +703,6 @@ class JsWindow:
   @property
   def events(self):
     """
-    Description:
-    ------------
     Property to all the events.
     """
     return JsWindowEvent()
@@ -864,11 +711,7 @@ class JsWindow:
                        js_funcs: Union[primitives.JsDataModel, str],
                        window_id: str = "window", profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[primitives.JsDataModel, str] event_type:
     :param Union[primitives.JsDataModel, str] js_funcs:
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -880,16 +723,12 @@ class JsWindow:
 
   def open(self, url: str, name: str = "_self", specs: list = None, replace: bool = None, window_id: str = "window"):
     """
-    Description:
-    ------------
     Opens a new browser window
 
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_open.asp
-
-    Attributes:
-    ----------
+ 
     :param str url: Optional. Specifies the URL of the page to open. If no URL is specified, a new window/tab with
       about:blank is opened
     :param str name: Optional. Specifies the target attribute or the name of the window.
@@ -906,11 +745,7 @@ class JsWindow:
 
   def postData(self, data):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     if not isinstance(data, list):
@@ -918,16 +753,12 @@ class JsWindow:
 
   def download(self, data, file_name: str, profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     Download the data from a flat file.
 
     Usage::
 
       page.js.window.download(rptObj.js.window.btoa(rptObj.js.objects.get("test")), fileName="test.txt")
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param file_name:
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -946,16 +777,12 @@ class JsWindow:
 
   def moveBy(self, x: int, y: int, window_id: str = "window"):
     """
-    Description:
-    ------------
     The moveBy() method moves a window a specified number of pixels relative to its current coordinates.
 
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_moveby.asp
-
-    Attributes:
-    ----------
+ 
     :param int x: The horizontal move in pixel.
     :param int y: The vertical move in pixel.
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -966,16 +793,12 @@ class JsWindow:
 
   def focus(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     The focus() method sets focus to the current window
 
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_focus.asp
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
@@ -984,16 +807,12 @@ class JsWindow:
 
   def scroll(self, x: int, y: int, window_id: str = "window"):
     """
-    Description:
-    ------------
     The Window.scroll() method scrolls the window to a particular place in the document.
 
     Related Pages:
 
       https://developer.mozilla.org/uk/docs/Web/API/Window/scroll
-
-    Attributes:
-    ----------
+ 
     :param int x: The pixel along the horizontal axis of the document that you want displayed in the upper left.
     :param int y: The pixel along the vertical axis of the document that you want displayed in the upper left.
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -1002,12 +821,8 @@ class JsWindow:
 
   def scrollTo(self, x: int = None, y: int = None, window_id: str = "window"):
     """
-    Description:
-    ------------
     The window.scrollTo() go to a particular point.
-
-    Attributes:
-    ----------
+ 
     :param int x: Optional.
     :param int y: Optional.
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -1018,27 +833,19 @@ class JsWindow:
 
   def scrollUp(self, window_id: str = "window"):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The JavaScript window object reference variable.
     """
     return JsFncs.JsFunction("%s.scrollTo(0, 0)" % window_id)
 
   def print_(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     Prints the content of the current window.
 
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_print.asp
-
-    Attributes:
-    ----------
+ 
     :param str window_id: Optional. The JavaScript window object reference variable.
 
     :return: Void, The Javascript String
@@ -1047,8 +854,6 @@ class JsWindow:
 
   def alert(self, data, js_funcs: Union[list, str] = None, window_id: str = "window", skip_data_convert: bool = False):
     """
-    Description:
-    ------------
     The alert() method displays an alert box with a specified message and an OK button.
 
     Usage::
@@ -1059,9 +864,7 @@ class JsWindow:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_alert.asp
-
-    Attributes:
-    ----------
+ 
     :param data: Optional. Specifies the text to display in the alert box, or an object converted into a string and
       displayed
     :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs.
@@ -1078,8 +881,6 @@ class JsWindow:
   def atob(self, data: Union[str, primitives.JsDataModel], js_funcs: Union[list, str] = None,
            window_id: str = "window"):
     """
-    Description:
-    ------------
     Decodes a base-64 encoded string.
 
     Usage::
@@ -1090,9 +891,7 @@ class JsWindow:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_atob.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[str, primitives.JsDataModel] data: The string which has been encoded by the btoa() method.
     :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -1102,8 +901,6 @@ class JsWindow:
   def btoa(self, data: Union[str, primitives.JsDataModel], js_funcs: Union[list, str] = None,
            window_id: str = "window"):
     """
-    Description:
-    ------------
     Encodes a string in base-64.
 
     Usage::
@@ -1113,9 +910,7 @@ class JsWindow:
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_btoa.asp
-
-    Attributes:
-    ----------
+ 
     :param Union[str, primitives.JsDataModel] data: Required. The string to be encoded.
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str window_id: Optional. The JavaScript window object reference variable.
@@ -1125,8 +920,6 @@ class JsWindow:
   def setInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds: int, window_id: str = "window",
                   set_var: bool = True, profile=False, run_on_start: bool = False):
     """
-    Description:
-    ------------
     The setInterval() method calls a function or evaluates an expression at specified intervals (in milliseconds).
 
     The setInterval() method will continue calling the function until clearInterval() is called, or the window
@@ -1141,9 +934,7 @@ class JsWindow:
       https://www.w3schools.com/jsref/met_win_setinterval.asp
 
     #TODO: Add a control on setInterval to only have one created
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The function that will be executed.
     :param str var_id: The JavaScript variable name.
     :param int milliseconds: The intervals (in milliseconds) on how often to execute the code.
@@ -1175,8 +966,6 @@ class JsWindow:
 
   def clearInterval(self, var_id: str, window_id: str = "window"):
     """
-    Description:
-    ------------
     The clearInterval() method clears a timer set with the setInterval() method.
 
     The ID value returned by setInterval() is used as the parameter for the clearInterval() method.
@@ -1191,9 +980,7 @@ class JsWindow:
       https://www.w3schools.com/jsref/met_win_clearinterval.asp
 
     #TODO: Check if interval is unique
-
-    Attributes:
-    ----------
+ 
     :param str var_id: A PythonJs object (JsArray, JsObject...) or reference
     :param str window_id: The JavaScript window object.
 
@@ -1204,17 +991,13 @@ class JsWindow:
 
   def toggleInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds, window_id: str = "window"):
     """
-    Description:
-    ------------
 
     Usage::
 
       page.ui.button("Interval Toggle").click([
         page.js.window.toggleInterval(rptObj.js.console.log('Print called'), 'test', 400),
       ])
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str var_id: A PythonJs object (JsArray, JsObject...) or reference.
     :param int milliseconds: Optional. The number of milliseconds to wait before executing the code.
@@ -1227,16 +1010,12 @@ class JsWindow:
   def setTimeout(self, js_funcs: Union[list, str], milliseconds: int = 0, window_id: str = "window",
                  profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     The setTimeout() method calls a function or evaluates an expression after a specified number of milliseconds.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_settimeout.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The function that will be executed.
     :param milliseconds: Optional. The number of milliseconds to wait before executing the code.
     :param window_id: Optional. The JavaScript window object.
@@ -1249,17 +1028,13 @@ class JsWindow:
 
   def clearTimeout(self, data, js_funcs: Union[list, str] = None, window_id: str = "window"):
     """
-    Description:
-    ------------
     The clearTimeout() method clears a timer set with the setTimeout() method.
     The ID value returned by setTimeout() is used as the parameter for the clearTimeout() method.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_win_cleartimeout.asp
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param Union[list, str] js_funcs: The PyJs functions.
     :param str window_id: The JavaScript window object.
@@ -1268,16 +1043,12 @@ class JsWindow:
 
   def getComputedStyle(self, element, pseudo_element=None, window_id: str = "window"):
     """
-    Description:
-    ------------
     The getComputedStyle() method gets all the actual (computed) CSS property and values of the specified element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp
-
-    Attributes:
-    ----------
+ 
     :param element: The element to get the computed style for.
     :param pseudo_element:
     :param str window_id: The JavaScript window object.
@@ -1291,24 +1062,16 @@ class JsWindow:
 
   def getSelection(self, window_id: str = "window"):
     """
-    Description:
-    ------------
     Returns a Selection object representing the range of text selected by the user.
-
-    Attributes:
-    ----------
+ 
     :param str window_id: The JavaScript window object
     """
     return JsFncs.JsFunction("%s.getSelection()" % window_id)
 
   def getVar(self, var_id: str, window_id: str = "window"):
     """
-    Description:
-    ------------
     Get the Javascript Variable name.
-
-    Attributes:
-    ----------
+ 
     :param str var_id: The Variable name.
     :param str window_id: The JavaScript window object.
 
@@ -1318,11 +1081,7 @@ class JsWindow:
 
   def onPageShow(self, js_funcs: Union[list, str]):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: The PyJs functions.
     """
     if not isinstance(js_funcs, list):
@@ -1331,11 +1090,7 @@ class JsWindow:
 
   def onBeforeUnload(self, js_funcs: Union[list, str]):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: A JsFnc or a list of JsFncs
     """
     if not isinstance(js_funcs, list):
@@ -1344,12 +1099,8 @@ class JsWindow:
 
   def location(self, url: str, window_id: str = "window"):
     """
-    Description:
-    ------------
     Change the window and open the page specify by the url.
-
-    Attributes:
-    ----------
+ 
     :param str url: The new page url.
     :param str window_id: Optional. The JavaScript window object.
     """
@@ -1359,8 +1110,6 @@ class JsWindow:
   @property
   def URL(self):
     """
-    Description:
-    ------------
 
     """
     return JsUrl

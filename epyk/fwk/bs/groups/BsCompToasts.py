@@ -10,17 +10,12 @@ class Components:
 
   def dismiss(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
               html_code=None, tooltip=None, profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a dismiss button to close all toasts.
+    """   Add a dismiss button to close all toasts.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/toasts/
-
-    Attributes:
-    ----------
+ 
     :param text: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param category:
@@ -41,17 +36,13 @@ class Components:
                 height=(None, "px"), editable=False, align='left', padding=None, html_code=None, helper=None,
                 options=None, profile=None, position=None):
     """
-    Description:
-    ------------
     Containers are a fundamental building block of Bootstrap that contain, pad, and align your content within a
     given device or viewport.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/toasts/#stacking
-
-    Attributes:
-    ----------
+ 
     :param components:
     :param label:
     :param color:
@@ -75,12 +66,8 @@ class Components:
   def fixed(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
             height=(None, "px"), editable=False, align='left', padding=None, html_code=None, helper=None,
             options=None, profile=None, position=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param components:
     :param label:
     :param color:
@@ -102,10 +89,7 @@ class Components:
     return component
 
   def custom(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
-    """
-    Description:
-    -----------
-    Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
+    """   Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
 
     Usage::
 
@@ -117,9 +101,7 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/components/toasts/
       https://getbootstrap.com/docs/5.0/components/toasts/#custom-content
-
-    Attributes:
-    ----------
+ 
     :param values: List<Components>. The different HTML objects to be added to the component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -142,17 +124,12 @@ class Components:
 
   def button(self, toast,  text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
              html_code=None, tooltip=None, profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a button attached to the modal.
+    """   Add a button attached to the modal.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
-
-    Attributes:
-    ----------
+ 
     :param toast:
     :param text: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.

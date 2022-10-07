@@ -5,16 +5,12 @@ from epyk.core.css.styles import GrpClsInput
 class BsClsInput(GrpClsInput.ClassInput):
 
   def size(self, breakpoint: str):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/forms/form-control/
 
-    Attributes:
-    ----------
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)
@@ -25,9 +21,7 @@ class BsClsInput(GrpClsInput.ClassInput):
     return self
 
   def plain_text(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -40,17 +34,13 @@ class BsClsInput(GrpClsInput.ClassInput):
 class BsClsSelect(GrpClsInput.ClassInput):
 
   def size(self, breakpoint: str):
-    """
-    Description:
-    ------------
+    """  
     You may also choose from small and large custom selects to match our similarly sized text inputs.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/forms/select/
 
-    Attributes:
-    ----------
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
       - sm (for tablets - screens equal to or greater than 768px wide)

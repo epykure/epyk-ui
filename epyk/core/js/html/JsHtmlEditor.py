@@ -17,11 +17,7 @@ class Console(JsHtml.JsHtmlRich):
   def write(self, data, timestamp=None, stringify: bool = False, skip_data_convert: bool = False, format: str = None,
             profile: Union[bool, dict] = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param timestamp:
     :param profile:
@@ -50,8 +46,6 @@ class Console(JsHtml.JsHtmlRich):
 
   def clear(self):
     """
-    Description:
-    ------------
 
     """
     return JsObjects.JsObjects.get('%s.innerHTML = ""' % self.varName)
@@ -61,8 +55,6 @@ class Editor(JsHtml.JsHtmlRich):
 
   def timestamp(self):
     """
-    Description:
-    ------------
     Update the editor timestamp.
     """
     return self.querySelector("span").innerHTML(JsObjects.JsDate.JsDate().getStrTimeStamp())
@@ -80,18 +72,13 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsHtml.ContentFormatters(self.page, "%s.getValue()" % self.component.editorId)
 
   def select(self):
-    """
-    Description:
-    -----------
-    Select the whole content of the editor.
+    """   Select the whole content of the editor.
 
     Related Pages:
 
@@ -100,10 +87,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self.component.editorId)
 
   def singleSelection(self):
-    """
-    Description:
-    -----------
-    When multiple selections are present, this deselects all but the primary selection.
+    """   When multiple selections are present, this deselects all but the primary selection.
 
     Related Pages:
 
@@ -112,10 +96,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self.component.editorId)
 
   def killLine(self):
-    """
-    Description:
-    -----------
-    Emacs-style line killing. Deletes the part of the line after the cursor.
+    """   Emacs-style line killing. Deletes the part of the line after the cursor.
     If that consists only of whitespace, the newline at the end of the line is also deleted.
 
     Related Pages:
@@ -125,10 +106,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self.component.editorId)
 
   def deleteLine(self):
-    """
-    Description:
-    -----------
-    Deletes the whole line under the cursor, including newline at the end.
+    """   Deletes the whole line under the cursor, including newline at the end.
 
     Related Pages:
 
@@ -137,21 +115,15 @@ class CodeMirror(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self.component.editorId)
 
   def copy(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get("%s.execCommand('copy')" % self.component.editorId)
 
   def setValue(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -159,12 +131,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
   def setOption(self, name: Union[str, primitives.JsDataModel, float, dict, list],
                 value: Union[str, primitives.JsDataModel, float, dict, list]):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param name:
     :param value:
     """
@@ -173,36 +141,26 @@ class CodeMirror(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.component.editorId, name, value))
 
   def refresh(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get("%s.refresh()" % self.component.editorId)
 
   def clear(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
 
   def empty(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
 
   def appendText(self, text: Union[str, primitives.JsDataModel], from_selection: bool = True):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param text: The text to append.
     :param from_selection: Optional.
     """

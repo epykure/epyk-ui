@@ -58,12 +58,8 @@ class Sent:
 
   def get(self, name: str = None):
     """
-    Description:
-    ------------
     Set the option attribute to be added on the Javascript side during the component build
 
-    Attributes:
-    ----------
     :param str name: The attribute name.
     """
     return self.__data[name or sys._getframe().f_back.f_code.co_name]
@@ -80,12 +76,8 @@ class Received:
 
   def set(self, value, name=None):
     """
-    Description:
-    ------------
     Set the option attribute to be added on the Javascript side during the component build
 
-    Attributes:
-    ----------
     :param value: Object. The value for the name
     :param name: String. The attribute name
     """
@@ -94,12 +86,8 @@ class Received:
 
   def get(self, name=None):
     """
-    Description:
-    ------------
     Set the option attribute to be added on the Javascript side during the component build
 
-    Attributes:
-    ----------
     :param name: String. The attribute name
     """
     if self.__data is not None:
@@ -110,8 +98,6 @@ class Received:
   @property
   def s(self):
     """
-    Description:
-    ------------
 
     TODO: Find a way to keep autocompletion without overidding this property
     :return:

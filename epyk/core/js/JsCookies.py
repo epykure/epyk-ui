@@ -15,15 +15,11 @@ class JsCookies:
 
   def set(self, key: str, data, data_key: str = None, python_data=True, js_funcs: Optional[Union[list, str]] = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https//www.w3schools.com/js/js_cookies.asp
-
-    Attributes:
-    ----------
+ 
     :param key:
     :param data:
     :param data_key:
@@ -40,11 +36,7 @@ class JsCookies:
   def get(self, data: Union[str, primitives.JsDataModel] = None, js_conv_func: Optional[Union[str, list]] = True,
           js_result_func: Optional[str] = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data: Optional. A String corresponding to a JavaScript object.
     :param js_conv_func: Optional. A specific JavaScript data conversion function.
     :param js_result_func: Optional. A function used to transform the result.

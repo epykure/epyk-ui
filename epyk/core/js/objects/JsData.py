@@ -82,27 +82,19 @@ class ContainerData:
 
   @property
   def fnc(self):
-    """
-    Description:
-    -----------
-    All the predefined transformation functions.
+    """   All the predefined transformation functions.
     """
     return JsFncs.FncOnRecords(self.page._props, self._schema)
 
   @property
   def to(self):
-    """
-    Description:
-    -----------
-    All the possible object transformation to deal with external packages
+    """   All the possible object transformation to deal with external packages
     """
     return JsFncs.FncToObject(self.page._props, self._schema)
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsFncs.FncFiltere(self, self.page._props, self._schema)
@@ -116,13 +108,8 @@ class RawData(primitives.JsDataModel):
 
   @classmethod
   def get(cls, page: primitives.PageModel, js_code: str):
-    """
-    Description:
-    -----------
-    Return the internal RawData object.
-
-    Attributes:
-    ----------
+    """   Return the internal RawData object.
+ 
     :param page: The main page object.
     :param js_code: The JavaScript variable name.
 
@@ -131,13 +118,8 @@ class RawData(primitives.JsDataModel):
     return RawData(page, None)
 
   def setId(self, jq_id: str = None):
-    """
-    Description:
-    -----------
-    Change the Id variable name for the javascript data source.
-
-    Attributes:
-    ----------
+    """   Change the Id variable name for the javascript data source.
+ 
     :param jq_id: The JQuery Identifier.
 
     :return: The Python object
@@ -146,16 +128,11 @@ class RawData(primitives.JsDataModel):
     return self
 
   def attach(self, component: primitives.HtmlModel, profile: Optional[Union[bool, dict]] = False):
-    """
-    Description:
-    -----------
-    Attach the data object to a HTML Object.
+    """   Attach the data object to a HTML Object.
 
     This function is automatically used in the different components in order
     to guarantee the link of the data. This will also ensure that the same data set will be store only once in the page
-
-    Attributes:
-    ----------
+ 
     :param component:
     :param profile: Optional.
     """
@@ -164,9 +141,7 @@ class RawData(primitives.JsDataModel):
     return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][component.htmlCode])
 
   def toTsv(self, col_names: list = None, profile: Optional[Union[bool, dict]] = False):
-    """
-    Description:
-    -----------
+    """   
 
     :return: A String with the Javascript function to be used
     """
@@ -182,27 +157,21 @@ class RawData(primitives.JsDataModel):
 
   @property
   def fnc(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsFncs.FncOnRecords(self, self.page._props, self._schema)
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsFncs.FncFiltere(self, self.page._props, self._schema)
 
   @property
   def to(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsFncs.FncToObject(self, self.page._props, self._schema)
@@ -236,14 +205,9 @@ class Datamap(primitives.JsDataModel):
         self.attr(k, v)
 
   def add(self, component: primitives.HtmlModel, html_code: str = None):
-    """
-    Description:
-    -----------
-    Add an HTML component to the object.
+    """   Add an HTML component to the object.
     The key will be the html_code.
-
-    Attributes:
-    ----------
+ 
     :param component: The HTML component.
     :param html_code: Optional. The Html code.
     """
@@ -251,14 +215,9 @@ class Datamap(primitives.JsDataModel):
     return self
 
   def attr(self, k: Union[str, primitives.JsDataModel], v: Any):
-    """
-    Description:
-    -----------
-    Add an key, value to the Datamap object.
+    """   Add an key, value to the Datamap object.
     Keys and value might be JavaScript objects.
-
-    Attributes:
-    ----------
+ 
     :param k: The key attribute to be added to the object.
     :param v: The value associated to the key.
     """
@@ -266,13 +225,8 @@ class Datamap(primitives.JsDataModel):
     return self
 
   def attrs(self, data: dict):
-    """
-    Description:
-    -----------
-    Add multiple attributes to the DataMap object.
-
-    Attributes:
-    ----------
+    """   Add multiple attributes to the DataMap object.
+ 
     :param data: All the attributes to attach
     """
     for k, v in data.items():
@@ -298,13 +252,9 @@ class FormData(primitives.JsDataModel):
   alias = None
 
   def new(self, js_code: str, var_type: str = "let"):
-    """
-    Description:
-    ------------
+    """  
     Define a JavaScript variable.
-
-    Attributes:
-    ----------
+ 
     :param js_code: The JavaScript variable name.
     :param var_type: The JavaScript variable type (let, const, var...)
     """
@@ -312,39 +262,27 @@ class FormData(primitives.JsDataModel):
     return "%s %s = new FormData()" % (var_type, js_code)
 
   def get(self, js_code: str):
-    """
-    Description:
-    ------------
+    """  
     Get a JavaScript variable.
-
-    Attributes:
-    ----------
+ 
     :param js_code: The JavaScript variable name.
     """
     self.alias = js_code
     return self
 
   def append(self, name: Union[str, primitives.JsDataModel], value: Any):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param name:
     :param value:
     """
     return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
 
   def add(self, component: primitives.HtmlModel, html_code: str = None):
-    """
-    Description:
-    ------------
+    """  
     Add an HTML component to the object.
     The key will be the html_code.
-
-    Attributes:
-    ----------
+ 
     :param component: The HTML component.
     :param html_code: Optional. The Html code.
     """
@@ -353,12 +291,8 @@ class FormData(primitives.JsDataModel):
       JsUtils.jsConvertData(component.dom.content, None))
 
   def update(self, attrs: Union[Datamap, dict]):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param attrs:
     """
     appends = []
@@ -396,10 +330,7 @@ class JsData:
     return DataAll()
 
   def crossfilter(self, data=None, js_code: str = None, cross_dimension=None):
-    """
-    Description:
-    -----------
-    A crossfilter represents a multi-dimensional dataset.
+    """   A crossfilter represents a multi-dimensional dataset.
 
     Constructs a new crossfilter. If records is specified, simultaneously adds the specified records.
     Records can be any array of JavaScript objects or primitives.
@@ -407,9 +338,7 @@ class JsData:
     Related Pages:
 
       https://github.com/crossfilter/crossfilter/wiki/API-Reference
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param js_code:
     :param cross_dimension:
@@ -426,10 +355,7 @@ class JsData:
 
   @property
   def formdata(self):
-    """
-    Description:
-    -----------
-    Create a JavaScript Formdata object.
+    """   Create a JavaScript Formdata object.
 
     The FormData interface provides a way to easily construct a set of key/value pairs representing form fields and
     their values, which can then be easily sent using the XMLHttpRequest.send() method.
@@ -442,28 +368,20 @@ class JsData:
     return FormData()
 
   def datamap(self, components: List[primitives.HtmlModel] = None, attrs: dict = None):
-    """
-    Description:
-    -----------
-    Create a bespoke data object dedicated to be converted to Json and passed to the JavaScript layer.
+    """   Create a bespoke data object dedicated to be converted to Json and passed to the JavaScript layer.
     This is an internal structure to link the HTML component and various object to the JavaScript definition.
     """
     return Datamap(components, attrs)
 
   def dataset(self, data: Any, js_code: str = None, options: Union[dict, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    One of the starting points of the visualizations of vis.js is that they can deal with dynamic data,
+    """   One of the starting points of the visualizations of vis.js is that they can deal with dynamic data,
     and allow manipulation of the data.
     To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
 
     Related Pages:
 
       https://visjs.github.io/vis-data/data/index.html
-
-    Attributes:
-    ----------
+ 
     :param data: The data to be passed to the JavaScript side.
     :param js_code: The variable reference to this object on the JavaScript side.
     :param options: The options to be added to this object.
@@ -474,10 +392,7 @@ class JsData:
     return vis_obj
 
   def dataview(self, dataset, var_name: str = None, options: Union[dict, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    A DataView offers a filtered and/or formatted view on a DataSet.
+    """   A DataView offers a filtered and/or formatted view on a DataSet.
     One can subscribe to change in a DataView, and easily get filtered or formatted data without having to specify
     filters and field types all the time.
 
@@ -486,9 +401,7 @@ class JsData:
     Related Pages:
 
       https://visjs.github.io/vis-data/data/dataview.html
-
-    Attributes:
-    ----------
+ 
     :param dataset:
     :param options:
     :param var_name:
@@ -499,22 +412,15 @@ class JsData:
     return vis_obj
 
   def records(self, data: Any):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param data:
     """
     return RawData(self.page, data)
 
   @property
   def null(self):
-    """
-    Description:
-    -----------
-    Javascript null reference
+    """   Javascript null reference
     """
     return JsObject.JsObject("null", is_py_data=False)
 
@@ -526,19 +432,13 @@ class JsDataTransfer:
 
   @property
   def text(self):
-    """
-    Description:
-    -----------
-    Get text data from a datatransfer object.
+    """   Get text data from a datatransfer object.
     """
     return JsString.JsString("%s.getData('text')" % self.varId, is_py_data=False)
 
   @property
   def files(self):
-    """
-    Description:
-    -----------
-    The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files,
+    """   The DataTransfer.files property is a list of the files in the drag operation. If the operation includes no files,
     the list is empty.
 
     This feature can be used to drag files from a user's desktop to the browser.
@@ -551,9 +451,7 @@ class JsDataTransfer:
 
   @property
   def dropEffect(self, flag: Union[bool, primitives.JsDataModel] = False):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -570,9 +468,7 @@ class JsDataTransfer:
 
   @property
   def effectAllowed(self, flag: Union[bool, primitives.JsDataModel] = False):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -588,10 +484,7 @@ class JsDataTransfer:
     return JsFncs.JsFunction("%s.effectAllowed = %s" % (self.varId, flag))
 
   def clearData(self, data_type: Union[str, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Remove the data associated with a given type. The type argument is optional.
+    """   Remove the data associated with a given type. The type argument is optional.
     If the type is empty or not specified, the data associated with all types is removed.
     If data for the specified type does not exist, or the data transfer contains no data, this method will have no
     effect.
@@ -606,19 +499,13 @@ class JsDataTransfer:
     return JsFncs.JsFunction("%s.clearData(%s)" % (self.varId, JsUtils.jsConvertData(data_type, None)))
 
   def setDragImage(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
 
   def setData(self, data: Any, data_type: Union[str, primitives.JsDataModel] = 'text'):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param data:
     :param data_type:
     """
@@ -627,12 +514,8 @@ class JsDataTransfer:
     return JsFncs.JsFunction("%s.setData(%s, %s)" % (self.varId, data_type, data))
 
   def getData(self, data_type: Union[str, primitives.JsDataModel] = "text"):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param data_type:
     """
     data_type = JsUtils.jsConvertData(data_type, None)
@@ -645,14 +528,10 @@ class JsClipboardData:
     self.varId = js_code
 
   def src(self, js_code: str):
-    """
-    Description:
-    ------------
+    """  
     Set the event source.
     By default the event is event but this can be changed according to the trigger event.
-    
-    Attributes:
-    ----------
+     
     :param js_code: Change the event source
     """
     self.varId = "%s.clipboardData" % js_code
@@ -660,9 +539,7 @@ class JsClipboardData:
 
   @property
   def text(self):
-    """
-    Description:
-    ------------
+    """  
     The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
     If the drag operation does not include data, this method returns an empty string
 
@@ -674,9 +551,7 @@ class JsClipboardData:
 
   @property
   def plain(self):
-    """
-    Description:
-    ------------
+    """  
     The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
     If the drag operation does not include data, this method returns an empty string
 
@@ -688,9 +563,7 @@ class JsClipboardData:
 
   @property
   def uri(self):
-    """
-    Description:
-    ------------
+    """  
     The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
     If the drag operation does not include data, this method returns an empty string
 
@@ -701,9 +574,7 @@ class JsClipboardData:
     return JsString.JsString("%s.getData('text/uri-list')" % self.varId, is_py_data=False)
 
   def getData(self, data_type: str):
-    """
-    Description:
-    ------------
+    """  
     The DataTransfer.getData() method retrieves drag data (as a DOMString) for the specified type.
     If the drag operation does not include data, this method returns an empty string
 
@@ -712,9 +583,7 @@ class JsClipboardData:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData
-
-    Attributes:
-    ----------
+ 
     :param data_type: The data format
     """
     data_type = JsUtils.jsConvertData(data_type, None)

@@ -35,10 +35,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Return a Javascript val object.
+    """   Return a Javascript val object.
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -46,9 +43,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def by_name(self) -> JsNodeDom.JsDomsList:
-    """
-    Description:
-    -----------
+    """   
 
     """
     if self.component.attr.get('name') is not None:
@@ -59,10 +54,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def isInViewPort(self) -> JsObjects.JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Check if the component is in the visible part of the page (the viewport).
+    """   Check if the component is in the visible part of the page (the viewport).
 
     :return: A Javascript boolean
     """
@@ -73,23 +65,15 @@ class ChartJs(JsCanvas.Canvas):
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
   def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
-    """
-    Description:
-    -----------
-    Trigger some code when the component is visible on the visible part of the page (the viewpport).
-
-    Attributes:
-    ----------
+    """   Trigger some code when the component is visible on the visible part of the page (the viewpport).
+ 
     :param js_funcs: The Javascript events
     """
     return self.component.js.if_(self.isInViewPort, js_funcs)
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
-    The component content object
+    """   The component content object
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
@@ -98,19 +82,13 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def events(self) -> JsNodeDom.JsDomEvents:
-    """
-    Description:
-    -----------
-    Link to the events attached to a Javascript DOM object.
+    """   Link to the events attached to a Javascript DOM object.
     """
     return JsNodeDom.JsDomEvents(self.component)
 
   @property
   def jquery(self) -> JsQuery.JQuery:
-    """
-    Description:
-    -----------
-    Link to the JQuery functions.
+    """   Link to the JQuery functions.
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(component=self.component,
@@ -119,10 +97,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """
-    Description:
-    -----------
-    Wrapper to the D3 library.
+    """   Wrapper to the D3 library.
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(component=self.component, selector="d3.select('#%s')" % self.component.htmlCode)
@@ -130,27 +105,19 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def objects(self) -> JsObjects.JsObjects:
-    """
-    Description:
-    -----------
-    Interface to the main Javascript Classes and Primitives.
+    """   Interface to the main Javascript Classes and Primitives.
     """
     return JsObjects.JsObjects(self.page)
 
   @property
   def format(self) -> JsHtml.Formatters:
     """
-    Description:
-    ------------
     Specific formatters for the HTML components.
     """
     return JsHtml.Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
-    """
-    Description:
-    -----------
-    Style property to change from the javascript the CSS attributes of an HTML object.
+    """   Style property to change from the javascript the CSS attributes of an HTML object.
 
     Usage::
 
@@ -160,9 +127,7 @@ class ChartJs(JsCanvas.Canvas):
     Related Pages:
 
       https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
-
-    Attributes:
-    ----------
+ 
     :param attrs: The CSS attributes.
     """
     styles = []
@@ -175,16 +140,11 @@ class ChartJs(JsCanvas.Canvas):
 
   def registerFunction(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[dict] = None,
                        profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Javascript Framework extension
+    """   Javascript Framework extension
 
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
-
-    Attributes:
-    ----------
+ 
     :param func_name: The function name.
     :param js_funcs: The Javascript function definition.
     :param pmts: Optional.
@@ -197,10 +157,7 @@ class ChartJs(JsCanvas.Canvas):
     return self
 
   def hide(self):
-    """
-    Description:
-    -----------
-    Hide the component.
+    """   Hide the component.
 
     Usage::
 
@@ -213,10 +170,7 @@ class ChartJs(JsCanvas.Canvas):
     return self.css("display", "none")
 
   def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Display the component.
+    """   Display the component.
 
     Usage::
 
@@ -225,9 +179,7 @@ class ChartJs(JsCanvas.Canvas):
     Related Pages:
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    Attributes:
-    ----------
+ 
     :param inline:
     :param duration: A time in second for the component display
     :param display_value: Optional. The value to display. Default inline-block
@@ -239,12 +191,8 @@ class ChartJs(JsCanvas.Canvas):
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
   def visible(self, data, inline: Optional[str] = None, display_value: Optional[str] = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param data: Boolean.
     :param inline:
     :param display_value:
@@ -254,17 +202,12 @@ class ChartJs(JsCanvas.Canvas):
       "if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
 
   def select(self):
-    """
-    Description:
-    -----------
-    Select the content of the HTMl component.
+    """   Select the content of the HTMl component.
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
   def toggle(self, attr: str = "display", js_val1: Optional[str] = None, js_val2: str = "none"):
     """
-    Description:
-    ------------
     Toggle (hide / show) the display of the component
 
     Usage::
@@ -275,9 +218,7 @@ class ChartJs(JsCanvas.Canvas):
     Related Pages:
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    Attributes:
-    ----------
+ 
     :param attr:
     :param js_val1:
     :param js_val2:
@@ -290,16 +231,12 @@ class ChartJs(JsCanvas.Canvas):
 
   def highlight(self, css_attrs: Optional[dict] = None, time_event: int = 1000):
     """
-    Description:
-    ------------
 
     Usage::
 
       s.dom.highlight()
       s.dom.highlight(css_attrs={"background": "red"}),
-
-    Attributes:
-    ----------
+ 
     :param css_attrs: A dictionary with the CSS attributes.
     :param time_event: The time of the event.
     """
@@ -329,8 +266,6 @@ class ChartJs(JsCanvas.Canvas):
   def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
                profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Load during a Javascript event a component within the one using this method.
     This cannot be tested during the Python execution and should be tested in the browser.
 
@@ -344,9 +279,7 @@ class ChartJs(JsCanvas.Canvas):
         page.js.console.debugger,
         d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
       ])
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param append: Optional. Mention if the component should replace or append the data.
     :param profile: Optional. A flag to set the component performance storage.
@@ -365,15 +298,11 @@ class ChartJs(JsCanvas.Canvas):
 
   def options(self, options: Optional[dict] = None):
     """
-    Description:
-    ------------
     Return the builder options used to generate the object on the Javascript side.
     This is not necessarily the same object as the component options as some can be only used on the Python side.
 
     This will not change the original option object used during the first object creation.
-
-    Attributes:
-    ----------
+ 
     :param options: Optional. The value to be changed.
     """
     opt = dict(self.component._jsStyles)
@@ -382,12 +311,8 @@ class ChartJs(JsCanvas.Canvas):
     return opt
 
   def copyToClipboard(self, clipboardCopySelector=None, with_header=True):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param clipboardCopySelector:
     :param with_header:
     """

@@ -17,12 +17,8 @@ class Skins:
     self.page = page
 
   def set(self, skin: str = "", options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param str skin: Optional. The skin name.
     :param dict options: Optional. Specific Python options available for this component.
     :param Union[dict, bool] profile: Optional. A flag to set the component performance storage.
@@ -32,19 +28,14 @@ class Skins:
 
   def rains(self, width: tuple = (100, '%'), height: tuple = (100, '%'), options: dict = None,
             profile: Union[dict, bool] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
       https://codepen.io/ruigewaard/pen/JHDdF
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param dict options: Optional. Specific Python options available for this component.
@@ -61,15 +52,10 @@ class Skins:
     return component
 
   def winter(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -86,15 +72,10 @@ class Skins:
     return component
 
   def matrix(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -111,15 +92,10 @@ class Skins:
     return component
 
   def doctor(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -136,15 +112,10 @@ class Skins:
     return component
 
   def fireworks(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -161,15 +132,10 @@ class Skins:
     return component
 
   def birthday(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -186,21 +152,15 @@ class Skins:
     return component
 
   def lights(self, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add fireflies to the background page.
+    """   Add fireflies to the background page.
 
-    Usage:
-    -----
+    Usage::
 
 
     Related Pages:
 
       https://codepen.io/Mertl/pen/GexapP
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.

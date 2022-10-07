@@ -6,8 +6,6 @@ class DomTime(JsHtml.JsHtmlRich):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Common function to get the component content.
     """
     return JsHtml.ContentFormatters(self.page, "%(var)s.getHour()+ ':'+ %(var)s.getMinute()" % {
@@ -19,8 +17,6 @@ class DomDate(JsHtml.JsHtmlRich):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Common function to get the component content.
     """
     return JsHtml.ContentFormatters(self.page, "%(var)s.getDate().toISOString().split('T')[0]" % {

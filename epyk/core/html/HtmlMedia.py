@@ -63,10 +63,7 @@ class Media(Html.Html):
 
   @property
   def options(self) -> OptButton.OptMedia:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a Media (video and audio).
+    """   Property to set all the possible object for a Media (video and audio).
     """
     return super().options
 
@@ -135,17 +132,13 @@ class Youtube(Html.Html):
 
   @staticmethod
   def get_embed_link(youtube_link: str):
-    """
-    Description:
-    -------------
+    """  -
     simple function to convert a youtube link to the embedded version.
 
     Usage::
 
       html.HtmlMedia.Youtube.get_embed_link('https://www.youtube.com/watch?v=iPGgnzc34tY')
-
-    Attributes:
-    ----------
+ 
     :param youtube_link: The Youtube link of the online video.
     """
     return 'https://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
@@ -164,19 +157,13 @@ class Camera(Html.Html):
 
   @property
   def options(self) -> OptButton.OptMedia:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a Media (video and audio).
+    """   Property to set all the possible object for a Media (video and audio).
     """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsMedia:
-    """
-    Description:
-    -----------
-    The Javascript Dom object.
+    """   The Javascript Dom object.
     """
     if self._dom is None:
       self._dom = JsHtml.JsMedia(self, page=self.page)

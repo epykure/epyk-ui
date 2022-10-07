@@ -8,8 +8,6 @@ class OptionsPivot(Options):
   @property
   def sortable(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -20,8 +18,6 @@ class OptionsPivot(Options):
   @property
   def readonly_rows(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(False)
 
@@ -32,8 +28,6 @@ class OptionsPivot(Options):
   @property
   def delete_rows(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -44,8 +38,6 @@ class OptionsPivot(Options):
   @property
   def readonly_columns(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(False)
 
@@ -56,8 +48,6 @@ class OptionsPivot(Options):
   @property
   def delete_columns(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -68,8 +58,6 @@ class OptionsPivot(Options):
   @property
   def title_values(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(
       "Values <i style='font-size:%s'>(multiple fields)</i>" % self.page.body.style.globals.font.normal(-3))
@@ -81,8 +69,6 @@ class OptionsPivot(Options):
   @property
   def title_rows(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(
       "Rows <i style='font-size:%s'>(unique field)</i>" % self.page.body.style.globals.font.normal(-3))

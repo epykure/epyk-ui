@@ -20,21 +20,15 @@ class JqueryVectorMap(Html.Html):
     self.style.css.display = "inline-block"
 
   def click(self, js_funcs, profile=None, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
-    The onclick event occurs when the user clicks on an element.
+    """   The onclick event occurs when the user clicks on an element.
     This function will receive the region, code and element. The common data variable is mapped to the region.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onclick.asp
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. A Javascript Python function
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
@@ -46,12 +40,8 @@ class JqueryVectorMap(Html.Html):
     return self
 
   def drag(self, js_funcs, profile=None, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. A Javascript Python function
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
@@ -64,9 +54,7 @@ class JqueryVectorMap(Html.Html):
 
   @property
   def js(self) -> JsQueryVectorMap.JQVMap:
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -81,10 +69,7 @@ class JqueryVectorMap(Html.Html):
 
   @property
   def options(self) -> OptJqvM.OptionsJqVM:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.

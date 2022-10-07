@@ -22,39 +22,28 @@ class Pivots(Html.Html):
 
   @property
   def options(self) -> OptDashboard.OptionsPivot:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a button.
+    """   Property to set all the possible object for a button.
     """
     return super().options
 
   @property
   def dom(self) -> JsHtmlDashboard.JsHtmlPivot:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
     """
     if self._dom is None:
       self._dom = JsHtmlDashboard.JsHtmlPivot(self, page=self.page)
     return self._dom
 
   def items_style(self, style: str = None, css_attrs: dict = None):
-    """
-    Description:
-    ------------
+    """  
     Function to load a predefined style for the items of the components.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param style: The alias of the style to apply.
     :param css_attrs: Css attributes.
     """
@@ -74,15 +63,10 @@ class Pivots(Html.Html):
     return self
 
   def clear(self, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param profile:
     """
     return JsUtils.jsConvertFncs([self.rows.dom.clear(), self.columns.dom.clear()], toStr=True, profile=profile)

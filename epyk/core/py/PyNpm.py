@@ -571,9 +571,7 @@ class Packages:
   @classmethod
   def descriptions(cls, verbose: bool = True):
     """  Get all the packages and the short description from NPM.
-
-    Attributes:
-    ----------
+ 
     :param verbose: Optional. Display version details (default True).
     """
     npm = Npm()

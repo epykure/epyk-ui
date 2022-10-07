@@ -76,8 +76,6 @@ class Navigation:
   def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
            height=(25, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
     Navigation button to go to the bottom of the page directly.
 
     :tags:
@@ -87,8 +85,6 @@ class Navigation:
 
       page.ui.navigation.down()
 
-    Attributes:
-    ----------
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
     :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
     :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
@@ -124,8 +120,6 @@ class Navigation:
   def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
          height=(25, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
     Navigation button to go to a specific point in the page directly.
 
     :tags:
@@ -135,8 +129,6 @@ class Navigation:
 
       page.ui.navigation.to(100, tooltip="test")
 
-    Attributes:
-    ----------
     :param y: Integer. The y position on the page.
     :param x: Integer. Optional. The x position on the page.
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
@@ -173,8 +165,6 @@ class Navigation:
   def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None,
           width=(25, 'px'), height=(25, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
     Shortcut to a specific position in the page.
 
     :tags:
@@ -184,8 +174,6 @@ class Navigation:
 
       page.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
-    Attributes:
-    ----------
     :param text: String. The shortcut name.
     :param url: String. Optional. The anchor name.
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
@@ -219,8 +207,6 @@ class Navigation:
 
   def scroll(self, progress=0, height=(3, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
     Add a horizontal progressbar to display the status of the page scrollbar.
 
     :tags:
@@ -230,8 +216,6 @@ class Navigation:
 
       page.ui.navigation.scroll()
 
-    Attributes:
-    ----------
     :param progress: Integer. Optional. The progression on the page.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -248,8 +232,6 @@ class Navigation:
   def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
               profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -258,8 +240,6 @@ class Navigation:
 
       page.ui.navigation.indices(10)
 
-    Attributes:
-    ----------
     :param count: Integer. Optional. The number of pages.
     :param selected: Integer. Optional. The selected index.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -280,10 +260,7 @@ class Navigation:
            tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
            align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
-    """
-    Description:
-    -----------
-    Add a see more button to get the number of calls for a pagination on the server side.
+    """   Add a see more button to get the number of calls for a pagination on the server side.
 
     Usage::
 
@@ -292,8 +269,6 @@ class Navigation:
       btn.click([page.js.console.log(btn.dom.next())])
       t.click([btn.dom.rewind()])
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the button.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
     :param tooltip: Optional. A string with the value of the tooltip.
@@ -333,8 +308,6 @@ class Navigation:
   def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
              profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -345,8 +318,6 @@ class Navigation:
       for i, _ in enumerate(p):
         p.click_item(i, [])
 
-    Attributes:
-    ----------
     :param count: Integer. The number of pages.
     :param selected: Integer. Optional. The selected index.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -366,8 +337,6 @@ class Navigation:
   def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), html_code=None,
            options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -376,8 +345,6 @@ class Navigation:
 
       d = page.ui.navigation.dots(10)
 
-    Attributes:
-    ----------
     :param count: Integer. Optional. The number of pages.
     :param selected: Integer. Optional. The selected index.
     :param position: String. Optional. A string with the vertical position of the component.
@@ -397,8 +364,6 @@ class Navigation:
 
   def path(self, record, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -408,8 +373,6 @@ class Navigation:
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
       page.ui.navigation.path(record)
 
-    Attributes:
-    ----------
     :param record: Dictionary. Component input data.
     :param divider: String. Optional. A path delimiter.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -432,8 +395,6 @@ class Navigation:
   def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None,
           profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -443,8 +404,6 @@ class Navigation:
       page.ui.components_skin = {"nav": {"css": {"background-color": 'pink'}}}
       nav = page.ui.navigation.nav(height=60, options={"center": True, "logo_height": 50})
 
-    Attributes:
-    ----------
     :param logo: String. Optional.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param components: List. Optional. The Components to be added to the navbar.
@@ -469,8 +428,6 @@ class Navigation:
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
           profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -485,8 +442,6 @@ class Navigation:
 
       - :class:`epyk.core.html.HtmlMenu.HtmlNavBar`
 
-    Attributes:
-    ----------
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -556,8 +511,6 @@ window.prevScrollpos = currentScrollPos;
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -571,8 +524,6 @@ window.prevScrollpos = currentScrollPos;
       - :class:`epyk.core.html.HtmlText.Text`
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    Attributes:
-    ----------
     :param image: String. Optional. The image full path.
     :param text: String. Optional. The value to be displayed to the component.
     :param link: String. Optional. The url link.
@@ -598,8 +549,6 @@ window.prevScrollpos = currentScrollPos;
 
   def footer(self, components=None, width=(100, '%'), height=(80, 'px'), fixed=False, options=None, profile=False):
     """
-    Description:
-    ------------
 
     Will create a footer object in the body of the report.
 
@@ -612,8 +561,6 @@ window.prevScrollpos = currentScrollPos;
 
       - :class:`epyk.core.html.HtmlMenu.HtmlFooter`
 
-    Attributes:
-    ----------
     :param components: list of html components.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -634,8 +581,6 @@ window.prevScrollpos = currentScrollPos;
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -647,8 +592,6 @@ window.prevScrollpos = currentScrollPos;
       https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/st_news.py
 
-    Attributes:
-    ----------
     :param components: List. The different HTML objects to be added to the component.
     :param anchor: Component. Optional. The panel button to show / hide.
     :param size: Integer. Optional. Panel's width in pixel.
@@ -702,8 +645,6 @@ window.prevScrollpos = currentScrollPos;
 
   def pilcrow(self, text="", html_code=None, options=None, profile=None):
     """
-    Description:
-    ------------
     Add an anchor on the page and move to this when it is clicked.
 
     :tags:
@@ -711,8 +652,6 @@ window.prevScrollpos = currentScrollPos;
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -727,8 +666,6 @@ window.prevScrollpos = currentScrollPos;
 
   def panel(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -739,8 +676,6 @@ window.prevScrollpos = currentScrollPos;
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -758,16 +693,12 @@ window.prevScrollpos = currentScrollPos;
 
   def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None, profile=None, html_code=None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param components: List. The different HTML objects to be added to the component.
     :param logo:
     :param size: Integer. Optional. Panel's height in pixel.
@@ -799,8 +730,6 @@ class Banners:
 
   def top(self, data="", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -819,8 +748,6 @@ class Banners:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
 
-    Attributes:
-    ----------
     :param data:
     :param background: String. Optional. Background color code.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -844,8 +771,6 @@ class Banners:
   def bottom(self, data: Union[str, list] = "", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
              profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -867,8 +792,6 @@ class Banners:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
 
-    Attributes:
-    ----------
     :param data:
     :param background: String. Optional. Background color code.
     :param align: String. The text-align property within this component.
@@ -893,8 +816,6 @@ class Banners:
 
   def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -903,8 +824,6 @@ class Banners:
 
       page.ui.banners.cookies("Test", "#")
 
-    Attributes:
-    ----------
     :param text: String. The value to be displayed to the component.
     :param url: String. The url link.
     :param align: String. The text-align property within this component.
@@ -932,8 +851,6 @@ class Banners:
   def corner(self, data="", background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
              profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -963,8 +880,6 @@ class Banners:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
 
-    Attributes:
-    ----------
     :param data:
     :param background: String. Optional. Background color code.
     :param position: String. Optional. A string with the vertical position of the component
@@ -998,16 +913,12 @@ class Banners:
   def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None,
            profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-info-circle
     :param background: String. Optional. Background color code.
@@ -1037,16 +948,12 @@ class Banners:
   def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
            options=None, html_code=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param size_notch:
     :param background: String. Optional. Background color code.
@@ -1077,16 +984,12 @@ class Banners:
   def title(self, title, content, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
             options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param title:  String. Optional. A panel title. This will be attached to the title property.
     :param content: String. Optional. The value to be displayed to the component.
     :param size_notch:
@@ -1124,16 +1027,12 @@ class Banners:
   def quote(self, content, author, avatar=None, background=None, size_notch=0, width=(100, '%'), align="center",
             height=(None, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param content: String. Optional. The value to be displayed to the component.
     :param author:
     :param avatar:
@@ -1170,16 +1069,12 @@ class Banners:
   def disclaimer(self, copyright=None, links=None, width=(100, '%'), height=("auto", ''), align="center", options=None,
                  profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param copyright:
     :param links:
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -1214,16 +1109,12 @@ class Banners:
   def follow(self, text, width=(100, '%'), height=("auto", ''), align="left", options=None, profile=False,
              youtube=True, twitter=True, facebook=True, twitch=True, instagram=True, linkedIn=True):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param align: String. Optional. A string with the horizontal position of the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -1284,16 +1175,12 @@ class Banners:
   def row(self, headers, links, size_notch=0, background=None, width=(100, '%'), align="left", height=(None, 'px'),
           options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param headers:
     :param links:
     :param size_notch:
@@ -1327,16 +1214,12 @@ class Banners:
   def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
                  html_code="contactus", options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param background: String. Optional. Background color code.
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -1375,16 +1258,12 @@ class Banners:
   def sponsor(self, logos, title="Sponsors", content='', background=None, width=(100, '%'), height=("auto", ''),
               align="center", options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param logos:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param content:
@@ -1439,16 +1318,12 @@ class NavBars:
 
   def fixed(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -1462,16 +1337,12 @@ class NavBars:
 
   def top(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -1486,16 +1357,12 @@ class NavBars:
 
   def transparent(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -1512,16 +1379,12 @@ class NavBars:
 
   def dark(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

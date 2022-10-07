@@ -42,10 +42,7 @@ class ProgressBar(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionsProgBar:
-    """
-    Description:
-    -----------
-    The progress bar is designed to display the current percent complete for a process.
+    """   The progress bar is designed to display the current percent complete for a process.
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
     Related Pages:
@@ -56,12 +53,8 @@ class ProgressBar(Html.Html):
 
   def to(self, number: float, timer: int = 10):
     """
-    Description:
-    ------------
     Move the progress bar to a defined level in a specific amount of time in millisecond.
 
-    Attributes:
-    ----------
     :param number: The final state for the progress bar.
     :param timer: Optional. the appended of the increase in millisecond.
     """
@@ -88,10 +81,7 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
   @property
   def js(self) -> JsQueryUi.ProgressBar:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Related Pages:
@@ -107,8 +97,6 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -141,10 +129,7 @@ class Menu(Html.Html):
 
   @property
   def style(self) -> GrpClsJqueryUI.ClassMenu:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsJqueryUI.ClassMenu(self)
@@ -152,10 +137,7 @@ class Menu(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionsMenu:
-    """
-    Description:
-    -----------
-    Property to the comments component options.
+    """   Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -182,10 +164,7 @@ class Menu(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Menu:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     Related Pages:
@@ -200,10 +179,7 @@ class Menu(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -235,10 +211,7 @@ class Dialog(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionDialog:
-    """
-    Description:
-    -----------
-    Property to the comments component options.
+    """   Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -256,10 +229,7 @@ class Dialog(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Dialog:
-    """
-    Description:
-    -----------
-    Open content in an interactive overlay.
+    """   Open content in an interactive overlay.
 
     Related Pages:
 
@@ -273,10 +243,7 @@ class Dialog(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -348,8 +315,6 @@ class Slider(Html.Html):
   @property
   def options(self) -> OptSliders.OptionsSlider:
     """
-    Description:
-    ------------
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -360,8 +325,6 @@ class Slider(Html.Html):
   @property
   def style(self) -> GrpClsJqueryUI.ClassSlider:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -370,10 +333,7 @@ class Slider(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Slider:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Related Pages:
@@ -387,18 +347,13 @@ class Slider(Html.Html):
     return self._js
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Triggered after the user slides a handle, if the value has changed;
+    """   Triggered after the user slides a handle, if the value has changed;
     or if the value is changed programmatically via the value method.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-change
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param on_ready: Optional. Trigger the change event when page is ready.
@@ -409,17 +364,12 @@ class Slider(Html.Html):
     return self
 
   def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Triggered when the user starts sliding.
+    """   Triggered when the user starts sliding.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-start
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -429,17 +379,12 @@ class Slider(Html.Html):
     return self
 
   def slide(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Triggered when the user starts sliding.
+    """   Triggered when the user starts sliding.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-slide
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -449,17 +394,12 @@ class Slider(Html.Html):
     return self
 
   def stop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Triggered after the user slides a handle.
+    """   Triggered after the user slides a handle.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#event-stop
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -470,10 +410,7 @@ class Slider(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlSlider:
-    """
-    Description:
-    -----------
-    The Javascript Dom object.
+    """   The Javascript Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSlider(self, page=self.page)
@@ -541,10 +478,7 @@ class SliderDate(Slider):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDate:
-    """
-    Description:
-    -----------
-    The Javascript Dom object.
+    """   The Javascript Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, page=self.page)
@@ -563,10 +497,7 @@ class SliderDates(SliderDate):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDates:
-    """
-    Description:
-    -----------
-    The Javascript Dom object.
+    """   The Javascript Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, page=self.page)
@@ -607,8 +538,6 @@ class SkillBar(Html.Html):
   @property
   def options(self) -> OptSliders.OptionsSkillbars:
     """
-    Description:
-    ------------
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -618,10 +547,7 @@ class SkillBar(Html.Html):
 
   @property
   def js(self) -> JsComponents.SkillBar:
-    """
-    Description:
-    -----------
-    The JavaScript predefined functions for this component.
+    """   The JavaScript predefined functions for this component.
 
     :return: A Javascript object
     """
@@ -704,8 +630,6 @@ class OptionsBar(Html.Html):
   @property
   def options(self) -> OptSliders.OptionBar:
     """
-    Description:
-    ------------
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -780,10 +704,7 @@ class Filters(Html.Html):
 
   @property
   def options(self) -> OptList.OptionsTagItems:
-    """
-    Description:
-    -----------
-    Property to the comments component options.
+    """   Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -804,13 +725,8 @@ class Filters(Html.Html):
         '''
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Javascript event triggered by the enter key.
+    """   Javascript event triggered by the enter key.
 
-    Attributes:
-    ----------
     :param js_funcs: The JavaScript events.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -822,13 +738,9 @@ class Filters(Html.Html):
     return self
 
   def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param prevent_default:
     :param profile: Optional. A flag to set the component performance storage.
@@ -838,13 +750,9 @@ class Filters(Html.Html):
     return super(Filters, self).drop(js_funcs, prevent_default, profile)
 
   def delete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -859,13 +767,9 @@ class Filters(Html.Html):
 
   def append(self, value: Any, category: Optional[str] = None, name: Optional[str] = None,
              disabled: bool = False, fixed: bool = False):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Attributes:
-    ----------
     :param value:
     :param category:
     :param name:
@@ -881,12 +785,8 @@ class Filters(Html.Html):
   def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: dict = None,
                 profile: types.PROFILE_TYPE = None, source_event: str = None):
     """
-    Description:
-    ------------
     Set the Filters component draggable.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
@@ -902,10 +802,7 @@ class Filters(Html.Html):
 
   @property
   def dom(self) -> JsHtmlList.Tags:
-    """
-    Description:
-    -----------
-    The Javascript Dom object.
+    """   The Javascript Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlList.Tags(self, page=self.page)

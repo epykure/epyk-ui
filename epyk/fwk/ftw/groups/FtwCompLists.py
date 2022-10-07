@@ -8,10 +8,7 @@ class Components:
 
   def select(self, records=None, html_code=None, selected=None, width=(100, "%"), height=(None, "%"),
              profile=None, options=None):
-    """
-    Description:
-    -----------
-    HTML Select component.
+    """   HTML Select component.
 
     Usage::
 
@@ -28,9 +25,7 @@ class Components:
     Related Pages:
 
       https://developer.microsoft.com/en-us/fabric-js/components/dropdown/dropdown
-
-    Attributes:
-    ----------
+ 
     :param records: List. Optional. The list of dictionaries with the input data.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param selected: String. Optional. The selected value or values.

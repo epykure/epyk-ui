@@ -6,9 +6,7 @@ class OptionsJsonFmt(Options):
 
   @property
   def open(self):
-    """
-    Description:
-    ------------
+    """  
     Default: 1 This number indicates up to how many levels the rendered tree should expand.
     Set it to 0 to make the whole tree collapsed or set it to Infinity to expand the tree deeply
 
@@ -22,17 +20,13 @@ class OptionsJsonFmt(Options):
 
   @property
   def hoverPreviewEnabled(self):
-    """
-    Description:
-    ------------
+    """  
     Enable preview on hover.
 
     Related Pages:
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop flag:
     """
     return self._config_group_get('opts', False)
@@ -43,9 +37,7 @@ class OptionsJsonFmt(Options):
 
   @property
   def hoverPreviewArrayCount(self):
-    """
-    Description:
-    ------------
+    """  
     Number of array items to show in preview Any array larger than this number will be shown as Array[XXX]
     where XXX is length of the array.
 
@@ -53,8 +45,6 @@ class OptionsJsonFmt(Options):
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop num:
     """
     return self._config_group_get('opts', 100)
@@ -65,9 +55,7 @@ class OptionsJsonFmt(Options):
 
   @property
   def hoverPreviewFieldCount(self):
-    """
-    Description:
-    ------------
+    """  
     Number of object properties to show for object preview. Any object with more properties that thin number
     will be truncated.
 
@@ -75,8 +63,6 @@ class OptionsJsonFmt(Options):
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop num:
     """
     return self._config_group_get('opts', 5)
@@ -87,17 +73,13 @@ class OptionsJsonFmt(Options):
 
   @property
   def animateOpen(self):
-    """
-    Description:
-    ------------
+    """  
     Enable animation when expanding json object. True by default.
 
     Related Pages:
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop flag:
     """
     return self._config_group_get('opts', True)
@@ -108,17 +90,13 @@ class OptionsJsonFmt(Options):
 
   @property
   def animateClose(self):
-    """
-    Description:
-    ------------
+    """  
     Enable animation when closing json object. True by default.
 
     Related Pages:
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop flag:
     """
     return self._config_group_get('opts', True)
@@ -129,9 +107,7 @@ class OptionsJsonFmt(Options):
 
   @property
   def useToJSON(self):
-    """
-    Description:
-    ------------
+    """  
     use the toJSON method to render an object as a string as available.
     Usefull for objects like Date or Mongo's ObjectID that migh make more sense as a strign than as empty objects.
     True by default.
@@ -140,8 +116,6 @@ class OptionsJsonFmt(Options):
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop flag:
     """
     return self._config_group_get('opts', True)
@@ -152,17 +126,13 @@ class OptionsJsonFmt(Options):
 
   @property
   def sortPropertiesBy(self):
-    """
-    Description:
-    ------------
+    """  
     use the given sorting function to deeply sort the object properties.
 
     Related Pages:
 
       https://github.com/mohsen1/json-formatter-js
 
-    Attributes:
-    ----------
     :prop flag:
     """
     return self._config_group_get('opts', None)
@@ -176,12 +146,8 @@ class OptionsLegend(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :prop css_attrs:
     """
     return self.get({})

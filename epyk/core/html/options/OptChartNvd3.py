@@ -17,17 +17,12 @@ class OptionsChartSharedNVD3(OptChart.OptionsChartShared):
     return self
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-y-label
-
-    Attributes:
-    ----------
+ 
     :param value: String. The axis label.
     """
     self.component.dom.xAxis.axisLabel(value)
@@ -48,13 +43,8 @@ class OptionsChartSharedNVD3(OptChart.OptionsChartShared):
     return self
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
-
-    Attributes:
-    ----------
+    """   Set the label of the y axis.
+ 
     :param value: String. The axis label.
     """
     self.component.dom.yAxis.axisLabel(value)

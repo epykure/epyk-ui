@@ -15,10 +15,7 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
     pass
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
     Not yet available.
 
@@ -26,8 +23,6 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
 
       https://github.com/frappe/charts/issues/219
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.xLabel = value
@@ -46,10 +41,7 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
     pass
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
+    """   Set the label of the y axis.
 
     Not yet available.
 
@@ -57,8 +49,6 @@ class OptionsChartSharedRoughViz(OptChart.OptionsChartShared):
 
       https://github.com/frappe/charts/issues/219
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.yLabel = value
@@ -72,8 +62,6 @@ class OptionData(Options):
   @property
   def labels(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -89,8 +77,6 @@ class OptionData(Options):
   @property
   def values(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -109,8 +95,6 @@ class OptionDataXY(Options):
   @property
   def labels(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -126,8 +110,6 @@ class OptionDataXY(Options):
   @property
   def x(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -143,8 +125,6 @@ class OptionDataXY(Options):
   @property
   def y(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -160,8 +140,6 @@ class OptionDataXY(Options):
   @property
   def y1(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -192,8 +170,6 @@ class RoughVizBar(Options):
   @property
   def element(self):
     """
-    Description:
-    ------------
     Id or class of container element.
 
     Related Pages:
@@ -209,8 +185,6 @@ class RoughVizBar(Options):
   @property
   def axisFontSize(self):
     """
-    Description:
-    ------------
     Font-size for axes' labels. Default: '1rem'.
 
     Related Pages:
@@ -226,8 +200,6 @@ class RoughVizBar(Options):
   @property
   def axisRoughness(self):
     """
-    Description:
-    ------------
     Roughness for x & y axes. Default: 0.5
 
     Related Pages:
@@ -243,8 +215,6 @@ class RoughVizBar(Options):
   @property
   def fillWeight(self):
     """
-    Description:
-    ------------
     Weight of inner paths' color. Default: 0.5
 
     Related Pages:
@@ -260,8 +230,6 @@ class RoughVizBar(Options):
   @property
   def font(self):
     """
-    Description:
-    ------------
     Font-family to use. You can use 0 or gaegu to use Gaegu, or 1 or indie flower to use Indie Flower.
 
     Related Pages:
@@ -277,8 +245,6 @@ class RoughVizBar(Options):
   @property
   def highlight(self):
     """
-    Description:
-    ------------
     FColor for each bar on hover. Default: 'coral'.
 
     Related Pages:
@@ -294,8 +260,6 @@ class RoughVizBar(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -311,8 +275,6 @@ class RoughVizBar(Options):
   @property
   def innerStrokeWidth(self):
     """
-    Description:
-    ------------
     Stroke-width for paths inside bars. Default: 1.
 
     Related Pages:
@@ -328,8 +290,6 @@ class RoughVizBar(Options):
   @property
   def interactive(self):
     """
-    Description:
-    ------------
     Whether or not chart is interactive. Default: true..
 
     Related Pages:
@@ -345,8 +305,6 @@ class RoughVizBar(Options):
   @property
   def labelFontSize(self):
     """
-    Description:
-    ------------
     Font-size for axes' labels. Default: '1rem'.
 
     Related Pages:
@@ -362,8 +320,6 @@ class RoughVizBar(Options):
   @property
   def margin(self):
     """
-    Description:
-    ------------
     Margin object. Default: {top: 50, right: 20, bottom: 70, left: 100}.
 
     Related Pages:
@@ -379,8 +335,6 @@ class RoughVizBar(Options):
   @property
   def padding(self):
     """
-    Description:
-    ------------
     Padding between bars. Default: 0.1.
 
     Related Pages:
@@ -396,8 +350,6 @@ class RoughVizBar(Options):
   @property
   def roughness(self):
     """
-    Description:
-    ------------
     Roughness level of chart. Default: 1.
 
     Related Pages:
@@ -413,8 +365,6 @@ class RoughVizBar(Options):
   @property
   def simplification(self):
     """
-    Description:
-    ------------
     Chart simplification. Default 0.2.
 
     Related Pages:
@@ -430,8 +380,6 @@ class RoughVizBar(Options):
   @property
   def color(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -447,8 +395,6 @@ class RoughVizBar(Options):
   @property
   def stroke(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -464,8 +410,6 @@ class RoughVizBar(Options):
   @property
   def strokeWidth(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -481,8 +425,6 @@ class RoughVizBar(Options):
   @property
   def title(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -498,8 +440,6 @@ class RoughVizBar(Options):
   @property
   def titleFontSize(self):
     """
-    Description:
-    ------------
     Font-size for chart title. Default: '1rem'.
 
     Related Pages:
@@ -515,8 +455,6 @@ class RoughVizBar(Options):
   @property
   def tooltipFontSize(self):
     """
-    Description:
-    ------------
     Font-size for tooltip. Default: '0.95rem'.
 
     Related Pages:
@@ -532,8 +470,6 @@ class RoughVizBar(Options):
   @property
   def xLabel(self):
     """
-    Description:
-    ------------
     Label for x-axis.
 
     Related Pages:
@@ -549,8 +485,6 @@ class RoughVizBar(Options):
   @property
   def yLabel(self):
     """
-    Description:
-    ------------
     Label for y-axis.
 
     Related Pages:
@@ -566,8 +500,6 @@ class RoughVizBar(Options):
   @property
   def width(self):
     """
-    Description:
-    ------------
     Chart title. Optional.
 
     Related Pages:
@@ -586,8 +518,6 @@ class RoughVizPie(RoughVizBar):
   @property
   def fillStyle(self):
     """
-    Description:
-    ------------
     Bar fill-style. Should be one of fillStyles shown above.
 
     Related Pages:
@@ -603,8 +533,6 @@ class RoughVizPie(RoughVizBar):
   @property
   def legend(self):
     """
-    Description:
-    ------------
     Whether or not to add legend. Default: 'true.
 
     Related Pages:
@@ -620,8 +548,6 @@ class RoughVizPie(RoughVizBar):
   @property
   def legendPosition(self):
     """
-    Description:
-    ------------
     Position of legend. Should be either 'left' or 'right'. Default: 'right'.
 
     Related Pages:
@@ -637,8 +563,6 @@ class RoughVizPie(RoughVizBar):
   @property
   def colors(self):
     """
-    Description:
-    ------------
     Array of colors for each arc.
 
     Related Pages:
@@ -657,8 +581,6 @@ class RoughVizLine(RoughVizBar):
   @property
   def data(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_sub_data("data", OptionDataXY)
@@ -666,8 +588,6 @@ class RoughVizLine(RoughVizBar):
   @property
   def circle(self):
     """
-    Description:
-    ------------
     Whether or not to add circles to chart. Default: true.
 
     Related Pages:
@@ -683,8 +603,6 @@ class RoughVizLine(RoughVizBar):
   @property
   def circleRadius(self):
     """
-    Description:
-    ------------
     Radius of circles. Default: 10.
 
     Related Pages:
@@ -700,8 +618,6 @@ class RoughVizLine(RoughVizBar):
   @property
   def circleRoughness(self):
     """
-    Description:
-    ------------
     Roughness of circles. Default: 2.
 
     Related Pages:
@@ -717,8 +633,6 @@ class RoughVizLine(RoughVizBar):
   @property
   def colors(self):
     """
-    Description:
-    ------------
     Array of colors for each arc.
 
     Related Pages:
@@ -745,8 +659,6 @@ class RoughVizScatter(RoughVizBar):
   @property
   def colors(self):
     """
-    Description:
-    ------------
     Array of colors for each arc.
 
     Related Pages:
@@ -762,8 +674,6 @@ class RoughVizScatter(RoughVizBar):
   @property
   def colorVar(self):
     """
-    Description:
-    ------------
     Array of colors for each arc.
 
     Related Pages:
@@ -779,8 +689,6 @@ class RoughVizScatter(RoughVizBar):
   @property
   def highlightLabel(self):
     """
-    Description:
-    ------------
     If input data is csv or tsv, this should be a column representing what value to display on hover.
     Otherwise, (x, y) values will be shown on hover.
 
@@ -797,8 +705,6 @@ class RoughVizScatter(RoughVizBar):
   @property
   def radius(self):
     """
-    Description:
-    ------------
     Circle radius. Default: .
 
     Related Pages:

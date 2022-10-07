@@ -9,10 +9,7 @@ class Components:
 
   def select(self, records=None, html_code=None, selected=None, width=(100, "%"), height=(None, "%"),
              profile=None, multiple=False, options=None):
-    """
-    Description:
-    -----------
-    HTML Select component.
+    """   HTML Select component.
 
     Usage::
 
@@ -30,8 +27,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/forms/select/
 
-    Attributes:
-    ----------
     :param records: List. Optional. The list of dictionaries with the input data.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param selected: String. Optional. The selected value or values.
@@ -59,15 +54,11 @@ class Components:
 
   def dropdown(self, records=None, text="", width=('auto', ""), height=(None, 'px'), html_code=None,
                options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
 
     https://getbootstrap.com/docs/5.0/components/dropdowns/
 
-    Attributes:
-    ----------
     :param records:
     :param text:
     :param width: Tuple. Optional. Integer for the component width.
@@ -79,10 +70,7 @@ class Components:
 
   def list(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
            profile=None):
-    """
-    Description:
-    -----------
-    List groups are a flexible and powerful component for displaying a series of content.
+    """   List groups are a flexible and powerful component for displaying a series of content.
     Modify and extend them to support just about any content within.
 
     Usage::
@@ -93,8 +81,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/list-group
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -110,10 +96,7 @@ class Components:
 
   def numbers(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
               profile=None):
-    """
-    Description:
-    -----------
-    Add the .list-group-numbered modifier class (and optionally use an <ol> element) to opt into numbered list group
+    """   Add the .list-group-numbered modifier class (and optionally use an <ol> element) to opt into numbered list group
     items. Numbers are generated via CSS (as opposed to a <ol>s default browser styling) for better placement inside l
     ist group items and to allow for better customization.
 
@@ -125,8 +108,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/list-group/#numbered
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -142,10 +123,7 @@ class Components:
 
   def buttons(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
               profile=None):
-    """
-    Description:
-    -----------
-    With <button>s, you can also make use of the disabled attribute instead of the .disabled class. Sadly,
+    """   With <button>s, you can also make use of the disabled attribute instead of the .disabled class. Sadly,
     <a>s don’t support the disabled attribute.
 
     Usage::
@@ -162,8 +140,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/list-group/#links-and-buttons
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -180,10 +156,7 @@ class Components:
 
   def flush(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
             profile=None):
-    """
-    Description:
-    -----------
-    Add .list-group-flush to remove some borders and rounded corners to render list group items edge-to-edge in a
+    """   Add .list-group-flush to remove some borders and rounded corners to render list group items edge-to-edge in a
     parent container (e.g., cards).
 
     Usage::
@@ -197,8 +170,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/list-group/#flush
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -213,10 +184,7 @@ class Components:
     return component
 
   def badges(self, values, width=('auto', ""), height=(None, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a list of badges.
+    """   Add a list of badges.
 
     Related Pages:
 
@@ -229,8 +197,6 @@ class Components:
       list.item(0).add_style("active")
       list.item(2).add_style("disabled")
 
-    Attributes:
-    ----------
     :param values:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -252,17 +218,12 @@ class Components:
     return component
 
   def checks(self, data=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a list checkboxes.
+    """   Add a list checkboxes.
 
     Usage::
 
       page.web.bs.lists.checks(["US", "ES", "IT"])
 
-    Attributes:
-    ----------
     :param data:
     :param width: Tuple. Optional. Integer for the component width.
     :param height: Tuple. Optional. Integer for the component height.
@@ -285,10 +246,7 @@ class Components:
 
   def datalist(self, records=None, html_code=None, selected=None, width=(100, "%"), height=(None, "%"),
                profile=None, options=None):
-    """
-    Description:
-    -----------
-    Datalists allow you to create a group of <option>s that can be accessed (and autocompleted) from within an <input>.
+    """   Datalists allow you to create a group of <option>s that can be accessed (and autocompleted) from within an <input>.
     These are similar to <select> elements, but come with more menu styling limitations and differences.
     While most browsers and operating systems include some support for <datalist> elements, their styling is
     nconsistent at best.
@@ -303,8 +261,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/form-control/
 
-    Attributes:
-    ----------
     :param records: List. Optional. The list of dictionaries with the input data.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param selected: String. Optional. The selected value or values.

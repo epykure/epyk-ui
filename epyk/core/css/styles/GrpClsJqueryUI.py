@@ -16,10 +16,7 @@ class ClassSlider(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrInput.AttrInput:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -33,10 +30,7 @@ class ClassSlider(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogInput.CatalogInput:
-    """
-    Description:
-    -----------
-    The internal class used to put a custom Style to this object.
+    """   The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogInput.CatalogInput
@@ -48,10 +42,7 @@ class ClassSlider(GrpCls.ClassHtml):
 
   @property
   def cls_ui_slider(self) -> Classes.CatalogInput.CatalogInput:
-    """
-    Description:
-    -----------
-    Add the predefined CSS class style for the active slider.
+    """   Add the predefined CSS class style for the active slider.
     Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
@@ -63,10 +54,7 @@ class ClassSlider(GrpCls.ClassHtml):
 
   @property
   def cls_ui_active(self) -> Classes.CatalogInput.CatalogInput:
-    """
-    Description:
-    -----------
-    Add the predefined CSS class style for the active slider.
+    """   Add the predefined CSS class style for the active slider.
     Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
@@ -78,10 +66,7 @@ class ClassSlider(GrpCls.ClassHtml):
 
   @property
   def cls_ui_header(self) -> Classes.CatalogInput.CatalogInput:
-    """
-    Description:
-    -----------
-    Add the predefined CSS class for the UI slider header.
+    """   Add the predefined CSS class for the UI slider header.
     Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
@@ -101,10 +86,7 @@ class ClassMenu(GrpCls.ClassHtml):
 
   @property
   def cls_ui(self) -> Classes.CatalogInput.CatalogInput:
-    """
-    Description:
-    -----------
-    Class override on the existing one in the package.
+    """   Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
     """

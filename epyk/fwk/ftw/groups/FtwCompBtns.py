@@ -21,10 +21,7 @@ class Components:
 
   def toggle(self, flag=False, label=None, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,
              profile=None):
-    """
-    Description:
-    -----------
-    Add a toggle component.
+    """   Add a toggle component.
 
     Usage::
 
@@ -32,9 +29,7 @@ class Components:
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
-
-    Attributes:
-    ----------
+ 
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -58,10 +53,7 @@ class Components:
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(None, "px"), label=None, html_code=None,
             profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a check component.
+    """   Add a check component.
 
     Usage::
 
@@ -70,9 +62,7 @@ class Components:
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
-
-    Attributes:
-    ----------
+ 
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param tooltip: String. Optional. The tooltip text.

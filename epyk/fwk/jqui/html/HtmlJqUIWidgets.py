@@ -17,19 +17,13 @@ class JqAccordion(Component):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return JsQuery.decorate_var("#%s" % self.htmlCode)
 
   @property
   def options(self) -> OptJqWiidgets.OptAccordion:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     Related Pages:
 
@@ -41,10 +35,7 @@ class JqAccordion(Component):
 
   @property
   def js(self) -> JsJqWidgets.Accordion:
-    """
-    Description:
-    -----------
-    Javascript module of the Accordion component.
+    """   Javascript module of the Accordion component.
 
     Related Pages:
 
@@ -58,9 +49,7 @@ class JqAccordion(Component):
 
   @property
   def style(self) -> JqStyleWidget.Accordion:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
 
     :rtype: JqStyleWidget.Accordion
@@ -70,37 +59,22 @@ class JqAccordion(Component):
     return self._styleObj
 
   def header(self, n):
-    """
-    Description:
-    -----------
-    Get a dedicated header component.
-
-    Attributes:
-    ----------
+    """   Get a dedicated header component.
+ 
     :param n: Integer. The header index.
     """
     return self.items[n]["header"]
 
   def panel(self, n: int):
-    """
-    Description:
-    -----------
-    Get a dedicated panel component.
-
-    Attributes:
-    ----------
+    """   Get a dedicated panel component.
+ 
     :param n: Integer. The panel index.
     """
     return self.items[n]["content"]
 
   def add_section(self, header, content, prepend=False):
-    """
-    Description:
-    -----------
-    Add a new section to the accordion component.
-
-    Attributes:
-    ----------
+    """   Add a new section to the accordion component.
+ 
     :param header: String | Component. The tab title.
     :param content: String | Component. The tab panel.
     :param prepend: Boolean. Optional. The position of the tab.
@@ -121,12 +95,8 @@ class JqAccordion(Component):
     return section
 
   def write_item(self, item):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param item:
     """
     return {"header": item["header"].html(), "content": item["content"].html()}
@@ -144,18 +114,13 @@ class JqTabs(Component):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return JsQuery.decorate_var("#%s" % self.htmlCode)
 
   @property
   def style(self) -> JqStyleWidget.Accordion:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
 
     :rtype: JqStyleWidget.Accordion
@@ -166,10 +131,7 @@ class JqTabs(Component):
 
   @property
   def options(self) -> OptJqWiidgets.OptTabs:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     Related Pages:
 
@@ -181,10 +143,7 @@ class JqTabs(Component):
 
   @property
   def js(self) -> JsJqWidgets.Tabs:
-    """
-    Description:
-    -----------
-    Javascript module of the Tabs component.
+    """   Javascript module of the Tabs component.
 
     Related Pages:
 
@@ -197,37 +156,22 @@ class JqTabs(Component):
     return self._js
 
   def tab(self, n):
-    """
-    Description:
-    -----------
-    Get a dedicated tab component.
-
-    Attributes:
-    ----------
+    """   Get a dedicated tab component.
+ 
     :param n: Integer. The tab index.
     """
     return self.items[n]["header"]
 
   def panel(self, n: int):
-    """
-    Description:
-    -----------
-    Get a dedicated panel component.
-
-    Attributes:
-    ----------
+    """   Get a dedicated panel component.
+ 
     :param n: Integer. The panel index.
     """
     return self.items[n]["content"]
 
   def add_panel(self, header, content, prepend=False):
-    """
-    Description:
-    -----------
-    Add a new panel to the multi tabs component.
-
-    Attributes:
-    ----------
+    """   Add a new panel to the multi tabs component.
+ 
     :param header: String | Component. The tab title.
     :param content: String | Component. The tab panel.
     :param prepend: Boolean. Optional. The position of the tab.
@@ -251,9 +195,7 @@ class JqTabs(Component):
     return panel
 
   def write_values(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     tabs, panels = [], []

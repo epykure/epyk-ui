@@ -83,8 +83,7 @@ def inline(css_attrs: dict, important: bool = False):
 
     inline({"color": "red"})
 
-  Related Pages:
-  --------------
+  Related Pages::
 
     https://www.w3schools.com/css/css_howto.asp
 
@@ -100,8 +99,7 @@ def inline(css_attrs: dict, important: bool = False):
 def px_to_em(value: float, with_unit: bool = True):
   """	Convert the pixel value to em.
 
-  Related Pages:
-  --------------
+  Related Pages::
 
     https://www.w3schools.com/cssref/css_pxtoemconversion.asp
 
@@ -118,8 +116,7 @@ def px_to_em(value: float, with_unit: bool = True):
 def em_to_px(value: float, with_unit: bool = True):
   """	Convert an em value in pixel.
 
-  Related Pages:
-  --------------
+  Related Pages::
 
     https://www.w3schools.com/cssref/css_pxtoemconversion.asp
 

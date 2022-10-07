@@ -35,17 +35,13 @@ class ToastTimes:
 
   def selectbox(self, hour=None, minute=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
                 options=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param hour: Number. optional. The initial hour.
     :param minute: Number. optional. The initial minute.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -68,17 +64,13 @@ class ToastTimes:
 
   def spinbox(self, hour=None, minute=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
               options=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param hour: Number. optional. The initial hour.
     :param minute: Number. optional. The initial minute.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -107,12 +99,8 @@ class ToastFields:
 
   def date(self, value=None, label="", width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
            options=None, helper=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param value:
     :param label:
     :param width:
@@ -138,17 +126,13 @@ class ToastFields:
 
   def time(self, hour=None, minute=None, label=None, width=(None, "px"), height=(None, "px"), html_code=None,
            profile=None, options=None, helper=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param hour: Number. optional. The initial hour.
     :param minute: Number. optional. The initial minute.
     :param label: String. Optional. The text of label to be added to the component.
@@ -175,17 +159,13 @@ class ToastFields:
 
   def today(self, value=None, label="", width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
             options=None, helper=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param label: String. Optional. The text of label to be added to the component.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -211,17 +191,13 @@ class ToastFields:
 
   def cob(self, value=None, label="", width=(None, "px"), height=(None, "px"), html_code=None, profile=None,
           options=None, helper=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param label: String. Optional. The text of label to be added to the component.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -252,17 +228,13 @@ class ToastDates:
     self.page = ui.page
 
   def date(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
     Create a date picker.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -281,9 +253,7 @@ class ToastDates:
     return component
 
   def range(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
     Create a date-range picker by DatePicker.createRangePicker().
 
     Related Pages:
@@ -291,8 +261,6 @@ class ToastDates:
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -311,9 +279,7 @@ class ToastDates:
     return component
 
   def calendar(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
     Create a calendar by DatePicker.createCalendar().
 
     Related Pages:
@@ -321,8 +287,6 @@ class ToastDates:
       https://nhn.github.io/tui.date-picker/latest/Calendar
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -347,16 +311,12 @@ class ToastCalendars:
     self.page = ui.page
 
   def monthly(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -374,16 +334,12 @@ class ToastCalendars:
     return component
 
   def weekly(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -401,16 +357,12 @@ class ToastCalendars:
     return component
 
   def daily(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -435,9 +387,7 @@ class ToastCharts:
 
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    ------------
+    """  
     Generic entry point for charts.
 
     :tags:
@@ -449,8 +399,6 @@ class ToastCharts:
 
       https://nhn.github.io/tui.chart/latest
 
-    Attributes:
-    ----------
     :param record: List. Optional. The list of dictionaries with the input data.
     :param y: List | String. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -468,17 +416,13 @@ class ToastCharts:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       https://nhn.github.io/tui.chart/latest/LineChart
       https://github.com/nhn/tui.chart/blob/main/docs/en/chart-line.md
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -506,16 +450,12 @@ class ToastCharts:
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       https://github.com/nhn/tui.chart/blob/main/docs/en/chart-area.md
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -546,16 +486,12 @@ class ToastCharts:
 
   def bubble(self, record=None, y_columns=None, x_axis=None, r_columns=None, profile=None, width=(100, "%"),
              height=(330, "px"), options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       https://github.com/nhn/tui.chart/blob/main/docs/en/chart-bubble.md
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -587,15 +523,11 @@ class ToastCharts:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -624,15 +556,11 @@ class ToastCharts:
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -659,15 +587,11 @@ class ToastCharts:
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -694,14 +618,10 @@ class ToastCharts:
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -728,15 +648,11 @@ class ToastCharts:
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -763,15 +679,11 @@ class ToastCharts:
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param record: Array<dict>. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
@@ -788,16 +700,12 @@ class ToastCharts:
 
   def radial(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       https://github.com/nhn/tui.chart/blob/main/docs/en/chart-radialBar.md
 
-    Attributes:
-    ----------
     :param record:
     :param y_columns:
     :param x_axis:
@@ -849,17 +757,13 @@ class Components:
 
   def time(self, hour=None, minute=None, width=(170, "px"), height=(None, "px"), html_code=None, profile=None,
            options=None):
-    """
-    Description:
-    ------------
+    """  
     Component that selects specific time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/
 
-    Attributes:
-    ----------
     :param hour: Number. optional. The initial hour.
     :param minute: Number. optional. The initial minute.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -872,9 +776,7 @@ class Components:
 
   @property
   def fields(self):
-    """
-    Description:
-    ------------
+    """  
     Toast predefined form input fields.
 
     Related Pages:
@@ -886,9 +788,7 @@ class Components:
 
   @property
   def times(self):
-    """
-    Description:
-    ------------
+    """  
     Toast times components and configurations.
 
     Related Pages:
@@ -901,17 +801,13 @@ class Components:
     return ToastTimes(self)
 
   def date(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
     Toast default date component.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width:
     :param height:
@@ -922,17 +818,13 @@ class Components:
     return self.dates.date(value, width, height, html_code, profile, options)
 
   def calendar(self, value=None, width=(None, "px"), height=(None, "px"), html_code=None, profile=None, options=None):
-    """
-    Description:
-    ------------
+    """  
     A JavaScript schedule calendar that is full featured. Now your service just got the customizable calendar.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/
 
-    Attributes:
-    ----------
     :param value:
     :param width:
     :param height:
@@ -944,9 +836,7 @@ class Components:
 
   @property
   def dates(self):
-    """
-    Description:
-    ------------
+    """  
     Toast Date components and configurations.
 
     Related Pages:
@@ -959,9 +849,7 @@ class Components:
 
   @property
   def calendars(self):
-    """
-    Description:
-    ------------
+    """  
     The Calendar supports monthly, weekly, daily views and more, and you can create or edit your schedule with a
     simple dragging motion.
 
@@ -975,9 +863,7 @@ class Components:
 
   @property
   def grids(self):
-    """
-    Description:
-    ------------
+    """  
     The Grid is a powerful library with features like data editing, filtering, sorting, and more, and can be used to
     customize the editor or the renderer to your desired format.
 
@@ -991,9 +877,7 @@ class Components:
 
   @property
   def charts(self):
-    """
-    Description:
-    ------------
+    """  
     The Chart makes your data pop, and it is easy to use. It provides you with multiple charts like Bar, Column, Line,
     and more.
 
@@ -1004,9 +888,7 @@ class Components:
     return ToastCharts(self)
 
   def editor(self, value=None, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
-    """
-    Description:
-    ------------
+    """  
     The Editor allows you to edit your Markdown documents using text or WYSIWYG and comes with Syntax Highlighting,
     Scroll-Sync, Live Preview, and Chart features.
 
@@ -1014,8 +896,6 @@ class Components:
 
       https://ui.toast.com/tui-editor
 
-    Attributes:
-    ----------
     :param value: String. Optional. The value to be displayed to the component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -1035,9 +915,7 @@ class Components:
 
   @property
   def js(self):
-    """
-    Description:
-    ------------
+    """  
     The Grid is a powerful library with features like data editing, filtering, sorting, and more, and can be used to
     customize the editor or the renderer to your desired format.
 

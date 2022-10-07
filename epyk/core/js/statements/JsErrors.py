@@ -14,8 +14,6 @@ class JsError:
   @property
   def message(self):
     """
-    Description:
-    ------------
     Sets or returns an error message (a string).
     """
     return JsObjects.JsObject.JsObject.get("%s.message" % self.__selector)
@@ -23,8 +21,6 @@ class JsError:
   @property
   def name(self):
     """
-    Description:
-    ------------
     Sets or returns an error name.
     """
     return JsObjects.JsObject.JsObject.get("%s.name" % self.__selector)
@@ -47,22 +43,16 @@ class JsTry:
   @property
   def error(self):
     """
-    Description:
-    ------------
     The error message object.
     """
     return JsError("err")
 
   def catch(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     Block of code to handle errors.
 
     The variable to be used if error in this loop.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -74,14 +64,10 @@ class JsTry:
 
   def except_(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     Block of code to handle errors (catch in JavaScript).
 
     The variable to be used is err in this loop.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -93,12 +79,8 @@ class JsTry:
 
   def finally_(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
     """
-    Description:
-    ------------
     Block of code to be executed regardless of the try / catch result.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """

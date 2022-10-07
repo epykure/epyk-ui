@@ -19,19 +19,14 @@ class OptionsChartSharedFrappe(OptChart.OptionsChartShared):
     pass
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
     Not yet available.
 
     Related Pages:
 
       https://github.com/frappe/charts/issues/219
-
-    Attributes:
-    ----------
+ 
     :param value: String. The axis label.
     """
     pass
@@ -40,19 +35,14 @@ class OptionsChartSharedFrappe(OptChart.OptionsChartShared):
     return self
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
+    """   Set the label of the y axis.
 
     Not yet available.
 
     Related Pages:
 
       https://github.com/frappe/charts/issues/219
-
-    Attributes:
-    ----------
+ 
     :param value: String. The axis label.
     """
     pass
@@ -90,16 +80,12 @@ class OptionFormatters(Options):
 
   @packageImport("accounting")
   def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       chart.options.tooltipOptions.y_formatters.scale(1/1000)
-
-    Attributes:
-    ----------
+ 
     :param factor:
     :param alias:
     :param digits:
@@ -119,15 +105,11 @@ class FrappeTooltipOptions(Options):
 
   def formatTooltipY(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
 
     Usage::
 
       l2.options.tooltipOptions.formatTooltipY(["return 'test: '+ value "])
-
-    Attributes:
-    ----------
+ 
     :param js_funcs:
     :param profile:
     """
@@ -147,8 +129,6 @@ class FrappeMarkersOptions(Options):
   @property
   def labelPos(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -163,8 +143,6 @@ class FrappeMarkers(Options):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -177,8 +155,6 @@ class FrappeMarkers(Options):
   @property
   def value(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -191,8 +167,6 @@ class FrappeMarkers(Options):
   @property
   def options(self):
     """
-    Description:
-    ------------
     Can be used to set various properties on bar plot.
 
     Related Pages:
@@ -206,8 +180,6 @@ class FrappeRegions(Options):
   @property
   def label(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -220,8 +192,6 @@ class FrappeRegions(Options):
   @property
   def start(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -234,8 +204,6 @@ class FrappeRegions(Options):
   @property
   def end(self):
     """
-    Description:
-    ------------
 
     https://frappe.io/charts/docs/basic/annotations
     """
@@ -248,8 +216,6 @@ class FrappeRegions(Options):
   @property
   def options(self):
     """
-    Description:
-    ------------
     Can be used to set various properties on bar plot.
 
     Related Pages:
@@ -264,8 +230,6 @@ class FrappeDataset(Options):
   @property
   def kind(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(name="chartType")
@@ -277,8 +241,6 @@ class FrappeDataset(Options):
   @property
   def name(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -290,8 +252,6 @@ class FrappeDataset(Options):
   @property
   def values(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -305,11 +265,7 @@ class FrappeData(Options):
 
   def add_data(self, data, name, kind):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param name:
     :param kind:
@@ -323,8 +279,6 @@ class FrappeData(Options):
   @property
   def labels(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -339,8 +293,6 @@ class LineOptions(Options):
   @property
   def dotSize(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -352,8 +304,6 @@ class LineOptions(Options):
   @property
   def regionFill(self):
     """
-    Description:
-    ------------
 
 
     Related Pages:
@@ -369,8 +319,6 @@ class LineOptions(Options):
   @property
   def hideDots(self):
     """
-    Description:
-    ------------
 
 
     Related Pages:
@@ -386,8 +334,6 @@ class LineOptions(Options):
   @property
   def heatline(self):
     """
-    Description:
-    ------------
 
 
     Related Pages:
@@ -403,8 +349,6 @@ class LineOptions(Options):
   @property
   def spline(self):
     """
-    Description:
-    ------------
 
 
     Related Pages:
@@ -423,8 +367,6 @@ class BarOptions(Options):
   @property
   def spaceRatio(self):
     """
-    Description:
-    ------------
     In order to set the bar width, instead of defining it and the space between the bars independently,
     we simply define the ratio of the space between bars to the bar width.
 
@@ -444,8 +386,6 @@ class BarOptions(Options):
   @property
   def stacked(self):
     """
-    Description:
-    ------------
     Renders multiple bar datasets in a stacked configuration, rather than the default adjacent.
 
     Related Pages:
@@ -488,8 +428,6 @@ class AxisOptions(Options):
   @property
   def xIsSeries(self):
     """
-    Description:
-    ------------
     We can skip X labels by setting the xIsSeries property in axisOptions to true.
 
     Related Pages:
@@ -508,8 +446,6 @@ class FrappeLine(Options):
   @property
   def animate(self):
     """
-    Description:
-    ------------
     Enable or disable animation.
 
     Related Pages:
@@ -525,8 +461,6 @@ class FrappeLine(Options):
   @property
   def truncateLegends(self):
     """
-    Description:
-    ------------
     Sometimes long legends would overlap with neighboring legends, this option truncates it to a fixed length.
 
     Related Pages:
@@ -542,8 +476,6 @@ class FrappeLine(Options):
   @property
   def xAxisMode(self):
     """
-    Description:
-    ------------
     Display axis points as short ticks or long spanning lines.
 
     Related Pages:
@@ -560,8 +492,6 @@ class FrappeLine(Options):
   @property
   def yAxisMode(self):
     """
-    Description:
-    ------------
     Display axis points as short ticks or long spanning lines.
 
     Related Pages:
@@ -578,8 +508,6 @@ class FrappeLine(Options):
   @property
   def xIsSeries(self):
     """
-    Description:
-    ------------
     The X axis (often the time axis) is usually continuous.
 
     Related Pages:
@@ -596,8 +524,6 @@ class FrappeLine(Options):
   @property
   def valuesOverPoints(self):
     """
-    Description:
-    ------------
     To display data values over bars or dots in an axis graph.
 
     Related Pages:
@@ -622,8 +548,6 @@ class FrappeLine(Options):
   @property
   def title(self):
     """
-    Description:
-    ------------
     Add a title to the Chart.
 
     Related Pages:
@@ -639,8 +563,6 @@ class FrappeLine(Options):
   @property
   def type(self):
     """
-    Description:
-    ------------
     Let the chart know what type to render.
 
     Related Pages:
@@ -656,8 +578,6 @@ class FrappeLine(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
     Set the height of the chart in pixels.
 
     Related Pages:
@@ -673,8 +593,6 @@ class FrappeLine(Options):
   @property
   def isNavigable(self):
     """
-    Description:
-    ------------
     Makes the chart interactive with arrow keys and highlights the current active data point.
 
     Related Pages:
@@ -690,8 +608,6 @@ class FrappeLine(Options):
   @property
   def axisOptions(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -703,8 +619,6 @@ class FrappeLine(Options):
   @property
   def lineOptions(self):
     """
-    Description:
-    ------------
     Can be used to set various properties on line plots, turn them into Area Charts and so on.
 
     Related Pages:
@@ -717,8 +631,6 @@ class FrappeLine(Options):
   @property
   def barOptions(self):
     """
-    Description:
-    ------------
     Can be used to set various properties on bar plot.
 
     Related Pages:
@@ -730,8 +642,6 @@ class FrappeLine(Options):
   @property
   def data(self):
     """
-    Description:
-    ------------
     Contains an array of labels and an array of datasets, each a value for the 2-dimensional data points.
 
     Related Pages:
@@ -743,8 +653,6 @@ class FrappeLine(Options):
   @property
   def stacked(self):
     """
-    Description:
-    ------------
     Renders multiple bar datasets in a stacked configuration, rather than the default adjacent.
 
     Related Pages:
@@ -759,11 +667,7 @@ class FrappeLine(Options):
 
   def add_marker(self, label, value):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param label:
     :param value:
     """
@@ -774,11 +678,7 @@ class FrappeLine(Options):
 
   def add_region(self, label, start, end):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param label:
     :param start:
     :param end:
@@ -792,8 +692,6 @@ class FrappeLine(Options):
   @property
   def tooltipOptions(self):
     """
-    Description:
-    ------------
     Frappe Charts are known for their awesome tooltips.
     """
     return self._config_sub_data("tooltipOptions", FrappeTooltipOptions)

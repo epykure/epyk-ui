@@ -6,10 +6,7 @@ from epyk.core.html.options import Enums
 class EnumStyleOptions(Enums):
 
   def api(self):
-    """
-    Description:
-    -----------
-    Selection can only be performed via the API
+    """   Selection can only be performed via the API
 
     Related Pages:
 
@@ -18,10 +15,7 @@ class EnumStyleOptions(Enums):
     return self._set_value()
 
   def single(self):
-    """
-    Description:
-    -----------
-    Only a single item can be selected, any other selected items will be automatically deselected when a new item
+    """   Only a single item can be selected, any other selected items will be automatically deselected when a new item
     is selected
 
     Related Pages:
@@ -31,10 +25,7 @@ class EnumStyleOptions(Enums):
     return self._set_value()
 
   def multi(self):
-    """
-    Description:
-    -----------
-    Multiple items can be selected. Selection is performed by simply clicking on the items to be selected
+    """   Multiple items can be selected. Selection is performed by simply clicking on the items to be selected
 
     Related Pages:
 
@@ -43,10 +34,7 @@ class EnumStyleOptions(Enums):
     return self._set_value()
 
   def os(self):
-    """
-    Description:
-    -----------
-    Operating System (OS) style selection. This is the most comprehensive option and provides complex behaviours
+    """   Operating System (OS) style selection. This is the most comprehensive option and provides complex behaviours
     such as ctrl/cmd clicking to select / deselect individual items, shift clicking to select ranges and an unmodified
     click to select a single item.
 
@@ -57,10 +45,7 @@ class EnumStyleOptions(Enums):
     return self._set_value()
 
   def multi_shift(self):
-    """
-    Description:
-    -----------
-    a hybrid between the os style and multi, allowing easy multi-row selection without immediate de-selection when
+    """   a hybrid between the os style and multi, allowing easy multi-row selection without immediate de-selection when
     clicking on a row.
 
     Related Pages:
@@ -73,10 +58,7 @@ class EnumStyleOptions(Enums):
 class Select(Options):
 
   def activate(self):
-    """
-    Description:
-    -----------
-    Enable and configure the Scroller extension for DataTables.
+    """   Enable and configure the Scroller extension for DataTables.
 
     Related Pages:
 
@@ -88,10 +70,7 @@ class Select(Options):
 
   @property
   def info(self):
-    """
-    Description:
-    -----------
-    Enable / disable the display for item selection information in the table summary
+    """   Enable / disable the display for item selection information in the table summary
 
     Related Pages:
 
@@ -105,10 +84,7 @@ class Select(Options):
 
   @property
   def blurable(self):
-    """
-    Description:
-    -----------
-    Indicate if the selected items will be removed when clicking outside of the table
+    """   Indicate if the selected items will be removed when clicking outside of the table
 
     Related Pages:
 
@@ -122,10 +98,7 @@ class Select(Options):
 
   @property
   def items(self):
-    """
-    Description:
-    -----------
-    Set which table items to select (rows, columns or cells).
+    """   Set which table items to select (rows, columns or cells).
 
     Related Pages:
 
@@ -139,10 +112,7 @@ class Select(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    -----------
-    Set the selection style for end user interaction with the table.
+    """   Set the selection style for end user interaction with the table.
 
     Related Pages:
 
@@ -156,10 +126,7 @@ class Select(Options):
 
   @property
   def toggleable(self):
-    """
-    Description:
-    -----------
-    Disable the deselection of selected rows when clicked.
+    """   Disable the deselection of selected rows when clicked.
 
     Related Pages:
 

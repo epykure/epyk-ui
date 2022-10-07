@@ -16,8 +16,6 @@ class Code(GrpCls.ClassHtml):
   @property
   def cls_cm(self) -> Classes.CatalogText.CatalogEditor:
     """
-    Description:
-    ------------
     The CSS Class for the code mirror container.
 
     :rtype: Classes.CatalogText.CatalogEditor
@@ -30,8 +28,6 @@ class Code(GrpCls.ClassHtml):
   @property
   def cls_cm_gutters(self) -> Classes.CatalogText.CatalogEditor:
     """
-    Description:
-    ------------
     The CSS Class for the gutter panel.
 
     :rtype: Classes.CatalogText.CatalogEditor
@@ -44,8 +40,6 @@ class Code(GrpCls.ClassHtml):
   @property
   def cls_cm_active(self) -> Classes.CatalogText.CatalogEditor:
     """
-    Description:
-    ------------
     The CSS Class for the active line background.
 
     :rtype: Classes.CatalogText.CatalogEditor

@@ -28,12 +28,8 @@ class Radio(Html.Html):
 
   def add(self, val: Union[Html.Html, str], checked: bool = False):
     """
-    Description:
-    ------------
     Add a value to the radio component.
 
-    Attributes:
-    ----------
     :param val: The item to be added.
     :param checked:  Optional. Check the item.
     """
@@ -46,11 +42,7 @@ class Radio(Html.Html):
 
   def set_disable(self, text: str):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param text: The item value to disable.
     """
     for v in self.val:
@@ -60,11 +52,7 @@ class Radio(Html.Html):
 
   def set_checked(self, text: str):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param text: The item value to set as checked.
     """
     for v in self.val:
@@ -75,8 +63,6 @@ class Radio(Html.Html):
   @property
   def dom(self) -> JsHtmlSelect.Radio:
     """
-    Description:
-    ------------
     HTML Dom object.
     """
     if self._dom is None:
@@ -121,8 +107,6 @@ class Tick(Html.Html):
   @property
   def dom(self) -> JsHtmlSelect.Tick:
     """
-    Description:
-    ------------
     HTML Dom object.
     """
     if self._dom is None:
@@ -191,8 +175,6 @@ class Switch(Html.Html):
   @property
   def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
@@ -208,10 +190,7 @@ class Switch(Html.Html):
 
   @property
   def js(self) -> JsComponents.Switch:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object.
@@ -222,13 +201,9 @@ class Switch(Html.Html):
 
   def event_fnc(self, event: str):
     """
-    Description:
-    ------------
     Function to get the generated JavaScript method in order to then reuse it in other components.
     This will return the event function in a string already transpiled.
 
-    Attributes:
-    ----------
     :param event: The event function.
     """
     return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
@@ -236,8 +211,6 @@ class Switch(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
     """
-    Description:
-    ------------
     Add click event to the switch component.
 
     Usage::
@@ -247,8 +220,6 @@ class Switch(Html.Html):
         page.js.console.log(mode_switch.input.dom.val)
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: Optional. The source target for the event.
@@ -261,8 +232,6 @@ class Switch(Html.Html):
   def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """
-    Description:
-    ------------
     Set the click property for the Switch.
     The toggle event allow specifying different Javascript functions for each states of the component.
 
@@ -273,8 +242,6 @@ class Switch(Html.Html):
         page.js.console.log(sw.content)
       ])
 
-    Attributes:
-    ----------
     :param on_funcs: Optional. The Javascript functions.
     :param off_funcs: Optional. The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.

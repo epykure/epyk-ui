@@ -9,10 +9,7 @@ class ClassStandard(GrpCls.ClassHtml):
 
   @property
   def css(self) -> Attrs:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -26,10 +23,7 @@ class ClassStandard(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    -----------
-    The internal class used to put a custom Style to this object.
+    """   The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
@@ -44,10 +38,7 @@ class ClassHelp(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsLayout.AttrHelp:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -61,10 +52,7 @@ class ClassHelp(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    -----------
-    The internal class used to put a custom Style to this object.
+    """   The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv

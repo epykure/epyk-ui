@@ -11,9 +11,7 @@ class OptionsDt(Options):
 
   @property
   def date(self):
-    """
-    Description:
-    ------------
+    """  
     Returns the component's model current date, a moment object or null if not set.
 
     Related Pages:
@@ -28,9 +26,7 @@ class OptionsDt(Options):
 
   @property
   def dayViewHeaderFormat(self):
-    """
-    Description:
-    ------------
+    """  
     Changes the heading of the datepicker when in "days" view.
 
     Related Pages:
@@ -45,9 +41,7 @@ class OptionsDt(Options):
 
   @property
   def sideBySide(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -61,9 +55,7 @@ class OptionsDt(Options):
 
   @property
   def inline(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -77,9 +69,7 @@ class OptionsDt(Options):
 
   @property
   def daysOfWeekDisabled(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -93,9 +83,7 @@ class OptionsDt(Options):
 
   @property
   def viewMode(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -109,9 +97,7 @@ class OptionsDt(Options):
 
   @property
   def defaultDate(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -125,9 +111,7 @@ class OptionsDt(Options):
 
   @property
   def format(self):
-    """
-    Description:
-    ------------
+    """  
     See momentjs' docs for valid formats.
     Format also dictates what components are shown, e.g. MM/dd/YYYY will not display the time picker.
 
@@ -143,9 +127,7 @@ class OptionsDt(Options):
 
   @property
   def locale(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -159,9 +141,7 @@ class OptionsDt(Options):
 
   @property
   def options(self):
-    """
-    Description:
-    ------------
+    """  
     Returns the components current options object.
     Note that the changing the values of the returned object does not change the components actual configuration.
     Use options(options) to set the components options massively or the other methods for setting config options
@@ -180,9 +160,7 @@ class OptionsDt(Options):
 
   @property
   def stepping(self):
-    """
-    Description:
-    ------------
+    """  
     Number of minutes the up/down arrow's will move the minutes value in the time picker.
 
     Related Pages:

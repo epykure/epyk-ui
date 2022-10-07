@@ -71,13 +71,12 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable', 'prefix', )
+  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable', 'prefix',
+                          'max_selected', 'text_click')
 
   @property
   def style(self):
     """
-    Description:
-    ------------
     Item CSS Style
     """
     return self._config_get({})
@@ -89,8 +88,6 @@ class OptionsItems(Options):
   @property
   def li_style(self):
     """
-    Description:
-    ------------
     List Item CSS Style
     """
     return self._config_get({})
@@ -102,8 +99,6 @@ class OptionsItems(Options):
   @property
   def li_height(self):
     """
-    Description:
-    ------------
     List Item line height CSS Style
     """
     return self.li_style.get("line-height")
@@ -117,8 +112,6 @@ class OptionsItems(Options):
   @property
   def badge(self):
     """
-    Description:
-    ------------
     Get the badge style
     """
     return self._config_get({})
@@ -130,8 +123,6 @@ class OptionsItems(Options):
   @property
   def delete(self):
     """
-    Description:
-    ------------
     Add a delete icon
     """
     return self._config_get(False)
@@ -143,8 +134,6 @@ class OptionsItems(Options):
   @property
   def checked(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get(False)
@@ -154,10 +143,23 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def checked_key(self):
+    """ The key in the data with the boolean to check / uncheck an item.
+
+    Usages::
+
+      its = page.ui.lists.items(["menu %s" % i for i in range(10)])
+      its.options.checked_key = "selected"
+    """
+    return self._config_get("checked")
+
+  @checked_key.setter
+  def checked_key(self, value: str):
+    self._config(value)
+
+  @property
   def icon(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get("")
@@ -167,10 +169,20 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def text_click(self):
+    """
+    Expand the click event to the label for check and radio components.
+    This is a way to define if the click event should be done on the full component or not.
+    """
+    return self._config_get(False)
+
+  @text_click.setter
+  def text_click(self, flag: bool):
+    self._config(flag)
+
+  @property
   def items_type(self):
     """
-    Description:
-    ------------
     Change the type of items in the dynamic list.
     """
     return self._config_get("text")
@@ -178,13 +190,12 @@ class OptionsItems(Options):
   @items_type.setter
   def items_type(self, text):
     self._config(text)
-    self._config(text not in ('link', 'badge', 'text', 'icon', 'timeline', 'check', 'radio', 'logs', 'status'), name="items_space")
+    self._config(text not in (
+      'link', 'badge', 'text', 'icon', 'timeline', 'check', 'radio', 'logs', 'status'), name="items_space")
 
   @property
   def items_space(self):
     """
-    Description:
-    ------------
     Keep the LI margin between the items.
     """
     return self._config_get(True)
@@ -196,8 +207,6 @@ class OptionsItems(Options):
   @property
   def info_icon(self):
     """
-    Description:
-    ------------
     Set the delete icon
     """
     return self._config_get("fas fa-info-circle fa-xs")
@@ -209,8 +218,6 @@ class OptionsItems(Options):
   @property
   def delete_icon(self):
     """
-    Description:
-    ------------
     Set the delete icon
     """
     return self._config_get("fas fa-trash-alt")
@@ -222,8 +229,6 @@ class OptionsItems(Options):
   @property
   def delete_position(self):
     """
-    Description:
-    ------------
     Set the position and CSS attributes of the delete icon
     """
     return self._config_get({"float": 'right', 'marginRight': '10px', 'marginTop': '5px'})
@@ -237,8 +242,6 @@ class OptionsItems(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -261,10 +264,26 @@ class OptionsItems(Options):
       self._config(values, 'showdown')
 
   @property
+  def max_selected(self):
+    """
+    Set a max selected item for a normal list.
+
+    Usages::
+
+      its = page.ui.lists.items(["menu %s" % i for i in range(10)])
+      its.options.max_selected = 2
+      its.select_type()
+      its.click([])
+    """
+    return self._config_get(None)
+
+  @max_selected.setter
+  def max_selected(self, value: int):
+    self._config(value)
+
+  @property
   def showdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -285,8 +304,6 @@ class OptionsItems(Options):
   @property
   def style_select(self):
     """
-    Description:
-    ------------
     Internal CSS class name to be used when the component is selected.
     """
     return self._config_get(None)
@@ -298,8 +315,6 @@ class OptionsItems(Options):
   @property
   def click(self):
     """
-    Description:
-    ------------
     Option property to defined click event on list items.
     By default this is None.
     """
@@ -312,8 +327,6 @@ class OptionsItems(Options):
   @property
   def draggable(self):
     """
-    Description:
-    ------------
     Property to defined JavaScript draggable events to the list items.
     By default items are not draggable.
     """
@@ -326,8 +339,6 @@ class OptionsItems(Options):
   @property
   def prefix(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get("")
@@ -339,8 +350,6 @@ class OptionsItems(Options):
   @property
   def label(self):
     """
-    Description:
-    ------------
     A text label use in the design of some components.
     """
     return self._config_get("")
@@ -352,8 +361,6 @@ class OptionsItems(Options):
   @property
   def group(self):
     """
-    Description:
-    ------------
     Set the group name for radio boxes
     """
     return self._config_get(None)
@@ -369,11 +376,7 @@ class OptionsTagItems(Options):
   @property
   def visible(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get(False)
@@ -385,12 +388,8 @@ class OptionsTagItems(Options):
   @property
   def delete(self):
     """
-    Description:
-    ------------
     Display the deleted icon on the different items
 
-    Attributes:
-    ----------
     :prop attrs: Dictionary or False. The deleted icon properties
     """
     return self._config_get('this.parentNode.remove()')
@@ -402,11 +401,7 @@ class OptionsTagItems(Options):
   @property
   def category_css(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
@@ -418,11 +413,7 @@ class OptionsTagItems(Options):
   @property
   def value_css(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
@@ -434,11 +425,7 @@ class OptionsTagItems(Options):
   @property
   def item_css(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
@@ -450,11 +437,7 @@ class OptionsTagItems(Options):
   @property
   def category(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
@@ -466,11 +449,7 @@ class OptionsTagItems(Options):
   @property
   def icon_css(self):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :prop css: Dictionary. All the CSS attributes to add the any items
     """
     return self._config_get({})
@@ -482,13 +461,9 @@ class OptionsTagItems(Options):
   @property
   def max_height(self):
     """
-    Description:
-    ------------
     Max height property for the filter tags container.
     This will then display a show all and reduce button if the size if above this value.
 
-    Attributes:
-    ----------
     :prop int css: All the CSS attributes to add the any items
     """
     return self._config_get(0)
@@ -500,12 +475,8 @@ class OptionsTagItems(Options):
   @property
   def draggable(self):
     """
-    Description:
-    ------------
     Set the component draggable and define JavaScript events
 
-    Attributes:
-    ----------
     :prop js_funcs: String. The JavaScript functions.
     """
     return self._config_get()
@@ -519,11 +490,7 @@ class OptionsListBrackets(Options):
 
   def save(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -534,11 +501,7 @@ class OptionsListBrackets(Options):
 
   def onMatchClick(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -549,11 +512,7 @@ class OptionsListBrackets(Options):
 
   def onMatchHover(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -565,16 +524,12 @@ class OptionsListBrackets(Options):
   @property
   def centerConnectors(self):
     """
-    Description:
-    ------------
     route connectors between matches instead of seats.
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop flag: Boolean.
     """
     return self._config_get(False)
@@ -586,15 +541,11 @@ class OptionsListBrackets(Options):
   @property
   def disableHighlight(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop flag: Boolean.
     """
     return self._config_get(False)
@@ -606,15 +557,11 @@ class OptionsListBrackets(Options):
   @property
   def skipSecondaryFinal(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop flag: Boolean.
     """
     return self._config_get(False)
@@ -626,15 +573,11 @@ class OptionsListBrackets(Options):
   @property
   def skipConsolationRound(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop flag: Boolean.
     """
     return self._config_get(False)
@@ -646,15 +589,11 @@ class OptionsListBrackets(Options):
   @property
   def skipGrandFinalComeback(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop flag: Boolean.
     """
     return self._config_get(False)
@@ -666,15 +605,11 @@ class OptionsListBrackets(Options):
   @property
   def dir(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop value: String.
     """
     return self._config_get("rl")
@@ -686,15 +621,11 @@ class OptionsListBrackets(Options):
   @property
   def userData(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop value: String.
     """
     return self._config_get("")
@@ -706,15 +637,11 @@ class OptionsListBrackets(Options):
   @property
   def teamWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop num: String.
     """
     return self._config_get("")
@@ -726,15 +653,11 @@ class OptionsListBrackets(Options):
   @property
   def scoreWidth(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop num: String.
     """
     return self._config_get("")
@@ -746,15 +669,11 @@ class OptionsListBrackets(Options):
   @property
   def matchMargin(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop num: String.
     """
     return self._config_get("")
@@ -766,15 +685,11 @@ class OptionsListBrackets(Options):
   @property
   def roundMargin(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       http://www.aropupu.fi/bracket/
 
-    Attributes:
-    ----------
     :prop num: String.
     """
     return self._config_get("")

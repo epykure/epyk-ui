@@ -9,8 +9,6 @@ class OptionsNews(Options):
   @property
   def dated(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get(True)
@@ -24,8 +22,6 @@ class OptionsNews(Options):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get([])
@@ -37,8 +33,6 @@ class OptionsNews(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -60,8 +54,6 @@ class OptionsAlert(Options):
   @property
   def time(self):
     """
-    Description:
-    ------------
     Set the time in milliseconds before hidden the popup.
     If None the popup will not hide progressively.
 
@@ -70,8 +62,6 @@ class OptionsAlert(Options):
       danger = page.ui.network.warning()
       danger.options.time = None
 
-    Attributes:
-    ----------
     :prop num: Integer. The time in millisecond. Default 1000.
     """
     return self._config_get(1000)
@@ -83,8 +73,6 @@ class OptionsAlert(Options):
   @property
   def delay(self):
     """
-    Description:
-    ------------
     The delay between the event and the display of the popup.
     THe time is in millisecond.
 
@@ -93,8 +81,6 @@ class OptionsAlert(Options):
       danger = page.ui.network.warning()
       danger.options.delay = 100
 
-    Attributes:
-    ----------
     :prop num: Integer. The time in millisecond. Default 1000.
     """
     return self._config_get(1000)
@@ -106,8 +92,6 @@ class OptionsAlert(Options):
   @property
   def close(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -121,8 +105,6 @@ class OptionsAlert(Options):
   @property
   def type(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(None)
 
@@ -133,8 +115,6 @@ class OptionsAlert(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -156,8 +136,6 @@ class OptionsChat(Options):
   @property
   def dated(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get(True)
@@ -171,8 +149,6 @@ class OptionsChat(Options):
   @property
   def readonly(self):
     """
-    Description:
-    ------------
     Check default value for radio and check lists
     """
     return self._config_get(True)
@@ -184,8 +160,6 @@ class OptionsChat(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -207,8 +181,6 @@ class OptionFiles(Options):
   @property
   def text(self):
     """
-    Description:
-    ------------
     Display comment for the loaded files.
     THis should be activated only when one file can be loaded.
     """
@@ -221,8 +193,6 @@ class OptionFiles(Options):
   @property
   def extensions(self):
     """
-    Description:
-    ------------
     List all the allowed file extensions
     """
     return self._config_get(None)
@@ -234,8 +204,6 @@ class OptionFiles(Options):
   @property
   def delimiter(self):
     """
-    Description:
-    ------------
     The file Delimiter for columns
     """
     return self._config_get(None)
@@ -247,8 +215,6 @@ class OptionFiles(Options):
   @property
   def format(self):
     """
-    Description:
-    ------------
     The file Delimiter for columns
     """
     return self._config_get("text")

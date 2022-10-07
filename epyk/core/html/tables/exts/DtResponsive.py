@@ -6,9 +6,7 @@ class DataBreakPoints(Options):
 
   @property
   def name(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -22,9 +20,7 @@ class DataBreakPoints(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -41,9 +37,7 @@ class DataDetails(Options):
 
   @property
   def type(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -57,10 +51,7 @@ class DataDetails(Options):
 
   @property
   def display(self):
-    """
-    Description:
-    -----------
-    Responsive provides the ability to show information about the columns it has hidden using DataTables child rows
+    """   Responsive provides the ability to show information about the columns it has hidden using DataTables child rows
     feature (row().child()), but you may wish to display the data in a different manner (potentially so you can use
     the child rows for other actions such as editing) - this parameter provides that ability.
 
@@ -76,9 +67,7 @@ class DataDetails(Options):
 
   @property
   def renderer(self):
-    """
-    Description:
-    -----------
+    """   
 
 
     Related Pages:
@@ -93,9 +82,7 @@ class DataDetails(Options):
 
   @property
   def target(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -116,10 +103,7 @@ class Responsive(Options):
 
   @property
   def details(self) -> DataDetails:
-    """
-    Description:
-    -----------
-    Responsive has the ability to use DataTables' child rows feature to show information about any columns which have
+    """   Responsive has the ability to use DataTables' child rows feature to show information about any columns which have
     been removed from the display as a child row, which can be particularly useful for displaying complex information
     on small screen devices. Please see the Responsive manual on the details rows for further information.
 
@@ -133,10 +117,7 @@ class Responsive(Options):
 
   @property
   def breakpoints(self) -> DataBreakPoints:
-    """
-    Description:
-    -----------
-    The visibility of columns in a DataTable with Responsive enabled can be controlled by breakpoints and class names
+    """   The visibility of columns in a DataTable with Responsive enabled can be controlled by breakpoints and class names
     matching those breakpoints (and other logical operations) .
     This provides the ability to exactly control which columns in a table will be visible for each device type.
     See the Responsive manual for more information.
@@ -151,10 +132,7 @@ class Responsive(Options):
 
   @property
   def orthogonal(self):
-    """
-    Description:
-    -----------
-    When Responsive is asked to show the hidden information about a DataTable row,
+    """   When Responsive is asked to show the hidden information about a DataTable row,
     it uses the cell().render() method to access this data for each cell in the row.
     This method provides DataTables ability to make use of orthogonal data - that is,
     the same data but formatted in a different way for different uses.

@@ -35,11 +35,7 @@ class JsPromiseRecords(primitives.JsDataModel):
 
   def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -50,11 +46,7 @@ class JsPromiseRecords(primitives.JsDataModel):
 
   def cast(self, columns: list, to: str = "float", profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param columns:
     :param to:
     :param profile: Optional. A flag to set the component performance storage.
@@ -75,11 +67,7 @@ class JsPromiseRecords(primitives.JsDataModel):
 
   def row(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -93,11 +81,7 @@ class JsPromiseRecords(primitives.JsDataModel):
                 value: types.JS_DATA_TYPES,
                 operator: str = "==", keep: bool = True):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param column:
     :param value:
     :param operator:
@@ -128,13 +112,8 @@ class JsPromise:
     self.__thens, self.__catch = [], []
 
   def then(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a new post-processing step to a then statement.
+    """   Add a new post-processing step to a then statement.
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -145,11 +124,7 @@ class JsPromise:
 
   def csvRows(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param js_code: Optional. The variable name created in the Javascript (default response).
@@ -161,11 +136,7 @@ class JsPromise:
 
   def csvtoRecords(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param js_code: Optional. The variable name created in the Javascript (default response).
@@ -184,11 +155,7 @@ class JsPromise:
 
   def catch(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     """
     if not isinstance(js_funcs, list):
@@ -225,15 +192,11 @@ class XMLHttpRequestErrors:
   def e404(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     404 Not Found
 
     The HTTP 404 Not Found response status code indicates that the server cannot find the requested resource.
     Links that lead to a 404 page are often called broken or dead links and can be subject to link rot.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param default: Optional. Use the default messages.
     :param profile: Optional. A flag to set the component performance storage.
@@ -250,15 +213,11 @@ class XMLHttpRequestErrors:
   def e405(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     405 Method Not Allowed
 
     The HyperText Transfer Protocol (HTTP) 405 Method Not Allowed response status code indicates that the server knows
     the request method, but the target resource doesn't support this method.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param default: Optional. Use the default messages.
     :param profile: Optional. A flag to set the component performance storage.
@@ -275,11 +234,7 @@ class XMLHttpRequestErrors:
   def e200(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
            profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param default: Optional. Use the default messages.
     :param profile: Optional. A flag to set the component performance storage.
@@ -296,11 +251,7 @@ class XMLHttpRequestErrors:
   def commons(self, js_funcs: types.JS_FUNCS_TYPES = None, default: bool = True,
               profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param default: Optional. Use the default messages.
     :param profile: Optional. A flag to set the component performance storage.
@@ -328,12 +279,8 @@ class XMLHttpRequest:
   @classmethod
   def get(cls, js_code: str):
     """
-    Description:
-    ------------
     Interface to the Javascript Object primitive.
 
-    Attributes:
-    ----------
     :param js_code: The variable name on tje JavaScript side.
 
     :return: The requested Python JsObject primitive.
@@ -343,8 +290,6 @@ class XMLHttpRequest:
   @property
   def readyState(self) -> JsNumber.JsNumber:
     """
-    Description:
-    ------------
     The XMLHttpRequest.readyState property returns the state an XMLHttpRequest client is in.
 
     Related Pages:
@@ -356,8 +301,6 @@ class XMLHttpRequest:
   @property
   def status(self) -> JsNumber.JsNumber:
     """
-    Description:
-    ------------
     The read-only XMLHttpRequest.status property returns the numerical HTTP status code of the XMLHttpRequest's
     response.
 
@@ -370,8 +313,6 @@ class XMLHttpRequest:
   @property
   def responseType(self, value: Optional[str] = None) -> JsString.JsString:
     """
-    Description:
-    ------------
     The XMLHttpRequest property responseType is an enumerated string value specifying the type of data contained in
     the response.
 
@@ -379,8 +320,6 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType
 
-    Attributes:
-    ----------
     :param value: Optional. The response type.
     """
     if value is not None:
@@ -392,8 +331,6 @@ class XMLHttpRequest:
   @property
   def responseText(self) -> JsString.JsString:
     """
-    Description:
-    ------------
     The read-only XMLHttpRequest property responseText returns the text received from a server following a request
     being sent.
 
@@ -405,8 +342,6 @@ class XMLHttpRequest:
 
   def abort(self):
     """
-    Description:
-    ------------
     The abort event is fired when a request has been aborted, for example because the program called
     XMLHttpRequest.abort().
 
@@ -417,8 +352,6 @@ class XMLHttpRequest:
 
   def addEventListener(self, event: str, js_funcs: types.JS_FUNCS_TYPES, options: types.OPTION_TYPE = None):
     """
-    Description:
-    ------------
     The EventTarget method addEventListener() sets up a function that will be called whenever the specified event
     is delivered to the target.
     Common targets are Element, Document, and Window, but the target may be any object that supports
@@ -429,8 +362,6 @@ class XMLHttpRequest:
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
       https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener
 
-    Attributes:
-    ----------
     :param event: A case-sensitive string representing the event type to listen for.
     :param js_funcs: Optional. The Javascript functions.
     :param options: Optional. Specific Python options available for this component.
@@ -439,16 +370,12 @@ class XMLHttpRequest:
   def open(self, method_type: str, url: str, _async: bool = True, user: Optional[str] = None,
            password: Optional[str] = None):
     """
-    Description:
-    ------------
     The XMLHttpRequest method open() initializes a newly-created request, or re-initializes an existing one.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
 
-    Attributes:
-    ----------
     :param method_type: The HTTP request method to use, such as "GET", "POST", "PUT", "DELETE", etc. Ignored for non-HTTP(S) URLs.
     :param url: A DOMString representing the URL to send the request to.
     :param _async: Optional. Defaulting to true. Indicating whether or not to perform the operation asynchronously.
@@ -460,16 +387,12 @@ class XMLHttpRequest:
 
   def setHeaders(self, headers: dict):
     """
-    Description:
-    ------------
     The XMLHttpRequest method setRequestHeader() sets the value of an HTTP request header.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
-    Attributes:
-    ----------
     :param headers: The different attributes to be added to the header.
     """
     self.__headers.update(headers)
@@ -477,16 +400,12 @@ class XMLHttpRequest:
 
   def setRequestHeader(self, name: str, value: str):
     """
-    Description:
-    ------------
     The XMLHttpRequest method setRequestHeader() sets the value of an HTTP request header.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/setRequestHeader
 
-    Attributes:
-    ----------
     :param name: The header name.
     :param value: The header value.
     """
@@ -495,8 +414,6 @@ class XMLHttpRequest:
 
   def onSuccess(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, data_ref: str = "data"):
     """
-    Description:
-    ------------
     The XMLHttpRequestEventTarget.onload is the function called when an XMLHttpRequest transaction completes
     successfully.
 
@@ -504,8 +421,6 @@ class XMLHttpRequest:
     It receives a ProgressEvent object as its first argument.
     The value of this (i.e. the context) is the same XMLHttpRequest this callback is related to.
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile. A flag to set the component performance storage
     :param data_ref: JavaScript variable name for the main data in the function (default data)
@@ -524,8 +439,6 @@ class XMLHttpRequest:
 
   def onerror(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     The XMLHttpRequestEventTarget.onerror is the function called when an XMLHttpRequest transaction fails due to
     an error.
 
@@ -533,8 +446,6 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/error_event
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -550,8 +461,6 @@ class XMLHttpRequest:
 
   def onFail(self, js_funcs: types.JS_FUNCS_TYPES, status_code: int = 404, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     The loaded event is fired when a request has completed, whether successfully (after load) or unsuccessfully
     (after abort or error).
 
@@ -559,8 +468,6 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/loadend_event
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param status_code: Optional. The status code for the failure condition.
     :param profile: Optional. A flag to set the component performance storage.
@@ -576,8 +483,6 @@ class XMLHttpRequest:
   @property
   def errors(self) -> XMLHttpRequestErrors:
     """
-    Description:
-    ------------
 
     """
     if self.__on.get("onloadend") is None:
@@ -586,16 +491,12 @@ class XMLHttpRequest:
 
   def ontimeout(self, js_funcs: types.JS_FUNCS_TYPES, timeout: int = 2000, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     The timeout event is fired when progression is terminated due to preset time expiring.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/timeout
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param timeout: Optional. Time in milliseconds.
     :param profile: Optional. A flag to set the component performance storage.
@@ -610,12 +511,8 @@ class XMLHttpRequest:
 
   def onloadend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Fired when a request has completed, whether successfully (after load) or unsuccessfully
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -628,13 +525,9 @@ class XMLHttpRequest:
 
   def onloadstart(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     The XMLHttpRequestEventTarget.onloadstart is the function called when an XMLHttpRequest transaction starts
     transferring data.
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -647,8 +540,6 @@ class XMLHttpRequest:
 
   def withCredentials(self, flag: bool):
     """
-    Description:
-    ------------
     The XMLHttpRequest.withCredentials property is a Boolean that indicates whether or not cross-site Access-Control
     requests should be made using credentials such as cookies, authorization headers or TLS client certificates.
 
@@ -658,16 +549,12 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/withCredentials
 
-    Attributes:
-    ----------
     :param flag: Flag to specify the use of credentials.
     """
 
   def send(self, json_data: types.JS_DATA_TYPES = None, encode_uri_data: dict = None,
            stringify: bool = True):
     """
-    Description:
-    ------------
     The XMLHttpRequest method send() sends the request to the server.
     If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the
     result is delivered using events.
@@ -677,8 +564,6 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
 
-    Attributes:
-    ----------
     :param json_data:
     :param encode_uri_data:
     :param stringify:
@@ -756,22 +641,15 @@ class JsObjects:
 
   def __getitem__(self, alias: str):
     """
-    Description:
-    ------------
     Get a bespoke object.
 
-    Attributes:
-    ----------
     :param alias: The variable name on the JavaScript side
     """
     return JsObject.JsObject.get("data")
 
   @property
   def this(self) -> JsNodeDom.JsDoms:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript "this" object (which is a dom object very often).
     """
@@ -779,10 +657,7 @@ class JsObjects:
 
   @property
   def result(self) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript result object from a post or any other AJAX calls.
     """
@@ -790,10 +665,7 @@ class JsObjects:
 
   @property
   def request(self) -> XMLHttpRequest:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript result object from a post or any other AJAX calls.
     """
@@ -801,10 +673,7 @@ class JsObjects:
 
   @property
   def data(self) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript data object from a post or any other AJAX calls.
     """
@@ -812,10 +681,7 @@ class JsObjects:
 
   @property
   def value(self) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript value in an event
     """
@@ -823,10 +689,7 @@ class JsObjects:
 
   @property
   def mouseEvent(self) -> JsEvents.MouseEvent:
-    """
-    Description:
-    -----------
-    Interface to the JavaScript MouseEvents.
+    """   Interface to the JavaScript MouseEvents.
 
     Related Pages:
 
@@ -836,10 +699,7 @@ class JsObjects:
 
   @property
   def event(self) -> JsEvents.Event:
-    """
-    Description:
-    -----------
-    Interface to the JavaScript Events.
+    """   Interface to the JavaScript Events.
 
     Related Pages:
 
@@ -849,10 +709,7 @@ class JsObjects:
 
   @property
   def jqThis(self):
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
     :return: The Javascript "this" object
     """
@@ -861,13 +718,8 @@ class JsObjects:
 
   @classmethod
   def get(cls, js_code: str) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
-    Attributes:
-    ----------
     :param js_code: The variable name.
 
     :return: The requested Python JsObject primitive
@@ -877,13 +729,8 @@ class JsObjects:
   @classmethod
   def new(cls, data=None, js_code: Optional[str] = None, is_py_data: bool = False,
           page: primitives.PageModel = None) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Object primitive.
+    """   Interface to the Javascript Object primitive.
 
-    Attributes:
-    ----------
     :param data: Optional. The value.
     :param js_code: Optional. The variable name.
     :param is_py_data: Optional. The data type.
@@ -894,13 +741,8 @@ class JsObjects:
     return JsObject.JsObject.new(data, js_code, is_py_data, page=page)
 
   def time(self, js_code: str, page: primitives.PageModel = None) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Return a time object from the Javascript function performance.now().
+    """   Return a time object from the Javascript function performance.now().
 
-    Attributes:
-    ----------
     :param js_code: The variable name.
     :param page: Optional. The report object.
     """
@@ -908,10 +750,7 @@ class JsObjects:
 
   @property
   def number(self) -> Type[JsNumber.JsNumber]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Number primitive.
+    """   Interface to the Javascript Number primitive.
 
     Related Pages:
 
@@ -923,10 +762,7 @@ class JsObjects:
 
   @property
   def string(self) -> Type[JsString.JsString]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript String primitive.
+    """   Interface to the Javascript String primitive.
 
     Related Pages:
 
@@ -938,10 +774,7 @@ class JsObjects:
 
   @property
   def list(self) -> Type[JsArray.JsArray]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Array primitive.
+    """   Interface to the Javascript Array primitive.
 
     Related Pages:
 
@@ -953,10 +786,7 @@ class JsObjects:
 
   @property
   def array(self) -> Type[JsArray.JsArray]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Array primitive.
+    """   Interface to the Javascript Array primitive.
 
     Related Pages:
 
@@ -968,10 +798,7 @@ class JsObjects:
 
   @property
   def date(self) -> Type[JsDate.JsDate]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Date primitive.
+    """   Interface to the Javascript Date primitive.
 
     Related Pages:
 
@@ -983,10 +810,7 @@ class JsObjects:
 
   @property
   def boolean(self) -> Type[JsBoolean.JsBoolean]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Boolean primitive.
+    """   Interface to the Javascript Boolean primitive.
 
     Related Pages:
 
@@ -998,10 +822,7 @@ class JsObjects:
 
   @property
   def dom(self) -> Type[JsNodeDom.JsDoms]:
-    """
-    Description:
-    -----------
-    Interface to the Javascript Dom class.
+    """   Interface to the Javascript Dom class.
 
     :return: A Python Document.
     """
@@ -1009,10 +830,7 @@ class JsObjects:
 
   @property
   def null(self) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Similar as None in Python.
+    """   Similar as None in Python.
 
     Related Pages:
 
@@ -1024,10 +842,7 @@ class JsObjects:
 
   @property
   def undefined(self) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Similar as the None in Python.
+    """   Similar as the None in Python.
 
     Related Pages:
 
@@ -1039,10 +854,7 @@ class JsObjects:
 
   @property
   def NaN(self) -> JsNumber.JsNumber:
-    """
-    Description:
-    -----------
-    The NaN property represents "Not-a-Number" value. This property indicates that a value is not a legal number.
+    """   The NaN property represents "Not-a-Number" value. This property indicates that a value is not a legal number.
 
     The NaN property is the same as the Number.Nan property.
 
@@ -1055,10 +867,7 @@ class JsObjects:
 
   @property
   def true(self) -> JsBoolean.JsBoolean:
-    """
-    Description:
-    -----------
-    Similar as True in Python.
+    """   Similar as True in Python.
 
     Related Pages:
 
@@ -1070,10 +879,7 @@ class JsObjects:
 
   @property
   def false(self) -> JsBoolean.JsBoolean:
-    """
-    Description:
-    -----------
-    Similar as False in Python.
+    """   Similar as False in Python.
 
     Related Pages:
 
@@ -1084,36 +890,22 @@ class JsObjects:
     return JsBoolean.JsBoolean.get('false')
 
   def record(self, js_code: str) -> JsData.RawData:
-    """
-    Description:
-    -----------
-    Get a record object.
+    """   Get a record object.
 
-    Attributes:
-    ----------
     :param js_code: A string with of the existing variable name.
     """
     return JsData.RawData.get(page=self.page, js_code=js_code)
 
   def incr(self, incr: str) -> JsObject.JsObject:
-    """
-    Description:
-    -----------
-    Increment a counter.
+    """   Increment a counter.
 
-    Attributes:
-    ----------
     :param incr: the variable name used to store the counter.
     """
     return JsObject.JsObject("%s++" % incr)
 
   def function(self, args, returns: str, eval: bool = False) -> JsObject.JsObject:
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param args:
     :param returns:
     :param eval:
@@ -1130,13 +922,8 @@ class JsObjects:
         ", ".join(params), returns, ", ".join(values)))
 
   def entry(self, i: int = 0, entry_code: str = "entry") -> JsIntersectionObserver.IntersectionObserverEntry:
-    """
-    Description:
-    -----------
-    Get a specific entry when using a JsIntersectionObserver in a loop.
+    """   Get a specific entry when using a JsIntersectionObserver in a loop.
 
-    Attributes:
-    ----------
     :param i: The index entry.
     :param entry_code: The entry reference in the loop. Default entry
     """

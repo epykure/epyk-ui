@@ -29,10 +29,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptChartC3.C3:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -43,10 +40,7 @@ class Chart(Html.Html):
 
   @property
   def dom(self) -> OptChartC3.C3:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object.
@@ -59,10 +53,7 @@ class Chart(Html.Html):
 
   @property
   def shared(self) -> OptChartC3.OptionsChartSharedC3:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -74,19 +65,13 @@ class Chart(Html.Html):
 
   @property
   def chartId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
   @property
   def js(self) -> JsC3.C3:
-    """
-    Description:
-    -----------
-    JavaScript C3 reference API.
+    """   JavaScript C3 reference API.
 
     Related Pages:
 
@@ -101,16 +86,11 @@ class Chart(Html.Html):
     return self._js
 
   def colors(self, hex_values: list):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -134,17 +114,12 @@ class Chart(Html.Html):
         series_count += 1
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
-    """
-    Description:
-    -----------
-    Set a callback for click event on each data point.
+    """   Set a callback for click event on each data point.
 
     Related Pages:
 
       https://c3js.org/reference.html#data-onclick
 
-    Attributes:
-    ----------
     :param js_funcs: List of Js Functions. A Javascript Python function
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
@@ -155,10 +130,7 @@ class Chart(Html.Html):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """
-    Description:
-    -----------
-    Property to the D£ library.
+    """   Property to the D£ library.
 
     :rtype: JsD3.D3Select
     """
@@ -169,11 +141,7 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=False, component_id=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: List. The dataset to be added to the chart.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -191,11 +159,7 @@ class Chart(Html.Html):
 
   def generate(self, data, options=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: List. The dataset to be added to the chart.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     """
@@ -220,11 +184,7 @@ class ChartLine(Chart):
 
   def labels(self, labels, series_id='x'):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param labels: List.
     :param series_id: String. Optional. The series ID.
     """
@@ -235,11 +195,7 @@ class ChartLine(Chart):
 
   def add_dataset(self, data, name, kind=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: List. The series of numbers to be added to the chart.
     :param name: String. The series name.
     :param kind: String. Optional. The chart type.
@@ -277,8 +233,6 @@ class ChartLine(Chart):
   @property
   def data(self):
     """
-    Description:
-    -----------
 
     """
     return self.options.data
@@ -304,14 +258,10 @@ class ChartScatter(ChartLine):
 
   def labels(self, labels, series_id='x'):
     """
-    Description:
-    -----------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param labels: List.
     :param series_id: String. Optional. The series ID.
     """
@@ -369,28 +319,19 @@ class ChartPie(ChartLine):
 
   def labels(self, labels, series_id='x'):
     """
-    Description:
-    -----------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param labels:
     :param series_id:
     """
     self._labels = labels
 
   def add_dataset(self, values, name, kind=None):
-    """
-    Description:
-    -----------
-    Add a dataset to a pie chart.
+    """   Add a dataset to a pie chart.
     If multiple datasets are added the value will be summed up in the resulting pue chart.
 
-    Attributes:
-    ----------
     :param values: List. The series of numbers to be added to the chart
     :param name: String. The series name.
     :param kind: String. Optional. The chart type.
@@ -425,11 +366,7 @@ class ChartGauge(ChartPie):
 
   def build(self, data=None, options=None, profile=False, component_id=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: List. The dataset to be added to the chart.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -442,11 +379,7 @@ class ChartGauge(ChartPie):
 
   def add_dataset(self, value, name, kind=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param value: List. The series of numbers to be added to the chart.
     :param name: String. The series name.
     :param kind: String. Optional. The chart type.
@@ -488,11 +421,7 @@ class ChartStanford(ChartLine):
 
   def epoch(self, series, name):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param series:
     :param name:
     """
@@ -501,11 +430,7 @@ class ChartStanford(ChartLine):
 
   def add_dataset(self, data, name, kind=None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param data: List. The series of numbers to be added to the chart.
     :param name: String. The series name.
     :param kind: String. Optional. The chart type.

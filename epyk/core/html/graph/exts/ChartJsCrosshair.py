@@ -7,9 +7,7 @@ class Line(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -23,9 +21,7 @@ class Line(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -42,10 +38,7 @@ class Sync(Options):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Enable or disable syncing of crosshairs between charts of the same group
+    """   Enable or disable syncing of crosshairs between charts of the same group
 
     Related Pages:
 
@@ -59,10 +52,7 @@ class Sync(Options):
 
   @property
   def group(self):
-    """
-    Description:
-    -----------
-    Limit crosshair syncing to charts belonging to the same 'group'.
+    """   Limit crosshair syncing to charts belonging to the same 'group'.
 
     Related Pages:
 
@@ -76,10 +66,7 @@ class Sync(Options):
 
   @property
   def suppressTooltips(self):
-    """
-    Description:
-    -----------
-    Allows for suppressing tooltips when showing a synced crosshair.
+    """   Allows for suppressing tooltips when showing a synced crosshair.
 
     Related Pages:
 
@@ -96,10 +83,7 @@ class Zoom(Options):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Enable or disable zooming by drag and drop.
+    """   Enable or disable zooming by drag and drop.
 
     Related Pages:
 
@@ -113,10 +97,7 @@ class Zoom(Options):
 
   @property
   def zoomboxBackgroundColor(self):
-    """
-    Description:
-    -----------
-    Background color of the zoombox.
+    """   Background color of the zoombox.
 
     Related Pages:
 
@@ -130,10 +111,7 @@ class Zoom(Options):
 
   @property
   def zoomboxBorderColor(self):
-    """
-    Description:
-    -----------
-    Border color of the zoombox.
+    """   Border color of the zoombox.
 
     Related Pages:
 
@@ -147,10 +125,7 @@ class Zoom(Options):
 
   @property
   def zoomButtonText(self):
-    """
-    Description:
-    -----------
-    Text of the button to reset the chart to original axis ranges.
+    """   Text of the button to reset the chart to original axis ranges.
 
     Related Pages:
 
@@ -164,10 +139,7 @@ class Zoom(Options):
 
   @property
   def zoomButtonClass(self):
-    """
-    Description:
-    -----------
-    Class of the button to reset the chart to original axis ranges.
+    """   Class of the button to reset the chart to original axis ranges.
 
     Related Pages:
 
@@ -184,9 +156,7 @@ class Crosshair(Options):
 
   @property
   def line(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -198,10 +168,7 @@ class Crosshair(Options):
 
   @property
   def sync(self):
-    """
-    Description:
-    -----------
-    The plugin allows for syncing crosshairs over multiple charts.
+    """   The plugin allows for syncing crosshairs over multiple charts.
 
     Related Pages:
 
@@ -213,10 +180,7 @@ class Crosshair(Options):
 
   @property
   def zoom(self):
-    """
-    Description:
-    -----------
-    The plugin allows for horizontal zooming by clicking and dragging over the chart.
+    """   The plugin allows for horizontal zooming by clicking and dragging over the chart.
 
     Related Pages:
 
@@ -228,10 +192,7 @@ class Crosshair(Options):
 
   @property
   def snapToDataPoint(self):
-    """
-    Description:
-    -----------
-    The plugin allows snapping to datapoints when used with line charts.
+    """   The plugin allows snapping to datapoints when used with line charts.
 
     Related Pages:
 
@@ -244,17 +205,12 @@ class Crosshair(Options):
     self._config(flag)
 
   def beforeZoom(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Called before zooming, return false to prevent the zoom
+    """   Called before zooming, return false to prevent the zoom
 
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -264,17 +220,12 @@ class Crosshair(Options):
       "function(start, end){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def afterZoom(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Called after zooming, can for example be used for reloading data at a higher resolution
+    """   Called after zooming, can for example be used for reloading data at a higher resolution
 
     Related Pages:
 
       https://chartjs-plugin-crosshair.netlify.app/options.html
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """

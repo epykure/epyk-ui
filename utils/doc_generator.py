@@ -45,9 +45,7 @@ URL = "https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html"
 DT_PROP = '''
   @property
   def %(label)s(self):
-    """
-    Description:
-    ------------
+    """  
     %(description)s
     
     Related Pages:
@@ -64,13 +62,9 @@ DT_PROP = '''
 
 DT_JS = '''
   def set_%(label)s(self, jsFncs, profile=None):
-    """
-    Description:
-    ------------
+    """  
     %(description)s
-    
-    Attributes:
-    ----------
+     
     :param jsFncs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """

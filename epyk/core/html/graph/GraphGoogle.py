@@ -21,10 +21,7 @@ class Chart(Html.Html):
 
   @property
   def shared(self) -> OptChartGoogle.OptionsChartSharedGoogle:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -36,10 +33,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptChartGoogle.OptionGoogle:
-    """
-    Description:
-    -----------
-    Property to the series options.
+    """   Property to the series options.
 
     Usage::
 
@@ -49,10 +43,7 @@ class Chart(Html.Html):
 
   @property
   def chartId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
 
     Usage::
     """
@@ -60,13 +51,9 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    -----------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -94,13 +81,8 @@ class Chart(Html.Html):
     raise NotImplementedError()
 
   def labels(self, values: list):
-    """
-    Description:
-    -----------
-    Set the chart labels.
-
-    Attributes:
-    ----------
+    """   Set the chart labels.
+ 
     :param list values: The label values.
     """
     self._vals = {"x": [], "datasets": [], "series": []}
@@ -109,11 +91,7 @@ class Chart(Html.Html):
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param label:
     :param colors:

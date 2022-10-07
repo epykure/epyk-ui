@@ -26,8 +26,6 @@ class Settings:
   @property
   def headerVisible(self):
     """
-    Description:
-    ------------
     By setting the headerVisible option to false you can hide the column headers and present the table as a simple
     list if needed.
     """
@@ -42,56 +40,42 @@ class Settings:
 class Navigation(JsPackage):
   def prev(self):
     """
-    Description:
-    ------------
     next editable cell on the left, if none available move to the right most editable cell on the row above
     """
     return JsObjects.JsObject.JsObject("%s.prev()" % self.toStr(), page=self.page, component=self.component)
 
   def next(self):
     """
-    Description:
-    ------------
     next editable cell on the right, if none available move to left most editable cell on the row below.
     """
     return JsObjects.JsObject.JsObject("%s.next()" % self.toStr(), page=self.page, component=self.component)
 
   def left(self):
     """
-    Description:
-    ------------
     next editable cell on the left, return false if none available on row.
     """
     return JsObjects.JsObject.JsObject("%s.left()" % self.toStr(), page=self.page, component=self.component)
 
   def right(self):
     """
-    Description:
-    ------------
     next editable cell on the right, return false if none available on row.
     """
     return JsObjects.JsObject.JsObject("%s.right()" % self.toStr(), page=self.page, component=self.component)
 
   def up(self):
     """
-    Description:
-    ------------
     move to the same cell in the row above.
     """
     return JsObjects.JsObject.JsObject("%s.up()" % self.toStr(), page=self.page, component=self.component)
 
   def down(self):
     """
-    Description:
-    ------------
     move to the same cell in the row below.
     """
     return JsObjects.JsObject.JsObject("%s.down()" % self.toStr(), page=self.page, component=self.component)
 
   def toStr(self):
     """
-    Description:
-    ------------
     Javascript representation
     """
     if self._selector is None:
@@ -111,8 +95,6 @@ class CellComponent(JsPackage):
 
   def getElement(self):
     """
-    Description:
-    ------------
     The getElement function returns the DOM node for the cell.
 
     Related Pages:
@@ -125,8 +107,6 @@ class CellComponent(JsPackage):
 
   def getColumn(self):
     """
-    Description:
-    ------------
     The getColumn function returns the ColumnComponent for the column that contains the cell.
 
     Related Pages:
@@ -138,8 +118,6 @@ class CellComponent(JsPackage):
 
   def getRow(self):
     """
-    Description:
-    ------------
     The getRow function returns the RowComponent for the row that contains the cell.
 
     Related Pages:
@@ -150,8 +128,6 @@ class CellComponent(JsPackage):
 
   def getData(self):
     """
-    Description:
-    ------------
     The getData function returns the data for the row that contains the cell.
 
     Related Pages:
@@ -162,8 +138,6 @@ class CellComponent(JsPackage):
 
   def getField(self):
     """
-    Description:
-    ------------
     The getField function returns the field name for the column that contains the cell.
 
     Related Pages:
@@ -174,8 +148,6 @@ class CellComponent(JsPackage):
 
   def restoreOldValue(self):
     """
-    Description:
-    ------------
     The restoreOldValue reverts the value of the cell back to its previous value, without triggering any of the cell
     edit callbacks.
 
@@ -187,8 +159,6 @@ class CellComponent(JsPackage):
 
   def getOldValue(self):
     """
-    Description:
-    ------------
     The getOldValue function returns the previous value of the cell. Very usefull in the event of cell update callbacks.
 
     Related Pages:
@@ -199,8 +169,6 @@ class CellComponent(JsPackage):
 
   def getValue(self):
     """
-    Description:
-    ------------
     The getValue function returns the current value for the cell.
 
     Related Pages:
@@ -211,8 +179,6 @@ class CellComponent(JsPackage):
 
   def setValue(self, text, flag: bool = True):
     """
-    Description:
-    ------------
     You can change the value of the cell using the setValue function.
     The first parameter should be the new value for the cell, the second optional parameter will apply the column
     mutators to the value when set to true (default = true).
@@ -220,9 +186,7 @@ class CellComponent(JsPackage):
     Related Pages:
 
       http://tabulator.info/docs/4.4/components
-
-    Attributes:
-    ----------
+ 
     :param text:
     :param flag:
     """
@@ -233,8 +197,6 @@ class CellComponent(JsPackage):
 
   def checkHeight(self):
     """
-    Description:
-    ------------
     If you are making manual adjustments to elements contained withing the cell, or the cell itself,
     it may sometimes be necessary to recalculate the height of all the cells in the row to make sure they remain aligned
 
@@ -246,16 +208,12 @@ class CellComponent(JsPackage):
 
   def edit(self, flag=True):
     """
-    Description:
-    ------------
     You and programmatically cause a cell to open its editor element using the edit function.
 
     Related Pages:
 
       http://tabulator.info/docs/4.4/components
-
-    Attributes:
-    ----------
+ 
     :param flag:
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -263,16 +221,12 @@ class CellComponent(JsPackage):
 
   def cancelEdit(self):
     """
-    Description:
-    ------------
     You and programmatically cancel a cell edit that is currently in progress by calling the cancelEdit function.
     """
     return JsObjects.JsObject.JsObject("%s.cancelEdit()" % self.toStr(), page=self.page, component=self.component)
 
   def nav(self):
     """
-    Description:
-    ------------
     When a cell is being edited it is possible to move the editor focus from the current cell to one if its neighbours.
     """
     return Navigation(js_code="%s.nav()" % self.toStr(), page=self.page, component=self.component)
@@ -281,8 +235,6 @@ class CellComponent(JsPackage):
 class GroupComponent(JsPackage):
   def getElement(self):
     """
-    Description:
-    ------------
     The getElement function returns the DOM node for the group header.
 
     Related Pages:
@@ -293,16 +245,12 @@ class GroupComponent(JsPackage):
 
   def getKey(self):
     """
-    Description:
-    ------------
     The getKey function returns the unique key that is shared between all rows in this group.
     """
     return JsObjects.JsObject.JsObject("%s.getKey()" % self.toStr(), page=self.page, component=self.component)
 
   def getField(self):
     """
-    Description:
-    ------------
     The getField function returns the string of the field that all rows in this group have been grouped by.
     (if a function is used to group the rows rather than a field, this function will return false).
     """
@@ -310,16 +258,12 @@ class GroupComponent(JsPackage):
 
   def getRows(self):
     """
-    Description:
-    ------------
     The getRows function returns an array of RowComponent objects, one for each row in the group.
     """
     return RowComponent(js_code="%s.getRows()" % self.toStr(), page=self.page, component=self.component)
 
   def getSubGroups(self):
     """
-    Description:
-    ------------
     The getParentGroup function returns the GroupComponent for the parent group of this group.
     if no parent exists, this function will return false.
     """
@@ -327,48 +271,36 @@ class GroupComponent(JsPackage):
 
   def getVisibility(self):
     """
-    Description:
-    ------------
     The getVisibility function returns a boolean to show if the group is visible, a value of true means it is visible.
     """
     return JsObjects.JsBoolean.JsBoolean("%s.getVisibility()" % self.toStr())
 
   def show(self):
     """
-    Description:
-    ------------
     The show function shows the group if it is hidden.
     """
     return JsObjects.JsObject.JsObject("%s.show()" % self.toStr())
 
   def hide(self):
     """
-    Description:
-    ------------
     The hide function hides the group if it is visible.
     """
     return JsObjects.JsObject.JsObject("%s.hide()" % self.toStr(), page=self.page, component=self.component)
 
   def toggle(self):
     """
-    Description:
-    ------------
     The toggle function toggles the visibility of the group, switching between hidden and visible.
     """
     return JsObjects.JsObject.JsObject("%s.toggle()" % self.toStr(), page=self.page, component=self.component)
 
   def getTable(self):
     """
-    Description:
-    ------------
     The getTable function returns the Tabulator object for the table containing the group.
     """
     return JsObjects.JsObject.JsObject("%s.getTable()" % self.toStr(), page=self.page, component=self.component)
 
   def getParentColumn(self):
     """
-    Description:
-    ------------
     The getParentGroup function returns the GroupComponent for the parent group of this group.
     if no parent exists, this function will return false.
     """
@@ -381,48 +313,36 @@ class ColumnComponent(JsPackage):
 
   def getElement(self):
     """
-    Description:
-    ------------
     The getElement function returns the DOM node for the column.
     """
     return JsNodeDom.JsDoms("%s.getElement()" % self.toStr(), page=self.page, component=self.component)
 
   def getTable(self):
     """
-    Description:
-    ------------
     The getTable function returns the Tabulator object for the table containing the column.
     """
     return JsObjects.JsObject.JsObject("%s.getTable()" % self.toStr(), page=self.page, component=self.component)
 
   def getDefinition(self):
     """
-    Description:
-    ------------
     The getDefinition function returns the column definition object for the column.
     """
     return JsObjects.JsObject.JsObject("%s.getDefinition()" % self.toStr(), page=self.page, component=self.component)
 
   def getField(self):
     """
-    Description:
-    ------------
     The getField function returns the field name for the column.
     """
     return JsObjects.JsObject.JsObject("%s.getField()" % self.toStr(), page=self.page, component=self.component)
 
   def getCells(self):
     """
-    Description:
-    ------------
     The getCells function returns an array of CellComponent objects, one for each cell in the column.
     """
     return CellComponent(js_code="%s.getCells()" % self.toStr(), page=self.page, component=self.component)
 
   def getNextColumn(self):
     """
-    Description:
-    ------------
     The getNextColumn function returns the Column Component for the next visible column in the table,
     if there is no next column it will return a value of false.
     """
@@ -430,8 +350,6 @@ class ColumnComponent(JsPackage):
 
   def getPrevColumn(self):
     """
-    Description:
-    ------------
     The getPrevColumn function returns the Column Component for the previous visible column in the table,
     if there is no previous column it will return a value of false.
     """
@@ -439,32 +357,24 @@ class ColumnComponent(JsPackage):
 
   def getVisibility(self):
     """
-    Description:
-    ------------
     The getVisibility function returns a boolean to show if the column is visible, a value of true means it is visible.
     """
     return JsObjects.JsBoolean.JsBoolean("%s.getVisibility()" % self.toStr(), page=self.page, component=self.component)
 
   def show(self):
     """
-    Description:
-    ------------
     The show function shows the column if it is hidden.
     """
     return JsObjects.JsObject.JsObject("%s.show()" % self.toStr(), page=self.page, component=self.component)
 
   def hide(self):
     """
-    Description:
-    ------------
     The hide function hides the column if it is visible.
     """
     return JsObjects.JsObject.JsObject("%s.hide()" % self.toStr(), page=self.page, component=self.component)
 
   def toggle(self):
     """
-    Description:
-    ------------
     The toggle function toggles the visibility of the column, switching between hidden and visible.
 
     Related Pages:
@@ -475,28 +385,20 @@ class ColumnComponent(JsPackage):
 
   def delete(self):
     """
-    Description:
-    ------------
     The delete function deletes the column, removing it from the table.
     """
     return self.fnc_closure_in_promise("delete()")
 
   def scrollTo(self):
     """
-    Description:
-    ------------
     The scrollTo function will scroll the table to the column if it is visible.
     """
     return JsObjects.JsObject.JsObject("%s.scrollTo()" % self.toStr(), page=self.page, component=self.component)
 
   def move(self, text, flag):
     """
-    Description:
-    ------------
     ou can move a column next to another column using the move function.
-
-    Attributes:
-    ----------
+ 
     :param text:
     :param flag:
     """
@@ -507,16 +409,12 @@ class ColumnComponent(JsPackage):
 
   def getSubColumns(self):
     """
-    Description:
-    ------------
     The getSubColumns function returns an array of ColumnComponent objects, one for each sub column of this column.
     """
     return ColumnComponent(js_code="%s.getSubColumns()" % self.toStr(), page=self.page, component=self.component)
 
   def getParentColumn(self):
     """
-    Description:
-    ------------
     The getParentColumn function returns the ColumnComponent for the parent column of this column.
     if no parent exists, this function will return false
     """
@@ -524,8 +422,6 @@ class ColumnComponent(JsPackage):
 
   def headerFilterFocus(self):
     """
-    Description:
-    ------------
     The headerFilterFocus function will place focus on the header filter element for this column if it exists.
     """
     return JsObjects.JsObject.JsObject(
@@ -533,13 +429,9 @@ class ColumnComponent(JsPackage):
 
   def setHeaderFilterValue(self, text):
     """
-    Description:
-    ------------
     The setHeaderFilterValue function set the value of the columns header filter element to the value provided
     in the first argument.
-
-    Attributes:
-    ----------
+ 
     :param text:
     """
     text = JsUtils.jsConvertData(text, None)
@@ -548,8 +440,6 @@ class ColumnComponent(JsPackage):
 
   def reloadHeaderFilter(self):
     """
-    Description:
-    ------------
     The reloadHeaderFilter function rebuilds the header filter element, updating any params passed into the editor
     used to generate the filter.
     """
@@ -562,11 +452,7 @@ class ColumnComponents(JsPackage):
 
   def forEach(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -575,8 +461,6 @@ class ColumnComponents(JsPackage):
   @property
   def table(self):
     """
-    Description:
-    ------------
     Return to the parent table.
     """
     self._parent._js.append([])
@@ -585,8 +469,6 @@ class ColumnComponents(JsPackage):
   @property
   def fields(self):
     """
-    Description:
-    ------------
 
     """
     return JsObjects.JsArray.JsArray.get(
@@ -595,11 +477,7 @@ class ColumnComponents(JsPackage):
 
   def rename(self, field: str = None, title: str = None, columns=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param field: Column fields' name
     :param title: Column title's name
     :param columns:
@@ -618,17 +496,13 @@ class RowComponent(JsPackage):
 
   def update(self, data: Union[primitives.JsDataModel, dict]):
     """
-    Description:
-    ------------
     You can update the data in the row using the update function.
     You should pass an object to the function containing any fields you wish to update
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.0/update
-
-    Attributes:
-    ----------
+ 
     :param data: Dictionary with the data to override.
     """
     data = JsUtils.jsConvertData(data, None)
@@ -636,8 +510,6 @@ class RowComponent(JsPackage):
 
   def getData(self) -> JsObjects.JsObject.JsObject:
     """
-    Description:
-    ------------
     The getData function returns the data object for the row.
 
     Related Pages:
@@ -648,8 +520,6 @@ class RowComponent(JsPackage):
 
   def getDict(self) -> dict:
     """
-    Description:
-    ------------
     Return the if columns are defined on the Python side.
 
     Usage::
@@ -664,8 +534,6 @@ class RowComponent(JsPackage):
 
   def getElement(self) -> JsNodeDom.JsDoms:
     """
-    Description:
-    ------------
     The getElement function returns the DOM node for the row.
 
     Related Pages:
@@ -677,24 +545,18 @@ class RowComponent(JsPackage):
 
   def getCells(self) -> JsObjects.JsArray.JsArray:
     """
-    Description:
-    ------------
     The getCells function returns an array of CellComponent objects, one for each cell in the row.
     """
     return JsObjects.JsArray.JsArray("%s.getCells()" % self.toStr(), page=self.page, component=self.component)
 
   def getCell(self) -> CellComponent:
     """
-    Description:
-    ------------
     The getCell function returns the CellComponent for the specified column from this row.
     """
     return CellComponent(js_code="%s.getCell()" % self.toStr(), page=self.page, component=self.component)
 
   def getIndex(self) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
     The getIndex function returns the index value for the row.
     (this is the value from the defined index column, NOT the row's position in the table)
     """
@@ -702,17 +564,13 @@ class RowComponent(JsPackage):
 
   def getPosition(self, flag: Union[primitives.JsDataModel, bool] = True):
     """
-    Description:
-    ------------
     Use the getPosition function to retrieve the numerical position of a row in the table.
     By default this will return the position of the row in all data, including data currently filtered out of the table.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/components#:~:text=Get%20Position,filtered%20out%20of%20the%20table.
-
-    Attributes:
-    ----------
+ 
     :param flag: To get the position of the row in the currently filtered/sorted data
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -721,16 +579,12 @@ class RowComponent(JsPackage):
 
   def getGroup(self):
     """
-    Description:
-    ------------
     When using grouped rows, you can retrieve the group component for the current row using the getGroup function.
     """
     return GroupComponent(js_code="%s.getGroup()" % self.toStr(), page=self.page, component=self.component)
 
   def delete(self):
     """
-    Description:
-    ------------
     The delete function deletes the row, removing its data from the table.
 
     TODO: Fix the fnc_closure_in_promise implementation
@@ -743,28 +597,20 @@ class RowComponent(JsPackage):
 
   def scrollTo(self):
     """
-    Description:
-    ------------
     The scrollTo function will scroll the table to the row if it passes the current filters.
     """
     return self.fnc_closure("scrollTo()")
 
   def pageTo(self):
     """
-    Description:
-    ------------
     The pageTo function will load the page for the row if it passes the current filters.
     """
     return self.fnc_closure("pageTo()")
 
   def move(self, index: int, flag: Union[primitives.JsDataModel, bool] = True):
     """
-    Description:
-    ------------
     You can move a row next to another row using the move function.
-
-    Attributes:
-    ----------
+ 
     :param index:
     :param flag:
     """
@@ -774,40 +620,30 @@ class RowComponent(JsPackage):
 
   def select(self):
     """
-    Description:
-    ------------
     The select function will select the current row.
     """
     return self.fnc_closure("select()")
 
   def deselect(self):
     """
-    Description:
-    ------------
     The deselect function will deselect the current row.
     """
     return self.fnc_closure("deselect()")
 
   def toggleSelect(self):
     """
-    Description:
-    ------------
     The toggleSelect function will toggle the selected state the current row.
     """
     return self.fnc_closure("toggleSelect()")
 
   def isSelected(self):
     """
-    Description:
-    ------------
     The isSelected function will return a boolean representing the current selected state of the row.
     """
     return JsObjects.JsBoolean.JsBoolean("%s.isSelected()" % self.toStr(), page=self.page, component=self.component)
 
   def normalizeHeight(self):
     """
-    Description:
-    ------------
     If you are making manual adjustments to elements contained within the row,
     it may sometimes be necessary to recalculate the height of all the cells in the row to make sure they remain aligned
     """
@@ -815,8 +651,6 @@ class RowComponent(JsPackage):
 
   def reformat(self):
     """
-    Description:
-    ------------
     If you want to re-format a row once it has been rendered to re-trigger the cell formatters and the rowFormatter
     callback, Call the reformat function.
     """
@@ -824,8 +658,6 @@ class RowComponent(JsPackage):
 
   def freeze(self):
     """
-    Description:
-    ------------
     You can freeze a row at the top of the table by calling the freeze function. This will insert the row above
     the scrolling portion of the table in the table header.
     """
@@ -833,8 +665,6 @@ class RowComponent(JsPackage):
 
   def unfreeze(self):
     """
-    Description:
-    ------------
     A frozen row can be unfrozen using the unfreeze function.
     This will remove the row from the table header and re-insert it back in the table.
     """
@@ -858,11 +688,7 @@ class RowComponent(JsPackage):
   @JsUtils.fromVersion({'tabulator-tables': '5.3.0'})
   def watchPosition(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs:
     :param profile:
     """
@@ -875,19 +701,14 @@ class TabRowContextMenu(JsPackage):
 
   def add(self, name: str, url: str, icon: str = None):
     """
-    Description:
-    ------------
     Add an item to a table context menu.
 
     TODO: Improve this interface.
 
-    Usage:
-    -----
+    Usage::
 
       table.js.rowContextMenu.add("Test", "/test")
-
-    Attributes:
-    ----------
+ 
     :param name: The name of the item in the context menu.
     :param url: The service URL. (This service will only return a message).
     :param icon: Optional. The icon class name.
@@ -900,12 +721,8 @@ class TabRowContextMenu(JsPackage):
 
   def fromConfig(self, services: list):
     """
-    Description:
-    ------------
     Extend the context menu of a table from a configuration object.
-
-    Attributes:
-    ----------
+ 
     :param services: A list of services to be added to the context menu.
     """
     js_service = self.page.js.fncs.service()
@@ -926,17 +743,12 @@ class Tabulator(JsPackage):
   #  Common table javascript interface
   #  -----------------------------------------
   def download(self, format: str, filename: str, options: dict = None):
-    """
-    Description:
-    -----------
-    Common download feature for tables.
+    """   Common download feature for tables.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/download
-
-    Attributes:
-    ----------
+ 
     :param format: File format
     :param filename: Filename
     :param options: Download option
@@ -972,10 +784,7 @@ class Tabulator(JsPackage):
   #  -----------------------------------------
   @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
   def alert(self, text: str):
-    """
-    Description:
-    -----------
-    To show an alert, call the alert function on the table. Passing the message into the first argument of the function.
+    """   To show an alert, call the alert function on the table. Passing the message into the first argument of the function.
 
     Usage::
 
@@ -985,19 +794,14 @@ class Tabulator(JsPackage):
     Related Pages:
 
       http://tabulator.info/docs/5.2/menu#popup-row
-
-    Attributes:
-    ----------
+ 
     :param text: Alert message
     """
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsVoid("%s.alert(%s)" % (self.varId, text))
 
   def downloadToTab(self, file_format: str):
-    """
-    Description:
-    -----------
-    If you want to open the generated file in a new browser tab rather than downloading it straight away, you can use
+    """   If you want to open the generated file in a new browser tab rather than downloading it straight away, you can use
     the downloadToTab function.
     This is particularly useful with the PDF downloader, as it allows you to preview the resulting PDF
     in a new browser tab
@@ -1005,9 +809,7 @@ class Tabulator(JsPackage):
     Related Pages:
 
       http://tabulator.info/docs/4.8/download
-
-    Attributes:
-    ----------
+ 
     :param file_format: The output format
     """
     if file_format == "pdf":
@@ -1017,10 +819,7 @@ class Tabulator(JsPackage):
 
   @JsUtils.fromVersion({'tabulator-tables': '5.2.0'})
   def clearAlert(self):
-    """
-    Description:
-    -----------
-    To clear an active alert, call the clearAlert function on the table.
+    """   To clear an active alert, call the clearAlert function on the table.
 
     Usage::
 
@@ -1034,18 +833,13 @@ class Tabulator(JsPackage):
     return JsObjects.JsVoid("%s.clearAlert()" % self.varId)
 
   def copyToClipboard(self, clipboard_copy_selector: str = None, with_header: bool = True):
-    """
-    Description:
-    -----------
-    If the table has focus, the copyToClipboard keybinding which is by default set to the ctrl + c key combination,
+    """   If the table has focus, the copyToClipboard keybinding which is by default set to the ctrl + c key combination,
     will trigger a copy of table to the clipboard, which data is copied depends on the state of the table.
 
     Related Pages:
 
       http://tabulator.info/docs/4.6/clipboard
-
-    Attributes:
-    ----------
+ 
     :param clipboard_copy_selector: can be table, active, selected, visible, all
     :param with_header: Optional. defined if the header are included in the copy
     """
@@ -1060,10 +854,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsVoid("%s.copyToClipboard(%s)" % (self.varId, clipboard_copy_selector))
 
   def getCalcResults(self):
-    """
-    Description:
-    -----------
-    You can retrieve the results of the column calculations at any point using the getCalcResults function.
+    """   You can retrieve the results of the column calculations at any point using the getCalcResults function.
 
     Related Pages:
 
@@ -1072,10 +863,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsObject.JsObject("%s.getCalcResults()" % self.varId, page=self.page, component=self.component)
 
   def getAjaxUrl(self):
-    """
-    Description:
-    -----------
-    You can retrieve the current AJAX URL of the table with the getAjaxUrl function.
+    """   You can retrieve the current AJAX URL of the table with the getAjaxUrl function.
 
     Related Pages:
 
@@ -1084,10 +872,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsString.JsString("%s.getAjaxUrl()" % self.varId, page=self.page, component=self.component)
 
   def recalc(self):
-    """
-    Description:
-    -----------
-    Calculations will be automatically updated whenever the row data is changed or edited.
+    """   Calculations will be automatically updated whenever the row data is changed or edited.
     
     If you want to trigger an update of the calculation at any point you can call the recalc function on the table.
 
@@ -1098,10 +883,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsVoid("%s.recalc()" % self.varId)
 
   def previousPage(self):
-    """
-    Description:
-    -----------
-    You can change to show the next page using the previousPage function.
+    """   You can change to show the next page using the previousPage function.
 
     Related Pages:
 
@@ -1110,10 +892,7 @@ class Tabulator(JsPackage):
     return JsObjects.JsPromise("%s.previousPage()" % self.varId)
 
   def nextPage(self):
-    """
-    Description:
-    -----------
-    You can change to show the next page using the nextPage function.
+    """   You can change to show the next page using the nextPage function.
 
     Related Pages:
 
@@ -1122,52 +901,37 @@ class Tabulator(JsPackage):
     return JsObjects.JsPromise("%s.nextPage()" % self.varId)
 
   def setPage(self, i: Union[str, int]):
-    """
-    Description:
-    -----------
-    When pagination is enabled the table footer will contain a number of pagination controls for navigating
+    """   When pagination is enabled the table footer will contain a number of pagination controls for navigating
     through the data.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/page
-
-    Attributes:
-    ----------
+ 
     :param i: The page index or some special keywords like first, next...
     """
     return JsObjects.JsPromise("%s.setPage(%s)" % (self.varId, i))
 
   def setPageSize(self, i: int):
-    """
-    Description:
-    -----------
-    You can change the page size at any point by using the setPageSize function.
+    """   You can change the page size at any point by using the setPageSize function.
     (this setting will be ignored if using remote pagination with the page size set by the server)
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/page
-
-    Attributes:
-    ----------
+ 
     :param i: The rows number
     """
     return JsObjects.JsPromise("%s.setPageSize(%s)" % (self.varId, i))
 
   def setGroupBy(self, column: str = None):
-    """
-    Description:
-    -----------
-    You can use the setGroupBy function to change the fields that rows are grouped by.
+    """   You can use the setGroupBy function to change the fields that rows are grouped by.
     This function has one argument and takes the same values as passed to the groupBy setup option.
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.1/group
-
-    Attributes:
-    ----------
+ 
     :param column: Optional. The column name
     """
     if column is None:
@@ -1177,34 +941,26 @@ class Tabulator(JsPackage):
 
   def setGroupStartOpen(self, flag: Union[primitives.JsDataModel, bool]):
     """
-    Description:
-    ------------
     You can use the setGroupStartOpen function to change the default open state of groups.
     This function has one argument and takes the same values as passed to the groupStartOpen setup option.
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.1/group
-
-    Attributes:
-    ----------
+ 
     :param flag: Flag for the open state for groups
     """
     return JsObjects.JsVoid("%s.setGroupStartOpen(%s)" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
   def setGroupHeader(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     You can use the setGroupHeader function to change the header generation function for each group.
     This function has one argument and takes the same values as passed to the groupHeader setup option.
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.1/group
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1214,25 +970,19 @@ class Tabulator(JsPackage):
 
   def deleteRow(self, n: int):
     """
-    Description:
-    ------------
     You can delete any row in the table using the deleteRow function.
     The first argument is the row you want to delete, it will take any of the standard row component look up options.
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.0/update
-
-    Attributes:
-    ----------
+ 
     :param n: Row index
     """
     return JsObjects.JsPromise("%s.deleteRow(%s)" % (self.varId, n))
 
   def addRow(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
     """
-    Description:
-    ------------
     You can add a row to the table using the addRow function.
 
     The first argument should be a row data object. If you do not pass data for a column, it will be left empty.
@@ -1246,9 +996,7 @@ class Tabulator(JsPackage):
     Related Pages:
 
       http://tabulator.info/docs/4.3/update#addrow
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param flag:
     """
@@ -1258,17 +1006,13 @@ class Tabulator(JsPackage):
 
   def updateRow(self, row_id, data):
     """
-    Description:
-    ------------
     The updateRow and row.updatemethods return a promise,
     this can be used to run any other commands that have to be run after the data has been loaded into the table.
 
     Related Pages:
 
       http://www.tabulator.info/docs/4.0/update
-
-    Attributes:
-    ----------
+ 
     :param row_id:
     :param data:
     """
@@ -1276,8 +1020,6 @@ class Tabulator(JsPackage):
 
   def updateOrAddRow(self, row_id, data):
     """
-    Description:
-    ------------
     If you don't know whether a row already exists you can use the updateOrAddRow function.
     This will check if a row with a matching index exists, if it does it will update it,
     if not it will add a new row with that data.
@@ -1285,9 +1027,7 @@ class Tabulator(JsPackage):
     Related Pages:
 
       http://www.tabulator.info/docs/4.0/update
-
-    Attributes:
-    ----------
+ 
     :param row_id:
     :param data:
     """
@@ -1295,21 +1035,16 @@ class Tabulator(JsPackage):
 
   def getRow(self, index: Union[types.JS_DATA_TYPES, int]):
     """
-    Description:
-    ------------
     Get the Row component.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/components
 
-    Usage:
-    -----
+    Usage::
 
       var row = cell.getRow();
-
-    Attributes:
-    ----------
+ 
     :param index:
     """
     row = RowComponent(self.component, selector="getRow(%s)" % index, set_var=False, page=self.page)
@@ -1318,8 +1053,6 @@ class Tabulator(JsPackage):
 
   def getSelectedRows(self):
     """
-    Description:
-    ------------
     To get the RowComponent's for the selected rows at any time you can use the getSelectedRows function.
 
     Related Pages:
@@ -1330,12 +1063,9 @@ class Tabulator(JsPackage):
 
   def getRows(self) -> JsObjects.JsArray.JsArray:
     """
-    Description:
-    ------------
     The getRows function returns an array of RowComponent objects, one for each row in the table.
 
-    Usage:
-    -----
+    Usage::
 
       rows = table.getRows()
 
@@ -1347,17 +1077,13 @@ class Tabulator(JsPackage):
 
   def getRowPosition(self, row, flag: bool = True) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
     The new getRowPosition function and Row Component getPosition function allow you to retrieve
     the current position of a row in the table.
 
     Related Pages:
 
       http://tabulator.info/news
-
-    Attributes:
-    ----------
+ 
     :param row:
     :param flag:
     """
@@ -1366,8 +1092,6 @@ class Tabulator(JsPackage):
 
   def getPageSize(self) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1377,8 +1101,6 @@ class Tabulator(JsPackage):
 
   def getPage(self) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1388,8 +1110,6 @@ class Tabulator(JsPackage):
 
   def getPageMax(self) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -1399,11 +1119,7 @@ class Tabulator(JsPackage):
 
   def getRowFromPosition(self, n: int, flag: bool = True) -> JsObjects.JsNumber.JsNumber:
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param n:
     :param flag:
     """
@@ -1413,22 +1129,17 @@ class Tabulator(JsPackage):
 
   def toggleColumn(self, column: str):
     """
-    Description:
-    ------------
     You can toggle the visibility of a column at any point using the toggleColumn function.
     Pass the field name of the column you wish to toggle as the first parameter of the function.
 
-    Usage:
-    -----
+    Usage::
 
       table.toggleColumn("name")
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns#addColumn
-
-    Attributes:
-    ----------
+ 
     :param column: The column name
     """
     column = JsUtils.jsConvertData(column, None)
@@ -1436,22 +1147,17 @@ class Tabulator(JsPackage):
 
   def hideColumn(self, column: str):
     """
-    Description:
-    ------------
     You can hide a visible column at any point using the hideColumn function.
     Pass the field name of the column you wish to hide as the first parameter of the function.
 
-    Usage:
-    -----
+    Usage::
 
       table.hideColumn("name")
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns#addColumn
-
-    Attributes:
-    ----------
+ 
     :param column: The column name
     """
     column = JsUtils.jsConvertData(column, None)
@@ -1459,22 +1165,17 @@ class Tabulator(JsPackage):
 
   def hideColumns(self, columns: List[str]):
     """
-    Description:
-    ------------
     You can hide a visible column at any point using the hideColumn function.
     Pass the field name of the column you wish to hide as the first parameter of the function.
 
-    Usage:
-    -----
+    Usage::
 
       table.hideColumn("name")
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns#addColumn
-
-    Attributes:
-    ----------
+ 
     :param columns: Columns' names
     """
     columns = JsUtils.jsConvertData(columns, None)
@@ -1482,11 +1183,7 @@ class Tabulator(JsPackage):
 
   def columns(self, headers=None, rows=None, values=None, options=None):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param headers:
     :param rows:
     :param values:
@@ -1517,11 +1214,7 @@ class Tabulator(JsPackage):
 
   def values(self, data, columns=None, options=None):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param columns:
     :param options:
@@ -1537,13 +1230,10 @@ class Tabulator(JsPackage):
   @property
   def getColumns(self):
     """
-    Description:
-    ------------
     To get an array of Column Components for the current table setup, call the getColumns function.
     This will only return actual data columns not column groups.
 
-    Usage:
-    -----
+    Usage::
 
       var cols = table.getColumns()
 
@@ -1557,22 +1247,16 @@ class Tabulator(JsPackage):
     return columns
 
   def addColumn(self, data, before=False, position=""):
-    """
-    Description:
-    -----------
-    If you wish to add a single column to the table, you can do this using the addColumn function
+    """   If you wish to add a single column to the table, you can do this using the addColumn function
 
-    Usage:
-    -----
+    Usage::
 
       table.addColumn({"title": "Age", "field": "age"}, True, "name");
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns#addColumn
-
-    Attributes:
-    ----------
+ 
     :param data: The column definition object for the column you want to add
     :param before: Determines how to position the new column.
         A value of true will insert the column to the left of existing columns, a value of false will insert it to the
@@ -1587,11 +1271,7 @@ class Tabulator(JsPackage):
 
   def addColumns(self, data, before=False, position="", options=None):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param before:
     :param position:
@@ -1605,26 +1285,19 @@ class Tabulator(JsPackage):
       data, options, self.varId, position, before))
 
   def deleteColumn(self, data):
-    """
-    Description:
-    -----------
-    To permanently remove a column from the table deleteColumn function. This function takes any of the standard
+    """   To permanently remove a column from the table deleteColumn function. This function takes any of the standard
     column component look up options as its first parameter.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/columns#delete
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     return JsObjects.JsPromise("%s.deleteColumn(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def redraw(self, flag: bool = False):
     """
-    Description:
-    ------------
     This can be done by calling the redraw method.
     For example, to trigger a redraw whenever the viewport width is changed:
 
@@ -1634,22 +1307,17 @@ class Tabulator(JsPackage):
     Related Pages:
 
       http://tabulator.info/docs/4.5/layout#redraw
-
-    Attributes:
-    ----------
+ 
     :param flag: Boolean. Trigger full rerender including all data and rows
     """
     return JsObjects.JsVoid("%s.redraw(%s)" % (self.varId, JsUtils.jsConvertData(flag, None)))
 
   def blockRedraw(self):
     """
-    Description:
-    ------------
     To get around this you can use the blockRedraw and restoreRedraw functions to temporarlity disable all table
     redraw actions while you are manipulating the table data.
 
-    Usage:
-    -----
+    Usage::
 
       table.blockRedraw(); //block table redrawing
 
@@ -1661,11 +1329,8 @@ class Tabulator(JsPackage):
 
   def restoreRedraw(self):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
       table.restoreRedraw(); //restore table redrawing
 
@@ -1677,31 +1342,22 @@ class Tabulator(JsPackage):
 
   def setSort(self, data):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
       table.setSort([{column:"age", dir:"asc"}]);
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/sort
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     return JsObjects.JsVoid("%s.setSort(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def setColumns(self, data: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     return JsObjects.JsVoid('''
@@ -1714,21 +1370,16 @@ class Tabulator(JsPackage):
 
   def getGroups(self, data=None):
     """
-    Description:
-    ------------
     You can use the getGroups function to retrieve an array of all the first level Group Components in the table.
 
-    Usage:
-    -----
+    Usage::
 
       var cols = table.getColumns()
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/group
-
-    Attributes:
-    ----------
+ 
     :param data: To get a structured array of Column Components that includes column groups, pass a value of true as
       an argument
     """
@@ -1739,12 +1390,9 @@ class Tabulator(JsPackage):
 
   def clearData(self):
     """
-    Description:
-    ------------
     You can remove all data from the table using the clearData function:
 
-    Usage:
-    -----
+    Usage::
 
       table.clearData()
 
@@ -1756,39 +1404,30 @@ class Tabulator(JsPackage):
 
   def showColumn(self, column: str):
     """
-    Description:
-    ------------
     You can show a hidden column at any point using the showColumn function.
     Pass the field name of the column you wish to show as the first parameter of the function.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/columns
-
-    Attributes:
-    ----------
+ 
     :param column: The column name to be displayed.
     """
     return JsObjects.JsPromise("%s.showColumn(%s)" % (self.varId, JsUtils.jsConvertData(column, None)))
 
   def showColumns(self, columns: list):
     """
-    Description:
-    ------------
     You can show a hidden columns at any point using the showColumn function. Pass the field name of the column you
     wish to show as the first parameter of the function.
 
-    Usage:
-    -----
+    Usage::
 
       table.showColumna("name")
 
     Related Pages:
 
       ttp://tabulator.info/docs/4.0/columns
-
-    Attributes:
-    ----------
+ 
     :param columns: The column names to be displayed
     """
     return JsObjects.JsPromise(
@@ -1796,23 +1435,15 @@ class Tabulator(JsPackage):
 
   def setData(self, data):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     return JsObjects.JsVoid("%s.setData(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
 
   def setDataFromArray(self, data, header=None, formatters=None):
     """
-    Description:
-    ------------
     Load a table from an array using the first row as header.
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param header:
     :param formatters:
@@ -1841,18 +1472,13 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
 
   def replaceData(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The replaceData function lets you silently replace all data in the table without updating scroll position,
     sort or filtering, and without triggering the ajax loading popup.
 
-    Usage:
-    -----
+    Usage::
 
       table.replaceData() //trigger reload of ajax data from ajaxURL property.
-
-    Attributes:
-    ----------
+ 
     :param data:
     """
     if data is None:
@@ -1863,8 +1489,6 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
 
   def getData(self) -> JsObjects.JsObject.JsObject:
     """
-    Description:
-    ------------
     You can retrieve the data stored in the table using the getData function.
     """
     return JsObjects.JsObject.JsObject("%s.getData()" % self.varId, component=self.component, page=self.page)
@@ -1874,27 +1498,19 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
     return TabRowContextMenu(self.component, selector=self.varId, page=self.page)
 
   def deselectRow(self, row_id: int):
-    """
-    Description:
-    -----------
-    To deselect a specific row you can pass any of the standard row component look up options into the first argument
+    """   To deselect a specific row you can pass any of the standard row component look up options into the first argument
     of the function. If you leave the argument blank you will deselect all rows.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/select
-
-    Attributes:
-    ----------
+ 
     :param row_id: The row ID.
     """
     return JsObjects.JsVoid("%s.deselectRow(%s)" % (self.varId, row_id))
 
   def getSelectedData(self) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    -----------
-    To get the data objects for the selected rows you can use the getSelectedData function.
+    """   To get the data objects for the selected rows you can use the getSelectedData function.
 
     This will return an array of the selected rows data objects in the order in which they were selected.
 
@@ -1907,8 +1523,6 @@ resultContent.push(row)}); %(varId)s.setData(resultContent)''' % {
   @property
   def _(self):
     """
-    Description:
-    ------------
     Tabulator standard components.
 
     Usage::
@@ -1923,8 +1537,6 @@ class _Export:
   @property
   def cell(self) -> CellComponent:
     """
-    Description:
-    ------------
     Cell component for the edited cell.
 
     Usage::
@@ -1940,8 +1552,6 @@ class _Export:
   @property
   def value(self):
     """
-    Description:
-    ------------
     The data being changed.
     """
     return JsObjects.JsObjects.get("value")
@@ -1949,8 +1559,6 @@ class _Export:
   @property
   def data(self):
     """
-    Description:
-    ------------
     The data being changed.
     """
     return JsObjects.JsObjects.get("data")
@@ -1958,8 +1566,6 @@ class _Export:
   @property
   def rowData(self):
     """
-    Description:
-    ------------
     The row data from the paste parser.
     """
     return JsObjects.JsObjects.get("row")
@@ -1967,8 +1573,6 @@ class _Export:
   @property
   def rows(self) -> JsObjects.JsArray.JsArray:
     """
-    Description:
-    ------------
     The row components from the paste action (this will be empty if the "replace" action is used).
     """
     return JsObjects.JsArray.JsArray("rows")
@@ -1976,8 +1580,6 @@ class _Export:
   @property
   def clipboard(self):
     """
-    Description:
-    ------------
     The clipboard string.
     """
     return JsObjects.JsObjects.get("clipboard")

@@ -225,10 +225,7 @@ class Snackbar(Component):
 
   @property
   def dom(self) -> DomMdcSnackbar.DomSnackbar:
-    """
-    Description:
-    -----------
-    The common DOM properties.
+    """   The common DOM properties.
     """
     if self._dom is None:
       self._dom = DomMdcSnackbar.DomSnackbar(component=self, page=self.page)

@@ -6,9 +6,7 @@ class Slider(Options):
 
   @property
   def max(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -22,9 +20,7 @@ class Slider(Options):
 
   @property
   def min(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -38,9 +34,7 @@ class Slider(Options):
 
   @property
   def step(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -58,10 +52,7 @@ class Check(Options):
 
   @property
   def disabled(self):
-    """
-    Description:
-    -----------
-    Add the disabled attribute and the associated <label>s are automatically styled to match with a lighter color to
+    """   Add the disabled attribute and the associated <label>s are automatically styled to match with a lighter color to
     help indicate the input’s state.
 
     Related Pages:
@@ -76,10 +67,7 @@ class Check(Options):
 
   @property
   def container_class(self):
-    """
-    Description:
-    -----------
-    Change the CSS class of the main container.
+    """   Change the CSS class of the main container.
     """
     return self._config_get(["form-check"])
 
@@ -89,10 +77,7 @@ class Check(Options):
 
   @property
   def switch(self):
-    """
-    Description:
-    -----------
-    Change the input style to a switch component.
+    """   Change the input style to a switch component.
 
     Related Pages:
 
@@ -107,10 +92,7 @@ class Check(Options):
 
   @property
   def inline(self):
-    """
-    Description:
-    -----------
-    Group checkboxes or radios on the same horizontal row by adding .form-check-inline to any .form-check.
+    """   Group checkboxes or radios on the same horizontal row by adding .form-check-inline to any .form-check.
 
     Related Pages:
 

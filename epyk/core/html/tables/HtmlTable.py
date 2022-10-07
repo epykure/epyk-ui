@@ -19,8 +19,6 @@ class Row(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
     """
-    Description:
-    ------------
     The DOM attributes.
 
     Usage::
@@ -34,8 +32,6 @@ class Row(Html.Html):
   @property
   def options(self) -> OptTable.OptionsTableRow:
     """
-    Description:
-    ------------
     All table options.
     """
     return super().options
@@ -44,17 +40,12 @@ class Row(Html.Html):
     return self.val[i]
 
   def cell(self, i: int):
-    """
-    Description:
-    -----------
-    Get the cell value.
+    """   Get the cell value.
 
     Usage::
 
       row.cell(i=1)
 
-    Attributes:
-    ----------
     :param i: The cell index in the tr
     """
     return self[i]
@@ -78,8 +69,6 @@ class Cell(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
     """
-    Description:
-    ------------
 
     """
     if self._dom is None:
@@ -89,20 +78,14 @@ class Cell(Html.Html):
   @property
   def options(self) -> OptTable.OptionsTableCell:
     """
-    Description:
-    ------------
     All table options.
     """
     return super().options
 
   def set_html_content(self, component: primitives.HtmlModel):
     """
-    Description:
-    ------------
     Set the cell content to be an HTML object.
 
-    Attributes:
-    ----------
     :param component: Python HTML object
 
     :return: self, the cell object to allow the chaining
@@ -137,38 +120,25 @@ class Bespoke(Html.Html):
   @property
   def options(self) -> OptTable.OptionsBasic:
     """
-    Description:
-    ------------
     All table options.
     """
     return super().options
 
   @property
   def tableId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the bespoke.
+    """   Return the Javascript variable of the bespoke.
     """
     return self.dom.varId
 
   @property
   def header(self):
-    """
-    Description:
-    -----------
-    Get the header row. Returns none if missing.
+    """   Get the header row. Returns none if missing.
     """
     return self._header
 
   def set_header(self, values: list, css: dict = None):
-    """
-    Description:
-    -----------
-    Set the table header.
+    """   Set the table header.
 
-    Attributes:
-    ----------
     :param values: A list of headers
     :param css: Specific CSS attributes
     """
@@ -179,10 +149,7 @@ class Bespoke(Html.Html):
     return self
 
   def set_items(self):
-    """
-    Description:
-    -----------
-    Set the table definition.
+    """   Set the table definition.
     """
     if self.items is None:
       self.items = []
@@ -202,33 +169,23 @@ class Bespoke(Html.Html):
     return self
 
   def __getitem__(self, i: int) -> Html.Html:
-    """
-    Description:
-    -----------
-    Get the table rows.
+    """   Get the table rows.
 
     Usage::
 
       component = self[i]
 
-    Attributes:
-    ----------
     :param i: The column number
     """
     return self.items[i]
 
   def row(self, i: int, inc_header: bool = False):
-    """
-    Description:
-    -----------
-    Get the table rows.
+    """   Get the table rows.
 
     Usage::
 
       row = self.row(0)
 
-    Attributes:
-    ----------
     :param i: The column number.
     :param inc_header: Optional. Default False
     """
@@ -238,18 +195,13 @@ class Bespoke(Html.Html):
     return self[i]
 
   def col(self, header: Union[str, bool] = None, i: int = None):
-    """
-    Description:
-    -----------
-    Get the table column cells as a generator.
+    """   Get the table column cells as a generator.
 
     Usage::
 
         for cell in t.col(i=1, header=False):
           cell
 
-    Attributes:
-    ----------
     :param header: Optional. Consider or not the header.
     :param i: Optional. The column index.
     """
@@ -263,12 +215,8 @@ class Bespoke(Html.Html):
 
   def set_editable_cols(self, col_indices: List[int]):
     """
-    Description:
-    ------------
     Define columns as editable.
 
-    Attributes:
-    ----------
     :param col_indices: Column indices to be changed.
     """
     for row in self.items:
@@ -278,8 +226,6 @@ class Bespoke(Html.Html):
   @property
   def dom(self) -> JsHtml.JsHtmlTable:
     """
-    Description:
-    ------------
     Dom properties for a table.
     """
     if self._dom is None:
@@ -287,17 +233,12 @@ class Bespoke(Html.Html):
     return self._dom
 
   def add(self, row: Union[dict, list], missing: str = "", is_header: bool = False):
-    """
-    Description:
-    -----------
-    Add a row to the table.
+    """   Add a row to the table.
 
     Usage::
 
       simple_table.row_add({"column": "value"})
 
-    Attributes:
-    ----------
     :param row: The row to be added to the table
     :param missing: Optional. The data to put when a cell is missing
     :param is_header: Optional.

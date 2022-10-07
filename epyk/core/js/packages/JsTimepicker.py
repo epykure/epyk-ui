@@ -14,16 +14,12 @@ class Timepicker(JsPackage):
 
   def value(self, value=None):
     """
-    Description:
-    ------------
     Set the timepicker object value
 
     Related Pages:
 
       https://stackoverflow.com/questions/32378842/setting-the-hour-and-minute-of-timepicker-dynamically
-
-    Attributes:
-    ----------
+ 
     :param value: String or Js Object
     """
     value = JsUtils.jsConvertData(value, None)
@@ -31,8 +27,6 @@ class Timepicker(JsPackage):
 
   def getTime(self):
     """
-    Description:
-    ------------
     Get the time using a Javascript Date object, relative to a Date object (default: today's date).
 
     Related Pages:
@@ -43,8 +37,6 @@ class Timepicker(JsPackage):
 
   def getSecondsFromMidnight(self):
     """
-    Description:
-    ------------
     Get the time as an integer, expressed as seconds from 12am.
 
     Related Pages:
@@ -55,8 +47,6 @@ class Timepicker(JsPackage):
 
   def isVisible(self):
     """
-    Description:
-    ------------
     Check if the timepicker attached to a specific input is visible. Not compatible with the useSelect option.
 
     Related Pages:
@@ -67,8 +57,6 @@ class Timepicker(JsPackage):
 
   def remove(self):
     """
-    Description:
-    ------------
     Unbind an existing timepicker element.
 
     Related Pages:
@@ -79,17 +67,13 @@ class Timepicker(JsPackage):
 
   def option(self,  key=None,  value=None):
     """
-    Description:
-    ------------
     Change the settings of an existing timepicker.
     Calling option on a visible timepicker will cause the picker to be hidden.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param key: String or Js Object
     :param value: String or Js Object
     """
@@ -99,16 +83,12 @@ class Timepicker(JsPackage):
 
   def setTime(self, value=None):
     """
-    Description:
-    ------------
     Set the time using a Javascript Date object.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param value: String or Js Object
     """
     value = JsUtils.jsConvertData(value, None)
@@ -116,8 +96,6 @@ class Timepicker(JsPackage):
 
   def change(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     The native onChange event will fire any time the input value is updated, whether by selection from the timepicker
     list or manual entry into the text input.
     Your code should bind to change after initializing timepicker, or use event delegation.
@@ -125,9 +103,7 @@ class Timepicker(JsPackage):
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -136,16 +112,12 @@ class Timepicker(JsPackage):
 
   def changeTime(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called after a valid time value is entered or selected. See timeFormatError and timeRangeError for error events.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -154,16 +126,12 @@ class Timepicker(JsPackage):
 
   def hideTimepicker(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called after the timepicker is closed.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -173,16 +141,12 @@ class Timepicker(JsPackage):
 
   def selectTime(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called after a time value is selected from the timepicker list. Fires before change event.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -191,16 +155,12 @@ class Timepicker(JsPackage):
 
   def showTimepicker(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called after the timepicker is shown.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -210,16 +170,12 @@ class Timepicker(JsPackage):
 
   def timeFormatError(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called if an unparseable time string is manually entered into the timepicker input. Fires before change event.
 
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """
@@ -229,8 +185,6 @@ class Timepicker(JsPackage):
 
   def timeRangeError(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None):
     """
-    Description:
-    ------------
     Called if maxTime and minTime, or disableTimeRanges is set and an invalid time is manually entered into the
     timepicker input.
 
@@ -239,9 +193,7 @@ class Timepicker(JsPackage):
     Related Pages:
 
       https://github.com/jonthornton/jquery-timepicker#timepicker-plugin-for-jquery
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
     """

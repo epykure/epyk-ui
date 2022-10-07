@@ -31,8 +31,6 @@ class Sparklines(Html.Html):
   @property
   def style(self) -> GrpClsChart.ClassBSpartlines:
     """
-    Description:
-    ------------
     Property to the sparkline style properties.
     This will group all the default CSS classes which are defined by default to a sparkline component.
 
@@ -46,10 +44,7 @@ class Sparklines(Html.Html):
 
   @property
   def options(self) -> OptSparkline.OptionsSparkLine:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a button.
+    """   Property to set all the possible object for a button.
 
     Usage::
 
@@ -59,10 +54,7 @@ class Sparklines(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlSparkline:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Usage::
@@ -77,8 +69,6 @@ class Sparklines(Html.Html):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
     When a user clicks on a sparkline, a sparklineClick event is generated.
     The event object contains a property called "sparklines" that holds an array of the sparkline objects under
     the mouse at the time of the click.
@@ -90,8 +80,6 @@ class Sparklines(Html.Html):
 
       https://omnipotent.net/jquery.sparkline/#interactive
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
@@ -103,8 +91,6 @@ class Sparklines(Html.Html):
 
   def hover(self, js_funcs, profile=False, source_event=None):
     """
-    Description:
-    ------------
     When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
     This can be useful to hook in an alternate tooltip library.
 
@@ -114,8 +100,6 @@ class Sparklines(Html.Html):
 
       https://omnipotent.net/jquery.sparkline/#interactive
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
@@ -125,18 +109,13 @@ class Sparklines(Html.Html):
     return self
 
   def color(self, hex_value, background=None):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     if background is None:

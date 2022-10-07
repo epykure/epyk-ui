@@ -7,9 +7,7 @@ from epyk.core.js import JsUtils
 class EnumHeightStyles(Enums):
 
   def auto(self):
-    """
-    Description:
-    ------------
+    """  
     All panels will be set to the height of the tallest panel.
 
     Related Pages:
@@ -19,9 +17,7 @@ class EnumHeightStyles(Enums):
     self._set_value()
 
   def fill(self):
-    """
-    Description:
-    ------------
+    """  
     Expand to the available height based on the accordion's parent height.
 
     Related Pages:
@@ -31,9 +27,7 @@ class EnumHeightStyles(Enums):
     self._set_value()
 
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     Each panel will be only as tall as its content.
 
     Related Pages:
@@ -47,10 +41,7 @@ class OptAccordion(Options):
 
   @property
   def active(self):
-    """
-    Description:
-    -----------
-    Which panel is currently open.
+    """   Which panel is currently open.
 
     Related Pages:
 
@@ -64,10 +55,7 @@ class OptAccordion(Options):
 
   @property
   def animate(self):
-    """
-    Description:
-    -----------
-    If and how to animate changing panels.
+    """   If and how to animate changing panels.
 
     Related Pages:
 
@@ -81,10 +69,7 @@ class OptAccordion(Options):
 
   @property
   def classes(self):
-    """
-    Description:
-    -----------
-    Specify additional classes to add to the widget's elements.
+    """   Specify additional classes to add to the widget's elements.
 
     Related Pages:
 
@@ -98,10 +83,7 @@ class OptAccordion(Options):
 
   @property
   def collapsible(self):
-    """
-    Description:
-    -----------
-    Whether all the sections can be closed at once. Allows collapsing the active section.
+    """   Whether all the sections can be closed at once. Allows collapsing the active section.
 
     Related Pages:
 
@@ -115,10 +97,7 @@ class OptAccordion(Options):
 
   @property
   def disabled(self):
-    """
-    Description:
-    -----------
-    Disables the accordion if set to true.
+    """   Disables the accordion if set to true.
 
     Related Pages:
 
@@ -132,10 +111,7 @@ class OptAccordion(Options):
 
   @property
   def event(self):
-    """
-    Description:
-    -----------
-    The type of event that the tabs should react to in order to activate the tab. To activate on hover, use "mouseover".
+    """   The type of event that the tabs should react to in order to activate the tab. To activate on hover, use "mouseover".
 
     Usage::
 
@@ -155,10 +131,7 @@ class OptAccordion(Options):
 
   @property
   def header(self):
-    """
-    Description:
-    -----------
-    Data identifying the header element.
+    """   Data identifying the header element.
 
     Related Pages:
 
@@ -172,10 +145,7 @@ class OptAccordion(Options):
 
   @property
   def heightStyle(self):
-    """
-    Description:
-    -----------
-    Controls the height of the accordion and each panel.
+    """   Controls the height of the accordion and each panel.
 
     Related Pages:
 
@@ -193,10 +163,7 @@ class OptAccordion(Options):
 
   @property
   def icons(self):
-    """
-    Description:
-    -----------
-    Icons to use for headers, matching an icon provided by the jQuery UI CSS Framework.
+    """   Icons to use for headers, matching an icon provided by the jQuery UI CSS Framework.
 
     Related Pages:
 
@@ -209,17 +176,13 @@ class OptAccordion(Options):
     self._config(values)
 
   def activate(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a panel has been activated (after animation completes). If the accordion was previously collapsed,
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -227,17 +190,13 @@ class OptAccordion(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def beforeActivate(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered directly before a panel is activated. Can be canceled to prevent the panel from activating.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -245,17 +204,13 @@ class OptAccordion(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def create(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered directly before a panel is activated. Can be canceled to prevent the panel from activating.
 
     Related Pages:
 
       https://api.jqueryui.com/accordion/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -267,10 +222,7 @@ class OptTabs(Options):
 
   @property
   def active(self):
-    """
-    Description:
-    -----------
-    Which panel is currently open.
+    """   Which panel is currently open.
 
     Related Pages:
 
@@ -284,10 +236,7 @@ class OptTabs(Options):
 
   @property
   def classes(self):
-    """
-    Description:
-    -----------
-    Specify additional classes to add to the widget's elements.
+    """   Specify additional classes to add to the widget's elements.
     Any of classes specified in the Theming section can be used as keys to override their value.
 
     Related Pages:
@@ -302,10 +251,7 @@ class OptTabs(Options):
 
   @property
   def collapsible(self):
-    """
-    Description:
-    -----------
-    When set to true, the active panel can be closed.
+    """   When set to true, the active panel can be closed.
 
     Related Pages:
 
@@ -319,10 +265,7 @@ class OptTabs(Options):
 
   @property
   def disabled(self):
-    """
-    Description:
-    -----------
-    Which tabs are disabled.
+    """   Which tabs are disabled.
 
     Related Pages:
 
@@ -336,10 +279,7 @@ class OptTabs(Options):
 
   @property
   def event(self):
-    """
-    Description:
-    -----------
-    The type of event that the tabs should react to in order to activate the tab. To activate on hover, use "mouseover".
+    """   The type of event that the tabs should react to in order to activate the tab. To activate on hover, use "mouseover".
 
     Usage::
 
@@ -359,10 +299,7 @@ class OptTabs(Options):
 
   @property
   def heightStyle(self):
-    """
-    Description:
-    -----------
-    Controls the height of the tabs widget and each panel. Possible values:
+    """   Controls the height of the tabs widget and each panel. Possible values:
       "auto": All panels will be set to the height of the tallest panel.
       "fill": Expand to the available height based on the tabs' parent height.
       "content": Each panel will be only as tall as its content.
@@ -378,10 +315,7 @@ class OptTabs(Options):
     self._config(text)
 
   def hide(self, effect, duration=1000):
-    """
-    Description:
-    -----------
-    If and how to animate the hiding of the panel.
+    """   If and how to animate the hiding of the panel.
 
     Related Pages:
 
@@ -391,42 +325,31 @@ class OptTabs(Options):
 
         acc.options.hide("explode")
 
-    Attributes:
-    ----------
     :param effect: String.
     :param duration: Number. Optional.  The panel will fade out with the specified duration and the default easing.
     """
     self._config({"effect": effect, "duration": duration})
 
   def show(self, effect, duration=800):
-    """
-    Description:
-    -----------
-    If and how to animate the showing of the panel.
+    """   If and how to animate the showing of the panel.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param effect: String.
     :param duration: Number. Optional.  The panel will fade out with the specified duration and the default easing.
     """
     self._config({"effect": effect, "duration": duration})
 
   def activate(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a panel has been activated (after animation completes). If the accordion was previously collapsed,
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -434,17 +357,13 @@ class OptTabs(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def beforeActivate(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered directly before a panel is activated. Can be canceled to prevent the panel from activating.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -452,17 +371,13 @@ class OptTabs(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def beforeLoad(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered when a remote tab is about to be loaded, after the beforeActivate event.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -470,17 +385,13 @@ class OptTabs(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def create(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered when the tabs are created.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -488,17 +399,13 @@ class OptTabs(Options):
       js_funcs, toStr=True, profile=profile), js_type=True)
 
   def load(self, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
     Triggered after a remote tab has been loaded.
 
     Related Pages:
 
       https://api.jqueryui.com/tabs/
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """

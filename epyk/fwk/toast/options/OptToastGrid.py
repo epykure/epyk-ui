@@ -7,8 +7,6 @@ class Column(Options):
   @property
   def header(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -23,8 +21,6 @@ class Column(Options):
   @property
   def name(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -39,8 +35,6 @@ class Column(Options):
   @property
   def editor(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -58,8 +52,6 @@ class GridConfig(Options):
   @property
   def el(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -71,8 +63,6 @@ class GridConfig(Options):
   @property
   def data(self):
     """
-    Description:
-    ------------
     Grid data for making rows. When using the data source, sets to object.
 
     Related Pages:
@@ -88,8 +78,6 @@ class GridConfig(Options):
   @property
   def scrollX(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -102,8 +90,6 @@ class GridConfig(Options):
   @property
   def scrollY(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -114,12 +100,8 @@ class GridConfig(Options):
 
   def add_column(self, field, title=None) -> Column:
     """
-    Description:
-    ------------
     Add new column to the underlying Tabulator object.
 
-    Attributes:
-    ----------
     :param field: String. Mandatory. The key in the row.
     :param title: String. Optional. The title for the column. Default to the field.
 

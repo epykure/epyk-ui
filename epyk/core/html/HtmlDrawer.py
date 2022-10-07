@@ -47,8 +47,6 @@ class Drawer(Html.Html):
   @property
   def dom(self) -> JsHtmlStepper.Drawer:
     """
-    Description:
-    ------------
     Property to get the common dom features.
     """
     if self._dom is None:
@@ -58,20 +56,14 @@ class Drawer(Html.Html):
   @property
   def options(self) -> OptPanel.OptionDrawer:
     """
-    Description:
-    ------------
     Property to set all the possible object for a drawer.
     """
     return super().options
 
   def add_panel(self, link: Union[Html.Html, str], container: Html.Html, display: bool = False):
     """
-    Description:
-    ------------
     Add panel to the drawer object.
 
-    Attributes:
-    ----------
     :param link: The value in the drawer.
     :param container: The component to be displayed.
     :param display: Optional. The CSS Display property.
@@ -90,8 +82,6 @@ class Drawer(Html.Html):
   @property
   def style(self) -> GrpClsContainer.ClassDrawer:
     """
-    Description:
-    ------------
     Get the CSS Style of the object.
     """
     if self._styleObj is None:
@@ -100,12 +90,8 @@ class Drawer(Html.Html):
 
   def set_handle(self, component: Html.Html):
     """
-    Description:
-    ------------
     Set the handle used to trigger the open / close events.
 
-    Attributes:
-    ----------
     :param component: An HTML component.
     """
     self.handle = self.page.ui.div()
@@ -172,8 +158,6 @@ class DrawerMulti(Html.Html):
   @property
   def dom(self) -> JsHtmlStepper.Drawer:
     """
-    Description:
-    ------------
     Property to get the common dom features.
     """
     if self._dom is None:
@@ -183,20 +167,14 @@ class DrawerMulti(Html.Html):
   @property
   def options(self) -> OptPanel.OptionDrawer:
     """
-    Description:
-    ------------
     Property to set all the possible object for a drawer.
     """
     return super().options
 
   def add_drawer(self, link: Union[str, Html.Html], container: Html.Html):
     """
-    Description:
-    ------------
     Add panel to the drawer object.
 
-    Attributes:
-    ----------
     :param link: The value in the drawer.
     :param container: The component to be displayed.
     """
@@ -237,8 +215,6 @@ class DrawerMulti(Html.Html):
   @property
   def style(self) -> GrpClsContainer.ClassDrawer:
     """
-    Description:
-    ------------
     Get the CSS Style of the object.
     """
     if self._styleObj is None:

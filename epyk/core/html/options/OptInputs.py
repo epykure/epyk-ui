@@ -8,12 +8,8 @@ from epyk.core.js import JsUtils
 class OptionsInput(Options):
 
   def css(self, attrs: dict):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param attrs: Dictionary. CSS attributes
     """
     self._config(attrs)
@@ -22,8 +18,6 @@ class OptionsInput(Options):
   @property
   def borders(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get("all")
@@ -35,8 +29,6 @@ class OptionsInput(Options):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     The rows attribute specifies the visible height of a text area, in lines.
 
     Related Pages:
@@ -55,17 +47,12 @@ class OptionsInput(Options):
 
   @packageImport("accounting")
   def formatMoney(self, symbol="", digits=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    -----------
-    Format any number into currency
+    """   Format any number into currency
 
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param symbol: String. custom symbol
     :param digits: Integer. Number of digit
     :param thousand_sep: String. The thousand separator
@@ -76,17 +63,12 @@ class OptionsInput(Options):
 
   @packageImport("accounting")
   def formatNumber(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    -----------
-    Format a number with custom precision and localisation
+    """   Format a number with custom precision and localisation
 
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param digit: Integer. Number of digit
     :param thousand_sep: String. The thousand separator
     """
@@ -95,17 +77,12 @@ class OptionsInput(Options):
 
   @packageImport("accounting")
   def toFixed(self, digit=0):
-    """
-    Description:
-    -----------
-    Better rounding for floating point numbers
+    """   Better rounding for floating point numbers
 
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param digit: Integer. Number of digit
     """
     self._config(digit)
@@ -114,8 +91,6 @@ class OptionsInput(Options):
   @property
   def background(self):
     """
-    Description:
-    ------------
     Specifies the maximum number of characters allowed in the text area
 
     Related Pages:
@@ -131,8 +106,6 @@ class OptionsInput(Options):
   @property
   def maxlength(self):
     """
-    Description:
-    ------------
     Specifies the maximum number of characters allowed in the text area
 
     Related Pages:
@@ -148,8 +121,6 @@ class OptionsInput(Options):
   @property
   def name(self):
     """
-    Description:
-    ------------
     Specifies a name for a text area
 
     Related Pages:
@@ -165,8 +136,6 @@ class OptionsInput(Options):
   @property
   def placeholder(self):
     """
-    Description:
-    ------------
     The placeholder attribute specifies a short hint that describes the expected value of an input field
     (e.g. a sample value or a short description of the expected format).
 
@@ -183,8 +152,6 @@ class OptionsInput(Options):
   @property
   def required(self):
     """
-    Description:
-    ------------
     Specifies that a text area is required/must be filled out
 
     Related Pages:
@@ -204,8 +171,6 @@ class OptionsInput(Options):
   @property
   def wrap(self):
     """
-    Description:
-    ------------
     Specifies how the text in a text area is to be wrapped when submitted in a form.
 
     Related Pages:
@@ -221,8 +186,6 @@ class OptionsInput(Options):
   @property
   def spellcheck(self):
     """
-    Description:
-    ------------
     The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
 
     Related Pages:
@@ -238,8 +201,6 @@ class OptionsInput(Options):
   @property
   def readonly(self):
     """
-    Description:
-    ------------
     The readonly attribute is a boolean attribute.
 
     Related Pages:
@@ -259,8 +220,6 @@ class OptionsInput(Options):
   @property
   def reset(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -271,8 +230,6 @@ class OptionsInput(Options):
   @property
   def select(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -286,8 +243,6 @@ class OptionsInputRange(OptionsInput):
   @property
   def output(self):
     """
-    Description:
-    ------------
     """
     return self._attrs.get('output', True)
 
@@ -301,8 +256,6 @@ class OptionsInputInteger(OptionsInput):
   @property
   def quantity(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -319,8 +272,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def appendTo(self):
     """
-    Description:
-    ------------
     Override where the dropdown is appended.
 
     Takes either a string to use as a selector, a function that gets passed the clicked input element as argument or a
@@ -339,8 +290,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def className(self):
     """
-    Description:
-    ------------
     A class name to apply to the HTML element that contains the timepicker dropdown.
 
     Related Pages:
@@ -356,8 +305,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def closeOnWindowScroll(self):
     """
-    Description:
-    ------------
     Close the timepicker when the window is scrolled. (Replicates <select> behavior.)
 
     Related Pages:
@@ -372,8 +319,6 @@ class OptionsTimePicker(OptionsInput):
 
   def disableTimeRanges(self, values):
     """
-    Description:
-    ------------
     Disable selection of certain time ranges. Input is an array of time pairs,
     like [['3:00am', '4:30am'], ['5:00pm', '8:00pm']].
 
@@ -388,8 +333,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def disableTextInput(self):
     """
-    Description:
-    ------------
     Disable typing in the timepicker input box; force users to select from list.
 
     Related Pages:
@@ -405,8 +348,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def disableTouchKeyboard(self):
     """
-    Description:
-    ------------
     Disable the onscreen keyboard for touch devices. There can be instances where Firefox or Chrome have touch events
     enabled (such as on Surface tablets but not actually be a touch device.
     In this case disableTouchKeyboard will prevent the timepicker input field from being focused.
@@ -424,8 +365,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def durationTime(self):
     """
-    Description:
-    ------------
     The time against which showDuration will compute relative times. Accepts a time string, Date object,
     integer seconds from midnight, or a function that returns one of those types.
 
@@ -442,8 +381,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def forceRoundTime(self):
     """
-    Description:
-    ------------
     Force update the time to step settings as soon as it loses focus.
 
     Related Pages:
@@ -459,8 +396,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def lang(self):
     """
-    Description:
-    ------------
     Language constants used in the timepicker. Can override the defaults by passing an object with one or more of the
     following properties: decimal, mins, hr, hrs.
 
@@ -477,8 +412,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def listWidth(self):
     """
-    Description:
-    ------------
     Set this to override CSS styling and set the list width to match the input element's width. Set to 1 to match input
     width, 2 to double input width, .5 to halve input width, etc. Set to null to let CSS determine the list width.
 
@@ -495,8 +428,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def maxTime(self):
     """
-    Description:
-    ------------
     The time that should appear last in the dropdown list. Can be used to limit the range of time options.
     Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
 
@@ -513,8 +444,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def minTime(self):
     """
-    Description:
-    ------------
     The time that should appear first in the dropdown list.
     Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
 
@@ -531,8 +460,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def noneOption(self):
     """
-    Description:
-    ------------
     Adds one or more custom options to the top of the dropdown.
 
     Related Pages:
@@ -548,8 +475,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def orientation(self):
     """
-    Description:
-    ------------
     By default the timepicker dropdown will be aligned to the bottom right of the input element,
     or aligned to the top left if there isn't enough room below the input.
 
@@ -565,8 +490,6 @@ class OptionsTimePicker(OptionsInput):
 
   def roundingFunction(self):
     """
-    Description:
-    ------------
     Function used to compute rounded times. The function will receive time in seconds and a settings object as
     arguments. The function should handle a null value for seconds. default: round to nearest step.
 
@@ -579,8 +502,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def scrollDefault(self):
     """
-    Description:
-    ------------
     If no time value is selected, set the dropdown scroll position to show the time provided, e.g. "09:00".
     Accepts a time string, Date object, integer seconds from midnight, or a function that returns one of those types.
 
@@ -597,8 +518,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def selectOnBlur(self):
     """
-    Description:
-    ------------
     Update the input with the currently highlighted time value when the timepicker loses focus.
 
     Related Pages:
@@ -614,8 +533,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def show2400(self):
     """
-    Description:
-    ------------
     Show "24:00" as an option when using 24-hour time format. You must also set timeFormat for this option to work.
 
     Related Pages:
@@ -631,8 +548,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def showDuration(self):
     """
-    Description:
-    ------------
     Shows the relative time for each item in the dropdown. minTime or durationTime must be set.
 
     Related Pages:
@@ -648,8 +563,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def showOn(self):
     """
-    Description:
-    ------------
     Display a timepicker dropdown when the input fires a particular event.
     Set to null or an empty array to disable automatic display.
     Setting should be an array of strings. default: ['focus'].
@@ -667,8 +580,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def step(self):
     """
-    Description:
-    ------------
     The amount of time, in minutes, between each item in the dropdown.
     Alternately, you can specify a function to generate steps dynamically.
     The function will receive a count integer (0, 1, 2...) and is expected to return a step integer.
@@ -686,8 +597,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def stopScrollPropagation(self):
     """
-    Description:
-    ------------
     When scrolling on the edge of the picker, it prevent parent containers () to scroll.
 
     Related Pages:
@@ -703,8 +612,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def timeFormat(self):
     """
-    Description:
-    ------------
     How times should be displayed in the list and input element. Uses PHP's date() formatting syntax.
     Characters can be escaped with a preceeding double slash (e.g. H\\hi).
 
@@ -721,8 +628,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def typeaheadHighlight(self):
     """
-    Description:
-    ------------
     Highlight the nearest corresponding time option as a value is typed into the form input.
 
     Related Pages:
@@ -738,8 +643,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def useSelect(self):
     """
-    Description:
-    ------------
     Convert the input to an HTML <SELECT> control. This is ideal for small screen devices,
     or if you want to prevent the user from entering arbitrary values.
 
@@ -756,8 +659,6 @@ class OptionsTimePicker(OptionsInput):
   @property
   def wrapHours(self):
     """
-    Description:
-    ------------
     If a time greater than 24 hours (27:30, for example) is entered, apply modolo 24 to create a valid time.
     Setting this to false will cause an input of 27:30 to result in a timeFormatError event.
 
@@ -777,8 +678,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def appendTo(self):
     """
-    Description:
-    ------------
     Which element the menu should be appended to.
     When the value is null, the parents of the input field will be checked for a class of ui-front.
     If an element with the ui-front class is found, the menu will be appended to that element.
@@ -797,8 +696,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def autoFocus(self):
     """
-    Description:
-    ------------
     If set to true the first item will automatically be focused when the menu is shown.
 
     Related Pages:
@@ -814,8 +711,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Specify additional classes to add to the widget's elements.
     Any of classes specified in the Theming section can be used as keys to override their value.
     To learn more about this option, check out the learn article about the classes option.
@@ -833,8 +728,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def delay(self):
     """
-    Description:
-    ------------
     The delay in milliseconds between when a keystroke occurs and when a search is performed.
     A zero-delay makes sense for local data (more responsive), but can produce a lot of load for remote data,
     while being less responsive.
@@ -852,8 +745,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     Disables the autocomplete if set to true.
 
     Related Pages:
@@ -869,8 +760,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def minLength(self):
     """
-    Description:
-    ------------
     The minimum number of characters a user must type before a search is performed.
     Zero is useful for local data with just a few items, but a higher value should be used when a single character
     search could match a few thousand items.
@@ -887,8 +776,6 @@ class OptionAutoComplete(OptionsInput):
 
   def position(self, my="left top", at="left bottom", of=None, using=None, within=None, collision=None):
     """
-    Description:
-    ------------
     Specifies where the dialog should be displayed when opened.
     The dialog will handle collisions such that as much of the dialog is visible as possible.
 
@@ -897,8 +784,6 @@ class OptionAutoComplete(OptionsInput):
       https://api.jqueryui.com/dialog/#option-position
       https://api.jqueryui.com/position/
 
-    Attributes:
-    ----------
     :param my: String. Optional. Defines which position on the element being positioned to align with the target element.
     :param at: String. Optional. Defines which position on the target element to align the positioned element against.
     :param of: String. Optional. Which element to position against. If you provide a selector or jQuery object, the first matching element will be used.
@@ -919,8 +804,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def reset(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -929,18 +812,13 @@ class OptionAutoComplete(OptionsInput):
     self.set(flag)
 
   def on_select(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Triggered when an item is selected from the menu.
+    """   Triggered when an item is selected from the menu.
     The default action is to replace the text field's value with the value of the selected item.
 
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-select
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -950,8 +828,6 @@ class OptionAutoComplete(OptionsInput):
   @property
   def source(self):
     """
-    Description:
-    ------------
     Defines the data to use, must be specified.
 
     Related Pages:
@@ -966,8 +842,6 @@ class OptionAutoComplete(OptionsInput):
 
   def startswith(self, values: list):
     """
-    Description:
-    ------------
     Defines the data to use, must be specified.
     Only display the values starting with the input text.
 
@@ -975,8 +849,6 @@ class OptionAutoComplete(OptionsInput):
 
       https://api.jqueryui.com/autocomplete/#entry-examples
 
-    Attributes:
-    ----------
     :param values: The predefined values.
     """
     values = JsUtils.jsConvertData(values, None)
@@ -991,8 +863,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def altField(self):
     """
-    Description:
-    ------------
     An input element that is to be updated with the selected date from the DatePicker.
     Use the altFormat option to change the format of the date within this field. Leave as blank for no alternate field.
 
@@ -1009,8 +879,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def altFormat(self):
     """
-    Description:
-    ------------
     The dateFormat to be used for the altField option.
     This allows one date format to be shown to the user for selection purposes, while a different format is actually
     sent behind the scenes. For a full list of the possible formats see the formatDate function.
@@ -1028,8 +896,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def appendText(self):
     """
-    Description:
-    ------------
     The text to display after each date field, e.g., to show the required format.
 
     Related Pages:
@@ -1045,8 +911,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def autoSize(self):
     """
-    Description:
-    ------------
     Set to true to automatically resize the input field to accommodate dates in the current dateFormat.
 
     Related Pages:
@@ -1062,8 +926,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def beforeShow(self):
     """
-    Description:
-    ------------
     A function that takes an input field and current DatePicker instance and returns an options object to update the
     DatePicker with. It is called just before the DatePicker is displayed.
 
@@ -1076,8 +938,6 @@ class OptionsDatePicker(OptionsInput):
   @beforeShow.setter
   def beforeShow(self, value):
     """
-    Description:
-    ------------
     A function that takes a date as a parameter and must return an array with:
 
     Related Pages:
@@ -1092,8 +952,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def buttonImage(self):
     """
-    Description:
-    ------------
     A URL of an image to use to display the DatePicker when the showOn option is set to "button" or "both".
     If set, the buttonText option becomes the alt value and is not directly displayed.
 
@@ -1110,8 +968,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def buttonImageOnly(self):
     """
-    Description:
-    ------------
     Whether the button image should be rendered by itself instead of inside a button element.
     This option is only relevant if the buttonImage option has also been set.
 
@@ -1128,8 +984,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def buttonText(self):
     """
-    Description:
-    ------------
     The text to display on the trigger button. Use in conjunction with the showOn option set to "button" or "both".
 
     Related Pages:
@@ -1145,8 +999,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def calculateWeek(self):
     """
-    Description:
-    ------------
     A function to calculate the week of the year for a given date.
     The default implementation uses the ISO 8601 definition:
     weeks start on a Monday; the first week of the year contains the first Thursday of the year.
@@ -1164,8 +1016,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def changeMonth(self):
     """
-    Description:
-    ------------
     Whether the month should be rendered as a DropDown instead of text.
 
     Related Pages:
@@ -1181,8 +1031,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def changeYear(self):
     """
-    Description:
-    ------------
     Whether the year should be rendered as a DropDown instead of text.
     Use the yearRange option to control which years are made available for selection.
 
@@ -1199,8 +1047,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def closeText(self):
     """
-    Description:
-    ------------
     The text to display for the close link. Use the showButtonPanel option to display this button.
 
     Related Pages:
@@ -1216,8 +1062,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def constrainInput(self):
     """
-    Description:
-    ------------
     When true, entry in the input field is constrained to those characters allowed by the current dateFormat option.
 
     Related Pages:
@@ -1233,8 +1077,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def currentText(self):
     """
-    Description:
-    ------------
     The text to display for the current day link. Use the showButtonPanel option to display this button.
 
     Related Pages:
@@ -1250,8 +1092,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def dateFormat(self):
     """
-    Description:
-    ------------
     The format for parsed and displayed dates. For a full list of the possible formats see the formatDate function.
 
     Related Pages:
@@ -1267,8 +1107,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def dayNames(self):
     """
-    Description:
-    ------------
     The list of long day names, starting from Sunday, for use as requested via the dateFormat option.
 
     Related Pages:
@@ -1294,8 +1132,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def dayNamesMin(self):
     """
-    Description:
-    ------------
     The list of minimised day names, starting from Sunday, for use as column headers within the DatePicker.
 
     Related Pages:
@@ -1311,8 +1147,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def dayNamesShort(self):
     """
-    Description:
-    ------------
     The list of abbreviated day names, starting from Sunday, for use as requested via the dateFormat option.
 
     Related Pages:
@@ -1328,8 +1162,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def defaultDate(self):
     """
-    Description:
-    ------------
     Set the date to highlight on first opening if the field is blank.
     Specify either an actual date via a Date object or as a string in the current dateFormat, or a number of days
     from today (e.g. +7) or a string of values and periods ('y' for years, 'm' for months, 'w' for weeks, 'd'
@@ -1348,8 +1180,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def duration(self):
     """
-    Description:
-    ------------
     Control the speed at which the DatePicker appears, it may be a time in milliseconds or a string representing one
     of the three predefined speeds ("slow", "normal", "fast").
 
@@ -1366,8 +1196,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def inline(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -1378,8 +1206,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def firstDay(self):
     """
-    Description:
-    ------------
     Set the first day of the week: Sunday is 0, Monday is 1, etc.
 
     Related Pages:
@@ -1395,8 +1221,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def gotoCurrent(self):
     """
-    Description:
-    ------------
     When true, the current day link moves to the currently selected date instead of today.
 
     Related Pages:
@@ -1412,8 +1236,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def hideIfNoPrevNext(self):
     """
-    Description:
-    ------------
     Normally the previous and next links are disabled when not applicable (see the minDate and maxDate options).
     You can hide them altogether by setting this attribute to true.
 
@@ -1430,8 +1252,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def isRTL(self):
     """
-    Description:
-    ------------
     Whether the current language is drawn from right to left.
 
     Related Pages:
@@ -1447,8 +1267,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def maxDate(self):
     """
-    Description:
-    ------------
     The maximum selectable date. When set to null, there is no maximum.
 
     Related Pages:
@@ -1464,8 +1282,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def minDate(self):
     """
-    Description:
-    ------------
     The minimum selectable date. When set to null, there is no minimum.
 
     Related Pages:
@@ -1481,8 +1297,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def monthNames(self):
     """
-    Description:
-    ------------
     The list of full month names, for use as requested via the dateFormat option.
 
     Related Pages:
@@ -1498,8 +1312,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def monthNamesShort(self):
     """
-    Description:
-    ------------
     The list of abbreviated month names, as used in the month header on each DatePicker and as requested via the
     dateFormat option.
 
@@ -1516,8 +1328,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def navigationAsDateFormat(self):
     """
-    Description:
-    ------------
     Whether the currentText, prevText and nextText options should be parsed as dates by the formatDate function,
     allowing them to display the target month names for example.
 
@@ -1534,8 +1344,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def nextText(self):
     """
-    Description:
-    ------------
     The text to display for the next month link. With the standard ThemeRoller styling,
     this value is replaced by an icon.
 
@@ -1552,8 +1360,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def numberOfMonths(self):
     """
-    Description:
-    ------------
     The number of months to show at once.
 
     Related Pages:
@@ -1569,8 +1375,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def onChangeMonthYear(self):
     """
-    Description:
-    ------------
     Called when the DatePicker moves to a new month and/or year.
     The function receives the selected year, month (1-12), and the DatePicker instance as parameters.
     this refers to the associated input field.
@@ -1587,8 +1391,6 @@ class OptionsDatePicker(OptionsInput):
 
   def onClose(self, values, profile=False):
     """
-    Description:
-    ------------
     Called when the DatePicker is closed, whether or not a date is selected.
     The function receives the selected date as text ("" if none) and the DatePicker instance as parameters.
     This refers to the associated input field.
@@ -1605,8 +1407,6 @@ class OptionsDatePicker(OptionsInput):
 
   def onSelect(self, values, profile=False):
     """
-    Description:
-    ------------
     Called when the DatePicker is selected.
     The function receives the selected date as text and the DatePicker instance as parameters.
     this refers to the associated input field.
@@ -1624,8 +1424,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def prevText(self):
     """
-    Description:
-    ------------
     The text to display for the previous month link. With the standard ThemeRoller styling, this value is replaced
     by an icon.
 
@@ -1642,8 +1440,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def selectOtherMonths(self):
     """
-    Description:
-    ------------
     Whether days in other months shown before or after the current month are selectable. This only applies if
     the showOtherMonths option is set to true.
 
@@ -1660,8 +1456,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def shortYearCutoff(self):
     """
-    Description:
-    ------------
     The cutoff year for determining the century for a date (used in conjunction with dateFormat 'y'). Any dates
     entered with a year value less than or equal to the cutoff year are considered to be in the current century,
     while those greater than it are deemed to be in the previous century.
@@ -1679,8 +1473,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showAnim(self):
     """
-    Description:
-    ------------
     The name of the animation used to show and hide the datepicker. Use "show" (the default), "slideDown", "fadeIn",
     any of the jQuery UI effects. Set to an empty string to disable animation.
 
@@ -1697,8 +1489,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showButtonPanel(self):
     """
-    Description:
-    ------------
     Whether to display a button pane underneath the calendar. The button pane contains two buttons, a Today button
     that links to the current day, and a Done button that closes the datepicker. The buttons' text can be customized
     using the currentText and closeText options respectively.
@@ -1716,8 +1506,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showCurrentAtPos(self):
     """
-    Description:
-    ------------
     When displaying multiple months via the numberOfMonths option, the showCurrentAtPos option defines which position
     to display the current month in.
 
@@ -1734,8 +1522,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showMonthAfterYear(self):
     """
-    Description:
-    ------------
     Whether to show the month after the year in the header.
 
     Related Pages:
@@ -1751,8 +1537,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showOn(self):
     """
-    Description:
-    ------------
     When the datepicker should appear. The datepicker can appear when the field receives focus ("focus"),
     when a button is clicked ("button"), or when either event occurs ("both").
 
@@ -1769,8 +1553,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showOptions(self):
     """
-    Description:
-    ------------
     If using one of the jQuery UI effects for the showAnim option, you can provide additional properties for
     that animation using this option.
 
@@ -1787,8 +1569,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showOtherMonths(self):
     """
-    Description:
-    ------------
     Whether to display dates in other months (non-selectable) at the start or end of the current month.
     To make these days selectable use the selectOtherMonths option.
 
@@ -1805,8 +1585,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def showWeek(self):
     """
-    Description:
-    ------------
     When true, a column is added to show the week of the year. The calculateWeek option determines how the week of
     the year is calculated. You may also want to change the firstDay option.
 
@@ -1823,8 +1601,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def stepMonths(self):
     """
-    Description:
-    ------------
     Set how many months to move when clicking the previous/next links.
 
     Related Pages:
@@ -1840,8 +1616,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def weekHeader(self):
     """
-    Description:
-    ------------
     The text to display for the week of the year column heading. Use the showWeek option to display this column.
 
     Related Pages:
@@ -1857,8 +1631,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def yearRange(self):
     """
-    Description:
-    ------------
     The range of years displayed in the year drop-down: either relative to today's year ("-nn:+nn"),
     relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"),
     or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down,
@@ -1877,8 +1649,6 @@ class OptionsDatePicker(OptionsInput):
   @property
   def yearSuffix(self):
     """
-    Description:
-    ------------
     Additional text to display after the year in the month headers.
 
     Related Pages:
@@ -1897,8 +1667,6 @@ class OptionsTextarea(OptionsInput):
   @property
   def rows(self):
     """
-    Description:
-    ------------
     The rows attribute specifies the visible height of a text area, in lines.
 
     Related Pages:

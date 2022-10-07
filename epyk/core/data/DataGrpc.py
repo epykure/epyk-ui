@@ -11,13 +11,9 @@ import importlib
 class DataGrpc:
 
   def __init__(self, service_name: str, path: str, module: str, host: str, port: int):
-    """
-    Description:
-    ------------
+    """  
     The path will be added to the python path.
 
-    Attributes:
-    ----------
     :param str service_name: The Service name (the class name in the python module).
     :param str path: The path with the GRPC features.
     :param str module: The python module name for the service.
@@ -33,14 +29,10 @@ class DataGrpc:
 
   @property
   def py(self):
-    """
-    Description:
-    -----------
-    Return the main module in the GRPC service for the data.
+    """   Return the main module in the GRPC service for the data.
     Namely is return the module without the _grpc.
 
-    Usage:
-    -----
+    Usage::
 
       grpc.py.HelloRequest(name="Test 3")
 
@@ -49,18 +41,12 @@ class DataGrpc:
     return self.imp(self.module.replace("_grpc", ""))
 
   def imp(self, module: str):
-    """
-    Description:
-    -----------
-    Return any module from the GRPC service based on its module name.
+    """   Return any module from the GRPC service based on its module name.
 
-    Usage:
-    -----
+    Usage::
 
       grpc.imp(self.module)
 
-    Attributes:
-    ----------
     :param str module: The python module name.
 
     :return: A python module
@@ -71,18 +57,12 @@ class DataGrpc:
     return self._libs[module]
 
   def request(self, method: str, data: dict = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Run the GRPC call from the service definition in the init.
+    """   Run the GRPC call from the service definition in the init.
 
-    Usage:
-    -----
+    Usage::
 
       grpc.request("SayHello", data)
 
-    Attributes:
-    ----------
     :param str method: The function name to be called for the request.
     :param dict data: Optional. The data to be passed during the call.
     :param dict options: Optional. The GRPC service call options.

@@ -5,10 +5,7 @@ from epyk.core.html.options import Options
 class ColReorder(Options):
 
   def activate(self):
-    """
-    Description:
-    -----------
-    ColReorder provides the option for end users to reorder columns in a DataTable by click and drag, or for yourself,
+    """   ColReorder provides the option for end users to reorder columns in a DataTable by click and drag, or for yourself,
     the developer using DataTable, through the API.
 
     Related Pages:
@@ -20,10 +17,7 @@ class ColReorder(Options):
 
   @property
   def enable(self):
-    """
-    Description:
-    -----------
-    It can be useful to disable ColReorder's user input controls at certain times, depending on the state of your
+    """   It can be useful to disable ColReorder's user input controls at certain times, depending on the state of your
     application. This option provides that ability when the table is initially created, while the colReorder.enable() and colReorder.disable() methods provide the option to enabling the user interaction after the table has been created.
 
     Related Pages:
@@ -38,10 +32,7 @@ class ColReorder(Options):
 
   @property
   def fixedColumnsLeft(self):
-    """
-    Description:
-    -----------
-    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
+    """   When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
     (for example locking an index, select or action column to the start of a table). This option provides that ability,
     locking columns counting from the left (colReorder.fixedColumnsRight provides the option to count from the right).
 
@@ -57,10 +48,7 @@ class ColReorder(Options):
 
   @property
   def fixedColumnsRight(self):
-    """
-    Description:
-    -----------
-    When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
+    """   When allowing reordering of columns in a table, you may often wish to disallow reordering of certain columns
     (for example locking an index, select or action column to the start of a table). This option provides that ability,
     locking columns counting from the right (colReorder.fixedColumnsLeft provides the option to count from the left).
 
@@ -76,10 +64,7 @@ class ColReorder(Options):
 
   @property
   def order(self):
-    """
-    Description:
-    -----------
-    This option provides the option to define a default order for the columns in a table. Typically you will wish to
+    """   This option provides the option to define a default order for the columns in a table. Typically you will wish to
     have the columns in the order defined in the HTML, or from state saving (stateSave), but if required, this option
     can be used to define an initial default order.
 

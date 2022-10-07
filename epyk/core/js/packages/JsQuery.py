@@ -120,14 +120,9 @@ class JQuery(JsPackage):
   lib_selector = 'jQuery("body")'
 
   def this(self, reference: str = None):
-    """
-    Description:
-    -----------
-    Force the selector to be this or a specific reference.
+    """   Force the selector to be this or a specific reference.
     This feature can be useful in functions.
-
-    Attributes:
-    ----------
+ 
     :param reference: The Jquery reference to be used instead example #MyId
 
     :return: The Jquery Python object
@@ -142,12 +137,8 @@ class JQuery(JsPackage):
     return self
 
   def new(self, tag=None, reference: str = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param tag:
     :param reference:
     """
@@ -167,15 +158,10 @@ class JQuery(JsPackage):
     return self
 
   def parseHTML(self, text, context=None, keepScripts: bool = False):
-    """
-    Description:
-    -----------
-    Parses a string into an array of DOM nodes.
+    """   Parses a string into an array of DOM nodes.
 
       https://api.jquery.com/jquery.parsehtml/
-
-    Attributes:
-    ----------
+ 
     :param text: HTML String to be parsed.
     :param context: Document element to serve as the context in which the HTML fragment will be created.
     :param keepScripts: A Boolean indicating whether to include scripts passed in the HTML string.
@@ -184,12 +170,8 @@ class JQuery(JsPackage):
     return "%s.parseHTML(%s)" % (JQUERY_ALIAS, text)
 
   def toggle(self, speed=None, easing=None, callback=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param speed:
     :param easing:
     :param callback:
@@ -197,12 +179,8 @@ class JQuery(JsPackage):
     return self.fnc("toggle()")
 
   def trigger(self, data: types.JS_DATA_TYPES, js_func: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param data:
     :param js_func: Javascript functions.
     """
@@ -210,17 +188,13 @@ class JQuery(JsPackage):
     return self.fnc("trigger(%(data)s)" % {"data": data})
 
   def hide(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_hide_show.asp
       http://api.jquery.com/hide/
-
-    Attributes:
-    ----------
+ 
     :param speed:
     :param callback: Javascript functions.
     """
@@ -236,17 +210,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def show(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_hide_show.asp
       http://api.jquery.com/show/
-
-    Attributes:
-    ----------
+ 
     :param speed:
     :param callback: Javascript functions.
     """
@@ -262,17 +232,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def fadeIn(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_fade.asp
       http://api.jquery.com/fadein/
-
-    Attributes:
-    ----------
+ 
     :param speed:
     :param callback:
     """
@@ -288,17 +254,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def fadeOut(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_fade.asp
       http://api.jquery.com/fadeout/
-
-    Attributes:
-    ----------
+ 
     :param speed:
     :param callback: Javascript functions.
     """
@@ -314,15 +276,11 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def fadeToggle(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
+    """   
 
     Documentation:
       - https://www.w3schools.com/jquery/jquery_fade.asp
-
-    Attributes:
-    ----------
+ 
     :param speed:
     :param callback: Javascript functions.
     """
@@ -338,18 +296,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def fadeTo(self, duration, opacity, easing=None, complete=None):
-    """
-    Description:
-    -----------
-    Adjust the opacity of the matched elements.
+    """   Adjust the opacity of the matched elements.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_fade.asp
       https://api.jquery.com/fadeto/
-
-    Attributes:
-    ----------
+ 
     :param duration: A string or number determining how long the animation will run.
     :param opacity: A number between 0 and 1 denoting the target opacity.
     :param easing: A string indicating which easing function to use for the transition.
@@ -374,18 +327,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def slideDown(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Display the matched elements with a sliding motion.
+    """   Display the matched elements with a sliding motion.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_slide.asp
       https://api.jquery.com/slideDown/#slideDown-duration-complete
-
-    Attributes:
-    ----------
+ 
     :param speed: A string or number determining how long the animation will run.
     :param callback: A string indicating which easing function to use for the transition.
     """
@@ -401,18 +349,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def slideUp(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Hide the matched elements with a sliding motion.
+    """   Hide the matched elements with a sliding motion.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_slide.asp
       https://api.jquery.com/slideUp/#slideUp-duration-complete
-
-    Attributes:
-    ----------
+ 
     :param speed: A string or number determining how long the animation will run.
     :param callback: A function to call once the animation is complete, called once per matched element
     """
@@ -428,18 +371,13 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def slideToggle(self, speed: int = None, callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Display or hide the matched elements with a sliding motion.
+    """   Display or hide the matched elements with a sliding motion.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_slide.asp
       https://api.jquery.com/slideToggle/#slideToggle-duration-complete
-
-    Attributes:
-    ----------
+ 
     :param speed: A string or number determining how long the animation will run.
     :param callback: A function to call once the animation is complete, called once per matched element.
     """
@@ -455,10 +393,7 @@ class JQuery(JsPackage):
     return self.fnc(jq_func)
 
   def animate(self, params, speed: int = 400, easing: str = 'swing', callback: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Perform a custom animation of a set of CSS properties.
+    """   Perform a custom animation of a set of CSS properties.
 
     Usage::
 
@@ -468,9 +403,7 @@ class JQuery(JsPackage):
 
       https://www.w3schools.com/jquery/jquery_animate.asp
       https://api.jquery.com/animate/#animate-properties-duration-easing-complete
-
-    Attributes:
-    ----------
+ 
     :param params: An object of CSS properties and values that the animation will move toward.
     :param speed: A string or number determining how long the animation will run.
     :param easing: A string indicating which easing function to use for the transition.
@@ -483,18 +416,13 @@ class JQuery(JsPackage):
     return self.fnc("animate(%s, %s, %s)" % (params, speed, easing))
 
   def stop(self, stop_all: bool = False, go_to_end: bool = False):
-    """
-    Description:
-    -----------
-    Stop the currently-running animation on the matched elements.
+    """   Stop the currently-running animation on the matched elements.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_stop.asp
       https://api.jquery.com/stop/#stop-clearQueue-jumpToEnd
-
-    Attributes:
-    ----------
+ 
     :param stop_all: A Boolean indicating whether to remove queued animation as well
     :param go_to_end: A Boolean indicating whether to complete the current animation immediately
     """
@@ -503,18 +431,13 @@ class JQuery(JsPackage):
     return self.fnc("stop(%(stopAll)s, %(goToEnd)s)" % {'stopAll': stop_all, 'goToEnd': go_to_end})
 
   def remove(self, selector=None):
-    """
-    Description:
-    -----------
-    Remove the set of matched elements from the DOM.
+    """   Remove the set of matched elements from the DOM.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_dom_remove.asp
       https://api.jquery.com/remove/#remove-selector
-
-    Attributes:
-    ----------
+ 
     :param selector: A selector expression that filters the set of matched elements to be removed.
     """
     if selector is not None:
@@ -524,10 +447,7 @@ class JQuery(JsPackage):
     return self.fnc("remove()")
 
   def empty(self):
-    """
-    Description:
-    -----------
-    Remove all child nodes of the set of matched elements from the DOM.
+    """   Remove all child nodes of the set of matched elements from the DOM.
 
     Related Pages:
 
@@ -537,18 +457,13 @@ class JQuery(JsPackage):
     return self.fnc("empty()")
 
   def siblings(self, selector: types.JS_DATA_TYPES = None):
-    """
-    Description:
-    -----------
-    Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
+    """   Get the siblings of each element in the set of matched elements, optionally filtered by a selector.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
       https://api.jquery.com/siblings/#siblings-selector
-
-    Attributes:
-    ----------
+ 
     :param selector: A string containing a selector expression to match elements against.
     """
     if selector is not None:
@@ -558,19 +473,14 @@ class JQuery(JsPackage):
     return self.fnc("siblings()")
 
   def next(self, selector: types.JS_DATA_TYPES = None):
-    """
-    Description:
-    -----------
-    Get the immediately following sibling of each element in the set of matched elements.
+    """   Get the immediately following sibling of each element in the set of matched elements.
     If a selector is provided, it retrieves the next sibling only if it matches that selector.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
       https://api.jquery.com/next/#next-selector
-
-    Attributes:
-    ----------
+ 
     :param selector: A string containing a selector expression to match elements against.
     """
     if selector is not None:
@@ -580,19 +490,14 @@ class JQuery(JsPackage):
     return self.fnc("next()")
 
   def prev(self, selector: types.JS_DATA_TYPES = None):
-    """
-    Description:
-    -----------
-    Get the immediately preceding sibling of each element in the set of matched elements.
+    """   Get the immediately preceding sibling of each element in the set of matched elements.
     If a selector is provided, it retrieves the previous sibling only if it matches that selector.
 
     Related Pages:
 
       https//www.w3schools.com/jquery/jquery_traversing_siblings.asp
       https://api.jquery.com/prev/#prev-selector
-
-    Attributes:
-    ----------
+ 
     :param selector: A string containing a selector expression to match elements against.
     """
     if selector is not None:
@@ -602,10 +507,7 @@ class JQuery(JsPackage):
     return self.fnc("prev()")
 
   def first(self):
-    """
-    Description:
-    -----------
-    The first() method returns the first element of the specified elements.
+    """   The first() method returns the first element of the specified elements.
 
     Related Pages:
 
@@ -621,9 +523,7 @@ class JQuery(JsPackage):
     Related Pages:
 
       https//www.w3schools.com/jquery/traversing_children.asp
-
-    Attributes:
-    ----------
+ 
     :param selector: Optional. Specifies a selector expression to narrow down the search for children
     """
     if selector is None:
@@ -632,10 +532,7 @@ class JQuery(JsPackage):
     return self.fnc("children(%s)" % selector)
 
   def last(self):
-    """
-    Description:
-    -----------
-    The last() method returns the last element of the specified element
+    """   The last() method returns the last element of the specified element
 
     Related Pages:
 
@@ -644,13 +541,8 @@ class JQuery(JsPackage):
     return self.fnc("last()")
 
   def appendTo(self, dstJqId, js_func: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Insert every element in the set of matched elements to the end of the target.
-
-    Attributes:
-    ----------
+    """   Insert every element in the set of matched elements to the end of the target.
+ 
     :param dstJqId: A selector, element, HTML string, array of elements, or jQuery object; the matched set of
       elements will be inserted at the end of the element(s) specified by this parameter.
     :param js_func:
@@ -660,12 +552,8 @@ class JQuery(JsPackage):
     return self.fnc("appendTo(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
   def append(self, dstJqId, js_func: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param dstJqId:
     :param js_func:
 
@@ -674,66 +562,47 @@ class JQuery(JsPackage):
     return self.fnc("append(%(dstJqId)s)" % {'dstJqId': JsUtils.jsConvertData(dstJqId, js_func)})
 
   def prepend(self, data, js_func: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Insert content, specified by the parameter, to the beginning of each element in the set of matched elements.
+    """   Insert content, specified by the parameter, to the beginning of each element in the set of matched elements.
 
     Related Pages:
 
       https://api.jquery.com/prepend/#prepend-content-content
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param js_func: Javascript functions.
     """
     return self.fnc("prepend(%(data)s)" % {"data": JsUtils.jsConvertData(data, js_func)})
 
   def eq(self, i: int):
-    """
-    Description:
-    -----------
-    The eq() method returns an element with a specific index number of the selected elements.
+    """   The eq() method returns an element with a specific index number of the selected elements.
 
     Documentation:
 
       - https://www.w3schools.com/jquery/jquery_traversing_filtering.asp
-
-    Attributes:
-    ----------
+ 
     :param i: The index numbers start at 0, so the first element will have the index number 0 and not 1
     """
     return self.fnc("eq(%(index)s)" % {'index': i})
 
   def filter(self, selector=None):
-    """
-    Description:
-    -----------
+    """   
 
     :return:
     """
 
   def _not(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
 
   def find(self, criteria):
-    """
-    Description:
-    -----------
-    Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object,
+    """   Get the descendants of each element in the current set of matched elements, filtered by a selector, jQuery object,
     or element.
 
     Related Pages:
 
       https://api.jquery.com/find/#entry-examples
-
-    Attributes:
-    ----------
+ 
     :param criteria: Selector or element An element or a jQuery object to match elements against.
     """
     criteria = JsUtils.jsConvertData(criteria, None)
@@ -741,16 +610,12 @@ class JQuery(JsPackage):
 
   def each(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Iterate over a jQuery object, executing a function for each matched element.
 
     Related Pages:
 
       https://api.jquery.com/each/#each-function
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: A function to execute for each matched element.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -759,17 +624,13 @@ class JQuery(JsPackage):
 
   def css(self, key, value=None):
     """
-    Description:
-    ------------
     Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property
     naming, or create custom properties.
 
     Related Pages:
 
       https://api.jquery.com/jQuery.cssHooks/#jQuery-cssHooks1
-
-    Attributes:
-    ----------
+ 
     :param key:
     :param value:
     """
@@ -785,16 +646,12 @@ class JQuery(JsPackage):
 
   def attr(self, key, value):
     """
-    Description:
-    ------------
     Get the value of an attribute for the first element in the set of matched elements.
 
     Related Pages:
 
       https://api.jquery.com/attr/#attr-attributeName
-
-    Attributes:
-    ----------
+ 
     :param key: The name of the attribute to get.
     :param value: A value to set for the attribute. If null, the specified attribute will be removed
     """
@@ -806,16 +663,12 @@ class JQuery(JsPackage):
 
   def prop(self, key: types.JS_DATA_TYPES, value=None):
     """
-    Description:
-    ------------
     The jQuery prop() method gets or sets the value of specified property to the DOM element(s).
 
     Related Pages:
 
       https://api.jquery.com/attr/#attr-attributeName
-
-    Attributes:
-    ----------
+ 
     :param key: The name of the attribute to get.
     :param value: A value to set for the attribute. If null, the specified attribute will be removed
     """
@@ -826,16 +679,12 @@ class JQuery(JsPackage):
 
   def val(self, data=None, js_func: types.JS_FUNCS_TYPES = None):
     """
-    Description:
-    ------------
     Get the current value of the first element in the set of matched elements.
 
     Related Pages:
 
       https://api.jquery.com/val/#val
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param js_func: Javascript functions.
     """
@@ -846,17 +695,13 @@ class JQuery(JsPackage):
 
   def text(self, data, js_func: types.JS_FUNCS_TYPES = None):
     """
-    Description:
-    ------------
     Get the combined text contents of each element in the set of matched elements, including their descendants,
     or set the text contents of the matched elements.
 
     Related Pages:
 
       https://api.jquery.com/text/#text
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param js_func: Javascript functions.
     """
@@ -868,11 +713,7 @@ class JQuery(JsPackage):
 
   def html(self, data=None, js_func: types.JS_FUNCS_TYPES = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param js_func: Javascript functions.
     """
@@ -883,11 +724,7 @@ class JQuery(JsPackage):
 
   def toggleClass(self, clsName, propagate: bool = False):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param clsName:
     :param propagate:
 
@@ -899,14 +736,10 @@ class JQuery(JsPackage):
 
   def addClass(self, clsName, attrs=None, eventAttrs=None):
     """
-    Description:
-    ------------
     Adds the specified class(es) to each element in the set of matched elements.
 
     This function can either use an existing class or create one if the attrs or eventAttrs are defined
-
-    Attributes:
-    ----------
+ 
     :param clsName: The Css classname
     :param attrs: A python dictionary with the css attributes
     :param eventAttrs: A nested python dictionary with the css attributes for each events
@@ -918,16 +751,12 @@ class JQuery(JsPackage):
 
   def getJSON(self, url, data, success, dataType='json', jsDataKey=None, isPyData=True, js_func=None, profile=None):
     """
-    Description:
-    ------------
     Load JSON-encoded data from the server using a GET HTTP request.
 
     Related Pages:
 
       https//api.jquery.com/jQuery.getJSON/#jQuery-getJSON-url-data-success
-
-    Attributes:
-    ----------
+ 
     """
     success = JsUtils.jsConvertFncs(success, toStr=True, profile=profile)
     data = JsUtils.jsConvert(data, jsDataKey, isPyData, js_func)
@@ -936,16 +765,12 @@ class JQuery(JsPackage):
 
   def getJsScript(self, url, data, success, dataType='json', jsDataKey=None, isPyData=True, js_func=None, profile=None):
     """
-    Description:
-    ------------
     Load a JavaScript file from the server using a GET HTTP request, then execute it.
 
     Related Pages:
 
       https//api.jquery.com/jQuery.getScript/
-
-    Attributes:
-    ----------
+ 
     :param url:
     :param data:
     :param success:
@@ -961,8 +786,6 @@ class JQuery(JsPackage):
 
   def load(self, url, data=None, success_funcs=None, profile=None):
     """
-    Description:
-    ------------
     Load data from the server and place the returned HTML into the matched elements.
 
     Usage::
@@ -972,9 +795,7 @@ class JQuery(JsPackage):
     Related Pages:
 
       https://api.jquery.com/load/#load-url-data-complete
-
-    Attributes:
-    ----------
+ 
     :param url: A string containing the URL to which the request is sent.
     :param data: A plain object or string that is sent to the server with the request.
     :param success_funcs: A callback function that is executed when the request completes.
@@ -994,15 +815,11 @@ class JQuery(JsPackage):
 
   def ajaxError(self, js_funcs, profile=False):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://api.jquery.com/ajaxError/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs:
     :param profile:
     """
@@ -1011,16 +828,12 @@ class JQuery(JsPackage):
 
   def ajaxStart(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Register a handler to be called when the first Ajax request begins. This is an Ajax Event.
 
     Related Pages:
 
       https://api.jquery.com/ajaxStart/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1029,16 +842,12 @@ class JQuery(JsPackage):
 
   def ajaxStop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Register a handler to be called when all Ajax requests have completed. This is an Ajax Event.
 
     Related Pages:
 
       https://api.jquery.com/ajaxStop/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1047,16 +856,12 @@ class JQuery(JsPackage):
 
   def ajaxSuccess(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Attach a function to be executed whenever an Ajax request completes successfully. This is an Ajax Event.
 
     Related Pages:
 
       https://api.jquery.com/ajaxSuccess/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1065,15 +870,11 @@ class JQuery(JsPackage):
 
   def ajaxSend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://api.jquery.com/ajaxSend/
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1082,11 +883,7 @@ class JQuery(JsPackage):
 
   def ajaxComplete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1095,9 +892,7 @@ class JQuery(JsPackage):
 
   def getParams(self, url, data, success_funcs, error_funcs, options, timeout, props, profile=None):
     """
-
-    Attributes:
-    ----------
+ 
     :param url:
     :param data:
     :param success_funcs:
@@ -1128,15 +923,11 @@ class JQuery(JsPackage):
 
   def get(self, url, data, success_funcs=None, options=None, timeout=None, props=None) -> Jsjqxhr:
     """
-    Description:
-    ------------
     Load data from the server using a HTTP GET request.
 
     Documentation:
       - https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
-
-    Attributes:
-    ----------
+ 
     :param url:
     :param data:
     :param success_funcs:
@@ -1148,15 +939,11 @@ class JQuery(JsPackage):
 
   def post(self, url, data=None, success_funcs=None, options=None, timeout=None, props=None) -> Jsjqxhr:
     """
-    Description:
-    ------------
     Load data from the server using a HTTP POST request.
 
     Documentation:
       - https://www.w3schools.com/jquery/jquery_ajax_get_post.asp
-
-    Attributes:
-    ----------
+ 
     :param url:
     :param data:
     :param success_funcs:
@@ -1171,8 +958,6 @@ class JQuery(JsPackage):
 
   def ajax(self, type, url, data=None, success_funcs=None, error_funcs=None, options=None, timeout=None, props=None):
     """
-    Description:
-    ------------
     The ajax() method is used to perform an AJAX (asynchronous HTTP) request.
 
     Example
@@ -1181,9 +966,7 @@ class JQuery(JsPackage):
     Related Pages:
 
       https//www.w3schools.com/jquery/ajax_ajax.asp
-
-    Attributes:
-    ----------
+ 
     :param type: Specifies the type of request. (GET or POST)
     :param url: Specifies the URL to send the request to. Default is the current page
     :param data: Specifies data to be sent to the server
@@ -1200,11 +983,7 @@ class JQuery(JsPackage):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -1214,8 +993,6 @@ class JQuery(JsPackage):
   def on(self, event: Union[str, List[str]], js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -1223,9 +1000,7 @@ class JQuery(JsPackage):
       btn.js.jquery.on("click", [
         btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
       ])
-
-    Attributes:
-    ----------
+ 
     :param event:
     :param js_funcs:
     :param profile:
@@ -1240,8 +1015,6 @@ class JQuery(JsPackage):
 
   def after(self, html_frg: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Inserts content (new or existing DOM elements) after an element(s) which is specified by a selector.
 
     Usage::
@@ -1250,9 +1023,7 @@ class JQuery(JsPackage):
       btn.js.jquery.on("click", [
         btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
       ])
-
-    Attributes:
-    ----------
+ 
     :param html_frg:
     """
     html_frg = JsUtils.jsConvertData(html_frg, None)
@@ -1260,8 +1031,6 @@ class JQuery(JsPackage):
 
   def before(self, html_frg: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Inserts content (new or existing DOM elements) before an element(s) which is specified by a selector.
 
     Usage::
@@ -1270,9 +1039,7 @@ class JQuery(JsPackage):
       btn.js.jquery.on("click", [
         btn.js.jquery.before('<div style="background-color:yellow"> New div </div>'),
       ])
-
-    Attributes:
-    ----------
+ 
     :param html_frg:
     """
     html_frg = JsUtils.jsConvertData(html_frg, None)

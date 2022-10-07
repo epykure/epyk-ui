@@ -18,16 +18,12 @@ class JsGeolocation:
 
   def set_timeout(self, value: float):
     """
-    Description:
-    ------------
     Amount of time before the error callback is invoked, if 0 it will never invoke.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
-
-    Attributes:
-    ----------
+ 
     :param float value: Time in milliseconds.
     """
     self.options["timeout"] = value
@@ -35,16 +31,12 @@ class JsGeolocation:
 
   def set_maximum_age(self, value: float):
     """
-    Description:
-    ------------
     Maximum cached position age.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
-
-    Attributes:
-    ----------
+ 
     :param float value: Time in milliseconds.
     """
     self.options["maximumAge"] = value
@@ -52,16 +44,12 @@ class JsGeolocation:
 
   def set_enable_high_accuracy(self, flag: bool = False):
     """
-    Description:
-    ------------
     Indicates the application would like to receive the best possible results
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
-
-    Attributes:
-    ----------
+ 
     :param bool flag: If true and if the device is able to provide a more accurate position.
     """
     self.options["enableHighAccuracy"] = flag
@@ -70,8 +58,6 @@ class JsGeolocation:
   def getCurrentPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str] = None,
                          error_func=None, options=None, profile=None):
     """
-    Description:
-    ------------
     The getCurrentPosition() method is used to return the user's position.
 
     You can use the underlying data object pk.events.geolocationPosition to get geo location information.
@@ -90,9 +76,7 @@ class JsGeolocation:
       https://developer.mozilla.org/fr/docs/Web/API/Geolocation/getCurrentPosition
       https://www.w3schools.com/html/html5_geolocation.asp
       https://developer.kaiostech.com/api/geolocation/getposition
-
-    Attributes:
-    ----------
+ 
     :param callback_func: String. A callback function that takes a Position object as its sole input parameter.
     :param error_func: String. Optional. An callback func that takes a PositionError object as its sole input parameter.
     :param options: Dictionary. Optional. An optional PositionOptions object.
@@ -108,8 +92,6 @@ class JsGeolocation:
   def watchPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str],
                     watch_id, error_func=None, options=None, profile=None, global_scope=True):
     """
-    Description:
-    ------------
     Returns the current position of the user and continues to return updated position as the user moves.
 
     Usage::
@@ -125,9 +107,7 @@ class JsGeolocation:
     Related Pages:
 
       https://www.w3schools.com/html/html5_geolocation.asp
-
-    Attributes:
-    ----------
+ 
     :param callback_func: String. A callback function that takes a Position object as an input parameter.
     :param watch_id: The ID number returned by the Geolocation.watchPosition() method when installing the handler you
       wish to remove.
@@ -149,8 +129,6 @@ class JsGeolocation:
 
   def clearWatch(self, watch_id, global_scope: bool = True):
     """
-    Description:
-    ------------
     Stops the watchPosition() method.
 
     Usage::
@@ -162,9 +140,7 @@ class JsGeolocation:
     Related Pages:
 
       https://www.w3schools.com/html/html5_geolocation.asp
-
-    Attributes:
-    ----------
+ 
     :param watch_id: The ID number returned by the Geolocation.watchPosition() method when installing the handler
     you wish to remove.
     :param bool global_scope: Optional. Flag to properly set the scope for global variables.
@@ -191,8 +167,6 @@ class JsNavigator:
   @property
   def geolocation(self):
     """
-    Description:
-    ------------
     The HTML Geolocation API is used to locate a user's position.
 
     Related Pages:
@@ -205,8 +179,6 @@ class JsNavigator:
   @property
   def language(self):
     """
-    Description:
-    ------------
     The language property returns the language version of the browser.
 
     Related Pages:
@@ -218,8 +190,6 @@ class JsNavigator:
   @property
   def browserLanguage(self):
     """
-    Description:
-    ------------
     The language property returns the language version of the browser.
     For IE10 and earlier versions, you can use the browserLanguage property.
 
@@ -232,8 +202,6 @@ class JsNavigator:
   @property
   def appCodeName(self):
     """
-    Description:
-    ------------
     The appCodeName property returns the application code name of the browser.
 
     Related Pages:
@@ -245,8 +213,6 @@ class JsNavigator:
   @property
   def appName(self):
     """
-    Description:
-    ------------
     The appName property returns the application name of the browser.
 
     Related Pages:
@@ -258,8 +224,6 @@ class JsNavigator:
   @property
   def product(self):
     """
-    Description:
-    ------------
     The product property returns the product name of the browser engine.
 
     Related Pages:
@@ -271,8 +235,6 @@ class JsNavigator:
   @property
   def appVersion(self):
     """
-    Description:
-    ------------
     The appVersion property returns version information about the browser.
 
     Related Pages:
@@ -284,16 +246,12 @@ class JsNavigator:
   @property
   def cookieEnabled(self):
     """
-    Description:
-    ------------
     """
     return JsString.JsString("navigator.cookieEnabled", is_py_data=False)
 
   @property
   def onLine(self):
     """
-    Description:
-    ------------
     The onLine property returns true if the browser is online.
 
     Related Pages:
@@ -305,8 +263,6 @@ class JsNavigator:
   @property
   def platform(self):
     """
-    Description:
-    ------------
     The platform property returns the browser platform (operating system).
 
     Related Pages:
@@ -318,8 +274,6 @@ class JsNavigator:
   @property
   def userAgent(self):
     """
-    Description:
-    ------------
     The userAgent property returns the user-agent header sent by the browser to the server.
 
     Related Pages:
@@ -331,8 +285,6 @@ class JsNavigator:
 
   def javaEnabled(self):
     """
-    Description:
-    ------------
     The javaEnabled() method returns a Boolean value that specifies whether the browser has Java enabled.
 
     Related Pages:

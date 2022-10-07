@@ -17,19 +17,13 @@ class Calendar(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastCalendar.OptionCalendar:
-    """
-    Description:
-    -----------
-    The Toast UI Calendar options.
+    """   The Toast UI Calendar options.
 
     Related Pages:
 
@@ -41,10 +35,7 @@ class Calendar(Html.Html):
 
   @property
   def js(self) -> JsToastCalendar.Calendar:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     Related Pages:
 

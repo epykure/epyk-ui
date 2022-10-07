@@ -10,8 +10,6 @@ class ContentTable(GrpCls.ClassHtml):
   @property
   def css(self) -> Commons:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -27,8 +25,6 @@ class ContentTable(GrpCls.ClassHtml):
   @property
   def css_class(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -51,9 +47,7 @@ class ClsFormula(GrpCls.ClassHtml):
 
   @property
   def cls_display(self) -> Classes.CatalogText.CatalogFormulas:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogText.CatalogFormulas
     """
@@ -64,9 +58,7 @@ class ClsFormula(GrpCls.ClassHtml):
 
   @property
   def cls_container(self) -> Classes.CatalogText.CatalogFormulas:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogText.CatalogFormulas
     """
@@ -77,9 +69,7 @@ class ClsFormula(GrpCls.ClassHtml):
 
   @property
   def cls_mjx(self) -> Classes.CatalogText.CatalogFormulas:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogText.CatalogFormulas
     """

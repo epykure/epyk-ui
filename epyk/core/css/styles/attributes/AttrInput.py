@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrInput(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Input.
+  """  CSS pre defined properties for the Input.
 
   CSS Properties:
 

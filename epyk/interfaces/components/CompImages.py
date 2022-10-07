@@ -20,9 +20,7 @@ class Images:
           height: types.SIZE_TYPE = (None, "px"), align: str = "center", html_code: str = None,
           profile: types.PROFILE_TYPE = None, tooltip: str = None,
           options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
-    """
-    Description:
-    ------------
+    """  
     Add an HTML image to the page. The path can be defined either in a absolute or relative format.
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of the
@@ -48,8 +46,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param image: Optional. The image file name
     :param path: Optional. Optional. The image file path
     :param width: Optional. Optional. The component width in pixel or percentage
@@ -78,9 +74,7 @@ class Images:
              height: types.SIZE_TYPE = (None, "px"), align: str = "center",
              html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None,
              options: types.OPTION_TYPE = None) -> html.HtmlImage.Figure:
-    """
-    Description:
-    ------------
+    """  
     Display a picture as a figure component with an attached caption object.
 
     :tags:
@@ -95,8 +89,6 @@ class Images:
       page.ui.images.figure("33c33735-8a1e-4bef-8201-155b4775304a.jpg", "test caption",
         path=picture_path, width=(100, 'px'))
 
-    Attributes:
-    -----------
     :param image: Optional. The url path of the image
     :param caption: Optional.
     :param path: Optional. The image file path
@@ -128,9 +120,7 @@ class Images:
                 align: str = "center",
                 profile: types.PROFILE_TYPE = None,
                 options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
     Empty container for images.
 
     :tags:
@@ -138,9 +128,6 @@ class Images:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param components: List of HTML Component. internal components
     :param max_width: Optional. The maximum width for this container
     :param align: Optional. A string with the horizontal position of the component
@@ -160,9 +147,7 @@ class Images:
                  size: str = "cover", margin: int = 0, align: str = "center",
                  html_code: str = None, position: str = "middle", profile: types.PROFILE_TYPE = None,
                  options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
     Add a background image.
 
     :tags:
@@ -170,9 +155,6 @@ class Images:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -200,18 +182,13 @@ class Images:
                 size: str = "cover", margin: int = 0, align: str = "center",
                 html_code: str = None, position: str = "middle", profile: types.PROFILE_TYPE = None,
                 options: types.OPTION_TYPE = None) -> html.HtmlImage.Background:
-    """
-    Description:
-    ------------
+    """  
 
     :tags: Background
     :categories:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. Tuple. The component width in pixel or percentage
     :param height: Optional. Tuple. The component height in pixel or percentage
@@ -243,9 +220,7 @@ class Images:
   def logo(self, url: str, width: types.SIZE_TYPE = (160, "px"), height: types.SIZE_TYPE = (60, "px"),
            top: types.SIZE_TYPE = (16, "px"), left: types.SIZE_TYPE = (16, "px"), profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -253,9 +228,6 @@ class Images:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param url: Optional. The link to the gallery
     :param width: Optional. The component width in pixel or percentage
     :param height: Optional. The component height in pixel or percentage
@@ -282,9 +254,7 @@ class Images:
   def youtube(self, video_id: str = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
               align: str = "center", html_code: str = None, profile: types.PROFILE_TYPE = None,
               options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
-    """
-    Description:
-    ------------
+    """  
     Get teh picture used by youtube.
 
     :tags:
@@ -292,9 +262,6 @@ class Images:
 
     Usage::
 
-
-    Attributes:
-    -----------
     :param video_id: Optional. The youtube video ID
     :param width: Optional. The component width in pixel or percentage
     :param height: Optional. The component height in pixel or percentage
@@ -313,9 +280,7 @@ class Images:
                height: types.SIZE_TYPE = (200, "px"), align: str = "center", html_code: str = None,
                profile: types.PROFILE_TYPE = None,
                options: types.OPTION_TYPE = None) -> html.HtmlImage.Image:
-    """
-    Description:
-    ------------
+    """  
     Add an HTML image to the page. The path can be defined either in a absolute or relative format.
 
     Tip: The absolute format does not work on servers. It is recommended to use relative starting to the root of
@@ -341,8 +306,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param image: Optional. The image file name
     :param path: Optional. String. The image file path
     :param width: Optional. Tuple. The component width in pixel or percentage
@@ -369,9 +332,7 @@ class Images:
              width: types.SIZE_TYPE = (30, "px"), height: types.SIZE_TYPE = (30, "px"), align: str = "center",
              html_code: str = None, profile: types.PROFILE_TYPE = None,
              options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
     Generate or load an avatar.
 
     :tags:
@@ -391,8 +352,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param text: Optional. The value to be displayed to the component
     :param image: Optional. The url of the image
     :param path: Optional. String. The image file path
@@ -461,9 +420,7 @@ class Images:
               width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
               profile: types.PROFILE_TYPE = None,
               options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -480,8 +437,6 @@ class Images:
       - :class:`epyk.core.html.HtmlText.Title`
       - :class:`epyk.core.html.HtmlImage.Image`
 
-    Attributes:
-    -----------
     :param image: The url of the image
     :param name: The name of the image
     :param title: Optional. A panel title. This will be attached to the title property
@@ -517,9 +472,7 @@ class Images:
                width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
                html_code: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlImage.AnimatedImage:
-    """
-    Description:
-    ------------
+    """  
     Advance image with mask and gallery link.
     This will display some details when the mouse is on the container.
 
@@ -539,8 +492,6 @@ class Images:
 
       https://tympanus.net/Tutorials/OriginalHoverEffects/
 
-    Attributes:
-    -----------
     :param image: Optional. The image file name
     :param text: Optional. String. The image file path
     :param title: Optional. The image title displayed in to the mask on mouse hover the container
@@ -562,9 +513,7 @@ class Images:
   def carousel(self, images: list = None, path: str = None, selected: int = 0, width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (300, "px"), options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlImage.ImgCarousel:
-    """
-    Description:
-    ------------
+    """  
     Carousel component for pictures.
 
     :tags:
@@ -588,8 +537,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param images: Optional. With the different picture file names
     :param path: Optional. The common path for the pictures
     :param width: Optional. Tuple. The component width in pixel or percentage
@@ -610,9 +557,7 @@ class Images:
 
   def emoji(self, symbol: str = None, top: types.SIZE_TYPE = (20, 'px'), options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Emoji:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -633,8 +578,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param symbol: Optional. The emoji code
     :param top: Optional. The number of pixel from the top of the page
     :param options: Optional. Specific Python options available for this component
@@ -649,9 +592,7 @@ class Images:
            html_code: str = None, height: types.SIZE_TYPE = (None, "px"), color: str = None,
            tooltip: str = None, align: str = "left", options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Icon:
-    """
-    Description:
-    ------------
+    """  
     Add an icon to the page.
 
     :tags:
@@ -670,8 +611,6 @@ class Images:
 
       https://fontawesome.com/icons?m=free
 
-    Attributes:
-    -----------
     :param icon: Optional. The component icon content from font-awesome references
     :param family: Optional. The Icon framework reference
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
@@ -705,9 +644,7 @@ class Images:
             height: types.SIZE_TYPE = (25, "px"), background_color: str = None,
             color: str = None, url: str = None, tooltip: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Badge:
-    """
-    Description:
-    ------------
+    """  
     Display a badge component using Bootstrap.
 
     :tags:
@@ -736,8 +673,6 @@ class Images:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    -----------
     :param text: Optional. The content of the badge
     :param label: Optional. The label to display close to the badge
     :param icon: Optional. A String with the icon to display from font-awesome
@@ -768,9 +703,7 @@ class Images:
   def color(self, code: str, color: str = None, width: types.SIZE_TYPE = (110, 'px'),
             height: types.SIZE_TYPE = (25, 'px'), options: types.OPTION_TYPE = None, helper: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
     Simple vignette to display a color with it is code.
 
     TODO: Return the hex code of the color when dom.content used
@@ -786,8 +719,6 @@ class Images:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
-    Attributes:
-    -----------
     :param code: The color code
     :param color: Optional. The font color
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -812,16 +743,13 @@ class Images:
               width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''),
               options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
-    """
-    Description:
-    ------------
+    """  
     Mosaic of pictures.
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -829,8 +757,6 @@ class Images:
 
     Templates:
 
-    Attributes:
-    -----------
     :param images: Optional. The list with the pictures
     :param columns: Optional. The number of column for the mosaic component
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -901,9 +827,7 @@ class Images:
            html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None,
            options: types.OPTION_TYPE = None
            ):
-    """
-    Description:
-    ------------
+    """  
     Add the Epyk Icon.
 
     Usage::
@@ -918,8 +842,6 @@ class Images:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    -----------
     :param align: Optional. A string with the horizontal position of the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

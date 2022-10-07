@@ -12,27 +12,21 @@ class NotebookJsCell:
     self._cell_ref = cell_ref
 
   def run(self):
-    """
-    Description:
-    ------------
+    """  
 
     :return:
     """
     return JsUtils.jsWrap("window.Jupyter.notebook.execute_cells([%s])" % self._cell_ref)
 
   def hide(self):
-    """
-    Description:
-    ------------
+    """  
 
     :return:
     """
     return JsUtils.jsWrap("$(Jupyter.notebook.get_cell(%s).element).hide()" % self._cell_ref)
 
   def show(self):
-    """
-    Description:
-    ------------
+    """  
 
     :return:
     """
@@ -42,12 +36,8 @@ class NotebookJsCell:
 class NotebookJs:
 
   def set_python_from_component(self, name, component):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param component:
     """
@@ -58,13 +48,9 @@ class NotebookJs:
       name, JsUtils.jsConvertData(component, None))
 
   def run_cell(self, i, hide=True):
-    """
-    Description:
-    ------------
+    """  
     Run the cell based on indices in the notebook.
 
-    Attributes:
-    ----------
     :param i: List | Integer. The cells indices.
     :param hide: Boolean. Optional. hide the cell once run. Default True.
     """
@@ -80,13 +66,9 @@ class NotebookJs:
     return NotebookJsCell("window.Jupyter.notebook.get_cell_elements().index($(event.target).parents('.cell'))+%s" % index)
 
   def run_next_cells(self, n, start=0, hide=True):
-    """
-    Description:
-    ------------
+    """  
     Run a list of cells located after the running one.
 
-    Attributes:
-    ----------
     :param n: Integer. The number of cells to run.
     :param start: Integer. Optional. The index for the first table.
     :param hide: Boolean. Optional. hide the cell once run. Default True.
@@ -99,9 +81,7 @@ class NotebookJs:
 })(%s, %s)''' % (n, start))
 
   def current_cell_id(self):
-    """
-    Description:
-    ------------
+    """  
     Get the id of the current cell.
     """
     return JsUtils.jsWrap("window.Jupyter.notebook.get_cell_elements().index($(event.target).parents('.cell'))")
@@ -114,26 +94,18 @@ class NotebookDisplay:
     self.page = None
 
   def full_width(self, page=None):
-    """
-    Description:
-    ------------
+    """  
     Shortcut to set the width for a Jupter page.
 
-    Attributes:
-    ----------
     :param page: Report. Optional. The web page or cell in the Jupyter notebook.
     """
     self.page = page or self.page
     return self.style_container({"width": "100%"})
 
   def full_page(self, page=None):
-    """
-    Description:
-    ------------
+    """  
     Shortcut to set the width for a Jupyter page.
 
-    Attributes:
-    ----------
     :param page: Report. Optional. The web page or cell in the Jupyter notebook.
     """
     self.page = page or self.page
@@ -148,9 +120,7 @@ class NotebookDisplay:
       return self.css(".end_space {min-height}")
 
   def style_notebook(self, attrs, important=True, page=None):
-    """
-    Description:
-    ------------
+    """  
 
     :param attrs:
     :param important:
@@ -166,9 +136,7 @@ class NotebookDisplay:
       return self.css("#notebook {%s}" % Defaults_css.inline(attrs, important))
 
   def style_prompt(self, attrs, important=True, page=None):
-    """
-    Description:
-    ------------
+    """  
 
     :param attrs:
     :param important:
@@ -184,9 +152,7 @@ class NotebookDisplay:
       return self.css(".prompt {%s}" % Defaults_css.inline(attrs, important))
 
   def style_container(self, attrs, important=True, page=None):
-    """
-    Description:
-    ------------
+    """  
     Set the CSS style for the container page in a Jupyter Notebook.
 
     Usage::
@@ -194,8 +160,6 @@ class NotebookDisplay:
       page = pk.Page()
       pk.jupyter.Notebook.display.full_width(page)
 
-    Attributes:
-    ----------
     :param attrs: Dictionary. Optional. The key, value pairs with the CSS attributes,
     :param important: Boolean. Optional. Set all the CSS attributes are important.
     :param page: Report. Optional. The web page or cell in the Jupyter notebook.
@@ -209,23 +173,17 @@ class NotebookDisplay:
       return self.css(".container {%s}" % Defaults_css.inline(attrs, important))
 
   def clear_toolbar(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.javascript('''
 $('#maintoolbar-container').find('div.btn-group:not([id])').remove();
 ''')
 
   def add_toolbar_button(self, name, icon='fa-terminal', callback=""):
-    """
-    Description:
-    ------------
+    """  
 
     https://jupyter-notebook.readthedocs.io/en/stable/examples/Notebook/JavaScript%20Notebook%20Extensions.html
 
-    Attributes:
-    ----------
     :param name:
     :param icon:
     :param callback:
@@ -239,26 +197,20 @@ if (toolbarItemValid){
 ''' % {"name": name, "icon": icon, "js": callback})
 
   def css(self, text):
-    """
-    Description:
-    ------------
+    """  
     Add CSS Style to the rendered cell.
 
     Usage::
 
       pk.jupyter.Notebook.display.css("button {color:green}")
 
-    Attributes:
-    ----------
     :param text: String. The CSS style.
     """
     self._css.append(text)
     return self
 
   def javascript(self, text, start=True):
-    """
-    Description:
-    ------------
+    """  
     Add JavaScript string fragments to the rendered cell.
 
     Usage::
@@ -269,8 +221,6 @@ if (toolbarItemValid){
         });
         ''', start=False)
 
-    Attributes:
-    ----------
     :param text: String. The JavaScript string.
     :param start: Boolean. Optional. Specify the location on the page.
     """
@@ -281,17 +231,13 @@ if (toolbarItemValid){
     return self
 
   def html(self, text):
-    """
-    Description:
-    ------------
+    """  
     Add HTML component to the page.
 
     Usage::
 
       pk.jupyter.Notebook.display.html("<button id='but'>click</button>")
 
-    Attributes:
-    ----------
     :param text: String. The HTML component definition
     """
     self._html.append(text)
@@ -323,9 +269,7 @@ class Jupyter:
 
   @property
   def online(self):
-    """
-    Description:
-    ------------
+    """  
     Define the route for the external packages sources.
 
     TODO: Fix this to integrate it properly to Jupyter.
@@ -339,14 +283,10 @@ class Jupyter:
       self.page.imports.static_url = "/static/components"# self.components_path
 
   def requireJs(self, jsFncs=None, verbose=False, excluded_packages=None):
-    """
-    Description:
-    ------------
+    """  
     Get the requirements generated by the page using requireJs package.
     This object can then be passed to the outs.jupyter() method in order to override the cell definition.
 
-    Attributes:
-    ----------
     :param jsFncs: List | String. Javascript functions.
     :param verbose: Boolean. Optional. Display version details (default False).
     :param excluded_packages: Optional.
@@ -364,13 +304,9 @@ class Jupyter:
     return results
 
   def requirejs_path(self, jsFncs=None, verbose=False, excluded_packages=None):
-    """
-    Description:
-    ------------
+    """  
     Return the requirejs path dictionary.
 
-    Attributes:
-    ----------
     :param jsFncs: List | String. Javascript functions.
     :param verbose: Boolean. Optional. Display version details (default False).
     :param excluded_packages: Optional.
@@ -378,13 +314,9 @@ class Jupyter:
     return self.requireJs(jsFncs, verbose, excluded_packages)["paths"]
 
   def requirejs_func(self, jsFncs=None, verbose=False, excluded_packages=None):
-    """
-    Description:
-    ------------
+    """  
     Return the requirejs path functions as a string.
 
-    Attributes:
-    ----------
     :param jsFncs: List | String. Javascript functions.
     :param verbose: Boolean. Optional. Display version details (default False).
     :param excluded_packages: Optional.
@@ -399,18 +331,14 @@ class Jupyter:
 
   @property
   def built_in(self):
-    """
-    Description:
-    ------------
+    """  
     Get the list of external packages installed to the Jupyter instance.
     """
     return os.listdir(self.components_path)
 
   @property
   def components_path(self):
-    """
-    Description:
-    ------------
+    """  
     Get the path of the Jupyter external packages.
     """
     import notebook
@@ -422,12 +350,8 @@ class Jupyter:
     pass
 
   def add(self, package, update=False, verbose=False):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param package: List. Optional. A list of packages to download.
     :param update: Boolean, Optional. Flag to specify if the files need to be uploaded again.
     :param verbose: Boolean. Optional. Display version details (default True).
@@ -435,12 +359,8 @@ class Jupyter:
     PyNpm.download(self.components_path, update=update, verbose=verbose, packages=[package])
 
   def install_packages(self, update=False, verbose=False):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param update: Boolean, Optional. Flag to specify if the files need to be uploaded again.
     :param verbose: Boolean. Optional. Display version details (default True).
     """

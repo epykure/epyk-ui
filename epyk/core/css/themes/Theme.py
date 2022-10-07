@@ -56,9 +56,7 @@ class Theme:
       self.__colors.update(ovr_attrs)
 
   def notch(self, value: int = None, step: int = None):
-    """
-    Description:
-    ------------
+    """  
     Get the base color from the theme.
     The base color can change and it is defined by the variable self.index.
 
@@ -66,8 +64,6 @@ class Theme:
 
       base_color = page.theme.notch()
 
-    Attributes:
-    ----------
     :param value: Optional. The number of notch from the centered index.
     :param step: Optional The value of a move (default 1).
     """
@@ -79,9 +75,7 @@ class Theme:
 
   @property
   def white(self):
-    """
-    Description:
-    ------------
+    """  
     Get the white color from the theme.
 
     Usage::
@@ -91,9 +85,7 @@ class Theme:
     return self.__colors["greys"][0]
 
   def dark_or_white(self, light=True) -> str:
-    """
-    Description:
-    ------------
+    """  
     Get the appropriate light or dark color according to the theme.
     Setting the Light flag to true will point to white in light mode otherwise it will point to black.
     """
@@ -104,9 +96,7 @@ class Theme:
 
   @property
   def black(self):
-    """
-    Description:
-    ------------
+    """  
     Get the black color from the theme.
 
     Usage::
@@ -117,9 +107,7 @@ class Theme:
 
   @property
   def charts(self):
-    """
-    Description:
-    ------------
+    """  
     Get the chart colors from the theme.
 
     Usage::
@@ -134,9 +122,7 @@ class Theme:
 
   @property
   def colors(self):
-    """
-    Description:
-    ------------
+    """  
     Get the theme colors scale.
 
     Usage::
@@ -154,9 +140,7 @@ class Theme:
 
   @property
   def greys(self):
-    """
-    Description:
-    ------------
+    """  
     Get the theme grey colors scale.
 
     Usage::
@@ -174,9 +158,7 @@ class Theme:
 
   @property
   def warning(self) -> ColorRange:
-    """
-    Description:
-    ------------
+    """  
     Get the warning colors. It is a tuple (light, dark).
 
     Usage::
@@ -191,9 +173,7 @@ class Theme:
 
   @property
   def danger(self) -> ColorRange:
-    """
-    Description:
-    ------------
+    """  
     Get the danger colors. It is a tuple (light, dark).
 
     Usage::
@@ -208,9 +188,7 @@ class Theme:
 
   @property
   def info(self) -> ColorRange:
-    """
-    Description:
-    ------------
+    """  
     Get the info colors. It is a tuple (light, dark).
 
     Usage::
@@ -225,9 +203,7 @@ class Theme:
 
   @property
   def success(self) -> ColorRange:
-    """
-    Description:
-    ------------
+    """  
     Get the success colors. It is a tuple (light, dark).
 
     Usage::
@@ -241,17 +217,13 @@ class Theme:
     self.__colors["success"] = ColorRange(colors)
 
   def color_palette(self, palette: str = None, n_colors: int = None, desat: float = None):
-    """
-    Description:
-    ------------
+    """  
     Change the chart color codes using standard palettes used in JavaScript and Python libraries.
 
     Related Pages:
 
       https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
 
-    Attributes:
-    ----------
     :param palette: Optional. Name of palette or None to set for charts colors.
     :param n_colors: Optional. Number of colors in the palette.
     :param desat: Optional. Proportion to desaturate each color by.

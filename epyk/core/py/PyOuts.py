@@ -388,9 +388,7 @@ if (typeof icon === "undefined"){
     Related Pages:
 
       https://codepen.io/
-
-    Attributes:
-    ----------
+ 
     :param path: Optional. The path in which the output files will be created.
     :param name: Optional. The filename without the extension.
 
@@ -415,9 +413,7 @@ if (typeof icon === "undefined"){
     Related Pages:
 
       https://jsfiddle.net/
-
-    Attributes:
-    ----------
+ 
     :param path: Optional. The path in which the output files will be created.
     :param name: Optional. The filename without the extension.
     :param framework: optional. The framework in which the result page will be used.
@@ -456,9 +452,7 @@ if (typeof icon === "undefined"){
       # To generate multiple files using local packages
       page.imports.static_url = "C:\epyks\statics"
       page.outs.html_file(name="test.html", options={"split": True, "minify": True, "static_path": page.imports.static_url})
-
-    Attributes:
-    ----------
+ 
     :param path: Optional. The path in which the output files will be created.
     :param name: Optional. The filename without the extension.
     :param options: Optional.
@@ -558,8 +552,7 @@ if (typeof icon === "undefined"){
               target_folder: str = "apps", auto_route: bool = False):
     """ Publish the HTML page to a distant web server.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.text("This is a text")
@@ -604,9 +597,7 @@ if (typeof icon === "undefined"){
 
   def markdown_file(self, path: Optional[str] = None, name: Optional[str] = None):
     """ Writes a Markdown file from the report object.
-
-    Attributes:
-    ----------
+ 
     :param path: The path in which the output files will be created.
     :param name: The filename without the extension.
 
@@ -636,8 +627,7 @@ if (typeof icon === "undefined"){
   def html(self):
     """ Function to get the result HTML page fragments from all the HTML components.
 
-    Usage:
-    -----
+    Usage::
 
       page = Report()
       page.ui.text("This is a text")

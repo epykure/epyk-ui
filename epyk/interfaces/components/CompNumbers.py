@@ -18,9 +18,7 @@ class Numbers:
   def digits(self, text: str = None, color: str = None, align: str = 'center', width: types.SIZE_TYPE = None,
              height: types.SIZE_TYPE = None, html_code: str = None, tooltip: str = None,
              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     The <span> tag is used to group inline-elements in a document.
 
     The <span> tag provides no visual change by itself.
@@ -46,8 +44,6 @@ class Numbers:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/numbers.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component.
     :param color: Optional. The color of the text.
     :param align: Optional. The position of the icon in the line (left, right, center).
@@ -74,9 +70,7 @@ class Numbers:
              tooltip: str = None, html_code: str = None, options: dict = None, helper: str = None,
              width: types.SIZE_TYPE = (100, '%'), align: str = "center",
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -89,8 +83,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param label: Optional. The text of label to be added to the component.
@@ -118,9 +110,7 @@ class Numbers:
               tooltip: str = None, html_code: str = None, options: str = None,
               helper: str = None, width: types.SIZE_TYPE = (100, '%'), align: str = "center",
               profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -133,8 +123,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param label: Optional. The text of label to be added to the component.
@@ -157,9 +145,7 @@ class Numbers:
   def pound(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
             tooltip: str = None, html_code: str = None, options: dict = None, helper: str = None,
             width: types.SIZE_TYPE = (100, '%'), align: str = "center", profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -172,8 +158,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param label: Optional. The text of label to be added to the component.
@@ -196,9 +180,7 @@ class Numbers:
   def euro(self, number: float = 0, title: str = None, label: str = None, icon: str = None, color: str = None,
            tooltip: str = None, html_code: str = None,  options: dict = None, helper: str = None,
            width: types.SIZE_TYPE = (100, '%'), align: str = "center", profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -211,8 +193,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param label: Optional. The text of label to be added to the component.
@@ -236,9 +216,7 @@ class Numbers:
              tooltip: str = None, html_code: str = None, options: dict = None, helper: str = None,
              width: types.SIZE_TYPE = (100, '%'), align: str = "center",
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -251,8 +229,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param label: Optional. The text of label to be added to the component.
@@ -276,9 +252,7 @@ class Numbers:
             color: str = None, tooltip: str = None, html_code: str = None,
             options: dict = None, helper: str = None, width: types.SIZE_TYPE = (100, '%'),
             align: str = "center", profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -291,8 +265,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlText.Numeric`
 
-    Attributes:
-    ----------
     :param symbol: The currency symbol.
     :param number: Optional. The value to be displayed to the component. Default now.
     :param title: Optional. A panel title. This will be attached to the title property.
@@ -316,9 +288,7 @@ class Numbers:
   def plotly(self, value: float = 0, profile: types.PROFILE_TYPE = None, options: dict = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              html_code: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -329,8 +299,6 @@ class Numbers:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
-    Attributes:
-    ----------
     :param value: Optional. Number. a value.
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
@@ -346,9 +314,7 @@ class Numbers:
   def plotly_with_delta(self, value, profile: types.PROFILE_TYPE = None, options: dict = None,
                         width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                         html_code: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -360,8 +326,6 @@ class Numbers:
 
       - :class:`epyk.core.graph.GraphPlotly.Indicator`
 
-    Attributes:
-    ----------
     :param value: Number. a value.
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
@@ -377,9 +341,7 @@ class Numbers:
   def move(self, current, previous=None, components=None, title: str = None, align: str = "center",
            width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, "px"), color: str = None,
            label: str = None, options: dict = None, helper: str = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -392,8 +354,6 @@ class Numbers:
 
       - :class:`epyk.core.html.HtmlTextComp.Delta`
 
-    Attributes:
-    ----------
     :param current: The current value.
     :param previous: Optional. Default the current value and not move.
     :param components: Optional. List of HTML component to be added.

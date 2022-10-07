@@ -7,8 +7,6 @@ class EnumStyleOptions(Enums):
 
   def vertical(self):
     """
-    Description:
-    ------------
     Set type of curve interpolation.
 
     Related Pages:
@@ -19,8 +17,6 @@ class EnumStyleOptions(Enums):
 
   def tab(self):
     """
-    Description:
-    ------------
     Set type of curve interpolation.
 
     Related Pages:
@@ -36,8 +32,6 @@ class OptionsEditor(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
     Editor's height style value. Height is applied as border-box ex) '300px', '100%', 'auto'.
 
     Related Pages:
@@ -55,8 +49,6 @@ class OptionsEditor(Options):
   @property
   def initialValue(self):
     """
-    Description:
-    ------------
     Initial editor type (markdown, wysiwyg).
 
     Related Pages:
@@ -72,8 +64,6 @@ class OptionsEditor(Options):
   @property
   def language(self):
     """
-    Description:
-    ------------
     language.
 
     Related Pages:
@@ -89,8 +79,6 @@ class OptionsEditor(Options):
   @property
   def placeholder(self):
     """
-    Description:
-    ------------
     The placeholder text of the editable element.
 
     Related Pages:
@@ -106,8 +94,6 @@ class OptionsEditor(Options):
   @property
   def theme(self):
     """
-    Description:
-    ------------
     The theme to style the editor with. The default is included in toastui-editor.css.
 
     Related Pages:
@@ -123,8 +109,6 @@ class OptionsEditor(Options):
   @property
   def viewer(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(None)
 
@@ -135,8 +119,6 @@ class OptionsEditor(Options):
   @property
   def initialEditType(self):
     """
-    Description:
-    ------------
     Initial editor type (markdown, wysiwyg).
 
     Related Pages:
@@ -152,8 +134,6 @@ class OptionsEditor(Options):
   @property
   def previewStyle(self):
     """
-    Description:
-    ------------
     Markdown editor's preview style (tab, vertical).
 
     Related Pages:
@@ -169,8 +149,6 @@ class OptionsEditor(Options):
   @property
   def previewStyles(self) -> EnumStyleOptions:
     """
-    Description:
-    ------------
     Highlight a preview element corresponds to the cursor position in the markdown editor.
 
     Related Pages:

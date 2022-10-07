@@ -27,8 +27,6 @@ class VueCli:
 
   def version(self):
     """
-    Description:
-    ------------
     Return the version of Vue.js on the server
 
     Related Pages:
@@ -39,8 +37,6 @@ class VueCli:
 
   def linter(self):
     """
-    Description:
-    ------------
     Updat the linter options and remove the no-unused-vars.
     """
     with open(os.path.join(self._vue_app_path, "package.json"), 'r') as f:
@@ -53,8 +49,6 @@ class VueCli:
 
   def ui(self):
     """
-    Description:
-    ------------
     You can also create and manage projects using a graphical interface with the vue ui command:
 
     Related Pages:
@@ -65,8 +59,6 @@ class VueCli:
 
   def npm(self, packages):
     """
-    Description:
-    ------------
 
     :param packages:
     """
@@ -78,8 +70,6 @@ class VueCli:
 
   def add_router(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -100,8 +90,6 @@ class App:
   @property
   def name(self):
     """
-    Description:
-    ------------
     Return the prefix of the component module (without any extension)
     """
     return self.className
@@ -109,20 +97,14 @@ class App:
   @property
   def path(self):
     """
-    Description:
-    ------------
     Return the full path of the component modules
     """
     return os.path.join("./", self.__path, self.name).replace("\\", "/")
 
   def route(self, component, alias, path):
     """
-    Description:
-    ------------
     Add the app to the routing mechanism
-
-    Attributes:
-    ----------
+ 
     :param component: String. The module name
     :param alias: String. The url route
     :param path: String. The .vue module path
@@ -147,11 +129,7 @@ class App:
 
   def export(self, path=None, target_path=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param path:
     :param target_path: for example ['src', 'app']
     """
@@ -202,16 +180,12 @@ class VueJs(node.Node):
 
   def create(self, name):
     """
-    Description:
-    ------------
     To create a new project, run:
 
     Related Pages:
 
       https://cli.vuejs.org/guide/creating-a-project.html
-
-    Attributes:
-    ----------
+ 
     :param name: String. The application name
     """
     if name is None:
@@ -221,8 +195,6 @@ class VueJs(node.Node):
 
   def cli(self, app_name):
     """
-    Description:
-    ------------
     Vue specific command lines
 
     Related Pages:
@@ -234,8 +206,6 @@ class VueJs(node.Node):
 
   def serve(self, app_name, port=8081):
     """
-    Description:
-    ------------
     Return the version of Vue.js on the server
 
     Related Pages:
@@ -248,15 +218,11 @@ class VueJs(node.Node):
 
   def router(self, app_name):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://router.vuejs.org/installation.html#direct-download-cdn
-
-    Attributes:
-    ----------
+ 
     :param app_name:
     """
     path = os.path.join(self._app_path, app_name)
@@ -264,8 +230,6 @@ class VueJs(node.Node):
 
   def help(self, app_name):
     """
-    Description:
-    ------------
     Return the version of Vue.js on the server
 
     Related Pages:
@@ -277,14 +241,10 @@ class VueJs(node.Node):
 
   def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
     """
-    Description:
-    ------------
     Create a specific Application as a component in the Angular framework.
 
     Unlike a basic component, the application will be routed to be accessed directly.
 
-    Description:
-    ------------
     :param report: Object. A report object
     :param selector: String. The url route for this report in the Angular app
     :param name: String. The component classname in the Angular framework
@@ -301,12 +261,8 @@ class VueJs(node.Node):
 
   def publish(self, app_name=None, target_path=None):
     """
-    Description:
-    ------------
     Publish the Vue.js application
-
-    Attributes:
-    ----------
+ 
     :param app_name:
     :param target_path: List  for example ['src', 'app']
     """

@@ -84,10 +84,7 @@ class SipHash:
       return self.__v0 ^ self.__v1 ^ self.__v2 ^ self.__v3
 
     def hashId(self, text: str):
-      """
-      Description:
-      ------------
-      Produce a unique ID for a given string. This can be used to replace the internal numbers.
+      """  Produce a unique ID for a given string. This can be used to replace the internal numbers.
 
       Usage::
 
@@ -98,8 +95,6 @@ class SipHash:
 
         https://github.com/bozhu/siphash-python
 
-      Attributes:
-      ----------
       :param text: String. The String to be hashed.
       """
       return self.auth(0x0f0e0d0c0b0a09080706050403020100, text)

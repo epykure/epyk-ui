@@ -37,13 +37,9 @@ class Hr(Html.Html):
       self.style.css.margin = "auto"
 
   def margin(self, left: int = 0, right: int = 0, unit: str = '%'):
-    """
-    Description:
-    ------------
+    """  
     Shortcut to set the margin let and right for this HTML component.
 
-    Attributes:
-    ----------
     :param left: Optional. The margin left.
     :param right: Optional. The margin right.
     :param unit: Optional. The unit by default percentage.
@@ -57,9 +53,7 @@ class Hr(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassStandard:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -106,9 +100,7 @@ class Stars(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Stars:
-    """
-    Description:
-    ------------
+    """  
     The JavaScript dom object to be used in any events.
     """
     if self._dom is None:
@@ -118,9 +110,7 @@ class Stars(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add the event click and double click to the starts item.
     The Javascript function will be triggered after the change of content of the component.
 
@@ -129,8 +119,6 @@ class Stars(Html.Html):
       stars = page.ui.rich.stars(3, label="test Again")
       stars.click(page.js.console.log("test").toStr())
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
@@ -176,9 +164,7 @@ class Help(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassHelp:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -215,14 +201,10 @@ class Loading(Html.Html):
       self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
 
   def fixed(self, css: Optional[dict] = None, icon_css: Optional[dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Set css attributes of the loading div to be fixed.
     This can be done directly in options in the component constructor options={"fixed": True}.
 
-    Attributes:
-    ----------
     :param css: Optional. The css attributes.
     :param icon_css: Optional. The CSS attributes.
 
@@ -253,9 +235,7 @@ class HtmlJson(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJson.JsonFormatter:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
@@ -265,9 +245,7 @@ class HtmlJson(Html.Html):
 
   @property
   def jsonId(self):
-    """
-    Description:
-    ------------
+    """  
     Return the Javascript variable of the json object.
     """
     return "%s_obj" % self.htmlCode
@@ -278,9 +256,7 @@ class HtmlJson(Html.Html):
 
   @property
   def options(self) -> OptJsonFormatter.OptionsJsonFmt:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -290,10 +266,7 @@ class HtmlJson(Html.Html):
 
   @property
   def js(self) -> JsJsonFormatter.Json:
-    """
-    Description:
-    -----------
-    Return the Javascript internal object.
+    """   Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -333,9 +306,7 @@ class Breadcrumb(Html.Html):
 
   @property
   def options(self) -> OptText.OptBreadCrumb:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a breadcrumb definition.
     """
     return super().options
@@ -391,10 +362,7 @@ class Legend(Html.Html):
 
   @property
   def options(self) -> OptJsonFormatter.OptionsLegend:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -494,9 +462,7 @@ class Slides(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -506,9 +472,7 @@ class Slides(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Slides:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
@@ -517,13 +481,9 @@ class Slides(Html.Html):
     return self._dom
 
   def add(self, component: Union[Html.Html, str]):
-    """
-    Description:
-    ------------
+    """  
     Add a component to the slide.
 
-    Attributes:
-    ----------
     :param component: The HTML component to be added to this component.
     """
     if isinstance(component, list):
@@ -546,13 +506,9 @@ class Slides(Html.Html):
     return self
 
   def add_slide(self, title: str, component: Union[Html.Html, str], options: Optional[dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Add a slide.
 
-    Attributes:
-    ----------
     :param title: The title value in the slide.
     :param component: The HTML component.
     :param options: Optional. The various component options.
@@ -608,9 +564,7 @@ class HtmlQRCode(Html.Html):
 
   @property
   def options(self) -> OptQrCode.OptionsQrCode:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -620,9 +574,7 @@ class HtmlQRCode(Html.Html):
 
   @property
   def jsonId(self):
-    """
-    Description:
-    ------------
+    """  
     Return the Javascript variable of the json object.
     """
     return "%s_obj" % self.htmlCode
@@ -633,10 +585,7 @@ class HtmlQRCode(Html.Html):
 
   @property
   def js(self) -> JsQrCode.QrCode:
-    """
-    Description:
-    -----------
-    Return the Javascript internal object.
+    """   Return the Javascript internal object.
 
     :return: A Javascript object
     """

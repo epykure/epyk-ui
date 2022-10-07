@@ -8,12 +8,8 @@ from epyk.core.js.primitives import JsObjects
 class SocketIO:
 
   def __init__(self, htmlCode: str = None, page: primitives.PageModel = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param htmlCode:
     :param page:
     """
@@ -24,17 +20,13 @@ class SocketIO:
 
   @property
   def message(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsObject.JsObject.get("data")
 
   def send(self, msg: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
+    """  
     This will send an event called message(built in) to our client, four seconds after the client connects.
     The send function on socket object associates the 'message' event.
 
@@ -42,40 +34,30 @@ class SocketIO:
 
       https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
 
-    Attributes:
-    ----------
     :param msg:
     """
     msg = JsUtils.jsConvertData(msg, None)
     return JsObjects.JsVoid("%s.send(%s)" % (self._selector, msg))
 
   def join(self, room_id):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       https://www.tutorialspoint.com/socket.io/socket.io_rooms.htm
 
-    Attributes:
-    ----------
     :param room_id:
     """
     room_id = JsUtils.jsConvertData(room_id, None)
     return JsObjects.JsVoid("%s.join(%s)" % (self._selector, room_id))
 
   def inRoom(self, room_id, event_type, data=None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       https://www.tutorialspoint.com/socket.io/socket.io_rooms.htm
 
-    Attributes:
-    ----------
     :param room_id: String. The room identifier.
     :param event_type:
     :param data:
@@ -86,30 +68,22 @@ class SocketIO:
     return JsObjects.JsVoid("%s.in(%s).emit(%s, %s)" % (self._selector, room_id, event_type, data))
 
   def leave(self, room_id):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://www.tutorialspoint.com/socket.io/socket.io_rooms.htm
 
-    Attributes:
-    ----------
     :param room_id: String. The room identifier
     """
     room_id = JsUtils.jsConvertData(room_id, None)
     return JsObjects.JsVoid("%s.leave(%s)" % (self._selector, room_id))
 
   def connect(self, url=None, port=None, namespace=None, from_config=None):
-    """
-    Description:
-    ------------
+    """  
     This function will automatically add the socket to the page object.
     This must be defined first in order to be used in the various components
 
-    Attributes:
-    ----------
     :param url: String. The server url
     :param port: Integer. The server port
     :param namespace: String. Optional. The server namespace (or room)
@@ -131,16 +105,12 @@ class SocketIO:
     return JsObjects.JsVoid("var %s = io.connect('%s:%s/%s')" % (self._selector, url, port, namespace))
 
   def on(self, event_type, js_funcs, profile=False):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
 
-    Attributes:
-    ----------
     :param event_type:
     :param js_funcs:
     :param profile:
@@ -155,12 +125,8 @@ class SocketIO:
     return self
 
   def emit(self, event_type, data=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param event_type:
     :param data:
     """

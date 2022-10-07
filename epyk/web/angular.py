@@ -21,8 +21,6 @@ def app(path: str, name: str = None):
   Description:
   ------------
 
-  Attributes:
-  ----------
   :param str path: The server path
   :param str name: Optional. The application name on the server
   """
@@ -45,164 +43,124 @@ class NGModule:
     self._ang_app_path = ang_app_path
 
   def class_(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic class definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#class-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     """
     subprocess.run('ng generate class %s' % name, shell=True, cwd=self._ang_app_path)
 
   def component(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic component definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#component-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     """
     subprocess.run('ng generate component %s' % name, shell=True, cwd=self._ang_app_path)
 
   def directive(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic directive definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#directive-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     """
     subprocess.run('ng generate directive %s' % name, shell=True, cwd=self._ang_app_path)
 
   def enum(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Generates a new, generic enum definition for the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#enum-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     """
     subprocess.run('ng generate enum %s' % name, shell=True, cwd=self._ang_app_path)
 
   def guard(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Generates a new, generic route guard definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#guard-command
 
-    Attributes:
-    ----------
     :param str name: The name of the new route guard.
     """
     subprocess.run('ng generate guard %s' % name, shell=True, cwd=self._ang_app_path)
 
   def interceptor(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new, generic interceptor definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#interceptor-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interceptor.
     """
     subprocess.run('ng generate interceptor %s' % name, shell=True, cwd=self._ang_app_path)
 
   def interface(self, name: str, type: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic interface definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#interface-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     :param str type: Adds a developer-defined type to the filename, in the format "name.type.ts".
     """
     subprocess.run('ng generate interface %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def library(self, name: str, type: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic library project in the current workspace.
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     :param str type:
     """
     subprocess.run('ng generate library %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def module(self, name: str, type: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new generic NgModule definition in the given or default project
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     :param str type:
     """
     subprocess.run('ng generate module %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def service(self, name: str, type: str):
-    """
-    Description:
-    ------------
+    """  
     Creates a new, generic service definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    Attributes:
-    ----------
     :param str name: The name of the interface
     :param str type:
     """
@@ -214,17 +172,13 @@ class NG:
     self._app_path, self._app_name, self.envs = app_path, app_name, env
 
   def e2e(self, app_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/e2e
 
-    Attributes:
-    ----------
     :param str app_name: The application name
     """
     app_name = app_name or self._app_name
@@ -234,17 +188,13 @@ class NG:
     subprocess.run('ng e2e %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def lint(self, app_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/lint
 
-    Attributes:
-    ----------
     :param str app_name: The application name
     """
     app_name = app_name or self._app_name
@@ -254,17 +204,13 @@ class NG:
     subprocess.run('ng lint %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def new(self, name: str, path: str = None):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/new
 
-    Attributes:
-    ----------
     :param str name: The application name
     :param str path: The server path
     """
@@ -275,33 +221,25 @@ class NG:
     print('ng new %s' % name)
 
   def doc(self, keyword: str):
-    """
-    Description:
-    ------------
+    """  
     Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
 
     Related Pages:
 
       https://angular.io/cli
 
-    Attributes:
-    ----------
     :param str keyword:
     """
     subprocess.run('ng doc %s' % keyword, shell=True, cwd=self._app_path)
 
   def add(self, package: str):
-    """
-    Description:
-    ------------
+    """  
     Add package to the Angular server node modules
 
     Related Pages:
 
       https://angular.io/cli
 
-    Attributes:
-    ----------
     :param str package: The package name
     """
     if self.envs is not None:
@@ -317,17 +255,13 @@ class NG:
     pass
 
   def help(self, options: dict = None):
-    """
-    Description:
-    ------------
+    """  
     Lists available commands and their short descriptions.
 
     Related Pages:
 
       https://angular.io/cli
 
-    Attributes:
-    ----------
     :param dict options:
     """
     if options is None:
@@ -336,16 +270,12 @@ class NG:
       subprocess.run('ng help %s' % options, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def test(self, app_name: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://angular.io/cli
 
-    Attributes:
-    ----------
     :param str app_name:
     """
     app_name = app_name or self._app_name
@@ -355,9 +285,7 @@ class NG:
     subprocess.run('ng test %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
   def build(self, app_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed from within
     a workspace directory.
 
@@ -365,8 +293,6 @@ class NG:
 
       https://angular.io/cli
 
-    Attributes:
-    ----------
     :param str app_name:
     """
     app_name = app_name or self._app_name
@@ -376,25 +302,19 @@ class NG:
     subprocess.run('ng build %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
   def version(self):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
     """
     subprocess.run('ng version', shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def serve(self, host: str = "localhost", port: int = 8081):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/serve
 
-    Attributes:
-    ----------
     :param str host: The server url
     :param int port: The server port
     """
@@ -402,16 +322,12 @@ class NG:
                    cwd=os.path.join(self._app_path, self._app_name))
 
   def npm(self, packages: list):
-    """
-    Description:
-    ------------
+    """  
     This will add the npm requirements to the Angular app but also update directly the angular.json for anything needed
     at the start of the application.
 
     This is mainly used for generic and common libraries like Jquery and Jquery UI
 
-    Attributes:
-    ----------
     :param list packages: The packages names to install
     """
     if self.envs is not None:
@@ -440,25 +356,19 @@ class NG:
 
   @property
   def create(self) -> NGModule:
-    """
-    Description:
-    ------------
+    """  
     Shortcut to the various generate entry points in the Angular Framework
     """
     return NGModule(os.path.join(self._app_path, self._app_name))
 
   def generate(self, schematic: str, name: str):
-    """
-    Description:
-    ------------
+    """  
     Generates and/or modifies files based on a schematic.
 
     Related Pages:
 
       https://angular.io/cli/generate
 
-    Attributes:
-    ----------
     :param str schematic:
     :param str name:
     """
@@ -489,13 +399,9 @@ class RouteModule:
       self.ngModule = "%s%s" % (self.ngModule, split_content[1])
 
   def add(self, component: str, alias: str, path: str):
-    """
-    Description:
-    ------------
+    """  
     Add an entry to the Angular routing app
 
-    Attributes:
-    ----------
     :param str component: String the Component module name
     :param str alias: The url shortcut
     :param str path: The component relative path
@@ -507,13 +413,9 @@ class RouteModule:
     self.routes[component] = alias
 
   def export(self, file_name=None, target_path: str = None):
-    """
-    Description:
-    ------------
+    """  
     Publish the new Angular routing Application
 
-    Attributes:
-    ----------
     :param file_name: String. Optional. The filename
     :param str target_path: Optional. The new routing file
     """
@@ -561,24 +463,16 @@ class NgModules:
     self.add_import("HttpClientModule", '@angular/common/http')
 
   def add(self, component: str, path: str):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str component: The component name
     :param str path: The component path
     """
     self.modules[component] = path
 
   def add_import(self, component: str, path: str):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str component:
     :param str path:
     """
@@ -588,12 +482,8 @@ class NgModules:
       self.imports.append(component)
 
   def export(self, file_name: str = None, target_path: str = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str file_name: Optional. The filename
     :param str target_path:
     """
@@ -626,15 +516,11 @@ class ComponentSpec:
     self.__comp_structure = {}
 
   def export(self, path: str = None, target_path: str = None):
-    """
-    Description:
-    ------------
+    """  
     Export the spec of the component
 
     TODO: make this generation more flexible
 
-    Attributes:
-    ----------
     :param str path: String.
     :param str target_path: for example ['src', 'app']
     """
@@ -692,9 +578,7 @@ class Components:
     self._app, self.count_comp, self.page = app, count, page
 
   def router(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     from epyk.web.components.angular import standards
@@ -703,9 +587,7 @@ class Components:
 
   @property
   def materials(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     from epyk.web.components.angular import materials
@@ -714,9 +596,7 @@ class Components:
 
   @property
   def primeng(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     from epyk.web.components.angular import primeng
@@ -742,9 +622,7 @@ class App:
 
   @property
   def clarity(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     from epyk.web.components.angular import clarity
@@ -753,9 +631,7 @@ class App:
 
   @property
   def bootstrap(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     from epyk.web.components.angular import bootstrap
@@ -763,12 +639,8 @@ class App:
     return bootstrap.Package(self.page, self)
 
   def add_var(self, name: str, value=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param value:
     """
@@ -779,24 +651,16 @@ class App:
     self.vars[name] = value
 
   def add_fnc(self, name: str, funcs):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param funcs:
     """
     self.__fncs[name] = funcs
 
   def add_imports(self, name: str, path: str):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str name:
     :param str path:
     """
@@ -804,9 +668,7 @@ class App:
 
   @property
   def components(self) -> Components:
-    """
-    Description:
-    ------------
+    """  
 
     """
     if self.__components is None:
@@ -824,20 +686,14 @@ class App:
 
   @property
   def name(self):
-    """
-    Description:
-    ------------
+    """  
     Return the prefix of the component module (without any extension)
     """
     return self.file_name or COMPONENT_NAME_TEMPLATE % self.alias
 
   def http(self, end_point: str, js_funcs, profile):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param end_point:
     :param js_funcs:
     :param profile:
@@ -848,20 +704,14 @@ class App:
 
   @property
   def path(self) -> str:
-    """
-    Description:
-    ------------
+    """  
     Return the full path of the component modules
     """
     return os.path.join("../../", self.__path, self.name).replace("\\", "/")
 
   def export(self, path: str = None, target_path: str = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str path:
     :param str target_path: for example ['src', 'app']
     """
@@ -937,33 +787,25 @@ class App:
 class Angular(node.Node):
 
   def create(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     To create a new project, run:
 
     Related Pages:
 
       https://cli.vuejs.org/guide/creating-a-project.html
 
-    Attributes:
-    ----------
     :param str name: The application name
     """
     subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
 
   def serve(self, app_name: str, host: str = "localhost", port: int = 8081):
-    """
-    Description:
-    ------------
+    """  
     Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/serve
 
-    Attributes:
-    ----------
     :param str app_name:
     :param str host:
     :param int port:
@@ -972,16 +814,12 @@ class Angular(node.Node):
     subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=path)
 
   def router(self, app_name: str):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://stackoverflow.com/questions/44990030/how-to-add-a-routing-module-to-an-existing-module-in-angular-cli-version-1-1-1
 
-    Attributes:
-    ----------
     :param str app_name:
     """
     path = os.path.join(self._app_path, app_name)
@@ -1005,34 +843,26 @@ export class AppRoutingModule { }
 ''')
 
   def ng(self, app_name: str = None):
-    """
-    Description:
-    ------------
+    """  
     Angular specific command lines
 
     Related Pages:
 
       https://angular.io/cli/
 
-    Attributes:
-    ----------
     :param str app_name: The angular application name
     """
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name, self.envs)
 
   def cli(self, app_name: str):
-    """
-    Description:
-    ------------
+    """  
     Angular specific command lines
 
     Related Pages:
 
       https://angular.io/cli/
 
-    Attributes:
-    ----------
     :param str app_name: The angular application name
     """
     app_name = app_name or self._app_name
@@ -1040,15 +870,11 @@ export class AppRoutingModule { }
 
   def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
            target_folder: str = "apps"):
-    """
-    Description:
-    ------------
+    """  
     Create a specific Application as a component in the Angular framework.
 
     Unlike a basic component, the application will be routed to be accessed directly.
-
-    Description:
-    ------------
+  
     :param primitives.PageModel page: A report object
     :param str selector: The url route for this report in the Angular app
     :param str name: The component classname in the Angular framework
@@ -1067,13 +893,9 @@ export class AppRoutingModule { }
     return self._page
 
   def ng_modules(self, app_name: str = None, file_name: str = None) -> NgModules:
-    """
-    Description:
-    ------------
+    """  
     Read the file app.module.ts
 
-    Attributes:
-    ----------
     :param str app_name: Optional. THe Angular application name
     :param str file_name:
 
@@ -1087,14 +909,10 @@ export class AppRoutingModule { }
     return self._fmw_modules
 
   def route(self, app_name: str = None, file_name: str = None) -> RouteModule:
-    """
-    Description:
-    ------------
+    """  
 
     Read the file app-routing.module.ts from the Angular app
 
-    Attributes:
-    ----------
     :param str app_name: Optional. THe Angular application name
     :param str file_name: Optional.
 
@@ -1106,12 +924,8 @@ export class AppRoutingModule { }
     return self._route
 
   def publish(self, app_name: str = None, target_path: list = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str app_name:
     :param list target_path: List for example ['src', 'app']
     """
@@ -1122,13 +936,9 @@ export class AppRoutingModule { }
       self._route.export()
 
   def home_page(self, page, app_name: str = None, with_router: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Change the Angular App home page
 
-    Attributes:
-    ----------
     :param page:
     :param app_name:
     :param with_router:

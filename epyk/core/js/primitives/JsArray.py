@@ -15,10 +15,7 @@ class JsArray(JsObject.JsObject):
 
   @property
   def length(self):
-    """
-    Description:
-    -----------
-    The length property of an array returns the length of an array (the number of array elements).
+    """   The length property of an array returns the length of an array (the number of array elements).
 
     Related Pages:
 
@@ -31,13 +28,8 @@ class JsArray(JsObject.JsObject):
 
   @classmethod
   def set(cls, js_code: str, data: Optional[list] = None, page: primitives.PageModel = None):
-    """
-    Description:
-    -----------
-    Define an array. Set an empty array by default
-
-    Attributes:
-    ----------
+    """   Define an array. Set an empty array by default
+ 
     :param js_code: The variable name for the speech recognition object.
     :param data:
     :param page:
@@ -47,17 +39,12 @@ class JsArray(JsObject.JsObject):
     return cls(data=data, js_code=js_code, set_var=True, page=page)
 
   def some_(self, js_funcs: Union[list, str]):
-    """
-    Description:
-    -----------
-    The some() method checks if any of the elements in an array pass a test (provided as a function).
+    """   The some() method checks if any of the elements in an array pass a test (provided as a function).
 
     Related Pages:
 
     https://www.w3schools.com/jsref/jsref_some.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr) A function to be run for each element in the array.
 
     :return: A Javascript Boolean
@@ -67,10 +54,7 @@ class JsArray(JsObject.JsObject):
     return JsBoolean.JsBoolean("%s.some(%s)" % (self.varId, js_funcs), is_py_data=False)
 
   def every_(self, js_funcs: Union[list, str], js_value: Optional[str] = None, profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The every() method checks if all elements in an array pass a test (provided as a function).
+    """   The every() method checks if all elements in an array pass a test (provided as a function).
     Data Structure used in this method is like obj(val, index, array)
 
     Usage::
@@ -78,9 +62,7 @@ class JsArray(JsObject.JsObject):
       Related Pages:
 
       https://www.w3schools.com/jsref/jsref_every.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: A function to be run for each element in the array
     :param js_value: Optional. A value to be passed to the function to be used as its "this" value.
     :param profile: Optional. A flag to set the component performance storage.
@@ -92,17 +74,12 @@ class JsArray(JsObject.JsObject):
     return JsFncs.JsFunction("%s.every(function(val, index, arr){%s}, %s)" % (self.varId, js_funcs, js_value))
 
   def filter_(self, js_funcs: Union[list, str], js_value: Optional[str] = None, profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The filter() method creates an array filled with all array elements that pass a test (provided as a function)
+    """   The filter() method creates an array filled with all array elements that pass a test (provided as a function)
 
     Related Pages:
 
     https://www.w3schools.com/jsref/jsref_filter.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: A function to be run for each element in the array
     :param js_value: Optional. A value to be passed to the function to be used as its "this" value.
     :param profile: Optional. A flag to set the component performance storage.
@@ -114,17 +91,12 @@ class JsArray(JsObject.JsObject):
     return JsFncs.JsFunction("%s.filter(function(val, index, arr){%s), %s)" % (self.varId, js_funcs, js_value))
 
   def find(self, js_funcs: Union[list, str]):
-    """
-    Description:
-    -----------
-    The find() method returns the value of the first element in an array that pass a test (provided as a function)
+    """   The find() method returns the value of the first element in an array that pass a test (provided as a function)
 
     Related Pages:
 
     https://www.w3schools.com/jsref/jsref_find.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
 
     :return: Returns the array element value if any of the elements in the array pass the test, otherwise it
@@ -132,10 +104,7 @@ class JsArray(JsObject.JsObject):
     return "%s.find(%s)" % (self.varId, js_funcs)
 
   def findIndex(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The find() method returns the value of the first element in an array that pass a test (provided as a function)
+    """   The find() method returns the value of the first element in an array that pass a test (provided as a function)
 
     Usage::
 
@@ -147,9 +116,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_findindex.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -159,10 +126,7 @@ class JsArray(JsObject.JsObject):
     return JsFncs.JsFunction("%s.findIndex(function(value, index, arr){%s})" % (self.varId, js_funcs))
 
   def forEach(self, js_funcs: Union[list, str], value: str = "value", profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The forEach() method calls a provided function once for each element in an array, in order.
+    """   The forEach() method calls a provided function once for each element in an array, in order.
 
     Usage::
 
@@ -172,9 +136,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_foreach.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: A function to be run for each element in the array
     :param value: Optional. A value to be passed to the function to be used as its "this" value.
     :param profile: Optional. A flag to set the component performance storage.
@@ -183,10 +145,7 @@ class JsArray(JsObject.JsObject):
     return JsFncs.JsFunction("%s.forEach(function(%s, index, arr){%s})" % (self.varId, value, js_funcs))
 
   def map(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The map() method creates a new array with the results of calling a function for every array element.
+    """   The map() method creates a new array with the results of calling a function for every array element.
 
     Usage::
 
@@ -197,9 +156,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_map.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -213,10 +170,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.map(function(value, index, arr){%s})" % (self.varId, ";".join(js_funcs)), is_py_data=False)
 
   def sort(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The sort() method sorts an array alphabetically:
+    """   The sort() method sorts an array alphabetically:
 
     Usage::
 
@@ -226,9 +180,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_array_sort.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -243,10 +195,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.sort()" % self.varId, is_py_data=False)
 
   def reduce(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The reduce() method reduces the array to a single value.
+    """   The reduce() method reduces the array to a single value.
 
     Usage::
 
@@ -257,9 +206,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_reduce.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr)	Required. A function to be run for each element in the array.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -271,10 +218,7 @@ class JsArray(JsObject.JsObject):
     return JsNumber.JsNumber("%s.reduce(function (r, o, i){%s})" % (self.varId, js_funcs))
 
   def shift(self):
-    """
-    Description:
-    -----------
-    The shift() method removes the first item of an array.
+    """   The shift() method removes the first item of an array.
 
     Usage::
 
@@ -291,10 +235,7 @@ class JsArray(JsObject.JsObject):
     return JsObject.JsObject("%s.shift()" % self.varId, is_py_data=False)
 
   def slice(self, start: Union[primitives.JsDataModel, int], end: Union[primitives.JsDataModel, int]):
-    """
-    Description:
-    -----------
-    The numbers in the table specify the first browser version that fully supports the method
+    """   The numbers in the table specify the first browser version that fully supports the method
 
     Usage::
 
@@ -304,9 +245,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_slice_array.asp
-
-    Attributes:
-    ----------
+ 
     :param start: The index number in the array.
     :param end: The index number in the array.
 
@@ -317,10 +256,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.slice(%s, %s)" % (self.varId, start, end), is_py_data=False)
 
   def pop(self):
-    """
-    Description:
-    -----------
-    The pop() method removes the last element of an array, and returns that element.
+    """   The pop() method removes the last element of an array, and returns that element.
 
     Usage::
 
@@ -337,10 +273,7 @@ class JsArray(JsObject.JsObject):
     return JsObject.JsObject("%s.pop()" % self.varId, is_py_data=False)
 
   def delete(self, value: Union[float, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Since JavaScript arrays are objects, elements can be deleted by using the JavaScript operator
+    """   Since JavaScript arrays are objects, elements can be deleted by using the JavaScript operator
     Using delete may leave undefined holes in the array. Use pop() or shift() instead.
 
     Usage::
@@ -351,9 +284,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
-
-    Attributes:
-    ----------
+ 
     :param value: The index of the value in the array to be removed.
 
     :return: Void, The Javascript String
@@ -362,10 +293,7 @@ class JsArray(JsObject.JsObject):
     return JsFncs.JsFunction("delete %s[%s]" % (self.varId, value))
 
   def join(self, sep: Union[primitives.JsDataModel, str]):
-    """
-    Description:
-    -----------
-    The join() method joins the elements of an array into a string, and returns the string.
+    """   The join() method joins the elements of an array into a string, and returns the string.
 
     Usage::
 
@@ -374,9 +302,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_join.asp
-
-    Attributes:
-    ----------
+ 
     :param sep: Optional. The separator to be used. If omitted, the elements are separated with a comma.
 
     :return: A String, representing the array values, separated by the specified separator.
@@ -388,10 +314,7 @@ class JsArray(JsObject.JsObject):
 
   def copyWithin(self, start: Union[primitives.JsDataModel, int] = 0,
                  end: Optional[Union[primitives.JsDataModel, int]] = None):
-    """
-    Description:
-    -----------
-    The copyWithin() method copies array elements within the array, to and from specified positions.
+    """   The copyWithin() method copies array elements within the array, to and from specified positions.
 
     Usage::
 
@@ -400,9 +323,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_copywithin.asp
-
-    Attributes:
-    ----------
+ 
     :param start: Optional. The index position to start copying elements from (default is 0)
     :param end: Optional. The index position to stop copying elements from (default is array.length)
 
@@ -415,10 +336,7 @@ class JsArray(JsObject.JsObject):
   def fill(self, data: primitives.JsDataModel, start: Union[primitives.JsDataModel, int] = 0,
            end: Optional[Union[primitives.JsDataModel, int]] = None,
            js_funcs: Union[list, str] = None, js_obj=None):
-    """
-    Description:
-    -----------
-    The fill() method fills the specified elements in an array with a static value.
+    """   The fill() method fills the specified elements in an array with a static value.
     The fill() method is not supported in Internet Explorer 11 and earlier versions.
 
     Usage::
@@ -429,9 +347,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_fill.asp
-
-    Attributes:
-    ----------
+ 
     :param data: The value to fill the array with.
     :param start: Optional. The index to start filling the array (default is 0).
     :param end: Optional. The index to stop filling the array (default is array.length).
@@ -456,10 +372,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.fill(%s)" % (self.varId, data), is_py_data=False)
 
   def concat(self, *args):
-    """
-    Description:
-    -----------
-    The concat() method is used to join two or more arrays.
+    """   The concat() method is used to join two or more arrays.
     This method does not change the existing arrays, but returns a new array, containing the values of the joined
     arrays.
 
@@ -475,9 +388,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_concat_array.asp
-
-    Attributes:
-    ----------
+ 
     :param args: Existing Javascript Arrays
 
     :return: An Array object, representing the joined array
@@ -486,10 +397,7 @@ class JsArray(JsObject.JsObject):
       self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), is_py_data=False)
 
   def append(self, js_obj, val: Union[primitives.JsDataModel, str]):
-    """
-    Description:
-    -----------
-    Equivalent to append Python function for the Javascript
+    """   Equivalent to append Python function for the Javascript
 
     Usage::
 
@@ -500,9 +408,7 @@ class JsArray(JsObject.JsObject):
 
       https://www.w3schools.com/js/js_array_methods.asp
       https://www.w3schools.com/python/ref_list_append.asp
-
-    Attributes:
-    ----------
+ 
     :param js_obj: The Python Javascript base object.
     :param val: The value to be added.
 
@@ -514,10 +420,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.append(%s)" % (self.varId, JsUtils.jsConvertData(val, None)), is_py_data=False)
 
   def push(self, *args):
-    """
-    Description:
-    -----------
-    The push() method adds new items to the end of an array, and returns the new length.
+    """   The push() method adds new items to the end of an array, and returns the new length.
 
     Usage::
 
@@ -527,9 +430,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
-
-    Attributes:
-    ----------
+ 
     :param args: A list of object to be added to the JsArray object
 
     :return: A Number, representing the new length of the array
@@ -540,16 +441,12 @@ class JsArray(JsObject.JsObject):
       self.varId, ", ".join([str(JsUtils.jsConvertData(a, None)) for a in args])), is_py_data=False)
 
   def push_dict(self, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       page.js.objects.array.get("myArray").push_dict(x="a", y=45)
-
-    Attributes:
-    ----------
+ 
     :param kwargs:
     """
     args = []
@@ -558,10 +455,7 @@ class JsArray(JsObject.JsObject):
     return self.push(JsObject.JsObject.get("{%s}" % ", ".join(args)))
 
   def reverse(self):
-    """
-    Description:
-    -----------
-    The reverse() method reverses the elements in an array.
+    """   The reverse() method reverses the elements in an array.
 
     Usage::
 
@@ -577,36 +471,26 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.reverse()" % self.varId, is_py_data=False)
 
   def flat(self, depth: Union[primitives.JsDataModel, int] = 1):
-    """
-    Description:
-    -----------
-    The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the
+    """   The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the
     specified depth.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat
-
-    Attributes:
-    ----------
+ 
     :param depth: The depth level specifying how deep a nested array structure should be flattened. Defaults to 1.
     """
     return JsArray("%s.flat(%s)" % (self.varId, JsUtils.jsConvertData(depth, None)), is_py_data=False)
 
   def flatMap(self, js_funcs: Union[list, str], profile: Union[dict, bool] = False):
-    """
-    Description:
-    -----------
-    The flatMap() method first maps each element using a mapping function, then flattens the result into a new array.
+    """   The flatMap() method first maps each element using a mapping function, then flattens the result into a new array.
     It is identical to a map() followed by a flat() of depth 1, but flatMap() is often quite useful, as merging both
     into one method is slightly more efficient.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: function(currentValue, index, arr). A function to be run for each element in the array.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -621,10 +505,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.flatMap(function(value, index, arr){%s})" % (self.varId, js_funcs), is_py_data=False)
 
   def includes(self, element: Union[primitives.JsDataModel, str], start: int = 0):
-    """
-    Description:
-    -----------
-    The includes() method determines whether an array contains a specified element.
+    """   The includes() method determines whether an array contains a specified element.
 
     This method returns true if the array contains the element, and false if not.
 
@@ -633,9 +514,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_includes_array.asp
-
-    Attributes:
-    ----------
+ 
     :param element: Object. The element to search for.
     :param start: Optional. Default 0. At which position in the array to start the search.
     """
@@ -645,10 +524,7 @@ class JsArray(JsObject.JsObject):
       self.varId, JsUtils.jsConvertData(element, None), start), is_py_data=False)
 
   def unshift(self, *args):
-    """
-    Description:
-    -----------
-    The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements.
+    """   The unshift() method adds a new element to an array (at the beginning), and "unshifts" older elements.
 
     Usage::
 
@@ -658,9 +534,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
-
-    Attributes:
-    ----------
+ 
     :param args: Required. The item(s) to add to the beginning of the array
 
     :return: A Number, representing the new length of the array
@@ -669,18 +543,13 @@ class JsArray(JsObject.JsObject):
 
   def splice(self, i: int, j: int, data: Union[primitives.JsDataModel, str],
              js_funcs: Optional[Union[list, str]] = None):
-    """
-    Description:
-    -----------
-    The splice() method can be used to add new items to an array
+    """   The splice() method can be used to add new items to an array
     With clever parameter setting, you can use splice() to remove elements without leaving "holes" in the array
 
     Related Pages:
 
       https://www.w3schools.com/js/js_array_methods.asp
-
-    Attributes:
-    ----------
+ 
     :param i: An integer that specifies at what position to add/remove items, Use negative values to.
       specify the position from the end of the array.
     :param j: Optional. The number of items to be removed. If set to 0, no items will be removed.
@@ -702,18 +571,13 @@ class JsArray(JsObject.JsObject):
     return JsObject.JsObject("%s[%s]" % (self.varId, index), page=self.page)
 
   def unique(self, js_obj):
-    """
-    Description:
-    -----------
-    Prototype Extension
+    """   Prototype Extension
 
     Usage::
 
       page.js.objects.array.new([2, 2, -3, -3], "MyArray")
       page.js.objects.array.get("MyArray").unique()
-
-    Attributes:
-    ----------
+ 
     :param js_obj: The Python Javascript base object.
 
     :return: A new Python Javascript Array with unique values.
@@ -724,10 +588,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("%s.unique()" % self.varId)
 
   def contains(self, js_obj, data: primitives.JsDataModel):
-    """
-    Description:
-    -----------
-    Prototype Extension
+    """   Prototype Extension
 
     Alternative to the includes function and compatible with all the browsers
 
@@ -735,9 +596,7 @@ class JsArray(JsObject.JsObject):
 
       page.js.objects.array.new([2, 2, -3, -3], "MyArray")
       page.js.objects.array.get("MyArray").contains(2)
-
-    Attributes:
-    ----------
+ 
     :param js_obj: The Python Javascript base object.
     :param data: The object to look for in the array.
 
@@ -751,20 +610,14 @@ class JsArray(JsObject.JsObject):
     return JsBoolean.JsBoolean("%s.contains(%s)" % (self.varId, JsUtils.jsConvertData(data, None)), is_py_data=False)
 
   def toArgs(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsObject.JsObject("...%s" % self.varId)
 
   def toDict(self, header: list):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param header:
     """
     return JsObject.JsObject(
@@ -772,18 +625,13 @@ class JsArray(JsObject.JsObject):
         self.varId, header))
 
   def sample(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Produce a random sample from the list. Pass a number to return n random elements from the list.
+    """   Produce a random sample from the list. Pass a number to return n random elements from the list.
     Otherwise a single random item will be returned.
 
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param n: An index.
     :param page: Optional. The report object.
     """
@@ -801,10 +649,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.sample(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def first(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns the first element of an array. Passing n will return the first n elements of the array.
+    """   Returns the first element of an array. Passing n will return the first n elements of the array.
 
     Usage::
 
@@ -813,9 +658,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param n: An index.
     :param page: The report object.
     """
@@ -833,10 +676,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.first(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def last(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns the last element of an array. Passing n will return the last n elements of the array.
+    """   Returns the last element of an array. Passing n will return the last n elements of the array.
 
     Usage::
 
@@ -845,9 +685,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param n: An index.
     :param page: Optional. The report object.
     """
@@ -865,10 +703,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.last(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def chunk(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Chunks an array into multiple arrays, each containing length or fewer items.
+    """   Chunks an array into multiple arrays, each containing length or fewer items.
 
     Usage::
 
@@ -877,9 +712,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#chunk
-
-    Attributes:
-    ----------
+ 
     :param n: The length of the sub lists.
     :param page: Optional. The report object.
     """
@@ -897,10 +730,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.chunk(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def initial(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns everything but the last entry of the array. Especially useful on the arguments object.
+    """   Returns everything but the last entry of the array. Especially useful on the arguments object.
     Pass n to exclude the last n elements from the result.
 
     Usage::
@@ -910,9 +740,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#initial
-
-    Attributes:
-    ----------
+ 
     :param n: An index.
     :param page: Optional. The report object.
     """
@@ -930,10 +758,7 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.initial(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def rest(self, n: Union[int, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns the rest of the elements in an array. Pass an index to return the values of the array from that index
+    """   Returns the rest of the elements in an array. Pass an index to return the values of the array from that index
     onward.
 
     Usage::
@@ -943,9 +768,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param n: An index.
     :param page: Optional. The report object.
     """
@@ -963,18 +786,13 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.rest(%s)})()" % (self.toStr(), self.varName), page=page)
 
   def where(self, values: Union[list, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Looks through each value in the list, returning an array of all the values that matches the key-value pairs
+    """   Looks through each value in the list, returning an array of all the values that matches the key-value pairs
     listed in properties.
 
     Related Pages:
 
       https://underscorejs.org/#where
-
-    Attributes:
-    ----------
+ 
     :param values: All the values to be removed.
     :param page: Optional. The report object.
     """
@@ -987,17 +805,12 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.where(%s, %s)})()" % (self.toStr, self.varName, values), page=page)
 
   def without(self, values: Union[list, primitives.JsDataModel] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns a copy of the array with all instances of the values removed.
+    """   Returns a copy of the array with all instances of the values removed.
 
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param values: All the values to be removed.
     :param page: Optional. The report object.
     """
@@ -1009,18 +822,13 @@ class JsArray(JsObject.JsObject):
     return JsArray("(function(){%s; return _.without(%s, %s)})()" % (self.toStr, self.varName, values), page=page)
 
   def union(self, arrays: Union[primitives.JsDataModel, list] = None, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    """   Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
 
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param arrays: The list of lists to sum.
     :param page: Optional. The report object.
     """
@@ -1034,18 +842,13 @@ class JsArray(JsObject.JsObject):
 
   def intersection(self, arrays: Union[primitives.JsDataModel, list] = None,
                    page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    """   Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
 
     Related Pages:
 
       https://underscorejs.org/#intersection
-
-    Attributes:
-    ----------
+ 
     :param arrays: The list of lists to process.
     :param page: Optional. The report object.
     """
@@ -1059,18 +862,13 @@ class JsArray(JsObject.JsObject):
       self.toStr, self.varName, arrays), page=page)
 
   def uniq(self, is_sorted: Union[bool, primitives.JsDataModel] = False, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
+    """   Computes the union of the passed-in arrays: the list of unique items, in order, that are present in one or more
     of the arrays.
 
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param is_sorted: Flag to specify if the list is sorted.
     :param page: Optional. The report object.
     """
@@ -1084,10 +882,7 @@ class JsArray(JsObject.JsObject):
 
   @property
   def every(self):
-    """
-    Description:
-    -----------
-    Returns true if all of the values in the list pass the predicate truth test.
+    """   Returns true if all of the values in the list pass the predicate truth test.
     Short-circuits and stops traversing the list if a false element is found. predicate is transformed through iteratee
     to facilitate shorthand syntaxes.
     """
@@ -1095,10 +890,7 @@ class JsArray(JsObject.JsObject):
 
   @property
   def some(self):
-    """
-    Description:
-    -----------
-    Returns true if any of the values in the list pass the predicate truth test.
+    """   Returns true if any of the values in the list pass the predicate truth test.
     Short-circuits and stops traversing the list if a true element is found. predicate is transformed through iteratee
     to facilitate shorthand syntaxes.
     """
@@ -1106,28 +898,20 @@ class JsArray(JsObject.JsObject):
 
   @property
   def reject(self):
-    """
-    Description:
-    -----------
-    Returns the values in list without the elements that the truth test (predicate) passes.
+    """   Returns the values in list without the elements that the truth test (predicate) passes.
     The opposite of filter. predicate is transformed through iteratee to facilitate shorthand syntaxes.
     """
     return JaArrayRejector("reject", self.toStr(), self.varName, self.page)
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JaArrayRejector("filter", self.toStr(), self.varName, self.page)
 
   def range(self, stop: int, start: int = 0, step: int = 1, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults
+    """   A function to create flexibly-numbered lists of integers, handy for each and map loops. start, if omitted, defaults
     to 0; step defaults to 1.
     Returns a list of integers from start (inclusive) to stop (exclusive), incremented (or decremented) by
     step, exclusive.
@@ -1137,9 +921,7 @@ class JsArray(JsObject.JsObject):
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param stop: The index of the last value
     :param start: The index of the first value
     :param step: The step
@@ -1150,19 +932,14 @@ class JsArray(JsObject.JsObject):
     return JsArray("_.range(%s, %s, %s)" % (start, stop, step), page=page)
 
   def object(self, keys: list, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list
+    """   Converts arrays into objects. Pass either a single list of [key, value] pairs, or a list of keys, and a list
     of values.
     Passing by pairs is the reverse of pairs. If duplicate keys exist, the last value wins.
 
     Related Pages:
 
       https://underscorejs.org/#arrays
-
-    Attributes:
-    ----------
+ 
     :param keys: The keys for the dictionary.
     :param page: Optional. The report object.
     """
@@ -1177,12 +954,8 @@ class JaArrayRejector:
     self.page, self.varName, self.data, self.func_name = page, js_code, data, func_name
 
   def modulo(self, n: Union[int, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param n:
     """
     if self.varName is None:
@@ -1193,12 +966,8 @@ class JaArrayRejector:
       self.data, self.func_name, self.varName, n), page=self.page)
 
   def equal(self, val: Union[primitives.JsDataModel, list]):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param val:
     """
     val = JsUtils.jsConvertData(val, None)
@@ -1210,12 +979,8 @@ class JaArrayRejector:
       self.data, self.func_name, self.varName, val), page=self.page)
 
   def includes(self, values: Union[primitives.JsDataModel, list]):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param values:
     """
     values = JsUtils.jsConvertData(values, None)
@@ -1227,12 +992,8 @@ class JaArrayRejector:
       self.data, self.func_name, self.varName, values), page=self.page)
 
   def custom(self, js_expr: str):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param js_expr: The JavaScript expression.
     """
     if self.varName is None:
@@ -1245,27 +1006,17 @@ class JaArrayRejector:
 class JsRecordSet(JsArray):
 
   def distinct(self, col_name: Union[primitives.JsDataModel, str]):
-    """
-    Description:
-    -----------
-    Return a sorted list based on a column in the recordset.
+    """   Return a sorted list based on a column in the recordset.
     This can be used to feed a selection box or a list component
-
-    Attributes:
-    ----------
+ 
     :param col_name: The column in the dictionary.
     """
     col_name = JsUtils.jsConvertData(col_name, None)
     return JsArray.get("(function(data){var result = {}; data.forEach(function(rec){result[rec[%s]] = true}); return Object.keys(result).sort() })(%s)" % (col_name, self.toStr()))
 
   def to_dict(self, col_name: Union[primitives.JsDataModel, str], value_name: Union[primitives.JsDataModel, str]):
-    """
-    Description:
-    -----------
-    Return a dictionary from the records. This function will sum the values to aggregate the data per colName.
-
-    Attributes:
-    ----------
+    """   Return a dictionary from the records. This function will sum the values to aggregate the data per colName.
+ 
     :param col_name: The column in the dictionary.
     :param value_name: The column in the dictionary.
     """

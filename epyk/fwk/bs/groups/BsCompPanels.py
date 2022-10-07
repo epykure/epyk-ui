@@ -11,8 +11,6 @@ class Components:
   def panel(self, components=None, width=(100, "%"), height=(None, "px"), html_code=None,
             options=None, profile=False):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -20,8 +18,6 @@ class Components:
 
     # gap-2 d-md-flex justify-content-md-en
 
-    Attributes:
-    ----------
     :param components: List<Component>. Optional. The sub components.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -36,16 +32,12 @@ class Components:
 
   def pills(self, data=None, active=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
             profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       page.web.bs.panels.pills(["tab 1", "tab 2"], active="tab 2")
 
-    Attributes:
-    ----------
     :param data:
     :param active: Boolean. Optional.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -77,12 +69,8 @@ class Components:
 
   def tabs(self, data=None, active=None, width=('auto', ""), height=(None, 'px'), html_code=None, options=None,
            profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     :param active: Boolean. Optional.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -113,10 +101,7 @@ class Components:
     return component
 
   def nav(self, items=None, active=None, vertical=False, width=(100, '%'), height=(100, '%'), options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a simple navigation bar.
+    """   Add a simple navigation bar.
 
     Usage::
 
@@ -125,8 +110,6 @@ class Components:
 
       page.web.bs.panels.nav(["tab 1", "tab 2"], active="tab 2", vertical=True)
 
-    Attributes:
-    ----------
     :param items:
     :param active: Boolean. Optional.
     :param vertical: Boolean. Optional. The direction for the navigation bar.

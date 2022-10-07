@@ -9,12 +9,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def icon(self, css=None, tags=None, events=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param tags: Dictionary. Optional. The DOM attributes to be added to the icon holder (Optional).
     :param events: Dictionary. Optional. The DOM events to be added to the internal component.
@@ -33,12 +29,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def button(self, css=None, tags=None, events=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param tags: Dictionary. Optional. The DOM attributes to be added to the icon holder (Optional).
     :param events: Dictionary. Optional. The DOM events to be added to the internal component.
@@ -57,12 +49,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def avatar(self, css=None, tags=None, events=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param tags: Dictionary. Optional. The DOM attributes to be added to the icon holder (Optional).
     :param events: Dictionary. Optional. The DOM events to be added to the internal component.
@@ -81,12 +69,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def remove(self, css=None, tags=None, events=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param tags: Dictionary. Optional. The DOM attributes to be added to the icon holder (Optional).
     :param events: Dictionary. Optional. The DOM events to be added to the internal component.
@@ -106,12 +90,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def runnable(self, css=None, tags=None, post=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param tags: Dictionary. Optional. The DOM attributes to be added to the icon holder (Optional).
     :param post:
@@ -131,12 +111,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def task(self, css=None, colors=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     :param colors: List. Optional.
     """
@@ -152,14 +128,9 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-icons')
   def icon_pivot(self, iconMapping, pivot=None, cssMapping=None, tags=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set an icon in the cell based on a lookup table based on another value in the row.
+    """   Set an icon in the cell based on a lookup table based on another value in the row.
     Default will take the cell value as icon classname.
 
-    Attributes:
-    ----------
     :param pivot: String. The column field in the row.
     :param iconMapping: Dictionary. Optional. A Icon classname mapping.
     :param cssMapping: Dictionary. Optional. A CSS mapping for the icons containers.
@@ -177,13 +148,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-inputs')
   def password(self, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Change the content of the cell to ****.
+    """   Change the content of the cell to ****.
 
-    Attributes:
-    ----------
     :param css: Dictionary. The CSS attributes for the cell (Optional).
     """
     formatter_params = {}
@@ -196,13 +162,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def label_thresholds(self, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values.
+    """   Set a label based on a list of values.
 
-    Attributes:
-    ----------
     :param thresholds: List. The different values to compare to deduce the category.
     :param labels: List. The resulting category.
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
@@ -217,13 +178,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def label_thresholds_pivot(self, pivot, thresholds, labels, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values from another column.
+    """   Set a label based on a list of values from another column.
 
-    Attributes:
-    ----------
     :param pivot: String. The column name to use to get the data to lookup from te row.
     :param thresholds: List. The different values to compare to deduce the category.
     :param labels: List. The resulting category.
@@ -239,12 +195,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def previous(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param decimal: String. Optional. decimal point separator default ".".
     :param thousand: String. Optional. thousands separator default ",".
     :param precision: Integer. Optional. decimal places default 0.
@@ -260,17 +212,13 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def number(self, decimal: str = ".", thousand: str = ",", precision: int = 0, symbol: str = "", format: str = "%v",
              css: dict = None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       c = table.get_column("Share")
       c.exts.formatters.number(symbol="£", format="%v%s", precision=1, css={"color": "blue", "text-align": "center"})
 
-    Attributes:
-    ----------
     :param decimal: String. Optional. decimal point separator default ".".
     :param thousand: String. Optional. thousands separator default ",".
     :param precision: Integer. Optional. Decimal places default 0.
@@ -287,18 +235,13 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def trend(self, css: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    Add an arrow to illustrate the trend.
+    """   Add an arrow to illustrate the trend.
 
     Usage::
 
       c = table.get_column("Share")
       c.exts.formatters.trend()
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
     """
     formatter_params = {}
@@ -311,12 +254,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def detailed(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     The data in the cell must be a dictionary with the following attributes:
       - value
       - flag
@@ -334,12 +273,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def small(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", css=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param decimal:
     :param thousand:
     :param precision:
@@ -353,12 +288,8 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def scale(self, css=None, colors=None, steps=None, decimal=".", thousand=",", precision=0, symbol="",
             format="%v", **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css:
     :param colors:
     :param steps:
@@ -378,12 +309,8 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def number_format(self, decimal=".", thousand=",", precision=0, symbol="", format="%v", colors=None,
                     threshold=0, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    
-    Attributes:
-    ----------
+    """   
+
     :param decimal: String. Optional. Decimal point separator default ".".
     :param thousand: String. Optional. Thousands separator default ",".
     :param precision: Integer. Optional. Decimal places default 0.
@@ -401,12 +328,8 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def number_difference(self, decimal=None, thousand=None, precision=None, symbol=None, format=None,
                         colors=None, threshold=0, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    
-    Attributes:
-    ----------
+    """   
+
     :param decimal: String. Optional. Decimal point separator default ".".
     :param thousand: String. Optional. Thousands separator default ",".
     :param precision: Integer. Optional. Decimal places default 0.
@@ -425,12 +348,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def number_thresholds(self, thresholds, css, **kwargs):
-    """
-    Description:
-    -----------
-    
-    Attributes:
-    ----------
+    """   
+
     :param thresholds:
     :param css:
     """
@@ -442,12 +361,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-numbers')
   def number_thresholds_pivot(self, pivot, thresholds, css, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param pivot:
     :param thresholds:
     :param css:
@@ -460,12 +375,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-drop')
   def drag_and_drop(self, row_delimiter="\n", col_delimiter="\t", css=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param row_delimiter: String. Optional.
     :param col_delimiter: String. Optional.
     :param css:
@@ -479,16 +390,12 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def intensity(self, steps, colors, is_number=True, intensity=None, css=None, decimal=".", thousand=",", precision=0,
                 symbol="", format="%v", **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
       table.get_column("flag").exts.formatters.intensity(5, ["white", "red"], intensity="flag")
 
-    Attributes:
-    ----------
     :param steps:
     :param colors:
     :param is_number:
@@ -514,12 +421,8 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def quality(self, steps, colors, intensity=None, quality=None, css=None, is_number=True, decimal=".", thousand=",",
               precision=0, symbol="", format="%v", **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param steps:
     :param colors:
     :param intensity:
@@ -548,18 +451,13 @@ class ExtsFormattors(Enums):
   @packageImport('tabulator-numbers')
   def trafficlight(self, tooltip: str = None, green: str = None, red: str = None, orange: str = None, css: dict = None,
                    **kwargs):
-    """
-    Description:
-    -----------
-    Put a traffic light in the cell with the color based on the value.
+    """   Put a traffic light in the cell with the color based on the value.
 
     Usage::
 
       c = table.get_column("Share")
       c.exts.formatters.trafficlight()
 
-    Attributes:
-    ----------
     :param tooltip: Optional. The column name for the details.
     :param green: Optional. The success color definition.
     :param red: Optional. The danger color definition.
@@ -580,13 +478,8 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-inputs')
   def lookup_pivot(self, lookups, pivot, css=None, **kwargs):
-    """
-    Description:
-    -----------
-    Set a label based on a list of values.
+    """   Set a label based on a list of values.
 
-    Attributes:
-    ----------
     :param lookups:
     :param pivot:
     :param css: Dictionary. Optional. The CSS attributes for the cell (Optional).
@@ -600,10 +493,7 @@ class ExtsFormattors(Enums):
     return self._set_value(value="lookupPivot")
 
   def buttonTick(self, **kwargs):
-    """
-    Description:
-    -----------
-    The buttonTick formatter displays a tick icon on each row (for use as a button).
+    """   The buttonTick formatter displays a tick icon on each row (for use as a button).
 
     Related Pages:
 
@@ -615,10 +505,7 @@ class ExtsFormattors(Enums):
     return self._set_value(value="buttonTick")
 
   def buttonCross(self, **kwargs):
-    """
-    Description:
-    -----------
-    The buttonCross formatter displays a cross icon on each row (for use as a button).
+    """   The buttonCross formatter displays a cross icon on each row (for use as a button).
 
     Related Pages:
 
@@ -629,10 +516,7 @@ class ExtsFormattors(Enums):
     return self._set_value(value="buttonCross")
 
   def rownum(self, **kwargs):
-    """
-    Description:
-    -----------
-    The rownum formatter shows an incrementing row number for each row as it is displayed.
+    """   The rownum formatter shows an incrementing row number for each row as it is displayed.
 
     Related Pages:
 
@@ -643,10 +527,7 @@ class ExtsFormattors(Enums):
     return self._set_value(value="rownum")
 
   def handle(self, **kwargs):
-    """
-    Description:
-    -----------
-    The handle formatter fills the cell with hamburger bars, to be used as a row handle.
+    """   The handle formatter fills the cell with hamburger bars, to be used as a row handle.
 
     Related Pages:
 
@@ -658,16 +539,12 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-inputs')
   def style(self, css=None, valField=None, cssField=None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
 
-    Attributes:
-    ----------
     :param css: Dictionary. Optional.  the css style to apply.
     :param cssField: Dictionary. Optional. The css style to apply.
     :param valField:
@@ -688,10 +565,7 @@ class ExtsFormattors(Enums):
 
   @packageImport('tabulator-inputs')
   def style_pivot(self, css_mapping: dict, pivot: str = None, **kwargs):
-    """
-    Description:
-    -----------
-    Change the CSS style based on the cell value.
+    """   Change the CSS style based on the cell value.
 
     Usage::
 
@@ -701,8 +575,6 @@ class ExtsFormattors(Enums):
       c = table.get_column("Share")
       c.exts.formatters.style_pivot({"Python": {"background": "green"}, "Java": {"background": "red"}}, pivot="Language")
 
-    Attributes:
-    ----------
     :param css_mapping: Optional. The conditional formatting definition.
     :param pivot: Optional. The column used for the conditional formatting.
     """
@@ -716,12 +588,8 @@ class ExtsFormattors(Enums):
     return self._set_value(value="cssStylePivot")
 
   def custom(self, formatter, formatter_params, module_alias=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param formatter:
     :param formatter_params: Dictionary. Optional.
     :param module_alias: String. Optional.

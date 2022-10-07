@@ -15,8 +15,6 @@ class Event(primitives.JsDataModel):
 
   def getEvent(self, js_code: str):
     """
-    Description:
-    ------------
 
     :param js_code:
     :return:
@@ -25,15 +23,11 @@ class Event(primitives.JsDataModel):
 
   def createEvent(self, js_code: str, event_type: Union[str, primitives.JsDataModel] = 'Event'):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/API/Document/createEvent
-
-    Attributes:
-    ----------
+ 
     :param js_code:
     :param event_type:
     """
@@ -44,16 +38,12 @@ class Event(primitives.JsDataModel):
                 bubbles: Union[bool, primitives.JsDataModel] = True,
                 cancelable: Union[bool, primitives.JsDataModel] = True):
     """
-    Description:
-    ------------
     The Event.initEvent() method is used to initialize the value of an event created using Document.createEvent().
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Event/initEvent
-
-    Attributes:
-    ----------
+ 
     :param name: Optional.
     :param js_code: Optional.
     :param bubbles: Optional.
@@ -67,8 +57,6 @@ class Event(primitives.JsDataModel):
 
   def cancelBubble(self):
     """
-    Description:
-    ------------
     The cancelBubble() method prevents the event-flow from bubbling up to parent elements.
 
     Related Pages:
@@ -79,8 +67,6 @@ class Event(primitives.JsDataModel):
 
   def target(self):
     """
-    Description:
-    ------------
     Returns the element that triggered the event
 
     Related Pages:
@@ -92,8 +78,6 @@ class Event(primitives.JsDataModel):
   @property
   def dataTransfer(self):
     """
-    Description:
-    ------------
     The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
     It may hold one or more data items, each of one or more data types. For more information about drag and drop,
     see HTML Drag and Drop API.
@@ -111,8 +95,6 @@ class Event(primitives.JsDataModel):
   @property
   def clipboardData(self):
     """
-    Description:
-    ------------
     The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
 
       - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a
@@ -130,8 +112,6 @@ class Event(primitives.JsDataModel):
   @property
   def timeStamp(self):
     """
-    Description:
-    ------------
     Returns the time (in milliseconds relative to the epoch) at which the event was created.
 
     Related Pages:
@@ -143,8 +123,6 @@ class Event(primitives.JsDataModel):
   @property
   def defaultPrevented(self):
     """
-    Description:
-    ------------
     The defaultPrevented event property checks whether the preventDefault() method was called for the event.
 
     Related Pages:
@@ -155,8 +133,6 @@ class Event(primitives.JsDataModel):
 
   def preventDefault(self):
     """
-    Description:
-    ------------
     Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
 
     Related Pages:
@@ -170,8 +146,6 @@ class Event(primitives.JsDataModel):
 
   def srcElement(self):
     """
-    Description:
-    ------------
     The deprecated Event.srcElement is an alias for the Event.target property. Use Event.target instead.
 
     Related Pages:
@@ -182,8 +156,6 @@ class Event(primitives.JsDataModel):
 
   def stopImmediatePropagation(self):
     """
-    Description:
-    ------------
     The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from
     being called.
 
@@ -195,8 +167,6 @@ class Event(primitives.JsDataModel):
 
   def stopPropagation(self):
     """
-    Description:
-    ------------
     Prevents further propagation of an event during event flow.
 
     Related Pages:
@@ -214,8 +184,6 @@ class UIEvent(Event):
   @property
   def detail(self):
     """
-    Description:
-    ------------
     The detail property returns a number with details about the event.
 
     Related Pages:
@@ -227,8 +195,6 @@ class UIEvent(Event):
   @property
   def view(self):
     """
-    Description:
-    ------------
     The view event property returns a reference to the Window object where the event occured.
 
     Related Pages:
@@ -244,8 +210,6 @@ class KeyboardEvent(UIEvent):
   @property
   def altKey(self):
     """
-    Description:
-    ------------
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key
     event was triggered.
 
@@ -258,8 +222,6 @@ class KeyboardEvent(UIEvent):
   @property
   def charCode(self):
     """
-    Description:
-    ------------
     The charCode property returns the Unicode character code of the key that triggered the onkeypress event.
 
     Related Pages:
@@ -272,8 +234,6 @@ class KeyboardEvent(UIEvent):
   @JsUtils.incompatibleBrowser(["Internet Explorer"])
   def code(self):
     """
-    Description:
-    ------------
     The code property returns the key that triggered the event.
 
     Related Pages:
@@ -285,8 +245,6 @@ class KeyboardEvent(UIEvent):
   @property
   def ctrlKey(self):
     """
-    Description:
-    ------------
     The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a
     key event was triggered.
 
@@ -300,8 +258,6 @@ class KeyboardEvent(UIEvent):
   @JsUtils.incompatibleBrowser(["Safari"])
   def key(self):
     """
-    Description:
-    ------------
     The getModifierState() method returns true if the specified modifier key was pressed, or activated.
 
     Related Pages:
@@ -313,8 +269,6 @@ class KeyboardEvent(UIEvent):
   @property
   def keyCode(self):
     """
-    Description:
-    ------------
     The keyCode property returns the Unicode character code of the key that triggered the onkeypress event,
     or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
@@ -328,8 +282,6 @@ class KeyboardEvent(UIEvent):
   @JsUtils.incompatibleBrowser(["Safari"])
   def location(self):
     """
-    Description:
-    ------------
     The location property returns a number that indicates the location of a key on the keyboard or device.
 
     Related Pages:
@@ -341,8 +293,6 @@ class KeyboardEvent(UIEvent):
   @property
   def metaKey(self):
     """
-    Description:
-    ------------
     The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
     when a key event was triggered.
 
@@ -355,8 +305,6 @@ class KeyboardEvent(UIEvent):
   @property
   def shiftKey(self):
     """
-    Description:
-    ------------
     The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a
     key event was triggered.
 
@@ -369,8 +317,6 @@ class KeyboardEvent(UIEvent):
   @property
   def which(self):
     """
-    Description:
-    ------------
     The which property returns the Unicode character code of the key that triggered the onkeypress event,
     or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
@@ -386,8 +332,6 @@ class MouseEvent(UIEvent):
   @property
   def altKey(self):
     """
-    Description:
-    ------------
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
     when a key event was triggered.
 
@@ -432,8 +376,6 @@ class MouseEvent(UIEvent):
   @property
   def clientX(self):
     """
-    Description:
-    ------------
     Returns the horizontal coordinate of the mouse pointer, relative to the current window,
     when the mouse event was triggered
 
@@ -446,8 +388,6 @@ class MouseEvent(UIEvent):
   @property
   def clientY(self):
     """
-    Description:
-    ------------
     The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer
     when a mouse event was triggered.
 
@@ -476,8 +416,6 @@ class MouseEvent(UIEvent):
   @property
   def offsetX(self):
     """
-    Description:
-    ------------
     Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
     return JsNumber.JsNumber.get(js_code="event.offsetX")
@@ -485,8 +423,6 @@ class MouseEvent(UIEvent):
   @property
   def offsetY(self):
     """
-    Description:
-    ------------
     Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
     """
     return JsNumber.JsNumber.get(js_code="event.offsetY")
@@ -536,8 +472,6 @@ class MouseEvent(UIEvent):
   @property
   def movementX(self):
     """
-    Description:
-    ------------
     Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event.
 
     Related Pages:
@@ -549,8 +483,6 @@ class MouseEvent(UIEvent):
   @property
   def movementY(self):
     """
-    Description:
-    ------------
     Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event.
 
     Related Pages:
@@ -562,8 +494,6 @@ class MouseEvent(UIEvent):
   @property
   def screenX(self):
     """
-    Description:
-    ------------
     Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
     Related Pages:
@@ -575,8 +505,6 @@ class MouseEvent(UIEvent):
   @property
   def screenY(self):
     """
-    Description:
-    ------------
     Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
     Related Pages:
@@ -594,8 +522,6 @@ class TouchEvent(UIEvent):
   @property
   def altKey(self):
     """
-    Description:
-    ------------
     The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
     when a touch event was triggered.
 
@@ -608,8 +534,6 @@ class TouchEvent(UIEvent):
   @property
   def ctrlKey(self):
     """
-    Description:
-    ------------
     The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
     when a touch event was triggered.
 
@@ -622,8 +546,6 @@ class TouchEvent(UIEvent):
   @property
   def metaKey(self):
     """
-    Description:
-    ------------
     The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
     when a touch event was triggered.
 
@@ -636,8 +558,6 @@ class TouchEvent(UIEvent):
   @property
   def shiftKey(self):
     """
-    Description:
-    ------------
     The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
     when a touch event was triggered.
 
@@ -650,8 +570,6 @@ class TouchEvent(UIEvent):
   @property
   def targetTouches(self):
     """
-    Description:
-    ------------
     The targetTouches property returns an array of Touch objects, one for each finger that is touching the
     current target element.
 
@@ -664,8 +582,6 @@ class TouchEvent(UIEvent):
   @property
   def touches(self):
     """
-    Description:
-    ------------
     The touches property returns an array of Touch objects, one for each finger that is currently touching the surface.
 
     Related Pages:

@@ -8,15 +8,11 @@ class OptionsQrCode(Options):
   @property
   def width(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :prop num:
     """
     return self._config_get(128)
@@ -28,15 +24,11 @@ class OptionsQrCode(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :prop num:
     """
     return self._config_get(128)
@@ -48,15 +40,11 @@ class OptionsQrCode(Options):
   @property
   def size(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :prop num:
     """
     return self.width
@@ -69,15 +57,11 @@ class OptionsQrCode(Options):
   @property
   def colorDark(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :prop color: String. The color value.
     """
     return self._config_get("#000000")
@@ -89,15 +73,11 @@ class OptionsQrCode(Options):
   @property
   def colorLight(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :prop color: String. The color value.
     """
     return self._config_get("#ffffff")

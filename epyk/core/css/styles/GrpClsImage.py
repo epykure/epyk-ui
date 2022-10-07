@@ -15,8 +15,6 @@ class ClassIcon(GrpCls.ClassHtml):
   @property
   def css(self) -> AttrClsImage.AttrIcon:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -41,8 +39,6 @@ class ClassTinySlider(GrpCls.ClassHtml):
   @property
   def cls_tns_button(self) -> Classes.CatalogImg.CatalogImg:
     """
-    Description:
-    ------------
 
     :rtype: Classes.CatalogImg.CatalogImg
     """
@@ -54,8 +50,6 @@ class ClassTinySlider(GrpCls.ClassHtml):
   @property
   def cls_tns_active(self) -> Classes.CatalogImg.CatalogImg:
     """
-    Description:
-    ------------
 
     :rtype: Classes.CatalogImg.CatalogImg
     """

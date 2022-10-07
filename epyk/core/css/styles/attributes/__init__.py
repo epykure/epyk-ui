@@ -20,12 +20,8 @@ class Attrs(Properties.CssMixin):
 
   def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
     """
-    Description:
-    ------------
     Set multiple CSS attributes to the HTML component.
 
-    Attributes:
-    ----------
     :param Union[dict, str] attrs: optional. The attributes to be added.
     :param str value: Optional. The value for a given item.
     :param bool important: Optional. Flag the attribute to be important.
@@ -46,15 +42,11 @@ class Attrs(Properties.CssMixin):
 
   def remove(self, attr: str = None, set_none: bool = False):
     """
-    Description:
-    ------------
     Remove a CSS attribute to the HTML component.
 
     This function will either remove it if it is part of the existing CSS attribute or set it to auto in case it is
     coming from a CSS class.
 
-    Attributes:
-    ----------
     :param str attr: Optional. The attribute to be removed.
     :param bool set_none: Optional. Set the CSS attribute value to None on the CSS.
     """
@@ -139,13 +131,9 @@ class CssInline(Attrs):
 
   def to_dict(self, copy: bool = False):
     """
-    Description:
-    ------------
     Returns the underlying CSS attributes.
     This is the internal object and not a copy by default.
 
-    Attributes:
-    ----------
     :param bool copy: Optional. Specify if a copy must be returned.
     """
     if copy:
@@ -155,13 +143,9 @@ class CssInline(Attrs):
 
   def important(self, attrs: list = None):
     """
-    Description:
-    ------------
 
     If attrs is not defined all the attributes will be important.
 
-    Attributes:
-    ----------
     :param list attrs: The Css Python property to be changed.
     """
     if attrs is None:
@@ -173,8 +157,6 @@ class CssInline(Attrs):
 
   def to_class(self, class_name: str):
     """
-    Description:
-    ------------
     The CSS class object.
 
     :param str class_name: The class name.

@@ -50,18 +50,13 @@ class DatePicker(Html.Html):
 
   @property
   def options(self) -> OptCalendars.OptionDatePicker:
-    """
-    Description:
-    -----------
-    Property to set all the DatePicker properties.
+    """   Property to set all the DatePicker properties.
     """
     return super().options
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
     """
-    Description:
-    ------------
     The Javascript Dom proxy to the input object.
 
     Usage::
@@ -76,10 +71,7 @@ class DatePicker(Html.Html):
     return self._dom
 
   def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Event trigger when the DatePicker component changes.
+    """   Event trigger when the DatePicker component changes.
 
     Usage::
 
@@ -88,8 +80,6 @@ class DatePicker(Html.Html):
         page.js.console.log(today.dom.content)
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript events when the DatePicker selection changes.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """
@@ -103,10 +93,7 @@ class DatePicker(Html.Html):
 
   def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                      profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Exclude some dates from the date picker selection.
+    """   Exclude some dates from the date picker selection.
     Those dates will be visible but no available for selection.
 
     Usage::
@@ -114,8 +101,6 @@ class DatePicker(Html.Html):
       today = page.ui.fields.today()
       today.excluded_dates(["2021-01-01"])
 
-    Attributes:
-    ----------
     :param dts: Optional. A list of dates format YYYY-MM-DD.
     :param js_funcs: Optional. Javascript functions.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
@@ -124,10 +109,7 @@ class DatePicker(Html.Html):
 
   def included_dates(self, dts: List[str] = None, selected: str = None,
                      js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    -----------
-    Include some date to be available for selection.
+    """   Include some date to be available for selection.
     All the other dates will be visible but not valid ones.
 
     Usage::
@@ -135,8 +117,6 @@ class DatePicker(Html.Html):
       today = page.ui.fields.today()
       today.included_dates(["2021-01-01"])
 
-    Attributes:
-    ----------
     :param dts: Optional. A list of dates format YYYY-MM-DD.
     :param selected: Optional. The selected date from the range. Default max.
     :param js_funcs: Optional. Javascript functions.
@@ -145,17 +125,12 @@ class DatePicker(Html.Html):
     return self.input.included_dates(dts, selected, js_funcs, profile)
 
   def add_options(self, options: dict = None, name: str = None, value: str = None):
-    """
-    Description:
-    -----------
-    Add DatePicker options.
+    """   Add DatePicker options.
 
     Related Pages:
 
       https://timepicker.co/options/
 
-    Attributes:
-    ----------
     :param options: Optional. Specific Python options available for this component.
     :param name: Optional. Python dictionary with the options to set.
     :param value: Optional. The option value.
@@ -199,8 +174,6 @@ class TimePicker(Html.Html):
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
     """
-    Description:
-    ------------
     The Javascript Dom proxy to the input object.
 
     Usage::
@@ -215,10 +188,7 @@ class TimePicker(Html.Html):
     return self._dom
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Event triggered when the value of the input field changes.
+    """   Event triggered when the value of the input field changes.
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
 
@@ -233,8 +203,6 @@ class TimePicker(Html.Html):
 
       https://timepicker.co/options/
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
@@ -286,13 +254,8 @@ class CountDownDate(Html.Html):
       }'''
 
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Events triggered at the end of the timer.
+    """   Events triggered at the end of the timer.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -331,19 +294,13 @@ htmlObj.setAttribute('data-value', data)
 
   @property
   def options(self) -> OptText.OptionsUpdate:
-    """
-    Description:
-    -----------
-    Property to set all the DatePicker properties.
+    """   Property to set all the DatePicker properties.
     """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -359,8 +316,6 @@ htmlObj.setAttribute('data-value', data)
 
   def refresh(self):
     """
-    Description:
-    ------------
     Javascript shortcut to change the timestamp to this component.
 
     Usage::
@@ -401,22 +356,14 @@ class Calendar(Html.Html):
 
   @property
   def options(self) -> OptCalendars.OptionDays:
-    """
-    Description:
-    -----------
-    Property to set all the Calendar properties.
+    """   Property to set all the Calendar properties.
     """
     return super().options
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Add a click event to the Calendar component.
+    """   Add a click event to the Calendar component.
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to profile or a function on the Js console.
     :param source_event: Optional. The source target for the event.
@@ -430,12 +377,8 @@ class Calendar(Html.Html):
   def task(self, name: str, start: str, capacity: Union[List[float], float], end: Optional[str] = None,
            weekend: bool = False, options: dict = None):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param name: The task name.
     :param start: The task start date format YYYY-MM-DD.
     :param capacity: A figure in percentage.
@@ -503,12 +446,8 @@ class Calendar(Html.Html):
 
   def weekly(self, name, start, capacity, frequency: int = 1, weekend: bool = False, options: Optional[dict] = None):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param name:
     :param start:
     :param capacity:
@@ -591,13 +530,8 @@ class Timer(Html.Html):
         tmp != 0 || (tmp=0)}, 1000)'''
 
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Events triggered at the end of the timer.
+    """   Events triggered at the end of the timer.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     """

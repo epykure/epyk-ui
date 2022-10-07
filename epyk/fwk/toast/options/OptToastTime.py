@@ -6,9 +6,7 @@ from epyk.core.html.options import Enums
 class EnumInputTypes(Enums):
 
   def selectbox(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -17,9 +15,7 @@ class EnumInputTypes(Enums):
     self._set_value()
 
   def spinbox(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -32,9 +28,7 @@ class OptionTime(Options):
 
   @property
   def initialHour(self):
-    """
-    Description:
-    ------------
+    """  
     Initial setting value of hour
 
     Related Pages:
@@ -49,9 +43,7 @@ class OptionTime(Options):
 
   @property
   def initialMinute(self):
-    """
-    Description:
-    ------------
+    """  
     Initial setting value of minute.
 
     Related Pages:
@@ -66,9 +58,7 @@ class OptionTime(Options):
 
   @property
   def hourStep(self):
-    """
-    Description:
-    ------------
+    """  
     Step value of hour.
 
     Related Pages:
@@ -83,9 +73,7 @@ class OptionTime(Options):
 
   @property
   def minuteStep(self):
-    """
-    Description:
-    ------------
+    """  
     Step value of minute.
 
     Related Pages:
@@ -100,9 +88,7 @@ class OptionTime(Options):
 
   @property
   def inputType(self):
-    """
-    Description:
-    ------------
+    """  
     'selectbox' or 'spinbox'.
 
     Related Pages:
@@ -117,9 +103,7 @@ class OptionTime(Options):
 
   @property
   def inputTypes(self):
-    """
-    Description:
-    ------------
+    """  
     'selectbox' or 'spinbox'.
 
     Related Pages:
@@ -130,9 +114,7 @@ class OptionTime(Options):
 
   @property
   def format(self):
-    """
-    Description:
-    ------------
+    """  
     hour, minute format for display.
 
     Related Pages:
@@ -147,9 +129,7 @@ class OptionTime(Options):
 
   @property
   def showMeridiem(self):
-    """
-    Description:
-    ------------
+    """  
     Show meridiem expression?.
 
     Related Pages:
@@ -164,9 +144,7 @@ class OptionTime(Options):
 
   @property
   def disabledHours(self):
-    """
-    Description:
-    ------------
+    """  
     Registered Hours is disabled.
 
     Related Pages:
@@ -181,9 +159,7 @@ class OptionTime(Options):
 
   @property
   def disabledMinutes(self):
-    """
-    Description:
-    ------------
+    """  
     Registered Minutes of selected hours is disabled.
 
     Related Pages:
@@ -198,9 +174,7 @@ class OptionTime(Options):
 
   @property
   def meridiemPosition(self):
-    """
-    Description:
-    ------------
+    """  
     Set location of the meridiem element.
     If this option set 'left', the meridiem element is created in front of the hour element.
 
@@ -216,9 +190,7 @@ class OptionTime(Options):
 
   @property
   def language(self):
-    """
-    Description:
-    ------------
+    """  
     SSet locale texts.
 
     Related Pages:
@@ -233,9 +205,7 @@ class OptionTime(Options):
 
   @property
   def usageStatistics(self):
-    """
-    Description:
-    ------------
+    """  
     send hostname to google analytics default value is true.
 
     Related Pages:

@@ -26,10 +26,7 @@ class Chart(Html.Html):
 
   @property
   def shared(self) -> OptChartNvd3.OptionsChartSharedNVD3:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -41,10 +38,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptChart.OptionsChart:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -56,32 +50,23 @@ class Chart(Html.Html):
   @property
   def chartId(self):
     """
-    Description:
-    ------------
     Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    Property to the last dataset added to the NVD3 chart.
+    """   Property to the last dataset added to the NVD3 chart.
     Use the function traces to get a specific series from the chart object.
     """
     return self._datasets[-1]
 
   def traces(self, i: int = None):
     """
-    Description:
-    ------------
     Get a specific series from the datasets attributes in the NVD3 chart.
 
     Usage::
 
-    Attributes:
-    ----------
     :param int i: Optional. An Index number.
     """
     if i is None:
@@ -91,14 +76,10 @@ class Chart(Html.Html):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
     This function is not implemented.
 
     Usage::
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param source_event: String. Optional. The source target for the event.
@@ -108,13 +89,9 @@ class Chart(Html.Html):
 
   def add_trace(self, data, name=""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param name:
     """
@@ -127,22 +104,14 @@ class Chart(Html.Html):
 
   def labels(self, values):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param values: List. The different values for the x axis.
     """
     self._labels = values
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List. The list of points (float).
     :param label: String. Optional. The series label (visible in the legend).
     :param colors: List. Optional. The color for this series. Default the global definition.
@@ -154,8 +123,6 @@ class Chart(Html.Html):
   @property
   def d3(self) -> JsD3.D3Select:
     """
-    Description:
-    ------------
     Property to the underlying D3 module.
 
     Usage::
@@ -168,16 +135,11 @@ class Chart(Html.Html):
     return self._d3
 
   def colors(self, hex_values: list):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -200,14 +162,10 @@ class Chart(Html.Html):
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
-    Description:
-    ------------
     Return the JavaScript fragment to refresh the component content.
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -245,8 +203,6 @@ class ChartLine(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3Line:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -286,8 +242,6 @@ class ChartScatter(ChartLine):
   @property
   def dom(self) -> JsNvd3.JsNvd3Scatter:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -299,13 +253,9 @@ class ChartScatter(ChartLine):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
@@ -321,8 +271,6 @@ class ChartCumulativeLine(ChartLine):
   @property
   def dom(self) -> JsNvd3.JsNvd3CumulativeLine:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -338,8 +286,6 @@ class ChartFocusLine(ChartLine):
   @property
   def dom(self) -> JsNvd3.JsNvd3LineWithFocus:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -355,8 +301,6 @@ class ChartBar(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3Bar:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -367,18 +311,13 @@ class ChartBar(Chart):
     return self._dom
 
   def colors(self, hex_values: list):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -401,13 +340,9 @@ class ChartBar(Chart):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Required. Javascript functions.
     :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
     :param source_event: String. Required. The source target for the event.
@@ -450,8 +385,6 @@ class ChartHorizontalBar(ChartBar):
   @property
   def dom(self) -> JsNvd3.JsNvd3MultiBarHorizontal:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -470,8 +403,6 @@ class ChartMultiBar(ChartBar):
   @property
   def dom(self) -> JsNvd3.JsNvd3MultiBar:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -482,18 +413,13 @@ class ChartMultiBar(ChartBar):
     return self._dom
 
   def colors(self, hex_values):
-    """
-    Description:
-    -----------
-    Set the colors of the chart.
+    """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
     Usage::
 
-    Attributes:
-    ----------
     :param hex_values: List. An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
@@ -523,8 +449,6 @@ class ChartPie(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3Pie:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -558,13 +482,9 @@ class ChartPie(Chart):
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: String. Optional. The source target for the event.
@@ -576,13 +496,9 @@ class ChartPie(Chart):
 
   def add_trace(self, data, name=""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param name:
     """
@@ -596,8 +512,6 @@ class ChartArea(ChartBar):
   @property
   def dom(self) -> JsNvd3.JsNvd3Area:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -613,8 +527,6 @@ class ChartHistoBar(ChartBar):
   @property
   def dom(self) -> JsNvd3.JsNvd3HistoricalBar:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -630,8 +542,6 @@ class ChartParallelCoord(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3ParallelCoordinates:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -643,13 +553,9 @@ class ChartParallelCoord(Chart):
 
   def set_dimension_names(self, dimensions):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param dimensions:
     """
     self.__dimensions = dimensions
@@ -658,13 +564,9 @@ class ChartParallelCoord(Chart):
 
   def add_trace(self, data, name=""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param name:
     """
@@ -677,8 +579,6 @@ class ChartSunbrust(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3Sunburst:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -690,13 +590,9 @@ class ChartSunbrust(Chart):
 
   def set_rcolors(self, color, data):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param color: String.
     :param data:
     """
@@ -707,13 +603,9 @@ class ChartSunbrust(Chart):
 
   def add_trace(self, data, name=""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param name: String. Optional.
     """
@@ -746,8 +638,6 @@ class ChartBoxPlot(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3BoxPlot:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -760,15 +650,11 @@ class ChartBoxPlot(Chart):
   def add_box(self, q1, q3=None, outliers=None, maxRegularValue=None, mean=None, median=None, minRegularValue=None,
               minOutlier=None, maxOutlier=None, title=None):
     """
-    Description:
-    ------------
 
     Usage::
 
     https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
 
-    Attributes:
-    ----------
     :param q1:
     :param q3:
     :param outliers:
@@ -794,13 +680,9 @@ class ChartBoxPlot(Chart):
 
   def add_trace(self, data, name=""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param name:
     """
@@ -813,8 +695,6 @@ class ChartCandlestick(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3CandlestickBar:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -830,8 +710,6 @@ class ChartOhlcBar(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3OhlcBar:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -847,8 +725,6 @@ class ChartForceDirected(Chart):
   @property
   def dom(self) -> JsNvd3.JsNvd3ForceDirectedGraph:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -860,13 +736,9 @@ class ChartForceDirected(Chart):
 
   def add_trace(self, data: dict, name: str = ""):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param dict data:
     :param str name:
     """

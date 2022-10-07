@@ -8,54 +8,40 @@ from epyk.core.js.packages import packageImport
 class EnumRender(Enums):
 
   def label(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_value()
 
   def value(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_value()
 
   def percentage(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_value()
 
   def image(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_value()
 
   def custom(self, jsFncs):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_value()
 
   @packageImport("accounting")
   def details(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    ------------
+    """  
     Display both the label and its value.
 
-    Attributes:
-    ----------
     :param digit: String. Optional. Decimal point separator
     :param thousand_sep: String. Optional. thousands separator
     """
@@ -65,12 +51,8 @@ class EnumRender(Enums):
 
   @packageImport("accounting")
   def labelNumber(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param digit: String. Optional. Decimal point separator
     :param thousand_sep: String. Optional. thousands separator
     """
@@ -79,12 +61,8 @@ class EnumRender(Enums):
 
   @packageImport("accounting")
   def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param symbol: String. Optional. Default currency symbol is ''
     :param digit: String. Optional. Decimal point separator
     :param thousand_sep: String. Optional. thousands separator
@@ -102,10 +80,7 @@ class LabelsImages(Options):
 
   @property
   def src(self):
-    """
-    Description:
-    -----------
-    Define the image path.
+    """   Define the image path.
 
     Related Pages:
 
@@ -119,10 +94,7 @@ class LabelsImages(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    Set the image height in pixel.
+    """   Set the image height in pixel.
 
     Related Pages:
 
@@ -136,10 +108,7 @@ class LabelsImages(Options):
 
   @property
   def height(self):
-    """
-    Description:
-    -----------
-    Set the image height in pixel.
+    """   Set the image height in pixel.
 
     Related Pages:
 
@@ -156,10 +125,7 @@ class Labels(Options):
 
   @property
   def render(self):
-    """
-    Description:
-    -----------
-    render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'.
+    """   render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'.
 
     Related Pages:
 
@@ -171,10 +137,7 @@ class Labels(Options):
 
   @property
   def precision(self):
-    """
-    Description:
-    -----------
-    precision for percentage, default is 0
+    """   precision for percentage, default is 0
 
     Related Pages:
 
@@ -188,10 +151,7 @@ class Labels(Options):
 
   @property
   def showZero(self):
-    """
-    Description:
-    -----------
-    Identifies whether or not labels of value 0 are displayed, default is false
+    """   Identifies whether or not labels of value 0 are displayed, default is false
 
     Related Pages:
 
@@ -205,10 +165,7 @@ class Labels(Options):
 
   @property
   def fontSize(self):
-    """
-    Description:
-    -----------
-    Font size, default is defaultFontSize
+    """   Font size, default is defaultFontSize
 
     Related Pages:
 
@@ -222,10 +179,7 @@ class Labels(Options):
 
   @property
   def fontColor(self):
-    """
-    Description:
-    -----------
-    Font color, can be color array for each data or function for dynamic color, default is defaultFontColor.
+    """   Font color, can be color array for each data or function for dynamic color, default is defaultFontColor.
 
     Related Pages:
 
@@ -239,10 +193,7 @@ class Labels(Options):
 
   @property
   def fontStyle(self):
-    """
-    Description:
-    -----------
-    Font style, default is defaultFontStyle.
+    """   Font style, default is defaultFontStyle.
 
     Related Pages:
 
@@ -256,10 +207,7 @@ class Labels(Options):
 
   @property
   def fontFamily(self):
-    """
-    Description:
-    -----------
-    Font family, default is defaultFontFamily.
+    """   Font family, default is defaultFontFamily.
 
     Related Pages:
 
@@ -273,10 +221,7 @@ class Labels(Options):
 
   @property
   def textShadow(self):
-    """
-    Description:
-    -----------
-    Draw text shadows under labels, default is false.
+    """   Draw text shadows under labels, default is false.
 
     Related Pages:
 
@@ -290,10 +235,7 @@ class Labels(Options):
 
   @property
   def shadowBlur(self):
-    """
-    Description:
-    -----------
-    Text shadow intensity, default is 6.
+    """   Text shadow intensity, default is 6.
 
     Related Pages:
 
@@ -307,10 +249,7 @@ class Labels(Options):
 
   @property
   def shadowOffsetX(self):
-    """
-    Description:
-    -----------
-    Text shadow X offset, default is 3.
+    """   Text shadow X offset, default is 3.
 
     Related Pages:
 
@@ -324,10 +263,7 @@ class Labels(Options):
 
   @property
   def shadowOffsetY(self):
-    """
-    Description:
-    -----------
-    Text shadow Y offset, default is 3.
+    """   Text shadow Y offset, default is 3.
 
     Related Pages:
 
@@ -341,10 +277,7 @@ class Labels(Options):
 
   @property
   def shadowColor(self):
-    """
-    Description:
-    -----------
-    Text shadow color, default is 'rgba(0,0,0,0.3)'.
+    """   Text shadow color, default is 'rgba(0,0,0,0.3)'.
 
     Related Pages:
 
@@ -358,10 +291,7 @@ class Labels(Options):
 
   @property
   def arc(self):
-    """
-    Description:
-    -----------
-    Draw label in arc, default is false, bar chart ignores this.
+    """   Draw label in arc, default is false, bar chart ignores this.
 
     Related Pages:
 
@@ -375,10 +305,7 @@ class Labels(Options):
 
   @property
   def position(self):
-    """
-    Description:
-    -----------
-    Position to draw label, available value is 'default', 'border' and 'outside'
+    """   Position to draw label, available value is 'default', 'border' and 'outside'
     default is 'default'.
 
     Related Pages:
@@ -393,10 +320,7 @@ class Labels(Options):
 
   @property
   def overlap(self):
-    """
-    Description:
-    -----------
-    Draw label even it's overlap, default is true.
+    """   Draw label even it's overlap, default is true.
 
     Related Pages:
 
@@ -410,10 +334,7 @@ class Labels(Options):
 
   @property
   def outsidePadding(self):
-    """
-    Description:
-    -----------
-    add padding when position is `outside`.
+    """   add padding when position is `outside`.
 
     Related Pages:
 
@@ -427,10 +348,7 @@ class Labels(Options):
 
   @property
   def images(self):
-    """
-    Description:
-    -----------
-    set images when `render` is 'image'.
+    """   set images when `render` is 'image'.
 
     :rtype: LabelsImages
     """
@@ -439,10 +357,7 @@ class Labels(Options):
 
   @property
   def textMargin(self):
-    """
-    Description:
-    -----------
-    Add margin of text when position is `outside` or `border`.
+    """   Add margin of text when position is `outside` or `border`.
 
     Related Pages:
 

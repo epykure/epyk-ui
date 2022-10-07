@@ -22,10 +22,7 @@ class NavBar(Attrs):
 
 
 class Footer(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Footer.
+  """  CSS pre defined properties for the Footer.
 
   CSS Properties:
 

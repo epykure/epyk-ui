@@ -16,8 +16,7 @@ class JqueryVertorMap:
   def add_map(self, name: str, continent: bool = False):
     """ Add the Javascript external package defining the map to the page.
 
-    Related Pages:
-    --------------
+    Related Pages::
 
       https://www.10bestdesign.com/jqvmap/
 

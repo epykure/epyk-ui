@@ -153,18 +153,14 @@ class Select(Component):
 
   @property
   def parsers(self):
-    """
-    Description:
-    ------------
+    """  
     Set of functions to parse the data.
     """
     return SelectionBox
 
   @property
   def data(self):
-    """
-    Description:
-    ------------
+    """  
     Property to the underlying data from the select.
     """
     return self._vals
@@ -178,13 +174,9 @@ class Select(Component):
       self.add_option(rec["value"], rec.get("name", rec["value"]), selected=rec.get("selected", False))
 
   def add_option(self, value, label, selected=False, options=None):
-    """
-    Description:
-    ------------
+    """  
     Add an option to the Data list component.
 
-    Attributes:
-    ----------
     :param value: String. The option value.
     :param label: String. The option label.
     :param selected: Boolean. Optional.

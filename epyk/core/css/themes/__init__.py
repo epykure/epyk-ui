@@ -29,12 +29,8 @@ class RegisteredThemes:
 
   def default(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The default CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -45,12 +41,8 @@ class RegisteredThemes:
 
   def blue(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Blue CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -61,12 +53,8 @@ class RegisteredThemes:
 
   def blue_grey(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Blue Grey CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -77,12 +65,8 @@ class RegisteredThemes:
 
   def blue_light(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Light Blue CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -93,12 +77,8 @@ class RegisteredThemes:
 
   def green(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Green CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -109,12 +89,8 @@ class RegisteredThemes:
 
   def green_light(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The light Green CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -125,12 +101,8 @@ class RegisteredThemes:
 
   def teal(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Teal CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -141,12 +113,8 @@ class RegisteredThemes:
 
   def grey(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Grey CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -157,12 +125,8 @@ class RegisteredThemes:
 
   def dark(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Dark CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -173,12 +137,8 @@ class RegisteredThemes:
 
   def pink(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Pink CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.
@@ -189,12 +149,8 @@ class RegisteredThemes:
 
   def red(self, index=5, step=1, ovr_attrs=None, dark=False):
     """
-    Description:
-    ------------
     The Red CSS Color theme.
-
-    Attributes:
-    ----------
+ 
     :param index: Integer. Optional. The base color index.
     :param step: Integer. Optional. The move step number.
     :param ovr_attrs: Dictionary. Optional. The nested dictionary with color codes.

@@ -14,8 +14,6 @@ class Components:
   def progressbar(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
                   options=None, profile=None):
     """
-    Description:
-    ------------
     Add a progress bar component to the page.
 
     Usage::
@@ -29,9 +27,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/progressbar/
-
-    Attributes:
-    ----------
+ 
     :param number: Integer. Optional. The initial value. (by default between 0 and 100)
     :param total: Integer. Optional. The maximum value.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -50,16 +46,12 @@ class Components:
   def progress(self, number=0, total=100, width=(100, '%'), height=(20, 'px'), html_code=None, helper=None,
                options=None, profile=None):
     """
-    Description:
-    ------------
     Add a progress bar component to the page.
 
     Related Pages:
 
       https://jqueryui.com/progressbar/
-
-    Attributes:
-    ----------
+ 
     :param number: Integer. Optional. The initial value.
     :param total: Integer. Optional. The maximum value.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -80,8 +72,6 @@ class Components:
   def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code=None, helper=None, options=None,
                  profile=None):
     """
-    Description:
-    ------------
     Menu using Jquery UI external module.
 
     Usage::
@@ -103,9 +93,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/menu/
-
-    Attributes:
-    ----------
+ 
     :param data:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
@@ -128,8 +116,6 @@ class Components:
   def dialogs(self, text="", width=(100, '%'), height=(20, 'px'), html_code=None, helper=None, options=None,
               profile=None):
     """
-    Description:
-    ------------
     Simple Jquery UI modal with a text.
 
     :tags:
@@ -142,9 +128,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/dialog/
-
-    Attributes:
-    ----------
+ 
     :param text: String. Optional. The value to be displayed to the component.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -161,8 +145,6 @@ class Components:
   def slider(self, number=0, minimum=0, maximum=100, width=(100, '%'), height=(None, 'px'), html_code=None,
              helper=None, options=None, profile=None):
     """
-    Description:
-    ------------
     Add a Jquery UI slider object to the page.
 
     Usage::
@@ -177,9 +159,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/slider/
-
-    Attributes:
-    ----------
+ 
     :param number: Integer. Optional. The initial value.
     :param minimum: Integer. Optional. The minimum value.
     :param maximum: Integer. Optional. The maximum value.
@@ -202,8 +182,6 @@ class Components:
   def date(self, text, placeholder='', width=(140, "px"), height=(None, "px"), html_code=None, options=None,
            attrs=None, profile=None):
     """
-    Description:
-    ------------
     Add a datepicker.
 
     Usage::
@@ -217,9 +195,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/datepicker/
-
-    Attributes:
-    ----------
+ 
     :param text: String. Optional. The value to be displayed to the component.
     :param placeholder: String. Optional. Text visible when the input component is empty.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -236,8 +212,6 @@ class Components:
   def panel(self, left=None, right=None, width=(100, '%'), height=(200, 'px'), left_width=(160, 'px'), resizable=True,
             helper=None, options=None, profile=None):
     """
-    Description:
-    ------------
     Add a split panel to the page.
 
     :tags:
@@ -257,9 +231,7 @@ class Components:
 
       https://codepen.io/rstrahl/pen/eJZQej
       https://jqueryui.com/resizable/
-
-    Attributes:
-    ----------
+ 
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param left_width:
@@ -279,8 +251,6 @@ class Components:
   def autocomplete(self, text="", placeholder='', width=(100, "%"), height=(None, "px"), html_code=None, options=None,
                    attrs=None, profile=None):
     """
-    Description:
-    ------------
     Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching
     and filtering.
 
@@ -296,9 +266,7 @@ class Components:
     Related Pages:
 
       https://jqueryui.com/autocomplete/
-
-    Attributes:
-    ----------
+ 
     :param text: String. Optional. The value to be displayed to the component.
     :param placeholder: String. Optional. Text visible when the input component is empty.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -321,8 +289,6 @@ class Components:
 
   def accordion(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
     """
-    Description:
-    ------------
     Add an Accordion panel.
 
     Related Pages:
@@ -336,9 +302,7 @@ class Components:
       acc.header(0).click([
         acc.panel(0).build("New content")
       ])
-
-    Attributes:
-    ----------
+ 
     :param values: Dictionary. Optional. Title: content.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -356,10 +320,7 @@ class Components:
     return component
 
   def tabs(self, values=None, html_code=None, width=(100, "%"), height=(None, "%"), profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add tabs panel.
+    """   Add tabs panel.
 
     Related Pages:
 
@@ -372,9 +333,7 @@ class Components:
       acc.tab(0).click([
         acc.panel(0).build("New content")
       ])
-
-    Attributes:
-    ----------
+ 
     :param values: Dictionary. Optional. Title: content.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.

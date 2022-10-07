@@ -17,8 +17,6 @@ class Modals:
   def forms(self, components: html.Html.Html, action: str, method: str, header=None, footer=None,
             helper: types.HELPER_TYPE = None):
     """
-    Description:
-    ------------
     Simple interface to create an html form within a modal
 
     Usage::
@@ -36,9 +34,7 @@ class Modals:
     Related Pages:
 
       https://www.w3schools.com/w3css/w3css_modal.asp
-
-    Attributes:
-    ----------
+ 
     :param components:
     :param action:
     :param method:
@@ -59,8 +55,6 @@ class Modals:
   def disclaimer(self, disc_list, header=None, footer=None, submit: bool = True, validation_text: str = 'AGREE',
                  action: str = None, add_buttons=None, helper: types.HELPER_TYPE = None):
     """
-    Description:
-    ------------
     Disclaimer that will appear as a modal.
 
     Usage::
@@ -76,9 +70,7 @@ class Modals:
       - :class:`epyk.core.html.HtmlContainer.Modal`
       - :class:`epyk.core.html.HtmlContainer.Row`
       - :class:`epyk.core.html.HtmlButton.Button`
-
-    Attributes:
-    ----------
+ 
     :param disc_list:
     :param header:
     :param footer:
@@ -109,8 +101,6 @@ class Modals:
              html_code: str = None, helper: types.HELPER_TYPE = None, options: dict = None,
              profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Simple Jquery UI modal with a text.
 
     Underlying HTML Objects:
@@ -123,9 +113,7 @@ class Modals:
 
     Usage::
 
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -143,8 +131,6 @@ class Modals:
   def icon(self, components: List[html.Html.Html] = None, icon: str = None, width: types.SIZE_TYPE = (100, '%'),
            height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a generic popup with an icon.
 
     Usage::
@@ -163,9 +149,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -200,8 +184,6 @@ class Modals:
   def validation(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
                  height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -219,9 +201,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -251,8 +231,6 @@ class Modals:
   def acknowledge(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
                   height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a popup with a ok button to validate the message has been displayed.
 
     Usage::
@@ -271,9 +249,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -299,8 +275,6 @@ class Modals:
   def popup(self, components: List[html.Html.Html] = None, title: str = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a generic popup.
 
     Usage::
@@ -319,9 +293,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param title:
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -344,8 +316,6 @@ class Modals:
   def error(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display an error popup.
 
     Usage::
@@ -364,9 +334,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -386,8 +354,6 @@ class Modals:
   def info(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
            height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display an info popup.
 
     Usage::
@@ -406,9 +372,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -423,8 +387,6 @@ class Modals:
   def success(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a success popup.
 
     Usage::
@@ -443,9 +405,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -462,8 +422,6 @@ class Modals:
   def loading(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
               options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a success popup.
 
     Usage::
@@ -482,9 +440,7 @@ class Modals:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The loading text.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -503,8 +459,6 @@ class Modals:
       Description:
       ------------
 
-      Attributes:
-      ----------
       :param data:
       :param options:
       :param profile:
@@ -519,11 +473,7 @@ class Modals:
               title: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
               options: dict = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param records:
     :param components:
     :param shape:

@@ -10,10 +10,7 @@ PARSE_FLOAT_EXPR = "parseFloat({})"
 class JsFor:
 
   def __init__(self, end, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
-    The for statement creates a loop that is executed as long as a condition is true.
+    """   The for statement creates a loop that is executed as long as a condition is true.
 
     The loop will continue to run as long as the condition is true. It will only stop when the condition becomes false.
 
@@ -22,8 +19,6 @@ class JsFor:
       https//www.w3schools.com/jsref/jsref_for.asp
       https://www.w3schools.com/js/js_performance.asp
 
-    Attributes:
-    ----------
     :param end:
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -36,10 +31,7 @@ class JsFor:
 
   @property
   def var(self) -> str:
-    """
-    Description:
-    -----------
-    Get the for loop iterable variable name.
+    """   Get the for loop iterable variable name.
 
     :return: A string corresponding to the variable.
     """
@@ -47,19 +39,13 @@ class JsFor:
 
   @var.setter
   def var(self, value):
-    """
-    Description:
-    -----------
-    Set the for loop iterable variable name.
+    """   Set the for loop iterable variable name.
     """
     self.options['var'] = value
 
   @property
   def start(self):
-    """
-    Description:
-    -----------
-    Set the start value for the for loop.
+    """   Set the start value for the for loop.
     """
     return self.options['start']
 
@@ -72,10 +58,7 @@ class JsFor:
 
   @property
   def end(self):
-    """
-    Description:
-    -----------
-    Set the end value for the for loop.
+    """   Set the end value for the for loop.
     """
     return self.options['end']
 
@@ -88,10 +71,7 @@ class JsFor:
 
   @property
   def step(self):
-    """
-    Description:
-    -----------
-    Set the step value to be used in the for loop to increment the variable.
+    """   Set the step value to be used in the for loop to increment the variable.
     """
     return self.options['step']
 
@@ -103,13 +83,8 @@ class JsFor:
       self.options['step'] = value
 
   def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
-    Add JavaScript functions to the content of the for loop.
+    """   Add JavaScript functions to the content of the for loop.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param bool reset: Optional. Reset the JavaScript functions for this loop.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -132,12 +107,8 @@ class JsIterable:
 
   def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
                profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[primitives.JsDataModel, str] iterable:
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -150,34 +121,23 @@ class JsIterable:
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
+    """   
 `   Return the variable reference for this loop.
     """
     return self.options['var']
 
   @var.setter
   def var(self, value: str):
-    """
-    Description:
-    -----------
+    """   
 `   Return the variable reference for this loop.
 
-    Attributes:
-    ----------
     :param str value: The value reference for the JavaScript variable.
     """
     self.options['var'] = value
 
   def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
-    Add expression to the for loop.
+    """   Add expression to the for loop.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param bool reset: Optional. Reset the JavaScript functions for this loop.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.

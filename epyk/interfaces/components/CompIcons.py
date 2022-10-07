@@ -25,8 +25,6 @@ class Icons:
               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, align: str = "left",
               size: types.SIZE_TYPE = (None, 'px')):
     """
-    Description:
-    ------------
     Generic function to create icon components. Default icon library used is font awesome but this might change
     depending on the web framework used.
 
@@ -43,8 +41,6 @@ class Icons:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/banners.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
 
-    Attributes:
-    ----------
     :param icon: Optional. The font awesome icon reference
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -84,8 +80,6 @@ class Icons:
              width: types.SIZE_TYPE = (25, 'px'), height: types.SIZE_TYPE = (25, 'px'), html_code: str = None,
              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -96,8 +90,6 @@ class Icons:
       - :class:`epyk.core.html.HtmlButton.IconEdit`
     ms-Icon ms-Icon--AdminDLogoInverse32
 
-    Attributes:
-    ----------
     :param icon: Optional. The FluentUI icon reference
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -126,12 +118,8 @@ class Icons:
             tooltip: str = None, align: str = "left", options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
 
-    Attributes:
-    ----------
     :param icon: Optional. The icon value
     :param family: Optional. The icon family
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -157,8 +145,6 @@ class Icons:
            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, align: str = "left",
            size: types.SIZE_TYPE = (None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -173,8 +159,6 @@ class Icons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -193,8 +177,6 @@ class Icons:
   def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -209,8 +191,6 @@ class Icons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -229,13 +209,9 @@ class Icons:
   def next(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -255,13 +231,9 @@ class Icons:
   def previous(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
                html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -281,16 +253,12 @@ class Icons:
   def play(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
     Shortcut to the play icon.
 
     Usage::
 
       page.ui.icons.play()
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -309,16 +277,12 @@ class Icons:
   def stop(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
     Shortcut to the stop icon.
 
     Usage::
 
       page.ui.icons.stop()
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -337,13 +301,9 @@ class Icons:
   def zoom_out(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
                html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -363,14 +323,10 @@ class Icons:
   def zoom_in(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -390,13 +346,9 @@ class Icons:
   def warning(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -417,13 +369,9 @@ class Icons:
   def success(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -444,13 +392,9 @@ class Icons:
   def danger(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -471,13 +415,9 @@ class Icons:
   def error(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -497,13 +437,9 @@ class Icons:
   def info(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), html_code=None,
            options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -522,14 +458,10 @@ class Icons:
   def save(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'), html_code=None,
            options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -548,8 +480,6 @@ class Icons:
   def refresh(self, text=None, position=None, tooltip="Refresh Component", width=(None, 'px'), height=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -561,8 +491,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -581,8 +509,6 @@ class Icons:
   def pdf(self, text=None, position=None, tooltip="Convert to PDF", width=(None, 'px'), height=(None, 'px'),
           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -593,8 +519,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -613,8 +537,6 @@ class Icons:
   def plus(self, text=None, position=None, tooltip="Add line", width=(None, 'px'), height=(None, 'px'),
            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
    Usage::
@@ -625,8 +547,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -645,8 +565,6 @@ class Icons:
   def excel(self, text=None, position=None, tooltip="Convert to Excel", width=(None, 'px'), height=(None, 'px'),
             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -657,8 +575,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center...)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -677,8 +593,6 @@ class Icons:
   def download(self, text=None, position=None, tooltip="Download", width=(None, 'px'), height=(None, 'px'),
                html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -689,8 +603,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -710,8 +622,6 @@ class Icons:
   def delete(self, text=None, position=None, tooltip="Delete Component on the page", width=(None, 'px'),
              height=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -722,8 +632,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -744,8 +652,6 @@ class Icons:
   def zoom(self, text=None, position=None, tooltip="Zoom on Component", width=(None, 'px'), height=(None, 'px'),
            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -756,8 +662,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -776,8 +680,6 @@ class Icons:
   def capture(self, text=None, position=None, tooltip="Save to clipboard", width=(None, 'px'), height=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -788,8 +690,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -809,8 +709,6 @@ class Icons:
   def remove(self, text=None, position=None, tooltip="Remove Item", width=(None, 'px'), height=(None, 'px'),
              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -821,8 +719,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -843,8 +739,6 @@ class Icons:
   def clear(self, text=None, position=None, tooltip="", width=(None, 'px'), height=(None, 'px'),
             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fas fa-times-circle <https://fontawesome.com/icons/fas fa-eraser>`_ icon
 
@@ -856,8 +750,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param align:
     :param position: Optional. The position of the icon in the line (left, right, center)
@@ -879,8 +771,6 @@ class Icons:
   def table(self, text=None, position=None, tooltip="Convert to Table", width=(None, 'px'), height=(None, 'px'),
             html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -891,8 +781,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -911,8 +799,6 @@ class Icons:
   def wrench(self, text=None, position=None, tooltip="Processing Time", width=(None, 'px'), height=(None, 'px'),
              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -923,8 +809,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -943,8 +827,6 @@ class Icons:
   def rss(self, text="RSS", position=None, tooltip="", width=('auto', ''), height=(25, 'px'),
           html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -955,8 +837,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param position: Optional. The position of the icon in the line (left, right, center)
     :param tooltip: Optional. A string with the value of the tooltip
@@ -984,8 +864,6 @@ class Icons:
   def facebook(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -996,8 +874,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1023,8 +899,6 @@ class Icons:
   def messenger(self, text=None, url="https://en-gb.facebook.com/", position=None, tooltip="Facebook", width=(25, 'px'),
                 html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1035,8 +909,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text to be displayed to this component. Default None
     :param url:
     :param position:
@@ -1060,8 +932,6 @@ class Icons:
   def twitter(self, text=None, url="https://twitter.com/Epykure1", position=None, tooltip="", width=(None, 'px'),
               html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1072,8 +942,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1099,8 +967,6 @@ class Icons:
   def twitch(self, text=None, url="https://www.twitch.tv/epykure1", position=None, tooltip="", width=(None, 'px'),
              html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1111,8 +977,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1138,8 +1002,6 @@ class Icons:
   def instagram(self, text=None, url="https://www.instagram.com/?hl=en", position=None, tooltip="Twitter",
                 width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1150,8 +1012,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1177,8 +1037,6 @@ class Icons:
   def linkedIn(self, text=None, url="https://www.linkedin.com/in/epykure-python-58278a1b8/", position=None, tooltip="",
                width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
     Create a LinkedIn icon button which will by default point to the Epykure account.
     Epykure account is the official account for the development of this framework.
 
@@ -1190,8 +1048,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: Optional. The text for the Icon
     :param url: Optional. The url when clicked
     :param position:
@@ -1217,8 +1073,6 @@ class Icons:
   def youtube(self, text=None, url="https://www.youtube.com/", position=None, tooltip="Follow us on Youtube",
               width=(None, 'px'), html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1229,8 +1083,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1257,8 +1109,6 @@ class Icons:
              tooltip="Go the the Github project", width=(None, 'px'), html_code=None, options=None, profile=None,
              align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
     Link to a GitHub repository.
 
     By default this icon button will redirect to the Epyk UI repository.
@@ -1271,8 +1121,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text: optional. The text on the icon
     :param url: Optional. The url link
     :param position:
@@ -1296,8 +1144,6 @@ class Icons:
   def python(self, text=None, url="https://pypi.org/", position=None, tooltip="", width=(25, 'px'), html_code=None,
              options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1308,8 +1154,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1335,8 +1179,6 @@ class Icons:
                     width=(25, 'px'), html_code=None, options=None, profile=None, align: str = "left",
                     size=(None, 'px')):
     """
-    Description:
-    ------------
 
 
     Usage::
@@ -1347,8 +1189,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1371,8 +1211,6 @@ class Icons:
   def mail(self, text=None, url="", position=None, tooltip="Share by mail", width=(25, 'px'), html_code=None,
            options=None, profile=None, align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Same as :func:`epyk.interfaces.components.CompIcons.Icons.awesome` with a `fab fa-stack-overflow <https://fontawesome.com/icons/stack-overflow>`_ icon
 
@@ -1384,8 +1222,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlButton.IconEdit`
 
-    Attributes:
-    ----------
     :param text:
     :param url:
     :param position:
@@ -1407,8 +1243,6 @@ class Icons:
   def tick(self, flag=True, text=None, icons=(JsFontAwesome.ICON_CHECK, JsFontAwesome.ICON_TIMES), position=None,
            tooltip="", width=(None, 'px'), html_code=None, options=None, profile=None):
     """
-    Description:
-    ------------
     Display a tick box component
 
     Usage::
@@ -1419,8 +1253,6 @@ class Icons:
 
       - :class:`epyk.core.html.HtmlRadio.Tick`
 
-    Attributes:
-    ----------
     :param flag: Optional. The state for the tick component
     :param text: optional. The text for this component. Default none
     :param icons: Optional. The two icons to use for the component state
@@ -1446,8 +1278,6 @@ class Icons:
 
   def epyk(self, align: str = "center", size: types.SIZE_TYPE = (32, 'px')):
     """
-    Description:
-    ------------
     Add the Epyk Icon.
 
     Usage::
@@ -1462,8 +1292,6 @@ class Icons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    ----------
     :param align: Optional. A string with the horizontal position of the component
     :param size: Optional.
     """
@@ -1483,8 +1311,6 @@ class Icons:
 
   def signin(self, text: str, width: types.SIZE_TYPE = (40, "px"), icon: str = None, colored: bool = True):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -1498,8 +1324,6 @@ class Icons:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
 
-    Attributes:
-    ----------
     :param text:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param icon: Optional. The component icon content from font-awesome references
@@ -1517,8 +1341,6 @@ class Icons:
           height: types.SIZE_TYPE = (None, 'px'), options: types.OPTION_TYPE = None,
           profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add a bespoke options / actions bar with icons
 
     Usage::
@@ -1529,8 +1351,6 @@ class Icons:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/chips.py
 
-    Attributes:
-    ----------
     :param records:
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1550,15 +1370,11 @@ class Icons:
              height: types.SIZE_TYPE = (None, ''), options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display an avatar component.
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param img: The image full path
     :param name: Optional.The tooltip name
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1582,8 +1398,6 @@ class Icons:
             height: types.SIZE_TYPE=(25, "px"), background_color: str = None, color: str = None, url: str = None,
             tooltip: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Display a badge component using Bootstrap
 
     Usage::
@@ -1604,8 +1418,6 @@ class Icons:
 
       https://getbootstrap.com/docs/4.0/components/badge/
 
-    Attributes:
-    ----------
     :param text: Optional. The content of the badge
     :param icon: Optional. A String with the icon to display from font-awesome
     :param background_color: Optional. The background color of the badge
@@ -1635,8 +1447,6 @@ class Icons:
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            helper: str = None):
     """
-    Description:
-    ------------
     This component is based on the Jquery Date Picker object.
 
     Usage::
@@ -1651,8 +1461,6 @@ class Icons:
 
       https://jqueryui.com/datepicker/
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -1683,14 +1491,10 @@ class Icons:
   def timer(self, time, js_funcs, icon="clock", width=(15, "px"), height=(15, "px"), options=None, profile=None,
             align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param time: Integer. Interval time in second
     :param js_funcs: String | List. The Javascript functions
     :param icon: String. The font awesome icon reference
@@ -1726,14 +1530,10 @@ class Icons:
   def large(self, icon=None, family=None, width=(None, 'px'), height=(None, "px"), html_code=None, color=None,
             tooltip=None, align="left", options=None, profile=None):
     """
-    Description:
-    ------------
 
     Usage::
 
 
-    Attributes:
-    ----------
     :param icon:
     :param family:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -1761,8 +1561,6 @@ class Icons:
   def menu(self, data, width=(100, '%'), height=(None, 'px'), options=None, profile=False,
            align: str = "left", size=(None, 'px')):
     """
-    Description:
-    ------------
     Add a menu bar with multiple icons.
 
     Usage::
@@ -1773,8 +1571,6 @@ class Icons:
         {"icon": "fas fa-file-code"}
       ])
 
-    Attributes:
-    ----------
     :param data: List. The icons definition.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param size: Tuple. Optional. A tuple with the integer for the icon size and its unit
@@ -1801,13 +1597,9 @@ class Icons:
 
   def hamburger(self, width=(15, 'px'), height=(2, 'px'), color=None, options=None, profile=None):
     """
-    Description:
-    ------------
 
     https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_menu_icon_js
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
     :param color: String. Optional. The font color in the component. Default inherit
@@ -1848,23 +1640,18 @@ class Icons:
   @property
   def toggles(self):
     """
-    Description:
-    ------------
     More custom toggles icons.
     """
     return Toggles(self)
 
   def gallery(self, icons=None, columns=6, width=(None, '%'), height=('auto', ''), options=None, profile=None):
     """
-    Description:
-    ------------
     Mosaic of pictures.
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -1872,8 +1659,6 @@ class Icons:
 
     Templates:
 
-    Attributes:
-    ----------
     :param icons: List. Optional. The list with the pictures
     :param columns: Integer. Optional. The number of column for the mosaic component
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -1946,8 +1731,6 @@ class Toggles:
   def collapse(self, icon_on="compress", icon_off="fas fa-expand", family=None, width=(None, 'px'),
                html_code=None, height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -1961,8 +1744,6 @@ class Toggles:
 
       https://fontawesome.com/icons?m=free
 
-    Attributes:
-    ----------
     :param icon_on: Optional. The component icon content from font-awesome references
     :param icon_off: Optional. The component icon content from font-awesome references
     :param family: Optional. The Icon library reference
@@ -1990,8 +1771,6 @@ class Toggles:
   def lock(self, icon_on="lock_open", icon_off="fas fa-lock", family=None, width=(None, 'px'), html_code=None,
            height=(None, "px"), color=None, tooltip=None, align="left", options=None, profile=None):
     """
-    Description:
-    ------------
     Add a lock toggle button.
 
     Usage::
@@ -2006,8 +1785,6 @@ class Toggles:
 
       https://fontawesome.com/icons?m=free
 
-    Attributes:
-    ----------
     :param icon_on: Optional. The component icon content from font-awesome references
     :param icon_off: Optional. The component icon content from font-awesome references
     :param family: Optional. The Icon library reference

@@ -28,9 +28,9 @@ class Panel(Html.Html):
   name = 'Panel'
 
   def __init__(self, page: primitives.PageModel, components: Union[List[Html.Html], Html.Html],
-               title: Optional[str], color: Optional[str], width: Optional[tuple], height: Optional[tuple],
-               html_code: Optional[str], helper: Optional[str], options: Optional[dict],
-               profile: Optional[Union[dict, bool]]):
+               title: Optional[str], color: Optional[str], width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               html_code: Optional[str], helper: Optional[str], options: types.OPTION_TYPE,
+               profile: types.PROFILE_TYPE):
     if isinstance(components, list) and components:
       for component in components:
         if hasattr(component, 'options'):
@@ -52,9 +52,7 @@ class Panel(Html.Html):
 
   @property
   def style(self) -> GrpClsContainer.ClassDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -63,9 +61,7 @@ class Panel(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlPanel:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -76,13 +72,9 @@ class Panel(Html.Html):
     return self._dom
 
   def extend(self, components: List[Html.Html]):
-    """
-    Description:
-    ------------
+    """  
     Add multiple HTML components to the container.
 
-    Attributes:
-    ----------
     :param components: The list of components.
     """
     for component in components:
@@ -90,13 +82,9 @@ class Panel(Html.Html):
     return self
 
   def add_menu(self, close: bool = True, mini: bool = True, info: Optional[bool] = None, pin: Optional[bool] = False):
-    """
-    Description:
-    ------------
+    """  
     Add specific and predefined options to the panels.
 
-    Attributes:
-    ----------
     :param close: Optional. Add a close button to the panel.
     :param mini: Optional. Add a minimize button to the panel.
     :param info: Optional. Add a info button to the panel.
@@ -160,9 +148,9 @@ class PanelSplit(Html.Html):
   requirements = ('jqueryui', )
   name = 'Panel Split'
 
-  def __init__(self, page: primitives.PageModel, width: Optional[tuple], height: Optional[tuple],
-               left_width: Optional[tuple], left_obj, right_obj, resizable: bool, helper,
-               options: Optional[dict], profile: Optional[Union[dict, bool]]):
+  def __init__(self, page: primitives.PageModel, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               left_width: types.SIZE_TYPE, left_obj, right_obj, resizable: bool, helper,
+               options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     super(PanelSplit, self).__init__(page, None, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
     self.left_width, self.resizable = left_width, resizable
@@ -180,9 +168,7 @@ class PanelSplit(Html.Html):
     self.add_helper(helper)
 
   def left(self, component: Html.Html):
-    """
-    Description:
-    ------------
+    """  
     Add the left component to the panel.
 
     Usage::
@@ -190,8 +176,6 @@ class PanelSplit(Html.Html):
       split_panel = page.ui.panels.split()
       split_panel.left(page.ui.col([page.ui.text("Left")]))
 
-    Attributes:
-    ----------
     :param component: An HTML component.
     """
     component.options.managed = False
@@ -199,9 +183,7 @@ class PanelSplit(Html.Html):
     return self
 
   def right(self, component: Html.Html):
-    """
-    Description:
-    ------------
+    """  
     Add the right component to the panel.
 
     Usage::
@@ -209,8 +191,6 @@ class PanelSplit(Html.Html):
       split_panel = page.ui.panels.split()
       split_panel.right(page.ui.col([page.ui.text("Right")]))
 
-    Attributes:
-    ----------
     :param component: An HTML component.
     """
     component.options.managed = False
@@ -238,9 +218,9 @@ class PanelSlide(Panel):
   _option_cls = OptPanel.OptionPanelSliding
 
   def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
-               title: Union[Html.Html, str], color: Optional[str], width: Optional[tuple],
-               height: Optional[tuple], html_code: Optional[str], helper,
-               options: Optional[dict], profile: Optional[Union[dict, bool]]):
+               title: Union[Html.Html, str], color: Optional[str], width: types.SIZE_TYPE,
+               height: types.SIZE_TYPE, html_code: Optional[str], helper,
+               options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     self.requirements = (page.icons.family, )
     super(PanelSlide, self).__init__(
       page, components, None, color, width, height, html_code, helper, options, profile)
@@ -268,9 +248,7 @@ class PanelSlide(Panel):
 
   @property
   def options(self) -> OptPanel.OptionPanelSliding:
-    """
-    Description:
-    ------------
+    """  
     Property to the comments component options.
     Optional can either impact the Python side or the Javascript builder.
 
@@ -280,9 +258,7 @@ class PanelSlide(Panel):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlSlidingPanel:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -294,18 +270,14 @@ class PanelSlide(Panel):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Event added to the title bar.
     This will be triggered first.
 
-    Attributes:
-    ----------
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -313,16 +285,12 @@ class PanelSlide(Panel):
     return self
 
   def open(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: str = False):
-    """
-    Description:
-    ------------
+    """  
     Event triggered when the sliding panel is open.
 
-    Attributes:
-    ----------
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -367,9 +335,9 @@ class Div(Html.Html):
   _option_cls = OptPanel.OptionsDiv
 
   def __init__(self, page: primitives.PageModel, components: List[Html.Html], label: Optional[str],
-               color: Optional[str], width: Optional[tuple], icon: Optional[str], height: Optional[tuple],
+               color: Optional[str], width: types.SIZE_TYPE, icon: Optional[str], height: types.SIZE_TYPE,
                editable: bool, align: str, padding: Optional[str], html_code: Optional[str],
-               tag: str, helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+               tag: str, helper: Optional[str], options: types.OPTION_TYPE, profile: types.OPTION_TYPE):
     super(Div, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                               css_attrs={"color": color, "width": width, "height": height})
     if not isinstance(components, list):
@@ -416,22 +384,17 @@ class Div(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Click event which redirect to another page.
+    """   Click event which redirect to another page.
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_a_target.asp
 
-    Attributes:
-    ----------
-    :param url: the url.
-    :param js_funcs: Optional. The Javascript Events triggered before the redirection.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param target: Optional. The target attribute specifies where to open the linked document.
-    :param source_event: Optional. The event source.
+    :param url: the url
+    :param js_funcs: Optional. The Javascript Events triggered before the redirection
+    :param profile: Optional. A flag to set the component performance storage
+    :param target: Optional. The target attribute specifies where to open the linked document
+    :param source_event: Optional. The event source
     """
     self.style.css.cursor = "pointer"
     js_funcs = js_funcs or []
@@ -442,9 +405,7 @@ class Div(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -473,15 +434,11 @@ class Div(Html.Html):
     return self
 
   def insert(self, n: int, component: Html.Html):
-    """
-    Description:
-    ------------
+    """  
     Insert a component to a div.
 
-    Attributes:
-    ----------
-    :param n: The expected position of the component in the list.
-    :param component: The component to be added to the underlying list.
+    :param n: The expected position of the component in the list
+    :param component: The component to be added to the underlying list
     """
     if isinstance(component, list):
       component = self.page.ui.row(component)
@@ -497,13 +454,9 @@ class Div(Html.Html):
     return self
 
   def extend(self, components: List[Html.Html]):
-    """
-    Description:
-    ------------
+    """  
     Add multiple HTML components to the container.
 
-    Attributes:
-    ----------
     :param components: The list of components.
     """
     for component in components:
@@ -512,18 +465,14 @@ class Div(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
     """
     return super().options
 
   @property
   def style(self) -> GrpClsContainer.ClassDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -532,18 +481,14 @@ class Div(Html.Html):
 
   def build(self, data: types.JS_DATA_TYPES = None, options: Optional[dict] = None,
             profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Build / Update the component.
     This is a function triggered on the JavaScript side.
 
-    Attributes:
-    ----------
-    :param data: Optional. A String corresponding to a JavaScript object.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param component_id: Optional. A DOM component reference in the page.
+    :param data: Optional. A String corresponding to a JavaScript object
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. A DOM component reference in the page
     """
     # check if there is no nested HTML components in the data
     if isinstance(data, dict):
@@ -578,9 +523,9 @@ class Td(Html.Html):
   name = 'Cell'
 
   def __init__(self, page: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
-               header: bool, position: Optional[str], width: Optional[tuple],
-               height: Optional[tuple], align: Optional[str], options: Optional[dict],
-               profile: Optional[Union[dict, bool]]):
+               header: bool, position: Optional[str], width: types.SIZE_TYPE,
+               height: types.SIZE_TYPE, align: Optional[str], options: types.OPTION_TYPE,
+               profile: types.PROFILE_TYPE):
     self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
     super(Td, self).__init__(page, [], profile=profile,
                              css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
@@ -591,35 +536,27 @@ class Td(Html.Html):
         self.__add__(component)
 
   def colspan(self, i: int):
-    """
-    Description:
-    ------------
+    """  
     The colspan attribute defines the number of columns a cell should span.
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_td_colspan.asp
 
-    Attributes:
-    ----------
-    :param i: The column span value for the cell object.
+    :param i: The column span value for the cell object
     """
     self.attr['colspan'] = i
     return self
 
   def rowspan(self, i: int):
-    """
-    Description:
-    ------------
+    """  
     The rowspan attribute specifies the number of rows a cell should span.
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_td_rowspan.asp
 
-    Attributes:
-    ----------
-    :param i: The row span value for the cell.
+    :param i: The row span value for the cell
     """
     self.attr['rowspan'] = i
     return self
@@ -636,8 +573,8 @@ class Tr(Html.Html):
   name = 'Column'
 
   def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
-               header, position, width: Optional[tuple], height: Optional[tuple],
-               align: Optional[str], options: Optional[dict], profile):
+               header, position, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               align: Optional[str], options: types.OPTION_TYPE, profile):
     self.position, self.header = position, header
     super(Tr, self).__init__(
       page, [], profile=profile, css_attrs={"width": width, "height": height, 'text-align': align})
@@ -648,14 +585,9 @@ class Tr(Html.Html):
     self.style.justify_content = self.position
 
   def __add__(self, component: Html.Html):
-    """
-    Description:
-    -----------
-    Add items to a container.
+    """   Add items to a container.
 
-    Attributes:
-    ----------
-    :param component: The underlying HTML component to be added this container.
+    :param component: The underlying HTML component to be added this container
     """
     if not isinstance(component, Td):
       if not isinstance(component, list):
@@ -667,10 +599,7 @@ class Tr(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlTr:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -689,8 +618,8 @@ class Caption(Html.Html):
   _option_cls = OptText.OptionsText
 
   def __init__(self, page: primitives.PageModel, text: Optional[str], color: Optional[str], align: Optional[str],
-               width: Optional[tuple], height: Optional[tuple], html_code: Optional[str],
-               tooltip: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+               width: types.SIZE_TYPE, height: types.SIZE_TYPE, html_code: Optional[str],
+               tooltip: Optional[str], options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     super(Caption, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
     if tooltip is not None:
@@ -698,9 +627,7 @@ class Caption(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
     """
     return super().options
@@ -715,7 +642,7 @@ class TSection(Html.Html):
   _option_cls = OptPanel.OptionPanelTable
 
   def __init__(self, page: primitives.PageModel, type: str, rows: Optional[list] = None,
-               options:  Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     super(TSection, self).__init__(page, [], options=options, profile=profile)
     self.__section = type
     if rows is not None:
@@ -724,9 +651,7 @@ class TSection(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionPanelTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -758,8 +683,8 @@ class Table(Html.Html):
   name = 'Table'
   _option_cls = OptPanel.OptionPanelTable
 
-  def __init__(self, page: primitives.PageModel, rows, width: Optional[tuple], height: Optional[tuple],
-               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+  def __init__(self, page: primitives.PageModel, rows, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               helper: Optional[str], options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     super(Table, self).__init__(page, [], css_attrs={
       "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap', 'border-collapse': 'collapse',
       'box-sizing': 'border-box'}, profile=profile, options=options)
@@ -777,9 +702,7 @@ class Table(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionPanelTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -803,15 +726,11 @@ class Table(Html.Html):
     return self
 
   def from_array(self, data: list, dim: int):
-    """
-    Description:
-    ------------
+    """  
     Load data from a 2D array.
 
-    Attributes:
-    ----------
-    :param data: The list of data.
-    :param dim: The number of columns in the table.
+    :param data: The list of data
+    :param dim: The number of columns in the table
     """
     v_count = len(data)
     modulo_rest = v_count % dim
@@ -823,15 +742,11 @@ class Table(Html.Html):
       self += data[-modulo_rest:]
 
   def line(self, text: str = "&nbsp;", align: str = "left", dim: Optional[int] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param align: Optional. The text-align property within this component.
-    :param dim: Optional. The number of columns in the table.
+    :param text: Optional. The value to be displayed to the component
+    :param align: Optional. The text-align property within this component
+    :param dim: Optional. The number of columns in the table
     """
     cell = Td(self.page, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
     cell.colspan(dim or len(self.body.val[0].val))
@@ -841,60 +756,43 @@ class Table(Html.Html):
   def add_caption(self, text: str, color: Optional[str] = None, align: Optional[str] = None, width: tuple = (100, "%"),
                   height: tuple = (100, "%"), html_code: Optional[str] = None, tooltip: Optional[str] = None,
                   options: Optional[dict] = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     The <caption> tag defines a table caption.
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_caption.asp
 
-    Attributes:
-    ----------
-    :param text: Optional. The value to be displayed to the component.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: Optional. The text-align property within this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.caption = Caption(self.page, text, color, align, width, height, html_code, tooltip, options, profile)
     return self.caption
 
   def get_header(self, i: int = 0):
-    """
-    Description:
-    ------------
+    """  Get a component from the header based on its position.
 
-    Attributes:
-    ----------
-    :param i: Optional.
+    :param i: Optional. The component index in the header
     """
     return self.header.val[i]
 
   def get_footer(self, i: int = 0):
-    """
-    Description:
-    ------------
-    Get a specific items from the table footer.
+    """  Get a specific items from the table footer.
 
-    Attributes:
-    ----------
-    :param i: Optional. The table footer component position.
+    :param i: Optional. The table footer component position
     """
     return self.footer.val[i]
 
   def col(self, i: int):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param i: The column index.
     """
     cells = []
@@ -911,13 +809,8 @@ class Table(Html.Html):
       yield c
 
   def __getitem__(self, i: int) -> Optional[Tr]:
-    """
-    Description:
-    ------------
-    Get the underlying body attached to the component.
+    """  Get the underlying body attached to the component.
 
-    Attributes:
-    ----------
     :param i: The internal row based on the index.
     """
     if not self.body.val:
@@ -936,7 +829,8 @@ class Col(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, page, components, position, width, height, align, helper, options, profile):
+  def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE, align: str,
+               helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     self.position,  self.rows_css, self.row_css_dflt = position, {}, {}
     super(Col, self).__init__(page, [], profile=profile, options=options)
     self.__set_size = None
@@ -965,22 +859,16 @@ class Col(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionGrid:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
     return super().options
 
   def add(self, component: Html.Html):
-    """
-    Description:
-    ------------
+    """  
     Add items to a container.
 
-    Attributes:
-    ----------
     :param component:
     """
     if not hasattr(component, 'options'):
@@ -990,12 +878,8 @@ class Col(Html.Html):
 
   def build(self, data=None, options: Optional[dict] = None, profile: types.PROFILE_TYPE = None,
             component_id: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param data:
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1004,9 +888,7 @@ class Col(Html.Html):
     return self.val[0].build(data, options, profile)
 
   def set_size(self, n: int, break_point: str = "lg"):
-    """
-    Description:
-    ------------
+    """  
     Set the column size.
 
     Usage::
@@ -1015,8 +897,6 @@ class Col(Html.Html):
       ps += [page.ui.text("test %s" % i) for i in range(5)]
       ps[0][0].set_size(10)
 
-    Attributes:
-    ----------
     :param n: The size of the component in the bootstrap row.
     :param break_point: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -1050,7 +930,8 @@ class Row(Html.Html):
   requirements = ('bootstrap', )
   _option_cls = OptPanel.OptionGrid
 
-  def __init__(self, page, components, position, width, height, align, helper, options, profile):
+  def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+               align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
     self.position, self.align = position, align
     super(Row, self).__init__(page, [], css_attrs={"width": width, "height": height},
                               options=options, profile=profile)
@@ -1074,9 +955,7 @@ class Row(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionGrid:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -1086,9 +965,7 @@ class Row(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlRow:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -1099,14 +976,10 @@ class Row(Html.Html):
     return self._dom
 
   def set_size_cols(self, *args):
-    """
-    Description:
-    ------------
+    """  
     Set the dimension of the columns in the row container.
     The sum of the various columns should not exceed 12, the max layout in Bootstrap.
 
-    Attributes:
-    ----------
     :param args: Integer the size of the different columns.
     """
     vals = list(args)
@@ -1120,14 +993,10 @@ class Row(Html.Html):
     return self
 
   def set_width_cols(self, *args):
-    """
-    Description:
-    ------------
+    """  
     Force the width of the different columns in the tow component.
 
-    Attributes:
-    ----------
-    :param args: Tuples. The width object (value, unit).
+    :param args: The width object (value, unit).
     """
     for i, val in enumerate(list(args)):
       self[i].style.css.width = "%s%s" % (val[0], val[1])
@@ -1183,7 +1052,7 @@ class Grid(Html.Html):
   _option_cls = OptPanel.OptionGrid
 
   def __init__(self, page: primitives.PageModel, rows: list, width: tuple, height: tuple, align: str, position: str,
-               options: Optional[dict], profile: Optional[Union[bool, dict]]):
+               options: types.OPTION_TYPE, profile: Optional[Union[bool, dict]]):
     super(Grid, self).__init__(
       page, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
     self.position = position
@@ -1211,9 +1080,7 @@ class Grid(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionGrid:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -1243,15 +1110,11 @@ class Grid(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlGrid:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlPanels.JsHtmlGrid
     """
     if self._dom is None:
       self._dom = JsHtmlPanels.JsHtmlGrid(self, page=self.page)
@@ -1282,9 +1145,7 @@ class Tabs(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionPanelTabs:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -1294,9 +1155,7 @@ class Tabs(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlTabs:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -1310,58 +1169,40 @@ class Tabs(Html.Html):
     return self.__panel_objs[name]
 
   def select(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Set a value to be selected when the component is created.
 
-    Attributes:
-    ----------
     :param name: The selected value.
     """
     self.__selected = name
     return self
 
   def panel(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Get the panel object.
 
-    Attributes:
-    ----------
     :param name: The tab name.
     """
     return self.__panel_objs[name]["content"]
 
   def tab(self, name: str) -> Div:
-    """
-    Description:
-    ------------
+    """  
     Get the tab container.
 
-    Attributes:
-    ----------
     :param name: The tab name.
     """
     return self.__panel_objs[name]["tab"][0]
 
   def tab_holder(self, name: str) -> Div:
-    """
-    Description:
-    ------------
+    """  
     Get the tab container.
 
-    Attributes:
-    ----------
     :param name: The tab name.
     """
     return self.__panel_objs[name]["tab"]
 
   def tabs(self):
-    """
-    Description:
-    ------------
+    """  
     Get the tab container.
     """
     for tab_obj in self.__panel_objs.values():
@@ -1369,13 +1210,9 @@ class Tabs(Html.Html):
 
   def add_panel(self, name: str, div: Html.Html, icon: str = None, selected: bool = False,
                 css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None):
-    """
-    Description:
-    ------------
+    """  
 
 
-    Attributes:
-    ----------
     :param name: The panel name.
     :param div: HTML Component.
     :param icon: Optional.
@@ -1479,9 +1316,7 @@ class IFrame(Html.Html):
 
   @property
   def dom(self) -> JsHtmlPanels.JsHtmlIFrame:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -1492,16 +1327,12 @@ class IFrame(Html.Html):
     return self._dom
 
   def scrolling(self, flag: bool = True):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_iframe.ASP
 
-    Attributes:
-    ----------
     :param flag: Optional.
     """
     if flag:
@@ -1512,50 +1343,38 @@ class IFrame(Html.Html):
     return self
 
   def sandbox(self, text: str):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_iframe_sandbox.asp
 
-    Attributes:
-    ----------
     :param text: Enables an extra set of restrictions for the content in an <iframe>.
     """
     self.attr["sandbox"] = text
     return self
 
   def allowfullscreen(self, flag: bool = True):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_iframe.ASP
 
-    Attributes:
-    ----------
     :param flag: optional. The <iframe> can activate fullscreen mode by calling the requestFullscreen() method.
     """
     self.attr["allowfullscreen"] = 'true' if flag else 'false'
     return self
 
   def referrerpolicy(self, text: str):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_iframe_referrerpolicy.asp
 
-    Attributes:
-    ----------
     :param text:
     """
     self.attr["referrerpolicy"] = text
@@ -1584,22 +1403,17 @@ class IconsMenu(Html.Html):
 
   def add_icon(self, text: str, css: Optional[dict] = None, position: str = "after", family: Optional[str] = None,
                html_code: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Add an icon to the HTML object.
+    """   Add an icon to the HTML object.
 
     Usage::
 
       checks.title.add_icon("fas fa-align-center")
 
-    Attributes:
-    ----------
-    :param text: The icon reference from font-awesome website.
-    :param css: Optional. A dictionary with the CSS style to be added to the component.
-    :param position: Optional. The position compared to the main component tag.
-    :param family: Optional. The icon framework to be used (preferred one is font-awesome).
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param text: The icon reference from font-awesome website
+    :param css: Optional. A dictionary with the CSS style to be added to the component
+    :param position: Optional. The position compared to the main component tag
+    :param family: Optional. The icon framework to be used (preferred one is font-awesome)
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     defined_families = ('office-ui-fabric-core', 'material-design-icons')
     if family is not None and self.options.verbose and family not in defined_families:
@@ -1619,12 +1433,8 @@ class IconsMenu(Html.Html):
     return self
 
   def add_select(self, action: str, data, width: int = 150):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param action:
     :param data:
     :param int width:
@@ -1658,14 +1468,10 @@ class Form(Html.Html):
     return self
 
   def extend(self, components: List[Html.Html]):
-    """
-    Description:
-    ------------
+    """  
     Add multiple HTML components to the container.
 
-    Attributes:
-    ----------
-    :param components: The list of components.
+    :param components: The list of components
     """
     for component in components:
       self.add(component)
@@ -1679,16 +1485,11 @@ class Form(Html.Html):
       self.submit(self.method, self.action, self.label)
 
   def submit(self, method: str = None, action: str = None, text: str = None):
-    """
-    Description:
-    -----------
-    Add a submit event to the form.
+    """   Add a submit event to the form.
 
-    Attributes:
-    ----------
-    :param method: Optional. The method used to transfer data.
-    :param action: Optional. The end point for submitting.
-    :param text: Optional. The text on the submit button.
+    :param method: Optional. The method used to transfer data
+    :param action: Optional. The end point for submitting
+    :param text: Optional. The text on the submit button
     """
     self.attr.update({"action": action or self.action, "method": method or self.method})
     self.__submit = self.page.ui.button(text).set_attrs({"type": 'submit'})
@@ -1711,10 +1512,7 @@ class Modal(Html.Html):
   name = 'Modal Popup'
 
   def __init__(self, page: primitives.PageModel, components: List[Html.Html], header, footer, submit, helper):
-    """
-    Description:
-    -----------
-    Constructor for the modal item.
+    """   Constructor for the modal item.
     This object is composed of three parts: a header, which is a row of object, a body which is a column and a footer
     which is a row they all accept collections of html objects and are configurable just like the normal rows and
     column objects.
@@ -1760,10 +1558,7 @@ class Modal(Html.Html):
 
   @property
   def style(self) -> GrpClsContainer.ClassModal:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpClsContainer.ClassModal(self)
@@ -1788,9 +1583,7 @@ class Modal(Html.Html):
     return self.page.js.getElementById(self.htmlCode).css({'display': 'none'})
 
   def close_on_background(self):
-    """
-    Description:
-    ------------
+    """  
     Will allow an event to close the modal if a click event is detected anywhere outside the modal.
     """
     modal = self.page.js.getElementById(self.htmlCode)
@@ -1845,10 +1638,7 @@ class Indices(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsPanelPoints:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -1859,16 +1649,12 @@ class Indices(Html.Html):
     return self.items[i]
 
   def click_item(self, i: int, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
 
-    Attributes:
-    ----------
     :param i:
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1906,9 +1692,7 @@ class Points(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsPanelPoints:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -1918,17 +1702,13 @@ class Points(Html.Html):
 
   def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add Javascript events to all the items in the component.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/obj_events.asp
 
-    Attributes:
-    ----------
     :param str event: The event type for an HTML object.
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1949,19 +1729,15 @@ class Points(Html.Html):
   def on_item(self, i: int, event: Union[list, str], js_funcs: types.JS_FUNCS_TYPES,
               profile: types.PROFILE_TYPE = False, source_event: Optional[str] = None,
               on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add specific event on the container items.
 
-    Attributes:
-    ----------
-    :param i: The item index in the container.
-    :param event: The Javascript event type from the dom_obj_event.asp.
-    :param js_funcs: A Javascript Python function.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param i: The item index in the container
+    :param event: The Javascript event type from the dom_obj_event.asp
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1970,17 +1746,13 @@ class Points(Html.Html):
 
   def click_item(self, i: int, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                  on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add a click event on a particular item of the component.
 
-    Attributes:
-    ----------
-    :param i: The item index.
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param i: The item index
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -2010,9 +1782,7 @@ class Header(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -2046,9 +1816,7 @@ class Section(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsDiv:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 

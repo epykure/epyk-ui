@@ -12,9 +12,7 @@ class Components:
   def alert(self, kind: str = None, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Usage::
@@ -25,8 +23,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param kind: Optional. The Bootstrap predefined category.
     :param components: Optional. The alert sub components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -54,17 +50,13 @@ class Components:
   def primary(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -78,17 +70,13 @@ class Components:
   def secondary(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
                 height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -102,17 +90,13 @@ class Components:
   def success(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -126,17 +110,13 @@ class Components:
   def danger(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -150,17 +130,13 @@ class Components:
   def warning(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
               profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -174,17 +150,13 @@ class Components:
   def info(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height:  Optional. A tuple with the integer for the component height and its unit.
@@ -198,17 +170,13 @@ class Components:
   def light(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -222,17 +190,13 @@ class Components:
   def dark(self, components: List[primitives.HtmlModel] = None, width: types.SIZE_TYPE = (100, '%'),
            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add alert to the page.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/alerts/
 
-    Attributes:
-    ----------
     :param components: Optional. The alert sub-components.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.

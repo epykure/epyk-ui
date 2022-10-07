@@ -80,9 +80,7 @@ class Graphs:
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_skill_bar.asp
-
-    Attributes:
-    ----------
+ 
     :param records: Optional. The Python list of dictionaries
     :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record

@@ -16,8 +16,6 @@ class Panels:
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Add a simple div panel to the page.
 
     :tags:
@@ -29,9 +27,7 @@ class Panels:
 
     Usage::
 
-
-    Attributes:
-    ----------
+ 
     :param components: Optional. The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.
@@ -55,8 +51,6 @@ class Panels:
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper to the Bootstrap Pills interface.
 
     :tags:
@@ -75,9 +69,7 @@ class Panels:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/navs/
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -108,8 +100,6 @@ class Panels:
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper to the Bootstrap rectangle boxes interface.
 
     :tags:
@@ -128,9 +118,7 @@ class Panels:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/navs/
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -162,8 +150,6 @@ class Panels:
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper for a multi Tabs component.
 
     :tags:
@@ -182,9 +168,7 @@ class Panels:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/navs/
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -208,8 +192,6 @@ class Panels:
                 html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper for a multi Tabs component.
 
     :tags:
@@ -224,9 +206,7 @@ class Panels:
       https://getbootstrap.com/docs/4.0/components/navs/
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -256,8 +236,6 @@ class Panels:
                   html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                   profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper for a multi Tabs component.
 
     :tags:
@@ -272,9 +250,7 @@ class Panels:
       https://getbootstrap.com/docs/4.0/components/navs/
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -305,8 +281,6 @@ class Panels:
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Python wrapper to the Bootstrap Pills interface.
 
     :tags:
@@ -321,9 +295,7 @@ class Panels:
       https://getbootstrap.com/docs/4.0/components/navs/
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. The font color in the component. Default inherit.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -352,8 +324,6 @@ class Panels:
               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.PanelSlide:
     """
-    Description:
-    ------------
     Add a sliding panel.
 
     TODO: Animate the CSS to make a transition.
@@ -369,9 +339,7 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
-
-    Attributes:
-    ----------
+ 
     :param components: Optional. The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.
@@ -408,8 +376,6 @@ class Panels:
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSplit:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -427,9 +393,7 @@ class Panels:
     Related Pages:
 
       https://codepen.io/rstrahl/pen/eJZQej
-
-    Attributes:
-    ----------
+ 
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param left_width: Optional.
@@ -450,10 +414,7 @@ class Panels:
   def filters(self, items=None, category: str = 'group', width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Chip component with only the filtering section.
+    """   Chip component with only the filtering section.
 
     :tags:
     :categories:
@@ -469,9 +430,7 @@ class Panels:
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_contact_chips.asp
-
-    Attributes:
-    ----------
+ 
     :param items: Optional.
     :param category: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -500,8 +459,6 @@ class Panels:
   def nav(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
           options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, helper: str = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -511,9 +468,7 @@ class Panels:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
-
-    Attributes:
-    ----------
+ 
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param options: Optional. A dictionary with the components properties.
@@ -533,8 +488,6 @@ class Panels:
                 align: str = "center", width=(100, "%"), height=(None, "px"),
                 html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
-    Description:
-    ------------
     Add hamburger panel.
 
     :tags:
@@ -545,9 +498,7 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
-
-    Attributes:
-    ----------
+ 
     :param components: Optional. The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.
@@ -594,8 +545,6 @@ class Panels:
   @property
   def slidings(self):
     """
-    Description:
-    ------------
     More custom sliding panels.
     """
     return Slidings(self)
@@ -609,17 +558,13 @@ class Slidings:
   def right(self, components: List[html.Html.Html], title: str = "", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
             helper=None, options=None, profile=False):
     """
-    Description:
-    ------------
     Sliding panels with the arrow on the right.
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.
@@ -648,17 +593,13 @@ class Slidings:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Sliding panels with the arrow on the left.
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.
@@ -683,17 +624,13 @@ class Slidings:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Same component than sliding with a different style.
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param components: The different HTML objects to be added to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
     :param color: Optional. The font color in the component. Default inherit.

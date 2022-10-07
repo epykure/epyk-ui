@@ -15,16 +15,12 @@ class Components:
   def discrete(self, number: float = 0, minimum: float = 0, maximum: float = 100, width: types.SIZE_TYPE = (100, '%'),
                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-fab
 
-    Attributes:
-    ----------
     :param number: Optional. The initial value
     :param minimum: Optional. The min value. Default 0
     :param maximum: Optional. The max value. Default 100

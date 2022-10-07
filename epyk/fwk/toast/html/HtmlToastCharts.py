@@ -28,18 +28,13 @@ class Chart(Html.Html):
   @property
   def parsers(self):
     """
-    Description:
-    ------------
     Set of functions to parse the data.
     """
     return SelectionBox
 
   @property
   def shared(self) -> OptToastCharts.OptToastChartsShared:
-    """
-    Description:
-    -----------
-    All the common properties shared between all the charts.
+    """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -51,19 +46,13 @@ class Chart(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    Return the data section from the main python options.
+    """   Return the data section from the main python options.
     """
     return self.options.data
 
@@ -80,19 +69,13 @@ class Chart(Html.Html):
 
   @property
   def config(self):
-    """
-    Description:
-    -----------
-    Returns the options option for the chart.
+    """   Returns the options option for the chart.
     """
     return self.options.config
 
   @property
   def js(self) -> JsToastCharts.Charts:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     :rtype: JsToastCharts.Charts
     """
@@ -102,23 +85,15 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptToastCharts.OptionsCharts:
-    """
-    Description:
-    -----------
-    All the component options.
+    """   All the component options.
 
     :rtype: OptToastCharts.OptionsCharts
     """
     return super().options
 
   def colors(self, hex_values):
-    """
-    Description:
-    -----------
-    Set the colors of the different series.
-
-    Attributes:
-    ----------
+    """   Set the colors of the different series.
+ 
     :param hex_values: Array. The color codes.
     """
     self.config.theme.series.colors = hex_values
@@ -161,9 +136,7 @@ class ChartPie(Chart):
 
   @property
   def options(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: OptToastCharts.OptionsChartsPie
     """

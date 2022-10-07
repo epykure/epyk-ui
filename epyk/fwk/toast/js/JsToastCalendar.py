@@ -15,17 +15,12 @@ class Calendar(JsPackage):
     self._js, self._jquery = [], None
 
   def changeView(self, new_view_name: str, force):
-    """
-    Description:
-    -----------
-    Change current view with view name('day', 'week', 'month')
+    """   Change current view with view name('day', 'week', 'month')
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#changeView
 
-    Attributes:
-    ----------
     :param str new_view_name: The New view name to render.
     :param force: Boolean. Force render despite of current view and new view are equal.
     """
@@ -34,35 +29,25 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.changeView(%s, %s)" % (self.component.var, new_view_name, force))
 
   def clear(self, immediately=False):
-    """
-    Description:
-    -----------
-    Delete all schedules and clear view. The real rendering occurs after requestAnimationFrame.
+    """   Delete all schedules and clear view. The real rendering occurs after requestAnimationFrame.
     If you have to render immediately, use the 'immediately' parameter as true.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#clear
 
-    Attributes:
-    ----------
     :param immediately: Boolean. Optional. Render it immediately.
     """
     immediately = JsUtils.jsConvertData(immediately, None)
     return JsUtils.jsWrap("%s.clear(%s)" % (self.component.var, immediately))
 
   def createSchedules(self, schedules, silent=False):
-    """
-    Description:
-    -----------
-    Create schedules and render calendar.
+    """   Create schedules and render calendar.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#createSchedules
 
-    Attributes:
-    ----------
     :param schedules: Array. Schedule data list.
     :param silent: Boolean. Optional. No auto render after creation when set true.
     """
@@ -71,17 +56,12 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.createSchedules(%s, %s)" % (self.component.var, schedules, silent))
 
   def deleteSchedule(self, schedule_id: str, calendar_id: str, silent: bool = False):
-    """
-    Description:
-    -----------
-    Delete a schedule.
+    """   Delete a schedule.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#deleteSchedule
 
-    Attributes:
-    ----------
     :param str schedule_id: ID of schedule to delete.
     :param str calendar_id: The CalendarId of the schedule to delete.
     :param bool silent: Optional. No auto render after creation when set true.
@@ -92,10 +72,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.deleteSchedule(%s, %s, %s)" % (self.component.var, schedule_id, calendar_id, silent))
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    destroy calendar instance.
+    """   destroy calendar instance.
 
     Related Pages:
 
@@ -104,10 +81,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.destroy()" % self.component.var)
 
   def getDate(self):
-    """
-    Description:
-    -----------
-    Current rendered date (TZDate for further information)
+    """   Current rendered date (TZDate for further information)
 
     Related Pages:
 
@@ -116,10 +90,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getDate()" % self.component.var)
 
   def getDateRangeEnd(self):
-    """
-    Description:
-    -----------
-    End time of rendered date range (TZDate for further information)
+    """   End time of rendered date range (TZDate for further information)
 
     Related Pages:
 
@@ -128,10 +99,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getDateRangeEnd()" % self.component.var)
 
   def getDateRangeStart(self):
-    """
-    Description:
-    -----------
-    Start time of rendered date range (TZDate for further information)
+    """   Start time of rendered date range (TZDate for further information)
 
     Related Pages:
 
@@ -140,16 +108,12 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getDateRangeStart()" % self.component.var)
 
   def getElement(self, schedule_id: str, calendar_id: str):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getElement
 
-    Attributes:
-    ----------
     :param str schedule_id: ID of schedule.
     :param str calendar_id: calendarId of schedule.
     """
@@ -158,10 +122,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getElement(%s, %s)" % (self.component.var, schedule_id, calendar_id))
 
   def getOptions(self):
-    """
-    Description:
-    -----------
-    Get current Options.
+    """   Get current Options.
 
     Related Pages:
 
@@ -170,17 +131,12 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getOptions()" % self.component.var)
 
   def getSchedule(self, schedule_id: str, calendar_id: str):
-    """
-    Description:
-    -----------
-    Get a Schedule object by schedule id and calendar id.
+    """   Get a Schedule object by schedule id and calendar id.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#getSchedule
 
-    Attributes:
-    ----------
     :param str schedule_id: ID of schedule.
     :param str calendar_id: calendarId of the schedule.
     """
@@ -189,10 +145,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.getSchedule(%s, %s)" % (self.component.var, schedule_id, calendar_id))
 
   def getViewName(self):
-    """
-    Description:
-    -----------
-    Get current view name('day', 'week', 'month')
+    """   Get current view name('day', 'week', 'month')
 
     Related Pages:
 
@@ -201,10 +154,7 @@ class Calendar(JsPackage):
     return JsObjects.JsString.JsString.get("%s.getViewName()" % self.component.var)
 
   def hideMoreView(self):
-    """
-    Description:
-    -----------
-    Hide the more view.
+    """   Hide the more view.
 
     Related Pages:
 
@@ -213,10 +163,7 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.hideMoreView()" % self.component.var)
 
   def next(self):
-    """
-    Description:
-    -----------
-    Move the calendar forward a day, a week, a month, 2 weeks, 3 weeks.
+    """   Move the calendar forward a day, a week, a month, 2 weeks, 3 weeks.
 
     Related Pages:
 
@@ -225,27 +172,19 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.next()" % self.component.var)
 
   def openCreationPopup(self, schedule):
-    """
-    Description:
-    -----------
-    Open schedule creation popup
+    """   Open schedule creation popup
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#openCreationPopup
 
-    Attributes:
-    ----------
     :param schedule: Schedule. The preset Schedule data.
     """
     schedule = JsUtils.jsConvertData(schedule, None)
     return JsUtils.jsWrap("%s.openCreationPopup(%s)" % (self.component.var, schedule))
 
   def prev(self):
-    """
-    Description:
-    -----------
-    Move the calendar backward a day, a week, a month, 2 weeks, 3 weeks.
+    """   Move the calendar backward a day, a week, a month, 2 weeks, 3 weeks.
 
     Related Pages:
 
@@ -254,28 +193,20 @@ class Calendar(JsPackage):
     return JsUtils.jsWrap("%s.prev()" % self.component.var)
 
   def render(self, immediately=False):
-    """
-    Description:
-    -----------
-    Render the calendar. The real rendering occurs after requestAnimationFrame.
+    """   Render the calendar. The real rendering occurs after requestAnimationFrame.
     If you have to render immediately, use the 'immediately' parameter as true.
 
     Related Pages:
 
       https://nhn.github.io/tui.calendar/latest/Calendar#render
 
-    Attributes:
-    ----------
     :param immediately: Boolean. Optional. Render it immediately.
     """
     immediately = JsUtils.jsConvertData(immediately, None)
     return JsUtils.jsWrap("%s.render(%s)" % (self.component.var, immediately))
 
   def scrollToNow(self):
-    """
-    Description:
-    -----------
-    Scroll to current time on today in case of daily, weekly view
+    """   Scroll to current time on today in case of daily, weekly view
 
     Related Pages:
 

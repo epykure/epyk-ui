@@ -11,10 +11,7 @@ class Components:
   def button(self, text: str = "", icon: str = None, category: str = "primary", width: types.SIZE_TYPE = (None, "%"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
              profile: types.PROFILE_TYPE = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Add a button.
+    """   Add a button.
 
     Usage::
 
@@ -27,8 +24,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/buttons/
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the button.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
     :param category: Optional. The Bootstrap predefined category.
@@ -49,10 +44,7 @@ class Components:
 
   def radio(self, flag=False, tooltip=None, html_code=None, group_name=None, width=(None, '%'), height=(None, "px"),
             label=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a radio component.
+    """   Add a radio component.
 
     Usage::
 
@@ -63,8 +55,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param tooltip: String. Optional. The tooltip text.
@@ -87,10 +77,7 @@ class Components:
 
   def check(self, flag=False, tooltip=None, width=(None, "px"), height=(None, "px"), label=None, html_code=None,
             profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a check component.
+    """   Add a check component.
 
     Usage::
 
@@ -100,8 +87,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param tooltip: String. Optional. The tooltip text.
@@ -121,10 +106,7 @@ class Components:
 
   def switch(self, flag=False, label=None, tooltip=None, width=(None, '%'), height=(None, 'px'),
              html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a switch component.
+    """   Add a switch component.
 
     Usage::
 
@@ -134,8 +116,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param tooltip: String. Optional. The tooltip text.
@@ -156,17 +136,12 @@ class Components:
 
   def toggle(self, flag=False, label=None, width=(None, '%'), height=(None, 'px'), html_code=None, options=None,
              profile=None):
-    """
-    Description:
-    -----------
-    Add a toggle component.
+    """   Add a toggle component.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Boolean. Optional. The component initial status.
     :param label: String. Optional. The text of label to be added to the component.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -186,17 +161,12 @@ class Components:
 
   def run(self, text="", category="primary", width=(None, "%"), height=(None, "px"), align="left", html_code=None,
           tooltip=None, profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a predefined run button.
+    """   Add a predefined run button.
 
     Usage::
 
       page.web.bs.buttons.run("Start Simulation")
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the button.
     :param category: String. Optional. The Bootstrap predefined category.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -214,17 +184,12 @@ class Components:
 
   def close(self, text="", width=(None, "%"), height=(None, "px"), html_code=None, tooltip=None, profile=None,
             options=None):
-    """
-    Description:
-    -----------
-    Add a close button
+    """   Add a close button
 
     Usage::
 
       page.web.bs.icons.close()
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the button.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -243,16 +208,12 @@ class Components:
   def icon(self, icon, text="", category="primary", width=(None, "%"), height=(None, "px"), align="left",
            html_code=None, tooltip=None, profile=None, options=None):
     """
-    Description:
-    ------------
     Add a button icon.
 
     Usage::
 
       page.web.bs.buttons.icon("bi-x-square-fill")
 
-    Attributes:
-    ----------
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param text: String. Optional. The value to be displayed to the button.
     :param category: String. Optional. The Bootstrap predefined category.

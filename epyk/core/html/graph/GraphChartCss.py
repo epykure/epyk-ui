@@ -23,8 +23,6 @@ class ChartCss(Html.Html):
   @property
   def options(self) -> OptChartCss.ChartCssOptions:
     """
-    Description:
-    ------------
     Set the ChartCss options.
 
       https://chartscss.org/charts/area/
@@ -35,27 +33,18 @@ class ChartCss(Html.Html):
 
   def labels(self, values):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param values: List. The different values for the x axis.
     """
     self._labels = values
 
   def dataset(self, i: int = None):
-    """
-    Description:
-    -----------
-    The data property of a ChartJs chart.
+    """   The data property of a ChartJs chart.
 
     Related Pages:
 
       https://www.chartjs.org/docs/master/general/data-structures
-
-    Attributes:
-    ----------
+ 
     :param i: Integer. Optional. The series index according to the y_columns.
 
     :rtype: JsChartJs.DataSetPie
@@ -65,8 +54,6 @@ class ChartCss(Html.Html):
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
     """
-    Description:
-    ------------
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -74,9 +61,7 @@ class ChartCss(Html.Html):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/developers/updates.html
-
-    Attributes:
-    ----------
+ 
     :param data: List. The list of points (float).
     :param label: List. Optional. The list of points (float).
     :param colors: List. Optional. The color for this series. Default the global definition.

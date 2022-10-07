@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrDiv(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Div container.
+  """  CSS pre defined properties for the Div container.
 
   CSS Properties:
 
@@ -22,10 +19,7 @@ class AttrDiv(Attrs):
 
 
 class AttrModal(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Div Modal.
+  """  CSS pre defined properties for the Div Modal.
 
   CSS Properties:
 

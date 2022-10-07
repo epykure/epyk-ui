@@ -15,9 +15,7 @@ class Forms:
   def new(self,
           components: List[html.Html.Html] = None,
           helper: Optional[str] = None) -> html.HtmlContainer.Form:
-    """
-    Description:
-    ------------
+    """  
     Creates a new empty form.
 
     :tags:
@@ -26,9 +24,7 @@ class Forms:
     Usage::
 
       f = page.ui.form()
-
-    Attributes:
-    -----------
+ -
     :param helper: Optional. A tooltip helper
     :param components: Optional. The different HTML objects to be added to the component
     """
@@ -38,9 +34,7 @@ class Forms:
 
   def date(self, html_code: str = "Current", profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
     Create a DatePicker object.
 
     :tags:
@@ -55,9 +49,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlContainer.Form`
       - :class:`epyk.core.html.HtmlContainer.Col`
       - :class:`epyk.core.html.HtmlDates.DatePicker`
-
-    Attributes:
-    -----------
+ -
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: Optional. A tooltip helper
     :param profile: Optional. A flag to set the component performance storage
@@ -79,9 +71,7 @@ class Forms:
             profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None,
             helper: str = None) -> html.HtmlContainer.Form:
-    """
-    Description:
-    ------------
+    """  
     Create two DatePicker objects for current and previous.
 
     :tags:
@@ -96,9 +86,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlContainer.Form`
       - :class:`epyk.core.html.HtmlContainer.Col`
       - :class:`epyk.core.html.HtmlDates.DatePicker`
-
-    Attributes:
-    -----------
+ -
     :param html_code: An identifier for the prefix of the date components (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
@@ -119,9 +107,7 @@ class Forms:
   def input(self, html_code: str, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
             profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
             helper: str = None) -> html.HtmlContainer.Form:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -132,9 +118,7 @@ class Forms:
 
       - :class:`epyk.core.html.HtmlContainer.Form`
       - :class:`epyk.core.html.HtmlInput.FieldInput`
-
-    Attributes:
-    -----------
+ -
     :param html_code: An identifier for this component (on both Python and Javascript side)
     :param value: Optional. The value to be displayed to this component. Default empty
     :param label: Optional. The text of label to be added to the component
@@ -154,9 +138,7 @@ class Forms:
 
   def inputs(self, record: List[dict], helper: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Form:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -173,9 +155,7 @@ class Forms:
       - :class:`epyk.core.html.HtmlContainer.Form`
       - :class:`epyk.core.html.HtmlContainer.Col`
       - :class:`epyk.core.html.HtmlInput.FieldInput`
-
-    Attributes:
-    -----------
+ -
     :param record: The Python list of dictionaries
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper: Optional. A tooltip helper
@@ -202,17 +182,13 @@ class Forms:
                 width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                 options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Div:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
     
     Usage::
-
-    Attributes:
-    -----------
+ -
     :param value: Optional. The value to be displayed to this component. Default empty
     :param placeholder: Optional. The text to be displayed when the input is empty
     :param button: Optional. The button component

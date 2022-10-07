@@ -38,8 +38,6 @@ class EnumProjections(Enums):
 
   def globe(self):
     """
-    Description:
-    ------------
     3d Globe as globe
 
     Related Pages:
@@ -50,8 +48,6 @@ class EnumProjections(Enums):
 
   def naturalEarth(self):
     """
-    Description:
-    ------------
     This example uses the Map's projection parameter to display the map using the Natural Earth ('naturalEarth')
     projection instead of the default Mercator projection.
 
@@ -63,8 +59,6 @@ class EnumProjections(Enums):
 
   def albers(self):
     """
-    Description:
-    ------------
     Albers equal-area conic projection as albers
 
     Related Pages:
@@ -75,8 +69,6 @@ class EnumProjections(Enums):
 
   def equalEarth(self):
     """
-    Description:
-    ------------
     Equal Earth equal-area pseudocylindrical projection as equalEarth
 
     Related Pages:
@@ -87,8 +79,6 @@ class EnumProjections(Enums):
 
   def equirectangular(self):
     """
-    Description:
-    ------------
     Equirectangular (Plate Carrée/WGS84) as equirectangular.
 
     Related Pages:
@@ -99,8 +89,6 @@ class EnumProjections(Enums):
 
   def lambertConformalConic(self):
     """
-    Description:
-    ------------
     Lambert Conformal Conic as lambertConformalConic.
 
     Related Pages:
@@ -111,8 +99,6 @@ class EnumProjections(Enums):
 
   def mercator(self):
     """
-    Description:
-    ------------
     Mercator cylindrical map projection as mercator.
 
     Related Pages:
@@ -123,8 +109,6 @@ class EnumProjections(Enums):
 
   def winkelTripel(self):
     """
-    Description:
-    ------------
     Winkel Tripel azimuthal map projection as winkelTripel.
 
     Related Pages:
@@ -139,8 +123,6 @@ class OptionsMapbox(Options):
   @property
   def accessToken(self):
     """
-    Description:
-    ------------
     If specified, map will use this token instead of the one defined in mapboxgl.accessToken.
 
     Related Pages:
@@ -156,8 +138,6 @@ class OptionsMapbox(Options):
   @property
   def antialias(self):
     """
-    Description:
-    ------------
     If true , the gl context will be created with MSAA antialiasing ,
     which can be useful for antialiasing custom layers. This is false by default as a performance optimization.
 
@@ -174,8 +154,6 @@ class OptionsMapbox(Options):
   @property
   def attributionControl(self):
     """
-    Description:
-    ------------
     If true , an AttributionControl will be added to the map.
 
     Related Pages:
@@ -191,8 +169,6 @@ class OptionsMapbox(Options):
   @property
   def bearing(self):
     """
-    Description:
-    ------------
     The initial bearing (rotation) of the map, measured in degrees counter-clockwise from north.
     If bearing is not specified in the constructor options, Mapbox GL JS will look for it in the map's style object.
     If it is not specified in the style, either, it will default to 0 .
@@ -210,8 +186,6 @@ class OptionsMapbox(Options):
   @property
   def bearingSnap(self):
     """
-    Description:
-    ------------
     The threshold, measured in degrees, that determines when the map's bearing will snap to north.
     For example, with a bearingSnap of 7, if the user rotates the map within 7 degrees of north,
     the map will automatically snap to exact north.
@@ -229,8 +203,6 @@ class OptionsMapbox(Options):
   @property
   def bounds(self):
     """
-    Description:
-    ------------
     The initial bounds of the map.
     If bounds is specified, it overrides center and zoom constructor options.
 
@@ -247,8 +219,6 @@ class OptionsMapbox(Options):
   @property
   def boxZoom(self):
     """
-    Description:
-    ------------
     If true , the "box zoom" interaction is enabled (see BoxZoomHandler ).
 
     Related Pages:
@@ -264,8 +234,6 @@ class OptionsMapbox(Options):
   @property
   def container(self):
     """
-    Description:
-    ------------
     The HTML element in which Mapbox GL JS will render the map, or the element's string id .
     The specified element must have no children.
 
@@ -282,8 +250,6 @@ class OptionsMapbox(Options):
   @property
   def interactive(self):
     """
-    Description:
-    ------------
     If false , no mouse, touch, or keyboard listeners will be attached to the map, so it will not respond
     to interaction.
 
@@ -300,8 +266,6 @@ class OptionsMapbox(Options):
   @property
   def keyboard(self):
     """
-    Description:
-    ------------
     If true , keyboard shortcuts are enabled (see KeyboardHandler ).
 
     Related Pages:
@@ -317,8 +281,6 @@ class OptionsMapbox(Options):
   @property
   def cooperativeGestures(self):
     """
-    Description:
-    ------------
     If true , scroll zoom will require pressing the ctrl or ⌘ key while scrolling to zoom map,
     and touch pan will require using two fingers while panning to move the map. Touch pitch will require three fingers
     to activate if enabled.
@@ -336,8 +298,6 @@ class OptionsMapbox(Options):
   @property
   def crossSourceCollisions(self):
     """
-    Description:
-    ------------
     If true , symbols from multiple sources can collide with each other during collision detection.
     If false , collision detection is run separately for the symbols in each source.
 
@@ -354,8 +314,6 @@ class OptionsMapbox(Options):
   @property
   def customAttribution(self):
     """
-    Description:
-    ------------
     String or strings to show in an AttributionControl .
     Only applicable if options.attributionControl is true .
 
@@ -372,8 +330,6 @@ class OptionsMapbox(Options):
   @property
   def doubleClickZoom(self):
     """
-    Description:
-    ------------
     If true , the "double click to zoom" interaction is enabled (see DoubleClickZoomHandler ).
 
     Related Pages:
@@ -389,8 +345,6 @@ class OptionsMapbox(Options):
   @property
   def dragPan(self):
     """
-    Description:
-    ------------
     If true , the "drag to pan" interaction is enabled. An Object value is passed as options to DragPanHandler#enable .
 
     Related Pages:
@@ -406,8 +360,6 @@ class OptionsMapbox(Options):
   @property
   def dragRotate(self):
     """
-    Description:
-    ------------
     If true , the "drag to rotate" interaction is enabled (see DragRotateHandler ).
 
     Related Pages:
@@ -423,8 +375,6 @@ class OptionsMapbox(Options):
   @property
   def fadeDuration(self):
     """
-    Description:
-    ------------
     Controls the duration of the fade-in/fade-out animation for label collisions, in milliseconds.
     This setting affects all symbol layers. This setting does not affect the duration of runtime styling transitions
     or raster tile cross-fading.
@@ -442,8 +392,6 @@ class OptionsMapbox(Options):
   @property
   def failIfMajorPerformanceCaveat(self):
     """
-    Description:
-    ------------
     If true , map creation will fail if the performance of Mapbox GL JS would be dramatically worse than expected
     (a software renderer would be used).
 
@@ -460,8 +408,6 @@ class OptionsMapbox(Options):
   @property
   def fitBoundsOptions(self):
     """
-    Description:
-    ------------
     A Map#fitBounds options object to use only when fitting the initial bounds provided above.
 
     Related Pages:
@@ -477,8 +423,6 @@ class OptionsMapbox(Options):
   @property
   def hash(self):
     """
-    Description:
-    ------------
     If true , the map's position (zoom, center latitude, center longitude, bearing, and pitch) will be synced with the
     hash fragment of the page's URL.
 
@@ -495,8 +439,6 @@ class OptionsMapbox(Options):
   @property
   def language(self):
     """
-    Description:
-    ------------
     A string representing the language used for the map's data and UI components.
 
     Related Pages:
@@ -512,8 +454,6 @@ class OptionsMapbox(Options):
   @property
   def locale(self):
     """
-    Description:
-    ------------
     A patch to apply to the default localization table for UI strings such as control tooltips.
     The locale object maps namespaced UI string IDs to translated strings in the target language;
 
@@ -530,8 +470,6 @@ class OptionsMapbox(Options):
   @property
   def localFontFamily(self):
     """
-    Description:
-    ------------
     Defines a CSS font-family for locally overriding generation of all glyphs.
     Font settings from the map's style will be ignored, except for font-weight keywords (light/regular/medium/bold).
     If set, this option overrides the setting in localIdeographFontFamily.
@@ -549,8 +487,6 @@ class OptionsMapbox(Options):
   @property
   def localIdeographFontFamily(self):
     """
-    Description:
-    ------------
     Defines a CSS font-family for locally overriding generation of glyphs in the 'CJK Unified Ideographs', 'Hiragana',
     'Katakana', 'Hangul Syllables' and 'CJK Symbols and Punctuation' ranges. In these ranges,
     font settings from the map's style will be ignored, except for font-weight keywords
@@ -568,8 +504,6 @@ class OptionsMapbox(Options):
   @property
   def logoPosition(self):
     """
-    Description:
-    ------------
     A string representing the position of the Mapbox wordmark on the map.
     Valid options are top-left , top-right , bottom-left , bottom-right .
 
@@ -586,8 +520,6 @@ class OptionsMapbox(Options):
   @property
   def maxBounds(self):
     """
-    Description:
-    ------------
     If set, the map will be constrained to the given bounds.
 
     Related Pages:
@@ -603,8 +535,6 @@ class OptionsMapbox(Options):
   @property
   def maxPitch(self):
     """
-    Description:
-    ------------
     The maximum pitch of the map (0-85).
 
     Related Pages:
@@ -620,8 +550,6 @@ class OptionsMapbox(Options):
   @property
   def maxTileCacheSize(self):
     """
-    Description:
-    ------------
     The maximum number of tiles stored in the tile cache for a given source. If omitted,
     the cache will be dynamically sized based on the current viewport.
 
@@ -638,8 +566,6 @@ class OptionsMapbox(Options):
   @property
   def pitch(self):
     """
-    Description:
-    ------------
     The initial pitch (tilt) of the map, measured in degrees away from the plane of the screen (0-85).
     If pitch is not specified in the constructor options, Mapbox GL JS will look for it in the map's style object.
     If it is not specified in the style, either, it will default to 0 .
@@ -657,8 +583,6 @@ class OptionsMapbox(Options):
   @property
   def pitchWithRotate(self):
     """
-    Description:
-    ------------
     If false , the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.
 
     Related Pages:
@@ -674,8 +598,6 @@ class OptionsMapbox(Options):
   @property
   def preserveDrawingBuffer(self):
     """
-    Description:
-    ------------
     If true , the map's canvas can be exported to a PNG using map.getCanvas().toDataURL() .
     This is false by default as a performance optimization.
 
@@ -692,8 +614,6 @@ class OptionsMapbox(Options):
   @property
   def styles(self):
     """
-    Description:
-    ------------
     The map's Mapbox style enumeration.
 
     Related Pages:
@@ -705,8 +625,6 @@ class OptionsMapbox(Options):
   @property
   def style(self):
     """
-    Description:
-    ------------
     The map's Mapbox style.
     This must be an a JSON object conforming to the schema described in the Mapbox Style Specification ,
     or a URL to such JSON. Can accept a null value to allow adding a style manually.
@@ -723,10 +641,7 @@ class OptionsMapbox(Options):
 
   @property
   def center(self):
-    """
-    Description:
-    -----------
-    The initial geographical centerpoint of the map.
+    """   The initial geographical centerpoint of the map.
     If center is not specified in the constructor options, Mapbox GL JS will look for it in the map's style object.
     If it is not specified in the style, either, it will default to [0, 0] Note: Mapbox GL uses longitude,
     latitude coordinate order (as opposed to latitude, longitude) to match GeoJSON.
@@ -742,18 +657,13 @@ class OptionsMapbox(Options):
     self._config(values)
 
   def set_center(self, lon: float, lat: float):
-    """
-    Description:
-    -----------
-    Starting position [lng, lat]
+    """   Starting position [lng, lat]
 
     Related Pages:
 
       https://docs.mapbox.com/mapbox-gl-js/example/simple-map/
       https://docs.mapbox.com/mapbox-gl-js/api/
 
-    Attributes:
-    ----------
     :param lon: The longitude
     :param lat: The latitude
     """
@@ -762,8 +672,6 @@ class OptionsMapbox(Options):
   @property
   def clickTolerance(self):
     """
-    Description:
-    ------------
     The max number of pixels a user can shift the mouse pointer during a click for it to be considered a valid
     click (as opposed to a mouse drag).
 
@@ -780,8 +688,6 @@ class OptionsMapbox(Options):
   @property
   def collectResourceTiming(self):
     """
-    Description:
-    ------------
     If true , Resource Timing API information will be collected for requests made by GeoJSON and Vector
     Tile web workers (this information is normally inaccessible from the main Javascript thread).
     Information will be returned in a resourceTiming property of relevant data events.
@@ -799,8 +705,6 @@ class OptionsMapbox(Options):
   @property
   def maxZoom(self):
     """
-    Description:
-    ------------
     The maximum zoom level of the map (0-24).
 
     Related Pages:
@@ -816,8 +720,6 @@ class OptionsMapbox(Options):
   @property
   def minPitch(self):
     """
-    Description:
-    ------------
     The minimum pitch of the map (0-85).
 
     Related Pages:
@@ -833,8 +735,6 @@ class OptionsMapbox(Options):
   @property
   def minTileCacheSize(self):
     """
-    Description:
-    ------------
     The minimum number of tiles stored in the tile cache for a given source.
     Larger viewports use more tiles and need larger caches.
     Larger viewports are more likely to be found on devices with more memory and on pages where the map
@@ -853,8 +753,6 @@ class OptionsMapbox(Options):
   @property
   def minZoom(self):
     """
-    Description:
-    ------------
     The minimum zoom level of the map (0-24).
 
     Related Pages:
@@ -870,8 +768,6 @@ class OptionsMapbox(Options):
   @property
   def optimizeForTerrain(self):
     """
-    Description:
-    ------------
     With terrain on, if true , the map will render for performance priority, which may lead to layer reordering
     allowing to maximize performance (layers that are draped over terrain will be drawn first, including fill,
     line, background, hillshade and raster). Otherwise, if set to false , the map will always be drawn for
@@ -890,8 +786,6 @@ class OptionsMapbox(Options):
   @property
   def projections(self):
     """
-    Description:
-    ------------
     Projection enumerations.
 
     Related Pages:
@@ -904,8 +798,6 @@ class OptionsMapbox(Options):
   @property
   def projection(self):
     """
-    Description:
-    ------------
     The projection the map should be rendered in.
 
     Related Pages:
@@ -921,8 +813,6 @@ class OptionsMapbox(Options):
   @property
   def refreshExpiredTiles(self):
     """
-    Description:
-    ------------
     If false , the map won't attempt to re-request tiles once they expire per their HTTP cacheControl / expires headers.
 
     Related Pages:
@@ -938,8 +828,6 @@ class OptionsMapbox(Options):
   @property
   def renderWorldCopies(self):
     """
-    Description:
-    ------------
     If true , multiple copies of the world will be rendered side by side beyond -180 and 180 degrees longitude.
 
     Related Pages:
@@ -955,8 +843,6 @@ class OptionsMapbox(Options):
   @property
   def scrollZoom(self):
     """
-    Description:
-    ------------
     If true , the "scroll to zoom" interaction is enabled.
     An Object value is passed as options to ScrollZoomHandler#enable .
 
@@ -973,8 +859,6 @@ class OptionsMapbox(Options):
   @property
   def testMode(self):
     """
-    Description:
-    ------------
     Silences errors and warnings generated due to an invalid accessToken,
     useful when using the library to write unit tests.
 
@@ -991,8 +875,6 @@ class OptionsMapbox(Options):
   @property
   def touchPitch(self):
     """
-    Description:
-    ------------
     If true , the "drag to pitch" interaction is enabled. An Object value is passed as options to TouchPitchHandler .
 
     Related Pages:
@@ -1008,8 +890,6 @@ class OptionsMapbox(Options):
   @property
   def touchZoomRotate(self):
     """
-    Description:
-    ------------
     If true , the "pinch to rotate and zoom" interaction is enabled.
     An Object value is passed as options to TouchZoomRotateHandler#enable .
 
@@ -1026,8 +906,6 @@ class OptionsMapbox(Options):
   @property
   def trackResize(self):
     """
-    Description:
-    ------------
     If true , the map will automatically resize when the browser window resizes.
 
     Related Pages:
@@ -1043,8 +921,6 @@ class OptionsMapbox(Options):
   @property
   def worldview(self):
     """
-    Description:
-    ------------
     Sets the map's worldview. A worldview determines the way that certain disputed boundaries are rendered.
 
     Related Pages:
@@ -1063,8 +939,6 @@ class OptionsMapbox(Options):
   @property
   def zoom(self):
     """
-    Description:
-    ------------
     The initial zoom level of the map.
     If zoom is not specified in the constructor options, Mapbox GL JS will look for it in the map's style object.
     If it is not specified in the style, either, it will default to 0 .

@@ -9,10 +9,7 @@ BORDER_1PX_EXPR = '1px solid {}'
 
 
 class CssInput(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Base style for the input components.
+  """  CSS Base style for the input components.
   """
   _attrs = {'border': 'none', 'cursor': 'text', 'margin': 0}
   _focus = {'outline': 0}
@@ -31,10 +28,7 @@ class CssInput(CssStyle.Style):
 
 
 class CssInputBottom(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Base style for the input components.
+  """  CSS Base style for the input components.
   """
   _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
   _focus = {'outline': 0}
@@ -52,10 +46,7 @@ class CssInputBottom(CssStyle.Style):
 
 
 class CssInputNoBorder(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Base style for the input components.
+  """  CSS Base style for the input components.
   """
   _attrs = {'border': 'none', 'text-align': 'center', 'cursor': 'text', 'margin': 0}
   _focus = {'outline': 0}
@@ -71,10 +62,7 @@ class CssInputNoBorder(CssStyle.Style):
 
 
 class CssInputRange(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Style for the input range component.
+  """  CSS Style for the input range component.
   """
   _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'outline': 'none', 'opacity': 0.7,
             '-webkit-transition': '.2s', 'transition': 'opacity .2s', 'cursor': 'pointer'}
@@ -116,10 +104,7 @@ class CssInputNumberNoScroll(CssStyle.Style):
 
 
 class CssInputRangeThumb(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Style for the thumb of the input range component.
+  """  CSS Style for the thumb of the input range component.
   """
   _attrs = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
   _webkit_slider_thumb = {'-webkit-appearance': 'none', 'appearance': 'none', 'cursor': 'pointer'}
@@ -133,10 +118,7 @@ class CssInputRangeThumb(CssStyle.Style):
 
 
 class CssInputLabel(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Style for the label attached to an input component.
+  """  CSS Style for the label attached to an input component.
   """
   _attrs = {'line-height': '1.5', 'margin-left': '10px'}
   _selectors = {'child': 'label'}
@@ -157,20 +139,14 @@ class CssInputInteger(CssStyle.Style):
 
 
 class CssInputText(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Style for the input text component (within a field object).
+  """  CSS Style for the input text component (within a field object).
   """
   _attrs = {'margin-left': '10px'}
   _selectors = {'child': 'input'}
 
 
 class CssInputTextArea(CssStyle.Style):
-  """
-  Description:
-  ------------
-  CSS Style for the textarea component.
+  """  CSS Style for the textarea component.
   """
   _attrs = {'resize': 'none', 'margin-bottom': '5px', 'padding': '5px'}
   _focus = {'outline': 0}

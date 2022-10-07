@@ -16,9 +16,7 @@ class Rich:
   def delta(self, record=None, components=None, title: str = None, align: str = "center",
             width: types.SIZE_TYPE = ('auto', ''), height: types.SIZE_TYPE = ('auto', ''),
             options: types.OPTION_TYPE = None, helper: str = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -30,9 +28,7 @@ class Rich:
 
     :tags: Numbers |
     :categories: Container |
-
-    Attributes:
-    ----------
+ 
     :param record: Optional. The input data for this component.
     :param components: Optional. The HTML components to be added to this component.
     :param title: Optional. A panel title. This will be attached to the title property.
@@ -70,9 +66,7 @@ class Rich:
   def stars(self, val=None, label: str = None, color: str = None, align: str = 'left', best: int = 5,
             html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Entry point for the Stars component.
 
     :tags:
@@ -91,9 +85,7 @@ class Rich:
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_star_rating.asp
-
-    Attributes:
-    ----------
+ 
     :param val: Optional. Number of stars.
     :param label: Optional. The text of label to be added to the component.
     :param color: Optional. The font color in the component. Default inherit.
@@ -111,9 +103,7 @@ class Rich:
   def light(self, color: str = None, height: types.SIZE_TYPE = (None, 'px'), label: str = None, align: str = "left",
             tooltip: str = None, helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add a traffic light component to give a visual status of a given process.
 
     :tags:
@@ -127,9 +117,7 @@ class Rich:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTextComp.TrafficLight`
-
-    Attributes:
-    ----------
+ 
     :param color: Optional. A hexadecimal color code.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param label: Optional. The text of label to be added to the component.
@@ -152,9 +140,7 @@ class Rich:
     return html_traffic
 
   def info(self, text: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Display an info icon with a tooltip.
 
     :tags:
@@ -172,9 +158,7 @@ class Rich:
 
       https://fontawesome.com/icons/question-circle?style=solid
       https://api.jqueryui.com/tooltip/
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The content of the tooltip.
     :param profile: Optional. A boolean to store the performances for each components.
     :param options: Optional. Specific Python options available for this component.
@@ -187,9 +171,7 @@ class Rich:
                 icon: str = "fas fa-stopwatch", time_ms_factor: int = 1000, width: types.SIZE_TYPE = (None, '%'),
                 height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
                 options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add a countdown to the page and remove the content if the page has expired.
 
     :tags:
@@ -208,9 +190,7 @@ class Rich:
       https://www.w3schools.com/js/js_date_methods.asp
       https://www.w3schools.com/howto/howto_js_countdown.asp
       https://fontawesome.com/icons/stopwatch?style=solid
-
-    Attributes:
-    ----------
+ 
     :param day: Day's number.
     :param month: Month's number.
     :param year: Year's number.
@@ -238,9 +218,7 @@ class Rich:
   def update(self, label: str = None, color: str = None, align: str = None, width: types.SIZE_TYPE = ("auto", ""),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Last Update time component.
 
     :tags:
@@ -260,9 +238,7 @@ class Rich:
     Related Pages:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
-
-    Attributes:
-    ----------
+ 
     :param label: Optional. The label to be displayed close to the date. Default Last Update.
     :param color: Optional. The color code for the font.
     :param align: Optional.
@@ -289,9 +265,7 @@ class Rich:
 
   def console(self, content: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (200, "px"),
               html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Display an component to show logs.
 
     :tags:
@@ -309,9 +283,7 @@ class Rich:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
-
-    Attributes:
-    ----------
+ 
     :param content: Optional. The console content.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -334,9 +306,7 @@ class Rich:
                    width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, "px"),
                    html_code: str = None, tooltip: str = None, extensible: bool = False,
                    options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Search bar.
 
     :tags:
@@ -353,9 +323,7 @@ class Rich:
     Related Pages:
 
       https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_anim_search
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The value to be displayed to the component.
     :param placeholder: Optional. The text display when empty.
     :param color: Optional. The font color in the component. Default inherit.
@@ -381,9 +349,7 @@ class Rich:
   def search_results(self, records=None, results_per_page: int = 20, width: types.SIZE_TYPE = (100, "%"),
                      height: types.SIZE_TYPE = (None, "px"), options: types.OPTION_TYPE = None,
                      profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Display the search results. This will return the matches and the details.
 
     :tags:
@@ -394,9 +360,7 @@ class Rich:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTextComp.SearchResult`
-
-    Attributes:
-    ----------
+ 
     :param records: Optional. The list of dictionaries with the input data.
     :param results_per_page: Optional. The page index.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -419,9 +383,7 @@ class Rich:
   def composite(self, schema, width: types.SIZE_TYPE = (None, "%"), height: types.PROFILE_TYPE = (None, "px"),
                 html_code: str = None, helper: str = None, options: dict = None,
                 profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Composite bespoke object.
 
     This object will be built based on its schema. No specific CSS Style and class will be added to this object.
@@ -436,9 +398,7 @@ class Rich:
           {'type': : {...}}
           ...
       ]}
-
-    Attributes:
-    ----------
+ 
     :param schema: The component nested structure.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -457,17 +417,13 @@ class Rich:
 
   def status(self, status: str, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
              html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param status:
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -491,9 +447,7 @@ class Rich:
   def markdown(self, text: str = "", width: types.SIZE_TYPE = ("calc(100% - 10px)", ''),
                height: types.SIZE_TYPE = ("auto", ''), html_code: str = None, options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -509,9 +463,7 @@ class Rich:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -533,17 +485,13 @@ class Rich:
 
   def adv_text(self, section, title, content, background: str = "",
                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param section:
     :param title: String | Component. Optional. A panel title. This will be attached to the title property.
     :param content:
@@ -587,18 +535,14 @@ class Rich:
   def color(self, code, content: str = "data copied to clipboard", width: types.SIZE_TYPE = (20, 'px'),
             height: types.SIZE_TYPE = (20, 'px'), options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Color component.
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param code: Tuple or String. The color code.
     :param content: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -625,17 +569,13 @@ class Rich:
 
   def elapsed(self, day=None, month=None, year=None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
               html_code=None, helper=None, options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param day:
     :param month:
     :param year:
@@ -655,9 +595,7 @@ class Rich:
     return md
 
   def powered(self, by=None, width=(100, "%"), height=(None, "px"), options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Display badges for the specifies JavaScript modules.
 
     Tip: If by is None. This will display only the main JavaScript module with the current version.
@@ -667,9 +605,7 @@ class Rich:
 
     :tags:
     :categories:
-
-    Attributes:
-    ----------
+ 
     :param by: List. Optional. Name of JavaScript library aliases.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

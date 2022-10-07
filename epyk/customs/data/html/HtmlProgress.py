@@ -51,10 +51,7 @@ class Gauge(Html.Html):
     return self._span
 
   def refresh(self):
-    """
-    Description:
-    -----------
-    Component refresh function. Javascript function which can be called in any Javascript event.
+    """   Component refresh function. Javascript function which can be called in any Javascript event.
 
     Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
 

@@ -11,12 +11,8 @@ from epyk.core.js import JsUtils
 class OptionExtraKeys(Options):
 
   def alt_f(self, value):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param value: String. The event code reference.
     """
     self._config(value, "'Alt-F'")
@@ -25,12 +21,8 @@ class OptionExtraKeys(Options):
     self._config(value, "'Ctrl-Space'")
 
   def f_11(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -40,12 +32,8 @@ class OptionExtraKeys(Options):
       'function(cm) {%s}' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), "'F11'", js_type=True)
 
   def esc(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -55,12 +43,8 @@ class OptionExtraKeys(Options):
       'function(cm) {%s}' % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), "'Esc'", js_type=True)
 
   def ctrl_q(self, js_funcs, profile=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -78,17 +62,13 @@ class OptionPanels:
       self.page = component.page
 
   def add(self, content, html_code, position="top"):
-    """
-    Description:
-    ------------
+    """  
     Add a panel to the codemirror component.
 
     Related Pages:
 
       https://codemirror.net/demo/panel.html
 
-    Attributes:
-    ----------
     :param content: String. The panel content.
     :param html_code: String. An identifier for this component (on both Python and Javascript side).
     :param position: String. Optional. The position of the panel on the component.
@@ -115,17 +95,13 @@ class OptionPanels:
       }''' % {"htmlCode": html_code, "position": position, "content": content, "editorId": self.component.editorId}
 
   def remove(self, html_code):
-    """
-    Description:
-    ------------
+    """  
     Remove a panel visible on the codemirror component.
 
     Related Pages:
 
       https://codemirror.net/demo/panel.html
 
-    Attributes:
-    ----------
     :param html_code: String. An identifier for this component (on both Python and Javascript side).
     """
     html_code = JsUtils.jsConvertData(html_code, None)
@@ -142,9 +118,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-search', 'codemirror-search')
   def search(self):
-    """
-    Description:
-    ------------
+    """  
     Adds the getSearchCursor(query, start, options) => cursor method to CodeMirror instances, which can be used to
     implement search/replace functionality. query can be a regular expression or a string.
     start provides the starting position of the search.
@@ -159,9 +133,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-trailingspace')
   def trailingspace(self):
-    """
-    Description:
-    ------------
+    """  
     Adds an option showTrailingSpace which, when enabled, adds the CSS class cm-trailingspace to stretches of
     whitespace at the end of lines.
 
@@ -176,9 +148,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-fold', 'codemirror-fold')
   def foldcode(self):
-    """
-    Description:
-    ------------
+    """  
     Provides an option foldGutter, which can be used to create a gutter with markers indicating the blocks that can be
     folded.
 
@@ -194,9 +164,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-highlighter')
   def highlighter(self):
-    """
-    Description:
-    ------------
+    """  
     Adds a highlightSelectionMatches option that can be enabled to highlight all instances of a currently selected word.
 
     Related Pages:
@@ -208,9 +176,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-hint', 'codemirror-hint')
   def hint(self):
-    """
-    Description:
-    ------------
+    """  
     Provides a framework for showing autocompletion hints.
 
     Related Pages:
@@ -223,9 +189,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-fullscreen', 'codemirror-fullscreen')
   def fullscreen(self):
-    """
-    Description:
-    ------------
+    """  
     Defines an option fullScreen that, when set to true, will make the editor full-screen (as in, taking up the whole
     browser window).
 
@@ -240,9 +204,7 @@ class OptionCMAddons:
 
   @packageImport('codemirror-placeholder')
   def placeholder(self):
-    """
-    Description:
-    ------------
+    """  
     Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
 
     Related Pages:
@@ -254,9 +216,7 @@ class OptionCMAddons:
   @property
   @packageImport('codemirror-panel')
   def panel(self) -> OptionPanels:
-    """
-    Description:
-    ------------
+    """  
     Property to the panel add-on features.
     """
     return OptionPanels(self.component)
@@ -265,17 +225,13 @@ class OptionCMAddons:
 class OptionsHints(Options):
 
   def hint(self, mappings, js_funcs=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://codemirror.net/demo/complete.html
       https://www.codegrepper.com/code-examples/whatever/codemirror+hint+on+every+key
 
-    Attributes:
-    ----------
     :param mappings: List of List.
     :param js_funcs: List | String. Optional. Javascript functions.
     """
@@ -298,18 +254,14 @@ class OptionsHints(Options):
     }''' % (mappings, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), js_type=True)
 
   def autocomplete(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return '''
       '''
 
   def snipet(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -321,9 +273,7 @@ class OptionsCode(Options):
 
   @property
   def addons(self) -> OptionCMAddons:
-    """
-    Description:
-    ------------
+    """  
     The addon directory in the distribution contains a number of reusable components that implement extra editor
     functionality.
 
@@ -335,9 +285,7 @@ class OptionsCode(Options):
 
   @property
   def value(self):
-    """
-    Description:
-    ------------
+    """  
     The starting value of the editor. Can be a string, or a document object.
 
     Related Pages:
@@ -352,9 +300,7 @@ class OptionsCode(Options):
 
   @property
   def mode(self):
-    """
-    Description:
-    ------------
+    """  
     The mode to use. When not given, this will default to the first mode that was loaded.
     It may be a string, which either simply names the mode or is a MIME type associated with the mode.
 
@@ -375,9 +321,7 @@ class OptionsCode(Options):
 
   @property
   def lineSeparator(self):
-    """
-    Description:
-    ------------
+    """  
     Explicitly set the line separator for the editor.
     By default (value null), the document will be split on CRLFs as well as lone CRs and LFs, and a single LF will be
     used as line separator in all output (such as getValue).
@@ -396,9 +340,7 @@ class OptionsCode(Options):
 
   @property
   def gutters(self):
-    """
-    Description:
-    ------------
+    """  
     Can be used to add extra gutters (beyond or instead of the line number gutter).
     Should be an array of CSS class names or class name / CSS string pairs, each of which defines a width
     (and optionally a background), and which will be used to draw the background of the gutters.
@@ -418,9 +360,7 @@ class OptionsCode(Options):
 
   @property
   def theme(self):
-    """
-    Description:
-    ------------
+    """  
     The theme to style the editor with.
     You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded (see the theme directory
     in the distribution).
@@ -440,9 +380,7 @@ class OptionsCode(Options):
 
   @property
   def indentUnit(self):
-    """
-    Description:
-    ------------
+    """  
     How many spaces a block (whatever that means in the edited language) should be indented. The default is 2.
 
     Related Pages:
@@ -457,9 +395,7 @@ class OptionsCode(Options):
 
   @property
   def smartIndent(self):
-    """
-    Description:
-    ------------
+    """  
     Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line
     before). Defaults to true.
 
@@ -475,9 +411,7 @@ class OptionsCode(Options):
 
   @property
   def tabSize(self):
-    """
-    Description:
-    ------------
+    """  
     The width of a tab character. Defaults to 4.
 
     Related Pages:
@@ -492,9 +426,7 @@ class OptionsCode(Options):
 
   @property
   def indentWithTabs(self):
-    """
-    Description:
-    ------------
+    """  
     Whether, when indenting, the first N*tabSize spaces should be replaced by N tabs. Default is false.
 
     Related Pages:
@@ -509,9 +441,7 @@ class OptionsCode(Options):
 
   @property
   def electricChars(self):
-    """
-    Description:
-    ------------
+    """  
     Configures whether the editor should re-indent the current line when a character is typed that might change its
     proper indentation (only works if the mode supports indentation).
     Default is true.
@@ -528,9 +458,7 @@ class OptionsCode(Options):
 
   @property
   def direction(self):
-    """
-    Description:
-    ------------
+    """  
     Flips overall layout and selects base paragraph direction to be left-to-right or right-to-left.
     Default is "ltr". CodeMirror applies the Unicode Bidirectional Algorithm to each line, but does not autodetect base
     direction — it's set to the editor direction for all lines.
@@ -547,9 +475,7 @@ class OptionsCode(Options):
 
   @property
   def rtlMoveVisually(self):
-    """
-    Description:
-    ------------
+    """  
     Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is visual (pressing the
     left arrow moves the cursor left) or logical (pressing the left arrow moves to the next lower index in the string,
     which is visually right in right-to-left text). The default is false on Windows, and true on other platforms.
@@ -566,9 +492,7 @@ class OptionsCode(Options):
 
   @property
   def keyMap(self):
-    """
-    Description:
-    ------------
+    """  
     Configures the key map to use. The default is "default", which is the only key map defined in codemirror.js itself.
     Extra key maps are found in the key map directory. See the section on key maps for more information.
 
@@ -584,9 +508,7 @@ class OptionsCode(Options):
 
   @property
   def lineWrapping(self):
-    """
-    Description:
-    ------------
+    """  
     Whether CodeMirror should scroll or wrap for long lines. Defaults to false (scroll).
 
     Related Pages:
@@ -601,9 +523,7 @@ class OptionsCode(Options):
 
   @property
   def lineNumbers(self):
-    """
-    Description:
-    ------------
+    """  
     Whether to show line numbers to the left of the editor.
 
     Related Pages:
@@ -618,9 +538,7 @@ class OptionsCode(Options):
 
   @property
   def firstLineNumber(self):
-    """
-    Description:
-    ------------
+    """  
     At which number to start counting lines. Default is 1.
 
     Related Pages:
@@ -635,9 +553,7 @@ class OptionsCode(Options):
 
   @property
   def fixedGutter(self):
-    """
-    Description:
-    ------------
+    """  
     Determines whether the gutter scrolls along with the content horizontally (false) or whether it stays fixed during
     horizontal scrolling (true, the default).
 
@@ -653,9 +569,7 @@ class OptionsCode(Options):
 
   @property
   def scrollbarStyle(self):
-    """
-    Description:
-    ------------
+    """  
     Chooses a scrollbar implementation. The default is "native", showing native scrollbars.
     The core library also provides the "null" style, which completely hides the scrollbars. Addons can implement
     additional scrollbar models.
@@ -672,9 +586,7 @@ class OptionsCode(Options):
 
   @property
   def coverGutterNextToScrollbar(self):
-    """
-    Description:
-    ------------
+    """  
     When fixedGutter is on, and there is a horizontal scrollbar, by default the gutter will be visible to the left of
     this scrollbar.
     If this option is set to true, it will be covered by an element with class CodeMirror-gutter-filler.
@@ -691,9 +603,7 @@ class OptionsCode(Options):
 
   @property
   def inputStyle(self):
-    """
-    Description:
-    ------------
+    """  
     Selects the way CodeMirror handles input and focus.
     he core library defines the "textarea" and "contenteditable" input models. On mobile browsers, the default is
     "contenteditable". On desktop browsers, the default is "textarea".
@@ -710,9 +620,7 @@ class OptionsCode(Options):
 
   @property
   def readOnly(self):
-    """
-    Description:
-    ------------
+    """  
     This disables editing of the editor content by the user. If the special value "nocursor" is given
     (instead of simply true), focusing of the editor is also disallowed.
 
@@ -728,9 +636,7 @@ class OptionsCode(Options):
 
   @property
   def screenReaderLabel(self):
-    """
-    Description:
-    ------------
+    """  
     This label is read by the screenreaders when CodeMirror text area is focused. This is helpful for accessibility.
 
     Related Pages:
@@ -745,9 +651,7 @@ class OptionsCode(Options):
 
   @property
   def showCursorWhenSelecting(self):
-    """
-    Description:
-    ------------
+    """  
     Whether the cursor should be drawn when a selection is active. Defaults to false.
 
     Related Pages:
@@ -762,9 +666,7 @@ class OptionsCode(Options):
 
   @property
   def lineWiseCopyCut(self):
-    """
-    Description:
-    ------------
+    """  
     When enabled, which is the default, doing copy or cut when there is no selection will copy or cut the whole lines
     that have cursors on them.
 
@@ -780,9 +682,7 @@ class OptionsCode(Options):
 
   @property
   def pasteLinesPerSelection(self):
-    """
-    Description:
-    ------------
+    """  
     When pasting something from an external source (not from the editor itself), if the number of lines matches
     the number of selection,
     CodeMirror will by default insert one line per selection. You can set this to false to disable that behavior.
@@ -799,9 +699,7 @@ class OptionsCode(Options):
 
   @property
   def selectionsMayTouch(self):
-    """
-    Description:
-    ------------
+    """  
     Determines whether multiple selections are joined as soon as they touch (the default) or only when they overlap
     (true).
 
@@ -817,9 +715,7 @@ class OptionsCode(Options):
 
   @property
   def historyEventDelay(self):
-    """
-    Description:
-    ------------
+    """  
     The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or
     deleting. Defaults to 1250.
 
@@ -835,9 +731,7 @@ class OptionsCode(Options):
 
   @property
   def tabindex(self):
-    """
-    Description:
-    ------------
+    """  
     The tab index to assign to the editor. If not given, no tab index will be assigned.
 
     Related Pages:
@@ -852,9 +746,7 @@ class OptionsCode(Options):
 
   @property
   def autofocus(self):
-    """
-    Description:
-    ------------
+    """  
     Can be used to make CodeMirror focus itself on initialization. Defaults to off.
     When fromTextArea is used, and no explicit value is given for this option, it will be set to true when either the
     source textarea is focused, or it has an autofocus attribute and no other element is focused.
@@ -871,9 +763,7 @@ class OptionsCode(Options):
 
   @property
   def dragDrop(self):
-    """
-    Description:
-    ------------
+    """  
     Controls whether drag-and-drop is enabled. On by default.
 
     Related Pages:
@@ -888,9 +778,7 @@ class OptionsCode(Options):
 
   @property
   def cursorBlinkRate(self):
-    """
-    Description:
-    ------------
+    """  
     Half-period in milliseconds used for cursor blinking.
     The default blink rate is 530ms. By setting this to zero, blinking can be disabled. A negative value hides the
     cursor entirely.
@@ -907,9 +795,7 @@ class OptionsCode(Options):
 
   @property
   def cursorScrollMargin(self):
-    """
-    Description:
-    ------------
+    """  
     How much extra space to always keep above and below the cursor when approaching the top or bottom of the visible
     view in a scrollable document. Default is 0.
 
@@ -925,9 +811,7 @@ class OptionsCode(Options):
 
   @property
   def cursorHeight(self):
-    """
-    Description:
-    ------------
+    """  
     Determines the height of the cursor. Default is 1, meaning it spans the whole height of the line.
     For some fonts (and by some tastes) a smaller height (for example 0.85), which causes the cursor to not reach all
     the way to the bottom of the line, looks better
@@ -944,9 +828,7 @@ class OptionsCode(Options):
 
   @property
   def matchBrackets(self):
-    """
-    Description:
-    ------------
+    """  
     Defines an option matchBrackets which, when set to true or an options object, causes matching brackets to be
     highlighted whenever the cursor is next to them.
     It also adds a method matchBrackets that forces this to happen once, and a method findMatchingBracket that can be
@@ -972,9 +854,7 @@ class OptionsCode(Options):
 
   @property
   def styleActiveLine(self):
-    """
-    Description:
-    ------------
+    """  
     Defines a styleActiveLine option that, when enabled, gives the wrapper of the line that contains the cursor the
     class CodeMirror-activeline, adds a background with the class CodeMirror-activeline-background, and adds the class
     CodeMirror-activeline-gutter to the line's gutter space is enabled.

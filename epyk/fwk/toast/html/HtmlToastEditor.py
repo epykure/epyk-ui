@@ -17,19 +17,13 @@ class Editor(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the editor javaScript object reference after the builder.
+    """   Return the editor javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastEditor.OptionsEditor:
-    """
-    Description:
-    -----------
-    The Toast UI Editor options.
+    """   The Toast UI Editor options.
 
     Related Pages:
 
@@ -41,10 +35,7 @@ class Editor(Html.Html):
 
   @property
   def js(self) -> JsToastEditor.Editor:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     Related Pages:
 

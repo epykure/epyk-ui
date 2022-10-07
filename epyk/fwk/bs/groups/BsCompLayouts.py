@@ -8,9 +8,7 @@ class Components:
 
   def grid(self, rows: list = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            align: str = None, position: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Use our powerful mobile-first flexbox grid to build layouts of all shapes and sizes thanks to a twelve column
     system, six default responsive tiers, Sass variables and mixins, and dozens of predefined classes.
 
@@ -18,8 +16,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/layout/grid/
 
-    Attributes:
-    ----------
     :param rows:
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple | Number. Optional. A tuple with the integer for the component height and its unit.
@@ -34,17 +30,13 @@ class Components:
 
   def row(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Add a row container.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/layout/grid/#row-columns
 
-    Attributes:
-    ----------
     :param components: Array<Component>. A list of HTML components.
     :param position: String. Optional. The position compared to the main component tag.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -60,17 +52,13 @@ class Components:
 
   def col(self, components=None, position='middle', width=(100, '%'), height=(None, 'px'), align=None, helper=None,
           options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Add a column container.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/layout/columns/
 
-    Attributes:
-    ----------
     :param components: Array<Component>. A list of HTML components.
     :param position: String. Optional. The position compared to the main component tag.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -86,9 +74,7 @@ class Components:
   def container(self, components=None, label=None, color=None, width=(100, "%"), icon=None,
                 height=(None, "px"), editable=False, align='left', padding=None, html_code=None, helper=None,
                 options=None, profile=None, position=None):
-    """
-    Description:
-    ------------
+    """  
     Containers are a fundamental building block of Bootstrap that contain, pad, and align your content within a
     given device or viewport.
 
@@ -97,8 +83,6 @@ class Components:
       https://getbootstrap.com/docs/5.1/layout/containers/
       https://getbootstrap.com/docs/5.1/layout/grid/#sass
 
-    Attributes:
-    ----------
     :param components: Array<Component>. A list of HTML components.
     :param label: String. Optional. The text of label to be added to the component.
     :param color: String. Optional. The font color in the component. Default inherit.

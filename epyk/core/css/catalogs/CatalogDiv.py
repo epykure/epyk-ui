@@ -190,18 +190,12 @@ class CatalogDrawer(Catalog.CatalogGroup):
 class CatalogShapes(Catalog.CatalogGroup):
 
   def page(self) -> CssStylesDivShape.CssDivPage:
-    """
-    Description:
-    -----------
-    Create a file look and feel display for a container.
+    """   Create a file look and feel display for a container.
     """
     return self._set_class(CssStylesDivShape.CssDivPage)
 
   def circle(self) -> CssStylesDivShape.CssDivCircle:
-    """
-    Description:
-    -----------
-    Create a circle look and feel display for a container.
+    """   Create a circle look and feel display for a container.
 
     Related Pages:
 
@@ -210,10 +204,7 @@ class CatalogShapes(Catalog.CatalogGroup):
     return self._set_class(CssStylesDivShape.CssDivCircle)
 
   def parallelogram(self) -> CssStylesDivShape.Parallelogram:
-    """
-    Description:
-    -----------
-    Create a parallelogram look and feel display for a container.
+    """   Create a parallelogram look and feel display for a container.
 
     Related Pages:
 
@@ -222,10 +213,7 @@ class CatalogShapes(Catalog.CatalogGroup):
     return self._set_class(CssStylesDivShape.Parallelogram)
 
   def octagon(self) -> CssStylesDivShape.Octagon:
-    """
-    Description:
-    -----------
-    Create a Octagon and feel display for a container.
+    """   Create a Octagon and feel display for a container.
 
     Related Pages:
 

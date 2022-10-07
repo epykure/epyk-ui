@@ -23,8 +23,6 @@ def packageImport(js_package: str = None, css_package: str = None, if_true: bool
     def myHtmlComponent():
       pass
 
-  Attributes:
-  ----------
   :param js_package: Optional. JavaScript package alias
   :param css_package: Optional. CSS Package alias
   :param if_true: Optional. Add packages only if they exist in the internal definition
@@ -74,24 +72,18 @@ class JsPackage(primitives.JsDataModel):
   @property
   def varId(self):
     """
-    Description:
-    ------------
     The Javascript and Python reference ID.
     """
     return self._selector if self.varName is None else self.varName
 
   def version(self, tag: str, js: dict = None, css: dict = None):
     """
-    Description:
-    ------------
     Change the package version number.
 
     Usage::
 
       bar.chart.version("1.11.0")
 
-    Attributes:
-    ----------
     :param tag: The package versions example 1.11.0.
     :param js: Optional. The JavaScript packages to be added.
     :param css: Optional. The CSS packages to be added.
@@ -101,14 +93,10 @@ class JsPackage(primitives.JsDataModel):
 
   def fnc(self, data: Any, unique: bool = False):
     """
-    Description:
-    ------------
     Base function to allow the object chain.
     THis will add the elements to the current section in the object structure.
     All the items at the same level wil be chained.
 
-    Attributes:
-    ----------
     :param data: The Javascript fragment to be added.
     :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
 
@@ -125,13 +113,9 @@ class JsPackage(primitives.JsDataModel):
 
   def fnc_enum(self, name: str, data_class):
     """
-    Description:
-    ------------
     Base function to allow the creation of function with parameters which are list of dataclasses.
     Basically this will be then transpiled to a list of dictionary.
 
-    Attributes:
-    ----------
     :param name: The function Name.
     :param data_class: The Python Data class
     """
@@ -147,16 +131,12 @@ class JsPackage(primitives.JsDataModel):
 
   def fnc_closure(self, data: str, check_undefined: bool = False, unique: bool = False):
     """
-    Description:
-    ------------
     Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
 
     Thanks to this Python can always keep the same structure and produce the correct Javascript definition
     There will be no chain in the Javascript side
 
-    Attributes:
-    ----------
     :param data: The Javascript fragment to be added.
     :param check_undefined: Add a check on the variable definition.
     :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
@@ -178,15 +158,11 @@ class JsPackage(primitives.JsDataModel):
 
   def fnc_closure_in_promise(self, data: str, check_undefined: bool = False):
     """
-    Description:
-    ------------
     Base function to allow the creation of a promise.
 
     A Js promise is an event attached toa function which will be only executed after the function.
     In case of success the then will be triggered otherwise the exception will be caught.
 
-    Attributes:
-    ----------
     :param data: The Javascript fragment to be added.
     :param check_undefined: Add a check on the variable definition.
 
@@ -201,21 +177,15 @@ class JsPackage(primitives.JsDataModel):
   @property
   def var(self):
     """
-    Description:
-    ------------
     Property to return the variable name as a valid pyJs object
     """
     return JsString.JsString(self.varId, is_py_data=False)
 
   def set_var(self, flag: bool):
     """
-    Description:
-    ------------
     Change the flag to define if the variable should be defined on the Javascript side.
     Default this is set to True
 
-    Attributes:
-    ----------
     :param flag: A python boolean
 
     :return: This in order to allow js chains
@@ -225,12 +195,8 @@ class JsPackage(primitives.JsDataModel):
 
   def getStr(self, empty_stack: bool = True) -> str:
     """
-    Description:
-    ------------
     Get the current string representation for the object and remove the stack.
 
-    Attributes:
-    ----------
     :param empty_stack:
     """
     js_stack = None
@@ -246,13 +212,9 @@ class JsPackage(primitives.JsDataModel):
 
   def _mapVarId(self, func: types.JS_FUNCS_TYPES, js_code: str):
     """
-    Description:
-    ------------
     Special function used for some external packages used to fix the problem of function override.
     Indeed in Datatable row.add is used as a class method compare to the other functions used at object level.
 
-    Attributes:
-    ----------
     :param str func: The function string.
     :param str js_code: The object reference.
 
@@ -262,13 +224,9 @@ class JsPackage(primitives.JsDataModel):
 
   def custom(self, func_nam: str, *argv):
     """
-    Description:
-    ------------
     Generic function to call any missing function form a package.
     This will automatically convert the object to JavaScript and also put the right object reference.
 
-    Attributes:
-    ----------
     :param func_nam: The function name.
     :param argv: Optional. The function arguments on the JavasScript side.
     """
@@ -279,8 +237,6 @@ class JsPackage(primitives.JsDataModel):
 
   def toStr(self):
     """
-    Description:
-    ------------
     Javascript representation
 
     :return: Return the Javascript String
@@ -337,15 +293,11 @@ class DataAttrs(primitives.JsDataModel):
 
   def custom(self, name: str, value: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
 
-    Attributes:
-    ----------
     :param name: The key to be added to the attributes.
     :param value: The value of the defined attributes.
 
@@ -356,12 +308,8 @@ class DataAttrs(primitives.JsDataModel):
 
   def attr(self, name: str, value: Any):
     """
-    Description:
-    ------------
     Add an attribute to the Javascript underlying dictionary
 
-    Attributes:
-    ----------
     :param str name: The attribute name.
     :param Any value: The attribute value.
 
@@ -372,12 +320,8 @@ class DataAttrs(primitives.JsDataModel):
 
   def attrs(self, values: dict):
     """
-    Description:
-    ------------
     Set multiple attributes to the underlying data directly from a dictionary.
 
-    Attributes:
-    ----------
     :param dict values: The data to set.
 
     :return: "Self" to allow the chains on the Python side
@@ -387,8 +331,6 @@ class DataAttrs(primitives.JsDataModel):
 
   def __str__(self):
     """
-    Description:
-    ------------
     Produce the resulting string to be added to the Javascript section of the web page
     """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])

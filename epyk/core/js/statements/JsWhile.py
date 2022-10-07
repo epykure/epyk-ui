@@ -11,13 +11,8 @@ class JsWhile:
 
   def __init__(self, pivot: str, options: Optional[dict] = None, context: Optional[primitives.PageModel] = None,
                profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
-    Create a JavaScript while statement.
+    """   Create a JavaScript while statement.
 
-    Attributes:
-    ----------
     :param str pivot: The JavaScript expression.
     :param Optional[dict] options:
     :param Optional[primitives.PageModel] context:
@@ -32,26 +27,16 @@ class JsWhile:
     self.profile = profile
 
   def next(self, rule: str):
-    """
-    Description:
-    -----------
-    Set the way the while will increment the cursor.
+    """   Set the way the while will increment the cursor.
 
-    Attributes:
-    ----------
     :param str rule: The JavaScript fragment for the next statement,
     """
     self.__next = rule
     return self
 
   def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
-    Set the functions, event to be trigger during the while loop.
+    """   Set the functions, event to be trigger during the while loop.
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript functions.
     :param bool reset: Reset the defined javascript functions or append to them.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -77,12 +62,8 @@ class JsWhileIterable:
 
   def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
                profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[primitives.JsDataModel, str] iterable:
     :param Optional[dict] options: Optional. While options.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
@@ -96,42 +77,29 @@ class JsWhileIterable:
 
   @property
   def var(self) -> str:
-    """
-    Description:
-    -----------
+    """   
 `   Return the variable reference for this loop.
     """
     return self.options['var']
 
   @var.setter
   def var(self, value: str):
-    """
-    Description:
-    -----------
+    """   
 `   Return the variable reference for this loop.
 
-    Attributes:
-    ----------
     :param str value: The value reference for the JavaScript variable.
     """
     self.options['var'] = value
 
   @property
   def value(self):
-    """
-    Description:
-    -----------
-    return the value during the while loop.
+    """   return the value during the while loop.
     """
     return JsObject.JsObject.get("%(it)s[%(var)s]" % self.options)
 
   def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The PyJs functions.
     :param bool reset: Optional. Reset the JavaScript functions for this loop.
     :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.

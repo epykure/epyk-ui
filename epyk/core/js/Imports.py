@@ -35,14 +35,9 @@ STATIC_PATH = "/static"
 
 def requires(name: str, reason: str = 'Missing Package', install=None, package=None, raise_except=False, source_script=None,
              pip_attrs=None):
-  """
-  Description:
-  ------------
-  Import the necessary external packages and provide explicit message to find a way to solve this error message.
+  """ Import the necessary external packages and provide explicit message to find a way to solve this error message.
   This method should also explain why this module is required to make sure this is really expected to get an error.
 
-  Attributes:
-  ----------
   :param str name:
   :param str reason:
   :param install:
@@ -101,10 +96,7 @@ def requires(name: str, reason: str = 'Missing Package', install=None, package=N
 
 
 def load_package(package_name: str, pip_attrs: Optional[list] = None, action: str = 'install'):
-  """
-  Description:
-  ------------
-  Force the package to be installed manually to the current python distribution.
+  """ Force the package to be installed manually to the current python distribution.
   This will run a pip command to the running python set up.
 
   Usage::
@@ -115,8 +107,6 @@ def load_package(package_name: str, pip_attrs: Optional[list] = None, action: st
 
       https://pypi.org/
 
-  Attributes:
-  ----------
   :param str package_name: The external package reference (e.g. pandas).
   :param Optional[list] pip_attrs: Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/.
   :param str action: Optional. The pip command (default install).
@@ -132,10 +122,7 @@ def load_package(package_name: str, pip_attrs: Optional[list] = None, action: st
 
 
 def installed_packages():
-  """
-  Description:
-  ------------
-  Returns the list of packages installed on the running Python distribution.
+  """ Returns the list of packages installed on the running Python distribution.
 
   This will require an internet connection as it will run the pip command behind the scene.
   It will return in the console a table with the status of the obsolescence of all the python packages.
@@ -270,6 +257,7 @@ JS_IMPORTS = {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'repository': 'https://github.com/ag-grid/ag-grid',
     'version': '25.0.1',
+    "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
     'modules': [
       {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]
   },
@@ -2069,17 +2057,12 @@ GOOGLE_EXTENSIONS = {
 
 
 def script_version(alias: str, script_details: dict, with_prefix: bool = False):
-  """
-  Description:
-  -----------
-  Return the script version number with or without prefix.
+  """ Return the script version number with or without prefix.
   This will ensure a standard way to get the version number for a given CSS or JavaScript script in the framework.
 
-  Attributes:
-  ----------
-  :param str alias: The package reference alias in the framework and in NPM.
-  :param dict script_details: The script definition in the framework.
-  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
+  :param alias: The package reference alias in the framework and in NPM.
+  :param script_details: The script definition in the framework.
+  :param with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   if "version" in script_details:
     if with_prefix:
@@ -2100,19 +2083,14 @@ def script_version(alias: str, script_details: dict, with_prefix: bool = False):
 
 
 def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False):
-  """
-  Description:
-  -----------
-  Get the script path to retrieve the content locally.
+  """ Get the script path to retrieve the content locally.
   This is mainly used by PyNpm package in order to retrieve the content of the script to produce local copies of them.
 
   Having script copied locally will speed up the loading of the page and also will ensure a run offline.
 
-  Attributes:
-  ----------
-  :param str alias: The package reference alias in the framework and in NPM.
-  :param dict script_details: The script definition in the framework.
-  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
+  :param alias: The package reference alias in the framework and in NPM.
+  :param script_details: The script definition in the framework.
+  :param with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
@@ -2122,15 +2100,11 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
 
 def script_npm_path(alias: str, script_details: dict, static_path: str, with_prefix: bool = False):
   """
-  Description:
-  -----------
 
-  Attributes:
-  ----------
-  :param str alias: The package reference alias in the framework and in NPM.
-  :param dict script_details: The script definition in the framework.
-  :param str static_path:
-  :param bool with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
+  :param alias: The package reference alias in the framework and in NPM.
+  :param script_details: The script definition in the framework.
+  :param static_path:
+  :param with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
   """
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
@@ -2143,22 +2117,16 @@ def script_npm_path(alias: str, script_details: dict, static_path: str, with_pre
 
 
 def extend(reference: str, module_path, version: str, cdnjs_url: str = CDNJS_REPO, required: Optional[list] = None):
-  """
-  Description:
-  ------------
-  Function to extend the internal CSS and JS registered modules.
+  """  Function to extend the internal CSS and JS registered modules.
 
 
-  Related Pages:
-  --------------
+  Related Pages::
 
-  Attributes:
-  ----------
-  :param str reference: The internal reference in the framework.
+  :param reference: The internal reference in the framework.
   :param module_path: List of tuple. The different modules and location.
-  :param str version: String. The version number. Can be an internal module reference to point to follow its version number.
-  :param str cdnjs_url: String. The CDNJS reference path.
-  :param Optional[list] required: The list of dependency modules.
+  :param version: String. The version number. Can be an internal module reference to point to follow its version number.
+  :param cdnjs_url: String. The CDNJS reference path.
+  :param required: The list of dependency modules.
   """
   for module, path in module_path:
     config = JS_IMPORTS if module.endswith(".js") else CSS_IMPORTS
@@ -2174,16 +2142,11 @@ def extend(reference: str, module_path, version: str, cdnjs_url: str = CDNJS_REP
 
 
 def extend_imports(extension: dict):
-  """
-  Description:
-  ------------
-  Hook to extend the imports in the centralised Import module.
-  The packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
+  """  Hook to extend the imports in the centralised Import module.
+  Packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
   simplicity.
 
-  Attributes:
-  ----------
-  :param dict extension: The list of packages to be added grouped by alias.
+  :param extension: The list of packages to be added grouped by alias.
   """
   global CSS_IMPORTS, JS_IMPORTS
 
@@ -2234,19 +2197,13 @@ class ImportModule:
 
   @property
   def alias(self) -> str:
-    """
-    Description:
-    -----------
-    Get the NPM alias name.
+    """   Get the NPM alias name.
     """
     return self._name
 
   @property
   def defer(self) -> bool:
-    """
-    Description:
-    -----------
-    If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
+    """   If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
     and executed after the page has finished parsing.
 
     Related Pages:
@@ -2261,10 +2218,7 @@ class ImportModule:
 
   @property
   def asynchrone(self) -> bool:
-    """
-    Description:
-    -----------
-    Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available
+    """   Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available
     (before parsing completes) (only for external scripts).
 
     Related Pages:
@@ -2279,10 +2233,7 @@ class ImportModule:
 
   @property
   def nomodule(self) -> bool:
-    """
-    Description:
-    -----------
-    Specifies that the script should not be executed in browsers supporting ES2015 modules.
+    """   Specifies that the script should not be executed in browsers supporting ES2015 modules.
 
     Related Pages:
 
@@ -2296,10 +2247,7 @@ class ImportModule:
 
   @property
   def eferrerpolicy(self) -> str:
-    """
-    Description:
-    -----------
-    Specifies which referrer information to send when fetching a script.
+    """   Specifies which referrer information to send when fetching a script.
 
     Related Pages:
 
@@ -2313,10 +2261,7 @@ class ImportModule:
 
   @property
   def version(self):
-    """
-    Description:
-    -----------
-    Return the package version number defined in the framework.
+    """   Return the package version number defined in the framework.
     """
     return self._js["versions"]
 
@@ -2337,10 +2282,7 @@ class ImportModule:
 
   @property
   def path(self) -> str:
-    """
-    Description:
-    -----------
-    Get the package path used to retrieve the various modules.
+    """   Get the package path used to retrieve the various modules.
     """
     mod = JS_IMPORTS[self._name]['modules'][0]
     mod["version"] = self.version[0]
@@ -2361,10 +2303,7 @@ class ImportModule:
 
   @property
   def scripts(self):
-    """
-    Description:
-    -----------
-    Get the list of external files used for this package.
+    """   Get the list of external files used for this package.
 
     Usage::
 
@@ -2383,10 +2322,7 @@ class ImportModule:
     return list(self._css["main"].keys())
 
   def add(self):
-    """
-    Description:
-    -----------
-    Force a package to be added to the external requirements.
+    """   Force a package to be added to the external requirements.
     """
     if self._name in JS_IMPORTS:
       self.page.jsImports.add(self._name)
@@ -2394,24 +2330,16 @@ class ImportModule:
       self.page.cssImport.add(self._name)
 
   def from_cdnjs(self):
-    """
-    Description:
-    -----------
-    Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
+    """   Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
     Indeed this method will not impact any modules with this flag set to True.
     """
     self.overriden = True
 
   def set_local(self, static_url: str = "/static"):
-    """
-    Description:
-    -----------
-    Route the package to the local path.
+    """   Route the package to the local path.
     Check first of the modules exist and raise an error otherwise.
 
-    Attributes:
-    ----------
-    :param str static_url: Optional. The static root on the server. (default value /static/).
+    :param static_url: Optional. The static root on the server. (default value /static/).
     """
     if self.overriden:
       return
@@ -2435,9 +2363,7 @@ class ImportModule:
     self.overriden = True
 
   def set_enterprise(self):
-    """
-    Description:
-    ------------
+    """  
     Change the package to the enterprise version.
     This feature will only work for few modules like AGGrid.
 
@@ -2455,6 +2381,8 @@ class ImportModule:
     if self._name == 'ag-grid-community':
       version = "28.1.0"
       JS_IMPORTS['ag-grid-community']["version"] = version
+      JS_IMPORTS['ag-grid-community']["register"]["module"] = "ag-grid-enterprise.min"
+      JS_IMPORTS['ag-grid-community']["register"]["npm"] = "ag-grid-enterprise"
       JS_IMPORTS['ag-grid-community']['modules'] = [
         {'script': 'ag-grid-enterprise.min.js', 'path': 'ag-grid-enterprise@%(version)s/dist/', 'cdnjs': JSDELIVER},
       ]
@@ -2476,9 +2404,7 @@ class ImportModule:
       self._css["versions"] = [version]
 
   def set_access_token(self, value: str = None, name: str = ""):
-    """
-    Description:
-    ------------
+    """  
     Set an access token to use this package
 
     Related Pages:
@@ -2493,8 +2419,6 @@ class ImportModule:
         "mapboxgl.accessToken"
       )
 
-    Attributes:
-    ----------
     :param value: The access token to set to use the library
     :param name: The access token variable name
     """
@@ -2516,9 +2440,7 @@ class ImportPackagesPivotExts:
 
   @property
   def c3(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2527,9 +2449,7 @@ class ImportPackagesPivotExts:
 
   @property
   def plotly(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2538,9 +2458,7 @@ class ImportPackagesPivotExts:
 
   @property
   def d3(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2549,9 +2467,7 @@ class ImportPackagesPivotExts:
 
   @property
   def subtotal(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2573,9 +2489,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def search(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2585,9 +2499,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def placeholder(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2597,9 +2509,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def trailingspace(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2609,9 +2519,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def fullscreen(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2621,9 +2529,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def highlighter(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2633,9 +2539,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def hint(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2645,9 +2549,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def panel(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2657,9 +2559,7 @@ class ImportPackagesCodeMirrorExts:
 
   @property
   def fold(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2682,9 +2582,7 @@ class ImportPackagesD3Exts:
 
   @property
   def tip(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2694,9 +2592,7 @@ class ImportPackagesD3Exts:
 
   @property
   def axis(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2706,9 +2602,7 @@ class ImportPackagesD3Exts:
 
   @property
   def ease(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2718,9 +2612,7 @@ class ImportPackagesD3Exts:
 
   @property
   def dsv(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2730,9 +2622,7 @@ class ImportPackagesD3Exts:
 
   @property
   def dispatch(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2742,9 +2632,7 @@ class ImportPackagesD3Exts:
 
   @property
   def transition(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2754,9 +2642,7 @@ class ImportPackagesD3Exts:
 
   @property
   def selection(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2766,9 +2652,7 @@ class ImportPackagesD3Exts:
 
   @property
   def interpolate(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2778,9 +2662,7 @@ class ImportPackagesD3Exts:
 
   @property
   def time_format(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2790,9 +2672,7 @@ class ImportPackagesD3Exts:
 
   @property
   def time(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2802,9 +2682,7 @@ class ImportPackagesD3Exts:
 
   @property
   def array(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2814,9 +2692,7 @@ class ImportPackagesD3Exts:
 
   @property
   def format(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2826,9 +2702,7 @@ class ImportPackagesD3Exts:
 
   @property
   def timer(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2838,9 +2712,7 @@ class ImportPackagesD3Exts:
 
   @property
   def collection(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2850,9 +2722,7 @@ class ImportPackagesD3Exts:
 
   @property
   def scale(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2862,9 +2732,7 @@ class ImportPackagesD3Exts:
 
   @property
   def color(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2874,9 +2742,7 @@ class ImportPackagesD3Exts:
 
   @property
   def brush(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2886,9 +2752,7 @@ class ImportPackagesD3Exts:
 
   @property
   def drag(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2898,9 +2762,7 @@ class ImportPackagesD3Exts:
 
   @property
   def shape(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2910,9 +2772,7 @@ class ImportPackagesD3Exts:
 
   @property
   def zoom(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2922,9 +2782,7 @@ class ImportPackagesD3Exts:
 
   @property
   def path(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2961,15 +2819,11 @@ class ImportPackagesTabulatorExts:
     self.__linked = links
 
   def get(self, name: str):
-    """
-    Description:
-    ------------
+    """  
     Generic way to retrieve packages from the framework.
     This is a shortcut to change any properties for the package (version, path...).
 
-    Attributes:
-    ----------
-    :param str name: The package alias to be loaded.
+    :param name: The package alias to be loaded.
 
     :rtype: ImportModule
     """
@@ -2980,9 +2834,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def formatter_inputs(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2992,9 +2844,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def formatter_icons(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3004,9 +2854,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def formatter_numbers(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3016,9 +2864,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def formatter_drops(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3028,9 +2874,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def mutators_inputs(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3040,9 +2884,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def editors_inputs(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3052,9 +2894,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def editors_dates(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3064,9 +2904,7 @@ class ImportPackagesTabulatorExts:
 
   @property
   def editors_selects(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3083,14 +2921,10 @@ class ImportPackages:
     self.__linked = {}
 
   def get(self, name: str) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Generic way to retrieve packages from the framework.
     This is a shortcut to change any properties for the package (version, path...).
 
-    Attributes:
-    ----------
     :param name: The package alias to be loaded
     """
     if name in self.__linked:
@@ -3100,9 +2934,7 @@ class ImportPackages:
 
   @property
   def vis(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     A dynamic, browser based visualization library..
 
     TODO: Add the split of packages
@@ -3117,9 +2949,7 @@ class ImportPackages:
 
   @property
   def d3(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     D3.js is a JavaScript library for manipulating documents based on data.
 
     TODO: Add the split of packages
@@ -3132,9 +2962,7 @@ class ImportPackages:
 
   @property
   def dc(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
     large multi-dimensional datasets.
 
@@ -3148,9 +2976,7 @@ class ImportPackages:
 
   @property
   def nvd3(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     This project is an attempt to build re-usable charts and chart components for d3.js without taking away
     the power that d3.js gives you.
 
@@ -3164,9 +2990,7 @@ class ImportPackages:
 
   @property
   def c3(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     C3.js D3-based reusable chart library.
 
     Related Pages:
@@ -3179,9 +3003,7 @@ class ImportPackages:
 
   @property
   def billboard(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Re-usable, easy interface JavaScript chart library, based on D3 v4+.
 
     Related Pages:
@@ -3194,9 +3016,7 @@ class ImportPackages:
 
   @property
   def chart_js(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Simple yet flexible JavaScript charting for designers & developers.
 
     Related Pages:
@@ -3209,9 +3029,7 @@ class ImportPackages:
 
   @property
   def chart_js_extensions(self):
-    """
-    Description:
-    ------------
+    """  
     Simple yet flexible JavaScript charting for designers & developers.
 
     Related Pages:
@@ -3224,9 +3042,7 @@ class ImportPackages:
 
   @property
   def crossfilter(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Fast Multidimensional Filtering for Coordinated Views.
 
     Related Pages:
@@ -3239,9 +3055,7 @@ class ImportPackages:
 
   @property
   def apexcharts(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Modern & Interactive Open-source Charts.
 
     Related Pages:
@@ -3254,9 +3068,7 @@ class ImportPackages:
 
   @property
   def plotly(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Plotly JavaScript Open Source Graphing Library.
 
     Related Pages:
@@ -3269,9 +3081,7 @@ class ImportPackages:
 
   @property
   def ag_grid(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     The Best JavaScript Grid in the World.
 
     Related Pages:
@@ -3284,9 +3094,7 @@ class ImportPackages:
 
   @property
   def bootstrap(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     The most popular front-end framework for developing responsive, mobile first projects on the web.
 
     Related Pages:
@@ -3299,9 +3107,7 @@ class ImportPackages:
 
   @property
   def jquery(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     JavaScript library for DOM operations.
 
     Related Pages:
@@ -3314,9 +3120,7 @@ class ImportPackages:
 
   @property
   def jqueryui(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery
     JavaScript Library.
 
@@ -3330,9 +3134,7 @@ class ImportPackages:
 
   @property
   def jquery_bracket(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for
     tournament play.
 
@@ -3346,9 +3148,7 @@ class ImportPackages:
 
   @property
   def jquery_sparkline(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied
     either inline in the HTML, or via javascript.
 
@@ -3362,9 +3162,7 @@ class ImportPackages:
 
   @property
   def jqvmap(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     JQVMap is a jQuery plugin that renders Interactive, Clickable Vector Maps.
 
     Related Pages:
@@ -3377,9 +3175,7 @@ class ImportPackages:
 
   @property
   def qunit(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     The powerful, easy-to-use JavaScript testing framework.
 
     Related Pages:
@@ -3392,9 +3188,7 @@ class ImportPackages:
 
   @property
   def accounting(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     number, money and currency formatting library.
 
     Related Pages:
@@ -3407,9 +3201,7 @@ class ImportPackages:
 
   @property
   def qrcodejs(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     QRCode.js is javascript library for making QRCode.
     QRCode.js supports Cross-browser with HTML5 Canvas and table tag in DOM. QRCode.js has no dependencies.
 
@@ -3423,9 +3215,7 @@ class ImportPackages:
 
   @property
   def underscore(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number,
     money and currency formatting.
 
@@ -3439,9 +3229,7 @@ class ImportPackages:
 
   @property
   def tabulator(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Interactive table generation JavaScript library.
 
     Related Pages:
@@ -3454,9 +3242,7 @@ class ImportPackages:
 
   @property
   def tabulator_extensions(self):
-    """
-    Description:
-    ------------
+    """  
     Get all the defined extension for tabulator.
 
     :rtype: ImportPackagesTabulatorExts
@@ -3465,9 +3251,7 @@ class ImportPackages:
 
   @property
   def datatables(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Add advanced interaction controls to your HTML tables the free & easy way.
 
     Related Pages:
@@ -3480,9 +3264,7 @@ class ImportPackages:
 
   @property
   def datatable_extensions(self):
-    """
-    Description:
-    ------------
+    """  
     Get all the defined extension for DataTable.
 
     :rtype: ImportPackagesDataTableExts
@@ -3491,9 +3273,7 @@ class ImportPackages:
 
   @property
   def mathjax(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Beautiful and accessible math in all browsers.
 
     Related Pages:
@@ -3506,9 +3286,7 @@ class ImportPackages:
 
   @property
   def mapbox(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3517,9 +3295,7 @@ class ImportPackages:
 
   @property
   def moment(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -3529,9 +3305,7 @@ class ImportPackages:
 
   @property
   def hammer(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Add touch gestures to your webapp.
 
     Related Pages:
@@ -3544,9 +3318,7 @@ class ImportPackages:
 
   @property
   def popper_js(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Tooltip & Popover Positioning Engine.
 
     Related Pages:
@@ -3559,9 +3331,7 @@ class ImportPackages:
 
   @property
   def font_awesome(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     The next generation of our icon library + toolkit is coming with more icons, more styles,
     more services, and more awesome.
 
@@ -3575,9 +3345,7 @@ class ImportPackages:
 
   @property
   def json_formatter(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Render JSON objects in HTML with a collapsible navigation.
 
     Related Pages:
@@ -3590,9 +3358,7 @@ class ImportPackages:
 
   @property
   def pivottable(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Open-source Javascript Pivot Table (aka Pivot Grid, Pivot Chart, Cross-Tab) implementation with drag'n'drop.
 
     Related Pages:
@@ -3605,9 +3371,7 @@ class ImportPackages:
 
   @property
   def require_js(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     RequireJS is a JavaScript file and module loader.
     It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node.
 
@@ -3621,9 +3385,7 @@ class ImportPackages:
 
   @property
   def timepicker(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     jQuery TimePicker is a plugin to enhance standard form input fields, helping users to select (or type) times.
 
     Related Pages:
@@ -3636,9 +3398,7 @@ class ImportPackages:
 
   @property
   def socket(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Real-time application framework.
     Socket.IO enables real-time bidirectional event-based communication.
 
@@ -3652,9 +3412,7 @@ class ImportPackages:
 
   @property
   def codemirror(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     CodeMirror is a versatile text editor implemented in JavaScript for the browser.
 
     Related Pages:
@@ -3667,9 +3425,7 @@ class ImportPackages:
 
   @property
   def codemirror_extensions(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: ImportPackagesCodeMirrorExts
     """
@@ -3677,9 +3433,7 @@ class ImportPackages:
 
   @property
   def highlight(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Syntax highlighting for the Web.
 
     Related Pages:
@@ -3692,9 +3446,7 @@ class ImportPackages:
 
   @property
   def leaflet(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     An open-source JavaScript library for mobile-friendly interactive maps.
 
     Related Pages:
@@ -3707,9 +3459,7 @@ class ImportPackages:
 
   @property
   def showdown(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Showdown is a Javascript Markdown to HTML converter.
 
     Related Pages:
@@ -3722,9 +3472,7 @@ class ImportPackages:
 
   @property
   def sortablejs(self) -> ImportModule:
-    """
-    Description:
-    ------------
+    """  
     Create and reorder lists with drag-and-drop. For use with modern browsers and touch devices.
 
     Related Pages:
@@ -3737,10 +3485,7 @@ class ImportPackages:
 
 
 class ImportManager:
-  """
-  Description:
-  ------------
-  The main class in charge of defining the order of the imports in the header.
+  """  The main class in charge of defining the order of the imports in the header.
 
   There is no check on the presence of the modules on the server. The only purpose of this module is to produce the
   string with the module names and the correct paths to your final HTML report.
@@ -3751,9 +3496,7 @@ class ImportManager:
   _static_path: Optional[str] = None
 
   def __init__(self, page=None):
-    """
-    Description:
-    ------------
+    """  
     Load the hierarchy of modules.
     This module will define the import section in the header of the final HTML page.
 
@@ -3761,9 +3504,7 @@ class ImportManager:
     available. To run a report using the online mode to False it is requires to get all the packages locally
     saved with the expected structured (basically the one of the CDNJS repository)
 
-    Attributes:
-    ----------
-    :param page: Report. Optional. The internal report object with all the required external modules.
+    :param page: Optional. The internal report object with all the required external modules.
     """
     self.page, ovr_version, self.__pkgs = page, {}, None
     self.force_position = {}
@@ -3854,14 +3595,10 @@ class ImportManager:
     self._static_path = path
 
   def add(self, alias: str):
-    """
-    Description:
-    ------------
+    """  
     Add package to the page external required modules.
 
-    Attributes:
-    ----------
-    :param str alias: The external module alias.
+    :param alias: The external module alias.
     """
     if alias in JS_IMPORTS:
       self.page.jsImports.add(alias)
@@ -3869,23 +3606,17 @@ class ImportManager:
       self.page.cssImport.add(alias)
 
   def extend(self, aliases: List[str]):
-    """
-    Description:
-    ------------
+    """  
     Add multiple aliases to the external requirements.
 
-    Attributes:
-    ----------
-    :param List[str] aliases: The list of package aliases to be added.
+    :param aliases: The list of package aliases to be added.
     """
     for alias in aliases:
       self.add(alias)
 
   @property
   def requirements(self) -> set:
-    """
-    Description:
-    ------------
+    """  
     Retrieve all the mandatory requirements required to display the final HTML page.
 
     Usage::
@@ -3899,9 +3630,7 @@ class ImportManager:
 
   def getModules(self, modules: dict, alias: Union[str, dict], folder: Optional[str] = None,
                  module_details: Optional[dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Return the list of modules for a given entry.
     This will be used recursively to resolve all the dependencies.
 
@@ -3910,12 +3639,10 @@ class ImportManager:
       modules = collections.OrderedDict()
       ImportManager().getModules(modules, 'c3')
 
-    Attributes:
-    ----------
-    :param dict modules: The ordered definition of modules.
-    :param Union[str, dict] alias: The module reference in the above JS and CSS dictionaries.
-    :param Optional[str] folder: Optional. The folder name.
-    :param Optional[dict] module_details: The module definition. Default check in the Javascript modules.
+    :param modules: The ordered definition of modules.
+    :param alias: The module reference in the above JS and CSS dictionaries.
+    :param folder: Optional. The folder name.
+    :param module_details: The module definition. Default check in the Javascript modules.
 
     :return: The list of modules
     """
@@ -3943,9 +3670,7 @@ class ImportManager:
 
   def getReq(self, mod: str, modules: List[dict], import_hierarchy: Optional[dict] = None,
              use_require_js: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Set the list pf required modules for a given alias to the modules list.
 
     Usage::
@@ -3954,12 +3679,10 @@ class ImportManager:
       page.imports.getReq("c3", deps)
       print(deps)
 
-    Attributes:
-    ----------
-    :param str mod: The alias of the external package.
-    :param List[dict] modules: The list of packages aliases in the inverse dependency order.
-    :param Optional[dict] import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
-    :param bool use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
+    :param mod: The alias of the external package.
+    :param modules: The list of packages aliases in the inverse dependency order.
+    :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
+    :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
     """
     import_hierarchy = import_hierarchy or JS_IMPORTS
     if isinstance(mod, dict):
@@ -3997,9 +3720,7 @@ class ImportManager:
       self.getReq(req, modules, import_hierarchy, use_require_js=use_require_js)
 
   def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Remove the underlying imports to avoid duplicated entries.
 
     Usage::
@@ -4007,8 +3728,6 @@ class ImportManager:
       >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
     ['jquery', 'd3', 'c3']
 
-    Attributes:
-    ----------
     :param imports: An array with the list of aliases for the external packages.
     :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list.
     :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False.
@@ -4035,9 +3754,7 @@ class ImportManager:
     return polyfills + import_resolved[::-1]
 
   def cssResolve(self, css_aliases: List[str], local_css: Optional[dict] = None, excluded: List[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Return the list of CSS modules to add to the header.
 
     Usage::
@@ -4045,12 +3762,10 @@ class ImportManager:
       >>> ImportManager().cssResolve(['c3'])
     '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
 
-    Attributes:
-    ----------
-    :param List[str] css_aliases: An array with the list of aliases for the external packages.
-    :param Optional[dict] local_css: Optional. The external file overrides with the full path.
-    :param List[str] excluded: Optional. Packages excluded from the result object (mandatory for some frameworks
-    already onboarding modules).
+    :param css_aliases: An array with the list of aliases for the external packages.
+    :param local_css: Optional. The external file overrides with the full path.
+    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks
+      already onboarding modules).
 
     :return: The string to be added to the header.
     """
@@ -4111,23 +3826,17 @@ class ImportManager:
     return "\n".join(css)
 
   def cssURLs(self, css_str: str):
-    """
-    Description:
-    ------------
+    """  
     Retrieve the list of CSS dependencies URL from a header.
 
-    Attributes:
-    ----------
-    :param str css_str: The CSS String in the page.
+    :param css_str: The CSS String in the page.
 
     :return: A Python list with all the CSS external URL to be imported.
     """
     return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
   def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None):
-    """
-    Description:
-    ------------
+    """  
     Return the list of Javascript modules to add to the header.
 
     Usage::
@@ -4135,8 +3844,6 @@ class ImportManager:
       >>> ImportManager().jsResolve(['c3'])
     '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
 
-    Attributes:
-    ----------
     :param js_aliases: An array with the list of aliases for the external packages.
     :param local_js: Optional. The external file overrides with the full path.
     :param excluded: Optional. Packages excluded from the result object
@@ -4207,13 +3914,9 @@ class ImportManager:
     return "\n".join(js)
 
   def jsURLs(self, expr: str):
-    """
-    Description:
-    ------------
+    """  
     Retrieve the list of Javascript dependencies URL from a header.
 
-    Attributes:
-    ----------
     :param expr: The Javascript String in the page.
 
     :return: A Python list with all the Javascript external URL to be imported.
@@ -4221,9 +3924,7 @@ class ImportManager:
     return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', expr)
 
   def getFiles(self, css_alias: List[str], js_alias: List[str]):
-    """
-    Description:
-    ------------
+    """  
     retrieve the package definition from the list of module aliases.
 
     Usage::
@@ -4231,8 +3932,6 @@ class ImportManager:
       >>> ImportManager().getFiles(['c3'], ['c3'])
     f['css'][0]['file']['script']
 
-    Attributes:
-    ----------
     :param css_alias: An array with the list of aliases for the CSS external packages.
     :param js_alias: An array with the list of aliases for the Js external packages.
 
@@ -4259,9 +3958,7 @@ class ImportManager:
     return files
 
   def cssGetAll(self):
-    """
-    Description:
-    ------------
+    """  
     To retrieve the full list of available modules on the server.
 
     This will return the dependencies as they should be included in the HTML page.
@@ -4276,9 +3973,7 @@ class ImportManager:
     return self.cssResolve(set(CSS_IMPORTS.keys()))
 
   def jsGetAll(self):
-    """
-    Description:
-    ------------
+    """  
     To retrieve the full list of available modules on the server.
 
     This will return the dependencies as they should be included in the HTML page.
@@ -4294,17 +3989,13 @@ class ImportManager:
 
   def getFullPackage(self, alias: str, version: Optional[str] = None, static_path: Optional[str] = None,
                      reload: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Download a full package (CSS and JS) locally for a server or full offline mode.
 
     Usage::
 
       Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
-    Attributes:
-    ----------
     :param alias: The package reference in the above list.
     :param version: Optional. The package version to retrieve.
     :param static_path: Optional. The path in which the files should be copied to.
@@ -4362,9 +4053,7 @@ class ImportManager:
     return self
 
   def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Allow the use of different version of a package.
 
     This will change the Import important to the Python env.
@@ -4373,8 +4062,6 @@ class ImportManager:
 
       page.imports.setVersion(page.imports.pkgs.popper_js.alias, "1.00.0")
 
-    Attributes:
-    ----------
     :param alias: The package reference in the above list.
     :param version: The new version to be used globally.
     :param js: Optional. The JavaScript packages to be added.
@@ -4412,9 +4099,7 @@ class ImportManager:
             "%(cdnjs)s/%(path)s%(script)s" % module] = version
 
   def addPackage(self, alias: str, config: dict):
-    """
-    Description:
-    ------------
+    """  
     Add a new package or update an existing one with new parameters.
     Only few parameters are available here in order to limit the changes.
 
@@ -4429,8 +4114,6 @@ class ImportManager:
         ]},
       )
 
-    Attributes:
-    ----------
     :param alias: The package alias.
     :param config: The Python dictionary with the package details.
 
@@ -4476,12 +4159,8 @@ class ImportManager:
     return self
 
   def to_requireJs(self, data: dict, excluded_packages: Optional[list] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param data: The Report modules to resolve.
     :param excluded_packages: Optional. The packages to exclude.
     """
@@ -4557,13 +4236,9 @@ class ImportManager:
     return results
 
   def show(self, all: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Show all the underlying packages used in a report or available in the framework.
 
-    Attributes:
-    ----------
     :param all: Optional. A flag to specify if only the one requested in the report should be displayed.
     """
     packages = {}
@@ -4588,9 +4263,7 @@ class ImportManager:
 
   def google_products(self, products: List[str], api_key: Optional[str] = None,
                       site_key: str = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
-    """
-    Description:
-    ------------
+    """  
     Enable the google predefined products.
 
     Those are by default disabled as they are sharing data with Google.
@@ -4605,8 +4278,6 @@ class ImportManager:
 
       https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
 
-    Attributes:
-    ----------
     :param products: The various Google products to enable in the report.
     :param api_key: Optional. The Google developer API key.
     :param site_key: Optional. The Google site key. https://developers.google.com/recaptcha/docs/v3.
@@ -4623,14 +4294,10 @@ class ImportManager:
     self.page._with_google_imports = True
 
   def locals(self, aliases: List[str], end_points: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Short circuit the import mechanism and retrieve the selected ones from a local static path.
     This could help on the debugging and the improvement of the packages before submitting them for review.
 
-    Attributes:
-    ----------
     :param aliases: The list of aliases.
     :param end_points: Optional. The end point on the server (The module static_path as default).
     """
@@ -4649,9 +4316,7 @@ class ImportManager:
 
   @property
   def pkgs(self) -> ImportPackages:
-    """
-    Description:
-    ------------
+    """  
     Shortcut properties to the various package definitions.
     This can be used in the script in order to change the path of the version of any external modules used.
 
@@ -4662,13 +4327,9 @@ class ImportManager:
     return self.__pkgs
 
   def website(self, alias: str):
-    """
-    Description:
-    ------------
+    """  
     Get the official website for a JavaScript library.
 
-    Attributes:
-    ----------
     :param alias: The JavaScript module alias (usually the one used by npm).
     """
     if alias not in JS_IMPORTS:
@@ -4681,9 +4342,7 @@ class Package:
 
   @property
   def all(self):
-    """
-    Description:
-    ------------
+    """  
     Get the definition of the package defined in this version of the package.
     This will simplify the compatibility with the interface.
     """
@@ -4691,9 +4350,7 @@ class Package:
 
   @classmethod
   def avoid_cache(cls, name: str):
-    """
-    Description:
-    ------------
+    """  
     This will allow the creation and the change of external packages usually cached by the browser.
     It will add a unique ID to make sure the browser will always try to reload it.
 
@@ -4702,8 +4359,6 @@ class Package:
       return jsonify({
         "import_pkg": pk.package.avoid_cache(r"/static/formatters-numbers-new.js")})
 
-    Attributes:
-    ----------
     :param name: The package name.
     """
     import random

@@ -33,10 +33,7 @@ class Table(Html.Html):
 
   @property
   def style(self) -> GrpClsTable.Datatable:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
 
     Usage::
 
@@ -48,31 +45,21 @@ class Table(Html.Html):
   @property
   def options(self) -> OptTableDatatable.TableConfig:
     """
-    Description:
-    ------------
     Ag Grid table options.
     """
     return super().options
 
   @property
   def tableId(self) -> str:
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
     """
     return "window['%s_obj']" % self.htmlCode
 
   def get_column(self, by_title: str):
-    """
-    Description:
-    -----------
-    Get the column object from it is title.
+    """   Get the column object from it is title.
 
     Usage::
 
-    Attributes:
-    ----------
     :param by_title:
     """
     for c in self.options.columns:
@@ -81,10 +68,7 @@ class Table(Html.Html):
 
   @property
   def js(self) -> JsDatatable.DatatableAPI:
-    """
-    Description:
-    -----------
-    Return the Javascript internal object.
+    """   Return the Javascript internal object.
 
     Usage::
 
@@ -103,14 +87,10 @@ class Table(Html.Html):
 
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: A String corresponding to a JavaScript object.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.

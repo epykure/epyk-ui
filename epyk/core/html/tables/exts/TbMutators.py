@@ -7,12 +7,8 @@ class ExtsMutators(Enums):
 
   @packageImport('tabulator-mutators-inputs')
   def number(self, green: str = None, red: str = None, threshold: int = 0, cssMapping: dict = None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param green:
     :param red:
     :param threshold:
@@ -30,14 +26,10 @@ class ExtsMutators(Enums):
 
   @packageImport('tabulator-mutators-inputs')
   def number_threshold(self, green: str = None, red: str = None, threshold: int = 0, css_mapping: dict = None, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
     # TODO: Add this mutator
 
-    Attributes:
-    ----------
     :param green:
     :param red:
     :param threshold:
@@ -59,12 +51,8 @@ class ExtsMutators(Enums):
 
   @packageImport('tabulator-mutators-inputs')
   def text(self, css_mapping: dict, **kwargs):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param css_mapping:
     :param kwargs:
     """
@@ -76,16 +64,12 @@ class ExtsMutators(Enums):
     return self
 
   def custom(self, mutator, mutator_params, module_alias):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/mutators
 
-    Attributes:
-    ----------
     :param mutator:
     :param mutator_params:
     :param module_alias:

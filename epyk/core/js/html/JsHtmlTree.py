@@ -11,13 +11,9 @@ class JsHtmlTree(JsHtml.JsHtmlRich):
 
   def hide(self, i: int = None):
     """
-    Description:
-    ------------
 
     TODO: Extend this for tree with multiple dimensions.
 
-    Attributes:
-    ----------
     :param i: Optional. The item index in the tree.
     """
     if i is not None:
@@ -33,13 +29,9 @@ document.querySelectorAll("#%(htmlCode)s i[name=item_arrow]").forEach( function(
 
   def expand(self, i: int = None):
     """
-    Description:
-    ------------
 
     TODO: Extend this for tree with multiple dimensions.
 
-    Attributes:
-    ----------
     :param i: Optional. The item index in the tree.
     """
     if i is not None:

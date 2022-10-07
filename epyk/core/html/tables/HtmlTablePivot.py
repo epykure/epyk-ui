@@ -20,13 +20,9 @@ class PivotAggregator:
 
   def sumOverSum(self, cols: list):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param cols: The columns to be added up.
     """
     cols = JsUtils.jsConvertData(cols, None)
@@ -35,8 +31,6 @@ class PivotAggregator:
 
   def count(self):
     """
-    Description:
-    ------------
 
     Usage::
     """
@@ -45,13 +39,9 @@ class PivotAggregator:
 
   def sum(self, col1: str):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     """
     col1 = JsUtils.jsConvertData(col1, None)
@@ -60,56 +50,40 @@ class PivotAggregator:
 
   def max(self, col1: str):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     """
     self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)", "Max")
 
   def min(self, col1: str):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     """
     self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)", "Min")
 
   def absSum(self, col1: str):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param col1:
     """
     self.singleFactorFormulas(col1, "+= Math.abs(col1)", "sum (abs)")
 
   def quick(self, col1: str, name: str, formula: str):
     """
-    Description:
-    ------------
     Add a fix formula without input options.
 
     Usage::
 
       tb = page.ui.tables.pivot(languages, ['name'], ['type'])
       tb.aggregators.quick("change", "Abs Change", "+= Math.abs(col1)")
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     :param name: The function name.
     :param formula: The formula to be applied.
@@ -133,8 +107,6 @@ return function(){
 
   def singleFactorFormulas(self, col1: str, formula: str, name: str):
     """
-    Description:
-    ------------
 
     TODO: Find way to set the column name on init
 
@@ -142,9 +114,7 @@ return function(){
 
       tb = page.ui.tables.pivot(languages, ['name'], ['type'])
       tb.aggregators.absSum('rating')
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     :param formula: The formula to be applied.
     :param name: The function name.
@@ -165,8 +135,6 @@ return function(data, rowKey, colKey) {
 
   def twoFactorFormulas(self, col1: str, col2: str, name: str, formula: str):
     """
-    Description:
-    ------------
     Create a two factor function.
 
     TODO: Find way to set the column name on init
@@ -175,9 +143,7 @@ return function(data, rowKey, colKey) {
 
       tb = page.ui.tables.pivot(languages, ['name'], ['type'])
       tb.aggregators.diffAbsolute('change', 'rating')
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     :param col2: The column name.
     :param name: The function name.
@@ -201,13 +167,9 @@ return function(data, rowKey, colKey) {
 
   def diffAbsolute(self, col1: str, col2: str, formula: str = "+= col1 - col2"):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param col1: The column name.
     :param col2: The column name.
     :param formula: The formula to be applied.
@@ -216,8 +178,6 @@ return function(data, rowKey, colKey) {
 
   def custom(self, name: str, js_def: str):
     """
-    Description:
-    ------------
     Add a custom aggregator function.
 
     Usage::
@@ -225,9 +185,7 @@ return function(data, rowKey, colKey) {
     Related Pages:
 
       https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
-
-    Attributes:
-    ----------
+ 
     :param name: The function name.
     :param js_def: The function definition
     """
@@ -243,8 +201,6 @@ class PivotRendererC3:
 
   def bar(self):
     """
-    Description:
-    ------------
     Horizontal bar chart from C3.
 
     Usage::
@@ -260,8 +216,6 @@ class PivotRendererC3:
 
   def scatter(self):
     """
-    Description:
-    ------------
     Scatter chart from C3.
 
     Usage::
@@ -276,8 +230,6 @@ class PivotRendererC3:
 
   def area(self):
     """
-    Description:
-    ------------
     Area chart from C3.
 
     Usage::
@@ -292,8 +244,6 @@ class PivotRendererC3:
 
   def line(self):
     """
-    Description:
-    ------------
     Line chart from C3.
 
     Usage::
@@ -308,8 +258,6 @@ class PivotRendererC3:
 
   def hbar(self):
     """
-    Description:
-    ------------
     Stacked bar chart from C3.
 
     Usage::
@@ -324,8 +272,6 @@ class PivotRendererC3:
 
   def stacked(self):
     """
-    Description:
-    ------------
     Stacked bar chart from C3.
 
     Usage::
@@ -346,8 +292,6 @@ class PivotRendererPlotly:
 
   def pies(self):
     """
-    Description:
-    ------------
     Multiple Pies charts from Plotly.
 
     Usage::
@@ -362,8 +306,6 @@ class PivotRendererPlotly:
 
   def area(self):
     """
-    Description:
-    ------------
     Area chart from Plotly.
 
     Usage::
@@ -378,8 +320,6 @@ class PivotRendererPlotly:
 
   def scatter(self):
     """
-    Description:
-    ------------
     Scatter chart from Plotly.
 
     Usage::
@@ -394,8 +334,6 @@ class PivotRendererPlotly:
 
   def line(self):
     """
-    Description:
-    ------------
     Line chart from Plotly.
 
     Usage::
@@ -410,8 +348,6 @@ class PivotRendererPlotly:
 
   def bar(self):
     """
-    Description:
-    ------------
     Bar chart from Plotly.
 
     Usage::
@@ -426,8 +362,6 @@ class PivotRendererPlotly:
 
   def hbar(self):
     """
-    Description:
-    ------------
     Horizontal Bar chart from Plotly.
 
     Usage::
@@ -448,8 +382,6 @@ class PivotRenderer:
 
   def table(self):
     """
-    Description:
-    ------------
 
     """
     self.options.renderer = '$.pivotUtilities.renderers["table"]'
@@ -457,8 +389,6 @@ class PivotRenderer:
   @property
   def plotly(self) -> PivotRendererPlotly:
     """
-    Description:
-    ------------
     Property to use the Plotly special renderers.
 
     Usage::
@@ -469,8 +399,6 @@ class PivotRenderer:
   @property
   def c3(self) -> PivotRendererC3:
     """
-    Description:
-    ------------
     Property to use the C3 special renderers.
 
     Usage::
@@ -479,8 +407,6 @@ class PivotRenderer:
 
   def treemap(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -493,8 +419,6 @@ class PivotRenderer:
 
   def heatmap(self):
     """
-    Description:
-    ------------
 
     Usage::
     """
@@ -502,8 +426,6 @@ class PivotRenderer:
 
   def bars(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -512,15 +434,11 @@ class PivotRenderer:
 
   def custom(self, name, js_def):
     """
-    Description:
-    ------------
 
     Usage::
 
     https://github.com/nicolaskruchten/pivottable/wiki/Renderers
-
-    Attributes:
-    ----------
+ 
     :param name:
     :param js_def:
     """
@@ -550,8 +468,6 @@ class PivotTable(Html.Html):
   @property
   def style(self) -> GrpClsTable.Pivot:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
 
     Usage::
@@ -563,8 +479,6 @@ class PivotTable(Html.Html):
   @property
   def options(self) -> OptTable.OptionsPivot:
     """
-    Description:
-    ------------
     Pivot Table options.
 
     Usage::
@@ -574,8 +488,6 @@ class PivotTable(Html.Html):
   @property
   def aggregators(self) -> PivotAggregator:
     """
-    Description:
-    ------------
 
     """
     return PivotAggregator(self.page, self.options)
@@ -583,8 +495,6 @@ class PivotTable(Html.Html):
   @property
   def renderers(self) -> PivotRenderer:
     """
-    Description:
-    ------------
 
     """
     return PivotRenderer(self.page, self.options)
@@ -595,9 +505,7 @@ class PivotTable(Html.Html):
       ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
   def sub_total(self):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
     """
@@ -626,8 +534,6 @@ class PivotUITable(PivotTable):
   @property
   def options(self) -> OptTable.OptionsPivotUI:
     """
-    Description:
-    ------------
     Pivot Table options.
 
     Usage::

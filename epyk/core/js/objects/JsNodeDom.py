@@ -32,8 +32,6 @@ class JsDomEvents(primitives.JsDataModel):
 
   def stopPropagation(self):
     """
-    Description:
-    ------------
     The stopPropagation() method prevents propagation of the same event from being called.
 
     Related Pages:
@@ -47,8 +45,6 @@ class JsDomEvents(primitives.JsDataModel):
 
   def blur(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     FocusEvent
 
     The event occurs when an element loses focus
@@ -56,9 +52,7 @@ class JsDomEvents(primitives.JsDataModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onblur.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -68,8 +62,6 @@ class JsDomEvents(primitives.JsDataModel):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user clicks on an element.
 
     Usage::
@@ -79,9 +71,7 @@ class JsDomEvents(primitives.JsDataModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onclick.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -91,8 +81,6 @@ class JsDomEvents(primitives.JsDataModel):
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the content of a form element, the selection, or the checked state have changed (for <input>,
     <select>, and <textarea>)
 
@@ -103,9 +91,7 @@ class JsDomEvents(primitives.JsDataModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onchange.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -115,16 +101,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user double-clicks on an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_ondblclick.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -134,16 +116,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def focus(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when an element gets focus.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onfocusin.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -153,16 +131,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def focusin(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when an element is about to get focus.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onfocusin.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -172,16 +146,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def focusout(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when an element is about to lose focus.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onfocusout.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -191,16 +161,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def keydown(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user is pressing a key
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeydown.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -210,16 +176,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def keypress(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user presses a key
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -229,16 +191,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def keyup(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user releases a key.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeyup.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -248,16 +206,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mousedown(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the user presses a mouse button over an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmousedown.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -267,16 +221,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mouseenter(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the pointer is moved onto an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseenter.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -286,8 +236,6 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mouseleave(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the pointer is moved out of an element
 
     Usage::
@@ -297,9 +245,7 @@ class JsDomEvents(primitives.JsDataModel):
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseleave.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -309,16 +255,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mouseover(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when the pointer is moved onto an element, or onto one of its children.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseover.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -328,16 +270,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mouseup(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when a user releases a mouse button over an element
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseup.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js
 
     :return: The Python Dom object
@@ -347,16 +285,12 @@ class JsDomEvents(primitives.JsDataModel):
 
   def mouseout(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The event occurs when a user releases a mouse button over an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onmouseout.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: An array of Js functions or string. Or a string with the Js.
 
     :return: The Python Dom object
@@ -367,8 +301,6 @@ class JsDomEvents(primitives.JsDataModel):
   def trigger(self, event: types.JS_DATA_TYPES, with_focus: bool = True,
               options: dict = None, event_name: str = "clickEvent"):
     """
-    Description:
-    ------------
     Trigger a javascript event
 
     Related Pages:
@@ -381,9 +313,7 @@ class JsDomEvents(primitives.JsDataModel):
       page.body.onReady([
         b.dom.events.trigger("click")
       ])
-
-    Attributes:
-    ----------
+ 
     :param event: The event name
     :param with_focus: Optional. a boolean to define if the focus needs to be set to this component
     :param options: Optional. Possibility to pass time option in second to set an implicit interval on the event
@@ -438,19 +368,13 @@ class JsDomsTransforms:
     self.page, self.selector = page, selector
 
   def initial(self):
-    """
-    Description:
-    -----------
-    Sets this property to its default value
+    """   Sets this property to its default value
 
     """
     return "%s.initial" % self.selector
 
   def inherit(self):
-    """
-    Description:
-    -----------
-    Inherits this property from its parent element.
+    """   Inherits this property from its parent element.
 
     """
     return "%s.initial" % self.selector
@@ -458,16 +382,12 @@ class JsDomsTransforms:
   def matrix(self, scale_x: float, skew_y: float, skew_x: float, scale_y: float, translate_x: float,
              translate_y: float):
     """
-    Description:
-    ------------
     Defines a 2D transformation, using a matrix of six values.
 
     Related Pages:
 
     https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
-
-    Attributes:
-    ----------
+ 
     :param scale_x:
     :param skew_y:
     :param skew_x:
@@ -480,8 +400,6 @@ class JsDomsTransforms:
 
   def translateX(self, x: int, unit: str = 'px'):
     """
-    Description:
-    ------------
     The translateX() CSS function repositions an element horizontally on the 2D plane. Its result is a
     <transform-function> data type.
 
@@ -489,9 +407,7 @@ class JsDomsTransforms:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
       https://www.w3schools.com/jsref/prop_style_transform.asp
-
-    Attributes:
-    ----------
+ 
     :param x:
     :param unit: The unit used for the transformation (px, cm, rem...)
     """
@@ -499,17 +415,13 @@ class JsDomsTransforms:
 
   def translateY(self, y: int, unit: str = 'px'):
     """
-    Description:
-    ------------
     The translateY() CSS function repositions an element vertically on the 2D plane. Its result is a
     <transform-function> data type.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_style_transform.asp
-
-    Attributes:
-    ----------
+ 
     :param y:
     :param unit: The unit used for the transformation (px, cm, rem...)
     """
@@ -517,17 +429,13 @@ class JsDomsTransforms:
 
   def translate(self, x: int, y: int, unit: str = 'px'):
     """
-    Description:
-    ------------
     The translate() CSS function repositions an element in the horizontal and/or vertical directions.
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_style_transform.asp
-
-    Attributes:
-    ----------
+ 
     :param x:
     :param y:
     :param unit: The unit used for the transformation (px, cm, rem...)
@@ -536,8 +444,6 @@ class JsDomsTransforms:
 
   def perspective(self, d: int, unit: str = 'px'):
     """
-    Description:
-    ------------
     The perspective() CSS function defines a transformation that sets the distance between the user and the z=0 plane,
     the perspective from which the viewer would be if the 2-dimensional interface were 3-dimensional.
     Its result is a <transform-function> data type.
@@ -545,9 +451,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
-
-    Attributes:
-    ----------
+ 
     :param d: Is a <length> representing the distance from the user to the z=0 plane.
               If it is 0 or a negative value, no perspective transform is applied.
     :param unit: The unit used for the transformation (px, cm, rem...)
@@ -556,16 +460,12 @@ class JsDomsTransforms:
 
   def scale(self, x: float, y: float):
     """
-    Description:
-    ------------
     The scale() CSS function defines a transformation that resizes an element on the 2D plane.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
-
-    Attributes:
-    ----------
+ 
     :param x: A <number> representing the abscissa of the scaling vector.
     :param y: A <number> representing the ordinate of the scaling vector.
               If not defined, its default value is sx, resulting in a uniform scaling that preserves the element's
@@ -575,51 +475,39 @@ class JsDomsTransforms:
 
   def scaleX(self, x: float):
     """
-    Description:
-    ------------
     The scaleX() CSS function defines a transformation that resizes an element along the x-axis (horizontally).
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
-
-    Attributes:
-    ----------
+ 
     :param x: Is a <number> representing the scaling factor to apply on the abscissa of each point of the element.
     """
     return "%s.style.transform = 'scaleX(%s)'" % (self.selector, x)
 
   def scaleY(self, y: float):
     """
-    Description:
-    ------------
     The scaleY() CSS function defines a transformation that resizes an element along the y-axis (vertically).
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
-
-    Attributes:
-    ----------
+ 
     :param y: Is a <number> representing the scaling factor to apply on the ordinate of each point of the element.
     """
     return "%s.style.transform = 'scaleY(%s)'" % (self.selector, y)
 
   def skew(self, angle_x: float, angle_y: float = 0, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The skew() CSS function defines a transformation that skews an element on the 2D plane.
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
-
-    Attributes:
-    ----------
+ 
     :param angle_x: Is an <angle> representing the angle to use to distort the element along the abscissa.
     :param angle_y: Is an <angle> representing the angle to use to distort the element along the ordinate.
       If not defined, its default value is 0, resulting in a purely horizontal skewing.
@@ -629,8 +517,6 @@ class JsDomsTransforms:
 
   def skewX(self, angle: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The skewX() CSS function defines a transformation that skews an element in the horizontal direction on the 2D plane.
     Its result is a <transform-function> data type.
 
@@ -641,9 +527,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
-
-    Attributes:
-    ----------
+ 
     :param angle: Is an <angle> representing the angle to use to distort the element along the abscissa.
     :param unit: The unit for the transformation (deg, turn, rad...)
     """
@@ -651,17 +535,13 @@ class JsDomsTransforms:
 
   def skewY(self, angle: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The skewY() CSS function defines a transformation that skews an element in the vertical direction on the 2D plane.
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
-
-    Attributes:
-    ----------
+ 
     :param angle: Is an <angle> representing the angle to use to distort the element along the ordinate.
     :param unit: The unit for the transformation (deg, turn, rad...)
     """
@@ -669,8 +549,6 @@ class JsDomsTransforms:
 
   def rotate(self, r: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The rotate() CSS function defines a transformation that rotates an element around a fixed point on the 2D plane,
     without deforming it.
     Its result is a <transform-function> data type.
@@ -682,9 +560,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
-
-    Attributes:
-    ----------
+ 
     :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
       a negative angle a counter-clockwise one.
     :param unit: The unit for the transformation (deg, turn, rad...)
@@ -693,8 +569,6 @@ class JsDomsTransforms:
 
   def rotate3d(self, x: float, y: float, z: float, a: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The rotate3d() CSS function defines a transformation that rotates an element around a fixed axis in 3D space,
     without deforming it.
     Its result is a <transform-function> data type.
@@ -702,9 +576,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
-
-    Attributes:
-    ----------
+ 
     :param x: Is a <number> describing the x-coordinate of the vector denoting the axis of rotation which
       could between 0 and 1.
     :param y: Is a <number> describing the y-coordinate of the vector denoting the axis of rotation which
@@ -719,8 +591,6 @@ class JsDomsTransforms:
 
   def rotateX(self, r: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The rotateX() CSS function defines a transformation that rotates an element around the abscissa (horizontal axis)
     without deforming it.
     Its result is a <transform-function> data type.
@@ -728,9 +598,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
-
-    Attributes:
-    ----------
+ 
     :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
       a negative angle a counter-clockwise one.
     :param unit: The unit for the transformation (deg, turn, rad...)
@@ -739,8 +607,6 @@ class JsDomsTransforms:
 
   def rotateY(self, r: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The rotateY() CSS function defines a transformation that rotates an element around the ordinate (vertical axis)
     without deforming it.
     Its result is a <transform-function> data type.
@@ -748,9 +614,7 @@ class JsDomsTransforms:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
-
-    Attributes:
-    ----------
+ 
     :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
       a negative angle a counter-clockwise one.
     :param unit: The unit for the transformation (deg, turn, rad...)
@@ -759,17 +623,13 @@ class JsDomsTransforms:
 
   def rotateZ(self, r: float, unit: str = 'deg'):
     """
-    Description:
-    ------------
     The rotateZ() CSS function defines a transformation that rotates an element around the z-axis without deforming it.
     Its result is a <transform-function> data type.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
-
-    Attributes:
-    ----------
+ 
     :param r: Is an <angle> representing the angle of the rotation. A positive angle denotes a clockwise rotation,
       a negative angle a counter-clockwise one.
     :param unit: The unit for the transformation (deg, turn, rad...)
@@ -786,11 +646,7 @@ class JsDomEffects:
   def glow(self, color, radius=50, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite",
            direction="alternate", fill_mode='forwards'):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param color:
     :param radius:
     :param duration:
@@ -807,11 +663,7 @@ class JsDomEffects:
   def blink(self, duration=1, timing_fnc="ease-in-out", delay=0, iteration_count="infinite", direction="alternate",
             fill_mode='forwards'):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param duration:
     :param timing_fnc:
     :param delay:
@@ -826,11 +678,7 @@ class JsDomEffects:
   def fade_out(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
                fill_mode='forwards'):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param duration:
     :param timing_fnc:
     :param delay:
@@ -846,11 +694,7 @@ class JsDomEffects:
   def fade_in(self, duration=5, timing_fnc="ease-in-out", delay=0, iteration_count=1, direction="normal",
               fill_mode='forwards'):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param duration:
     :param timing_fnc:
     :param delay:
@@ -872,8 +716,6 @@ class JsClassList:
   @property
   def length(self):
     """
-    Description:
-    ------------
     Returns the number of classes in the list.
 
     Related Pages:
@@ -894,8 +736,6 @@ class JsClassList:
 
   def add(self, cls_names: Union[list, str]):
     """
-    Description:
-    ------------
     Adds one or more class names to an element.
 
     If the specified class already exist, the class will not be added.
@@ -903,9 +743,7 @@ class JsClassList:
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_element_classlist.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_names: The class names.
     """
     if not hasattr(cls_names, 'toStr'):
@@ -916,8 +754,6 @@ class JsClassList:
 
   def contains(self, cls_name: str):
     """
-    Description:
-    ------------
     Returns a Boolean value, indicating whether an element has the specified class name.
 
     Possible values:
@@ -928,9 +764,7 @@ class JsClassList:
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_element_classlist.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_name: The CSS classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
@@ -938,12 +772,8 @@ class JsClassList:
 
   def is_missing(self, cls_name: str):
     """
-    Description:
-    ------------
     Check if a CSS class is missing in the component classes definitions.
-
-    Attributes:
-    ----------
+ 
     :param cls_name: The CSS classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
@@ -951,8 +781,6 @@ class JsClassList:
 
   def item(self, index: int):
     """
-    Description:
-    ------------
     Returns the class name with a specified index number from an element. Index starts at 0.
 
     Returns null if the index is out of range
@@ -960,25 +788,19 @@ class JsClassList:
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_element_classlist.asp
-
-    Attributes:
-    ----------
+ 
     :param index: The index of the class.
     """
     return JsNumber.JsNumber.get("%s.item(%s)" % (self.varId, index))
 
   def items(self):
     """
-    Description:
-    ------------
     Return all the CSS classes for a given DOM object.
     """
     return JsNumber.JsNumber.get("%s" % self.varId)
 
   def remove(self, cls_names: Union[list, str]):
     """
-    Description:
-    ------------
     Removes one or more class names from an element.
 
     Note: Removing a class that does not exist, does NOT throw an error
@@ -986,9 +808,7 @@ class JsClassList:
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_element_classlist.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_names: The class names.
     """
     if not hasattr(cls_names, 'toStr'):
@@ -999,8 +819,6 @@ class JsClassList:
 
   def toggle(self, cls_name: types.JS_DATA_TYPES, flag: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Toggles between a class name for an element.
 
     The first parameter removes the specified class from an element, and returns false.
@@ -1015,9 +833,7 @@ class JsClassList:
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_element_classlist.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_name: The CSS classname.
     :param flag: forces the class to be added or removed, regardless of whether or not it already existed.
     """
@@ -1030,13 +846,9 @@ class JsClassList:
 
   def select(self, flag: bool = True):
     """
-    Description:
-    ------------
     Shortcut to add the predefined selected class for the component.
     This will add the internal predefined classname.
-
-    Attributes:
-    ----------
+ 
     :param flag: To specific if the select style need to be added or removed from the ClassList.
     """
     if self.component is None:
@@ -1056,16 +868,12 @@ class JsDoms(JsObject.JsObject):
   def new(cls, tag_name: types.JS_DATA_TYPES = None, js_code: str = None, is_py_data: bool = True,
           set_var: bool = True, page: primitives.PageModel = None):
     """
-    Description:
-    ------------
     Create a new dom object to be added to the HTML page
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_obj_date.asp
-
-    Attributes:
-    ----------
+ 
     :param tag_name: The tag name to be created.
     :param js_code: Optional,
     :param is_py_data: Optional,
@@ -1082,8 +890,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def parentNode(self):
     """
-    Description:
-    ------------
     The parentNode property returns the parent node of the specified node, as a Node object.
 
     Note: In HTML, the document itself is the parent node of the HTML element, HEAD and BODY are child nodes of
@@ -1097,12 +903,8 @@ class JsDoms(JsObject.JsObject):
 
   def querySelector(self, tag: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Get element by tag.
-
-    Attributes:
-    ----------
+ 
     :param tag: The DOM tag reference.
     """
     tag = JsUtils.jsConvertData(tag, None)
@@ -1110,17 +912,13 @@ class JsDoms(JsObject.JsObject):
 
   def querySelectorAll(self, tag: types.JS_DATA_TYPES, js_code: str = None):
     """
-    Description:
-    ------------
     The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
     as a static NodeList object.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_document_queryselectorall.asp
-
-    Attributes:
-    ----------
+ 
     :param tag: The tag name.
     :param js_code: The variable name on the javascript side.
 
@@ -1135,8 +933,6 @@ class JsDoms(JsObject.JsObject):
 
   def empty(self):
     """
-    Description:
-    ------------
     Shortcut function to emtpy an HTML component.
     This will only reuse the innerHTML property
     """
@@ -1144,18 +940,13 @@ class JsDoms(JsObject.JsObject):
 
   @property
   def events(self) -> JsDomEvents:
-    """
-    Description:
-    -----------
-    Link to the events attached to a Javascript DOM object.
+    """   Link to the events attached to a Javascript DOM object.
     """
     return JsDomEvents(self.page, js_code=self.varName)
 
   @property
   def effects(self) -> JsDomEffects:
     """
-    Description:
-    ------------
     Add CSS pre defined events from a dom object.
     """
     return JsDomEffects(self.page, self.component)
@@ -1163,8 +954,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def transform(self) -> JsDomsTransforms:
     """
-    Description:
-    ------------
     The transform property applies a 2D or 3D transformation to an element.
     This property allows you to rotate, scale, move, skew, etc., elements.
 
@@ -1178,8 +967,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def jquery(self):
     """
-    Description:
-    ------------
     Link to the Jquery package
 
     The id attribute must be defined
@@ -1195,16 +982,12 @@ class JsDoms(JsObject.JsObject):
 
   def addEventListener(self, event: types.JS_DATA_TYPES, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The addEventListener() method attaches an event handler to the specified element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_addeventlistener.asp
-
-    Attributes:
-    ----------
+ 
     :param event: The JavaScript event
     :param js_funcs: The Javascript functions
     """
@@ -1214,15 +997,11 @@ class JsDoms(JsObject.JsObject):
 
   def dispatchEvent(self, event: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Dispatches an Event at the specified EventTarget, (synchronously) invoking the affected EventListeners in
     the appropriate order.
     The normal event processing rules (including the capturing and optional bubbling phase) also apply to events
     dispatched manually with dispatchEvent().
-
-    Attributes:
-    ----------
+ 
     :param event: event is the Event object to be dispatched.
     """
     event = JsUtils.jsConvertData(event, None)
@@ -1231,16 +1010,12 @@ class JsDoms(JsObject.JsObject):
 
   def addOnReady(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     The ready event occurs when the DOM (document object model) has been loaded.
 
     Related Pages:
 
       https://www.w3schools.com/jquery/event_ready.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions
     """
     self.page._props.setdefault('js', {}).setdefault(
@@ -1248,8 +1023,6 @@ class JsDoms(JsObject.JsObject):
 
   def innerText(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
-    Description:
-    ------------
     The innerText property sets or returns the text content of the specified node, and all its descendants.
 
     Usage::
@@ -1259,9 +1032,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_node_innertext.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional, The Javascript String to be added.
     :param append: Boolean. Mention if the component should replace or append the data.
     :param val_type: The type of data expected in the component.
@@ -1286,8 +1057,6 @@ class JsDoms(JsObject.JsObject):
 
   def textContent(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
-    Description:
-    ------------
     The textContent property returns the text with spacing, but without inner element tags.
 
     Usage::
@@ -1297,9 +1066,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_node_innertext.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional, The Javascript String to be added.
     :param append: Optional. Mention if the component should replace or append the data.
     :param val_type: Optional. The type of data expected in the component.
@@ -1324,8 +1091,6 @@ class JsDoms(JsObject.JsObject):
 
   def innerHTML(self, text: types.JS_DATA_TYPES = None, append: bool = False, val_type=None):
     """
-    Description:
-    ------------
     Sets or returns the content of an element.
 
     Usage::
@@ -1336,9 +1101,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_html_innerhtml.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional.  The Javascript String to be added.
     :param append: Optional. Mention if the component should replace or append the data.
     :param val_type: Optional. The type of data expected in the component.
@@ -1363,16 +1126,12 @@ class JsDoms(JsObject.JsObject):
 
   def outerText(self, text: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The outerText property sets or returns the text content of the specified node.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_node_outertext.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The Javascript String to be set.
 
     :return: self to allow the chaining
@@ -1385,17 +1144,13 @@ class JsDoms(JsObject.JsObject):
 
   def outerHTML(self, text: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The outerHTML property sets or returns the HTML element and all it's content, including the start tag,
     it's attributes, and the end tag.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_html_outerhtml.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. The Javascript String to be set.
 
     :return: self to allow the chaining
@@ -1408,16 +1163,12 @@ class JsDoms(JsObject.JsObject):
 
   def value(self, text: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The value attribute specifies the value of an <input> element.
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_input_value.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. Set the input value.
     """
     if text is None:
@@ -1428,8 +1179,6 @@ class JsDoms(JsObject.JsObject):
 
   def nodeValue(self, text: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The nodeValue property sets or returns the node value of the specified node.
 
     If the node is an element node, the nodeValue property will return null.
@@ -1437,9 +1186,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_node_nodevalue.asp
-
-    Attributes:
-    ----------
+ 
     :param text: Optional. Set the node value.
     """
     if text is None:
@@ -1449,10 +1196,7 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def attr(self, value: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES = None):
-    """
-    Description:
-    -----------
-    The attr() method adds the specified attribute to an element, and gives it the specified value.
+    """   The attr() method adds the specified attribute to an element, and gives it the specified value.
     It will use the underlying setAttribute() method
 
     Usage::
@@ -1463,9 +1207,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param value: A String with the type of parameter or a python dictionary.
     :param data: A JsObj with the value to be set.
 
@@ -1489,10 +1231,7 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def setAttribute(self, attribute_name: types.JS_DATA_TYPES, attribute_value: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
+    """   The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
 
     Usage::
 
@@ -1501,9 +1240,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param attribute_name: The name of the attribute you want to add.
     :param attribute_value: The value of the attribute you want to add.
     """
@@ -1513,10 +1250,7 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def addClass(self, cls_name: str, attrs: dict = None, event_attrs: dict = None, extend: bool = True):
-    """
-    Description:
-    -----------
-    Adds the specified class(es) to each element in the set of matched elements.
+    """   Adds the specified class(es) to each element in the set of matched elements.
 
     This function can either use an existing class or create one if the attrs or eventAttrs are defined.
 
@@ -1527,9 +1261,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_name: The Css classname.
     :param attrs: A python dictionary with the css attributes.
     :param event_attrs: A nested python dictionary with the css attributes for each event.
@@ -1545,17 +1277,12 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def removeClass(self, cls_name: types.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Remove a class from the defined classes of the DOM element
+    """   Remove a class from the defined classes of the DOM element
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_js_remove_class.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_name: Required. The classname.
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
@@ -1564,10 +1291,7 @@ class JsDoms(JsObject.JsObject):
 
   @property
   def classList(self) -> JsClassList:
-    """
-    Description:
-    -----------
-    The classList property returns the class name(s) of an element, as a DOMTokenList object.
+    """   The classList property returns the class name(s) of an element, as a DOMTokenList object.
 
     Related Pages:
 
@@ -1576,10 +1300,7 @@ class JsDoms(JsObject.JsObject):
     return JsClassList("%s.classList" % self.varId, self.component)
 
   def css(self, attr: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES = None, duration: int = None):
-    """
-    Description:
-    -----------
-    Replicate in plain Js the Jquery CSS function.
+    """   Replicate in plain Js the Jquery CSS function.
 
     Usage::
 
@@ -1588,9 +1309,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param attr: A String with the type of parameter or a python dictionary
     :param data: A JsObj with the value to be set
     :param duration: Integer
@@ -1619,19 +1338,14 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def position(self, x: int = None, y: int = None, dx: int = 0, dy: int = 0):
-    """
-    Description:
-    -----------
-    Set the position of the component in the page.
+    """   Set the position of the component in the page.
     By default the component will be fixed at the mouse level (this should be used in an event).
 
     Usage::
 
       page.js.createElement("div", "popup").innerHTML("uygk,k,kj..kj.kjyf").attr('id', 'popup').css({
         'color': 'red', 'display': 'block'}).position()
-
-    Attributes:
-    ----------
+ 
     :param x: The position from the top of the page
     :param y: The position from the left
     :param dx:
@@ -1651,16 +1365,12 @@ class JsDoms(JsObject.JsObject):
   def toggle_transition(self, attribute, value, value2, duration: int = 1,
                         timing_func: str = 'ease', delay: float = None):
     """
-    Description:
-    ------------
     Toggle a transition.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/css3_pr_transition.asp
-
-    Attributes:
-    ----------
+ 
     :param attribute: Specifies the name of the CSS property the transition effect is for
     :param value: Specifies the value of the CSS property the transition effect is for
     :param value2: Specifies the value of the CSS property the transition effect is for
@@ -1689,8 +1399,6 @@ class JsDoms(JsObject.JsObject):
                  duration: Union[float, List[float]] = 1, delay: int = None, timing_fnc: str = 'ease',
                  reverse: bool = False):
     """
-    Description:
-    ------------
     The transition property is a shorthand property for:
       - transition-property
       - transition-duration
@@ -1705,9 +1413,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/cssref/css3_pr_transition.asp
-
-    Attributes:
-    ----------
+ 
     :param attribute: Specifies the name of the CSS property the transition effect is for
     :param value: Specifies the value of the CSS property the transition effect is for
     :param duration: Specifies how many seconds or milliseconds the transition effect takes to complete
@@ -1745,8 +1451,6 @@ class JsDoms(JsObject.JsObject):
 
   def invisible(self):
     """
-    Description:
-    ------------
     Component not visible by setting the CSS property visibility to hidden.
 
     Usage:
@@ -1757,8 +1461,6 @@ class JsDoms(JsObject.JsObject):
 
   def hide(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -1772,8 +1474,6 @@ class JsDoms(JsObject.JsObject):
 
   def show(self, display_value: str = None, duration: int = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -1782,9 +1482,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
-
-    Attributes:
-    ----------
+ 
     :param display_value:
     :param duration:
     """
@@ -1795,13 +1493,9 @@ class JsDoms(JsObject.JsObject):
 
   def toggle(self, attr: str = "display", val_1: str = None, val_2: str = "none"):
     """
-    Description:
-    ------------
     Hexadecimal colors should be converted to rgb code as only the computed style will be compared.
     To do so you can use: Colors.getHexToRgb(self._report.theme.success[1]) from epyk.core.css import Colors
-
-    Attributes:
-    ----------
+ 
     :param attr:
     :param val_1:
     :param val_2:
@@ -1817,12 +1511,8 @@ class JsDoms(JsObject.JsObject):
 
   def toggleAttrs(self, pivot_key, pivot_val, attrs_off: dict, attrs_on: dict):
     """
-    Description:
-    ------------
     Toggle some CSS attributes
-
-    Attributes:
-    ----------
+ 
     :param pivot_key:
     :param pivot_val:
     :param attrs_on: A python dictionary with CSS attributes
@@ -1838,12 +1528,8 @@ class JsDoms(JsObject.JsObject):
 
   def toggleText(self, string_1: types.JS_DATA_TYPES, string_2: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Toggle (change) the content of the HTML component
-
-    Attributes:
-    ----------
+ 
     :param string_1: The content
     :param string_2: The new content
     """
@@ -1855,8 +1541,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def clientHeight(self):
     """
-    Description:
-    ------------
     The Element.clientHeight read-only property is zero for elements with no CSS or inline layout boxes; otherwise,
     it's the inner height of an element in pixels.
     It includes padding but excludes borders, margins, and horizontal scrollbars (if present).
@@ -1873,12 +1557,8 @@ class JsDoms(JsObject.JsObject):
 
   def toggleClass(self, cls_name: types.JS_DATA_TYPES, propagate: bool = False):
     """
-    Description:
-    ------------
     Toggle a class name
-
-    Attributes:
-    ----------
+ 
     :param cls_name: The classname to be toggled.
     :param propagate: Optional.
     """
@@ -1892,16 +1572,12 @@ class JsDoms(JsObject.JsObject):
 
   def switchClass(self, cls_name_1: types.JS_DATA_TYPES, cls_name_2: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Switch from one CSS class to another.
 
     Usage::
 
       icon.dom.switchClass("fa-folder", "fa-folder-open")
-
-    Attributes:
-    ----------
+ 
     :param cls_name_1: A class name or a string with a list of classname space separated.
     :param cls_name_2: A class name or a string with a list of classname space separated.
 
@@ -1914,8 +1590,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def firstChild(self):
     """
-    Description:
-    ------------
     The firstChild property returns the first child node of the specified node, as a Node object.
 
     Usage::
@@ -1933,12 +1607,8 @@ class JsDoms(JsObject.JsObject):
 
   def child(self, i: int):
     """
-    Description:
-    ------------
     Returns the requested child DOM object on the JavaScript side.
-
-    Attributes:
-    ----------
+ 
     :param i: The position of the child.
     """
     return JsDoms("%s.childNodes[%s]" % (self.varId, i))
@@ -1946,8 +1616,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def nextSibling(self):
     """
-    Description:
-    ------------
     The nextSibling property returns the node immediately following the specified node, in the same tree level.
 
     Related Pages:
@@ -1958,16 +1626,12 @@ class JsDoms(JsObject.JsObject):
 
   def contains(self, node: str):
     """
-    Description:
-    ------------
     The contains() method returns a Boolean value indicating whether a node is a descendant of a specified node.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_node_contains.asp
-
-    Attributes:
-    ----------
+ 
     :param node: Specifies the node that may be contained by (a descendant of) a specified node.
 
     :return: A Boolean
@@ -1976,8 +1640,6 @@ class JsDoms(JsObject.JsObject):
 
   def getAttribute(self, attribute_name: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The getAttribute() method returns the value of the attribute with the specified name, of an element.
 
     Usage::
@@ -1987,9 +1649,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_getattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param attribute_name: The name of the attribute you want to get the value from
 
     :return: A String, representing the specified attribute's value.
@@ -1999,16 +1659,12 @@ class JsDoms(JsObject.JsObject):
 
   def getAttributeNode(self, attribute_name: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The getAttributeNode() method returns the attribute node with the specified name of an element, as an Attr object.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_getattributenode.asp
-
-    Attributes:
-    ----------
+ 
     :param attribute_name: The name of the attribute you want to return.
 
     :return: An Attr object, representing the specified attribute node.
@@ -2018,11 +1674,7 @@ class JsDoms(JsObject.JsObject):
 
   def getComputedStyle(self, attribute_name: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param attribute_name: String. Optional.
     """
     if attribute_name is None:
@@ -2034,10 +1686,7 @@ class JsDoms(JsObject.JsObject):
     return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attribute_name), is_py_data=False)
 
   def getBoundingClientRect(self) -> JsNodeDomRect.JsDOMRect:
-    """
-    Description:
-    -----------
-    The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
+    """   The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
 
     Related Pages:
 
@@ -2049,8 +1698,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def hasChildNodes(self) -> JsBoolean.JsBoolean:
     """
-    Description:
-    ------------
     Returns true if an element has any child nodes, otherwise false
 
     Usage::
@@ -2067,11 +1714,7 @@ class JsDoms(JsObject.JsObject):
 
   def hasClass(self, cls_name: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param cls_name:
     """
     cls_name = JsUtils.jsConvertData(cls_name, None)
@@ -2079,14 +1722,10 @@ class JsDoms(JsObject.JsObject):
 
   def text(self, value: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Javascript Function
 
     Shortcut in charge oa creating a text node object and adding the text.
-
-    Attributes:
-    ----------
+ 
     :param value: The Javascript String of the text node component.
 
     :return: The main Python Dom Object
@@ -2096,8 +1735,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def childNodes(self):
     """
-    Description:
-    ------------
     The childNodes property returns a collection of a node's child nodes, as a NodeList object.
 
     The nodes in the collection are sorted as they appear in the source code and can be accessed by index numbers.
@@ -2116,8 +1753,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def tagName(self):
     """
-    Description:
-    ------------
     The tagName property returns the tag name of the element
 
     Usage::
@@ -2135,8 +1770,6 @@ class JsDoms(JsObject.JsObject):
   @property
   def offsetTop(self):
     """
-    Description:
-    ------------
     The HTMLElement.offsetTop read-only property returns the distance of the current element relative to the top of
     the offsetParent node.
 
@@ -2148,16 +1781,12 @@ class JsDoms(JsObject.JsObject):
 
   def contentEditable(self, flag: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Set content editable
 
     Usage::
 
       page.ui.text("This is a text").dom.contentEditable(True)
-
-    Attributes:
-    ----------
+ 
     :param flag: Set the content editable flag to the Dom object
 
     :return: Return a JsBoolean object
@@ -2166,8 +1795,6 @@ class JsDoms(JsObject.JsObject):
 
   def className(self, cls_name: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The className property sets or returns the class name of an element (the value of an element's class attribute).
 
     Usage::
@@ -2177,9 +1804,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_html_classname.asp
-
-    Attributes:
-    ----------
+ 
     :param cls_name: Specifies the class name of an element. To apply multiple classes, separate them with
       spaces, like "test demo"
 
@@ -2194,8 +1819,6 @@ class JsDoms(JsObject.JsObject):
 
   def cloneNode(self, deep: types.JS_DATA_BOOLEAN_TYPES = True):
     """
-    Description:
-    ------------
     The cloneNode() method creates a copy of a node, and returns the clone.
 
     The cloneNode() method clones all attributes and their values.
@@ -2207,9 +1830,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_node_clonenode.asp
-
-    Attributes:
-    ----------
+ 
     :param deep: Optional. Specifies whether all descendants of the node should be cloned.
 
     :return: A Node object, representing the cloned node
@@ -2218,8 +1839,6 @@ class JsDoms(JsObject.JsObject):
 
   def remove(self):
     """
-    Description:
-    ------------
     Remove the current dom object from the page
 
     Usage::
@@ -2234,16 +1853,12 @@ class JsDoms(JsObject.JsObject):
 
   def removeAttribute(self, dom: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The removeAttribute() method removes the specified attribute from an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_removeattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param dom: The name of the attribute you want to remove.
     """
     self._js.append("%s.removeAttribute(%s)" % (self.varId, JsUtils.jsConvertData(dom, None)))
@@ -2251,16 +1866,12 @@ class JsDoms(JsObject.JsObject):
 
   def removeChild(self, dom: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     Removes a child node from an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_node_removechild.asp
-
-    Attributes:
-    ----------
+ 
     :param dom: The node object you want to remove.
 
     :return: A Node object, representing the removed node, or null if the node does not exist.
@@ -2269,8 +1880,6 @@ class JsDoms(JsObject.JsObject):
 
   def appendChild(self, dom: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The appendChild() method appends a node as the last child of a node.
 
     Usage::
@@ -2280,9 +1889,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_node_appendchild.asp
-
-    Attributes:
-    ----------
+ 
     :param dom: The node object you want to append.
 
     :return: 	A Node Object, representing the appended node
@@ -2292,8 +1899,6 @@ class JsDoms(JsObject.JsObject):
 
   def insertBefore(self, new_node, existing_node=None):
     """
-    Description:
-    ------------
     The insertBefore() method inserts a node as a child, right before an existing child, which you specify.
 
     Usage::
@@ -2303,9 +1908,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_node_insertbefore.asp
-
-    Attributes:
-    ----------
+ 
     :param new_node: The node object you want to insert
     :param existing_node: Optional. The child node you want to insert the new node before. If set to null,
       the insertBefore method will insert the new_node at the end
@@ -2317,14 +1920,9 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES = None):
-    """
-    Description:
-    -----------
-    Trigger a click event.
+    """   Trigger a click event.
     This function will not set the event
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     """
     if js_funcs is None:
@@ -2334,17 +1932,12 @@ class JsDoms(JsObject.JsObject):
     return self
 
   def onclick(self, js_funcs: types.JS_FUNCS_TYPES, auto_style: bool = True):
-    """
-    Description:
-    -----------
-    Execute a JavaScript when a button is clicked
+    """   Execute a JavaScript when a button is clicked
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onclick.asp
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Required. The Javascript function.
     :param auto_style: Optional. Some predefined style attributes added to this event (self.css({"cursor": "pointer"}))
 
@@ -2359,11 +1952,7 @@ class JsDoms(JsObject.JsObject):
 
   def onVisible(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions
     """
     self._js.append("var rect = %s.getBoundingClientRect()" % self.varId)
@@ -2371,8 +1960,6 @@ class JsDoms(JsObject.JsObject):
 
   def getContext(self, context_type: str, context_attributes: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Function dedicated to DOM Canvas types.
 
     The HTMLCanvasElement.getContext() method returns a drawing context on the canvas,
@@ -2381,9 +1968,7 @@ class JsDoms(JsObject.JsObject):
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
-
-    Attributes:
-    ----------
+ 
     :param context_type: Is a DOMString containing the context identifier defining the drawing context
       associated to the canvas
     :param context_attributes: Dictionary with specific context attributes (depending on the type
@@ -2402,14 +1987,10 @@ class JsDoms(JsObject.JsObject):
 
   def custom(self, frg: str):
     """
-    Description:
-    ------------
     Bespoke function to be called from the dom element.
 
     This can be use if a function is missing from the wrapper interface.
-
-    Attributes:
-    ----------
+ 
     :param frg: The DOM feature.
     """
     return JsObject.JsObject("%s.%s" % (self.varId, frg))
@@ -2419,12 +2000,8 @@ class JsDomsList(JsArray.JsArray):
 
   def all(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    Description:
-    ------------
     Apply a set of functions on all the elements with this name.
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: List of Javascript fragments.
     """
     self._js.append("%s.forEach(function(elt, index){%s})" % (self.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True)))
@@ -2433,16 +2010,12 @@ class JsDomsList(JsArray.JsArray):
   @property
   def first(self):
     """
-    Description:
-    ------------
     Get the first dom item in corresponding to the name criteria
     """
     return JsDoms.get("%s[0]" % self.toStr())
 
   def css(self, attr: Union[str, dict], data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Replicate in plain Js the Jquery CSS function
 
     Usage::
@@ -2452,9 +2025,7 @@ class JsDomsList(JsArray.JsArray):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param attr: A String with the type of parameter or a python dictionary
     :param data: A JsObj with the value to be set
 
@@ -2480,8 +2051,6 @@ class JsDomsList(JsArray.JsArray):
 
   def log(self):
     """
-    Description:
-    ------------
     Add a print to the loop to assist on the implementation
     """
     self._js.append("for(let e of %s){ console.log(e) }" % self.varId)
@@ -2489,8 +2058,6 @@ class JsDomsList(JsArray.JsArray):
 
   def attr(self, value: Union[str, dict], data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     The attr() method adds the specified attribute to an element, and gives it the specified value.
     It will use the underlying setAttribute() method
 
@@ -2502,9 +2069,7 @@ class JsDomsList(JsArray.JsArray):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_element_setattribute.asp
-
-    Attributes:
-    ----------
+ 
     :param value: A String with the type of parameter or a python dictionary.
     :param data: A JsObj with the value to be set.
     """
@@ -2523,12 +2088,8 @@ class JsDomsList(JsArray.JsArray):
 
   def __getitem__(self, index: int):
     """
-    Description:
-    ------------
     Get the nth item corresponding to the name in the HTML page.
-
-    Attributes:
-    ----------
+ 
     :param index: The index number of the item.
     """
     return JsDoms.get("%s[%s]" % (self.toStr(), index))

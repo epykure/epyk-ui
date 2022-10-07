@@ -55,8 +55,6 @@ def deprecated(comment: str):
   This is a decorator which can be used to mark functions as deprecated. It will result in a warning being emitted
   when the function is used.
 
-  Attributes:
-  ----------
   :param comment:
   """
 
@@ -81,8 +79,6 @@ def inprogress(func):
   -----------
   Decorator to specify a function is still in development so the result might not be fully tested yet.
 
-  Attributes:
-  ----------
   :param func: Function. A python function.
   """
   @functools.wraps(func)
@@ -99,11 +95,7 @@ def inprogress(func):
 
 def set_component_skin(component: primitives.HtmlModel):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param component:
     """
     if component.page.ui.components_skin is not None:
@@ -133,15 +125,10 @@ class Required:
     self._page = page
 
   def add(self, package: str, version: Optional[str] = None, verbose: bool = True):
-    """
-    Description:
-    -----------
-    Add the package to the main page context.
+    """   Add the package to the main page context.
 
     TODO: Use the version number
 
-    Attributes:
-    ----------
     :param package: The package alias.
     :param version: Optional. The package version number.
     :param verbose: Optional. Display version details (default True).
@@ -177,8 +164,6 @@ class EventTouch:
   def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
             source_event: Optional[str] = None):
     """
-    Description:
-    ------------
     The touchstart event occurs when the user touches an element.
 
     Note: The touchstart event will only work on devices with a touch screen.
@@ -193,8 +178,6 @@ class EventTouch:
 
       https://www.w3schools.com/jsref/event_touchstart.asp
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -205,8 +188,6 @@ class EventTouch:
   def move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
            source_event: Optional[str] = None):
     """
-    Description:
-    ------------
     The touchmove event occurs when the user moves the finger across the screen.
 
     The touchmove event will be triggered once for each movement, and will continue to be triggered until the finger
@@ -220,8 +201,6 @@ class EventTouch:
 
       https://www.w3schools.com/jsref/event_touchmove.asp
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -232,8 +211,6 @@ class EventTouch:
   def cancel(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
              source_event: Optional[str] = None):
     """
-    Description:
-    ------------
     The touchcancel event occurs when the touch event gets interrupted.
 
     Different devices will interrupt a touch event at different actions, and it is considered good practice to include
@@ -247,8 +224,6 @@ class EventTouch:
 
       https://www.w3schools.com/jsref/event_touchcancel.asp
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -259,8 +234,6 @@ class EventTouch:
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
           source_event: Optional[str] = None):
     """
-    Description:
-    ------------
     The touchend event occurs when the user removes the finger from an element.
 
     Note: The touchend event will only work on devices with a touch screen.
@@ -275,8 +248,6 @@ class EventTouch:
 
       https://www.w3schools.com/jsref/event_touchend.asp
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -287,12 +258,8 @@ class EventTouch:
   def swap(self, js_funcs_left: types.JS_FUNCS_TYPES, js_funcs_right: types.JS_FUNCS_TYPES,
            profile: types.PROFILE_TYPE = False, source_event: Optional[str] = None):
     """
-    Description:
-    ------------
     Add swap event functions.
 
-    Attributes:
-    ----------
     :param js_funcs_left: Javascript functions.
     :param js_funcs_right: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -310,13 +277,8 @@ class EventTouch:
 class Components(collections.OrderedDict):
 
   def css(self, attrs: dict):
-    """
-    Description:
-    -----------
-    Set the CSS style for all the inner components.
+    """   Set the CSS style for all the inner components.
 
-    Attributes:
-    ----------
     :param attrs: The CSS attributes.
     """
     for component in self.values():
@@ -325,13 +287,8 @@ class Components(collections.OrderedDict):
     return self
 
   def add(self, component: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Standard way to add a component to the rendered dictionary.
+    """   Standard way to add a component to the rendered dictionary.
 
-    Attributes:
-    ----------
     :param component: HTML component.
     """
     self[component.htmlCode] = component
@@ -408,11 +365,7 @@ class Html(primitives.HtmlModel):
   def with_profile(self, profile: types.PROFILE_TYPE, event: Optional[str] = None,
                    element_id: Optional[str] = None):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param profile: Optional. A flag to set the component performance storage.
     :param event: Optional. The event name.
     :param element_id: Optional. A DOM component reference in the page.
@@ -432,10 +385,7 @@ class Html(primitives.HtmlModel):
     return profile
 
   def add(self, component: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Add items to a container.
+    """   Add items to a container.
 
     The added HTML component will not be managed by the page by default. This means it might not be visible on the
     JavaScript page if it is not by default managed by the main HTML component.
@@ -447,16 +397,12 @@ class Html(primitives.HtmlModel):
       div = page.ui.div()
       div.add(page.ui.button("Run"))
 
-    Attributes:
-    ----------
     :param component: Component added to the val main component.
     """
     return self.__add__(component)
 
   def insert(self, i: int, component: primitives.HtmlModel):
     """
-    Description:
-    ------------
     Add a component to the sub list of components for a container at a defined position.
     This is a user-friendly shortcut to the self.val feature.
 
@@ -467,8 +413,6 @@ class Html(primitives.HtmlModel):
       comp_title.style.css.color = self.page.theme.greys[-2]
       menu_items.insert(0, comp_title)
 
-    Attributes:
-    ----------
     :param i: The position for the component in the container.
     :param component: Component added to the val main component.
     """
@@ -493,10 +437,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def style(self) -> GrpCls.ClassHtml:
-    """
-    Description:
-    -----------
-    The CSS style (class and attributes) of the HTML component.
+    """   The CSS style (class and attributes) of the HTML component.
     This property will allow to custom any component in the page.
 
     Usage::
@@ -517,10 +458,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def htmlCode(self) -> str:
-    """
-    Description:
-    -----------
-    Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be
+    """   Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be
     changed in the report.
 
     This reference can be used in the Python to get the html object from components in the page but it is also
@@ -540,10 +478,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def js(self) -> 'Js.JsBase':
-    """
-    Description:
-    -----------
-    Javascript base function.
+    """   Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
@@ -563,10 +498,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def dom(self) -> JsHtml.JsHtml:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     
     Usage::
@@ -582,10 +514,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def options(self) -> Options:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a button.
+    """   Property to set all the possible object for a button.
     
     Usage::
 
@@ -595,10 +524,7 @@ class Html(primitives.HtmlModel):
     return self.__options
 
   def prepend_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Wrapper to the Javascript method insertChild to add an HTML component.
+    """   Wrapper to the Javascript method insertChild to add an HTML component.
 
     Usage::
 
@@ -610,8 +536,6 @@ class Html(primitives.HtmlModel):
 
       https://www.w3schools.com/jsref/met_node_insertbefore.asp
 
-    Attributes:
-    ----------
     :param component: The html component.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -627,10 +551,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def append_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Wrapper to the Javascript method appendChild to append an HTML component.
+    """   Wrapper to the Javascript method appendChild to append an HTML component.
 
     Usage::
 
@@ -642,8 +563,6 @@ class Html(primitives.HtmlModel):
 
       https://www.w3schools.com/jsref/met_node_appendchild.asp
 
-    Attributes:
-    ----------
     :param component: The html component.
     :param profile: Optional. A flag to set the component performance storage.
 
@@ -658,10 +577,7 @@ class Html(primitives.HtmlModel):
     return self
 
   def onReady(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add set of event / actions which will be triggered after the build of the object.
+    """   Add set of event / actions which will be triggered after the build of the object.
     Usually this can be used to add js functions on a chart or a table.
 
     Usage::
@@ -671,8 +587,6 @@ class Html(primitives.HtmlModel):
         network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: A flag to set the component performance storage.
     """
@@ -683,14 +597,9 @@ class Html(primitives.HtmlModel):
     self._browser_data['component_ready'].extend(JsUtils.jsConvertFncs(js_funcs, profile=profile))
 
   def add_menu(self, context_menu: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Attach a context menu to an existing component. A context menu must have a component attached to otherwise
+    """   Attach a context menu to an existing component. A context menu must have a component attached to otherwise
     the report will not be triggered.
 
-    Attributes:
-    ----------
     :param context_menu: A Python context menu object.
     """
     context_menu.source = self
@@ -700,8 +609,6 @@ class Html(primitives.HtmlModel):
   def add_icon(self, text: str, css: Optional[dict] = None, position: str = "before", family: Optional[str] = None,
                html_code: Optional[str] = None):
     """
-    Description:
-    ------------
     Add an icon to the HTML object.
 
     Usage::
@@ -709,8 +616,6 @@ class Html(primitives.HtmlModel):
       checks.title.add_icon("wrench") # For cross family icon definition
       checks.title.add_icon("fas fa-align-center") # for font awesome icon
 
-    Attributes:
-    ----------
     :param text: The icon reference from font-awesome website.
     :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param position: Optional. The position compared to the main component tag.
@@ -740,17 +645,12 @@ class Html(primitives.HtmlModel):
 
   def add_label(self, text: str, css: Optional[dict] = None, position: str = "before", for_: str = None,
                 html_code: Optional[str] = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add an elementary label component.
+    """   Add an elementary label component.
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_label.asp
 
-    Attributes:
-    ----------
     :param text: The label content.
     :param css: Optional. A dictionary with the CSS style to be added to the component.
     :param position: Optional. The position compared to the main component tag.
@@ -777,17 +677,12 @@ class Html(primitives.HtmlModel):
 
   def add_span(self, text: str, css: Optional[Union[dict, bool]] = None, position: str = "before",
                html_code: Optional[str] = None, i: Optional[int] = None):
-    """
-    Description:
-    -----------
-    Add an elementary span component.
+    """   Add an elementary span component.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/layering
 
-    Attributes:
-    ----------
     :param text: The Span content.
     :param css: Optional. The CSS style to be added to the component.
     :param position: Optional. The position compared to the main component tag.
@@ -813,18 +708,13 @@ class Html(primitives.HtmlModel):
   def add_link(self, text: str, url: str = None, script_name: Optional[str] = None, report_name: Optional[str] = None,
                name: Optional[str] = None, icon: Optional[str] = None, css: Optional[dict] = None,
                position: str = "before", options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add an elementary label component.
+    """   Add an elementary label component.
 
     Usage::
 
       div = page.ui.div()
       div.add_link("test.py", name="Click to go to the test report")
 
-    Attributes:
-    ----------
     :param text: The value of the link displayed in the page.
     :param url: Optional. The URL path.
     :param script_name:
@@ -854,13 +744,8 @@ class Html(primitives.HtmlModel):
 
   def add_title(self, text: str, level: Optional[int] = None, css: Optional[dict] = None, position: str = "before",
                 options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add an elementary title component.
+    """   Add an elementary title component.
 
-    Attributes:
-    ----------
     :param text: The title content.
     :param level: Optional. The level of title.
     :param css: Dictionary. Optional. The CSS style to be added to the component.
@@ -885,13 +770,8 @@ class Html(primitives.HtmlModel):
 
   def add_input(self, text: str, css: Optional[dict] = None, attrs: Optional[dict] = None, position: str = "before",
                 options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add an elementary input component.
+    """   Add an elementary input component.
 
-    Attributes:
-    ----------
     :param text: The title content.
     :param css: Optional. The CSS style to be added to the component.
     :param attrs: Optional. The HTML tag attributes.
@@ -924,13 +804,8 @@ class Html(primitives.HtmlModel):
 
   def add_checkbox(self, flag: bool, css: Optional[dict] = None, attrs: Optional[dict] = None,
                    position: str = "before"):
-    """
-    Description:
-    -----------
-    Add an elementary checkbox component.
+    """   Add an elementary checkbox component.
 
-    Attributes:
-    ----------
     :param flag: The state of the checkbox component.
     :param css: Optional. The CSS style to be added to the component.
     :param attrs: Optional. The HTML tag attributes.
@@ -950,15 +825,10 @@ class Html(primitives.HtmlModel):
     return self
 
   def add_helper(self, text: str, css: dict = None):
-    """
-    Description:
-    -----------
-    Add an elementary helper icon.
+    """   Add an elementary helper icon.
 
     The helper is not managed by the main page and should be written in the component.
 
-    Attributes:
-    ----------
     :param text: The helper content.
     :param css: Optional. The CSS style to be added to the component.
     """
@@ -971,10 +841,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def keydown(self) -> KeyCodes.KeyCode:
-    """
-    Description:
-    -----------
-    The onkeydown event occurs when the user is pressing a key (on the keyboard).
+    """   The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
     Related Pages:
 
@@ -988,10 +855,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def keypress(self) -> KeyCodes.KeyCode:
-    """
-    Description:
-    -----------
-    The onkeypress event occurs when the user presses a key (on the keyboard).
+    """   The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
 
@@ -1003,10 +867,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def keyup(self) -> KeyCodes.KeyCode:
-    """
-    Description:
-    -----------
-    The onkeypress event occurs when the user presses a key (on the keyboard).
+    """   The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
 
@@ -1018,10 +879,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def aria(self) -> Aria.Aria:
-    """
-    Description:
-    -----------
-    Accessible Rich Internet Applications is a [HTML] specification module.
+    """   Accessible Rich Internet Applications is a [HTML] specification module.
     Web developers MAY use the ARIA role and aria-* attributes on HTML elements.
 
     Related Pages:
@@ -1032,10 +890,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Property to get the jquery value of the HTML object in a python HTML object.
+    """   Property to get the jquery value of the HTML object in a python HTML object.
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python.
 
@@ -1045,10 +900,7 @@ class Html(primitives.HtmlModel):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
-    Get the HTML content of the component as a string.
+    """   Get the HTML content of the component as a string.
     """
     if self.innerPyHTML is not None:
       if isinstance(self.innerPyHTML, list):
@@ -1059,25 +911,17 @@ class Html(primitives.HtmlModel):
     return self.val if not hasattr(self.val, "html") else self.val.html()
 
   def move(self):
-    """
-    Description:
-    -----------
-    Move the component to this position in the page.
+    """   Move the component to this position in the page.
     """
     self.page.components.move_to_end(self.htmlCode)
 
   def css(self, key: Union[str, dict] = None, value: Optional[str] = None, reset: bool = False):
-    """
-    Description:
-    -----------
-    Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function.
+    """   Change the CSS Style of a main component. This is trying to mimic the signature of the Jquery css function.
 
     Related Pages:
 
       http://api.jquery.com/css/
 
-    Attributes:
-    ----------
     :param key: Optional. The key style in the CSS attributes (Can also be a dictionary).
     :param value: Optional. The value corresponding to the key style.
     :param reset: Optional. Specify if the CSS styles need to be emptied first.
@@ -1117,14 +961,10 @@ class Html(primitives.HtmlModel):
   def add_style(self, css_classes: Optional[Union[str, list]] = None, css_attrs: Optional[dict] = None,
                 clear_first: bool = False, keep_css_keys: Optional[tuple] = ("width", "height")):
     """
-    Description:
-    ------------
     Add CSS styles (inline and classes) to the component.
     This function could also remove all the predefined CSS style first.
     To create inline CSS it will use the underlying css function.
 
-    Attributes:
-    ----------
     :param css_classes: Optional. The CSS class reference.
     :param css_attrs: Optional. The CSS attributes.
     :param clear_first: Optional. Remove all the predefined CSS Inline style and classes for the component.
@@ -1152,10 +992,7 @@ class Html(primitives.HtmlModel):
 
   @packages.packageImport('bootstrap', 'bootstrap')
   def tooltip(self, value: types.JS_DATA_TYPES, location: str = 'top', options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add the Tooltip feature when the mouse is over the component.
+    """   Add the Tooltip feature when the mouse is over the component.
     This tooltip version is coming from Bootstrap.
 
     Usage::
@@ -1168,8 +1005,6 @@ class Html(primitives.HtmlModel):
 
     TODO Change background color
 
-    Attributes:
-    ----------
     :param value: The tooltip text.
     :param location: Optional. The position of the tooltip.
     :param options: Optional. Specific Python options available for this component.
@@ -1207,17 +1042,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   @packages.packageImport('bootstrap', 'bootstrap')
   def popover(self, content: str, title: str = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a tooltip using Bootstrap Popover feature.
+    """   Add a tooltip using Bootstrap Popover feature.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.4/components/popovers/
 
-    Attributes:
-    ----------
     :param content: The tooltip content.
     :param title: Optional. The tooltip title.
     :param options: Optional. Specific Python options available for this component.
@@ -1237,12 +1067,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = None, source_event: str = None):
     """
-    Description:
-    ------------
     Set the component as a draggable item.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1256,16 +1082,11 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       'event.dataTransfer.setData("text", event.target.innerHTML)'], profile=profile, source_event=source_event)
 
   def sticky(self, anchor: primitives.HtmlModel, css_attrs: dict = None):
-    """
-    Description:
-    -----------
-    Change the CSS style of the component to be sticky on the page.
+    """   Change the CSS style of the component to be sticky on the page.
 
     This will add a class to the component. It is possible to set some attributes in order to
     change its style.
 
-    Attributes:
-    ----------
     :param anchor: the component which will be used to check the position.
     :param css_attrs: Optional. The CSS attributes of the component once sticky.
     """
@@ -1287,14 +1108,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   def add_options(self, options: types.OPTION_TYPE = None, name: str = None, value: str = None):
-    """
-    Description:
-    -----------
-    Change the Javascript options of the component.
+    """   Change the Javascript options of the component.
     This will change the options sent to the Javascript.
 
-    Attributes:
-    ----------
     :param options: Optional. the extra options to be added to the component.
     :param name: Optional. The key. The option name.
     :param value: Optional. The value. The option value.
@@ -1311,10 +1127,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   def set_attrs(self, attrs: Optional[dict] = None, name: Optional[str] = None, value: Optional[Any] = None):
-    """
-    Description:
-    -----------
-    Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML
+    """   Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML
     component will be defined.
     Basically all sort of attributes can be defined here: CSS attributes, but also data, name...
     Either the attrs or the tuple (name, value) can be used to add information to the dom object.
@@ -1328,8 +1141,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
       https://www.w3schools.com/html/html_attributes.asp
 
-    Attributes:
-    ----------
     :param attrs: Optional. All the HTML tags attributes.
     :param name: Optional. A python string with the name of the attribute.
     :param value: Optional. A python string with the value of the attribute.
@@ -1366,17 +1177,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self
 
   def get_attrs(self, with_id: bool = True, css_class_names: List[str] = None):
-    """
-    Description:
-    -----------
-    Return the string line with all the attributes.
+    """   Return the string line with all the attributes.
 
     All the attributes in the div should use double quote and not simple quote to be consistent everywhere in the
     framework and also in the javascript. If there is an inconsistency, the aggregation of the string fragments will
     not work
 
-    Attributes:
-    ----------
     :param with_id: Optional. Add the ID tag. This is handled by the framework. (Default true)
     :param css_class_names: Optional. The Python class names.
 
@@ -1414,10 +1220,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Add an event to the document ready function.
+    """   Add an event to the document ready function.
     This is to mimic the Jquery on function.
 
     Tip: use the r function to not have side effects when Python is building the JavaScript:
@@ -1430,8 +1233,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
       https://www.w3schools.com/jsref/dom_obj_event.asp
 
-    Attributes:
-    ----------
     :param event: The Javascript event type from the dom_obj_event.asp.
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
@@ -1455,30 +1256,21 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def event_fnc(self, event: str):
     """
-    Description:
-    ------------
     Function to get the generated JavaScript method in order to then reuse it in other components.
     This will return the event function in a string already transpiled.
 
-    Attributes:
-    ----------
     :param event: The event function.
     """
     return list(self._browser_data['mouse'][event][self.dom.varId]["content"])
 
   def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a drag and drop property to the element.
+    """   Add a drag and drop property to the element.
 
     Usage::
 
       d = page.ui.div()
       d.drop([page.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param prevent_default: Optional. Specify if the event should have a default behaviour on the page.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
@@ -1505,10 +1297,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Add an mouse hover event on the component.
+    """   Add an mouse hover event on the component.
 
     Usage::
 
@@ -1517,8 +1306,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         page.js.alert("This is a test")
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -1527,10 +1314,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def viewport(self, js_funcs: types.JS_FUNCS_TYPES, options: dict = None, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Trigger an event when the component is visible.
+    """   Trigger an event when the component is visible.
     The result of the event can be on the component itself (the observer) or another component (to load / add items).
 
     Usage::
@@ -1541,8 +1325,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         text.dom.css("color", "red")
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param options: Optional.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
@@ -1556,10 +1338,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    The onclick event occurs when the user clicks on an element.
+    """   The onclick event occurs when the user clicks on an element.
 
     Usage::
 
@@ -1572,8 +1351,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
       https://www.w3schools.com/jsref/event_onclick.asp
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: Optional. The source target for the event.
@@ -1585,10 +1362,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def focusout(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    The onfocusout event occurs when the user select an element.
+    """   The onfocusout event occurs when the user select an element.
 
     Usage::
 
@@ -1601,8 +1375,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
       https://www.w3schools.com/jsref/event_onfocusout.asp
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function in the
       console.
@@ -1615,17 +1387,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    The ondblclick event occurs when the user double-clicks on an element.
+    """   The ondblclick event occurs when the user double-clicks on an element.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_ondblclick.asp
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the console.
     :param source_event: Optional. The source target for the event.
@@ -1637,17 +1404,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def scroll(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
              source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    The onscroll event occurs when an element's scrollbar is being scrolled.
+    """   The onscroll event occurs when an element's scrollbar is being scrolled.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onscroll.asp
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: Optional. The source target for the event.
@@ -1656,10 +1418,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def mouse(self, on_funcs: types.JS_FUNCS_TYPES = None, out_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Wrapper function fot the mouse event.
+    """   Wrapper function fot the mouse event.
     This function will cover the on mouse hover event and mouse out.
 
     More specific events are possible using the generic out function.
@@ -1674,8 +1433,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
           span.dom.css("cursor", "pointer").r],
         span.dom.css("color", "blue").r)
 
-    Attributes:
-    ----------
     :param on_funcs: Optional. The Javascript events.
     :param out_funcs: Optional. The Javascript events.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1692,13 +1449,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   def paste(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event=None,
             components=None):
-    """
-    Description:
-    -----------
-    Add a paste event to the component.
+    """   Add a paste event to the component.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -1712,15 +1464,10 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return self.on("paste", str_fncs, profile, source_event)
 
   def contextMenu(self, menu, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Attach a context menu to a component and set a function to called before the display.
+    """   Attach a context menu to a component and set a function to called before the display.
 
     TODO Test context menu
 
-    Attributes:
-    ----------
     :param menu:
     :param js_funcs: Optional. The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -1739,10 +1486,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
   @property
   def touch(self) -> EventTouch:
-    """
-    Description:
-    -----------
-    Shortcut property to all the Touch event.
+    """   Shortcut property to all the Touch event.
 
     Events that occur when user touches a touch-based device, belongs to the TouchEvent Object.
 
@@ -1759,13 +1503,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: Optional.
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -1798,10 +1538,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return fnc_call
 
   def refresh(self):
-    """
-    Description:
-    -----------
-    Component refresh function. Javascript function which can be called in any Javascript event.
+    """   Component refresh function. Javascript function which can be called in any Javascript event.
 
     Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
 
@@ -1811,8 +1548,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   def subscribe(self, socket, channel: str, data=None, options: Optional[dict] = None,
                 js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Subscribe to a socket channel.
     Data received from the socket are defined as a dictionary with a field data.
 
@@ -1822,8 +1557,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
       https://timepicker.co/options/
 
-    Attributes:
-    ----------
     :param socket: Socket. A python socket object.
     :param channel: The channel on which events will be received.
     :param data:
@@ -1840,16 +1573,12 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   @packageImport('sortablejs')
   def sortable(self, options: types.OPTION_TYPE = None, propagate: bool = True, propagate_only: bool = False):
     """
-    Description:
-    ------------
     Sortable is a JavaScript library for reorderable drag-and-drop lists.
 
     Related Pages:
 
       https://github.com/SortableJS/Sortable
 
-    Attributes:
-    ----------
     :param options: Optional. The sortable options.
     :param propagate: Optional. Specify if the sub children should get the draggable property.
     :param propagate_only: Optional. Specify if the first level of child is draggable.
@@ -1870,20 +1599,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return self._on_ready_js['sortable']
 
   def __str__(self):
-    """
-    Description:
-    -----------
-    Apply the corresponding function to build the HTML result.
+    """   Apply the corresponding function to build the HTML result.
     This function is very specific and it has to be defined in each class.
     """
     raise NotImplementedError('subclasses must override __str__()!')
 
   @property
   def component(self) -> WebComponents.Component:
-    """
-    Description:
-    -----------
-    The static component definition on the Javascript Side.
+    """   The static component definition on the Javascript Side.
 
     This will be then used by the different framework to define the elementary bricks on which the complex component
     will be based on.
@@ -1891,10 +1614,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return WebComponents.Component(self)
 
   def html(self):
-    """
-    Description:
-    -----------
-    Render the HTML component to the JavaScript.
+    """   Render the HTML component to the JavaScript.
     This will be the main function called by the page to render all the component.s
 
     """
@@ -1937,10 +1657,7 @@ class Body(Html):
 
   @property
   def style(self) -> GrpCls.ClassPage:
-    """
-    Description:
-    -----------
-    A property to the CSS style of the DOM component.
+    """   A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
     """
     if self._styleObj is None:
@@ -1949,10 +1666,7 @@ class Body(Html):
 
   @property
   def dom(self) -> JsHtml.JsHtml:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -1964,13 +1678,8 @@ class Body(Html):
 
   def scroll(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
              source_event: str = None):
-    """
-    Description:
-    -----------
-    The onscroll event occurs when an element's scrollbar is being scrolled.
+    """   The onscroll event occurs when an element's scrollbar is being scrolled.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param source_event: Optional. The source target for the event.
@@ -1982,10 +1691,7 @@ class Body(Html):
     return self
 
   def onReady(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add set of event / actions which will be triggered after the build of the object.
+    """   Add set of event / actions which will be triggered after the build of the object.
     usually this can be used to add js functions on a chart or a table.
 
     Usage::
@@ -1995,8 +1701,6 @@ class Body(Html):
         network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []}),
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript function to be added once the object is built.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -2005,13 +1709,8 @@ class Body(Html):
     self.page.js.onReady(js_funcs)
 
   def onLoad(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a JavaScript function in the builder section which correspond to the JavaScript onload.
+    """   Add a JavaScript function in the builder section which correspond to the JavaScript onload.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """
@@ -2023,10 +1722,7 @@ class Body(Html):
                  components: Optional[List[primitives.HtmlModel]] = None,
                  lang: Optional[str] = "eng", end_point: str = "/static/configs", sync: bool = True,
                  filename: Optional[str] = None):
-    """
-    Description:
-    -----------
-    Load teh configuration file in order to fill the templates with static data.
+    """   Load teh configuration file in order to fill the templates with static data.
     This will allow to externalise the configuration and design rich web templates.
 
     Do not forget to use CTRL+F5 in order to refresh the browser cache to get the updates.
@@ -2038,8 +1734,6 @@ class Body(Html):
         page.body.fromConfig(components=[title], end_point="/static", lang=None)
       ])
 
-    Attributes:
-    ----------
     :param js_funcs: Optional. The various transformations to be triggered from the configuration data.
     :param components: Optional. The various HTML Components to be updated from the configuration file.
     :param lang: Optional. The default lang for the configuration.
@@ -2078,13 +1772,9 @@ class Body(Html):
 
   def set_content(self, page: primitives.PageModel, page_content: str):
     """
-    Description:
-    ------------
     Function to allow the templating of the report.
     This can be overridden by a generic class which can be shared within a set of report
 
-    Attributes:
-    ----------
     :param page: The main report object.
     :param page_content: The html content of the page.
 
@@ -2096,16 +1786,12 @@ class Body(Html):
   def set_background(self, start_color: Optional[str] = None, end_color: Optional[str] = None,
                      from_theme: bool = False):
     """
-    Description:
-    ------------
     Change the body background color.
 
     Usage::
 
       page.body.set_background("#101626", "#374F67")
 
-    Attributes:
-    ----------
     :param start_color: Optional. The first code color.
     :param end_color: Optional. The last code color.
     :param from_theme: Optional. Default to the code colors defined in the theme.
@@ -2123,10 +1809,7 @@ class Body(Html):
 
   def loading(self, status: bool = True, label: str = "Loading...", component=None,
               z_index: int = 500, attrs: dict = None):
-    """
-    Description:
-    -----------
-    Display a loading page.
+    """   Display a loading page.
 
     Usage::
 
@@ -2134,8 +1817,6 @@ class Body(Html):
       ...
       page.body.loading(False)
 
-    Attributes:
-    ----------
     :param status: Optional. A flag to specify the status of the loading event.
     :param z_index: Optional. Specifies the stack order of an element.
     :param label: Optional.
@@ -2172,8 +1853,6 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
 
   def add_template(self, css: dict = None, defined_style: str = None):
     """
-    Description:
-    ------------
     Add an extra layer.
 
     Usage::
@@ -2184,8 +1863,6 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
 
       page.body.add_template(css={"background": "white"}, defined_style="doc")
 
-    Attributes:
-    ----------
     :param css: Optional. The CSS attributes to be added to the HTML component.
     :param defined_style: Optional. A predefined style attached to the style property.
     """
@@ -2198,8 +1875,6 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
   @property
   def template(self):
     """
-    Description:
-    ------------
     Shortcut to the body template component.
     This will just be an intermediate div tag on which all the component will be attached.
 
@@ -2265,31 +1940,20 @@ class Component(Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the javaScript object reference after the builder.
+    """   Return the javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   def add_item(self, component: Union[Html, str]):
-    """
-    Description:
-    -----------
-    Add the sub item to the list of items.
+    """   Add the sub item to the list of items.
     This will also add the component to the page component dictionary.
 
-    Attributes:
-    ----------
     :param component: The component.
     """
     raise ValueError("Needs to be implemented")
 
   def write_item(self, item: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Write an item in the component. This function is call by the __str__ method for each item attached to the
+    """   Write an item in the component. This function is call by the __str__ method for each item attached to the
     HTML component.
 
     This method return a dictionary which will be directly used to define the string set in self.dyn_repr.
@@ -2301,17 +1965,12 @@ class Component(Html):
       in self.dyn_repr but the full logic can be implemented in the write_values method. In this case does not need to
       be defined.
 
-    Attributes:
-    ----------
     :param item: The item added to the self.items.
     """
     return {"sub_item": item.html()}
 
   def write_values(self) -> dict:
-    """
-    Description:
-    -----------
-    Prepare the data to be written to the self.str_repr module variable.
+    """   Prepare the data to be written to the self.str_repr module variable.
     The keys {attrs} and {htmlCode} will be automatically added by the core framework.
 
     By default this function will add the values defined for the component to the {text} key.
@@ -2358,13 +2017,8 @@ class StructComponent(Html):
     self.items = {}
 
   def add_to(self, group: str, content: Union[Html, str]):
-    """
-    Description:
-    -----------
-    Add subcomponent to the main component.
+    """   Add subcomponent to the main component.
 
-    Attributes:
-    ----------
     :param group: The category for the component.
     :param content: The HTML component to be added.
     """
@@ -2376,10 +2030,7 @@ class StructComponent(Html):
     return content
 
   def write_values(self):
-    """
-    Description:
-    -----------
-    Prepare the data to be written to the self.str_repr module variable.
+    """   Prepare the data to be written to the self.str_repr module variable.
     The keys {attrs} and {htmlCode} will be automatically added by the core framework.
 
     By default this function will add the values defined for the component to the {text} key.

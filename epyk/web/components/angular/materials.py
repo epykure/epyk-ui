@@ -15,9 +15,7 @@ class Package:
     self.path = os.path.join(self.app._node_path, self.app._app_name)
 
   def install(self):
-    """
-    Description:
-    ------------
+    """  
     Install Bootstrap Framework on top of your Angular framework.
 
     This will trigger the automatic install defined on the official website.
@@ -29,9 +27,7 @@ class Package:
     subprocess.run('npm add %s' % MODULE, shell=True, cwd=self.path)
 
   def update(self):
-    """
-    Description:
-    ------------
+    """  
     Install Clarity Framework on top of your Angular framework.
 
     This will trigger the automatic install defined on the official website.
@@ -55,18 +51,14 @@ class Components:
     self.check()
 
   def check(self):
-    """
-    Description:
-    ------------
+    """  
     Check if the package is installed on the server
     """
     if not os.path.exists(os.path.join(self.path, 'node_modules', MODULE)):
       raise ValueError("Components package missing on the target server, please run install() first")
 
   def autocomplete(self):
-    """
-    Description:
-    ------------
+    """  
 
     https://material.angular.io/components/autocomplete/examples
     """

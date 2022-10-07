@@ -21,35 +21,25 @@ class DataClass:
 
   def update(self, vals: dict):
     """
-    Description:
-    ------------
     Update the opbject internal attributes.
 
-    Attributes:
-    ----------
     :param vals: All the attributes to be added to the component
     """
     self._attrs.update(vals)
 
   def attrs(self):
     """
-    Description:
-    ------------
 
     """
     return self._attrs.items()
 
   def custom(self, name: str, value: Any):
     """
-    Description:
-    ------------
     Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
 
-    Attributes:
-    ----------
     :param name: The key to be added to the attributes.
     :param value: The value of the defined attributes.
 
@@ -60,12 +50,8 @@ class DataClass:
 
   def attr(self, name: str, value: Any):
     """
-    Description:
-    ------------
     Add an attribute to the Javascript underlying dictionary.
 
-    Attributes:
-    ----------
     :param name: The attribute name.
     :param value: The attribute value.
 
@@ -76,25 +62,17 @@ class DataClass:
 
   def has_attribute(self, cls_obj):
     """
-    Description:
-    ------------
     Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
 
-    Attributes:
-    ----------
     :param cls_obj: Class. The sub data class used in the structure definition
     """
     return self.sub_data(sys._getframe().f_back.f_code.co_name, cls_obj)
 
   def get(self, dfl: Union[str, bool, int, dict, list, float] = None, name: str = None):
     """
-    Description:
-    ------------
     Get the attribute to the underlying attributes dictionary.
 
-    Attributes:
-    ----------
     :param dfl: Optional. The default value of this attribute.
     :param name: Optional. The attribute name. default the name of the function.
     """
@@ -102,12 +80,8 @@ class DataClass:
 
   def set(self, value: Any, name: str = None):
     """
-    Description:
-    ------------
     Add an attribute to the Javascript underlying dictionary.
 
-    Attributes:
-    ----------
     :param value: The attribute value.
     :param name: Optional. The attribute name. default the name of the function.
 
@@ -117,15 +91,11 @@ class DataClass:
 
   def sub_data(self, name: str, cls_obj):
     """
-    Description:
-    ------------
     Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
 
     Should use has_attribute is the name can be deduced from the parent function.
 
-    Attributes:
-    ----------
     :param name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
@@ -138,12 +108,8 @@ class DataClass:
 
   def add(self, name: str, value: Any):
     """
-    Description:
-    ------------
     Add the key and value to the final result object.
 
-    Attributes:
-    ----------
     :param name: The key in the final data dictionary.
     :param value: The value in the final data dictionary.
     """
@@ -153,13 +119,9 @@ class DataClass:
 
   def sub_data_enum(self, name: str, cls_obj):
     """
-    Description:
-    ------------
     Add key to a sub dictionary.
     This will create an attribute object with a nested structure.
 
-    Attributes:
-    ----------
     :param name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
@@ -187,13 +149,9 @@ class DataEnum:
 
   def set(self, value: Union[str, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be set (default is the function name).
     """
     if value is None:
@@ -204,12 +162,8 @@ class DataEnum:
 
   def custom(self, value: str):
     """
-    Description:
-    ------------
     Set a custom value.This will not use any specific conversion.
 
-    Attributes:
-    ----------
     :param value: The value to be set.
     """
     self.__value = value
@@ -237,13 +191,9 @@ class DataEnumMulti:
 
   def set(self, value: str = None):
     """
-    Description:
-    ------------
     Set the selected value in this enumeration.
     The last function call will be persisted.
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be set (default is the function name).
     """
     if value is None:
@@ -252,12 +202,8 @@ class DataEnumMulti:
 
   def custom(self, value):
     """
-    Description:
-    ------------
     Set a custom value.This will not use any specific conversion.
 
-    Attributes:
-    ----------
     :param value: String. The value to be set.
     """
     self.__value.add(value)

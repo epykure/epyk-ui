@@ -41,10 +41,7 @@ class Select(Html.Html):
 
   @property
   def options(self) -> OptSelect.OptionsSelectJs:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a button.
+    """   Property to set all the possible object for a button.
 
     :rtype: OptSelect.OptionsSelectJs
     """
@@ -52,10 +49,7 @@ class Select(Html.Html):
 
   @property
   def style(self) -> GrpClsList.ClassSelect:
-    """
-    Description:
-    -----------
-    A property to the CSS style of the DOM component.
+    """   A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
 
     :rtype: GrpClsList.ClassSelect
@@ -66,10 +60,7 @@ class Select(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.DomSelect:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -82,18 +73,13 @@ class Select(Html.Html):
 
   @property
   def js(self) -> JsSelect.JSelect:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :return: A Javascript Dom object
 
     :rtype: JsSelect.JSelect
@@ -105,8 +91,6 @@ class Select(Html.Html):
   @property
   def parsers(self):
     """
-    Description:
-    ------------
     Set of functions to parse the data.
     """
     return SelectionBox
@@ -114,8 +98,6 @@ class Select(Html.Html):
   @property
   def data(self):
     """
-    Description:
-    ------------
     Property to the underlying data from the select.
     """
     return self._vals
@@ -143,13 +125,8 @@ class Select(Html.Html):
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, empty_funcs: types.JS_FUNCS_TYPES=None,
              profile: types.PROFILE_TYPE = None, source_event: str = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Javascript event triggered when the value has changed.
+    """   Javascript event triggered when the value has changed.
 
-    Attributes:
-    ----------
     :param js_funcs: Set of Javascript function to trigger on this event
     :param empty_funcs: Set of Js function to trigger if the value is empty
     :param profile: Optional. A flag to set the component performance storage.
@@ -166,17 +143,12 @@ class Select(Html.Html):
 
   def ajax(self, url: str, js_data: types.JS_FUNCS_TYPES = "function (){return {q: '{{{q}}}'}}", is_json: bool = True,
            method: str = "POST", options: dict = None):
-    """
-    Description:
-    -----------
-    Create a AJAX request.
+    """   Create a AJAX request.
 
     Related Pages:
 
       https://github.com/truckingsim/Ajax-Bootstrap-Select
 
-    Attributes:
-    ----------
     :param url: The request URL for the ajax call.
     :param js_data: Optional. The value of the item to be removed from the list.
     :param is_json: Optional. A flag to specific if the data are json (default True).

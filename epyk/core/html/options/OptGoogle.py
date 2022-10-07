@@ -7,9 +7,7 @@ class OptionMaps(Options):
 
   @property
   def zoom(self):
-    """
-    Description:
-    ------------
+    """  
     The starting value of the editor. Can be a string, or a document object.
 
     Related Pages:
@@ -24,9 +22,7 @@ class OptionMaps(Options):
 
   @property
   def center(self):
-    """
-    Description:
-    ------------
+    """  
     The starting value of the editor. Can be a string, or a document object.
 
     Related Pages:
@@ -45,9 +41,7 @@ class OptionMaps(Options):
 
   @property
   def mapTypeId(self):
-    """
-    Description:
-    ------------
+    """  
     The starting value of the editor. Can be a string, or a document object.
 
     Related Pages:

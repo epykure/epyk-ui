@@ -10,10 +10,7 @@ class KeyTable(Options):
 
   @property
   def blurable(self):
-    """
-    Description:
-    -----------
-    Allow KeyTable's focus to be blurred (removed) from a table.
+    """   Allow KeyTable's focus to be blurred (removed) from a table.
 
     Related Pages:
 
@@ -27,10 +24,7 @@ class KeyTable(Options):
 
   @property
   def className(self):
-    """
-    Description:
-    -----------
-    Set the class name used for the focused cell.
+    """   Set the class name used for the focused cell.
 
     Related Pages:
 
@@ -44,10 +38,7 @@ class KeyTable(Options):
 
   @property
   def clipboard(self):
-    """
-    Description:
-    -----------
-    Enable / disable clipboard interaction with KeyTable.
+    """   Enable / disable clipboard interaction with KeyTable.
 
     Related Pages:
 
@@ -61,10 +52,7 @@ class KeyTable(Options):
 
   @property
   def clipboardOrthogonal(self):
-    """
-    Description:
-    -----------
-    Set the orthogonal data to copy to clipboard.
+    """   Set the orthogonal data to copy to clipboard.
 
     Related Pages:
 
@@ -78,10 +66,7 @@ class KeyTable(Options):
 
   @property
   def columns(self):
-    """
-    Description:
-    -----------
-    Select the columns that can gain focus.
+    """   Select the columns that can gain focus.
 
     Related Pages:
 
@@ -95,10 +80,7 @@ class KeyTable(Options):
 
   @property
   def focus(self):
-    """
-    Description:
-    -----------
-    Cell to receive initial focus in the table.
+    """   Cell to receive initial focus in the table.
 
     Related Pages:
 
@@ -112,10 +94,7 @@ class KeyTable(Options):
 
   @property
   def keys(self):
-    """
-    Description:
-    -----------
-    Limit the keys that KeyTable will listen for and take action on
+    """   Limit the keys that KeyTable will listen for and take action on
 
     Related Pages:
 
@@ -129,10 +108,7 @@ class KeyTable(Options):
 
   @property
   def tabIndex(self):
-    """
-    Description:
-    -----------
-    Set the table's tab index for when it will receive focus.
+    """   Set the table's tab index for when it will receive focus.
 
     Related Pages:
 

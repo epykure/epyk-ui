@@ -13,10 +13,7 @@ class Components:
   def img(self, image: str = None, path: str = None, thumbnail: bool = False,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), align: str = "center",
           html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None, options: dict = None):
-    """
-    Description:
-    -----------
-    Add image component to the page.
+    """   Add image component to the page.
 
     Usage::
 
@@ -26,8 +23,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/content/images/
 
-    Attributes:
-    ----------
     :param image: Optional. The image file name.
     :param path: Optional. Optional. TString. The image file path.
     :param thumbnail: Optional. you can set thumbnail to give an image a rounded 1px border appearance.
@@ -48,17 +43,12 @@ class Components:
   def badge(self, text: str = "", category: str = "primary", width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (None, "px"), tooltip: str = None, options: str = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Documentation and examples for badges, our small count and labeling component.
+    """   Documentation and examples for badges, our small count and labeling component.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/components/badge/
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component.
     :param category: Optional. The Bootstrap predefined category.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -78,10 +68,7 @@ class Components:
   def pill(self, text: str = "", category: str = "primary", icon: str = None,
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), tooltip: str = None,
            options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Documentation and examples for badges, our small count and labeling component.
+    """   Documentation and examples for badges, our small count and labeling component.
 
     Usage::
 
@@ -91,8 +78,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/badge/
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component.
     :param category: Optional. The Bootstrap predefined category.
     :param icon: Optional. A string with the value of the icon to display from Bootstrap.
@@ -118,10 +103,7 @@ class Components:
   def carousel(self, images: List[str] = None, active: bool = None, width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add carousel component.
+    """   Add carousel component.
 
     TODO: Fix component and add js events.
 
@@ -135,8 +117,6 @@ class Components:
         r"/static/template_3.PNG",
         "/static/v1.6.PNG"])
 
-    Attributes:
-    ----------
     :param images: Optional. The image paths.
     :param active: optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.

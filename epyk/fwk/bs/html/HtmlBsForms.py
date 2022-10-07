@@ -20,8 +20,6 @@ class BsInput(Input):
   @property
   def style(self) -> BsStyleForms.BsClsInput:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
 
     :rtype: BsStyleForms.BsClsInput
@@ -53,10 +51,7 @@ class BsCheck(Component):
 
   @property
   def dom(self) -> DomBsForms.DomCheck:
-    """
-    Description:
-    -----------
-    The common DOM properties.
+    """   The common DOM properties.
 
     :rtype: DomBsForms.DomCheck
     """
@@ -66,10 +61,7 @@ class BsCheck(Component):
 
   @property
   def options(self) -> OptBsForms.Check:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptBsForms.Check
     """
@@ -91,8 +83,6 @@ class BsSelect(Component):
   @property
   def parsers(self):
     """
-    Description:
-    ------------
     Set of functions to parse the data.
     """
     return SelectionBox
@@ -100,8 +90,6 @@ class BsSelect(Component):
   @property
   def data(self):
     """
-    Description:
-    ------------
     Property to the underlying data from the select.
     """
     return self.items
@@ -117,8 +105,6 @@ class BsSelect(Component):
   @property
   def style(self) -> BsStyleForms.BsClsSelect:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
 
     :rtype: BsStyleForms.BsClsSelect
@@ -132,12 +118,8 @@ class BsSelect(Component):
 
   def add_option(self, value: str, label: str, selected: bool = False, options: dict = None):
     """
-    Description:
-    ------------
     Add an option to the Data list component.
 
-    Attributes:
-    ----------
     :param value: The option value.
     :param label: The option label.
     :param selected: Optional.
@@ -165,8 +147,6 @@ class BsDataList(Component):
   @property
   def parsers(self):
     """
-    Description:
-    ------------
     Set of functions to parse the data.
     """
     return SelectionBox
@@ -174,8 +154,6 @@ class BsDataList(Component):
   @property
   def data(self):
     """
-    Description:
-    ------------
     Property to the underlying data from the select.
     """
     return self.items
@@ -190,12 +168,8 @@ class BsDataList(Component):
 
   def add_option(self, value: str, label: str, selected: bool = False, options: dict = None):
     """
-    Description:
-    ------------
     Add an option to the Data list component.
 
-    Attributes:
-    ----------
     :param value: The option value.
     :param label: The option label.
     :param selected: Optional.
@@ -230,8 +204,6 @@ class BsSFloatingLabel(Component):
 
   def write_values(self):
     """
-    Description:
-    ------------
 
     """
     if self._vals['value']:

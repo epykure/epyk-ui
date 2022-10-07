@@ -14,16 +14,13 @@ class BsComposite(html.HtmlTextComp.Composite):
 
   @property
   def _get_comp_map(self):
-    """
-    Description:
-    ------------
+    """  
     This list is specific for the Bootstrap components.
 
     Span are replaced by div as I did not want to use the span as a container object.
     I believe this component should remain a base one.
 
-    Usage:
-    -----
+    Usage::
 
     """
     if self.extended_map is None:
@@ -46,15 +43,10 @@ class Section(html.Html.Html):
       self.__add__(data)
 
   def __getitem__(self, i: int):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i: The internal row based on the index.
 
     :rtype: Tr
@@ -67,15 +59,10 @@ class Section(html.Html.Html):
     return self
 
   def insert(self, i: int, comp: html.Html.Html):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i:
     :param comp:
     """
@@ -107,15 +94,10 @@ class BsToasts(html.Html.Html):
     # $('.toast').toast('show')
 
   def __getitem__(self, i):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
@@ -126,16 +108,11 @@ class BsToasts(html.Html.Html):
     return self.body.val[i]
 
   def __add__(self, component):
-    """
-    Description:
-    ------------
+    """  
     Add items to a container.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param component:
     """
     self.body.__add__(component)
@@ -143,12 +120,9 @@ class BsToasts(html.Html.Html):
 
   @property
   def header(self):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
     """
     if self.__header is None:
       self.__header = Section(self.page, 'div')
@@ -158,12 +132,9 @@ class BsToasts(html.Html.Html):
 
   @property
   def body(self):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
     """
     if self.__body is None:
       self.__body = Section(self.page, 'div')
@@ -188,15 +159,10 @@ class BsCards(html.Html.Html):
       self.header.__add__(title)
 
   def __getitem__(self, i):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
@@ -207,31 +173,21 @@ class BsCards(html.Html.Html):
     return self.body.val[i]
 
   def __add__(self, component):
-    """
-    Description:
-    ------------
+    """  
     Add items to a container.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param component:
     """
     self.body.__add__(component)
     return self
 
   def insert(self, i, component):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i:
     :param component:
     """
@@ -240,12 +196,9 @@ class BsCards(html.Html.Html):
 
   @property
   def header(self):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
     """
     if self.__header is None:
@@ -256,12 +209,9 @@ class BsCards(html.Html.Html):
 
   @property
   def body(self):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
     """
     if self.__body is None:
@@ -310,16 +260,11 @@ class BsModals(html.Html.Html):
       self.body.__add__(c)
 
   def __add__(self, comp):
-    """
-    Description:
-    ------------
+    """  
     Add items to a container.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param comp:
     """
     if hasattr(comp, 'options'):
@@ -328,15 +273,10 @@ class BsModals(html.Html.Html):
     return self
 
   def __getitem__(self, i):
-    """
-    Description:
-    ------------
+    """  
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param i: Integer. The internal row based on the index
 
     :rtype: Tr
@@ -348,14 +288,11 @@ class BsModals(html.Html.Html):
 
   @property
   def dom(self):
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Usage:
-    -----
+    Usage::
 
     :return: A Javascript Dom object
 

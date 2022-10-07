@@ -19,17 +19,13 @@ class NoSql:
     self.page = page
 
   def mongo(self, host="localhost", port=5000, is_secured=False):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://www.w3schools.com/python/python_mongodb_getstarted.asp
       https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.3-signed.msi/download
 
-    Attributes:
-    ----------
     :param host: String. Optional. Database hostname. Default localhost
     :param port: Integer. Optional. Database port. Default 5000
     :param is_secured: Boolean. Optional.
@@ -39,17 +35,13 @@ class NoSql:
     return py_mongo.MongoClient("mongodb://%s:%s/" % (host, port))
 
   def neo4j(self, host="localhost", port=5000, is_secured=False):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://neo4j.com/developer/python/
       https://community.neo4j.com/?_ga=2.69585106.394662973.1539480121-615400289.1539480121
 
-    Attributes:
-    ----------
     :param host: String. Optional. Database hostname. Default localhost.
     :param port: Integer. Optional. Database port. Default 5000.
     :param is_secured: Boolean. Optional.
@@ -70,10 +62,7 @@ class DataDb:
     self.table_names = None   # create the unique set of tables to be loaded
 
   def __settings(self):
-    """
-    Description:
-    -----------
-    Retrieve the database settings based on the environment configuration.
+    """   Retrieve the database settings based on the environment configuration.
 
     Settings are used in the context of generic private and public databases.
     If SQLite is used, the database will be automatically generated.
@@ -109,10 +98,7 @@ class DataDb:
 
   @property
   def names(self):
-    """
-    Description:
-    -----------
-    Returns the different database names to be used by the user in a public or private context.
+    """   Returns the different database names to be used by the user in a public or private context.
 
     Generally the public database is shared by all the users whereas the private one is only dedicated to a user and
     data can be granted to some external users.
@@ -128,10 +114,7 @@ class DataDb:
 
   @property
   def private(self):
-    """
-    Description:
-    -----------
-    Return the private database from the family defined in the environment.
+    """   Return the private database from the family defined in the environment.
 
     It is not possible to specify the type of DB for an environment at this level.
     This should be done either in the server configuration or in the report configuration.
@@ -175,10 +158,7 @@ class DataDb:
 
   @property
   def public(self):
-    """
-    Description:
-    -----------
-    Return the public shared database from the family defined in the environment.
+    """   Return the public shared database from the family defined in the environment.
 
     It is not possible to specify the type of DB for an environment at this level.
     This should be done either in the server configuration or in the report configuration.
@@ -217,17 +197,12 @@ class DataDb:
     return self._db_bindings[database]
 
   def reflect(self, table_names: list):
-    """
-    Description:
-    -----------
-    Reduce the scope of database tables to be loaded by SQLAchemy.
+    """   Reduce the scope of database tables to be loaded by SQLAchemy.
 
     Related Pages:
 
       https://docs.sqlalchemy.org/en/13/core/metadata.html
 
-    Attributes:
-    ----------
     :param table_names:
     """
     if self.table_names is None:
@@ -237,17 +212,12 @@ class DataDb:
     return self
 
   def sqlite(self, name, db_path=None, model_path=None, db_settings=None, tables_scope=None):
-    """
-    Description:
-    -----------
-    Create a bespoke SQLite database.
+    """   Create a bespoke SQLite database.
 
     By default the database will be in the current folder.
     The table definition will not be done automatically for this database and this should be created in a
     external manner
 
-    Attributes:
-    ----------
     :param name: The database name
     :param db_path: Optional, the database path
     :param model_path: Optional, the model with the tables definition. The filename must be unique in the project
@@ -270,12 +240,8 @@ class DataDb:
     return self._db_bindings[database]
 
   def oracle(self, name, host, port, model_path=None, is_secured=False, tables_scope=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 5432
@@ -297,12 +263,8 @@ class DataDb:
 
   def mssql(self, name, host="localhost", driver_name="{ODBC Driver 17 for SQL Server}",
             model_path=None, tables_scope=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param name: The database name
     :param host: The database host name
     :param driver_name: Optional, The
@@ -325,13 +287,8 @@ class DataDb:
     return self._db_bindings[database]
 
   def mdb(self, name, db_path, model_path=None):
-    """
-    Description:
-    -----------
-    Get a Access (.mdb) Database query object using ODBC driver.
+    """   Get a Access (.mdb) Database query object using ODBC driver.
 
-    Attributes:
-    ----------
     :param name: The filename
     :param db_path: The database full path
     :param model_path: Optional, Database model path with the python scripts of the tables.
@@ -348,17 +305,12 @@ class DataDb:
     return self._db_bindings[database]
 
   def accdb(self, name, db_path, model_path=None):
-    """
-    Description:
-    -----------
-    Get a Access (.accdb) Database query object using ODBC driver.
+    """   Get a Access (.accdb) Database query object using ODBC driver.
 
     Related Pages:
 
       https://www.599cd.com/access/studentdatabases/
 
-    Attributes:
-    ----------
     :param name: The filename
     :param db_path: The database full path
     :param model_path: Optional, Database model path with the python scripts of the tables
@@ -375,18 +327,13 @@ class DataDb:
     return self._db_bindings[database]
 
   def postgres(self, name, host="localhost", port=5432, model_path=None, is_secured=False, tables_scope=None):
-    """
-    Description:
-    -----------
-    Get a PostgreSql Database query object using SQLAlchemy.
+    """   Get a PostgreSql Database query object using SQLAlchemy.
 
     Related Pages:
 
       https://www.postgresql.org/
       https://docs.sqlalchemy.org/en/13/dialects/postgresql.html#sqlalchemy.dialects.postgresql.dml.Insert.on_conflict_do_update.params.where
 
-    Attributes:
-    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 5432
@@ -411,10 +358,7 @@ class DataDb:
     return self._db_bindings[database]
 
   def mysql(self, name, host="localhost", port=3306, model_path=None, is_secured=False, tables_scope=None):
-    """
-    Description:
-    -----------
-    Get a MySql Database query object using SQLAlchemy.
+    """   Get a MySql Database query object using SQLAlchemy.
 
     Usage::
 
@@ -424,8 +368,6 @@ class DataDb:
 
       https://dev.mysql.com/
 
-    Attributes:
-    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 3306
@@ -446,10 +388,7 @@ class DataDb:
     return self._db_bindings[database]
 
   def mariadb(self, name, host="localhost", port=3306, model_path=None, is_secured=False, tables_scope=None):
-    """
-    Description:
-    -----------
-    Get a MariaDB Database query object using SQLAlchemy.
+    """   Get a MariaDB Database query object using SQLAlchemy.
 
     Usage::
 
@@ -459,8 +398,6 @@ class DataDb:
 
       https://mariadb.org/
 
-    Attributes:
-    ----------
     :param name: Database name
     :param host: Optional, Database hostname. Default localhost
     :param port: Optional, Database port. Default 3306

@@ -21,19 +21,13 @@ class Grid(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def js(self) -> JsToastGrid.JsGrid:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     :rtype: JsToastGrid.JsGrid
     """
@@ -43,23 +37,16 @@ class Grid(Html.Html):
 
   @property
   def options(self) -> OptToastGrid.GridConfig:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptToastGrid.GridConfig
     """
     return super().options
 
   def add_column(self, field, title=None):
-    """
-    Description:
-    ------------
+    """  
     Add new column to the underlying Tabulator object.
 
-    Attributes:
-    ----------
     :param field: String. Mandatory. The key in the row.
     :param title: String. Optional. The title for the column. Default to the field.
     """

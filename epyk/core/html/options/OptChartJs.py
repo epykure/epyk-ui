@@ -33,13 +33,8 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     return self
 
   def x_label(self, value: etypes.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Set the label of the x-axis.
+    """   Set the label of the x-axis.
 
-    Attributes:
-    ----------
     :param value: The axis label.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
@@ -68,13 +63,8 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     return self
 
   def y_label(self, value: etypes.JS_DATA_TYPES):
-    """
-    Description:
-    -----------
-    Set the label of the y-axis.
+    """   Set the label of the y-axis.
 
-    Attributes:
-    ----------
     :param value: The axis label.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
@@ -93,10 +83,7 @@ class OptionLabelFont(Options):
 
   @property
   def size(self):
-    """
-    Description:
-    -----------
-    Change the font-size.
+    """   Change the font-size.
     """
     return self._config_get()
 
@@ -106,10 +93,7 @@ class OptionLabelFont(Options):
 
   @property
   def family(self):
-    """
-    Description:
-    -----------
-    Change the font family.
+    """   Change the font family.
 
     Related Pages:
 
@@ -123,10 +107,7 @@ class OptionLabelFont(Options):
 
   @property
   def weight(self):
-    """
-    Description:
-    -----------
-    Change the font weight.
+    """   Change the font weight.
 
     Related Pages:
 
@@ -140,10 +121,7 @@ class OptionLabelFont(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    -----------
-    Change the CSS font style property.
+    """   Change the CSS font style property.
 
     Related Pages:
 
@@ -159,10 +137,7 @@ class OptionLabelFont(Options):
 class OptionAxesTicksMajor(Options):
   @property
   def fontColor(self):
-    """
-    Description:
-    -----------
-    Change the font color.
+    """   Change the font color.
 
     Related Pages:
 
@@ -179,10 +154,7 @@ class OptionAxesTicks(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
-    Change the font color.
+    """   Change the font color.
 
     Related Pages:
 
@@ -196,10 +168,7 @@ class OptionAxesTicks(Options):
 
   @property
   def fontColor(self):
-    """
-    Description:
-    -----------
-    Change the font color.
+    """   Change the font color.
 
     Related Pages:
 
@@ -213,10 +182,7 @@ class OptionAxesTicks(Options):
 
   @property
   def textStrokeColor(self):
-    """
-    Description:
-    -----------
-    Change the font color.
+    """   Change the font color.
 
     Related Pages:
 
@@ -230,10 +196,7 @@ class OptionAxesTicks(Options):
 
   @property
   def backdropColor(self):
-    """
-    Description:
-    -----------
-    Change the font color.
+    """   Change the font color.
 
     Related Pages:
 
@@ -247,9 +210,7 @@ class OptionAxesTicks(Options):
 
   @property
   def fontSize(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -263,9 +224,7 @@ class OptionAxesTicks(Options):
 
   @property
   def beginAtZero(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -279,27 +238,21 @@ class OptionAxesTicks(Options):
 
   @property
   def major(self) -> OptionAxesTicksMajor:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("major", OptionAxesTicksMajor)
 
   @property
   def minor(self) -> OptionAxesTicksMajor:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("minor", OptionAxesTicksMajor)
 
   @property
   def max(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -313,9 +266,7 @@ class OptionAxesTicks(Options):
 
   @property
   def min(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -329,9 +280,7 @@ class OptionAxesTicks(Options):
 
   @property
   def mirror(self):
-    """
-    Description:
-    ------------
+    """  
     Flips tick labels around axis, displaying the labels inside the chart instead of outside.
     Note: Only applicable to vertical scales.
 
@@ -347,9 +296,7 @@ class OptionAxesTicks(Options):
 
   @property
   def maxTicksLimit(self):
-    """
-    Description:
-    ------------
+    """  
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/line.html
@@ -362,9 +309,7 @@ class OptionAxesTicks(Options):
 
   @property
   def suggestedMin(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -378,9 +323,7 @@ class OptionAxesTicks(Options):
 
   @property
   def suggestedMax(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -394,10 +337,7 @@ class OptionAxesTicks(Options):
 
   @property
   def stepSize(self):
-    """
-    Description:
-    -----------
-    Force the step size.
+    """   Force the step size.
 
     Related Pages:
 
@@ -412,12 +352,8 @@ class OptionAxesTicks(Options):
 
   @packageImport("accounting")
   def scale(self, factor: int = 1000, alias: str = None, digits: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param factor:
     :param alias:
     :param digits:
@@ -434,12 +370,8 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
   def toMoney(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
               decimal_sep: etypes.JS_DATA_TYPES = ",", fmt: etypes.JS_DATA_TYPES = "%v %s", factor: float = None,
               alias: str = ""):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param symbol:
     :param digit:
     :param thousand_sep:
@@ -459,17 +391,12 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
 
   @packageImport("accounting")
   def toNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-    """
-    Description:
-    -----------
-    Convert to number using the accounting Javascript module-
+    """   Convert to number using the accounting Javascript module-
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param digit: Optional. The number of digit to be displayed
     :param thousand_sep: Optional. The thousand symbol separator
     """
@@ -479,17 +406,13 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
     return self
 
   def callback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -498,17 +421,12 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
     return self
 
   def userCallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Convert to number using the accounting Javascript module-
+    """   Convert to number using the accounting Javascript module-
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -516,13 +434,8 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
     return self
 
   def mapTo(self, mapping: dict):
-    """
-    Description:
-    -----------
-    Map the values to a static dictionary.
+    """   Map the values to a static dictionary.
 
-    Attributes:
-    ----------
     :param mapping: The mapping table.
     """
     self._config(
@@ -535,10 +448,7 @@ class OptionLabels(Options):
 
   @property
   def fontColor(self):
-    """
-    Description:
-    -----------
-    Change the color.
+    """   Change the color.
     """
     return self._config_get()
 
@@ -551,10 +461,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def display(self):
-    """
-    Description:
-    -----------
-    If false, do not display grid lines for this axis.
+    """   If false, do not display grid lines for this axis.
 
     Related Pages:
 
@@ -568,10 +475,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def circular(self):
-    """
-    Description:
-    -----------
-    If true, gridlines are circular (on radar chart only).
+    """   If true, gridlines are circular (on radar chart only).
 
     Related Pages:
 
@@ -585,10 +489,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
-    The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
+    """   The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
     to the second grid line and so on.
 
     Related Pages:
@@ -603,10 +504,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    -----------
-    The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
+    """   The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
     to the second grid line and so on.
 
     Related Pages:
@@ -621,10 +519,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def borderDash(self):
-    """
-    Description:
-    -----------
-    Length and spacing of dashes on grid lines.
+    """   Length and spacing of dashes on grid lines.
 
     Related Pages:
 
@@ -638,10 +533,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def borderDashOffset(self):
-    """
-    Description:
-    -----------
-    Offset for line dashes.
+    """   Offset for line dashes.
 
     Related Pages:
 
@@ -655,10 +547,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def lineWidth(self):
-    """
-    Description:
-    -----------
-    Stroke width of grid lines.
+    """   Stroke width of grid lines.
 
     Related Pages:
 
@@ -672,10 +561,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def drawBorder(self):
-    """
-    Description:
-    -----------
-    If true, draw border at the edge between the axis and the chart area.
+    """   If true, draw border at the edge between the axis and the chart area.
 
     Related Pages:
 
@@ -689,10 +575,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def drawOnChartArea(self):
-    """
-    Description:
-    -----------
-    If true, draw lines on the chart area inside the axis lines.
+    """   If true, draw lines on the chart area inside the axis lines.
     This is useful when there are multiple axes and you need to control which grid lines are drawn.
 
     Related Pages:
@@ -707,10 +590,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def drawTicks(self):
-    """
-    Description:
-    -----------
-    If true, draw lines beside the ticks in the axis area beside the chart.
+    """   If true, draw lines beside the ticks in the axis area beside the chart.
 
     Related Pages:
 
@@ -724,10 +604,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def tickMarkLength(self):
-    """
-    Description:
-    -----------
-    Length in pixels that the grid lines will draw into the axis area.
+    """   Length in pixels that the grid lines will draw into the axis area.
 
     Related Pages:
 
@@ -741,9 +618,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def tickColor(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -757,10 +632,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def zeroLineWidth(self):
-    """
-    Description:
-    -----------
-    Stroke width of the grid line for the first index (index 0).
+    """   Stroke width of the grid line for the first index (index 0).
 
     Related Pages:
 
@@ -774,10 +646,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def zeroLineColor(self):
-    """
-    Description:
-    -----------
-    Stroke color of the grid line for the first index (index 0).
+    """   Stroke color of the grid line for the first index (index 0).
 
     Related Pages:
 
@@ -791,10 +660,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def zeroLineBorderDash(self):
-    """
-    Description:
-    -----------
-    Length and spacing of dashes of the grid line for the first index (index 0).
+    """   Length and spacing of dashes of the grid line for the first index (index 0).
 
     Related Pages:
 
@@ -808,10 +674,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def zeroLineBorderDashOffset(self):
-    """
-    Description:
-    -----------
-    Offset for line dashes of the grid line for the first index (index 0).
+    """   Offset for line dashes of the grid line for the first index (index 0).
 
     Related Pages:
 
@@ -825,10 +688,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def offsetGridLines(self):
-    """
-    Description:
-    -----------
-    If true, grid lines will be shifted to be between labels. This is set to true for a bar chart by default.
+    """   If true, grid lines will be shifted to be between labels. This is set to true for a bar chart by default.
 
     Related Pages:
 
@@ -842,10 +702,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def z(self):
-    """
-    Description:
-    -----------
-    z-index of gridline layer. Values <= 0 are drawn under datasets, > 0 on top.
+    """   z-index of gridline layer. Values <= 0 are drawn under datasets, > 0 on top.
 
     Related Pages:
 
@@ -885,13 +742,9 @@ class OptionAxesScaleLabel(Options):
     self._config(val)
 
   def label(self, value: str):
-    """
-    Description:
-    ------------
+    """  
     Shortcut to the labelString and display property.
 
-    Attributes:
-    ----------
     :param value: The label value.
     """
     self.labelString = value
@@ -913,9 +766,7 @@ class OptionAxesTime(Options):
 
   @property
   def displayFormats(self) -> OptionDisplayFormats:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("displayFormats", OptionDisplayFormats)
 
@@ -924,9 +775,7 @@ class OptionTitle(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -940,9 +789,7 @@ class OptionTitle(Options):
 
   @property
   def display(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -957,9 +804,7 @@ class OptionTitle(Options):
 
   @property
   def text(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -973,9 +818,7 @@ class OptionTitle(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1045,9 +888,7 @@ class OptionTitle(Options):
 
   @property
   def font(self) -> OptionLabelFont:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("font", OptionLabelFont)
@@ -1073,9 +914,7 @@ class OptionAxes(Options):
 
   @property
   def reverse(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1103,9 +942,7 @@ class OptionAxes(Options):
 
   @property
   def stacked(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1119,9 +956,7 @@ class OptionAxes(Options):
 
   @property
   def id(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1135,9 +970,7 @@ class OptionAxes(Options):
 
   @property
   def offset(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1151,9 +984,7 @@ class OptionAxes(Options):
 
   @property
   def position(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1167,9 +998,7 @@ class OptionAxes(Options):
 
   @property
   def suggestedMin(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1183,9 +1012,7 @@ class OptionAxes(Options):
 
   @property
   def suggestedMax(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1199,12 +1026,8 @@ class OptionAxes(Options):
 
   @property
   def stepSize(self):
-    """
-    Description:
-    -----------
-
-    Description:
-    ------------
+    """   
+  
 
     Related Pages:
 
@@ -1218,33 +1041,25 @@ class OptionAxes(Options):
 
   @property
   def ticks(self) -> OptionAxesTicks:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("ticks", OptionAxesTicks)
 
   @property
   def time(self) -> OptionAxesTime:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("time", OptionAxesTime)
 
   @property
   def gridLines(self) -> OptionAxesGridLine:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("gridLines", OptionAxesGridLine)
 
   @property
   def grid(self) -> OptionAxesGridLine:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1254,9 +1069,7 @@ class OptionAxes(Options):
 
   @property
   def ticks(self) -> OptionAxesTicks:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1266,9 +1079,7 @@ class OptionAxes(Options):
 
   @property
   def title(self) -> OptionTitle:
-    """
-    Description:
-    ------------
+    """  
     Namespace: options.scales[scaleId].title, it defines options for the scale title.
     Note that this only applies to cartesian axes.
 
@@ -1280,19 +1091,13 @@ class OptionAxes(Options):
 
   @property
   def scaleLabel(self) -> OptionAxesScaleLabel:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
   def add_label(self, text: str, color: str = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param text:
     :param color:
     """
@@ -1303,12 +1108,8 @@ class OptionAxes(Options):
     return self
 
   def category(self, vals):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param vals:
     """
     self.type = "category"
@@ -1335,9 +1136,7 @@ class OptionScalePointLabels(Options):
 
   @property
   def font(self) -> OptionLabelFont:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1350,9 +1149,7 @@ class OptionScaleR(Options):
 
   @property
   def pointLabels(self) -> OptionScalePointLabels:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1365,9 +1162,7 @@ class OptionScales(Options):
 
   @property
   def xAxes(self):
-    """
-    Description:
-    ------------
+    """  
     Shortcut property to the last x_axes definition.
     Use the function x_axes to be more specific.
     """
@@ -1375,9 +1170,7 @@ class OptionScales(Options):
 
   @property
   def yAxes(self):
-    """
-    Description:
-    ------------
+    """  
     Shortcut property to the last y_axis definition.
     Use the function y_axis to be more specific.
 
@@ -1386,20 +1179,14 @@ class OptionScales(Options):
     return self.y_axis()
 
   def add_y_axis(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("y", OptionAxes)
 
   def y_axis(self, i: int = None) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param i: optional. Default take the latest one
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
@@ -1414,20 +1201,14 @@ class OptionScales(Options):
     return self.js_tree["yAxes"][i]
 
   def add_x_axis(self) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
     Add a X axis to a chart component.
     """
     return self._config_sub_data("x", OptionAxes)
 
   def x_axes(self, i: int = None) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param i: optional. Default take the latest one.
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
@@ -1443,33 +1224,25 @@ class OptionScales(Options):
 
   @property
   def r(self) -> OptionScaleR:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("r", OptionScaleR)
 
   @property
   def x(self) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("x", OptionAxes)
 
   @property
   def y(self) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("y", OptionAxes)
 
   @property
   def y2(self) -> OptionAxes:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("y2", OptionAxes)
 
@@ -1493,12 +1266,8 @@ class OptionScaleGeo(Options):
     self._config(num)
 
   def set_projection(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """
@@ -1511,9 +1280,7 @@ class OptionScalesGeo(Options):
 
   @property
   def xy(self) -> OptionScaleGeo:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("xy", OptionScaleGeo)
 
@@ -1522,9 +1289,7 @@ class OptionPadding(Options):
 
   @property
   def left(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1538,9 +1303,7 @@ class OptionPadding(Options):
 
   @property
   def right(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1554,9 +1317,7 @@ class OptionPadding(Options):
 
   @property
   def top(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1570,9 +1331,7 @@ class OptionPadding(Options):
 
   @property
   def bottom(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1589,9 +1348,7 @@ class OptionLayout(Options):
 
   @property
   def padding(self) -> OptionPadding:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("padding", OptionPadding)
 
@@ -1600,25 +1357,19 @@ class OptionLegend(Options):
 
   @property
   def labels(self) -> OptionLabels:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("labels", OptionLabels)
 
   @property
   def title(self) -> OptionTitle:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def align(self):
-    """
-    Description:
-    ------------
+    """  
     Alignment of the legend.
 
     Related Pages:
@@ -1634,9 +1385,7 @@ class OptionLegend(Options):
 
   @property
   def display(self):
-    """
-    Description:
-    ------------
+    """  
     Is the legend shown?
 
     Related Pages:
@@ -1652,9 +1401,7 @@ class OptionLegend(Options):
 
   @property
   def position(self):
-    """
-    Description:
-    ------------
+    """  
     Position of the legend
     values are top, left, bottom, right
 
@@ -1670,9 +1417,7 @@ class OptionLegend(Options):
 
   @property
   def reverse(self):
-    """
-    Description:
-    ------------
+    """  
     Legend will show datasets in reverse order.
 
     Related Pages:
@@ -1687,9 +1432,7 @@ class OptionLegend(Options):
 
   @property
   def rtl(self):
-    """
-    Description:
-    ------------
+    """  
     true for rendering the legends from right to left.
 
     Related Pages:
@@ -1708,9 +1451,7 @@ class OptionPoint(Options):
 
   @property
   def radius(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_get(False)
 
@@ -1723,9 +1464,7 @@ class OptionLine(Options):
 
   @property
   def tension(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_get()
 
@@ -1738,9 +1477,7 @@ class OptionInteractionLine(Options):
 
   @property
   def intersect(self):
-    """
-    Description:
-    ------------
+    """  
 
     https://www.chartjs.org/docs/latest/samples/line/interpolation.html
     """
@@ -1755,9 +1492,7 @@ class OptionElements(Options):
 
   @property
   def point(self) -> OptionPoint:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("point", OptionPoint)
 
@@ -1766,9 +1501,7 @@ class OptionElementsLine(OptionElements):
 
   @property
   def line(self) -> OptionLine:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("line", OptionLine)
@@ -1778,9 +1511,7 @@ class OptionChartJsSize(Options):
 
   @property
   def height(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -1791,9 +1522,7 @@ class OptionChartJsSize(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -1807,9 +1536,7 @@ class OptionChartAreaBorder(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1823,9 +1550,7 @@ class OptionChartAreaBorder(Options):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1839,9 +1564,7 @@ class OptionChartAreaBorder(Options):
 
   @property
   def borderDash(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1855,9 +1578,7 @@ class OptionChartAreaBorder(Options):
 
   @property
   def borderDashOffset(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1874,9 +1595,7 @@ class OptionQuadrants(Options):
 
   @property
   def topLeft(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1890,9 +1609,7 @@ class OptionQuadrants(Options):
 
   @property
   def topRight(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1906,9 +1623,7 @@ class OptionQuadrants(Options):
 
   @property
   def bottomRight(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1922,9 +1637,7 @@ class OptionQuadrants(Options):
 
   @property
   def bottomLeft(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1942,10 +1655,7 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-labels')
   def labels(self):
-    """
-    Description:
-    -----------
-    Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
+    """   Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
 
     Related Pages:
 
@@ -1956,26 +1666,20 @@ class OptionChartJsPlugins(Options):
 
   @property
   def legend(self) -> OptionLegend:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("legend", OptionLegend)
 
   @property
   def title(self) -> OptionTitle:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def subtitle(self) -> OptionTitle:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1990,10 +1694,7 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-datalabels')
   def datalabels(self) -> ChartJsDataLabels.Datalabels:
-    """
-    Description:
-    -----------
-    Display labels on data for any type of charts.
+    """   Display labels on data for any type of charts.
 
     Related Pages:
 
@@ -2004,10 +1705,7 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-zoom')
   def zoom(self) -> ChartJsZoom.Zoom:
-    """
-    Description:
-    -----------
-    A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
+    """   A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
 
     Related Pages:
 
@@ -2018,9 +1716,7 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-crosshair')
   def crosshair(self) -> ChartJsCrosshair.Crosshair:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -2031,10 +1727,7 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-annotation')
   def annotation(self) -> ChartJsAnnotation.Annotation:
-    """
-    Description:
-    -----------
-    An annotation plugin for Chart.js >= 2.4.0
+    """   An annotation plugin for Chart.js >= 2.4.0
 
     This plugin draws lines and boxes on the chart area.
 
@@ -2100,67 +1793,49 @@ class ChartJsOptions(OptChart.OptionsChart):
 
   @property
   def elements(self) -> OptionElements:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("elements", OptionElements)
 
   @property
   def scales(self) -> OptionScales:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("scales", OptionScales)
 
   @property
   def layout(self) -> OptionLayout:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("layout", OptionLayout)
 
   @property
   def title(self) -> OptionTitle:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("title", OptionTitle)
 
   @property
   def legend(self) -> OptionLegend:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("legend", OptionLegend)
 
   @property
   def plugins(self) -> OptionChartJsPlugins:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("plugins", OptionChartJsPlugins)
 
   @property
   def tooltips(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("tooltips", OptionChartJsTooltips)
 
   def add_title(self, text: str, color: str = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param text:
     :param color:
     """
@@ -2172,10 +1847,7 @@ class ChartJsOptions(OptChart.OptionsChart):
 
   @property
   def size(self) -> OptionChartJsSize:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_sub_data("size", OptionChartJsSize)
 
 
@@ -2183,9 +1855,7 @@ class OptionPieAnimation(Options):
 
   @property
   def animateRotate(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2199,9 +1869,7 @@ class OptionPieAnimation(Options):
 
   @property
   def animateScale(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2218,9 +1886,7 @@ class OptionsBar(ChartJsOptions):
 
   @property
   def stacked(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2240,17 +1906,13 @@ class OptionsPie(ChartJsOptions):
 
   @property
   def tooltips(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("tooltips", OptionChartJsPieTooltips)
 
   @property
   def cutoutPercentage(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2264,9 +1926,7 @@ class OptionsPie(ChartJsOptions):
 
   @property
   def rotation(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2280,9 +1940,7 @@ class OptionsPie(ChartJsOptions):
 
   @property
   def circumference(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2296,9 +1954,7 @@ class OptionsPie(ChartJsOptions):
 
   @property
   def animation(self) -> OptionPieAnimation:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("animation", OptionPieAnimation)
 
@@ -2307,9 +1963,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def showLines(self):
-    """
-    Description:
-    ------------
+    """  
     If false, the line is not drawn for this dataset.
 
     Related Pages:
@@ -2325,9 +1979,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def spanGaps(self):
-    """
-    Description:
-    ------------
+    """  
     If true, lines will be drawn between points with no or null data.
     If false, points with null data will create a break in the line. Can also be a number specifying the maximum gap
     length to span. The unit of the value depends on the scale used.
@@ -2345,9 +1997,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def tension(self):
-    """
-    Description:
-    ------------
+    """  
     Bezier curve tension of the line.
     Set to 0 to draw straightlines. This option is ignored if monotone cubic interpolation is used.
 
@@ -2363,9 +2013,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def backgroundColor(self):
-    """
-    Description:
-    ------------
+    """  
     The line fill color.
 
     Related Pages:
@@ -2380,9 +2028,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderCapStyle(self):
-    """
-    Description:
-    ------------
+    """  
     Cap style of the line.
 
     Related Pages:
@@ -2397,9 +2043,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    ------------
+    """  
     The line color.
 
     Related Pages:
@@ -2414,9 +2058,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderDash(self):
-    """
-    Description:
-    ------------
+    """  
     Length and spacing of dashes.
 
     Related Pages:
@@ -2431,9 +2073,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderDashOffset(self):
-    """
-    Description:
-    ------------
+    """  
     Offset for line dashes.
 
     Related Pages:
@@ -2448,9 +2088,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderJoinStyle(self):
-    """
-    Description:
-    ------------
+    """  
     Line joint style.
 
     Related Pages:
@@ -2465,9 +2103,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    ------------
+    """  
     The line width (in pixels).
 
     Related Pages:
@@ -2482,17 +2118,13 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def interaction(self) -> OptionInteractionLine:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("interaction", OptionInteractionLine)
 
   @property
   def fill(self):
-    """
-    Description:
-    ------------
+    """  
     How to fill the area under the line.
 
     Related Pages:
@@ -2507,9 +2139,7 @@ class OptionsLine(ChartJsOptions):
 
   @property
   def elements(self) -> OptionElementsLine:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_sub_data("elements", OptionElementsLine)
@@ -2519,9 +2149,7 @@ class OptionsPolar(ChartJsOptions):
 
   @property
   def startAngle(self):
-    """
-    Description:
-    ------------
+    """  
     Starting angle to draw arcs for the first item in a dataset. In degrees, 0 is at top.
 
     Related Pages:
@@ -2537,9 +2165,7 @@ class OptionsPolar(ChartJsOptions):
 
   @property
   def animation(self) -> OptionPieAnimation:
-    """
-    Description:
-    ------------
+    """  
     """
     return self._config_sub_data("animation", OptionPieAnimation)
 
@@ -2548,9 +2174,7 @@ class OptionChartJsTooltipsCallbacks(Options):
 
   @property
   def label(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2566,12 +2190,8 @@ class OptionChartJsTooltipsCallbacks(Options):
   @packageImport("accounting")
   def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
                   decimal_sep: etypes.JS_DATA_TYPES = ","):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param digit: Optional. Decimal point separator.
     :param thousand_sep: Optional. thousands separator.
     :param decimal_sep: Optional. Decimal point separator.
@@ -2586,12 +2206,8 @@ class OptionChartJsTooltipsCallbacks(Options):
   @packageImport("accounting")
   def labelCurrency(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
                     decimal_sep: etypes.JS_DATA_TYPES = ","):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param symbol: Optional. Default currency symbol is ''.
     :param digit: Optional. Decimal point separator.
     :param thousand_sep: Optional. thousands separator.
@@ -2611,9 +2227,7 @@ return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMon
 
   @property
   def value(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -2630,12 +2244,8 @@ class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
 
   @packageImport("accounting")
   def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param digit: Optional. Decimal point separator
     :param thousand_sep: Optional. thousands separator
     """
@@ -2648,12 +2258,8 @@ return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[
   @packageImport("accounting")
   def labelCurrency(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
                     decimal_sep: etypes.JS_DATA_TYPES = ","):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param symbol: Optional. Default currency symbol is ''
     :param digit: Optional. Decimal point separator
     :param thousand_sep: Optional. thousands separator
@@ -2712,9 +2318,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def callbacks(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionChartJsTooltipsCallbacks
     """
@@ -2728,9 +2332,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def backgroundColor(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2745,9 +2347,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def titleColor(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2762,9 +2362,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def titleAlign(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2779,9 +2377,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def titleSpacing(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2796,9 +2392,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def titleMarginBottom(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2813,9 +2407,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def bodyColor(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2830,9 +2422,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def bodyAlign(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2847,9 +2437,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def bodySpacing(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2864,9 +2452,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def footerColor(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2881,9 +2467,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def footerAlign(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2898,9 +2482,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def footerSpacing(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2915,9 +2497,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def footerMarginTop(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2932,9 +2512,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def caretPadding(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2949,9 +2527,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def caretSize(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2966,9 +2542,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def cornerRadius(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -2983,9 +2557,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def multiKeyBackground(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3000,9 +2572,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def displayColors(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3017,9 +2587,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def boxWidth(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3034,9 +2602,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def boxHeight(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3051,9 +2617,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def boxPadding(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3068,9 +2632,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def usePointStyle(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3085,9 +2647,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3102,9 +2662,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3119,9 +2677,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def rtl(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3136,9 +2692,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def textDirection(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3153,9 +2707,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def xAlign(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3170,9 +2722,7 @@ class OptionChartJsTooltips(Options):
 
   @property
   def yAlign(self):
-    """
-    Description:
-    ------------
+    """  
 
 
     Related Pages:
@@ -3190,9 +2740,7 @@ class OptionChartJsPieTooltips(Options):
 
   @property
   def callbacks(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionChartJsTooltipsPieCallbacks
     """
@@ -3227,9 +2775,7 @@ class OptionGeoColorScale(Options):
 
   @property
   def legend(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionLegend
     """
@@ -3259,9 +2805,7 @@ class OptionGeo(Options):
 
   @property
   def colorScale(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionGeoColorScale
     """
@@ -3269,9 +2813,7 @@ class OptionGeo(Options):
 
   @property
   def radiusScale(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionGeoRadiusScale
     """
@@ -3282,9 +2824,7 @@ class OptionPlugins(Options):
 
   @property
   def legend(self) -> OptionLegend:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionLegend
     """
@@ -3311,9 +2851,7 @@ class OptionsGeo(ChartJsOptions):
 
   @property
   def scale(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionScaleGeo
     """
@@ -3321,9 +2859,7 @@ class OptionsGeo(ChartJsOptions):
 
   @property
   def scales(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionScalesGeo
     """
@@ -3331,9 +2867,7 @@ class OptionsGeo(ChartJsOptions):
 
   @property
   def geo(self):
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionGeo
     """
@@ -3341,9 +2875,7 @@ class OptionsGeo(ChartJsOptions):
 
   @property
   def plugins(self) -> OptionPlugins:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionPlugins
     """

@@ -20,8 +20,6 @@ class Symboles:
   @property
   def shapes(self):
     """
-    Description:
-    ------------
     UTF-8 Geometric Shapes.
     Range: Decimal 9632-9727. Hex 25A0-25FF.
 
@@ -34,8 +32,6 @@ class Symboles:
   @property
   def punctuations(self):
     """
-    Description:
-    ------------
     UTF-8 General Punctuation.
     Range: Decimal 8192-8303. Hex 2000-206F.
 
@@ -48,8 +44,6 @@ class Symboles:
   @property
   def maths(self):
     """
-    Description:
-    ------------
     UTF-8 Mathematical Operators.
     Range: Decimal 8704-8959. Hex 2200-22FF.
 
@@ -62,8 +56,6 @@ class Symboles:
   @property
   def emojis(self):
     """
-    Description:
-    ------------
     Emoji Unicode Reference.
     Emojis For Web.
 
@@ -76,8 +68,6 @@ class Symboles:
   @property
   def letters(self):
     """
-    Description:
-    ------------
     UTF-8 Letterlike Symbols.
     Range: Decimal 8448-8527. Hex 2100-214F.
 
@@ -90,8 +80,6 @@ class Symboles:
   @property
   def currencies(self):
     """
-    Description:
-    ------------
     UTF-8 Currency Symbols.
     Range: Decimal 8352-8399. Hex 20A0-20CF.
 
@@ -104,8 +92,6 @@ class Symboles:
   @property
   def smileys(self):
     """
-    Description:
-    ------------
     Smiley Emoji.
     Smiley Emojis For Web.
 
@@ -118,8 +104,6 @@ class Symboles:
   @property
   def html(self):
     """
-    Description:
-    ------------
     HTML Symbols.
     Symbols that are not present on your keyboard can also be added by using entities.
 
@@ -133,8 +117,6 @@ class Symboles:
   @property
   def arrows(self):
     """
-    Description:
-    ------------
     UTF-8 Arrows.
     Range: Decimal 8592-8703. Hex 2190-21FF.
 

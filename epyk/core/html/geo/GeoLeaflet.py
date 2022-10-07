@@ -23,21 +23,15 @@ class GeoLeaflet(Html.Html):
 
   def click(self,  js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    The onclick event occurs when the user clicks on an element.
+    """   The onclick event occurs when the user clicks on an element.
     This function will receive the region, code and element. The common data variable is mapped to the region.
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onclick.asp
 
-    Attributes:
-    ----------
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
     :param source_event: Optional. The source target for the event.
@@ -50,10 +44,7 @@ class GeoLeaflet(Html.Html):
 
   @property
   def js(self) -> JsLeaflet.LeafLet:
-    """
-    Description:
-    -----------
-    The Javascript functions defined for this component.
+    """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     Usage::
@@ -66,10 +57,7 @@ class GeoLeaflet(Html.Html):
 
   @property
   def options(self) -> OptionsLeaflet.Leaflet:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -103,12 +91,8 @@ class GeoLeaflet(Html.Html):
   #     "chartId": self.chartId, "htmlId": self.htmlCode}
 
   def loader(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param js_funcs:
     :param profile:
     """

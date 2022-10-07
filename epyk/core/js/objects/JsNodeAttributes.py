@@ -19,8 +19,6 @@ class JsAttributes(JsObject.JsObject):
   @property
   def name(self):
     """
-    Description:
-    ------------
     The name property returns the name of the attribute.
 
     This property is read-only.
@@ -36,8 +34,6 @@ class JsAttributes(JsObject.JsObject):
   @property
   def value(self):
     """
-    Description:
-    ------------
     The value property sets or returns the value of the attribute.
 
     Related Pages:
@@ -51,8 +47,6 @@ class JsAttributes(JsObject.JsObject):
   @property
   def specified(self):
     """
-    Description:
-    ------------
     The specified property returns true if the attribute is specified.
 
     Related Pages:
@@ -65,16 +59,12 @@ class JsAttributes(JsObject.JsObject):
 
   def item(self, i: Union[int, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The item() method returns the node at the specified index in a NamedNodeMap, as a Node object.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_namednodemap_item.asp
-
-    Attributes:
-    ----------
+ 
     :param i: The index of the node in the NamedNodeMap you want to return
 
     :return: A Node object, representing the attribute node at the specified index.
@@ -83,16 +73,12 @@ class JsAttributes(JsObject.JsObject):
 
   def removeNamedItem(self, name: str):
     """
-    Description:
-    ------------
     The removeNamedItem() method removes the node with the specified name in a NamedNodeMap object.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
-
-    Attributes:
-    ----------
+ 
     :param str name: The name of the node in the namedNodeMap you want to remove.
 
     :return: 	A Node object, representing the removed attribute node
@@ -101,8 +87,6 @@ class JsAttributes(JsObject.JsObject):
 
   def setNamedItem(self, attrs: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The setNamedItem() method adds the specified node to the NamedNodeMap.
 
     If the node already exists, it will be replaced, and the replaced node will be the return value, otherwise
@@ -111,9 +95,7 @@ class JsAttributes(JsObject.JsObject):
     Related Pages:
 
       https://www.w3schools.com/jsref/met_namednodemap_setnameditem.asp
-
-    Attributes:
-    ----------
+ 
     :param attrs:
 
     :return: A Node object, representing the replaced node (if any), otherwise null.
@@ -122,16 +104,12 @@ class JsAttributes(JsObject.JsObject):
 
   def getNamedItem(self, node_name: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
     The getNamedItem() method returns the attribute node with the specified name from a NamedNodeMap object.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_namednodemap_getnameditem.asp
-
-    Attributes:
-    ----------
+ 
     :param node_name: The name of the node in the namedNodeMap you want to return.
 
     :return: A Node object, representing the attribute node with the specified name.

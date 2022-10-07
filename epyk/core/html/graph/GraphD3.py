@@ -24,10 +24,7 @@ class Script(Html.Html):
 
   @property
   def options(self) -> OptChart.OptionsChart:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -37,13 +34,8 @@ class Script(Html.Html):
     return super().options
 
   def colors(self, hex_values):
-    """
-    Description:
-    -----------
-    Set specific chart color codes.
+    """   Set specific chart color codes.
 
-    Attributes:
-    ----------
     :param hex_values: List. Color codes.
     """
     line_colors, bg_colors = [], []
@@ -62,12 +54,8 @@ class Script(Html.Html):
     self.options.background_colors = bg_colors
 
   def data(self, data):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data:
     """
     if not isinstance(data, (list, dict)):
@@ -75,13 +63,9 @@ class Script(Html.Html):
     self._vals = data
 
   def loader(self, str_frg):
-    """
-    Description:
-    ------------
+    """  
     Loader for the script.
 
-    Attributes:
-    ----------
     :param str_frg: String. The javascript fragments.
     """
     self.builder_name = "D3Builder%s" % self.page.py.hash(str_frg)
@@ -91,10 +75,7 @@ class Script(Html.Html):
     return super().build(data, options, profile, component_id=self.dom.d3.varId)
 
   def responsive(self):
-    """
-    Description:
-    -----------
-    Make the SVG chart responsive when the window change size.
+    """   Make the SVG chart responsive when the window change size.
 
     TODO: Find a way to get the update SVG data.
     """
@@ -103,9 +84,7 @@ class Script(Html.Html):
 
   @property
   def svg(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return JsD3.D3Svg(self.page, "%s.select('svg')" % self.dom.d3.varId, set_var=False)

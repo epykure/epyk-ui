@@ -23,129 +23,82 @@ class CatalogInput(Catalog.CatalogGroup):
     return self._set_class(CssStylesInput.CssUIWidgetHeader)
 
   def basic(self):
-    """
-    Description:
-    -----------
-    Basic style for an input component
+    """   Basic style for an input component
     """
     return self._set_class(CssStylesInput.CssInput)
 
   def basic_border_bottom(self):
-    """
-    Description:
-    -----------
-    Basic style for an input component
+    """   Basic style for an input component
     """
     return self._set_class(CssStylesInput.CssInputBottom)
 
   def basic_noborder(self):
-    """
-    Description:
-    -----------
-    Basic style for an input component
+    """   Basic style for an input component
     """
     return self._set_class(CssStylesInput.CssInputNoBorder)
 
   def range(self):
-    """
-    Description:
-    -----------
-    CSS Style for the input range component
+    """   CSS Style for the input range component
     """
     return self._set_class(CssStylesInput.CssInputRange)
 
   def textfield_appearance_inner(self):
-    """
-    Description:
-    -----------
-    CSS Style for the thumb of the input number component
+    """   CSS Style for the thumb of the input number component
     """
     return self._set_class(CssStylesInput.CssInputNumberNoInnerScroll)
 
   def textfield_appearance_outer(self):
-    """
-    Description:
-    -----------
-    CSS Style for the thumb of the input number component
+    """   CSS Style for the thumb of the input number component
     """
     return self._set_class(CssStylesInput.CssInputNumberNoOuterScroll)
 
   def textfield_appearance(self):
-    """
-    Description:
-    -----------
-    CSS Style for the thumb of the input number component
+    """   CSS Style for the thumb of the input number component
     """
     return self._set_class(CssStylesInput.CssInputNumberNoScroll)
 
   def range_thumb(self):
-    """
-    Description:
-    -----------
-    CSS Style for the thumb of the input range component
+    """   CSS Style for the thumb of the input range component
     """
     return self._set_class(CssStylesInput.CssInputRangeThumb)
 
   def label(self):
-    """
-    Description:
-    -----------
-    CSS Style for the label attached to an input component
+    """   CSS Style for the label attached to an input component
     """
     return self._set_class(CssStylesInput.CssInputLabel)
 
   def label_hover(self):
-    """
-    Description:
-    -----------
-    CSS Style to change the label background color on mouse hover
+    """   CSS Style to change the label background color on mouse hover
     """
     return self._set_class(CssStylesLabel.CssLabelCheckMarkHover)
 
   def label_disable(self):
-    """
-    Description:
-    -----------
-    CSS Style to set the label to be disabled
+    """   CSS Style to set the label to be disabled
     """
     return self._set_class(CssStylesLabel.CssLabelContainerDisabled)
 
   def integer(self):
-    """
-    Description:
-    -----------
-    Basic style for an input integer component
+    """   Basic style for an input integer component
     """
     return self._set_class(CssStylesInput.CssInputInteger)
 
   def text(self):
-    """
-    Description:
-    -----------
-    Basic style for an input text component
+    """   Basic style for an input text component
     """
     return self._set_class(CssStylesInput.CssInputText)
 
   def textarea(self):
-    """
-    Description:
-    -----------
-    Basic style for an input textarea component
+    """   Basic style for an input textarea component
     """
     return self._set_class(CssStylesInput.CssInputTextArea)
 
   def is_valid(self):
-    """
-    Description:
-    -----------
-    Basic style for an input component with a valid condition
+    """   Basic style for an input component with a valid condition
     """
     return self._set_class(CssStylesInput.CssInputValid)
 
   def menu(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     return self._set_class(CssStylesInput.CssUIMenuActive)
@@ -154,38 +107,28 @@ class CatalogInput(Catalog.CatalogGroup):
 class CatalogDate(Catalog.CatalogGroup):
   def datepicker_ui(self):
     """
-    Description:
-    ------------
 
     """
     return self._set_class(CssStylesDates.CssDatePickerUI)
 
   def datepicker(self):
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesDates.CssDatePicker)
 
   def datepicker_header(self):
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesDates.CssDatesDatePickerHeader)
 
   def time_picker(self):
     """
-    Description:
-    ------------
     CSS class in charge of changing the container of the different possible items to be selected
     """
     return self._set_class(CssStylesDates.CssDatesTimePicker)
 
   def time_picker_items(self):
     """
-    Description:
-    ------------
     CSS class in charge of changing the color of the items on mouse hover.
     This will by default change the background of the item
     """
@@ -193,24 +136,18 @@ class CatalogDate(Catalog.CatalogGroup):
 
   def autocomplete(self):
     """
-    Description:
-    ------------
     CSS class to change the style of the Jquery UI autocomplete input box.
     """
     return self._set_class(CssStylesInput.CssAutocomplete)
 
   def autocomplete_menu(self):
     """
-    Description:
-    ------------
     CSS class to change the style of the Jquery UI autocomplete dropdown menu.
     """
     return self._set_class(CssStylesInput.CssAutocompleteMenu)
 
   def autocomplete_item_active(self):
     """
-    Description:
-    ------------
     CSS class to change the style of the Jquery UI autocomplete active item.
     """
     return self._set_class(CssStylesInput.CssAutocompleteItemActive)

@@ -8,8 +8,6 @@ class OptionsSkin(Options):
   @property
   def color(self):
     """
-    Description:
-    ------------
     Specify if the all item should be added to the items.
 
     """
@@ -22,8 +20,6 @@ class OptionsSkin(Options):
   @property
   def font_size(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(10)

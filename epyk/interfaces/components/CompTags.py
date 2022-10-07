@@ -15,9 +15,7 @@ class Tags:
 
   def a(self, text: str, url: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <a> tag defines a hyperlink, which is used to link from one page to another.
 
     The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
@@ -35,9 +33,7 @@ class Tags:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component.
     :param url: String. Specifies the URL of the page the link goes to.
     :param width: Tuple with the width value and its unit.
@@ -58,9 +54,7 @@ class Tags:
 
   def aside(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <aside> tag defines some content aside from the content it is placed in.
 
     The aside content should be related to the surrounding content.
@@ -72,9 +66,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_aside.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component.
     :param width: Tuple with the width value and its unit.
     :param height: Tuple with the height value and its unit.
@@ -93,9 +85,7 @@ class Tags:
 
   def b(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <b> tag specifies bold text without any extra importance.
 
     Underlying HTML Objects:
@@ -105,9 +95,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_b.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -126,9 +114,7 @@ class Tags:
 
   def h1(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
@@ -140,9 +126,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_hn.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -161,9 +145,7 @@ class Tags:
 
   def h2(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
@@ -175,9 +157,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_hn.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -196,9 +176,7 @@ class Tags:
 
   def h3(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
@@ -210,9 +188,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_hn.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -231,9 +207,7 @@ class Tags:
 
   def hn(self, level: int, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
@@ -245,9 +219,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_hn.asp
-
-    Attributes:
-    ----------
+ 
     :param level: Integer.
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
@@ -267,16 +239,12 @@ class Tags:
 
   def delete(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -294,9 +262,7 @@ class Tags:
 
   def figcaption(self, text: str = "", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='',
                  options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <figcaption> tag defines a caption for a <figure> element.
 
     The <figcaption> element can be placed as the first or last child of the <figure> element.
@@ -308,9 +274,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_figcaption.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -329,9 +293,7 @@ class Tags:
 
   def u(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     Underline a misspelled word with the <u> tag:
     <p>This is a <u>paragraph</u>.</p>
 
@@ -342,9 +304,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_u.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -363,9 +323,7 @@ class Tags:
 
   def p(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     A paragraph is marked up as follows with the <p> tag:
     <p>This is some text in a paragraph.</p>
 
@@ -376,9 +334,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_p.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -397,9 +353,7 @@ class Tags:
 
   def bdi(self, text, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     BDI stands for Bi-Directional Isolation.
     The <bdi> tag is new in HTML5.
 
@@ -416,9 +370,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_bdi.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -436,9 +388,7 @@ class Tags:
 
   def bdo(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     bdo stands for Bi-Directional Override.
     The <bdo> tag is used to override the current text direction.
 
@@ -453,9 +403,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_bdo.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -473,9 +421,7 @@ class Tags:
 
   def ol(self, text=None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <ol> tag defines an ordered list. An ordered list can be numerical or alphabetical.
 
     Use the <li> tag to define list items.
@@ -487,9 +433,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_ol.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -507,9 +451,7 @@ class Tags:
 
   def em(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <em> tag is a phrase tag. It renders as emphasized text.
 
     Underlying HTML Objects:
@@ -519,9 +461,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_em.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -539,9 +479,7 @@ class Tags:
 
   def strong(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <strong> tag is a phrase tag. It defines important text.
 
     Underlying HTML Objects:
@@ -551,9 +489,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_strong.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -571,9 +507,7 @@ class Tags:
 
   def samp(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <samp> tag is a phrase tag. It defines sample output from a computer program.
 
     Underlying HTML Objects:
@@ -583,9 +517,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_samp.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -603,9 +535,7 @@ class Tags:
 
   def kbd(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <kbd> tag is a phrase tag. It defines keyboard input.
 
     Underlying HTML Objects:
@@ -615,9 +545,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_kbd.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -635,9 +563,7 @@ class Tags:
 
   def var(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <var> tag also supports the Global Attributes in HTML.
 
     Underlying HTML Objects:
@@ -647,9 +573,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_var.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -667,9 +591,7 @@ class Tags:
 
   def sup(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <sup> tag defines superscript text. Superscript text appears half a character above the normal line,
     and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
@@ -680,9 +602,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_sup.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -700,9 +620,7 @@ class Tags:
 
   def wbr(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
 
     Underlying HTML Objects:
@@ -712,9 +630,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_wbr.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -732,9 +648,7 @@ class Tags:
 
   def time(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <time> tag defines a human-readable date/time.
 
     Underlying HTML Objects:
@@ -744,9 +658,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_time.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -764,9 +676,7 @@ class Tags:
 
   def sub(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <sub> tag defines subscript text. Subscript text appears half a character below the normal line,
     and is sometimes rendered in a smaller font.
     Subscript text can be used for chemical formulas, like H2O.
@@ -778,9 +688,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_sub.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -798,9 +706,7 @@ class Tags:
 
   def small(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <small> tag defines smaller text (and other side comments).
 
     Underlying HTML Objects:
@@ -810,9 +716,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_small.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -830,9 +734,7 @@ class Tags:
 
   def s(self, text, width=(100, "px"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
         tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <s> tag specifies text that is no longer correct, accurate or relevant.
 
     Underlying HTML Objects:
@@ -842,9 +744,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_s.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -862,9 +762,7 @@ class Tags:
 
   def i(self, text, width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <i> tag defines a part of text in an alternate voice or mood. The content of the <i>
     tag is usually displayed in italic.
 
@@ -875,9 +773,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_i.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -895,9 +791,7 @@ class Tags:
 
   def q(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <q> tag defines a short quotation.
 
     Browsers normally insert quotation marks around the quotation.
@@ -909,9 +803,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_q.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -929,9 +821,7 @@ class Tags:
 
   def mark(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <mark> tag defines marked text.
 
     Use the <mark> tag if you want to highlight parts of your text.
@@ -943,9 +833,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_mark.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -963,9 +851,7 @@ class Tags:
 
   def nav(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within
     the current document or to other documents.
     Common examples of navigation sections are menus, tables of contents, and indexes.
@@ -978,9 +864,7 @@ class Tags:
 
       https://fr.w3docs.com/apprendre-html/html-tag-nav.html
       https://developer.mozilla.org/en-US/docs/Web/HTML/Element/nav
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -998,9 +882,7 @@ class Tags:
 
   def ins(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <ins> tag defines a text that has been inserted into a document.
 
     Underlying HTML Objects:
@@ -1010,9 +892,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_ins.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1030,9 +910,7 @@ class Tags:
 
   def dfn(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <dfn> tag represents the defining instance of a term in HTML.
 
     Underlying HTML Objects:
@@ -1042,9 +920,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_dfn.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1062,9 +938,7 @@ class Tags:
 
   def cite(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.).
 
     Underlying HTML Objects:
@@ -1074,9 +948,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_cite.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1094,9 +966,7 @@ class Tags:
 
   def abbr(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
 
     Underlying HTML Objects:
@@ -1106,9 +976,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_abbr.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1126,9 +994,7 @@ class Tags:
 
   def meter(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <meter> tag defines a scalar measurement within a known range, or a fractional value.
     This is also known as a gauge.
 
@@ -1139,9 +1005,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_meter.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1158,17 +1022,13 @@ class Tags:
     return html_abbr
 
   def comment(self, text: str):
-    """
-    Description:
-    ------------
+    """  
     Add an HTML comment to the code
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTags.HtmlComment`
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     """
     html_comm = html.HtmlTags.HtmlComment(self.page, text)
@@ -1177,9 +1037,7 @@ class Tags:
 
   def span(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <span> tag is an inline container used to mark up a part of a text, or a part of a document.
 
     The <span> tag is easily styled by CSS or manipulated with JavaScript using the class or id attribute.
@@ -1200,9 +1058,7 @@ class Tags:
         Value Formatter €
         A Value Formatter is
         ''', options={"multiline": True})
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1220,9 +1076,7 @@ class Tags:
 
   def label(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     The <label> tag defines a label for several elements.
 
     Underlying HTML Objects:
@@ -1232,9 +1086,7 @@ class Tags:
     Related Pages:
 
       https://www.w3schools.com/tags/tag_label.asp
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
@@ -1252,13 +1104,9 @@ class Tags:
 
   def no_tag(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Description:
-    ------------
+    """  
     Dummy HTML without any tag to add this to the list of a container objects.
-
-    Attributes:
-    ----------
+ 
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit

@@ -13,14 +13,9 @@ class BsBreadcrumb(Component):
   dyn_repr = '''{sub_item}'''
 
   def add_item(self, component: primitives.HtmlModel, active: bool = False):
-    """
-    Description:
-    -----------
-    Add the sub item to the list of items.
+    """   Add the sub item to the list of items.
     This will also add the component to the page component dictionary.
 
-    Attributes:
-    ----------
     :param component: The breadcrumb item.
     :param active: Optional. The selected status for the item.
     """
@@ -35,13 +30,8 @@ class BsBreadcrumb(Component):
     return component
 
   def add_section(self, text: str, url: str = "#", active: bool = False):
-    """
-    Description:
-    -----------
-    Add a section to the breadcrumb.
+    """   Add a section to the breadcrumb.
 
-    Attributes:
-    ----------
     :param text: The link to be added.
     :param url: Optional. The link when clicked.
     :param active: Optional. The current page.
@@ -69,37 +59,22 @@ class BsAccordion(Component):
   dyn_repr = '''{sub_item}'''
 
   def header(self, n: int):
-    """
-    Description:
-    -----------
-    Get a dedicated header component.
+    """   Get a dedicated header component.
 
-    Attributes:
-    ----------
     :param n: Integer. The header index.
     """
     return self.items[n]["header"]
 
   def panel(self, n: int):
-    """
-    Description:
-    -----------
-    Get a dedicated panel component.
+    """   Get a dedicated panel component.
 
-    Attributes:
-    ----------
     :param n: Integer. The panel index.
     """
     return self.items[n]["content"]
 
   def add_section(self, header, content, prepend: bool = False):
-    """
-    Description:
-    -----------
-    Add a new section to the accordion component.
+    """   Add a new section to the accordion component.
 
-    Attributes:
-    ----------
     :param header: String | Component. The tab title.
     :param content: String | Component. The tab panel.
     :param prepend: Optional. The position of the tab.
@@ -126,13 +101,8 @@ class BsAccordion(Component):
       self.items.append({"header": header, "content": content})
 
   def write_item(self, item: dict):
-    """
-    Description:
-    -----------
-    Write an item to the component definition.
+    """   Write an item to the component definition.
 
-    Attributes:
-    ----------
     :param item: A sub item to the accordion object.
     """
     content = self.page.web.std.div([item["header"], item["content"]])
@@ -152,37 +122,23 @@ class BsDropdown(Component):
     self.items = {"buttons": [], "options": []}
 
   def button(self, n: int = 0):
-    """
-    Description:
-    -----------
-    Get a dedicated button from the Dropdown component.
+    """   Get a dedicated button from the Dropdown component.
     By default there is a button but it is not always the case for split button.
 
-    Attributes:
-    ----------
     :param n: Optional. The button index. Default 0.
     """
     return self.items[n]
 
   def item(self, n: int):
-    """
-    Description:
-    -----------
-    Get a dedicated item in the dropdown component..
+    """   Get a dedicated item in the dropdown component..
 
-    Attributes:
-    ----------
     :param n: The item index.
     """
     return self.items["options"][n]
 
   def add_button(self, value, category: str = "primary", split: bool = False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param value:
     :param category:
     :param split:
@@ -190,8 +146,6 @@ class BsDropdown(Component):
 
   def add_delimiter(self):
     """
-    Description:
-    ------------
     Add a delimiter item the dropdown
     """
     hr = self.page.web.std.layouts.hr()
@@ -203,12 +157,8 @@ class BsDropdown(Component):
 
   def add_item(self, component: primitives.HtmlModel, url: str = "#", active: bool = False):
     """
-    Description:
-    ------------
     Add an item to the Dropdown list.
 
-    Attributes:
-    ----------
     :param component: The item to be added to the dropdown.
     :param url: Optional. The url path for the link.
     :param active: Optional. The status of the option item.
@@ -233,45 +183,29 @@ class BsModal(StructComponent):
 
   @property
   def options(self) -> OptBsWidget.Modal:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptBsWidget.Modal
     """
     return super().options
 
   def add_to_header(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Add an item to the header section.
+    """   Add an item to the header section.
 
-    Attributes:
-    ----------
     :param content: An item to add to the header section
     """
     return self.add_to("header", content)
 
   def add_to_body(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param content: An item to add to the body section
     """
     return self.add_to("body", content)
 
   def add_to_footer(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param content: An item to add to the footer section
     """
     return self.add_to("footer", content)
@@ -297,10 +231,7 @@ class BsOffCanvas(StructComponent):
 
   @property
   def options(self) -> OptBsWidget.OffCanvas:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptBsWidget.OffCanvas
     """
@@ -308,9 +239,7 @@ class BsOffCanvas(StructComponent):
 
   @property
   def js(self) -> JsBsWidgets.OffCanvas:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsBsWidgets.OffCanvas
     """
@@ -319,34 +248,22 @@ class BsOffCanvas(StructComponent):
     return self._js
 
   def add_to_header(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param content: An item to add to the header section
     """
     return self.add_to("header", content)
 
   def add_to_body(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param content: An item to add to the body section
     """
     return self.add_to("body", content)
 
   def add_to_footer(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param content: An item to add to the footer section
     """
     return self.add_to("footer", content)
@@ -390,22 +307,15 @@ class BsCarousel(Component):
 
   @property
   def options(self) -> OptBsWidget.Carousel:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptBsWidget.Carousel
     """
     return super().options
 
   def add_item(self, image: str, active: bool = False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param image:
     :param active:
     """
@@ -424,14 +334,10 @@ class BsNav(Component):
 
   def add_item(self, component: primitives.HtmlModel, url: str = "#", active: bool = False, disabled: bool = False):
     """
-    Description:
-    ------------
     Add an item to the Nav list.
 
     https://getbootstrap.com/docs/5.1/components/navs-tabs/
 
-    Attributes:
-    ----------
     :param component: The item to be added to the Nav.
     :param url: Optional. The url path for the link.
     :param active: Optional. The status of the option item.
@@ -517,18 +423,13 @@ class BsToast(StructComponent):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the JavaScript object reference after the builder.
+    """   Return the JavaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def js(self) -> JsBsWidgets.OffCanvas:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsBsWidgets.OffCanvas
     """
@@ -537,37 +438,22 @@ class BsToast(StructComponent):
     return self._js
 
   def add_to_header(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Add an item to the header section.
+    """   Add an item to the header section.
 
-    Attributes:
-    ----------
     :param content: An item to add to the header section.
     """
     return self.add_to("header", content)
 
   def add_to_body(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Add an item to the body section.
+    """   Add an item to the body section.
 
-    Attributes:
-    ----------
     :param content: An item to add to the header section.
     """
     return self.add_to("body", content)
 
   def add_to_footer(self, content: primitives.HtmlModel):
-    """
-    Description:
-    -----------
-    Add an item to the body section.
+    """   Add an item to the body section.
 
-    Attributes:
-    ----------
     :param content: An item to add to the header section.
     """
     return self.add_to("footer", content)

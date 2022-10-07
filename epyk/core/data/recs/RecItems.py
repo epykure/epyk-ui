@@ -7,14 +7,9 @@ class ItemsLinkRec:
   @staticmethod
   def from_records(records, column, text: Callable = None, other_fields: Dict[str, Any] = None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param records:
     :param column:
     :param text: A Python function to transform the text displayed.
@@ -67,14 +62,9 @@ class ItemsBoxRec:
   @staticmethod
   def from_records(records, column, title=None, color=None, icons=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param records:
     :param column:
     :param title:

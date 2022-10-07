@@ -14,10 +14,7 @@ class C3Legend:
     self.varName = js_code
 
   def show(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Show legend for each target.
+    """   Show legend for each target.
 
     Related Pages:
 
@@ -32,17 +29,12 @@ class C3Legend:
     return "%s.show(%s)" % (self.varName, target_ids)
 
   def hide(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Show legend for each target.
+    """   Show legend for each target.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-legend-show
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -57,17 +49,12 @@ class C3Data:
     self.varName = js_code
 
   def axes(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Get and set axes of the data loaded in the chart.
+    """   Get and set axes of the data loaded in the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-data-axes
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -77,17 +64,12 @@ class C3Data:
     return "%s.axes(%s)" % (self.varName, target_ids)
 
   def values(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Get values of the data loaded in the chart.
+    """   Get values of the data loaded in the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-data-values
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -97,17 +79,12 @@ class C3Data:
     return "%s.values(%s)" % (self.varName, target_ids)
 
   def colors(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Get and set colors of the data loaded in the chart.
+    """   Get and set colors of the data loaded in the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-data-colors
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -117,17 +94,12 @@ class C3Data:
     return "%s.colors(%s)" % (self.varName, target_ids)
 
   def names(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Get and set names of the data loaded in the chart.
+    """   Get and set names of the data loaded in the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-data-names
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -137,17 +109,12 @@ class C3Data:
     return "%s.names(%s)" % (self.varName, target_ids)
 
   def show(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Show legend for each target.
+    """   Show legend for each target.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-legend-show
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -157,17 +124,12 @@ class C3Data:
     return "%s.show(%s)" % (self.varName, target_ids)
 
   def hide(self, target_ids=None):
-    """
-    Description:
-    -----------
-    Show legend for each target.
+    """   Show legend for each target.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-legend-show
 
-    Attributes:
-    ----------
     :param target_ids:
     """
     if target_ids is None:
@@ -208,10 +170,7 @@ class C3(JsPackage):
     """
 
   def show(self, target_ids=None, options=None):
-    """
-    Description:
-    -----------
-    This API shows specified targets.
+    """   This API shows specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be shown.
@@ -220,8 +179,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-show
 
-    Attributes:
-    ----------
     :param target_ids:
     :param options:
     """
@@ -233,10 +190,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
   def toggle(self, target_ids=None, options=None):
-    """
-    Description:
-    -----------
-    This API shows specified targets.
+    """   This API shows specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be shown.
@@ -245,8 +199,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-show
 
-    Attributes:
-    ----------
     :param target_ids:
     :param options:
     """
@@ -259,10 +211,7 @@ class C3(JsPackage):
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    Get data loaded in the chart.
+    """   Get data loaded in the chart.
 
     Related Pages:
 
@@ -271,10 +220,7 @@ class C3(JsPackage):
     raise NotImplementedError()
 
   def hide(self, target_ids=None, options=None):
-    """
-    Description:
-    -----------
-    This API hides specified targets.
+    """   This API hides specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be hidden.
@@ -283,8 +229,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-hide
 
-    Attributes:
-    ----------
     :param target_ids:
     :param options:
     """
@@ -296,10 +240,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
   def flow(self, args):
-    """
-    Description:
-    -----------
-    Flow data to the chart.
+    """   Flow data to the chart.
 
     By this API, you can append new data points to the chart.
 
@@ -307,25 +248,18 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-flow
 
-    Attributes:
-    ----------
     :param args:
     """
     args = JsUtils.jsConvertData(args, None)
     return JsObjects.JsVoid("%s.flow(%s)" % (self._selector, args))
 
   def transform(self, chart_type, target_ids=None):
-    """
-    Description:
-    -----------
-    Change the type of the chart.
+    """   Change the type of the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-transform
 
-    Attributes:
-    ----------
     :param chart_type:
     :param target_ids:
     """
@@ -337,10 +271,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.transform(%s, %s)" % (self._selector, chart_type, target_ids))
 
   def load(self, args):
-    """
-    Description:
-    -----------
-    Load data to the chart.
+    """   Load data to the chart.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be toggles.
@@ -349,8 +280,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-load
 
-    Attributes:
-    ----------
     :param args:
     """
     if isinstance(args, list):
@@ -362,10 +291,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.load(%s)" % (self._selector, args))
 
   def unload(self, args):
-    """
-    Description:
-    -----------
-    Unload data to the chart.
+    """   Unload data to the chart.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be toggles.
@@ -374,8 +300,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-unload
 
-    Attributes:
-    ----------
     :param args:
     """
     if isinstance(args, list):
@@ -384,27 +308,19 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.unload(%s)" % (self._selector, args))
 
   def resise(self, size):
-    """
-    Description:
-    -----------
-    Resize the chart.
+    """   Resize the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-resize
 
-    Attributes:
-    ----------
     :param size:
     """
     size = JsUtils.jsConvertData(size, None)
     return JsObjects.JsVoid("%s.resise(%s)" % (self._selector, size))
 
   def flush(self):
-    """
-    Description:
-    -----------
-    Force to redraw.
+    """   Force to redraw.
 
     Related Pages:
 
@@ -413,10 +329,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.flush()" % self._selector)
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Reset the chart object and remove element and events completely.
+    """   Reset the chart object and remove element and events completely.
 
     Related Pages:
 
@@ -425,23 +338,15 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.destroy()" % self._selector)
 
   def xgrids(self, grids):
-    """
-    Description:
-    -----------
-    Update x grid lines.
+    """   Update x grid lines.
 
-    Attributes:
-    ----------
     :param grids:
     """
     grids = JsUtils.jsConvertData(grids, None)
     return JsObjects.JsVoid("%s.xgrids(%s)" % (self._selector, grids))
 
   def select(self, ids, indices, reset_others):
-    """
-    Description:
-    -----------
-    Change data point state to selected.
+    """   Change data point state to selected.
 
     By this API, you can select data points. To use this API, data.selection.enabled needs to be set true.
 
@@ -449,8 +354,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-select
 
-    Attributes:
-    ----------
     :param ids:
     :param indices:
     :param reset_others:
@@ -461,10 +364,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.select(%s, %s, %s)" % (self._selector, ids, indices, reset_others))
 
   def unselected(self, ids, indices):
-    """
-    Description:
-    -----------
-    Change data point state to unselected.
+    """   Change data point state to unselected.
 
     By this API, you can unselect data points. To use this API, data.selection.enabled needs to be set true.
 
@@ -472,8 +372,6 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-select
 
-    Attributes:
-    ----------
     :param ids:
     :param indices:
     """
@@ -482,10 +380,7 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.select(%s, %s)" % (self._selector, ids, indices))
 
   def selected(self, ids):
-    """
-    Description:
-    -----------
-    Get selected data points.
+    """   Get selected data points.
 
     By this API, you can get selected data points information.
     To use this API, data.selection.enabled needs to be set true.
@@ -494,35 +389,25 @@ class C3(JsPackage):
 
       https://c3js.org/reference.html#api-selected
 
-    Attributes:
-    ----------
     :param ids:
     """
     ids = JsUtils.jsConvertData(ids, None)
     return JsObjects.JsVoid("%s.selected(%s)" % (self._selector, ids))
 
   def zoom(self, domain):
-    """
-    Description:
-    -----------
-    Zoom by giving x domain.
+    """   Zoom by giving x domain.
 
     Related Pages:
 
       https://c3js.org/reference.html#api-zoom
 
-    Attributes:
-    ----------
     :param domain:
     """
     domain = JsUtils.jsConvertData(domain, None)
     return JsObjects.JsVoid("%s.zoom(%s)" % (self._selector, domain))
 
   def unzoom(self):
-    """
-    Description:
-    -----------
-    Unzoom to the original domain.
+    """   Unzoom to the original domain.
 
     Related Pages:
 

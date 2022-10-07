@@ -419,9 +419,7 @@ class SqlConn:
     Usage::
 
       db.get_last_id("table")
-
-    Attributes:
-    ----------
+ 
     :param table_name: The table name.
 
     :return: Return the last row ID or -1

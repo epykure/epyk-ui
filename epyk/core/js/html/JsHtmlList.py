@@ -22,12 +22,8 @@ class JsItemsDef:
 
   def text(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object.
     """
     item_def = '''
@@ -36,12 +32,16 @@ class JsItemsDef:
       item.style.cursor = 'pointer';
       item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
       item.onclick = function(event){
+         var selectedLen = htmlObj.parentElement.querySelectorAll(".list_text_selected").length;
          var dataValue = item.getAttribute('data-valid');
-         if(dataValue == 'true'){
-           item.classList.remove('list_text_selected');
-           item.setAttribute('data-valid', false)}
-         else{item.classList.add('list_text_selected'); item.setAttribute('data-valid', true) }
-         var value = this.innerHTML; options.click(event, value)}
+         if (dataValue == 'true' || options.max_selected == null || selectedLen < options.max_selected ){
+           var value = this.innerHTML; options.click(event, value);
+           if(dataValue == 'true'){
+             item.classList.remove('list_text_selected');
+             item.setAttribute('data-valid', false)}
+           else{item.classList.add('list_text_selected'); item.setAttribute('data-valid', true) }
+         }
+      }
     } else {
       item.setAttribute('name', 'value'); item.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -57,12 +57,8 @@ class JsItemsDef:
 
   def logs(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object.
     """
     item_def = '''
@@ -86,13 +82,17 @@ class JsItemsDef:
       item.style.cursor = 'pointer';
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
       item.onclick = function(event){
+         var selectedLen = htmlObj.parentElement.querySelectorAll(".list_text_selected").length;
          var dataValue = message.getAttribute('data-valid');
-         if(dataValue == 'true'){
-           message.classList.remove('list_text_selected');
-           message.setAttribute('data-valid', false)}
-         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
-         options.click(event, value)}
+         if (dataValue == 'true' || options.max_selected == null || selectedLen < options.max_selected ){
+           var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
+           options.click(event, value)
+           if(dataValue == 'true'){
+             message.classList.remove('list_text_selected');
+             message.setAttribute('data-valid', false)}
+           else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+         }
+      }
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -113,12 +113,8 @@ class JsItemsDef:
 
   def timeline(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object.
     """
     item_def = '''
@@ -140,13 +136,17 @@ class JsItemsDef:
       item.style.cursor = 'pointer';
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
       item.onclick = function(event){
+         var selectedLen = htmlObj.parentElement.querySelectorAll(".list_text_selected").length;
          var dataValue = message.getAttribute('data-valid');
-         if(dataValue == 'true'){
-           message.classList.remove('list_text_selected');
-           message.setAttribute('data-valid', false)}
-         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
-         options.click(event, value)}
+         if (dataValue == 'true' || options.max_selected == null || selectedLen < options.max_selected ){
+           var value = Object.assign({}, {"value": message.innerHTML, "timestamp": log.innerHTML}, data); 
+           options.click(event, value)
+           if(dataValue == 'true'){
+             message.classList.remove('list_text_selected');
+             message.setAttribute('data-valid', false)}
+           else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+         }
+      }
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -183,12 +183,8 @@ class JsItemsDef:
 
   def status(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object.
     """
     item_def = '''
@@ -211,13 +207,17 @@ class JsItemsDef:
       item.style.cursor = 'pointer';
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', false);
       item.onclick = function(event){
+         var selectedLen = htmlObj.parentElement.querySelectorAll(".list_text_selected").length;
          var dataValue = message.getAttribute('data-valid');
-         if(dataValue == 'true'){
-           message.classList.remove('list_text_selected');
-           message.setAttribute('data-valid', false)}
-         else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
-         var value = Object.assign({}, {"value": message.innerHTML, "status": log.innerHTML}); 
-         options.click(event, value)}
+         if (dataValue == 'true' || options.max_selected == null || selectedLen < options.max_selected ){
+           var value = Object.assign({}, {"value": message.innerHTML, "status": log.innerHTML}); 
+           options.click(event, value)
+           if(dataValue == 'true'){
+             message.classList.remove('list_text_selected');
+             message.setAttribute('data-valid', false)}
+           else{message.classList.add('list_text_selected'); message.setAttribute('data-valid', true) }
+        }
+      }
     } else {
       message.setAttribute('name', 'value'); message.setAttribute('data-valid', true);}
     if(options.draggable != false){ 
@@ -240,12 +240,8 @@ class JsItemsDef:
 
   def tweet(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -294,12 +290,8 @@ class JsItemsDef:
 
   def icon(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add icon items to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object.
     """
     page.jsImports.add('font-awesome')
@@ -318,12 +310,8 @@ class JsItemsDef:
 
   def check(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add check components to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -337,20 +325,32 @@ class JsItemsDef:
     input.style.verticalAlign = "middle";
     input.onchange = function(event){ 
       event.stopPropagation(); event.cancelBubble = true; span.setAttribute('data-valid', this.checked); 
-      var value = span.innerHTML; if(options.click != null){options.click(event, value)}};
+      var value = span.innerHTML; if(options.click != null){options.click(event, value)}
+    };
     
-    var span = document.createElement("label"); span.style.marginLeft = '5px'; span.setAttribute('data-valid', false); 
-    
+    var span = document.createElement("label"); 
+    if (options.text_click){
+      span.style.cursor = "pointer";
+      span.onclick = function(event){ 
+        var isChecked = this.getAttribute('data-valid');
+        if (isChecked == 'true'){this.setAttribute('data-valid', false); input.checked = false} 
+        else {this.setAttribute('data-valid', true); input.checked = true}
+        var value = this.innerHTML; if(options.click != null){options.click(event, value)}
+      };
+    }
+    span.style.marginLeft = '5px'; span.setAttribute('data-valid', false); span.style.marginBottom = '0px'; 
     if(typeof data === 'object'){ 
       if(typeof data.text !== 'undefined'){ span.innerHTML = data.text} else {span.innerHTML = data.value}} 
-    else { span.innerHTML = data};
+    else {span.innerHTML = data};
     if(options.checked){ 
       input.setAttribute('checked', options.checked); span.setAttribute('data-valid', options.checked)};
-    if(data.checked){input.setAttribute('checked', data.checked); span.setAttribute('data-valid', data.checked)};
-    
+    var checkedCol = "checked";
+    if (typeof options.checked_key !== 'undefined'){checkedCol = options.checked_key}
+    if(data[checkedCol]){
+      input.setAttribute('checked', data[checkedCol]); span.setAttribute('data-valid', data[checkedCol])};
     if (options.position == 'right'){
       span.innerHTML = ""; var labelTag = document.createElement("span"); labelTag.setAttribute('name', 'value');
-      labelTag.innerHTML = data; labelTag.style.marginLeft = '5px'; labelTag.style.marginRight = '5px'; 
+      labelTag.innerHTML = data; labelTag.style.margin = '5px'; labelTag.style.marginRight = '5px'; 
       item.appendChild(labelTag);
     } else {span.setAttribute('name', 'value');}
     span.style.verticalAlign = "middle";
@@ -360,12 +360,8 @@ class JsItemsDef:
 
   def radio(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add radio components to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -375,28 +371,52 @@ class JsItemsDef:
     var input = document.createElement("input");    
     input.setAttribute('type', 'radio'); input.setAttribute('name', options.group);
     input.style.verticalAlign = "middle";
-    input.onchange = function(event){ 
-      this.parentNode.parentNode.parentNode.querySelectorAll('[name=value]').forEach(function(node){
-        node.setAttribute('data-valid', false); }); var value = span.innerHTML; 
-        span.setAttribute('data-valid', this.checked ); if(options.click != null){options.click(event, value)}};  
-    var span = document.createElement("span");  
+    input.onclick = function(event){
+        var value = span.innerHTML; 
+        if (input.checked && (span.getAttribute('data-valid') == 'true')){
+          input.checked = false;
+          span.setAttribute('data-valid', false)} 
+        else{
+          this.parentNode.parentNode.parentNode.querySelectorAll('[name=value]').forEach(
+            function(node){node.setAttribute('data-valid', false)});
+          if(options.click != null){options.click(event, value)};
+          span.setAttribute('data-valid', input.checked)
+        }
+    };  
+    if (options.text_click){
+      span.style.cursor = "pointer";
+      span.onclick = function(event){
+          var value = span.innerHTML;
+          if (this.getAttribute('data-valid') == 'true'){
+            input.checked = false; this.setAttribute('data-valid', false)
+          } else {
+            this.parentNode.parentNode.parentNode.querySelectorAll('[name=value]').forEach(
+              function(node){node.setAttribute('data-valid', false)});
+            if(options.click != null){options.click(event, value)};
+            this.setAttribute('data-valid', true); input.checked = true;
+          }
+      };  
+    }
     span.setAttribute('name', 'value'); span.setAttribute('data-valid', false);
     span.style.marginLeft = "5px";
-    if(typeof data === 'object'){ span.innerHTML = data.text} else { span.innerHTML = data};
+    if(typeof data === 'object'){ 
+      span.innerHTML = data.text;
+      var checkedCol = "checked";
+      if (typeof options.checked_key !== 'undefined'){checkedCol = options.checked_key};
+      if(data[checkedCol]){
+        input.setAttribute('checked', data[checkedCol])
+        span.setAttribute('data-valid', data[checkedCol]);
+      }
+    } else { span.innerHTML = data};
     span.style.verticalAlign = "middle";
-    
     item.appendChild(input); item.appendChild(span);
     '''
     return self._item(item_def)
 
   def badge(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text object with badges to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -413,12 +433,8 @@ class JsItemsDef:
 
   def link(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add links items to the list.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -440,14 +456,10 @@ class JsItemsDef:
 
   def button(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add button items to the list.
     Data structure expected:
       {'text': f, 'button': 'get',  'event': {'url': '/test', 'data': {'Ok': 45}}
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
@@ -473,12 +485,8 @@ class JsItemsDef:
 
   def box(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     This will represent a title with a text and a list of icons.
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     page.jsImports.add('font-awesome')
@@ -507,24 +515,20 @@ class JsItemsDef:
 
   def period(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Add text items to the list
-
-    Attributes:
-    ----------
+ 
     :param page: Page object. The internal page object
     """
     item_def = '''
-    if(options.showdown){var converter = new showdown.Converter(options.showdown); converter.setOption("display", "inline-block");
+    if(options.showdown){var converter = new showdown.Converter(options.showdown); 
+      converter.setOption("display", "inline-block");
       data.content = converter.makeHtml(data.content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
 
-    function hashCode(str) { // java String#hashCode
+    function hashCode(str) {
       var hash = 0; for (var i = 0; i < str.length; i++) {hash = str.charCodeAt(i) + ((hash << 5) - hash)} return hash}
-
     function intToRGB(i){
       var c = (i & 0x00FFFFFF).toString(16).toUpperCase(); return "00000".substring(0, 6 - c.length) + c}
-
+      
     var item = document.createElement("DIV"); var title = document.createElement("DIV");  
     var titleValue = document.createElement("DIV");  
     titleValue.innerHTML = data.title;  titleValue.style.fontWeight = "bold"
@@ -556,12 +560,8 @@ class JsItemsDef:
 
   def custom(self, item_def: str):
     """
-    Description:
-    ------------
     Allow the creation of custom items for list.
-
-    Attributes:
-    ----------
+ 
     :param item_def: The JavaScript item definition
     """
     return self._item(item_def)
@@ -587,14 +587,13 @@ class JsItem(JsHtml.JsHtmlRich):
   def all(self):
     return JsHtml.ContentFormatters(self.page, '''
 (function(dom){var values = []; dom.childNodes.forEach(function(dom, k){  
-  const item = dom.querySelector('[name=value]'); if (item != null){values.push(dom.querySelector('[name=value]').innerHTML)}
+  const item = dom.querySelector('[name=value]'); 
+  if (item != null){values.push(dom.querySelector('[name=value]').innerHTML)}
 }); return values})(%s)''' % self.varName)
 
   @property
   def selected(self):
     """
-    Description:
-    ------------
     Return a list with all the selected values.
     """
     return self.content
@@ -602,8 +601,6 @@ class JsItem(JsHtml.JsHtmlRich):
   @property
   def unselected(self):
     """
-    Description:
-    ------------
     Return a list with all the unselected values.
     """
     return JsHtml.ContentFormatters(self.page, '''
@@ -621,8 +618,6 @@ class JsItem(JsHtml.JsHtmlRich):
   @property
   def first(self):
     """
-    Description:
-    ------------
     Get the first value in the list.
     """
     return JsObjects.JsVoid("%s.firstChild.querySelector('[name=value]').innerHTML" % self.varName)
@@ -630,8 +625,6 @@ class JsItem(JsHtml.JsHtmlRich):
   @property
   def last(self):
     """
-    Description:
-    ------------
     Get the last value in the list.
     """
     return JsObjects.JsVoid("%s.lastChild.querySelector('[name=value]').innerHTML" % self.varName)
@@ -639,22 +632,17 @@ class JsItem(JsHtml.JsHtmlRich):
   @property
   def current(self):
     """
-    Description:
-    ------------
     Get the current value from a LI item event.
     """
     return JsObjects.JsVoid('''(function(){
-      var source = this; if (typeof this.querySelector === 'undefined'){source = event.target || event.srcElement}
-      if(source.getAttribute("name")){
-        return source.innerHTML} 
-      else {return source.querySelector('[name=value]').innerHTML} 
-      })(event, this)''')
+var source = this; if (typeof this.querySelector === 'undefined'){source = event.target || event.srcElement}
+if(source.getAttribute("name")){return source.innerHTML} 
+else {return source.querySelector('[name=value]').innerHTML} 
+})(event, this)''')
 
   @property
   def values(self):
     """
-    Description:
-    ------------
     Get all the values in the list.
     """
     return JsObjects.JsArray.JsArray.get("")
@@ -672,12 +660,8 @@ document.body.removeChild(dummy);
 
   def getItemByValue(self, value: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Get an item from the list based on its value.
-
-    Attributes:
-    ----------
+ 
     :param value: The value to find in the list
     """
     value = JsUtils.jsConvertData(value, None)
@@ -689,12 +673,8 @@ document.body.removeChild(dummy);
 
   def selectAll(self, with_input_box: bool = False):
     """
-    Description:
-    ------------
     Select all the items in the list.
-
-    Attributes:
-    ----------
+ 
     :param with_input_box: If the items have a dedicated input box for the check
     """
     if self.component.options.items_type == "radio":
@@ -717,23 +697,25 @@ document.body.removeChild(dummy);
 
   def unSelectAll(self, with_input_box: bool = False):
     """
-    Description:
-    ------------
     UnSelect all the items in the list.
-
-    Attributes:
-    ----------
+ 
     :param with_input_box: If the items have a dedicated input box for the check
     """
-    if self.component.options.items_type == "radio":
-      raise ValueError("It is not possible to select all radios from a same group, use check instead")
-
-    if self.component.options.items_type == "check" or with_input_box:
+    if self.component.options.items_type in "check" or with_input_box:
       return JsObjects.JsVoid('''
         %s.childNodes.forEach(function(dom, k){  
           const item = dom.querySelector('[name=input_box]');
           if (item != null){ 
             dom.querySelector('[name=input_box]').checked = false;
+            dom.querySelector('[data-valid]').setAttribute("data-valid", false);
+        }})''' % self.varName)
+
+    if self.component.options.items_type in "radio" or with_input_box:
+      return JsObjects.JsVoid('''
+        %s.childNodes.forEach(function(dom, k){  
+          const item = dom.querySelector('[type=radio]');
+          if (item != null){ 
+            dom.querySelector('[type=radio]').checked = false;
             dom.querySelector('[data-valid]').setAttribute("data-valid", false);
         }})''' % self.varName)
 
@@ -746,12 +728,8 @@ document.body.removeChild(dummy);
   def add(self, value: Union[str, dict], css_attrs: dict = None, css_cls: str = None, before: bool = False,
           options: dict = None):
     """
-    Description:
-    ------------
     Add items to the list.
-
-    Attributes:
-    ----------
+ 
     :param value:
     :param css_attrs: All the CSS attributes to be added to the LI component
     :param css_cls: The CSS class to be added to the LI component
@@ -794,12 +772,8 @@ document.body.removeChild(dummy);
 
   def append(self, items: list, css_attrs: dict = None, css_cls: str = None, options: dict = None):
     """
-    Description:
-    ------------
     Add items to the list.
-
-    Attributes:
-    ----------
+ 
     :param items: The items
     :param css_attrs: Optional. All the CSS attributes to be added to the LI component
     :param css_cls: Optional. The CSS class to be added to the LI component
@@ -812,12 +786,8 @@ document.body.removeChild(dummy);
 
   def prepend(self, items: str, css_attrs: dict = None, css_cls: str = None, options: dict = None):
     """
-    Description:
-    ------------
     Insert items to the beginning of the list.
-
-    Attributes:
-    ----------
+ 
     :param items: The items.
     :param css_attrs: Optional. All the CSS attributes to be added to the LI component
     :param css_cls: Optional. The CSS class to be added to the LI component
@@ -830,12 +800,8 @@ document.body.removeChild(dummy);
 
   def tags(self, values: list, css_attrs: dict = None, css_cls: str = None):
     """
-    Description:
-    ------------
     Add tags to an item in the list.
-
-    Attributes:
-    ----------
+ 
     :param values: The tags to be added to the current item
     :param css_attrs: All the CSS attributes to be added to the LI component
     :param css_cls: The CSS class to be added to the LI component
@@ -863,12 +829,8 @@ document.body.removeChild(dummy);
   def contextMenu(self, menu, js_funcs: Union[list, str] = None, menu_funcs: Union[list, str] = None,
                   profile: Optional[Union[bool, dict]] = False):
     """
-    Description:
-    ------------
     Add a context menu to an item in the list.
-
-    Attributes:
-    ----------
+ 
     :param menu:
     :param menu_funcs:
     :param js_funcs: The Javascript functions
@@ -902,8 +864,6 @@ document.body.removeChild(dummy);
 
   def clear(self):
     """
-    Description:
-    ------------
     Clear all the items in the list.
     """
     return JsObjects.JsVoid(
@@ -911,12 +871,8 @@ document.body.removeChild(dummy);
 
   def select_item(self, value: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Force the selection of an item in the list.
-
-    Attributes:
-    ----------
+ 
     :param value: The value of the item to be selected
     """
     value = JsUtils.jsConvertData(value, None)
@@ -940,10 +896,7 @@ class Tags(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
-    Returns the list of data available on the filters panel.
+    """   Returns the list of data available on the filters panel.
     """
     return JsHtml.ContentFormatters(self.page, '''
       (function(dom){var content = {}; 
@@ -957,12 +910,8 @@ class Tags(JsHtml.JsHtmlRich):
 
   def is_duplicated(self, text: str, category: str = None):
     """
-    Description:
-    ------------
     Check the duplicates in the filter panel for a given category.
-
-    Attributes:
-    ----------
+ 
     :param text: The item text
     :param category: The item category
     """
@@ -987,24 +936,18 @@ class Tags(JsHtml.JsHtmlRich):
 
   def hide(self):
     """
-    Description:
-    ------------
     Hide the filters panel.
     """
     return self.querySelector("div[name=panel]").show()
 
   def show(self):
     """
-    Description:
-    ------------
     Show the filters panel.
     """
     return self.querySelector("div[name=panel]").show()
 
   def toggle(self):
     """
-    Description:
-    ------------
     Toggle the display of the filters panel.
     """
     return self.querySelector("div[name=panel]").toggle()
@@ -1012,13 +955,9 @@ class Tags(JsHtml.JsHtmlRich):
   def add(self, text: Union[str, primitives.JsDataModel], category: Union[str, primitives.JsDataModel] = None,
           name: str = None, fixed: bool = False, no_duplicate: bool = True):
     """
-    Description:
-    ------------
     Add item on the filters panel.
     When no_duplicate is set to False it is possible to pass a list.
-
-    Attributes:
-    ----------
+ 
     :param text: The value to be added on the filter panel
     :param category: Optional. The item category
     :param name: Optional. The item name
@@ -1063,28 +1002,20 @@ class Tags(JsHtml.JsHtmlRich):
   @property
   def input(self):
     """
-    Description:
-    ------------
     Clear the content of the filters panel.
     """
     return JsObjects.JsObjects.get("%s.value" % self.querySelector("input"))
 
   def clear(self):
     """
-    Description:
-    ------------
     Clear the content of the filters panel.
     """
     return self.querySelector("div[name=panel]").empty()
 
   def remove(self, text: Union[str, primitives.JsDataModel], category: Union[str, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     Remove an item from the filters panel.
-
-    Attributes:
-    ----------
+ 
     :param text: The test of the items to be removed
     :param category: The test of the items to be removed
     """
@@ -1097,16 +1028,12 @@ class Tags(JsHtml.JsHtmlRich):
 
   def count(self):
     """
-    Description:
-    ------------
     Return a count of number of values defined in the filters across all the categories.
     """
     return self.values().length
 
   def categories(self):
     """
-    Description:
-    ------------
     Return a count of categories currently used to filter the data.
     """
     return self.content.dict.keys()

@@ -42,9 +42,7 @@ class Components:
 
   def date(self, value: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"),
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsDate.BsDatePicker:
-    """
-    Description:
-    ------------
+    """  
     Toast default date component.
 
     Usage::
@@ -56,8 +54,6 @@ class Components:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param value: Optional. The initial time value format YYYY-MM-DD
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -82,9 +78,7 @@ class Components:
   def time(self, hour: int = None, minute: int = 0, second: int = 0,
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            profile: types.PROFILE_TYPE = None, options=None) -> HtmlBsDate.BsDatePicker:
-    """
-    Description:
-    ------------
+    """  
     Toast default date component.
 
     Usage::
@@ -96,8 +90,6 @@ class Components:
 
       https://nhn.github.io/tui.date-picker/latest/
 
-    Attributes:
-    ----------
     :param hour: Optional. The hours' value
     :param minute: Optional. The minutes' value.
     :param second: Optional. The seconds' value.
@@ -122,9 +114,7 @@ class Components:
   def loading(self, text: str = "Loading...", width: types.SIZE_TYPE = (None, "%"),
               height: types.SIZE_TYPE = (None, "%"), category=None, options: dict = None,
               profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Indicate the loading state of a component or page with Bootstrap spinners, built entirely with HTML, CSS,
     and no JavaScript.
 
@@ -139,8 +129,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/spinners/
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -163,9 +151,7 @@ class Components:
 
   @property
   def icons(self) -> groups.BsCompIcons.Components:
-    """
-    Description:
-    ------------
+    """  
     Free, high quality, open source icon library with over 1,300 icons. Include them anyway you like—SVGs,
     SVG sprite, or web fonts. Use them with or without Bootstrap in any project.
 
@@ -183,9 +169,7 @@ class Components:
 
   @property
   def images(self) -> groups.BsCompImages.Components:
-    """
-    Description:
-    ------------
+    """  
     Add images and badges to your web page.
 
     Related Pages:
@@ -197,9 +181,7 @@ class Components:
 
   @property
   def fields(self) -> groups.BsCompFields.Components:
-    """
-    Description:
-    ------------
+    """  
     Create beautifully simple form labels that float over your input fields.
 
     Related Pages:
@@ -210,18 +192,14 @@ class Components:
 
   @property
   def texts(self) -> groups.BsCompFields.TextComponents:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return groups.BsCompFields.TextComponents(self)
 
   @property
   def tables(self) -> groups.BsCompTables.Components:
-    """
-    Description:
-    ------------
+    """  
     Documentation and examples for opt-in styling of tables (given their prevalent use in JavaScript plugins)
     with Bootstrap.
 
@@ -233,9 +211,7 @@ class Components:
 
   @property
   def lists(self) -> groups.BsCompLists.Components:
-    """
-    Description:
-    ------------
+    """  
     Customize the native <select>s with custom CSS that changes the element’s initial appearance.
 
     Related Pages:
@@ -247,9 +223,7 @@ class Components:
 
   @property
   def buttons(self) -> groups.BsCompBtns.Components:
-    """
-    Description:
-    ------------
+    """  
     Use Bootstrap’s custom button styles for actions in forms, dialogs, and more with support for multiple sizes,
     states, and more.
 
@@ -268,9 +242,7 @@ class Components:
 
   @property
   def toasts(self):
-    """
-    Description:
-    ------------
+    """  
     Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
 
     Related Pages:
@@ -281,9 +253,7 @@ class Components:
 
   @property
   def sliders(self):
-    """
-    Description:
-    ------------
+    """  
     Use our custom range inputs for consistent cross-browser styling and built-in customization.
 
     Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars,
@@ -298,9 +268,7 @@ class Components:
 
   @property
   def inputs(self) -> groups.BsCompInputs.Components:
-    """
-    Description:
-    ------------
+    """  
     Pre-defined inputs components.
 
     """
@@ -308,9 +276,7 @@ class Components:
 
   @property
   def alerts(self) -> groups.BsCompAlerts.Components:
-    """
-    Description:
-    ------------
+    """  
     Alerts are available for any length of text, as well as an optional close button.
 
     Related Pages:
@@ -321,9 +287,7 @@ class Components:
 
   @property
   def modals(self) -> groups.BsCompModals.Components:
-    """
-    Description:
-    ------------
+    """  
     Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications,
     or completely custom content.
 
@@ -341,9 +305,7 @@ class Components:
 
   @property
   def offcanvas(self) -> groups.BsCompModals.OffComponents:
-    """
-    Description:
-    ------------
+    """  
     Use Bootstrap’s JavaScript modal plugin to add dialogs to your site for lightboxes, user notifications,
     or completely custom content.
 
@@ -358,9 +320,7 @@ class Components:
 
   @property
   def navbars(self) -> groups.BsCompNavs.Components:
-    """
-    Description:
-    ------------
+    """  
     Documentation and examples for Bootstrap’s powerful, responsive navigation header, the navbar.
     Includes support for branding, navigation, and more, including support for our collapse plugin.
 
@@ -375,9 +335,7 @@ class Components:
 
   @property
   def panels(self) -> groups.BsCompPanels.Components:
-    """
-    Description:
-    ------------
+    """  
     Documentation and examples for how to use Bootstrap’s included navigation components.
 
     Related Pages:
@@ -388,9 +346,7 @@ class Components:
 
   @property
   def layouts(self) -> groups.BsCompLayouts.Components:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -401,9 +357,7 @@ class Components:
   def accordion(self, values=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
                 height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
                 options: dict = None) -> HtmlBsWidgets.BsAccordion:
-    """
-    Description:
-    ------------
+    """  
     Add an Accordion panel.
 
     Related Pages:
@@ -418,8 +372,6 @@ class Components:
         acc.panel(0).build("New content")
       ])
 
-    Attributes:
-    ----------
     :param values: Optional. Title: content.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -439,9 +391,7 @@ class Components:
   def breadcrumb(self, values: list = None, active: str = None, html_code: str = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
                  profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsWidgets.BsBreadcrumb:
-    """
-    Description:
-    ------------
+    """  
     Add a breadcrumb.
 
     Related Pages:
@@ -452,8 +402,6 @@ class Components:
 
       page.web.bs.breadcrumb(["AAA", "BBBB"], active="AAA")
 
-    Attributes:
-    ----------
     :param values: Optional. Title: content.
     :param active: Optional. The active section in the breadcrumb.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
@@ -474,9 +422,7 @@ class Components:
   def offcanva(self, values: list = None, position: str = "start", html_code: str = None,
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
                profile: types.PROFILE_TYPE = None, options: dict = None) -> HtmlBsWidgets.BsOffCanvas:
-    """
-    Description:
-    ------------
+    """  
     Add an off canvas panel.
 
     Related Pages:
@@ -487,8 +433,6 @@ class Components:
 
       oc = page.web.bs.offcanvas(["AAA", "BBB"])
 
-    Attributes:
-    ----------
     :param values: Optional. Title: content.
     :param position: Optional. The offcanvas position in the page.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
@@ -513,9 +457,7 @@ class Components:
   def modal(self, values: dict = None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
             options: dict = None) -> HtmlBsWidgets.BsModal:
-    """
-    Description:
-    ------------
+    """  
     Add an off canvas panel.
 
     Related Pages:
@@ -526,8 +468,6 @@ class Components:
 
       oc = page.web.bs.offcanvas(["AAA", "BBB"])
 
-    Attributes:
-    ----------
     :param values: Optional. Title: content.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -549,12 +489,8 @@ class Components:
   def navbar(self, values=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
              options: dict = None) -> HtmlBsWidgets.BsNavBar:
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param values:
     :param html_code:
     :param width:
@@ -581,10 +517,7 @@ class Components:
   def toast(self, values: List[primitives.HtmlModel] = None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None,
             options: dict = None) -> HtmlBsWidgets.BsToast:
-    """
-    Description:
-    -----------
-    Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
+    """   Push notifications to your visitors with a toast, a lightweight and easily customizable alert message.
 
     Usage::
 
@@ -593,8 +526,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/components/toasts/
 
-    Attributes:
-    ----------
     :param values: Optional. Components added to the body.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit.

@@ -48,10 +48,7 @@ class Popup(Html.Html):
 
   @property
   def js(self) -> JsHtmlPopup.JsHtmlPopup:
-    """
-    Description:
-    -----------
-    Specific JavaScript features for the popup component.
+    """   Specific JavaScript features for the popup component.
 
     :return: A Javascript object
     """
@@ -61,37 +58,25 @@ class Popup(Html.Html):
 
   def add(self, component: Html.Html):
     """
-    Description:
-    ------------
     Add a component to the popup.
     If this is a list then they will be added in a row.
 
-    Attributes:
-    ----------
     :param component: The component to be added to the underlying list.
     """
     return self.container.add(component)
 
   def extend(self, components: List[Html.Html]):
     """
-    Description:
-    ------------
     Append list of component to the popup.
 
-    Attributes:
-    ----------
     :param components: The component to be added to the underlying list.
     """
     return self.container.extend(components)
 
   def insert(self, n: int, component: Html.Html):
     """
-    Description:
-    ------------
     Insert a component to the popup at a specific place.
 
-    Attributes:
-    ----------
     :param n: The position in the popup.
     :param component: The component to be added to the underlying list.
     """
@@ -100,8 +85,6 @@ class Popup(Html.Html):
   @property
   def options(self) -> OptPanel.OptionPopup:
     """
-    Description:
-    ------------
     Property to set all the possible object for a button.
     """
     return self.__options
@@ -109,12 +92,8 @@ class Popup(Html.Html):
   def add_title(self, text: str, align: str = 'center', level: Optional[int] = 5, css: Optional[dict] = None,
                 position: str = "before", options: Optional[dict] = None):
     """
-    Description:
-    ------------
     Add a title to the popup.
 
-    Attributes:
-    ----------
     :param text: The value to be displayed to the component.
     :param align: Optional. The text-align property within this component.
     :param level: Optional.

@@ -14,21 +14,14 @@ class JsPlotly(JsPackage):
   #  Common table javascript interface
   #  -----------------------------------------
   def empty(self):
-    """
-    Description:
-    -----------
+    """   
 
     """
     pass
 
   def download(self, format: str, filename: str, options: dict = None):
-    """
-    Description:
-    -----------
-    Common download feature for tables.
+    """   Common download feature for tables.
 
-    Attributes:
-    ----------
     :param format: File format
     :param filename: Filename
     :param options: Download option
@@ -52,8 +45,6 @@ class JsPlotly(JsPackage):
   #  -----------------------------------------
   def newPlot(self, data=None, layout=None, config=None, html_code=None):
     """
-    Description:
-    ------------
     Draws a new plot in an <div> element, overwriting any existing plot. To update an existing plot in a <div>,
     it is much more efficient to use Plotly.react than to overwrite it.
 
@@ -61,8 +52,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param data: array of objects, see documentation (defaults to []).
     :param layout: object, see documentation (defaults to {}).
     :param config: object, see documentation (defaults to {}).
@@ -76,8 +65,6 @@ class JsPlotly(JsPackage):
 
   def react(self, data=None, layout=None, config=None, html_code=None):
     """
-    Description:
-    ------------
     Plotly.react has the same signature as Plotly.newPlot above, and can be used in its place to create a plot,
     but when called again on the same <div> will update it far more efficiently than Plotly.newPlot,
     which would destroy and recreate the plot.
@@ -87,8 +74,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param data: array of objects, see documentation (defaults to []).
     :param layout: object, see documentation (defaults to {}).
     :param config: object, see documentation (defaults to {}).
@@ -102,8 +87,6 @@ class JsPlotly(JsPackage):
 
   def restyle(self, update=None, trace_indices=None, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -111,8 +94,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param update: object, see below for examples (defaults to {})
     :param trace_indices: array of integer indices into existing value of data (optional, default behaviour is to
       apply to all traces)
@@ -128,8 +109,6 @@ class JsPlotly(JsPackage):
 
   def relayout(self, update=None, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing
     the whole plot with Plotly.newPlot.
 
@@ -137,8 +116,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param update: object, see below for examples (defaults to {})
     :param html_code: String. Optional. DOM node or string id of a DOM node.
     """
@@ -147,8 +124,6 @@ class JsPlotly(JsPackage):
 
   def update(self, data_update=None, layout_update=None, trace_indices=None, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing
     the whole plot with Plotly.newPlot.
 
@@ -156,8 +131,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param data_update: object, see Plotly.restyle above (defaults to {})
     :param layout_update: object, see Plotly.relayout above (defaults to {})
     :param trace_indices: array of integer indices into existing value of data, see Plotly.restyle above
@@ -176,16 +149,12 @@ class JsPlotly(JsPackage):
 
   def validate(self, data, layout):
     """
-    Description:
-    ------------
     Plotly.validate allows users to validate their input data array and layout object.
 
     Related Pages:
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param data: array of objects
     :param layout: object
     """
@@ -195,8 +164,6 @@ class JsPlotly(JsPackage):
 
   def makeTemplate(self, figure):
     """
-    Description:
-    ------------
     Plotly.makeTemplate copies the style information from a figure.
     It does this by returning a template object which can be passed to the layout.template attribute of another figure.
 
@@ -204,11 +171,8 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param figure: figure or DOM Node where figure is a plot object, with {data, layout} members.
     If a DOM node is used it must be a div element already containing a plot.
     """
@@ -217,8 +181,6 @@ class JsPlotly(JsPackage):
 
   def validateTemplate(self, figure, template):
     """
-    Description:
-    ------------
     Plotly.validateTemplate allows users to Test for consistency between the given figure and a template,
     either already included in the figure or given separately.
 
@@ -226,11 +188,8 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param figure: figure or DOM Node where figure is a plot object, with {data, layout} members.
     :param template: the template, with its own {data, layout}, to test. If omitted, we will look for a template
       already attached as the plot's
@@ -245,8 +204,6 @@ class JsPlotly(JsPackage):
 
   def addTraces(self, traces, position=None, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -254,8 +211,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param traces:
     :param position: Integer.
     :param html_code: String. Optional. DOM node or string id of a DOM node.
@@ -269,20 +224,14 @@ class JsPlotly(JsPackage):
 
   def deleteAllTraces(self, html_code=None):
     """
-    Description:
-    ------------
     Remove all the traces defined in the chart.
 
-    Attributes:
-    ----------
     :param html_code:
     """
     return JsObject.JsObject.get("%(graphId)s.data = []" % {"graphId": html_code or self.component.dom.varName})
 
   def deleteTraces(self, positions, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -290,8 +239,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param positions: List.
     :param html_code: String. Optional. DOM node or string id of a DOM node.
     """
@@ -301,16 +248,12 @@ class JsPlotly(JsPackage):
   @property
   def traceCount(self):
     """
-    Description:
-    ------------
     Return the number of traces on a chart
     """
     return JsObjects.JsNumber.JsNumber.get("%s.data.length" % self.component.dom.varName)
 
   def moveTraces(self, current_position, dest_position=None, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -318,8 +261,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param current_position:
     :param dest_position: Integer. Optional.
     :param html_code: String. Optional. DOM node or string id of a DOM node.
@@ -334,8 +275,6 @@ class JsPlotly(JsPackage):
 
   def extendTraces(self, traces_extension, index_traces, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -343,8 +282,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param traces_extension:
     :param index_traces: List.
     :param html_code: String. Optional. DOM node or string id of a DOM node
@@ -356,8 +293,6 @@ class JsPlotly(JsPackage):
 
   def prependTraces(self, traces_new, index_traces, html_code=None):
     """
-    Description:
-    ------------
     This function has comparable performance to Plotly.react and is faster than redrawing the whole plot
     with Plotly.newPlot.
 
@@ -365,8 +300,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param tracesNew:
     :param index_traces: List.
     :param html_code: String. Optional. DOM node or string id of a DOM node
@@ -378,8 +311,6 @@ class JsPlotly(JsPackage):
 
   def animate(self, frame_or_group_name_or_frameList, animation_attributes, html_code=None):
     """
-    Description:
-    ------------
     This allows you to add animation frames to a graphDiv. The group or name attribute of a frame can be used by
     Plotly.animate in place of a frame object (or array of frame objects). See example here.
 
@@ -387,8 +318,6 @@ class JsPlotly(JsPackage):
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param frame_or_group_name_or_frameList: A frame to be animated or an array of frames to be animated in sequence.
     :param animation_attributes: An object, see documentation for examples.
     :param html_code: String. Optional. DOM node or string id of a DOM node
@@ -401,8 +330,6 @@ class JsPlotly(JsPackage):
 
   def purge(self):
     """
-    Description:
-    ------------
     Using purge will clear the div, and remove any Plotly plots that have been placed in it.
 
     Related Pages:
@@ -413,16 +340,12 @@ class JsPlotly(JsPackage):
 
   def toImage(self, img_format: str, html_code: str = None):
     """
-    Description:
-    ------------
     toImage will generate a promise to an image of the plot in data URL format.
 
     Related Pages:
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param str img_format:
     :param str html_code: Optional. DOM node or string id of a DOM node
     """
@@ -431,16 +354,12 @@ class JsPlotly(JsPackage):
 
   def downloadImage(self, img_format: str, html_code: str = None):
     """
-    Description:
-    ------------
     downloadImage will trigger a request to download the image of a Plotly plot.
 
     Related Pages:
 
       https://plot.ly/javascript/plotlyjs-function-reference/#plotlynewplot
 
-    Attributes:
-    ----------
     :param str img_format:
     :param str html_code: Optional. DOM node or string id of a DOM node.
     """

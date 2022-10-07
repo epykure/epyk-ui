@@ -8,71 +8,51 @@ class CatalogTable(Catalog.CatalogGroup):
 
   def table(self) -> CssStylesTable.CssTableBasic:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTableBasic)
 
   def row_hover(self) -> CssStylesTable.CssTrHover:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTrHover)
 
   def new_row(self) -> CssStylesTable.CssTableNewRow:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTableNewRow)
 
   def selected(self) -> CssStylesTable.CssTableSelected:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTableSelected)
 
   def cell_comment(self) -> CssStylesTable.CssCellComment:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssCellComment)
 
   def cell_save(self) -> CssStylesTable.CssCellSave:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssCellSave)
 
   def editable(self) -> CssStylesTable.CssTdEditor:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTdEditor)
 
   def row_details(self) -> CssStylesTable.CssTdDetails:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTdDetails)
 
   def row_details_shown(self) -> CssStylesTable.CssTdDetailsShown:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTdDetailsShown)
 
   def grid_headers(self) -> CssStylesTable.CssTdGridHeaderCols:
     """
-    Description:
-    ------------
     """
     return self._set_class(CssStylesTable.CssTdGridHeaderCols)
 
@@ -301,32 +281,24 @@ class CatalogTable(Catalog.CatalogGroup):
 
   def ag_head(self):
     """
-    Description:
-    ------------
     Predefined CSS class for the AG Grid header.
     """
     return self._set_class(CssStylesTableAgGrid.CssAgHead)
 
   def ag_filter(self):
     """
-    Description:
-    ------------
     Predefined CSS Class for the AG Grid filter boxes.
     """
     return self._set_class(CssStylesTableAgGrid.CssAgFilter)
 
   def ag_popup(self):
     """
-    Description:
-    ------------
     Predefined CSS Class for the AG Grid Popup selection in the filter boxes.
     """
     return self._set_class(CssStylesTableAgGrid.CssAgMFilterPopup)
 
   def ag_menu(self):
     """
-    Description:
-    ------------
     Predefined CSS class for the AG Grid Menu.
     """
     return self._set_class(CssStylesTableAgGrid.CssAgHeaderLabel)

@@ -12,8 +12,7 @@ def autoPrefixer(prop: str):
 
   The main browsers supported are IE, Chrome, Firefox and Opera
 
-  Related Pages:
-  --------------
+  Related Pages::
 
     https://www.w3schools.com/cssref/css3_browsersupport.asp
 
@@ -338,8 +337,6 @@ class CssMixin:
     """	Set the container background from an url.
     This will also set some default usual property.
 
-    Attributes:
-    ----------
     :param val: Optional. The picture CSS url.
     :param size: Optional. The CSS background size property.
     :param repeat: Optional. The CSS repeat property.
@@ -2267,8 +2264,6 @@ class CssMixin:
       https://css-tricks.com/snippets/css/text-rotation/
       https://www.w3schools.com/cssref/css3_pr_transform.asp
 
-    Attributes:
-    ----------
     :param val: Integer | String. The rotation angle.
     """
     if isinstance(val, int):
@@ -2438,8 +2433,6 @@ class CssMixin:
 
       https://www.w3schools.com/cssref/func_calc.asp
 
-    Attributes:
-    ----------
     :param int width_in_px: The width used by other components in the line.
     :param int container_width: The percentage width to be used by the component in total. Default 100%.
     """
@@ -2576,8 +2569,6 @@ class CssMixin:
 
   def shadow_text(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 

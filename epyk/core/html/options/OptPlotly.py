@@ -14,13 +14,8 @@ class OptionsChartSharedPlotly(OptChart.OptionsChartShared):
     pass
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
-
-    Attributes:
-    ----------
+    """   Set the label of the x axis.
+ 
     :param value: String. The axis label.
     """
     pass
@@ -38,13 +33,8 @@ class OptionsChartSharedPlotly(OptChart.OptionsChartShared):
     pass
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
-
-    Attributes:
-    ----------
+    """   Set the label of the y axis.
+ 
     :param value: String. The axis label.
     """
     pass
@@ -58,8 +48,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def mode(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -73,8 +61,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def responsive(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -89,8 +75,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def displayModeBar(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -105,8 +89,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def editable(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -121,8 +103,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def staticPlot(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -137,8 +117,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def scrollZoom(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -153,8 +131,6 @@ class OptionConfig(OptChart.OptionsChart):
   @property
   def mapboxAccessToken(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 

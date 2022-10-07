@@ -7,10 +7,7 @@ from epyk.core.py import types
 
 
 class Sliders:
-  """
-  Description:
-  ------------
-  This module is relying on some Jquery IU components
+  """  This module is relying on some Jquery IU components
 
   The slider and progress bar components can be fully described on the corresponding website
 
@@ -26,8 +23,6 @@ class Sliders:
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
              helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add a Jquery UI slider object to the page
 
     Usage::
@@ -43,8 +38,6 @@ class Sliders:
 
       https://jqueryui.com/slider/
 
-    Attributes:
-    ----------
     :param number: Optional. The initial value
     :param minimum: Optional. The min value. Default 0
     :param maximum: Optional. The max value. Default 100
@@ -69,8 +62,6 @@ class Sliders:
            height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -78,8 +69,6 @@ class Sliders:
 
       - :class:`epyk.core.html.HtmlEvent.SliderDate`
 
-    Attributes:
-    ----------
     :param value: Optional. The initial value
     :param minimum: Optional. The min value
     :param maximum: Optional. The max value
@@ -105,8 +94,6 @@ class Sliders:
                  html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -142,8 +129,6 @@ class Sliders:
             height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -175,8 +160,6 @@ class Sliders:
             height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -184,8 +167,6 @@ class Sliders:
 
       - :class:`epyk.core.html.HtmlEvent.Range`
 
-    Attributes:
-    ----------
     :param value: Optional. The initial value
     :param minimum: Optional. The min value. Default 0
     :param maximum: Optional. The max value. Default 100
@@ -209,8 +190,6 @@ class Sliders:
             height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -241,8 +220,6 @@ class Sliders:
                   height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
                   options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add a progress bar component to the page
 
     Usage::
@@ -257,8 +234,6 @@ class Sliders:
 
       https://jqueryui.com/progressbar/
 
-    Attributes:
-    ----------
     :param number: Optional. The initial value
     :param total: Optional. The total value
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -279,13 +254,9 @@ class Sliders:
                height: types.SIZE_TYPE = (20, 'px'), html_code: str = None, helper: str = None,
                options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param number: Optional. The initial value
     :param total: Optional. The total value
     :param width: Optional. A tuple with the integer for the component width and its unit

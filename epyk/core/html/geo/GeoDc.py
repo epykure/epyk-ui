@@ -11,10 +11,7 @@ class ChartGeoChoropleth(GraphDC.Chart):
 
   @property
   def dom(self) -> JsDc.GeoChoropleth:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :rtype: JsDc.GeoChoropleth

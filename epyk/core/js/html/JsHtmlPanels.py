@@ -24,8 +24,6 @@ class JsHtmlSlidingPanel(JsHtml.JsHtml):
 
   def close(self):
     """
-    Description:
-    ------------
     Close the sliding panel.
     """
     return JsFncs.JsFunctions([
@@ -37,8 +35,6 @@ class JsHtmlSlidingPanel(JsHtml.JsHtml):
 
   def open(self):
     """
-    Description:
-    ------------
     Open the sliding panel.
     """
     return JsFncs.JsFunctions([
@@ -50,12 +46,8 @@ class JsHtmlSlidingPanel(JsHtml.JsHtml):
 
   def set_title(self, data, options: dict = None):
     """
-    Description:
-    ------------
     Set the component title.
-
-    Attributes:
-    ----------
+ 
     :param data: String. A String corresponding to a JavaScript object.
     :param dict options: Optional. Specific Python options available for this component.
     """
@@ -63,12 +55,8 @@ class JsHtmlSlidingPanel(JsHtml.JsHtml):
 
   def set_icon(self, data, css=None, options: dict = None):
     """
-    Description:
-    ------------
     Set the icon from Font-awesome options.
-
-    Attributes:
-    ----------
+ 
     :param data: String. A String corresponding to a JavaScript object.
     :param css: Dictionary. Optional. The CSS attributes to be added to the HTML component.
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -92,8 +80,6 @@ class JsHtmlGrid(JsHtml.JsHtml):
   @property
   def val(self):
     """
-    Description:
-    ------------
     Return the underlying input values.
     """
     return self.component.input.dom.val
@@ -101,20 +87,14 @@ class JsHtmlGrid(JsHtml.JsHtml):
   @property
   def content(self):
     """
-    Description:
-    ------------
     Return the underlying input content.
     """
     return self.component.input.dom.content
 
   def panel(self, i):
     """
-    Description:
-    ------------
     Return the underlying panel object.
-
-    Attributes:
-    ----------
+ 
     :param i: Integer. The panel index.
     """
     panel = JsHtmlPanel(self.component, page=self.page)
@@ -124,8 +104,6 @@ class JsHtmlGrid(JsHtml.JsHtml):
   @property
   def panels(self):
     """
-    Description:
-    ------------
     Iterator on the various available panels.
     """
     for i, _ in enumerate(self.component.colsDim):
@@ -135,13 +113,9 @@ class JsHtmlGrid(JsHtml.JsHtml):
 
   def togglePanel(self, i: int):
     """
-    Description:
-    ------------
     Toggle the display of the column in a grid component.
     Thw other columns will be resized accordingly.
-
-    Attributes:
-    ----------
+ 
     :param int i: The column number (start at 0).
     """
     return '''
@@ -160,12 +134,8 @@ class JsHtmlTabs(JsHtml.JsHtml):
 
   def add_tab(self, name: str):
     """
-    Description:
-    ------------
     Add a tab to the panel.
-
-    Attributes:
-    ----------
+ 
     :param str name: The name of the new tab.
     """
     return JsFncs.JsFunctions([
@@ -186,28 +156,20 @@ class JsHtmlTabs(JsHtml.JsHtml):
 
   def tab(self, i: int):
     """
-    Description:
-    ------------
     Return the Javascript tab object.
 
     Usage::
 
       tab.dom.tab(3).firstChild.css({"color": 'red'})
-
-    Attributes:
-    ----------
+ 
     :param int i: Starting from 0 as we keep the Python indexing as reference.
     """
     return JsObjects.JsNodeDom.JsDoms.get("%s.firstChild.querySelector('div:nth-child(%s)')" % (self.varId, i+1))
 
   def set_tab_name(self, i: int, name: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     Change the name for a specific panel.
-
-    Attributes:
-    ----------
+ 
     :param int i: The panel index.
     :param Union[str, primitives.JsDataModel] name: The panel name.
     """
@@ -219,8 +181,6 @@ class JsHtmlTabs(JsHtml.JsHtml):
   @property
   def selected_index(self):
     """
-    Description:
-    ------------
     Return the index of the selected tab.
 
     :return: The index or -1
@@ -234,8 +194,6 @@ class JsHtmlTabs(JsHtml.JsHtml):
   @property
   def selected_name(self):
     """
-    Description:
-    ------------
     Return the name of the selected tab.
 
     :return: The HTML content or an emtpy string.
@@ -248,10 +206,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
 
   @property
   def content(self):
-    """
-    Description:
-    -----------
-    Standard property to get the component value.
+    """   Standard property to get the component value.
     """
     return JsHtml.ContentFormatters(self.page, '''
           (function(node){ var selectedTab = node.querySelector('div[data-selected=true'); 
@@ -265,8 +220,6 @@ class JsHtmlTabs(JsHtml.JsHtml):
 
   def deselect_tabs(self):
     """
-    Description:
-    ------------
     Deselect all the tabs in the component.
     """
     return JsFncs.JsFunctions([

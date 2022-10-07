@@ -11,8 +11,6 @@ class OptionsSlider(Options):
   @property
   def animate(self):
     """
-    Description:
-    ------------
     Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
 
     Related Pages:
@@ -28,8 +26,6 @@ class OptionsSlider(Options):
   @property
   def css(self):
     """
-    Description:
-    ------------
     Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
 
     Related Pages:
@@ -45,8 +41,6 @@ class OptionsSlider(Options):
   @property
   def handler_css(self):
     """
-    Description:
-    ------------
     Whether to slide the handle smoothly when the user clicks on the slider track. Also accepts any valid animation.
 
     Related Pages:
@@ -61,8 +55,6 @@ class OptionsSlider(Options):
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :param js_funcs:
     :param profile:
@@ -73,8 +65,6 @@ class OptionsSlider(Options):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Specify additional classes to add to the widget's elements.
     Any of classes specified in the Theming section can be used as keys to override their value.
     To learn more about this option, check out the learn article about the classes option.
@@ -92,8 +82,6 @@ class OptionsSlider(Options):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     Disables the slider if set to true.
 
     Related Pages:
@@ -109,8 +97,6 @@ class OptionsSlider(Options):
   @property
   def max(self):
     """
-    Description:
-    ------------
     The maximum value of the slider.
 
     Related Pages:
@@ -126,16 +112,12 @@ class OptionsSlider(Options):
   @property
   def min(self):
     """
-    Description:
-    ------------
     The minimum value of the slider.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/#option-min
 
-    Attributes:
-    ----------
     :prop value: The min value
     """
     return self._config_get(0)
@@ -147,8 +129,6 @@ class OptionsSlider(Options):
   @property
   def show_min_max(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -162,8 +142,6 @@ class OptionsSlider(Options):
   @property
   def force_show_current(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(False)
@@ -177,8 +155,6 @@ class OptionsSlider(Options):
   @property
   def orientation(self):
     """
-    Description:
-    ------------
     Determines whether the slider handles move horizontally (min on left, max on right) or vertically (min on bottom,
     max on top).
     Possible values: "horizontal", "vertical".
@@ -196,8 +172,6 @@ class OptionsSlider(Options):
   @property
   def range(self):
     """
-    Description:
-    ------------
     Whether the slider represents a range.
 
     Related Pages:
@@ -213,10 +187,7 @@ class OptionsSlider(Options):
   def slide(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             readout: bool = True, readout_level: str = "handle", readout_format: Optional[bool] = True,
             options: types.OPTION_TYPE = None, css: dict = None, precision: int = 0, delay_ms: int = 0):
-    """
-    Description:
-    -----------
-    Triggered on every mouse move during slide.
+    """   Triggered on every mouse move during slide.
     The value provided in the event as ui.value represents the value that the handle will have as a result of
     the current movement.
 
@@ -231,8 +202,6 @@ class OptionsSlider(Options):
       slider.options.step = 0.01
       slider.options.slide(precision=2)
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param readout: Optional. Show the value in a popup
@@ -296,17 +265,12 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
       "function (event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def create(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Triggered when the slider is created.
+    """   Triggered when the slider is created.
 
     Related Pages:
 
       https://api.jqueryui.com/slider/
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -315,8 +279,6 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
   @property
   def step(self):
     """
-    Description:
-    ------------
     Determines the size or amount of each interval or step the slider takes between the min and max.
     The full specified value range of the slider (max - min) should be evenly divisible by the step.
 
@@ -338,8 +300,6 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
   @property
   def value(self):
     """
-    Description:
-    ------------
     Determines the value of the slider, if there's only one handle.
     If there is more than one handle, determines the value of the first handle.
 
@@ -356,8 +316,6 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
   @property
   def values(self):
     """
-    Description:
-    ------------
     This option can be used to specify multiple handles.
     If the range option is set to true, the length of values should be 2.
 
@@ -378,8 +336,6 @@ class OptionsProgBar(Options):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Initialize the progressbar with the classes option specified, changing the theming for the ui-progressbar
 
     Related Pages:
@@ -395,8 +351,6 @@ class OptionsProgBar(Options):
   @property
   def digits(self):
     """
-    Description:
-    ------------
     Get the number of digit for the value.
 
     Related Pages:
@@ -412,8 +366,6 @@ class OptionsProgBar(Options):
   @property
   def background(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_group_get('css', None)
@@ -425,8 +377,6 @@ class OptionsProgBar(Options):
   @property
   def border_color(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_group_get('css', None, name="borderColor")
@@ -437,11 +387,7 @@ class OptionsProgBar(Options):
 
   def css(self, attrs: dict):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param attrs: The CSS attributes
     """
     css_attrs = self._config_get({}, 'css')
@@ -451,8 +397,6 @@ class OptionsProgBar(Options):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     Disables the progressbar if set to true.
 
     Related Pages:
@@ -468,8 +412,6 @@ class OptionsProgBar(Options):
   @property
   def max(self):
     """
-    Description:
-    ------------
     The maximum value of the progressbar.
 
     Related Pages:
@@ -485,8 +427,6 @@ class OptionsProgBar(Options):
   @property
   def value(self):
     """
-    Description:
-    ------------
     The value of the progressbar.
 
     Related Pages:
@@ -502,8 +442,6 @@ class OptionsProgBar(Options):
   @property
   def rounded(self):
     """
-    Description:
-    ------------
     Change the border radius style of the component.
     """
     return self.component.style.css.border_radius
@@ -527,8 +465,6 @@ class OptionsMenu(Options):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Specify additional classes to add to the widget's elements.
     Any of classes specified in the Theming section can be used as keys to override their value.
     To learn more about this option, check out the learn article about the
@@ -546,8 +482,6 @@ class OptionsMenu(Options):
   @property
   def disabled(self):
     """
-    Description:
-    ------------
     Disables the menu if set to true
 
     Related Pages:
@@ -563,8 +497,6 @@ class OptionsMenu(Options):
   @property
   def icons(self):
     """
-    Description:
-    ------------
     Icons to use for submenus, matching an icon provided by the jQuery UI CSS Framework.
 
     Related Pages:
@@ -580,8 +512,6 @@ class OptionsMenu(Options):
   @property
   def position(self):
     """
-    Description:
-    ------------
     Identifies the position of submenus in relation to the associated parent menu item.
     The of option defaults to the parent menu item, but you can specify another element to position against.
     You can refer to the jQuery UI Position utility for more details about the various options.
@@ -603,8 +533,6 @@ class OptionDialog(Options):
   @property
   def appendTo(self):
     """
-    Description:
-    ------------
     Which element the dialog (and overlay, if modal) should be appended to
 
     Related Pages:
@@ -620,8 +548,6 @@ class OptionDialog(Options):
   @property
   def autoOpen(self):
     """
-    Description:
-    ------------
     If set to true, the dialog will automatically open upon initialization.
     If false, the dialog will stay hidden until the open() method is called.
 
@@ -638,8 +564,6 @@ class OptionDialog(Options):
   @property
   def classes(self):
     """
-    Description:
-    ------------
     Specify additional classes to add to the widget's elements.
     Any of classes specified in the Theming section can be used as keys to override their value.
     To learn more about this option, check out the learn article about the
@@ -657,8 +581,6 @@ class OptionDialog(Options):
   @property
   def closeOnEscape(self):
     """
-    Description:
-    ------------
     Specifies whether the dialog should close when it has focus and the user presses the escape (ESC) key.
 
     Related Pages:
@@ -674,8 +596,6 @@ class OptionDialog(Options):
   @property
   def closeText(self):
     """
-    Description:
-    ------------
     Specifies the text for the close button. Note that the close text is visibly hidden when using a standard theme.
 
     Related Pages:
@@ -691,8 +611,6 @@ class OptionDialog(Options):
   @property
   def draggable(self):
     """
-    Description:
-    ------------
     If set to true, the dialog will be draggable by the title bar. Requires the jQuery UI Draggable widget to
     be included.
 
@@ -709,8 +627,6 @@ class OptionDialog(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
     The height of the dialog.
 
     Related Pages:
@@ -726,8 +642,6 @@ class OptionDialog(Options):
   @property
   def hide(self):
     """
-    Description:
-    ------------
     If and how to animate the hiding of the dialog.
 
     Related Pages:
@@ -743,8 +657,6 @@ class OptionDialog(Options):
   @property
   def maxHeight(self):
     """
-    Description:
-    ------------
     The maximum height to which the dialog can be resized, in pixels.
 
     Related Pages:
@@ -760,8 +672,6 @@ class OptionDialog(Options):
   @property
   def maxWidth(self):
     """
-    Description:
-    ------------
     The maximum width to which the dialog can be resized, in pixels.
 
     Related Pages:
@@ -777,8 +687,6 @@ class OptionDialog(Options):
   @property
   def minHeight(self):
     """
-    Description:
-    ------------
     The minimum height to which the dialog can be resized, in pixels.
 
     Related Pages:
@@ -794,8 +702,6 @@ class OptionDialog(Options):
   @property
   def minWidth(self):
     """
-    Description:
-    ------------
     The minimum width to which the dialog can be resized, in pixels.
 
     Related Pages:
@@ -810,8 +716,6 @@ class OptionDialog(Options):
 
   def position(self, my: str = "center", at: str = "center", of: str = "window"):
     """
-    Description:
-    ------------
     Specifies where the dialog should be displayed when opened. The dialog will handle collisions such that as much
     of the dialog is visible as possible.
 
@@ -819,8 +723,6 @@ class OptionDialog(Options):
 
       https://api.jqueryui.com/dialog/#option-position
 
-    Attributes:
-    ----------
     :param my:
     :param at:
     :param of:
@@ -831,8 +733,6 @@ class OptionDialog(Options):
   @property
   def modal(self):
     """
-    Description:
-    ------------
     If set to true, the dialog will have modal behavior; other items on the page will be disabled, i.e.,
     cannot be interacted with.
     Modal dialogs create an overlay below the dialog but above other page elements.
@@ -850,8 +750,6 @@ class OptionDialog(Options):
   @property
   def resizable(self):
     """
-    Description:
-    ------------
     If set to true, the dialog will be resizable. Requires the jQuery UI Resizable widget to be included.
 
     Related Pages:
@@ -867,8 +765,6 @@ class OptionDialog(Options):
   @property
   def title(self):
     """
-    Description:
-    ------------
     Specifies the title of the dialog. If the value is null, the title attribute on the dialog source element will
     be used.
 
@@ -885,8 +781,6 @@ class OptionDialog(Options):
   @property
   def width(self):
     """
-    Description:
-    ------------
     The width of the dialog, in pixels.
 
     Related Pages:
@@ -902,8 +796,6 @@ class OptionDialog(Options):
   @property
   def empty(self):
     """
-    Description:
-    ------------
     Empty the dialog content first.
 
     This is the default behaviour in case of content as text.
@@ -920,8 +812,6 @@ class OptionBar(Options):
   @property
   def draggable(self):
     """
-    Description:
-    ------------
     Set the bar draggable using Jquery UI
     """
     return self._config_get(False)
@@ -944,8 +834,6 @@ class OptionsSkillbars(Options):
   @property
   def percentage(self):
     """
-    Description:
-    ------------
     Flag to display the percentage value on the bars.
     """
     return self._config_get(False)
@@ -957,8 +845,6 @@ class OptionsSkillbars(Options):
   @property
   def success(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(self.page.theme.success[0])
 
@@ -969,8 +855,6 @@ class OptionsSkillbars(Options):
   @property
   def warning(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(self.page.theme.warning.light)
 
@@ -981,8 +865,6 @@ class OptionsSkillbars(Options):
   @property
   def danger(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(self.page.theme.danger.light)
 
@@ -993,8 +875,6 @@ class OptionsSkillbars(Options):
   @property
   def width(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(100)
 

@@ -37,15 +37,11 @@ class Components:
             html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlTags.HtmlGeneric:
     """
-    Description:
-    ------------
 
     Related Pages:
 
 
 
-    Attributes:
-    ----------
     :param text:
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -64,14 +60,10 @@ class Components:
             options: dict = None, profile: types.PROFILE_TYPE = None,
             position: Union[bool, dict] = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     Related Pages:
 
 
-    Attributes:
-    ----------
     :param components:
     :param color:
     :param width:
@@ -93,15 +85,11 @@ class Components:
   def text(self, text: str = "Loading...", width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "%"),
            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
 
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -119,15 +107,11 @@ class Components:
                height: types.SIZE_TYPE = (None, "%"), options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-linear-progress
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -143,15 +127,11 @@ class Components:
              height: types.SIZE_TYPE = (None, "%"), options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-linear-progress
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param label: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -168,15 +148,11 @@ class Components:
              height: types.SIZE_TYPE = (None, "%"), options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-top-app-bar#regular-top-app-bar
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -193,15 +169,11 @@ class Components:
              height: types.SIZE_TYPE = (None, "%"), options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-top-app-bar#regular-top-app-bar
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -217,15 +189,11 @@ class Components:
                height: types.SIZE_TYPE = (None, "%"), options: types.OPTION_TYPE = None,
                category: str = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-snackbar
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -243,15 +211,11 @@ class Components:
   def chip(self, text: str = "Loading...", width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "%"),
            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-chips
 
-    Attributes:
-    ----------
     :param text: Optional. The initial value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -266,8 +230,6 @@ class Components:
   @property
   def icons(self) -> groups.MdcCompIcons.Components:
     """
-    Description:
-    ------------
     MDC Form Field aligns an MDC Web form field (for example, a checkbox) with its label and makes it RTL-aware.
     It also activates a ripple effect upon interacting with the label.
 
@@ -281,8 +243,6 @@ class Components:
   @property
   def buttons(self) -> groups.MdcCompBtns.Components:
     """
-    Description:
-    ------------
     Buttons allow users to take actions, and make choices, with a single tap.
 
     Related Pages:
@@ -294,8 +254,6 @@ class Components:
   @property
   def fabs(self) -> groups.MdcCompFabs.Components:
     """
-    Description:
-    ------------
     A floating action button (FAB) represents the primary action of a screen.
 
     Related Pages:
@@ -308,8 +266,6 @@ class Components:
   @property
   def sliders(self) -> groups.MdcCompSliders.Components:
     """
-    Description:
-    ------------
     Sliders allow users to make selections from a range of values.
 
     The MDC Slider implementation supports both single point sliders (one thumb) and range sliders (two thumbs).

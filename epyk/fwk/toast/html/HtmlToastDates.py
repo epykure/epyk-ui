@@ -25,10 +25,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
   def style(self) -> GrpClsToastDates.ClassDatePicker:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
 
     :rtype: GrpClsToastDates.ClassDatePicker
     """
@@ -38,10 +35,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
   def dom(self):
-    """
-    Description:
-    -----------
-    The common DOM properties.
+    """   The common DOM properties.
 
     :rtype: DomToastDatePicker.DomDate
     """
@@ -51,19 +45,13 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastCalendar.OptionDate:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptToastCalendar.OptionDate
     """
@@ -71,10 +59,7 @@ htmlObj.querySelector(".tui-datepicker").style["z-index"] = 500'''
 
   @property
   def js(self) -> JsToastDates.DatePicker:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     :rtype: JsToastDates.DatePicker
     """
@@ -101,19 +86,13 @@ class DateCalendar(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastCalendar.OptionCalendar:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     Related Pages:
 
@@ -125,10 +104,7 @@ class DateCalendar(Html.Html):
 
   @property
   def js(self) -> JsToastDates.Calendar:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     Related Pages:
 
@@ -157,19 +133,13 @@ class DatePickerRange(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastCalendar.OptionDateRange:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptToastCalendar.OptionDateRange
     """
@@ -177,10 +147,7 @@ class DatePickerRange(Html.Html):
 
   @property
   def js(self) -> JsToastDates.DatePickerRange:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     :rtype: JsToastDates.DatePickerRange
     """
@@ -220,10 +187,7 @@ class TimePicker(Html.Html):
 
   @property
   def style(self) -> GrpClsToastDates.ClassTimePicker:
-    """
-    Description:
-    -----------
-    Property to the CSS Style of the component.
+    """   Property to the CSS Style of the component.
 
     :rtype: GrpClsToastDates.ClassTimePicker
     """
@@ -233,19 +197,13 @@ class TimePicker(Html.Html):
 
   @property
   def var(self):
-    """
-    Description:
-    -----------
-    Return the calendar javaScript object reference after the builder.
+    """   Return the calendar javaScript object reference after the builder.
     """
     return "window['%s']" % self.htmlCode
 
   @property
   def options(self) -> OptToastTime.OptionTime:
-    """
-    Description:
-    -----------
-    TimePicker static properties.
+    """   TimePicker static properties.
 
     :rtype: OptToastTime.OptionTime
     """
@@ -253,10 +211,7 @@ class TimePicker(Html.Html):
 
   @property
   def dom(self) -> DomToastDatePicker.DomTime:
-    """
-    Description:
-    -----------
-    The common DOM properties.
+    """   The common DOM properties.
 
     :rtype: DomToastDatePicker.DomTime
     """
@@ -266,10 +221,7 @@ class TimePicker(Html.Html):
 
   @property
   def js(self) -> JsToastDates.TimePicker:
-    """
-    Description:
-    -----------
-    Javascript module of the items in the menu.
+    """   Javascript module of the items in the menu.
 
     :rtype: JsToastDates.TimePicker
     """

@@ -10,10 +10,7 @@ class ChartGeoD3(GraphD3.Script):
 
   @property
   def options(self) -> OptChartD3.ChartGeo:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -27,13 +24,9 @@ class ChartGeoD3(GraphD3.Script):
     return super().options
 
   def loader(self, frg: str):
-    """
-    Description:
-    ------------
+    """  
     Loader for the script.
 
-    Attributes:
-    ----------
     :param str frg: The javascript fragments.
     """
     self.builder_name = "D3GeoBuilder%s" % self.page.py.hash(frg)

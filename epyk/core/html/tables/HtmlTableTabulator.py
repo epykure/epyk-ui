@@ -40,8 +40,6 @@ class Table(Html.Html):
   @property
   def style(self) -> GrpClsTable.Tabulator:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
     """
     if self._styleObj is None:
@@ -50,10 +48,7 @@ class Table(Html.Html):
 
   @property
   def dom(self) -> JsHtmlTables.JsHtmlTabulator:
-    """
-    Description:
-    -----------
-    HTML Dom object.
+    """   HTML Dom object.
     """
     if self._dom is None:
       self._dom = JsHtmlTables.JsHtmlTabulator(self, page=self.page)
@@ -62,8 +57,6 @@ class Table(Html.Html):
   @property
   def tableId(self):
     """
-    Description:
-    ------------
     Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
@@ -71,8 +64,6 @@ class Table(Html.Html):
   @property
   def options(self) -> OptTableTabulator.TableConfig:
     """
-    Description:
-    ------------
     Tabulator table options.
     """
     return super().options
@@ -81,8 +72,6 @@ class Table(Html.Html):
   @Html.deprecated("use self.options instead")
   def config(self) -> OptTableTabulator.TableConfig:
     """
-    Description:
-    ------------
     Tabulator configuration options.
     Deprecated and replaced by component options.
     """
@@ -91,8 +80,6 @@ class Table(Html.Html):
   @property
   def js(self) -> JsTabulator.Tabulator:
     """
-    Description:
-    ------------
     Return the Javascript internal object specific to this package.
 
     Usage::
@@ -105,20 +92,14 @@ class Table(Html.Html):
 
   def data(self, data):
     """
-    Description:
-    ------------
     Add data to the table.
-
-    Attributes:
-    ----------
+ 
     :param data: Data object
     """
     self.options.data = data
 
   def add_column(self, field: str = None, title: str = None):
     """
-    Description:
-    ------------
     Add new column to the underlying Tabulator object.
 
     Usage::
@@ -130,9 +111,7 @@ class Table(Html.Html):
         c.hozAlign = "center"
         c.headerSort = False
         c.cellClick(["cell.getRow().toggleSelect()"])
-
-    Attributes:
-    ----------
+ 
     :param field: Optional. The key in the row.
     :param title: Optional. The title for the column. Default to the field.
     """
@@ -140,15 +119,11 @@ class Table(Html.Html):
 
   def get_column(self, by_field: str = None, by_title: str = None) -> OptTableTabulator.Column:
     """
-    Description:
-    ------------
     Get the column from the underlying Tabulator object by field or by title.
     Pointing by field is recommended as the title might change quite easily.
 
     This function will only get columns defined from the Python side.
-
-    Attributes:
-    ----------
+ 
     :param by_field: Optional. The field reference for the column.
     :param by_title: Optional. The title reference for the column.
     """
@@ -156,8 +131,6 @@ class Table(Html.Html):
 
   def get_columns(self) -> Generator[OptTableTabulator.Column, None, None]:
     """
-    Description:
-    ------------
     Get a generator with all the columns defined for the table on the Python side.
 
     This function will only return columns defined from the Python side.
@@ -167,12 +140,8 @@ class Table(Html.Html):
 
   def headers(self, cols_def: dict):
     """
-    Description:
-    ------------
     Update the header definition thanks to a static configuration.
-
-    Attributes:
-    ----------
+ 
     :param cols_def: The header definition.
     """
     for c in self.options.columns:
@@ -182,14 +151,10 @@ class Table(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False, data_ref: str = "data"):
     """
-    Description:
-    ------------
     Use a rowClick event as underlying click event.
 
     Use the function row.getData() to make the data available.
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
@@ -203,8 +168,6 @@ class Table(Html.Html):
 
   def define(self, options: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Common JavaScript function to set the table columns definition.
 
     Usage::
@@ -212,17 +175,13 @@ class Table(Html.Html):
       tab = page.ui.tables.tabulators.table()
       page.ui.button("Update Tabulator").click([
         tab.define([{"field": "col1", "title": "Column 1"}]),])
-
-    Attributes:
-    ----------
+ 
     :param options: Optional. The header attributes
     """
     return self.js.setColumns(options)
 
   def build(self, data: Any = None, options: dict = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
     """
-    Description:
-    ------------
     Common JavaScript function to add data to the table.
 
     Usage::
@@ -231,9 +190,7 @@ class Table(Html.Html):
       page.ui.button("Update Tabulator").click([
         tab.define([{"field": "col1", "title": "Column 1"}]),
         tab.build([{"col1": "row %s" % i}for i in range(n)])])
-
-    Attributes:
-    ----------
+ 
     :param data: Optional. A String corresponding to a JavaScript object
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -248,8 +205,6 @@ class Table(Html.Html):
 
   def extendModule(self, category: str, type: str, func_name: str, func_def: str):
     """
-    Description:
-    ------------
     Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
     series of modules that provide all of its wonderfull features.
 
@@ -260,9 +215,7 @@ class Table(Html.Html):
 
       http://tabulator.info/docs/4.0/modules
       http://tabulator.info/docs/4.2/modules#module-keybindings
-
-    Attributes:
-    ----------
+ 
     :param category: The name of the module. e.g format
     :param type: The name of the property you want to extend. e.g. formatters
     :param func_name: The alias of teh function to be added to the registry
@@ -275,10 +228,7 @@ class Table(Html.Html):
     return self
 
   def loading(self, status: bool = True, color: str = None):
-      """
-      Description:
-      ------------
-      Display / hide the loading status for this component.
+      """  Display / hide the loading status for this component.
 
       Usage::
 
@@ -289,8 +239,6 @@ class Table(Html.Html):
           tab.loading(False),
         ])
 
-      Attributes:
-      ----------
       :param status: Optional. The loading status.
       :param color: Optional. The loading text color.
       """
@@ -334,8 +282,6 @@ class TableTree(Table):
   @property
   def options(self) -> OptTableTabulator.TableTreeConfig:
     """
-    Description:
-    ------------
     Tabulator table options.
     """
     return super().options

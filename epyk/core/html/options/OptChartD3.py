@@ -11,8 +11,6 @@ class D3GgeographyConfig(Options):
   @property
   def popupOnHover(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -24,8 +22,6 @@ class D3GgeographyConfig(Options):
   @property
   def hideAntarctica(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -37,8 +33,6 @@ class D3GgeographyConfig(Options):
   @property
   def hideHawaiiAndAlaska(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -50,8 +44,6 @@ class D3GgeographyConfig(Options):
   @property
   def highlightOnHover(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -63,8 +55,6 @@ class D3GgeographyConfig(Options):
   @property
   def highlightBorderColor(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -79,8 +69,6 @@ class D3GgeographyConfig(Options):
   @property
   def borderColor(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get('#444')
@@ -92,8 +80,6 @@ class D3GgeographyConfig(Options):
   @property
   def borderOpacity(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(1)
@@ -105,8 +91,6 @@ class D3GgeographyConfig(Options):
   @property
   def borderWidth(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(0.5)
@@ -118,8 +102,6 @@ class D3GgeographyConfig(Options):
   @property
   def dataUrl(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -137,8 +119,6 @@ class D3GgeographyBubbleConfig(D3GgeographyConfig):
   @property
   def animate(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -150,8 +130,6 @@ class D3GgeographyBubbleConfig(D3GgeographyConfig):
   @property
   def radius(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -163,8 +141,6 @@ class D3GgeographyBubbleConfig(D3GgeographyConfig):
   @property
   def fillOpacity(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -176,8 +152,6 @@ class D3GgeographyBubbleConfig(D3GgeographyConfig):
   @property
   def exitDelay(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(100)
@@ -189,8 +163,6 @@ class D3GgeographyBubbleConfig(D3GgeographyConfig):
   @property
   def key(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get("JSON.stringify")
@@ -205,8 +177,6 @@ class D3ArcConfig(Options):
   @property
   def strokeColor(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get('#DD1C77')
@@ -218,8 +188,6 @@ class D3ArcConfig(Options):
   @property
   def strokeWidth(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(1)
@@ -231,8 +199,6 @@ class D3ArcConfig(Options):
   @property
   def arcSharpness(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(1)
@@ -244,8 +210,6 @@ class D3ArcConfig(Options):
   @property
   def animationSpeed(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(600)
@@ -257,8 +221,6 @@ class D3ArcConfig(Options):
   @property
   def popupOnHover(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(False)
@@ -276,8 +238,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def element(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -289,8 +249,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def dataType(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get("json")
@@ -302,8 +260,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def dataUrl(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -315,8 +271,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def reponsive(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get(True)
@@ -328,8 +282,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def scope(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()
@@ -349,8 +301,6 @@ class ChartGeo(OptChart.OptionsChart):
   @property
   def projection(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get()

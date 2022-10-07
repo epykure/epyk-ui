@@ -14,7 +14,10 @@ COLOR_EXPR = "1px solid {}"
 
 
 class Buttons:
-
+  """
+  Buttons Interface.
+  """
+  
   def __init__(self, ui):
     self.page = ui.page
 
@@ -52,7 +55,7 @@ class Buttons:
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
              tooltip: str = None, profile: types.PROFILE_TYPE = None,
              options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
-    """ Standard button.
+    """ Standard button
 
     :tags:
     :categories:
@@ -104,7 +107,7 @@ class Buttons:
   def colored(self, text: str = "", icon: str = None, color: str = None,
               width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"), align: str = "left",
               html_code: str = None, tooltip: str = None, profile: types.PROFILE_TYPE = None,
-              options: types.OPTION_TYPE = None):
+              options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """ Standard colored button.
 
     :tags:
@@ -155,15 +158,15 @@ class Buttons:
   def clear(self, text: str = "", icon: str = "fas fa-eraser", color: str = None,
             width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
             align: str = "left", html_code: str = None, tooltip: str = None,
-            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
+            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """ Standard clear button with a font-awesome icon.
-
-    :tags:
-    :categories:
 
     Usage::
 
       page.ui.buttons.clear("Clear")
+
+    :tags:
+    :categories:
 
     Underlying HTML Objects:
 
@@ -207,12 +210,12 @@ class Buttons:
             tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """ Large button.
 
-    :tags:
-    :categories:
-
     Usage::
 
       page.ui.buttons.large("Test")
+
+    :tags:
+    :categories:
 
     Underlying HTML Objects:
 
@@ -998,7 +1001,7 @@ class Buttons:
   def live(self, time: int, js_funcs: types.JS_FUNCS_TYPES, icon: Optional[Union[str, bool]] = "fas fa-circle",
            width: types.SIZE_TYPE = (15, "px"), height: types.SIZE_TYPE = (15, "px"), align: str = "left",
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """Live component which will trigger event every x second.
+    """ Live component which will trigger event every x second.
     This will then allow other components to be refreshed in the page.
 
     :tags:
@@ -1069,7 +1072,7 @@ class Buttons:
            tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
            align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
-    """
+    """ Add a text button.
 
     :tags:
     :categories:
@@ -1160,7 +1163,7 @@ class Buttons:
            width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"), align: str = "left",
            html_code: Optional[str] = None, tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
-    """
+    """ Add a pill button.
 
     :tags:
     :categories:

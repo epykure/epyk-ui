@@ -8,31 +8,20 @@ class BsStyles:
     self.page = page
 
   def remove(self, style: str):
-    """
-    Description:
-    -----------
-    Remove a specific CSS class for all the components.
-
-    Attributes:
-    ----------
+    """   Remove a specific CSS class for all the components.
+ 
     :param style: String the css style to be removed
     """
     self.replate(style, None)
     return self
 
   def replace(self, style: str, new_style: str):
-    """
-    Description:
-    -----------
-    Apply a style change on all the components.
+    """   Apply a style change on all the components.
 
-    Usage:
-    -----
+    Usage::
 
       page.styles.replace('btn', 'btn btn-custom')
-
-    Attributes:
-    ----------
+ 
     :param style: String the css style to be replaced
     :param new_style: String. The new CSS Style to be added (multiple should be a string with spaces)
     """
@@ -46,18 +35,12 @@ class BsStyles:
     return self
 
   def apply_calc(self, component: primitives.HtmlModel, style_map: dict):
-    """
-    Description:
-    -----------
-    Apply a style calc on a component and its hierarchy of underlying components
+    """   Apply a style calc on a component and its hierarchy of underlying components
 
-    Usage:
-    -----
+    Usage::
 
       page.styles.apply_calc(d, {'btn': 'toto'})
-
-    Attributes:
-    ----------
+ 
     :param component: The HTML component
     :param style_map: The CSS style map definition
     """

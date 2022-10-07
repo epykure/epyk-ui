@@ -4,10 +4,7 @@ from epyk.core.py import primitives
 
 
 class AttrHelp(Attrs):
-  """
-  Description:
-  ------------
-  CSS pre defined properties for the Helper.
+  """  CSS pre defined properties for the Helper.
 
   CSS Properties:
 

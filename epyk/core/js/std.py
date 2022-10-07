@@ -27,8 +27,6 @@ def selector(component: Optional[primitives.HtmlModel] = None):
 
       https://www.w3schools.com/cssref/css_selectors.asp
 
-  Attributes:
-  ----------
   :param component: An HTML component
   """
   return Selector.Selector(component)
@@ -46,35 +44,25 @@ alert = JsWindow.JsWindow().alert
 
 
 def querySelectorAll(reference: Union[primitives.JsDataModel, str]):
-  """
-  Description:
-  ------------
-  The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+  """  The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
   as a static NodeList object.
 
   Related Pages:
 
       https://www.w3schools.com/jsref/met_document_queryselectorall.asp
 
-  Attributes:
-  ----------
   :param reference: CSS selectors.
   """
   return JsDomsList("document.querySelectorAll(%s)" % JsUtils.jsConvertData(reference, None), is_py_data=False)
 
 
 def querySelector(reference: Union[primitives.JsDataModel, str]):
-  """
-  Description:
-  ------------
-  The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+  """  The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
 
   Related Pages:
 
       https://www.w3schools.com/jsref/met_document_queryselector.asp
 
-  Attributes:
-  ----------
   :param reference: CSS selectors.
   """
   return JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(reference, None))
@@ -94,30 +82,20 @@ maths = JsMaths.JsMaths()
 
 
 def comment(value: str):
-  """
-  Description:
-  ------------
-  Javascript Comment section.
+  """  Javascript Comment section.
 
   Related Pages:
 
       https://www.w3schools.com/js/js_comments.asp
 
-  Attributes:
-  ----------
   :param value: the Value.
   """
   return JsObjects.JsVoid("/*%s*/" % value)
 
 
 def var(name: str, value: Union[primitives.JsDataModel, str, bool] = None, global_scope: bool = False, depth: bool = False):
-  """
-  Description:
-  ------------
-  Hoisting is JavaScript's default behavior of moving declarations to the top.
+  """  Hoisting is JavaScript's default behavior of moving declarations to the top.
 
-  Attributes:
-  ----------
   :param name: The variable name.
   :param value: Optional. The object.
   :param global_scope: Optional. The variable scope.
@@ -135,14 +113,9 @@ def var(name: str, value: Union[primitives.JsDataModel, str, bool] = None, globa
 
 
 def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, global_scope: bool = False):
-  """
-  Description:
-  ------------
-  Hoisting is JavaScript's default behavior of moving declarations to the top.
+  """  Hoisting is JavaScript's default behavior of moving declarations to the top.
   Create a recordset variable on the JavaScript side (a list of dictionaries).
 
-  Attributes:
-  ----------
   :param name: The variable name.
   :param value: Optional. The object.
   :param global_scope: Optional. The variable scope.
@@ -159,10 +132,7 @@ def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, globa
 
 
 def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = False):
-  """
-  Description:
-  ------------
-  Redeclaring a variable using the let keyword can solve this problem.
+  """  Redeclaring a variable using the let keyword can solve this problem.
 
   Redeclaring a variable inside a block will not redeclare the variable outside the block:
 
@@ -172,8 +142,6 @@ def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = Fals
 
       https://www.w3schools.com/js/js_let.asp
 
-  Attributes:
-  ----------
   :param name: The variable name.
   :param value: Optional. The object.
   :param depth: Optional. Set to true of it is a nested object.
@@ -182,10 +150,7 @@ def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = Fals
 
 
 def const(name: str, value: Union[primitives.JsDataModel, str] = None, depth: bool = False):
-  """
-  Description:
-  ------------
-  The keyword const is a little misleading.
+  """  The keyword const is a little misleading.
 
   It does NOT define a constant value. It defines a constant reference to a value.
 
@@ -195,8 +160,6 @@ def const(name: str, value: Union[primitives.JsDataModel, str] = None, depth: bo
 
       https://www.w3schools.com/js/js_const.asp
 
-  Attributes:
-  ----------
   :param name: The variable name.
   :param value: Object. Optional. The object.
   :param depth: Optional. Set to true of it is a nested object.

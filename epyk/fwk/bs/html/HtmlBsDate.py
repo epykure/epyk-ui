@@ -25,10 +25,7 @@ class BsDatePicker(Component):
 
   @property
   def options(self) -> OptBsDT.DT:
-    """
-    Description:
-    -----------
-    The component options.
+    """   The component options.
 
     :rtype: OptBsDT.DT
     """
@@ -36,10 +33,7 @@ class BsDatePicker(Component):
 
   @property
   def dom(self) -> DomBsDatePicker.DomDate:
-    """
-    Description:
-    -----------
-    The common DOM properties.
+    """   The common DOM properties.
 
     :rtype: DomBsDatePicker.DomDate
     """

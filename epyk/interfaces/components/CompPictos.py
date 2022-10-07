@@ -14,13 +14,9 @@ class Pictogram:
   def path(self, path, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100), options=None,
            profile=None):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param path:
     :param fill:
     :param stroke:
@@ -41,13 +37,9 @@ class Pictogram:
 
   def paths(self, paths, fill=None, stroke=None, width=(33, "px"), height=(25, "px"), viewbox=(150, 100)):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param paths:
     :param fill:
     :param stroke:
@@ -67,13 +59,9 @@ class Pictogram:
 
   def arrow(self, width=(21, "px"), height=(12, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     """
@@ -89,13 +77,9 @@ class Pictogram:
 
   def flam(self, width=(619, "px"), height=(423, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     """
@@ -117,8 +101,6 @@ class Pictogram:
 
   def team(self, fill=None, border=None, width=(50, "px"), height=(30, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -126,8 +108,6 @@ class Pictogram:
 
       https://uxwing.com/business-team-icon/
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -140,8 +120,6 @@ class Pictogram:
 
   def tick(self, fill=None, border=None, width=(30, "px"), height=(30, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -149,8 +127,6 @@ class Pictogram:
 
       https://uxwing.com/check-mark-icon/
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -163,13 +139,9 @@ class Pictogram:
 
   def quote(self, fill=None, border=None, width=(33, "px"), height=(25, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -182,8 +154,6 @@ class Pictogram:
 
   def stack(self, fill=None, border=None, width=(33, "px"), height=(25, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -202,8 +172,6 @@ class Pictogram:
 
   def faq(self, fill=None, border=None, width=(33, "px"), height=(25, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -211,8 +179,6 @@ class Pictogram:
 
       https://uxwing.com/faq-icon/
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -224,8 +190,6 @@ class Pictogram:
 
   def compass(self, fill=None, border=None, width=(33, "px"), height=(25, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -233,8 +197,6 @@ class Pictogram:
 
       https://uxwing.com/compass-icon/
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -246,13 +208,9 @@ class Pictogram:
 
   def people(self, fill=None, border=None, width=(20, "px"), height=(48, "px")):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param fill:
     :param border:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

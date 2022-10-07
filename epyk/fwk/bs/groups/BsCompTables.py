@@ -5,9 +5,7 @@ class Components:
 
   def basic(self, records, cols=None, rows=None, category=None, width=(100, '%'), height=(None, 'px'), html_code=None,
             options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Documentation and examples for opt-in styling of tables (given their prevalent use in JavaScript plugins)
     with Bootstrap.
 
@@ -21,8 +19,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/content/tables/
 
-    Attributes:
-    ----------
     :param records: List<dict>. Optional. The list of dictionaries with the input data.
     :param cols: List. Optional. The list of key from the record to be used as columns in the table.
     :param rows: List. Optional. The list of key from the record to be used as rows in the table.
@@ -44,9 +40,7 @@ class Components:
 
   def striped(self, records, cols=None, rows=None, category=None, width=(100, '%'), height=(None, 'px'), html_code=None,
               options=None, profile=None):
-    """
-    Description:
-    ------------
+    """  
     Documentation and examples for opt-in styling of tables (given their prevalent use in JavaScript plugins)
     with Bootstrap.
 
@@ -62,8 +56,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/content/tables/
 
-    Attributes:
-    ----------
     :param records: List<dict>. Optional. The list of dictionaries with the input data.
     :param cols: List. Optional. The list of key from the record to be used as columns in the table.
     :param rows: List. Optional. The list of key from the record to be used as rows in the table.

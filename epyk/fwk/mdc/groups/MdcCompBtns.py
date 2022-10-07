@@ -16,16 +16,12 @@ class Components:
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
              tooltip: str = None, profile: types.PROFILE_TYPE = None,
              options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-button
 
-    Attributes:
-    ----------
     :param text: Optional.
     :param icon: Optional. A string with the value of the icon to display from font-awesome.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -40,10 +36,7 @@ class Components:
   def check(self, flag: bool = False, tooltip: str = None, width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (None, "px"), label: str = None, html_code: str = None,
             profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a check component.
+    """   Add a check component.
 
     Usage::
 
@@ -53,8 +46,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Optional. The component initial status.
     :param label: Optional. The text of label to be added to the component.
     :param tooltip: Optional. The tooltip text.
@@ -76,10 +67,7 @@ class Components:
   def toggle(self, flag: bool = False, label: str = None, width: types.SIZE_TYPE = (None, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a toggle component.
+    """   Add a toggle component.
 
     Usage::
 
@@ -88,8 +76,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/forms/checks-radios/
 
-    Attributes:
-    ----------
     :param flag: Optional. The component initial status.
     :param label: Optional. The text of label to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.

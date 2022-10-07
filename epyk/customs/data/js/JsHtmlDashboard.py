@@ -13,8 +13,6 @@ class JsHtmlPivot(JsHtml.JsHtml):
   @property
   def content(self) -> JsObjects.JsObject.JsObject:
     """
-    Description:
-    ------------
     Return the values of the items in the list.
     """
     if self.component.sub_rows is None:
@@ -29,16 +27,11 @@ class JsHtmlPivot(JsHtml.JsHtml):
 
   def clear(self, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Clear all the items in the list.
 
-    Usage:
-    -----
+    Usage::
 
 
-    Attributes:
-    ----------
     :param profile: Optional. A flag to set the component performance storage.
     """
     if self.component.sub_rows is not None:
@@ -55,8 +48,6 @@ class JsHtmlColumns(JsHtml.JsHtml):
   @property
   def val(self) -> JsObjects.JsObject.JsObject:
     """
-    Description:
-    ------------
     Return the standard value object with the fields (value, timestamp, offset).
     """
     return JsObjects.JsObjects.get('''{%s: {value: %s.querySelector('[data-select=true]').innerHTML, 
@@ -65,8 +56,6 @@ timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlC
   @property
   def content(self) -> JsObjects.JsArray.JsArray:
     """
-    Description:
-    ------------
     Return the values of the items in the list.
     """
     return JsObjects.JsArray.JsArray.get('''
@@ -78,23 +67,16 @@ timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlC
   @property
   def classList(self):
     """
-    Description:
-    ------------
     Return the class name of the list item.
     """
     return self.component.dom.getAttribute("class")
 
   def add(self, item, unique: bool = True, draggable: bool = True):
     """
-    Description:
-    ------------
     Add a new item to the list.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param item: The Item to be added to the list.
     :param unique: Optional. Only add the item if it is not already in the list.
     :param draggable: Optional. Set the new entry as draggable.
@@ -170,22 +152,15 @@ timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}''' % (self.htmlC
 
   def clear(self):
     """
-    Description:
-    ------------
     Clear all the items in the list.
     """
     return JsObjects.JsVoid("%s.innerHTML = ''" % self.component.dom.varName)
 
   def loading(self, label: str = "Processing data"):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param label: Optional. The processing message.
     """
     return JsObjects.JsVoid("%s.innerHTML = '<i style=\"margin-right:5px\" class=\"fas fa-spinner fa-spin\"></i>%s'" % (
@@ -196,16 +171,11 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
 
   def store(self, delimiter: str = None, format: str = None):
     """
-    Description:
-    ------------
     Not available for a task object as the data will be directly returned and there is not needed to
     perform some string transformation before loading.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param delimiter:
     :param format:
     """
@@ -213,14 +183,9 @@ class JsHtmlTask(JsHtmlNetwork.JsHtmlDropFiles):
 
   def load(self, data: types.JS_DATA_TYPES):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data:
     """
     return JsObjects.JsVoid('''window['%s_data'] = %s; %s

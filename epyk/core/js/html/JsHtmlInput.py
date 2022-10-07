@@ -12,16 +12,12 @@ class Inputs(JsHtml.JsHtml):
 
   def autocomplete(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns the value of the autocomplete attribute of a text field.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_autocomplete.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -32,16 +28,12 @@ class Inputs(JsHtml.JsHtml):
 
   def autofocus(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns whether a text field should automatically get focus when the page loads.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_autofocus.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -52,16 +44,12 @@ class Inputs(JsHtml.JsHtml):
 
   def defaultValue(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns the default value of a text field.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_defaultvalue.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -72,16 +60,12 @@ class Inputs(JsHtml.JsHtml):
 
   def disabled(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns whether the text field is disabled, or not.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_disabled.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -92,16 +76,12 @@ class Inputs(JsHtml.JsHtml):
 
   def maxLength(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns the value of the maxlength attribute of a text field.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_maxlength.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -112,16 +92,12 @@ class Inputs(JsHtml.JsHtml):
 
   def pattern(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns the value of the pattern attribute of a text field.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_pattern.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -132,16 +108,12 @@ class Inputs(JsHtml.JsHtml):
 
   def placeholder(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Set or get the placeholder for an HTML component.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_placeholder.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -152,16 +124,12 @@ class Inputs(JsHtml.JsHtml):
 
   def readOnly(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns whether a text field is read-only, or not.
 
     Related Pages:
 
         https://www.w3schools.com/jsref/prop_text_readonly.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -172,16 +140,12 @@ class Inputs(JsHtml.JsHtml):
 
   def required(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns whether the text field must be filled out before submitting a form.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_text_required.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -192,16 +156,12 @@ class Inputs(JsHtml.JsHtml):
 
   def size(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Sets or returns the value of the size attribute of a text field.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_text_size.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:
@@ -212,16 +172,12 @@ class Inputs(JsHtml.JsHtml):
 
   def name(self, data: types.JS_DATA_TYPES = None):
     """
-    Description:
-    ------------
     Set or get the placeholder for an HTML component.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_text_name.asp
-
-    Attributes:
-    ----------
+ 
     :param data: A String corresponding to a JavaScript object.
     """
     if data is None:

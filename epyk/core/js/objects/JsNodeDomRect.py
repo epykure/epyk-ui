@@ -13,10 +13,7 @@ class JsDOMRect:
 
   @property
   def x(self):
-    """
-    Description:
-    -----------
-    The x read-only property of the DOMRectReadOnly interface represents the x coordinate of the DOMRect's origin.
+    """   The x read-only property of the DOMRectReadOnly interface represents the x coordinate of the DOMRect's origin.
 
     Related Pages:
 
@@ -26,10 +23,7 @@ class JsDOMRect:
 
   @property
   def y(self):
-    """
-    Description:
-    -----------
-    The y read-only property of the DOMRectReadOnly interface represents the y coordinate of the DOMRect's origin.
+    """   The y read-only property of the DOMRectReadOnly interface represents the y coordinate of the DOMRect's origin.
 
     Related Pages:
 
@@ -39,10 +33,7 @@ class JsDOMRect:
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    The width read-only property of the DOMRectReadOnly interface represents the width of the DOMRect.
+    """   The width read-only property of the DOMRectReadOnly interface represents the width of the DOMRect.
 
     Related Pages:
 
@@ -52,10 +43,7 @@ class JsDOMRect:
 
   @property
   def height(self):
-    """
-    Description:
-    -----------
-    The height read-only property of the DOMRectReadOnly interface represents the height of the DOMRect.
+    """   The height read-only property of the DOMRectReadOnly interface represents the height of the DOMRect.
 
     Related Pages:
 
@@ -65,10 +53,7 @@ class JsDOMRect:
 
   @property
   def top(self):
-    """
-    Description:
-    -----------
-    The top read-only property of the DOMRectReadOnly interface returns the top coordinate value of the DOMRect.
+    """   The top read-only property of the DOMRectReadOnly interface returns the top coordinate value of the DOMRect.
     (Has the same value as y, or y + height if height is negative.)
 
     Related Pages:
@@ -79,10 +64,7 @@ class JsDOMRect:
 
   @property
   def right(self):
-    """
-    Description:
-    -----------
-    The right read-only property of the DOMRectReadOnly interface returns the right coordinate value of the DOMRect.
+    """   The right read-only property of the DOMRectReadOnly interface returns the right coordinate value of the DOMRect.
     (Has the same value as x + width, or x if width is negative.)
 
     Related Pages:
@@ -93,10 +75,7 @@ class JsDOMRect:
 
   @property
   def bottom(self):
-    """
-    Description:
-    -----------
-    The bottom read-only property of the DOMRectReadOnly interface returns the bottom coordinate value of the DOMRect.
+    """   The bottom read-only property of the DOMRectReadOnly interface returns the bottom coordinate value of the DOMRect.
     (Has the same value as y + height, or y if height is negative.)
 
     Related Pages:
@@ -107,10 +86,7 @@ class JsDOMRect:
 
   @property
   def left(self):
-    """
-    Description:
-    -----------
-    The left read-only property of the DOMRectReadOnly interface returns the left coordinate value of the DOMRect.
+    """   The left read-only property of the DOMRectReadOnly interface returns the left coordinate value of the DOMRect.
     (Has the same value as x, or x + width if width is negative.)
 
     Related Pages:

@@ -10,8 +10,6 @@ class ClassInput(GrpCls.ClassHtml):
   @property
   def css(self) -> AttrInput.AttrInput:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -27,8 +25,6 @@ class ClassInput(GrpCls.ClassHtml):
   @property
   def css_class(self) -> Classes.CatalogInput.CatalogInput:
     """
-    Description:
-    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -52,8 +48,6 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the datepicker class.
     Class override on the existing one in the package.
 
@@ -67,8 +61,6 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker_ui(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the predefined datepicker UI class.
     Class override on the existing one in the package.
 
@@ -82,8 +74,6 @@ class ClassInputDate(ClassInput):
   @property
   def cls_datepicker_header(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the override on the date picker header class.
     Class override on the existing one in the package.
 
@@ -106,8 +96,6 @@ class ClassInputTime(ClassInput):
   @property
   def cls_timepicker(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the predefined timepicker CSS class.
     Class override on the existing one in the package.
 
@@ -121,8 +109,6 @@ class ClassInputTime(ClassInput):
   @property
   def cls_timepicker_items(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the predefined timepicker items CSS class.
     Class override on the existing one in the package.
 
@@ -145,8 +131,6 @@ class ClassInputRange(GrpCls.ClassHtml):
   @property
   def cls_range(self) -> Classes.CatalogInput.CatalogInput:
     """
-    Description:
-    ------------
     Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogInput
@@ -159,8 +143,6 @@ class ClassInputRange(GrpCls.ClassHtml):
   @property
   def cls_range_thumb(self) -> Classes.CatalogInput.CatalogInput:
     """
-    Description:
-    ------------
     Add the predefined timepicker CSS class for the slider thumb.
     Class override on the existing one in the package.
 
@@ -184,8 +166,6 @@ class ClassInputAutocomplete(ClassInput):
   @property
   def cls_autocomplete(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Add the predefined autocomplete CSS style.
     Class override on the existing one in the package.
 
@@ -199,8 +179,6 @@ class ClassInputAutocomplete(ClassInput):
   @property
   def cls_item_active(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Change the CSS predefined style for the active item.
     Class override on the existing one in the package.
 
@@ -214,8 +192,6 @@ class ClassInputAutocomplete(ClassInput):
   @property
   def cls_menu_item(self) -> Classes.CatalogInput.CatalogDate:
     """
-    Description:
-    ------------
     Class override on the existing one in the package.
 
     :rtype: Classes.CatalogInput.CatalogDate

@@ -50,9 +50,7 @@ class UpDown(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsNumberMoves:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -116,13 +114,9 @@ class UpDown(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add a click event to the HTML component.
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param Optional[str] source_event: Optional. The source target for the event.
@@ -156,9 +150,7 @@ class BlockText(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
 
     :rtype: OptText.OptionsText
@@ -207,9 +199,7 @@ class TextWithBorder(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -330,9 +320,7 @@ class Delta(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsNumberDelta:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
 
     :rtype: OptText.OptionsNumberDelta
@@ -392,9 +380,7 @@ class Formula(Html.Html):
 
   @property
   def style(self) -> GrpClsText.ClsFormula:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
 
     :rtype: GrpClsText.ClsFormula
@@ -405,18 +391,13 @@ class Formula(Html.Html):
 
   @property
   def js(self) -> JsMathjax.Mathjax:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
-
-    Attributes:
-    ----------
+ 
     :return: A Javascript Dom object
 
     :rtype: JsMathjax.Mathjax
@@ -453,9 +434,7 @@ class TrafficLight(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlBackground:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -468,13 +447,9 @@ class TrafficLight(Html.Html):
     return self._dom
 
   def colors(self, green: Optional[str] = None, red: Optional[str] = None, neutral: Optional[str] = None):
-    """
-    Description:
-    ------------
+    """  
     Set the 3 colors of the traffic light.
-
-    Attributes:
-    ----------
+ 
     :param Optional[str] green: Optional. The color used in case of result true.
     :param Optional[str] red: Optional. The color used in case of result false.
     :param Optional[str] neutral: Optional. The color used in case of null.
@@ -490,13 +465,9 @@ class TrafficLight(Html.Html):
     return self
 
   def resolve(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
-    """
-    Description:
-    ------------
+    """  
     Turn a error warning to a green one.
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     """
@@ -512,13 +483,9 @@ class TrafficLight(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add a click event to the HTML component.
-
-    Attributes:
-    ----------
+ 
     :param Union[list, str] js_funcs: Javascript functions.
     :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
     :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
@@ -568,9 +535,7 @@ class ContentsTable(Html.Html):
 
   @property
   def options(self) -> OptText.OptContents:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for the content menu on the page.
     This object can be defined only once on the page.
 
@@ -580,9 +545,7 @@ class ContentsTable(Html.Html):
 
   @property
   def style(self) -> GrpClsText.ContentTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
 
     Usage::
@@ -607,17 +570,13 @@ class ContentsTable(Html.Html):
       })} '''
 
   def anchor(self, text: str, level: int = 0, anchor: str = '#', options: Optional[dict] = None):
-    """
-    Description:
-    ------------
+    """  
     Add link to the content table.
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_a.asp
-
-    Attributes:
-    ----------
+ 
     :param str text: The link label.
     :param int level: Optional. The depth of the link in the document tree.
     :param str anchor: Optional. The internal reference to another component in the page.
@@ -666,9 +625,7 @@ class ContentsTable(Html.Html):
     return href
 
   def move(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     super(ContentsTable, self).move()
@@ -678,13 +635,9 @@ class ContentsTable(Html.Html):
 
   def add_category(self, text: str, level: Optional[int] = None, options: Optional[dict] = None,
                    html_code_content: str = "content"):
-    """
-    Description:
-    ------------
+    """  
     Add a bespoke title to the page without click event.
-
-    Attributes:
-    ----------
+ 
     :param str text: The text visible on the page.
     :param Optional[int] level: Optional. The depth for the title in the document.
     :param Optional[dict] options: Optional. The options for the title component.
@@ -694,13 +647,9 @@ class ContentsTable(Html.Html):
 
   def add_title(self, component: Html.Html, level: Optional[int] = None, css: Optional[dict] = None,
                 position: str = "before", options: Optional[dict] = None, html_code_content: str = "content"):
-    """
-    Description:
-    ------------
+    """  
     Add a bespoke title to the page.
-
-    Attributes:
-    ----------
+ 
     :param Html.Html component: An HTML component.
     :param Optional[int] level: Optional. The depth for the title in the document.
     :param Optional[dict] css: Optional. The CSS style for the link.
@@ -724,14 +673,10 @@ class ContentsTable(Html.Html):
 
   def add_url(self, component: Html.Html, url: str, level: Optional[int] = None,
               options: Optional[dict] = None, html_code_content: str = "content"):
-    """
-    Description:
-    ------------
+    """  
     Add a bespoke link to the content table.
     Those links can redirect to external pages.
-
-    Attributes:
-    ----------
+ 
     :param Html.Html component: An HTML component.
     :param str url: The url link with component clicked.
     :param Optional[int] level: Optional. The depth for the title in the document.
@@ -843,9 +788,7 @@ class Composite(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsComposite:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -857,9 +800,7 @@ class Composite(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
@@ -879,9 +820,7 @@ class Composite(Html.Html):
 
   @property
   def style(self) -> GrpCls.ClassHtmlEmpty:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Style of the component.
 
     :rtype: GrpCls.ClassHtmlEmpty
@@ -908,9 +847,7 @@ class Composite(Html.Html):
 
   @property
   def _get_comp_map(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     comp_ui = self.page.ui
@@ -943,12 +880,8 @@ class Composite(Html.Html):
     }
 
   def _set_comp(self, comp: Optional[Html.Html], schema_child, builders, ref_map):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param comp:
     :param schema_child:
     :param builders:
@@ -1019,9 +952,7 @@ class Status(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsStatus:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 

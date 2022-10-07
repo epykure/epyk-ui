@@ -7,10 +7,7 @@ class Components:
 
   def progressbar(self, number=0, total=100, label=None, category=None, width=(100, '%'), height=(20, 'px'),
                   html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars,
+    """   Documentation and examples for using Bootstrap custom progress bars featuring support for stacked bars,
     animated backgrounds, and text labels.
 
     Usage::
@@ -21,8 +18,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.0/components/progress/
 
-    Attributes:
-    ----------
     :param number: Number. Optional. The initial value.
     :param label: Component | String. Optional. The label on the slider component.
     :param total: Number. Optional. The maximum value.
@@ -47,10 +42,7 @@ class Components:
 
   def multibars(self, values=None, total=100, labels=None, categories=None, width=(100, '%'), height=(20, 'px'),
                 html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Include multiple progress bars in a progress component if you need.
+    """   Include multiple progress bars in a progress component if you need.
 
     Usage::
 
@@ -60,8 +52,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/components/progress/#multiple-bars
 
-    Attributes:
-    ----------
     :param values: Number. Optional. The initial values for the sliders.
     :param total: Number. Optional. The maximum value.
     :param labels: ist<SComponent | String>. Optional. The labels on the slider components.
@@ -95,10 +85,7 @@ class Components:
 
   def slider(self, number=0, minimum=0, maximum=100, step=None, width=(100, '%'), height=(None, 'px'), html_code=None,
              options=None, profile=None):
-    """
-    Description:
-    -----------
-    Use our custom range inputs for consistent cross-browser styling and built-in customization.
+    """   Use our custom range inputs for consistent cross-browser styling and built-in customization.
 
     Usage::
 
@@ -112,8 +99,6 @@ class Components:
 
       https://getbootstrap.com/docs/5.1/forms/range/
 
-    Attributes:
-    ----------
     :param number: Number. Optional. The initial value.
     :param minimum: Number. Optional. The minimum value.
     :param maximum: Number. Optional.  The maximum value.

@@ -27,17 +27,13 @@ class URLSearchParams:
     self.query = query
 
   def get(self, key: str, default: Any = None):
-    """
-    Description:
-    ------------
+    """  
     Get the value of a request parameter in the url.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-
-    Attributes:
-    ----------
+ 
     :param key: The url parameter
     :param default: Optional. The default value
     """
@@ -48,17 +44,13 @@ class URLSearchParams:
         self.query, key, default))
 
   def set(self, key: str, value: Any):
-    """
-    Description:
-    ------------
+    """  
     Set the value of a request parameter in the url.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-
-    Attributes:
-    ----------
+ 
     :param key: The url parameter
     :param value: The value to set
     """
@@ -72,51 +64,39 @@ class URLSearchParams:
     return self.set(component.html_code, component.dom.content)
 
   def getAll(self, key: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
+    """  
     Get all the values of a request parameter in the url.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-
-    Attributes:
-    ----------
+ 
     :param key: The url parameter
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.query, key))
 
   def has(self, key: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
+    """  
     Check if a given parameter is in the url.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-
-    Attributes:
-    ----------
+ 
     :param key: The url parameter
     """
     key = JsUtils.jsConvertData(key, None)
     return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.query, key))
 
   def append(self, key: Union[str, primitives.JsDataModel], value: Any):
-    """
-    Description:
-    ------------
+    """  
     Append a key, value to the url parameter object.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-
-    Attributes:
-    ----------
+ 
     :param key: The url parameter
     :param value: The value to be appended to the URL
     """
@@ -126,18 +106,14 @@ class URLSearchParams:
       "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.query, key, value))
 
   def delete(self, key):
-    """
-    Description:
-    ------------
+    """  
     The delete() method of the URLSearchParams interface deletes the given search parameter and all its associated
     values, from the list of all search parameters.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/delete
-
-    Attributes:
-    ----------
+ 
     :param key:
     """
     key = JsUtils.jsConvertData(key, None)
@@ -147,12 +123,13 @@ class URLSearchParams:
 
 
 class JsLocation:
+  """ JavaScript Location module.
+
+  """
 
   @property
   def hostname(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The hostname property sets or returns the hostname of a URL.
 
     Usage::
@@ -169,9 +146,7 @@ class JsLocation:
 
   @property
   def pathname(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The hostname property sets or returns the hostname of a URL.
 
     Usage::
@@ -188,9 +163,7 @@ class JsLocation:
 
   @property
   def host(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The host property sets or returns the hostname and port of a URL.
 
     Usage::
@@ -207,9 +180,7 @@ class JsLocation:
 
   @property
   def hash(self) -> JsObject.JsObject:
-    """
-    Description:
-    ------------
+    """  
     The hash property sets or returns the anchor part of a URL, including the hash sign (#).
 
     Usage::
@@ -226,9 +197,7 @@ class JsLocation:
 
   @property
   def search(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The search property sets or returns the querystring part of a URL, including the question mark (?).
 
     Related Pages:
@@ -241,9 +210,7 @@ class JsLocation:
 
   @property
   def urlSearchParams(self) -> URLSearchParams:
-    """
-    Description:
-    ------------
+    """  
     The URLSearchParams() constructor creates and returns a new URLSearchParams object.
 
     Related Pages:
@@ -254,9 +221,7 @@ class JsLocation:
 
   @property
   def port(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The port property sets or returns the port number the server uses for a URL.
 
     Related Pages:
@@ -269,9 +234,7 @@ class JsLocation:
 
   @property
   def origin(self) -> JsString.JsString:
-    """
-    Description:
-    ------------
+    """  
     The origin property returns the protocol, hostname and port number of a URL.
 
     Usage::
@@ -290,9 +253,7 @@ class JsLocation:
 
   @classmethod
   def href(cls, href: Union[str, primitives.JsDataModel] = None, secured: bool = False) -> JsObject.JsObject:
-    """
-    Description:
-    ------------
+    """  
     The href property sets or returns the entire URL of the current component.
 
     Usage::
@@ -302,9 +263,7 @@ class JsLocation:
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_loc_href.asp
-
-    Attributes:
-    ----------
+ 
     :param href: Optional. Set the href property
     :param secured: Optional. The secured flag
 
@@ -321,9 +280,7 @@ class JsLocation:
   def open_new_tab(cls, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
                    specs: Union[str, primitives.JsDataModel] = None, replace: Union[str, primitives.JsDataModel] = None,
                    window_id: str = "window", data: dict = None, secured: bool = False) -> JsFncs.JsFunction:
-    """
-    Description:
-    ------------
+    """  
     Opens a new browser window in a new tab (duplicated but part of the Window module).
 
     Usage::
@@ -333,9 +290,7 @@ class JsLocation:
     Related Pages:
 
       https://www.w3schools.com/Jsref/met_win_open.asp
-
-    Attributes:
-    ----------
+ 
     :param url: Optional. Specifies the URL of the page to open.
       If no URL is specified, a new window/tab with about:blank is opened
     :param name: Optional. Specifies the target attribute or the name of the window. Default _blank
@@ -366,13 +321,9 @@ class JsLocation:
   @classmethod
   def download(cls, url: Union[str, primitives.JsDataModel],
                name: Union[str, primitives.JsDataModel] = 'download') -> JsObjects.JsVoid:
-    """
-    Description:
-    ------------
+    """  
     Download data from the url.
-
-    Attributes:
-    ----------
+ 
     :param url: The url of the image
     :param name: Optional. The name of the file
     """
@@ -383,9 +334,7 @@ class JsLocation:
       link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % {'name': name, 'url': url})
 
   def mail(self, mails: List[str], subject: str, body: str):
-    """
-    Description:
-    ------------
+    """  
     The mailto link when clicked opens users default email program or software.
     A new email page is created with "To" field containing the address of the name specified on the link by default.
 
@@ -396,9 +345,7 @@ class JsLocation:
     Related Pages:
 
       http://www.tutorialspark.com/html5/HTML5_email_mailto.php
-
-    Attributes:
-    ----------
+ 
     :param mails: The email addresses
     :param subject: The email's subject
     :param body: The email's content
@@ -412,9 +359,7 @@ class JsLocation:
 
   @classmethod
   def reload(cls, force_get: bool = False):
-    """
-    Description:
-    ------------
+    """  
     The reload() method is used to reload the current document.
 
     The reload() method does the same as the reload button in your browser.
@@ -422,9 +367,7 @@ class JsLocation:
     Related Pages:
 
       https//www.w3schools.com/jsref/met_loc_reload.asp
-
-    Attributes:
-    ----------
+ 
     :param force_get: Optional. Specifies the type of reloading:
           false - Default. Reloads the current page from the cache
           true - Reloads the current page from the server
@@ -434,17 +377,13 @@ class JsLocation:
 
   @classmethod
   def assign(cls, url: Union[str, primitives.JsDataModel]) -> JsFncs.JsFunction:
-    """
-    Description:
-    ------------
+    """  
     The assign() method loads a new document.
 
     Related Pages:
 
       https//www.w3schools.com/jsref/met_loc_assign.asp
-
-    Attributes:
-    ----------
+ 
     :param url: Specifies the URL of the page to navigate to
     """
     data = JsUtils.jsConvertData(url, None)
@@ -452,9 +391,7 @@ class JsLocation:
 
   @classmethod
   def replace(cls, url: Union[str, primitives.JsDataModel], secured: bool = False) -> JsFncs.JsFunction:
-    """
-    Description:
-    ------------
+    """  
     The replace() method replaces the current document with a new one.
 
     The difference between this method and assign(), is that replace() removes the URL of the current document
@@ -464,9 +401,7 @@ class JsLocation:
     Related Pages:
 
       https//www.w3schools.com/jsref/met_loc_replace.asp
-
-    Attributes:
-    ----------
+ 
     :param url: Specifies the URL of the page to navigate to
     :param secured: Optional. If the http is missing. This will be used to fix the url
     """
@@ -477,17 +412,13 @@ class JsLocation:
 
   @classmethod
   def postTo(cls, url: str, data: dict, method: str = "POST", target: str = "_blank"):
-    """
-    Description:
-    ------------
+    """  
     This method will create an internal form and submit the response exactly like a post of a form to another page.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/dom_obj_form.asp
-
-    Attributes:
-    ----------
+ 
     :param url: The target url
     :param data: The url parameters
     :param method: Optional. The method used to send the data. Default POST
@@ -506,17 +437,13 @@ input.type = "hidden"; input.value = %s; form.appendChild(input)''' % (k, js_val
   @classmethod
   def getUrlFromData(cls, data: Union[dict, primitives.JsDataModel],
                      options: Optional[Union[dict, primitives.JsDataModel]] = None):
-    """
-    Description:
-    ------------
+    """  
     Convert data to a URL.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/Blob
-
-    Attributes:
-    ----------
+ 
     :param data: Input data to be converted
     :param options: Optional. Blob definition properties
     """
@@ -533,13 +460,9 @@ input.type = "hidden"; input.value = %s; form.appendChild(input)''' % (k, js_val
                        charset: str = "utf-8",
                        end_line: Union[str, primitives.JsDataModel] = "\r\n",
                        ):
-    """
-    Description:
-    ------------
+    """  
     Convert data to a URL.
-
-    Attributes:
-    ----------
+ 
     :param data: A JavaScript array
     :param delimiter: Optional. The column delimiter
     :param charset: Optional.

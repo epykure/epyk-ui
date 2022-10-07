@@ -18,28 +18,20 @@ class JsSelectItem:
 
   def css(self, attrs):
     """
-    Description:
-    ------------
     Set CSS properties to the option item.
 
     Related Pages:
 
       https://www.w3schools.com/tags/tag_option.asp
 
-    Attributes:
-    ----------
     :param attrs: Dictionary. The CSS attributes.
     """
     return JsObjects.JsObjects.get("%s.css(%s)" % (self._selector, attrs))
 
   def prop(self, name, data):
     """
-    Description:
-    ------------
     Set a specific property / option to the selection Picker object.
 
-    Attributes:
-    ----------
     :param name: String. optional. The option name of the new DOM component. Default the value.
     :param data: String or Js Object. The value of the item to be removed from the list.
     """
@@ -60,16 +52,12 @@ class JSelect(JsPackage):
 
   def val(self, data=None):
     """
-    Description:
-    ------------
     You can set the selected value by calling the val method on the element.
 
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :param data: String | Js Object. The value of the item to be removed from the list.
     """
     if data is None:
@@ -80,12 +68,8 @@ class JSelect(JsPackage):
 
   def prop(self, name, data):
     """
-    Description:
-    ------------
     Set a specific property / option to the selection Picker object.
 
-    Attributes:
-    ----------
     :param name: String. optional. The option name of the new DOM component. Default the value.
     :param data: String | Js Object. The value of the item to be removed from the list.
     """
@@ -94,8 +78,6 @@ class JSelect(JsPackage):
 
   def empty(self):
     """
-    Description:
-    ------------
     Empty the selection component.
     Using this method will force the refresh of the component to update it on the page.
 
@@ -110,16 +92,12 @@ class JSelect(JsPackage):
 
   def remove(self, data, refresh=True):
     """
-    Description:
-    ------------
     Remove an item from the list based on its value (and not necessarly its visible name).
 
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :param data: String or Js Object. The value of the item to be removed from the list.
     :param refresh: Boolean. Optional. Refresh the list after the item removal. (default true).
     """
@@ -133,8 +111,6 @@ class JSelect(JsPackage):
 
   def mobile(self):
     """
-    Description:
-    ------------
     Enable mobile scrolling by calling $('.selectpicker').selectpicker('mobile').
     This enables the device's native menu for select menus.
 
@@ -146,8 +122,6 @@ class JSelect(JsPackage):
 
   def add(self, value, name=None, refresh=True, selected=False):
     """
-    Description:
-    ------------
     Add an item to the list.
 
     Related Pages:
@@ -156,8 +130,6 @@ class JSelect(JsPackage):
 
     TODO: Manage correctly the spaces in the value.
 
-    Attributes:
-    ----------
     :param value: String. The option value of the new DOM component.
     :param name: String. optional. The option name of the new DOM component. Default the value.
     :param refresh: Boolean. Optional. Refresh the list after the item removal. (default true).
@@ -176,12 +148,8 @@ class JSelect(JsPackage):
 
   def item(self, value):
     """
-    Description:
-    ------------
     Search an item from the select box.
 
-    Attributes:
-    ----------
     :param value: String. The value of the options.
     """
     value = JsUtils.jsConvertData(value, None)
@@ -189,8 +157,6 @@ class JSelect(JsPackage):
 
   def deselectAll(self):
     """
-    Description:
-    ------------
     This will deselect all items in a multi-select.
 
     Related Pages:
@@ -201,8 +167,6 @@ class JSelect(JsPackage):
 
   def selectAll(self):
     """
-    Description:
-    ------------
     This will select all items in a multi-select.
 
     Related Pages:
@@ -213,8 +177,6 @@ class JSelect(JsPackage):
 
   def selectIndex(self, i: int):
     """
-    Description:
-    ------------
     This will select the option at the specified index.
 
     Related Pages:
@@ -226,8 +188,6 @@ class JSelect(JsPackage):
 
   def render(self):
     """
-    Description:
-    ------------
     You can force a re-render of the bootstrap-select ui with the render method.
     This is useful if you programmatically change any underlying values that affect the layout of the element.
 
@@ -239,8 +199,6 @@ class JSelect(JsPackage):
 
   def refresh(self):
     """
-    Description:
-    ------------
     Force the refresh of the select Picker object.
 
     Related Pages:
@@ -251,8 +209,6 @@ class JSelect(JsPackage):
 
   def toggle(self):
     """
-    Description:
-    ------------
     Programmatically toggles the bootstrap-select menu open/closed.
 
     Related Pages:
@@ -263,8 +219,6 @@ class JSelect(JsPackage):
 
   def hide(self):
     """
-    Description:
-    ------------
     To programmatically hide the bootstrap-select use the hide method (this only affects the visibility of
     the bootstrap-select itself).
 
@@ -276,8 +230,6 @@ class JSelect(JsPackage):
 
   def show(self):
     """
-    Description:
-    ------------
     To programmatically show the bootstrap-select use the show method (this only affects the visibility of
     the bootstrap-select itself).
 
@@ -289,8 +241,6 @@ class JSelect(JsPackage):
 
   def setStyle(self, class_name, event=None):
     """
-    Description:
-    ------------
     To programmatically show the bootstrap-select use the show method (this only affects the visibility
     of the bootstrap-select itself).
 
@@ -298,8 +248,6 @@ class JSelect(JsPackage):
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :param class_name: String.
     :param event: List. Set of Javascript function to trigger on this event
     """
@@ -312,16 +260,12 @@ class JSelect(JsPackage):
 
   def disable(self, flag):
     """
-    Description:
-    ------------
     Disable the selection component.
 
     Related Pages:
 
       https://developer.snapappointments.com/bootstrap-select/methods/
 
-    Attributes:
-    ----------
     :param flag: Boolean. A flag to specify the status of the component.
     """
     flag = JsUtils.jsConvertData(flag, None)
@@ -330,8 +274,6 @@ class JSelect(JsPackage):
   @property
   def search(self):
     """
-    Description:
-    ------------
     Get the selected content from the Select component
 
     Usage::
@@ -343,8 +285,6 @@ class JSelect(JsPackage):
   @property
   def events(self):
     """
-    Description:
-    ------------
 
     """
     return JsNodeDom.JsDomEvents(component=self.component)
@@ -352,8 +292,6 @@ class JSelect(JsPackage):
   @property
   def jquery(self):
     """
-    Description:
-    ------------
     jQuery UI is a curated set of user interface interactions, effects, widgets, and themes
     built on top of the jQuery JavaScript Library.
     Whether you're building highly interactive web applications or you just need to add a date picker to a form control,
@@ -372,8 +310,6 @@ class JSelect(JsPackage):
 
   def ajaxSelectPicker(self, options):
     """
-    Description:
-    ------------
     Process the raw data returned from a request. The following arguments are passed to this callback:
 
     Related Pages:
@@ -388,8 +324,6 @@ class JSelect(JsPackage):
         'function(data) {return [{text: "C", value: "C"}, {text: "D", value: "D"}]}', "locale": {
     "emptyTitle": "Select and Begin Typing"}})])
 
-    Attributes:
-    ----------
     :param options:
     """
     self.component.cssImport.add('ajax-bootstrap-select')
@@ -412,12 +346,8 @@ class JSelect(JsPackage):
 
   def if_(self, rule, js_funcs):
     """
-    Description:
-    ------------
     Generic if statement for an select component.
 
-    Attributes:
-    ----------
     :param rule: String.
     :param js_funcs: List | String. Javascript functions.
     """
@@ -427,8 +357,6 @@ class JSelect(JsPackage):
 
   def __str__(self):
     """
-    Description:
-    ------------
     The str() method return the variable Javascript reference of the variable.
 
     According to the variable definition it can be either its name or its value.

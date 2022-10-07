@@ -33,13 +33,8 @@ class OptToastChartsShared(OptChart.OptionsChartShared):
     return self
 
   def y_tick_count(self, num):
-    """
-    Description:
-    -----------
-    Set the interval between the ticks.
+    """   Set the interval between the ticks.
 
-    Attributes:
-    ----------
     :param num:
     """
     self.component.config.yAxis.tick.interval = num
@@ -53,9 +48,7 @@ class OptToastChartsShared(OptChart.OptionsChartShared):
 class EnumStackTypes(Enums):
 
   def normal(self):
-    """
-    Description:
-    ------------
+    """  
     Set the stack type.
 
     Related Pages:
@@ -65,9 +58,7 @@ class EnumStackTypes(Enums):
     self._set_value()
 
   def percent(self):
-    """
-    Description:
-    ------------
+    """  
     Set the stack type.
 
     Related Pages:
@@ -80,9 +71,7 @@ class EnumStackTypes(Enums):
 class EnumEventDetectTypes(Enums):
 
   def grouped(self):
-    """
-    Description:
-    ------------
+    """  
     Set the stack type.
 
     Related Pages:
@@ -95,9 +84,7 @@ class EnumEventDetectTypes(Enums):
 class OptionsChartDataSeries(Options):
   @property
   def name(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -111,9 +98,7 @@ class OptionsChartDataSeries(Options):
 
   @property
   def data(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -124,9 +109,7 @@ class OptionsChartDataSeries(Options):
 
   @property
   def visible(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -140,9 +123,7 @@ class OptionsChartDataSeries(Options):
 
   @property
   def stackGroup(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -159,9 +140,7 @@ class OptionsChartData(Options):
 
   @property
   def categories(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -175,8 +154,6 @@ class OptionsChartData(Options):
 
   def add_series(self, name, data) -> OptionsChartDataSeries:
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -194,9 +171,7 @@ class OptionsChartAttrs(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -210,9 +185,7 @@ class OptionsChartAttrs(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -226,9 +199,7 @@ class OptionsChartAttrs(Options):
 
   @property
   def height(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -244,9 +215,7 @@ class OptionsChartAttrs(Options):
 class OptionsTitle(Options):
   @property
   def text(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -263,9 +232,7 @@ class OptionsAxisLabel(Options):
 
   @property
   def interval(self):
-    """
-    Description:
-    ------------
+    """  
     Set the tick interval on the axis.
 
     Related Pages:
@@ -283,9 +250,7 @@ class OptionsScale(Options):
 
   @property
   def min(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -299,9 +264,7 @@ class OptionsScale(Options):
 
   @property
   def max(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -315,9 +278,7 @@ class OptionsScale(Options):
 
   @property
   def stepSize(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -331,9 +292,7 @@ class OptionsScale(Options):
 
   @property
   def step(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -350,9 +309,7 @@ class OptionsAxis(Options):
 
   @property
   def label(self) -> OptionsAxisLabel:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -364,9 +321,7 @@ class OptionsAxis(Options):
 
   @property
   def tick(self) -> OptionsAxisLabel:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -378,9 +333,7 @@ class OptionsAxis(Options):
 
   @property
   def scale(self) -> OptionsScale:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -392,9 +345,7 @@ class OptionsAxis(Options):
 
   @property
   def title(self) -> OptionsTitle:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -404,14 +355,10 @@ class OptionsAxis(Options):
     return self._config_sub_data("title", OptionsTitle)
 
   def add_title(self, text: str) -> OptionsTitle:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param str text:
 
     :rtype: OptionsTitle
@@ -422,9 +369,7 @@ class OptionsAxis(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -438,9 +383,7 @@ class OptionsAxis(Options):
 
   @property
   def pointOnColumn(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -454,9 +397,7 @@ class OptionsDataLabels(Options):
 
   @property
   def visible(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -467,9 +408,7 @@ class OptionsDataLabels(Options):
 
   @property
   def offsetY(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -483,9 +422,7 @@ class OptionsChartStack(Options):
 
   @property
   def type(self):
-    """
-    Description:
-    ------------
+    """  
 
     # normal, percent
     """
@@ -501,9 +438,7 @@ class OptionsChartStack(Options):
 
   @property
   def connector(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -532,9 +467,7 @@ class OptionsChartSeries(Options):
 
   @property
   def diverging(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -548,9 +481,7 @@ class OptionsChartSeries(Options):
 
   @property
   def eventDetectType(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -565,9 +496,7 @@ class OptionsChartSeries(Options):
 
   @property
   def selectable(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -578,9 +507,7 @@ class OptionsChartSeries(Options):
 
   @property
   def shift(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -594,9 +521,7 @@ class OptionsChartSeries(Options):
 
   @property
   def stack(self) -> OptionsChartStack:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -610,9 +535,7 @@ class OptionsChartSeries(Options):
 
   @property
   def spline(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -623,9 +546,7 @@ class OptionsChartSeries(Options):
 
   @property
   def showDot(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -636,9 +557,7 @@ class OptionsChartSeries(Options):
 
   @property
   def zoomable(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -655,9 +574,7 @@ class OptionsDot(Options):
 
   @property
   def radius(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -674,9 +591,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def areaOpacity(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -690,9 +605,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def barWidth(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -706,9 +619,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def colors(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -722,9 +633,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def dashSegments(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -738,9 +647,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def fillColor(self):
-    """
-    Description:
-    ------------
+    """  
     The background color of the series.
 
     Related Pages:
@@ -755,9 +662,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def lineWidth(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -771,9 +676,7 @@ class OptionsThemeSeries(Options):
 
   @property
   def iconTypes(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -802,9 +705,7 @@ class OptionsTheme(Options):
 
   @property
   def series(self) -> OptionsThemeSeries:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -819,9 +720,7 @@ class OptionsLegendItem(Options):
 
   @property
   def overflow(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -835,9 +734,7 @@ class OptionsLegendItem(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -854,9 +751,7 @@ class OptionsLegend(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -870,9 +765,7 @@ class OptionsLegend(Options):
 
   @property
   def item(self) -> OptionsLegendItem:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -884,9 +777,7 @@ class OptionsLegend(Options):
 
   @property
   def visible(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -914,9 +805,7 @@ class OptionsChartPlotLine(Options):
 
   @property
   def value(self):
-    """
-    Description:
-    ------------
+    """  
     Value that corresponds to the x axis.
 
     Related Pages:
@@ -932,9 +821,7 @@ class OptionsChartPlotLine(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    ------------
+    """  
     Line color.
 
     Related Pages:
@@ -950,9 +837,7 @@ class OptionsChartPlotLine(Options):
 
   @property
   def opacity(self):
-    """
-    Description:
-    ------------
+    """  
     Line opacity
 
     Related Pages:
@@ -971,9 +856,7 @@ class OptionsChartPlotBand(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    ------------
+    """  
     Box color.
 
     Related Pages:
@@ -989,9 +872,7 @@ class OptionsChartPlotBand(Options):
 
   @property
   def range(self):
-    """
-    Description:
-    ------------
+    """  
     Values that correspond to the x-axis; entered in the array in the order of starting value and ending value.
 
     Related Pages:
@@ -1007,9 +888,7 @@ class OptionsChartPlotBand(Options):
 
   @property
   def opacity(self):
-    """
-    Description:
-    ------------
+    """  
     Box color opacity
 
     Related Pages:
@@ -1025,9 +904,7 @@ class OptionsChartPlotBand(Options):
 
   @property
   def mergeOverlappingRanges(self):
-    """
-    Description:
-    ------------
+    """  
     Determines whether to display overlapping bands when there are overlapping values in the range (default: false)
 
     Related Pages:
@@ -1044,10 +921,7 @@ class OptionsChartPlotBand(Options):
 class OptionsChartPlot(Options):
 
   def add_lines(self, value, color='#fa2828'):
-    """
-    Description:
-    -----------
-    Line, Area, LineArea, LineScatter, ColumnLine.
+    """   Line, Area, LineArea, LineScatter, ColumnLine.
 
     Related Pages:
 
@@ -1061,10 +935,7 @@ class OptionsChartPlot(Options):
     return line
 
   def add_band(self, values, color: str = '#ff5722', opacity: float = 0.1) -> OptionsChartPlotBand:
-    """
-    Description:
-    -----------
-    Line, Area, LineArea, LineScatter, ColumnLine
+    """   Line, Area, LineArea, LineScatter, ColumnLine
 
     Related Pages:
 
@@ -1083,9 +954,7 @@ class OptionsAnimation(Options):
 
   @property
   def duration(self):
-    """
-    Description:
-    ------------
+    """  
     Box color opacity
 
     Related Pages:
@@ -1103,9 +972,7 @@ class OptionsResponsive(Options):
 
   @property
   def animation(self) -> OptionsAnimation:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionsAnimation
     """
@@ -1116,9 +983,7 @@ class OptionsChartOpts(Options):
 
   @property
   def chart(self) -> OptionsChartAttrs:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1129,9 +994,7 @@ class OptionsChartOpts(Options):
 
   @property
   def legend(self) -> OptionsLegend:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1142,9 +1005,7 @@ class OptionsChartOpts(Options):
 
   @property
   def tooltip(self) -> OptionsTooltip:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1155,9 +1016,7 @@ class OptionsChartOpts(Options):
 
   @property
   def theme(self) -> OptionsTheme:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1168,9 +1027,7 @@ class OptionsChartOpts(Options):
 
   @property
   def series(self) -> OptionsChartSeries:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1181,9 +1038,7 @@ class OptionsChartOpts(Options):
 
   @property
   def plot(self) -> OptionsChartPlot:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionsChartPlot
     """
@@ -1201,9 +1056,7 @@ class OptionsChartOpts(Options):
 
   @property
   def yAxis(self) -> OptionsAxis:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1214,9 +1067,7 @@ class OptionsChartOpts(Options):
 
   @property
   def usageStatistics(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get(False)
@@ -1227,9 +1078,7 @@ class OptionsChartOpts(Options):
 
   @property
   def responsive(self) -> OptionsResponsive:
-    """
-    Description:
-    ------------
+    """  
 
     :rtype: OptionsResponsive
     """
@@ -1240,9 +1089,7 @@ class OptionsCharts(Options):
 
   @property
   def y_columns(self):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -1255,9 +1102,7 @@ class OptionsCharts(Options):
 
   @property
   def x_axis(self):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -1270,9 +1115,7 @@ class OptionsCharts(Options):
 
   @property
   def config(self) -> OptionsChartOpts:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1283,9 +1126,7 @@ class OptionsCharts(Options):
 
   @property
   def data(self) -> OptionsChartData:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1299,9 +1140,7 @@ class OptionsChartRadiusRange(Options):
 
   @property
   def inner(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -1312,9 +1151,7 @@ class OptionsChartRadiusRange(Options):
 
   @property
   def outer(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get()
@@ -1328,9 +1165,7 @@ class OptionsChartSeriesPie(Options):
 
   @property
   def radiusRange(self) -> OptionsChartRadiusRange:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1344,9 +1179,7 @@ class OptionsChartPieOpts(OptionsChartOpts):
 
   @property
   def series(self) -> OptionsChartSeriesPie:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -1360,9 +1193,7 @@ class OptionsChartsPie(OptionsCharts):
 
   @property
   def config(self) -> OptionsChartPieOpts:
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 

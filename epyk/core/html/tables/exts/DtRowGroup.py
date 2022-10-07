@@ -10,10 +10,7 @@ class RowGroup(Options):
 
   @property
   def className(self):
-    """
-    Description:
-    -----------
-    Set the class name to be used for the grouping rows.
+    """   Set the class name to be used for the grouping rows.
 
     Related Pages:
 
@@ -27,10 +24,7 @@ class RowGroup(Options):
 
   @property
   def dataSrc(self):
-    """
-    Description:
-    -----------
-    Set the data point to use as the grouping data source
+    """   Set the data point to use as the grouping data source
 
     Related Pages:
 
@@ -44,10 +38,7 @@ class RowGroup(Options):
 
   @property
   def emptyDataGroup(self):
-    """
-    Description:
-    -----------
-    Text to show for rows which have null, undefined or empty string group data.
+    """   Text to show for rows which have null, undefined or empty string group data.
 
     Related Pages:
 
@@ -61,10 +52,7 @@ class RowGroup(Options):
 
   @property
   def enable(self):
-    """
-    Description:
-    -----------
-    Provides the ability to disable row grouping at initialisation.
+    """   Provides the ability to disable row grouping at initialisation.
 
     Related Pages:
 
@@ -78,10 +66,7 @@ class RowGroup(Options):
 
   @property
   def endClassName(self):
-    """
-    Description:
-    -----------
-    Set the class name to be used for the grouping end rows.
+    """   Set the class name to be used for the grouping end rows.
 
     Related Pages:
 
@@ -95,10 +80,7 @@ class RowGroup(Options):
 
   @property
   def startClassName(self):
-    """
-    Description:
-    -----------
-    Set the class name to be used for the grouping start rows.
+    """   Set the class name to be used for the grouping start rows.
 
     Related Pages:
 

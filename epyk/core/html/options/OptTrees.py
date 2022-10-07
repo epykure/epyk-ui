@@ -9,11 +9,7 @@ class OptionsTree(Options):
   @property
   def is_root(self):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :prop flag:
     """
     return self._config_get(True)
@@ -25,12 +21,8 @@ class OptionsTree(Options):
   @property
   def icon_open(self):
     """
-    Description:
-    ------------
     Set the icon when the node is open.
-
-    Attributes:
-    ----------
+ 
     :prop icon: String. The icon reference from font-awesome.
     """
     return self._config_get("fas fa-folder-open")
@@ -42,12 +34,8 @@ class OptionsTree(Options):
   @property
   def icon_close(self):
     """
-    Description:
-    ------------
     Set the icon when the node is closed.
-
-    Attributes:
-    ----------
+ 
     :prop icon: String. The icon reference from font-awesome.
     """
     return self._config_get("fas fa-folder")
@@ -59,12 +47,8 @@ class OptionsTree(Options):
   @property
   def icon_style(self):
     """
-    Description:
-    ------------
     Set the CSS attributes to each node and leaf in the tree.
-
-    Attributes:
-    ----------
+ 
     :prop css: Dictionary. The CSS Style to be used.
     """
     return self._config_get({"margin-right": "5px"})
@@ -78,12 +62,8 @@ class OptionsTree(Options):
   @property
   def expanded(self):
     """
-    Description:
-    ------------
     Flag to set the initial state of the tree.
-
-    Attributes:
-    ----------
+ 
     :prop flag: Boolean. A flag to specify the state of the tree.
     """
     return self._config_get(True)
@@ -95,12 +75,8 @@ class OptionsTree(Options):
   @property
   def style(self):
     """
-    Description:
-    ------------
     Set the CSS attributes to each node and leaf in the tree.
-
-    Attributes:
-    ----------
+ 
     :prop css: Dictionary. The CSS Style to be used.
     """
     return self._config_get({})
@@ -112,12 +88,8 @@ class OptionsTree(Options):
   @property
   def with_badge(self):
     """
-    Description:
-    ------------
     Display a badge with the count of leaves in the tree for a given node.
-
-    Attributes:
-    ----------
+ 
     :prop flag: Boolean. A flag to specify if the badge with the count of leaves is visible.
     """
     return self._config_get(False)
@@ -129,11 +101,7 @@ class OptionsTree(Options):
   @property
   def with_icon(self):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :prop key: The key in the data used to display an icon.
     """
     return self._config_get(None)
@@ -145,11 +113,7 @@ class OptionsTree(Options):
   @property
   def filter_on(self):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :prop str key: The sub string to filter the tree result.
     """
     return self._config_get(None)
@@ -160,12 +124,8 @@ class OptionsTree(Options):
 
   def click_node(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
     Add event on the node label.
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
@@ -177,12 +137,8 @@ class OptionsTree(Options):
 
   def click_leaf(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
     Add a specific event on the leaf nodes in the hierarchy view.
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """
@@ -198,12 +154,8 @@ class OptDropDown(Options):
   @property
   def width(self):
     """
-    Description:
-    ------------
     Set the width of the dropdown item.
-
-    Attributes:
-    ----------
+ 
     :prop number: Integer. The width of the item in pixel.
     """
     return self._config_get(False)
@@ -219,8 +171,6 @@ class OptDropDown(Options):
   @property
   def a(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get({})
@@ -232,8 +182,6 @@ class OptDropDown(Options):
   @property
   def ul(self):
     """
-    Description:
-    ------------
 
     """
     return self._config_get({})
@@ -244,11 +192,7 @@ class OptDropDown(Options):
 
   def onClick(self, js_funcs, profile=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: List | String. A Javascript Python function.
     :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
     """

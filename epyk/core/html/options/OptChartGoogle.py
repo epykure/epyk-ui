@@ -18,13 +18,8 @@ class OptionsChartSharedGoogle(OptChart.OptionsChartShared):
     pass
 
   def x_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the x axis.
+    """   Set the label of the x axis.
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.hAxis.title = value
@@ -43,13 +38,8 @@ class OptionsChartSharedGoogle(OptChart.OptionsChartShared):
     pass
 
   def y_label(self, value):
-    """
-    Description:
-    -----------
-    Set the label of the y axis.
+    """   Set the label of the y axis.
 
-    Attributes:
-    ----------
     :param value: String. The axis label.
     """
     self.component.options.vAxis.title = value

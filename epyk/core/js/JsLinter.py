@@ -6,13 +6,8 @@ from epyk.core.py import primitives
 
 
 def indent(level: int = 0, spaces: Optional[int] = None):
-  """
-  Description:
-  ------------
-  Add the number of spaces according to the indent level.
+  """  Add the number of spaces according to the indent level.
 
-  Attributes:
-  ----------
   :param int level: Optional. The level for the line indent.
   :param Optional[int] spaces: Optional. The number of spaces. (Default 2).
   """
@@ -21,13 +16,8 @@ def indent(level: int = 0, spaces: Optional[int] = None):
 
 
 def parse_statements(line: str, level: int, delimiter: str = ";", spaces: Optional[int] = None):
-  """
-  Description:
-  ------------
-  Parse and format a JavaScript line.
+  """  Parse and format a JavaScript line.
 
-  Attributes:
-  ----------
   :param line: The JavaScript statements.
   :param level: The level of indent to be added to this line.
   :param delimiter: Optional. The statement delimiter. Default ;.
@@ -47,13 +37,8 @@ def parse_statements(line: str, level: int, delimiter: str = ";", spaces: Option
 
 
 def parse(data: str, minify: Optional[bool] = None, to_str: bool = True, spaces: Optional[int] = None):
-  """
-  Description:
-  ------------
-  Parse and format a JavaScript string full statement.
+  """  Parse and format a JavaScript string full statement.
 
-  Attributes:
-  ----------
   :param data: The Javascript statements.
   :param minify: Optional. Specify the type of formatting. (Default minify True).
   :param to_str: Optional. Specify the type of data returned by this function (string or list).
@@ -90,13 +75,8 @@ def parse(data: str, minify: Optional[bool] = None, to_str: bool = True, spaces:
 
 
 def builder(cls, minify: Optional[bool] = None, to_str: bool = True, spaces: Optional[int] = None):
-  """
-  Description:
-  ------------
-  Extract the builder function from the HTML component.
+  """  Extract the builder function from the HTML component.
 
-  Attributes:
-  ----------
   :param cls: Class. An internal HTML component class.
   :param minify: Optional. Specify the type of formatting. (Default minify True).
   :param to_str: Optional. Specify the type of data returned by this function (string or list).
@@ -109,10 +89,7 @@ def builder(cls, minify: Optional[bool] = None, to_str: bool = True, spaces: Opt
 
 def events(component: primitives.HtmlModel, minify: Optional[bool] = None, to_str: bool = True,
            spaces: Optional[int] = None) -> str:
-  """
-  Description:
-  ------------
-  Extract the JavaScript events from an HTML component.
+  """  Extract the JavaScript events from an HTML component.
 
   Usage::
 
@@ -122,8 +99,6 @@ def events(component: primitives.HtmlModel, minify: Optional[bool] = None, to_st
 
     results = JsLinter.events(but)
 
-  Attributes:
-  ----------
   :param component: An internal component in the framework.
   :param minify: Optional. Specify the type of formatting. (Default minify True).
   :param to_str: Optional. Specify the type of data returned by this function (string or list).

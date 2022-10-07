@@ -14,9 +14,7 @@ class Drawers:
   def drawer(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
              options: dict = None, profile: types.PROFILE_TYPE = None,
              helper: str = None) -> html.HtmlDrawer.Drawer:
-    """
-    Description:
-    ------------
+    """  
     Bespoke drawer with handle on the right.
 
     :tags:
@@ -31,9 +29,7 @@ class Drawers:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/drawers.py
-
-    Attributes:
-    -----------
+ -
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -50,18 +46,14 @@ class Drawers:
   def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
            options: dict = None, profile: types.PROFILE_TYPE = None,
            helper: str = None) -> html.HtmlDrawer.Drawer:
-    """
-    Description:
-    ------------
+    """  
     Bespoke drawer with handle on the left.
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    -----------
+ -
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -80,9 +72,7 @@ class Drawers:
   def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
             options: dict = None, profile: types.PROFILE_TYPE = None,
             helper: str = None) -> html.HtmlDrawer.Drawer:
-    """
-    Description:
-    ------------
+    """  
     Bespoke drawer with handle on the left.
 
     :tags:
@@ -101,9 +91,7 @@ class Drawers:
           d.panels[0].dom.css({"display": 'block'}).r,
           page.js.console.log(d.dom.content)
         ])
-
-    Attributes:
-    -----------
+ -
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. A dictionary with the components properties
@@ -122,9 +110,7 @@ class Drawers:
   def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
             profile: dict = None, helper: str = None) -> html.HtmlDrawer.DrawerMulti:
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
@@ -134,9 +120,7 @@ class Drawers:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/multi_drawers.py
-
-    Attributes:
-    -----------
+ -
     :param component: Object in charge of managing the panel display
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -157,9 +141,7 @@ class Drawers:
                 height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
                 profile: types.PROFILE_TYPE = None,
                 helper: str = None) -> html.HtmlDrawer.Drawer:
-    """
-    Description:
-    ------------
+    """  
     Bespoke drawer without handle.
     The event to display the panel will be attached to the component.
 
@@ -169,9 +151,7 @@ class Drawers:
     Usage::
 
       page.ui.drawers.no_handle(page.ui.button("No Handle"))
-
-    Attributes:
-    -----------
+ -
     :param component: Object in charge of managing the panel display
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit

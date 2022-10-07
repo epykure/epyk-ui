@@ -38,9 +38,7 @@ class Stepper(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStepper.Stepper:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
     """
@@ -50,9 +48,7 @@ class Stepper(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsStepper:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
     """
     return super().options
@@ -87,13 +83,9 @@ class Stepper(Html.Html):
       '''
 
   def add_shape(self, shape: str, shape_def: str, dependencies: Optional[list] = None):
-    """
-    Description:
-    ------------
+    """  
     Add a bespoke shape for the stepper component.
 
-    Attributes:
-    ----------
     :param shape: The reference of the shape.
     :param shape_def: The shape JavaScript definition.
     :param dependencies: Optional. The external module dependencies.
@@ -126,13 +118,9 @@ class Step:
     self._selector = selector
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add a click event to the component.
 
-    Attributes:
-    ----------
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     """

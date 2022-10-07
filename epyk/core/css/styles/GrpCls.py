@@ -29,8 +29,6 @@ class ClassPage:
   @property
   def css(self) -> Body:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     :rtype: Body
@@ -42,8 +40,6 @@ class ClassPage:
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
-    Description:
-    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
@@ -57,8 +53,6 @@ class ClassPage:
   @property
   def globals(self) -> Defaults_css.GlobalStyle:
     """
-    Description:
-    ------------
     Reference for all the global setting in the page.
     This should be changed in order to be the proxy to the Default CSS settings in the framework.
 
@@ -75,8 +69,6 @@ class ClassPage:
   @property
   def scrollbar_webkit(self) -> CssStyleScrollbar.CssWebkitScrollbar:
     """
-    Description:
-    ------------
     Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbar
@@ -88,8 +80,6 @@ class ClassPage:
   @property
   def scrollbar_webkit_thumb(self) -> CssStyleScrollbar.CssWebkitScrollbarThumb:
     """
-    Description:
-    ------------
     Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
@@ -101,8 +91,6 @@ class ClassPage:
   @property
   def scrollbar_webkit_track(self):
     """
-    Description:
-    ------------
     Scrollbars predefined styles.
 
     :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
@@ -114,8 +102,6 @@ class ClassPage:
   @property
   def selection(self) -> CssStyleScrollbar.CssWebkitSelection:
     """
-    Description:
-    ------------
     Selection predefined style (background color based on the selected theme).
 
     Related Pages:
@@ -131,8 +117,6 @@ class ClassPage:
   @property
   def moz_selection(self) -> CssStyleScrollbar.CssWebkitMozSelection:
     """
-    Description:
-    ------------
     Selection predefined style (background color based on the selected theme).
 
     Related Pages:
@@ -147,8 +131,6 @@ class ClassPage:
 
   def contenteditable(self) -> CssStylesPage.CssPageContentEditable:
     """
-    Description:
-    ------------
     Set the border color of the editable content according to the selected theme.
 
     Related Pages:
@@ -164,11 +146,7 @@ class ClassPage:
 
   def fit_screen_height(self, margin_size=None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param margin_size: Integer. Optional.
     """
     if margin_size is not None:
@@ -181,8 +159,6 @@ class ClassPage:
   @property
   def defaults(self):
     """
-    Description:
-    ------------
     The Default CSS Attributes in the framework.
     """
     return Defaults_css
@@ -190,8 +166,6 @@ class ClassPage:
   @property
   def add_classes(self) -> Classes.Catalog:
     """
-    Description:
-    ------------
     Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
 
     :rtype: Classes.Catalog
@@ -203,8 +177,6 @@ class ClassPage:
   @property
   def define_classes(self) -> Classes.Catalog:
     """
-    Description:
-    ------------
     Property to get access to the catalog of CSS classes to be loaded in the page.
     Those classes will not be automatically added to any HTML tag and they need to be added manually.
 
@@ -216,8 +188,6 @@ class ClassPage:
 
   def get_classes(self):
     """
-    Description:
-    ------------
     Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
     """
     for css_cls in self.classList.values():
@@ -228,8 +198,6 @@ class ClassPage:
 
   def get_classes_css(self):
     """
-    Description:
-    ------------
     Attach the predefined styles for the scrollbar and selection then return all the classes.
     """
     self.classList['other'].add(self.scrollbar_webkit)
@@ -246,23 +214,17 @@ class ClassPage:
     return css_frgs
 
   def custom_class(self, css_attrs, classname=None, selector=None, is_class=True, important=False):
-    """
-    Description:
-    -----------
-    This will create dynamic CSS class which will not be added to any component.
+    """   This will create dynamic CSS class which will not be added to any component.
     The class definition can then be reused in multiple components.
 
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
     TODO: Enable the important for nested css_attrs.
 
-    Usage:
-    -----
+    Usage::
 
       page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
-
-    Attributes:
-    ----------
+ 
     :param css_attrs: Dictionary. Nested dictionary with the different attributes.
     :param classname: Optional. String. The classname in the CSS definition.
     :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition).
@@ -299,8 +261,6 @@ class ClassHtml:
   @property
   def varName(self) -> str:
     """
-    Description:
-    ------------
     Unique identifier for the CSS object on the Javascript side.
     """
     return "%s_css" % self.component.htmlCode
@@ -308,8 +268,6 @@ class ClassHtml:
   @property
   def css(self) -> Commons:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
     """
     if self._css_struct is None:
@@ -319,8 +277,6 @@ class ClassHtml:
   @property
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
-    Description:
-    ------------
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
     """
@@ -331,16 +287,12 @@ class ClassHtml:
 
   def shadows(self, num: int):
     """
-    Description:
-    ------------
     Shortcut to various shadow styles.
 
     Related Pages:
 
       https://getcssscan.com/css-box-shadow-examples
-
-    Attributes:
-    ----------
+ 
     :param int num: The template number.
     """
     shadow_styles = {
@@ -372,8 +324,6 @@ class ClassHtml:
   @property
   def configs(self) -> GrpConfigs.ClsConfigs:
     """
-    Description:
-    ------------
     All predefined CSS configurations.
     """
     return GrpConfigs.ClsConfigs(self.component)
@@ -381,8 +331,6 @@ class ClassHtml:
   @property
   def defaults(self):
     """
-    Description:
-    ------------
     The Default CSS Attributes in the framework.
     """
     return Defaults_css
@@ -390,8 +338,6 @@ class ClassHtml:
   @property
   def effects(self) -> Effects.Effects:
     """
-    Description:
-    ------------
     Add animation effect to the component based either on a bespoke definition or a predefined one.
     """
     if self.__cls_effects is None:
@@ -401,8 +347,6 @@ class ClassHtml:
   @property
   def add_classes(self) -> Classes.Catalog:
     """
-    Description:
-    ------------
     Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
     """
     if self.__cls_catalog is None:
@@ -412,8 +356,6 @@ class ClassHtml:
   @property
   def define_classes(self) -> Classes.Catalog:
     """
-    Description:
-    ------------
     Property to get access to the catalog of CSS classes to be loaded in the page.
     Those classes will not be automatically added to any HTML tag and they need to be added manually.
     """
@@ -423,16 +365,12 @@ class ClassHtml:
 
   def attr(self, key: str, name: str, dflt: Optional[str] = None, suffix: str = "temp"):
     """
-    Description:
-    ------------
     The attr() function returns the value of an attribute of the selected elements.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/func_attr.asp
-
-    Attributes:
-    ----------
+ 
     :param key: The attribute key.
     :param name: The attribute value.
     :param dflt: Optional. The default value for the attribute.
@@ -448,40 +386,28 @@ class ClassHtml:
 
   def attr_content(self, name: str):
     """
-    Description:
-    ------------
     Use of the attr function for the before content value.
     This is the unique valid use of this CSS function in most of the browser.
 
     Related Pages:
 
       https://gomakethings.com/how-to-access-and-use-data-attributes-in-your-css/
-
-    Attributes:
-    ----------
+ 
     :param name: The attribute content name.
     """
     self.attr("content", name, suffix='before')
 
   def hover(self, attrs: dict):
     """
-    Description:
-    ------------
     Add onmousever style.
-
-    Attributes:
-    ----------
+ 
     :param attrs: The CSS attributes for the mouse hover style.
     """
     self.selector("hover", attrs)
 
   def standard(self, percent: int = 10, width_adj: bool = True):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param percent: Optional. The percentage of space on the left and right.
     :param width_adj: Optional. Adjust the width of the component considering this space.
     """
@@ -493,12 +419,8 @@ class ClassHtml:
 
   def selector(self, suffix: str, attrs: dict):
     """
-    Description:
-    ------------
     Set the selector name.
-
-    Attributes:
-    ----------
+ 
     :param suffix: The selector suffix value.
     :param attrs: The CSS attributes.
     """
@@ -509,24 +431,18 @@ class ClassHtml:
 
   def add_custom_class(self, css_attrs: dict, classname: str = None, selector: str = None,
                        is_class: bool = True, to_component: bool = False):
-    """
-    Description:
-    -----------
-    This will create dynamic CSS class which will not be added to any component.
+    """   This will create dynamic CSS class which will not be added to any component.
     The class definition can then be reused in multiple components.
 
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
-    Usage:
-    -----
+    Usage::
 
       page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
 
       p = page.ui.texts.paragraph("This is a paragraph", helper="Paragraph helper")
       p.style.add_custom_class({"_attrs": {"color": "green"}, "_hover": {"color": "blue"}})
-
-    Attributes:
-    ----------
+ 
     :param css_attrs: Nested dictionary with the different attributes.
     :param classname: Optional. The classname in the CSS definition.
     :param selector: Optional. The class selector (if it is not a classname using . but a strict definition).
@@ -555,8 +471,6 @@ class ClassHtml:
 
   def no_class(self):
     """
-    Description:
-    ------------
     Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
@@ -569,12 +483,8 @@ class ClassHtml:
 
   def clear_class(self, classname: str):
     """
-    Description:
-    ------------
     Remove a class from the main class object attribute.
-
-    Attributes:
-    ----------
+ 
     :param classname: The CSS class name to be removed for the component.
 
     :return: The style property for chaining.
@@ -589,12 +499,8 @@ class ClassHtml:
 
   def clear_style(self, persist_attrs: dict = None, keep_attrs: list = None):
     """
-    Description:
-    ------------
     Clear all the inline CSS styles defined for the component.
-
-    Attributes:
-    ----------
+ 
     :param persist_attrs: Optional. CSS attributes to be maintained
     :param keep_attrs: Optional. CSS attributes to keep from the initial state
 
@@ -617,12 +523,8 @@ class ClassHtml:
 
   def clear(self, no_default: bool = False):
     """
-    Description:
-    ------------
     Remove the predefined class and set the default one for the div components.
-
-    Attributes:
-    ----------
+ 
     :param no_default: Optional. Remove the default class.
 
     :return: self to allow the chaining.
@@ -641,15 +543,11 @@ class ClassHtml:
 
   def clear_all(self, no_default: bool = False):
     """
-    Description:
-    ------------
     Clear all the Style, Classes and CSS attributes for the HTML component.
     Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
     Set the default style to no margin and no padding.
-
-    Attributes:
-    ----------
+ 
     :param no_default: Optional. Remove the default class.
 
     :return: self to allow the chaining.
@@ -660,13 +558,9 @@ class ClassHtml:
 
   def builder(self, name: str, js_frg: str):
     """
-    Description:
-    ------------
     Attach a Javascript Builder to a CSS style.
     It will be triggered only once for all the HTML components using this style.
-
-    Attributes:
-    ----------
+ 
     :param name: The Javascript variable name.
     :param js_frg: The Javascript framework corresponding to the Js builder.
     """
@@ -675,8 +569,6 @@ class ClassHtml:
 
   def get_classes(self):
     """
-    Description:
-    ------------
     Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
     """
     if self.__css_virtual and '_attrs' not in self.__css_virtual:
@@ -702,8 +594,6 @@ class ClassHtml:
 
   def get_classes_css(self):
     """
-    Description:
-    ------------
 
     """
     css_frgs = {}
@@ -721,8 +611,6 @@ class ClassHtml:
   @property
   def bs(self) -> BsCssClasses.Style:
     """
-    Description:
-    ------------
     Add shortcut to the Bootstrap predefined styles.
 
     Related Pages:
@@ -739,8 +627,6 @@ class ClassHtmlEmpty(ClassHtml):
   @property
   def css(self) -> Empty:
     """
-    Description:
-    ------------
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
     """
     if self._css_struct is None:

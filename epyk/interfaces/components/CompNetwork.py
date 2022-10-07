@@ -20,8 +20,6 @@ class Network:
                height: types.SIZE_TYPE = (200, 'px'), profile: types.PROFILE_TYPE = None,
                options: dict = None) -> html.HtmlNetwork.Comments:
     """
-    Description:
-    ------------
     Python wrapper to a div item composed to several sub html items to display message
 
     Usage::
@@ -38,9 +36,7 @@ class Network:
 
       https://leaverou.github.io/bubbly/
       http://manos.malihu.gr/jquery-custom-content-scroller/
-
-    Attributes:
-    ----------
+ 
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param record: Optional. The Python list of dictionaries.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -61,8 +57,6 @@ class Network:
            height: types.SIZE_TYPE = (200, 'px'), profile: types.PROFILE_TYPE = None,
            options: dict = None) -> html.HtmlNetwork.Chat:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -73,9 +67,7 @@ class Network:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/chat.py
-
-    Attributes:
-    ----------
+ 
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param record: Optional. The Python list of dictionaries.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -95,8 +87,6 @@ class Network:
   def bot(self, html_code: str, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
           profile: types.PROFILE_TYPE = None, options: dict = None) -> html.HtmlNetwork.Bot:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -109,9 +99,7 @@ class Network:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bot.py
-
-    Attributes:
-    ----------
+ 
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -131,8 +119,6 @@ class Network:
             height: types.SIZE_TYPE = (None, None), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
     """
-    Description:
-    ------------
     Function to add when the python run some tags to put on the top of your report messages.
 
     The type of the messages can be different according to its criticallity.
@@ -156,9 +142,7 @@ class Network:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/alerts.py
-
-    Attributes:
-    ----------
+ 
     :param category: The warning level.
     :param value: Optional. The content of the notification.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -185,8 +169,6 @@ class Network:
              height: types.SIZE_TYPE = (None, None), options: dict = None,
              profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
     """
-    Description:
-    ------------
     Function to add when the python run some tags to put on the top of your report messages.
 
     The type of the messages can be different according to its criticality.
@@ -206,9 +188,7 @@ class Network:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/alerts/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The content of the notification.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -224,8 +204,6 @@ class Network:
            height: types.SIZE_TYPE = (None, None), options: dict = None,
            profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
     """
-    Description:
-    ------------
     Function to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
@@ -241,9 +219,7 @@ class Network:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/alerts/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The content of the notification.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -259,8 +235,6 @@ class Network:
               height: types.SIZE_TYPE = (None, None), options: dict = None,
               profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
     """
-    Description:
-    ------------
     unction to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
@@ -276,9 +250,7 @@ class Network:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/alerts/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The content of the notification.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -294,8 +266,6 @@ class Network:
               height: types.SIZE_TYPE = (None, None), options: dict = None,
               profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
     """
-    Description:
-    ------------
     Function to add when the python run some tags to put on the top of your report messages.
     The type of the messages can be different according to its criticallity.
     This is fully defined and #driven in the Python and visible in the browser when the page is ready
@@ -315,9 +285,7 @@ class Network:
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/components/alerts/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The content of the notification.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -333,8 +301,6 @@ class Network:
            height: types.SIZE_TYPE = (None, None), options: dict = None,
            profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.News:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -349,9 +315,7 @@ class Network:
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/st_news.py
-
-    Attributes:
-    ----------
+ 
     :param value: Optional.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -372,14 +336,10 @@ class Network:
            height: types.SIZE_TYPE = (60, 'px'), options: dict = None,
            profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Room:
     """
-    Description:
-    ------------
 
     Usage::
 
-
-    Attributes:
-    ----------
+ 
     :param img: Optional. The image path on the server or locally to be used.
     :param html_code: Optional. The id for this component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -401,8 +361,6 @@ class Network:
                html_code: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlNetwork.DropFile:
     """
-    Description:
-    ------------
     Add an HTML component to drop files. The files will be dropped by default to the OUTPUT folder of the
     defined environment.
 
@@ -419,9 +377,7 @@ class Network:
 
     Related Pages:
 
-
-    Attributes:
-    ----------
+ 
     :param placeholder: Optional. The placeholder text when input empty.
     :param delimiter: Optional. The column delimiter.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -440,13 +396,9 @@ class Network:
              html_code: str = None, options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param icon: Optional. The component icon content from font-awesome references
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -463,13 +415,9 @@ class Network:
                height: types.SIZE_TYPE = (25, 'px'), html_code: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlButton.IconEdit:
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param name: Optional.
     :param icon: Optional. The component icon content from font-awesome references.
     :param path: Optional. String. The image file path.
@@ -510,13 +458,9 @@ class Network:
                 size: types.SIZE_TYPE = (50, 'px'), profile: types.PROFILE_TYPE = None,
                 options: dict = None) -> html.HtmlNetwork.Assistant:
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param image:
     :param name:
     :param path:
@@ -557,16 +501,12 @@ class Network:
   def impression(self, number: int = 0, icon: str = "fas fa-chart-bar", options: dict = None, html_code: str = None,
                  profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add an impression component. This is designed to use the viewport function to increment the value,
 
     Usage::
 
       page.ui.network.impression()
-
-    Attributes:
-    ----------
+ 
     :param number: Optional. The initial value
     :param icon: Optional. The icon text
     :param options: Optional. The number component options
@@ -590,8 +530,6 @@ class Network:
   def votes(self, number: int = 0, options: dict = None, html_code: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add a vote component with two arrows and a number.
 
     Usage::
@@ -600,9 +538,7 @@ class Network:
       vote.up.style.css.cursor = "pointer"
       vote.up.click(vote.number.dom.add(1))
       vote.down.click(vote.number.dom.add(-1))
-
-    Attributes:
-    ----------
+ 
     :param number: Optional. The initial value
     :param options: Optional. The number component options
     :param html_code: Optional. The code used on the JavaScript side

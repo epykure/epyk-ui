@@ -62,9 +62,7 @@ class DataMarkersChoroMap(GraphPlotly.DataMarkers):
 
   @property
   def colorbar(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: DataMarkersChoroMapBar
     """
@@ -137,18 +135,14 @@ class LayoutMapBox(GraphPlotly.Layout):
 
   @property
   def center(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutCenter
     """
     return self.sub_data("center", LayoutCenter)
 
   def add_layers(self, sourcetype, source, below="traces"):
-    """
-    Description:
-    -----------
+    """   
 
     :param sourcetype:
     :param source:
@@ -184,9 +178,7 @@ class LayoutGeo(GraphPlotly.Layout):
 
   @property
   def mapbox(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutMapBox
     """
@@ -299,9 +291,7 @@ class LayoutGeoMapGeo(LayoutGeo):
 
   @property
   def projection(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeoProjection
     """
@@ -312,9 +302,7 @@ class LayoutGeoMap(LayoutGeo):
 
   @property
   def geo(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeoMapGeo
     """
@@ -322,18 +310,14 @@ class LayoutGeoMap(LayoutGeo):
 
   @property
   def mapbox(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutMapBox
     """
     return self.sub_data("mapbox", LayoutMapBox)
 
   def no_background(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://community.plot.ly/t/you-can-remove-the-white-background-of-the-graphics-background/933
 
@@ -407,9 +391,7 @@ class DataChoropleth(GraphPlotly.DataChart):
 
   @property
   def marker(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://plot.ly/javascript/bubble-maps/
 
@@ -436,9 +418,7 @@ class Scatter(GraphPlotly.Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsPlotly.Pie
     """
@@ -448,9 +428,7 @@ class Scatter(GraphPlotly.Chart):
 
   @property
   def layout(self) -> LayoutGeo:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeo
     """
@@ -479,9 +457,7 @@ class Chorolet(GraphPlotly.Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsPlotly.Pie
     """
@@ -491,9 +467,7 @@ class Chorolet(GraphPlotly.Chart):
 
   @property
   def layout(self) -> LayoutGeo:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeo
     """
@@ -522,9 +496,7 @@ class Choropleth(GraphPlotly.Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsPlotly.Pie
     """
@@ -534,9 +506,7 @@ class Choropleth(GraphPlotly.Chart):
 
   @property
   def layout(self) -> LayoutGeoMap:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeoMap
     """
@@ -572,9 +542,7 @@ class BubbleGeo(GraphPlotly.Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: JsPlotly.Pie
     """
@@ -584,9 +552,7 @@ class BubbleGeo(GraphPlotly.Chart):
 
   @property
   def layout(self) -> LayoutGeoMap:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: LayoutGeoMap
     """

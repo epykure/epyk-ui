@@ -15,16 +15,12 @@ class Poller:
              align: str = "left", html_code: str = None, options: dict = None,
              profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param time: Integer. Interval time in second.
     :param js_funcs: String | List. The Javascript functions.
     :param components: List. HTML components to be triggered when activated.
@@ -69,16 +65,12 @@ class Poller:
            height: Union[tuple, int] = (15, "px"), align: str = "left",
            html_code: str = None, profile: Union[dict, bool] = None, options: dict = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param time: Integer. Interval time in second.
     :param js_funcs: String | List. The Javascript functions.
     :param components: List. HTML components to be triggered when activated.

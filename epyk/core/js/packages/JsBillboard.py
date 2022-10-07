@@ -12,10 +12,7 @@ class Billboard(JsC3.C3):
   lib_alias = {'js': "billboard.js", 'css': 'billboard.js'}
 
   def export(self):
-    """
-    Description:
-    -----------
-    Export chart as an image.
+    """   Export chart as an image.
 
     Related Pages:
 
@@ -24,17 +21,12 @@ class Billboard(JsC3.C3):
     return JsObjects.JsVoid("%s.export()" % self._selector)
 
   def revert(self, target: Union[str, list, primitives.JsDataModel] = None):
-    """
-    Description:
-    -----------
-    Export chart as an image.
+    """   Export chart as an image.
 
     Related Pages:
 
       https://naver.github.io/billboard.js/release/latest/doc/Chart.html#export
 
-    Attributes:
-    ----------
     :param Union[str, list, primitives.JsDataModel] target: ids to be reverted.
     """
     target = JsUtils.jsConvertData(target, None)

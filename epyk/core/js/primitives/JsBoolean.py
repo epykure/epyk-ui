@@ -21,10 +21,7 @@ class JsBoolean(JsObject.JsObject):
 
   @property
   def not_(self):
-    """
-    Description:
-    -----------
-    Add the Symbol (!) for the boolean negation.
+    """   Add the Symbol (!) for the boolean negation.
     This feature is also available directly to the JsObj
 
     Usage::
@@ -41,10 +38,7 @@ class JsBoolean(JsObject.JsObject):
     return self
 
   def valueOf(self):
-    """
-    Description:
-    -----------
-    The valueOf() method returns the primitive value of a boolean.
+    """   The valueOf() method returns the primitive value of a boolean.
 
     Usage::
 

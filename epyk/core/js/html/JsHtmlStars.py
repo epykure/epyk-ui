@@ -10,8 +10,6 @@ class Stars(JsHtml.JsHtmlRich):
   @property
   def val(self):
     """
-    Description:
-    ------------
     The Javascript data object. A dictionary with all the specific metadata attached to the component.
     """
     return JsObjects.JsObjects.get(
@@ -21,8 +19,6 @@ class Stars(JsHtml.JsHtmlRich):
   @property
   def content(self) -> JsHtml.ContentFormatters:
     """
-    Description:
-    ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component.
     """
     return JsHtml.ContentFormatters(self.page, "%s.dataset.level" % self.varName)
@@ -33,21 +29,15 @@ class Slides(JsHtml.JsHtmlRich):
   @property
   def content(self) -> JsHtml.ContentFormatters:
     """
-    Description:
-    ------------
     The Javascript value of the component. This returned only a value corresponding to the state of the component.
     """
     return JsHtml.ContentFormatters(self.page, "%s.getAttribute('data-current_slide')" % self.varName)
 
   def goTo(self, number: int):
     """
-    Description:
-    ------------
 
     TODO: ADD if in the JavaScript to display the next and previous if goTo triggered from first or last slides.
 
-    Attributes:
-    ----------
     :param int number:
     """
     return JsObjects.JsObjects.get('''%s.setAttribute('data-current_slide', Math.min(%s, %s)-2);

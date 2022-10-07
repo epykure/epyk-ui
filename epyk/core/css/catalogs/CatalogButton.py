@@ -10,20 +10,14 @@ class CatalogButton(Catalog.CatalogGroup):
   """
 
   def basic(self) -> CssStylesButton.CssButtonBasic:
-    """
-    Description:
-    -----------
-    Basic style for a button.
+    """   Basic style for a button.
 
     :rtype: CssStylesButton.CssButtonBasic
     """
     return self._set_class(CssStylesButton.CssButtonBasic)
 
   def important(self) -> CssStylesButton.CssButtonImportant:
-    """
-    Description:
-    -----------
-    Important style for a button.
+    """   Important style for a button.
 
     :rtype: CssStylesButton.CssButtonImportant
     """
@@ -31,8 +25,6 @@ class CatalogButton(Catalog.CatalogGroup):
 
   def reset(self) -> CssStylesButton.CssButtonReset:
     """
-    Description:
-    -----------
 
     :rtype: CssStylesButton.CssButtonReset
     """
@@ -40,18 +32,13 @@ class CatalogButton(Catalog.CatalogGroup):
 
   def success(self) -> CssStylesButton.CssButtonSuccess:
     """
-    Description:
-    -----------
 
     :rtype: CssStylesButton.CssButtonSuccess
     """
     return self._set_class(CssStylesButton.CssButtonSuccess)
 
   def content(self) -> CssStylesButton.CssButtonContentHover:
-    """
-    Description:
-    -----------
-    CSS Class for the underlying item panel.
+    """   CSS Class for the underlying item panel.
     By default this item is not visible and this will change when the mouse is hover.
 
     :rtype: CssStylesButton.CssButtonContentHover
@@ -59,10 +46,7 @@ class CatalogButton(Catalog.CatalogGroup):
     return self._set_class(CssStylesButton.CssButtonContentHover)
 
   def content_link(self) -> CssStylesButton.CssButtonContentAHover:
-    """
-    Description:
-    -----------
-    CSS Class for the item link.
+    """   CSS Class for the item link.
     This will set the background color when the mouse is hover.
 
     The color is deduced from the defined theme.

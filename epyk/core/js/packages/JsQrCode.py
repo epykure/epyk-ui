@@ -12,13 +12,10 @@ class QrCode(JsPackage):
   lib_alias = {"js": "qrcodejs", 'css': "qrcodejs"}
 
   def clear(self):
-    """
-    Description:
-    ------------
+    """  
     Clear the code.
 
-    Usage:
-    -----
+    Usage::
 
       qrcode = page.ui.qrcode()
       button = page.ui.button("Clear")
@@ -31,13 +28,10 @@ class QrCode(JsPackage):
     return JsObjects.JsObjects.get('%s.clear()' % self.varName)
 
   def makeCode(self, data: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
+    """  
     Make another code.
 
-    Usage:
-    -----
+    Usage::
 
       qrcode = page.ui.qrcode()
       button = page.ui.button("Write Test")
@@ -47,8 +41,6 @@ class QrCode(JsPackage):
 
       https://davidshimjs.github.io/qrcodejs/
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] data: The text to be used to build to code.
     """
     data = JsUtils.jsConvertData(data, None)

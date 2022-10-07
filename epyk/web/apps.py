@@ -16,13 +16,9 @@ class AppRoute:
 
   def angular(self, server, app, selector: str = None, name: str = None):
     """
-    Description:
-    ------------
     Entry point to a local Angular setup.
     This will allow the framework to convert modules and integrate them to an external Angular App.
 
-    Attributes:
-    ----------
     :param server:
     :param app:
     :param str selector:
@@ -34,13 +30,9 @@ class AppRoute:
 
   def react(self, server, app, selector=None, name=None):
     """
-    Description:
-    ------------
     Entry point to a local React setup.
     This will allow the framework to convert modules and integrate them to an external React App.
 
-    Attributes:
-    ----------
     :param server:
     :param app:
     :param selector:
@@ -52,13 +44,9 @@ class AppRoute:
 
   def vue(self, server, app, selector=None, name=None):
     """
-    Description:
-    ------------
     Entry point to a local Vue setup.
     This will allow the framework to convert modules and integrate them to an external Vue App.
 
-    Attributes:
-    ----------
     :param server:
     :param app:
     :param selector:
@@ -71,8 +59,6 @@ class AppRoute:
   @property
   def jupyter(self):
     """
-    Description:
-    ------------
     Entry point to a local Jupyter configuration.
     This will provide some information concerning the configuration of the local Jupyter instance.
 

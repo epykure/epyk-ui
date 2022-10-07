@@ -18,10 +18,7 @@ from epyk.core.html.tables.exts import TbValidators
 class EnumTopCalc(Enums):
 
   def concat(self):
-    """
-    Description:
-    -----------
-    Join all values into one string.
+    """   Join all values into one string.
 
     Related Pages:
 
@@ -30,10 +27,7 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def count(self):
-    """
-    Description:
-    -----------
-    A count of all non-empty cells in the column.
+    """   A count of all non-empty cells in the column.
 
     Related Pages:
 
@@ -42,17 +36,12 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def avg(self, precision: Union[int, bool] = None):
-    """
-    Description:
-    -----------
-    The average value of the column.
+    """   The average value of the column.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/column-calcs
-
-    Attributes:
-    ----------
+ 
     :param precision: The number of decimals to display, setting this value to false will display
       however many decimals are provided with the number
     """
@@ -64,17 +53,12 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def max(self, precision: Union[int, bool] = None):
-    """
-    Description:
-    -----------
-    The minimum value in the column.
+    """   The minimum value in the column.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/column-calcs
-
-    Attributes:
-    ----------
+ 
     :param precision: The number of decimals to display, setting this value to false will display
       however many decimals are provided with the number
     """
@@ -86,17 +70,12 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def min(self, precision: Union[int, bool] = None):
-    """
-    Description:
-    -----------
-    The minimum value in the column.
+    """   The minimum value in the column.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/column-calcs
-
-    Attributes:
-    ----------
+ 
     :param precision: The number of decimals to display, setting this value to false will display
       however many decimals are provided with the number
     """
@@ -108,17 +87,12 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def sum(self, precision: Union[int, bool] = None):
-    """
-    Description:
-    -----------
-    The minimum value in the column.
+    """   The minimum value in the column.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/column-calcs
-
-    Attributes:
-    ----------
+ 
     :param precision: The number of decimals to display, setting this value to false will display
       however many decimals are provided with the number
     """
@@ -130,17 +104,12 @@ class EnumTopCalc(Enums):
     return self._set_value()
 
   def bespoke(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add bespoke top calculation for the column.
+    """   Add bespoke top calculation for the column.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/column-calcs
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -150,10 +119,7 @@ class EnumTopCalc(Enums):
 class EnumLayout(Enums):
 
   def fitDataStretch(self):
-    """
-    Description:
-    -----------
-    The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the
+    """   The fitDataStretch layout mode functions in the same way as the fitDataFill mode, but instead of stretching the
     empty row to fill the table it stretches the last visible column.
 
     Related Pages:
@@ -163,10 +129,7 @@ class EnumLayout(Enums):
     return self._set_value()
 
   def fitColumns(self):
-    """
-    Description:
-    -----------
-    As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize
+    """   As an alternative to the default data fit, you can use the fitColumns layout mode to cause Tabulator to resize
     columns so they fit perfectly in the available table width.
 
     Related Pages:
@@ -176,10 +139,7 @@ class EnumLayout(Enums):
     return self._set_value()
 
   def fitData(self):
-    """
-    Description:
-    -----------
-    http://tabulator.info/docs/4.1/layout#fittodata.
+    """   http://tabulator.info/docs/4.1/layout#fittodata.
 
     Related Pages:
 
@@ -188,10 +148,7 @@ class EnumLayout(Enums):
     return self._set_value()
 
   def fitDataTable(self):
-    """
-    Description:
-    -----------
-    Tables will automatically resize container and columns to fit the data.
+    """   Tables will automatically resize container and columns to fit the data.
 
     Related Pages:
 
@@ -200,18 +157,13 @@ class EnumLayout(Enums):
     return self._set_value()
 
   def fitDataFill(self, inline: bool = True):
-    """
-    Description:
-    -----------
-    The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at
+    """   The fitDataFill layout mode functions in the same way as the fitData mode, but ensures that rows are always at
     least the full width of the table.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/layout
-
-    Attributes:
-    ----------
+ 
     :param inline: Optional. Force the CSS display to be inline-block.
     """
     self.component.style.css.width = "auto"
@@ -224,10 +176,7 @@ class EnumLayout(Enums):
 class EnumSorter(Enums):
 
   def string(self):
-    """
-    Description:
-    -----------
-    Sorts column as strings of characters.
+    """   Sorts column as strings of characters.
 
     Related Pages:
 
@@ -236,10 +185,7 @@ class EnumSorter(Enums):
     return self._set_value()
 
   def number(self):
-    """
-    Description:
-    -----------
-    Sorts column as numbers (integer or float, will also handle numbers using "," separators)
+    """   Sorts column as numbers (integer or float, will also handle numbers using "," separators)
 
     Related Pages:
 
@@ -248,10 +194,7 @@ class EnumSorter(Enums):
     return self._set_value()
 
   def alphanum(self):
-    """
-    Description:
-    -----------
-    Sorts column as alpha numeric code.
+    """   Sorts column as alpha numeric code.
 
     Related Pages:
 
@@ -260,10 +203,7 @@ class EnumSorter(Enums):
     return self._set_value()
 
   def boolean(self):
-    """
-    Description:
-    -----------
-    Sorts column as booleans.
+    """   Sorts column as booleans.
 
     Related Pages:
 
@@ -272,10 +212,7 @@ class EnumSorter(Enums):
     return self._set_value()
 
   def date(self):
-    """
-    Description:
-    -----------
-    Sorts column as dates.
+    """   Sorts column as dates.
 
     Related Pages:
 
@@ -284,10 +221,7 @@ class EnumSorter(Enums):
     return self._set_value()
 
   def time(self):
-    """
-    Description:
-    -----------
-    Sorts column as dates
+    """   Sorts column as dates
 
     Related Pages:
 
@@ -301,35 +235,22 @@ class EnumColCss(Enums):
   delimiter = " "
 
   def center(self):
-    """
-    Description:
-    -----------
-    CSS Class to center the results.
+    """   CSS Class to center the results.
     """
     self.component.body.style.custom_class({'_attrs': {'text-align': 'center'}}, classname="tb-center")
     return self._add_value(value="tb-center")
 
   def color(self, color: str):
-    """
-    Description:
-    -----------
-    CSS Class to change the font color.
-
-    Attributes:
-    ----------
+    """   CSS Class to change the font color.
+ 
     :param color: The CSS Color
     """
     self.component.body.style.custom_class({'_attrs': {'color': color}}, classname="tb-color-%s" % color)
     return self._add_value(value="tb-color-%s" % color)
 
   def background(self, color: str):
-    """
-    Description:
-    -----------
-    CSS Class to change the background color.
-
-    Attributes:
-    ----------
+    """   CSS Class to change the background color.
+ 
     :param color: The CSS Color
     """
     self.component.body.style.custom_class(
@@ -337,34 +258,24 @@ class EnumColCss(Enums):
     return self._add_value(value="tb-background-%s" % color)
 
   def name(self, name: str):
-    """
-    Description:
-    -----------
-    CSS class for bespoke style.
+    """   CSS class for bespoke style.
 
     Usage::
 
       page.properties.css.add_text('''.teststyle {background: pink}''')
       c.cssClasses.name("teststyle")
-
-    Attributes:
-    ----------
+ 
     :param name: The CSS classname
     """
     return self._add_value(value=name)
 
   def css(self, css_attrs: dict, css_attrs_hover: dict = None, important: bool = False):
-    """
-    Description:
-    -----------
-    CSS class for bespoke style.
+    """   CSS class for bespoke style.
 
     Usage::
 
       col_def.cssClass.css({'background': 'orange'}, {'background': 'white', 'color': 'blue'})
-
-    Attributes:
-    ----------
+ 
     :param css_attrs: The CSS attributes for the class
     :param css_attrs_hover: Optional. The CSS Hover attributes for the class
     :param important: Optional. To set the CSS configuration as important
@@ -380,10 +291,7 @@ class PersistencePage(Options):
 
   @property
   def size(self):
-    """
-    Description:
-    -----------
-    persist the current page size.
+    """   persist the current page size.
 
     Related Pages:
 
@@ -397,10 +305,7 @@ class PersistencePage(Options):
 
   @property
   def page(self):
-    """
-    Description:
-    -----------
-    do not persist the current page.
+    """   do not persist the current page.
 
     Related Pages:
 
@@ -417,10 +322,7 @@ class PersistenceGroup(Options):
 
   @property
   def groupBy(self):
-    """
-    Description:
-    -----------
-    persist only the groupBy setting.
+    """   persist only the groupBy setting.
     """
     return self._config_get()
 
@@ -430,10 +332,7 @@ class PersistenceGroup(Options):
 
   @property
   def groupStartOpen(self):
-    """
-    Description:
-    -----------
-    You can set the default open state of groups using the groupStartOpen property.
+    """   You can set the default open state of groups using the groupStartOpen property.
 
     Related Pages:
 
@@ -447,10 +346,7 @@ class PersistenceGroup(Options):
 
   @property
   def groupHeader(self):
-    """
-    Description:
-    -----------
-    You can also set a different header for each level of group, as above you pass an array to the groupHeader option.
+    """   You can also set a different header for each level of group, as above you pass an array to the groupHeader option.
 
     Related Pages:
 
@@ -467,10 +363,7 @@ class Persistence(Options):
 
   @property
   def sort(self):
-    """
-    Description:
-    -----------
-    You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence
+    """   You can ensure the data sorting is stored for the next page load by setting the sort property of the persistence
     option to true.
 
     Related Pages:
@@ -485,10 +378,7 @@ class Persistence(Options):
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
-    You can ensure the data filtering is stored for the next page load by setting the filter property of the
+    """   You can ensure the data filtering is stored for the next page load by setting the filter property of the
     persistence option to true.
 
     Related Pages:
@@ -503,10 +393,7 @@ class Persistence(Options):
 
   @property
   def group(self) -> PersistenceGroup:
-    """
-    Description:
-    -----------
-    You can ensure the row grouping settings are stored for the next page load by setting the group property of the
+    """   You can ensure the row grouping settings are stored for the next page load by setting the group property of the
     persistence option to true.
 
     Related Pages:
@@ -517,10 +404,7 @@ class Persistence(Options):
 
   @property
   def page(self) -> PersistencePage:
-    """
-    Description:
-    -----------
-    You can ensure the pagination settings are stored for the next page load by setting the page property of the
+    """   You can ensure the pagination settings are stored for the next page load by setting the page property of the
     persistence option to true.
 
     Related Pages:
@@ -531,10 +415,7 @@ class Persistence(Options):
 
   @property
   def columns(self):
-    """
-    Description:
-    -----------
-    You can ensure the layout of columns is stored for the next page load by setting the columns property of the
+    """   You can ensure the layout of columns is stored for the next page load by setting the columns property of the
     persistence option to true.
 
     Related Pages:
@@ -553,11 +434,7 @@ class EditorAutocomplete(Enums):
   def startswith(self, values: types.JS_DATA_TYPES, show_list_on_empty: types.JS_DATA_TYPES = True,
                  freetext: types.JS_DATA_TYPES = True, allow_empty: types.JS_DATA_TYPES = True):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param values:
     :param show_list_on_empty: Optional.
     :param freetext: Optional.
@@ -576,17 +453,12 @@ return matches;}, showListOnEmpty: %s, freetext: %s, allowEmpty: %s}''' % (
 class Editor(Enums):
 
   def input(self, search: bool = True, element_attributes: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    The input editor allows entering of a single line of plain text.
+    """   The input editor allows entering of a single line of plain text.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param search: Optional. Use search type input element with clear button
     :param element_attributes: Optional. set attributes directly on the input element
     """
@@ -599,17 +471,12 @@ class Editor(Enums):
     return self._set_value()
 
   def textarea(self, vertical_navigation: str = "editor", element_attributes: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    The textarea editor allows entering of multiple lines of plain text.
+    """   The textarea editor allows entering of multiple lines of plain text.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param vertical_navigation: Optional. set attributes directly on the textarea element
     :param element_attributes: Optional. determine how use of the up/down arrow keys will affect the editor
     :param kwargs: Optional. Dictionary with extra attributes
@@ -622,17 +489,12 @@ class Editor(Enums):
 
   def number(self, min: float = None, max: float = None, step: int = 1, element_attributes: dict = None,
              vertical_navigation: str = "table", **kwargs):
-    """
-    Description:
-    -----------
-    The number editor allows for numeric entry with a number type input element with increment and decrement buttons.
+    """   The number editor allows for numeric entry with a number type input element with increment and decrement buttons.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param min: Optional. the maximum allowed value
     :param max: Optional. the minimum allowed value
     :param step: Optional. the step size when incrementing/decrementingthe value (default 1)
@@ -651,17 +513,12 @@ class Editor(Enums):
     return self._set_value()
 
   def range(self, min: float = None, max: float = None, step: int = 1, element_attributes: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    The range editor allows for numeric entry with a range type input element.
+    """   The range editor allows for numeric entry with a range type input element.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param min: Optional. the maximum allowed value
     :param max: Optional. the minimum allowed value
     :param step: Optional. the step size when incrementing/decrementingthe value (default 1)
@@ -679,17 +536,12 @@ class Editor(Enums):
     return self._set_value()
 
   def tick(self, tristate: bool = False, indeterminate_value: str = None, element_attributes: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    The tick editor allows for boolean values using a checkbox type input element.
+    """   The tick editor allows for boolean values using a checkbox type input element.
 
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param tristate: Optional. allow tristate tickbox (default false)
     :param indeterminate_value: Optional. when using tristate tickbox what value should the third indeterminate
       state have (default null)
@@ -705,10 +557,7 @@ class Editor(Enums):
     return self._set_value()
 
   def stars(self, element_attributes: dict = None, **kwargs):
-    """
-    Description:
-    -----------
-    The star editor allows entering of numeric value using a star rating indicator.
+    """   The star editor allows entering of numeric value using a star rating indicator.
 
     This editor will automatically detect the correct number of stars to use if it is used on the same column as the
     star formatter.
@@ -716,9 +565,7 @@ class Editor(Enums):
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param element_attributes: Optional set attributes directly on the star holder element
     :param kwargs: Optional. Dictionary with extra attributes
     """
@@ -732,10 +579,7 @@ class Editor(Enums):
 
   def select(self, values: list = True, default_value: str = None, element_attributes: dict = None,
              vertical_navigation: str = "hybrid", **kwargs):
-    """
-    Description:
-    -----------
-    The select editor creates a dropdown select box to allow the user to select from some predefined options passed
+    """   The select editor creates a dropdown select box to allow the user to select from some predefined options passed
     into the values property of the editorParams option.
 
     Usage::
@@ -746,9 +590,7 @@ class Editor(Enums):
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
       http://tabulator.info/docs/5.2/edit#editor-list
-
-    Attributes:
-    ----------
+ 
     :param values: a list of values to be displayed to the user
     :param default_value: set the value that should be selected by default if the cells value is undefined
     :param element_attributes: set attributes directly on the input element
@@ -773,10 +615,7 @@ class Editor(Enums):
 
   def list(self, values: list = True, default_value: str = None, element_attributes: dict = None,
            vertical_navigation: str = "hybrid", **kwargs):
-    """
-    Description:
-    -----------
-    The select editor creates a dropdown select box to allow the user to select from some predefined options passed
+    """   The select editor creates a dropdown select box to allow the user to select from some predefined options passed
     into the values property of the editorParams option.
 
     Usage::
@@ -787,9 +626,7 @@ class Editor(Enums):
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
       http://tabulator.info/docs/5.2/edit#editor-list
-
-    Attributes:
-    ----------
+ 
     :param values: Optional. a list of values to be displayed to the user
     :param default_value: Optional. set the value that should be selected by default if the cells value is undefined
     :param element_attributes: Optional. set attributes directly on the input element
@@ -814,10 +651,7 @@ class Editor(Enums):
 
   @property
   def autocompletes(self) -> EditorAutocomplete:
-    """
-    Description:
-    -----------
-    Predefined autocomplete configurations.
+    """   Predefined autocomplete configurations.
     # TODO find a way to put Union[Options, Enums] in the type definition Emuns parameters.
     """
     self._set_value()
@@ -825,10 +659,7 @@ class Editor(Enums):
 
   def autocomplete(self, values: list = True, default_value=None, element_attributes: dict = None,
                    vertical_navigation: str = "hybrid", **kwargs):
-    """
-    Description:
-    -----------
-    The autocomplete editor allows users to search a list of predefined options passed into the values property of
+    """   The autocomplete editor allows users to search a list of predefined options passed into the values property of
     the editorParams option.
 
     Usage::
@@ -838,9 +669,7 @@ class Editor(Enums):
     Related Pages:
 
       http://tabulator.info/docs/4.5/edit#edit-builtin
-
-    Attributes:
-    ----------
+ 
     :param values: Optional. a list of values to be displayed to the user
     :param default_value: Optional. set the value that should be selected by default if the cells value is undefined
     :param element_attributes: Optional. set attributes directly on the input element
@@ -866,15 +695,11 @@ class Editor(Enums):
   def custom(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, editor_params: dict = None,
              profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       http://tabulator.info/docs/4.8/modules
-
-    Attributes:
-    ----------
+ 
     :param func_name: The function name
     :param js_funcs: Optional. The function definition
     :param editor_params: Optional. The editor parameters
@@ -901,8 +726,6 @@ class Formattors(Enums):
   def rowSelection(self, title_formatter: bool = True, title_formatter_params: dict = None,
                    hoz_align: Optional[str] = "center", header_sort: bool = False, **kwargs):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -910,9 +733,7 @@ class Formattors(Enums):
       for c in table.get_columns():
         if c.field == "ticks":
           c.formatters.rowSelection(width=20)
-
-    Attributes:
-    ----------
+ 
     :param title_formatter: Optional. title formatter
     :param title_formatter_params: Optional. title formatter parameters
     :param hoz_align: Optional. To set the horizontal alignment
@@ -931,18 +752,13 @@ class Formattors(Enums):
       self._set_value(k, value=v)
 
   def text(self, **kwargs):
-    """
-    Description:
-    -----------
-    The plaintext formatter is the default formatter for all cells and will simply display the value of the cell
+    """   The plaintext formatter is the default formatter for all cells and will simply display the value of the cell
     as text.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param kwargs:
     """
     self._set_value(value="plaintext")
@@ -951,18 +767,13 @@ class Formattors(Enums):
     return self
 
   def textarea(self, **kwargs):
-    """
-    Description:
-    -----------
-    The textarea formatter shows text with carriage returns intact (great for multiline text), this formatter will also
+    """   The textarea formatter shows text with carriage returns intact (great for multiline text), this formatter will also
     adjust the height of rows to fit the cells contents when columns are resized.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param kwargs:
     """
     self._set_value(value="textarea")
@@ -971,17 +782,12 @@ class Formattors(Enums):
     return self
 
   def html(self, **kwargs):
-    """
-    Description:
-    -----------
-    The html formater displays un-sanitized html.
+    """   The html formater displays un-sanitized html.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param kwargs:
     """
     self._set_value()
@@ -991,17 +797,12 @@ class Formattors(Enums):
 
   def money(self, decimal: str = ",", thousand: str = ".", precision: bool = False, symbol: str = None,
             symbolAfter=None, **kwargs):
-    """
-    Description:
-    -----------
-    The money formatter formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
+    """   The money formatter formats a number into currency notation (eg. 1234567.8901 -> 1,234,567.89).
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param decimal: Optional. Symbol to represent the decimal point (default ".")
     :param thousand: Optional. Symbol to represent the thousands separator (default ",")
     :param precision: Optional. the number of decimals to display (default is 2), setting this value to false will display
@@ -1016,18 +817,13 @@ class Formattors(Enums):
     return self
 
   def image(self, height: types.SIZE_TYPE = None, width: types.SIZE_TYPE = None, **kwargs):
-    """
-    Description:
-    -----------
-    The image formatter creates an img element with the src set as the value. (triggers the normalizeHeight function on
+    """   The image formatter creates an img element with the src set as the value. (triggers the normalizeHeight function on
     the row on image load).
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param height: Optional. A CSS value for the height of the image.
     :param width: Optional. A CSS value for the width of the image.
     :param kwargs:
@@ -1045,18 +841,13 @@ class Formattors(Enums):
 
   def link(self, label: str = None, url: str = None, target: str = '_blank', url_prefix: str = None,
            label_field: str = None, url_field: str = None, **kwargs):
-    """
-    Description:
-    -----------
-    The link formatter renders data as an anchor with a link to the given value (by default the value will be used as
+    """   The link formatter renders data as an anchor with a link to the given value (by default the value will be used as
     both the url and the label of the tag).
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param label: Optional. A string representing the label, or a function which must return the string for the label,
       the function is passed the Cell Component as its first argument
     :param url: Optional. A string representing the url, or a function which must return the string for the url,
@@ -1077,17 +868,12 @@ class Formattors(Enums):
 
   def datetime(self, input_format: str = "YYYY-MM-DD", output_format: str = "YYYY-MM-DD",
                invalid_placeholder: str = "(invalid date)", **kwargs):
-    """
-    Description:
-    -----------
-    The datetime formatter transforms on format of date or time into another.
+    """   The datetime formatter transforms on format of date or time into another.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param input_format:
     :param output_format:
     :param invalid_placeholder:
@@ -1104,17 +890,12 @@ class Formattors(Enums):
   def tickcross(self, allow_empty: bool = True, allow_truthy: bool = True,
                 tick_element: str = "<i class='fa fa-check'></i>", cross_element: str = "<i class='fa fa-times'></i>",
                 **kwargs):
-    """
-    Description:
-    -----------
-    The tickCross formatter displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not.
+    """   The tickCross formatter displays a green tick if the value is (true|'true'|'True'|1) and a red cross if not.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param allow_empty: Optional. Set to true to cause empty values (undefined, null, "") to display an empty
       cell instead of a cross (default false)
     :param allow_truthy: Optional. Set to true to allow any truthy value to show a tick (default false)
@@ -1134,10 +915,7 @@ class Formattors(Enums):
     return self
 
   def color(self, **kwargs):
-    """
-    Description:
-    -----------
-    The color formatter sets the background colour of the cell to the value. The cell's value can be any valid
+    """   The color formatter sets the background colour of the cell to the value. The cell's value can be any valid
     CSS color eg. #ff0000, #f00, rgb(255,0,0), red, rgba(255,0,0,0), hsl(0, 100%, 50%)
 
     Related Pages:
@@ -1150,17 +928,12 @@ class Formattors(Enums):
     return self
 
   def star(self, starts: float, **kwargs):
-    """
-    Description:
-    -----------
-    The star formatter displays a graphical star rating based on integer values.
+    """   The star formatter displays a graphical star rating based on integer values.
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param starts: maximum number of stars to be displayed (default 5).
     """
     self._set_value()
@@ -1172,11 +945,7 @@ class Formattors(Enums):
 
   def progress(self, min=0, max=100, color=None, legend=None, legendColor=None, legendAlign=None, **kwargs):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param min:
     :param max:
     :param color:
@@ -1191,18 +960,13 @@ class Formattors(Enums):
     return self
 
   def lookup(self, data: dict, **kwargs):
-    """
-    Description:
-    -----------
-    The lookup formatter looks up the value to display from a object passed into the formatterParams property,
+    """   The lookup formatter looks up the value to display from a object passed into the formatterParams property,
     if not present it displays the current cell value
 
     Related Pages:
 
       http://tabulator.info/docs/4.1/format
-
-    Attributes:
-    ----------
+ 
     :param data: Dictionary for the lookup.
     :param kwargs:
     """
@@ -1216,15 +980,11 @@ class Formattors(Enums):
   def custom(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, formatter_params: dict = None,
              profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/modules
-
-    Attributes:
-    ----------
+ 
     :param func_name: The function name
     :param js_funcs: Optional. The function definition
     :param formatter_params: Formatter attributes
@@ -1247,11 +1007,7 @@ class Formattors(Enums):
 
   def css(self, attrs: dict):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param attrs: CSS attributes
     """
     self.component.extendModule("format", "formatters", "FormatterPureCss", '''function(cell, formatterParams){   
@@ -1263,8 +1019,6 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
 
   def wrapper(self, formatter: types.JS_DATA_TYPES, css_attrs: dict, formatter_params: dict = None):
     """
-    Description:
-    -----------
 
     Usage::
 
@@ -1273,9 +1027,7 @@ Object.keys(formatterParams.css).forEach(function(key){cell.getElement().style[k
     Related Pages:
 
       http://tabulator.info/docs/4.0/modules
-
-    Attributes:
-    ----------
+ 
     :param formatter:
     :param css_attrs:
     :param formatter_params:
@@ -1296,19 +1048,14 @@ function(cell, formatterParams){const cssAttrs = formatterParams.css;
 class Mutators(Enums):
 
   def bespoke(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    he mutator module allows for manipulation of data as it is entered into Tabulator.
+    """   he mutator module allows for manipulation of data as it is entered into Tabulator.
 
     More information on these functions can be found in the Mutators Documentation.
 
     Related Pages:
 
       http://tabulator.info/docs/4.8/mutators
-
-    Attributes:
-    ----------
+ 
     :param func_name: Javascript functions name
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -1330,10 +1077,7 @@ class Accessors(Enums):
 
   def bespoke(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES = None, accessor_params: dict = None,
               profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
+    """   Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
 
     You can set accessors on a per column basis using the accessor option in the column definition object.
 
@@ -1343,9 +1087,7 @@ class Accessors(Enums):
     Related Pages:
 
       http://tabulator.info/docs/4.8/mutators#accessors
-
-    Attributes:
-    ----------
+ 
     :param func_name: Javascript functions name
     :param js_funcs: Javascript function
     :param accessor_params: Accessor parameters
@@ -1369,10 +1111,7 @@ class Accessors(Enums):
 class Validators(Enums):
 
   def required(self):
-    """
-    Description:
-    -----------
-    The required validator allows values that are not null or an empty string
+    """   The required validator allows values that are not null or an empty string
 
     Related Pages:
 
@@ -1382,10 +1121,7 @@ class Validators(Enums):
     return self
 
   def unique(self):
-    """
-    Description:
-    -----------
-    The unique validator allows values that do not match the value of any other cell in this column
+    """   The unique validator allows values that do not match the value of any other cell in this column
 
     Related Pages:
 
@@ -1395,10 +1131,7 @@ class Validators(Enums):
     return self
 
   def integer(self):
-    """
-    Description:
-    -----------
-    The integer validator allows values that are valid integers
+    """   The integer validator allows values that are valid integers
 
     Related Pages:
 
@@ -1408,10 +1141,7 @@ class Validators(Enums):
     return self
 
   def float(self):
-    """
-    Description:
-    -----------
-    The float validator allows values that are valid floats.
+    """   The float validator allows values that are valid floats.
 
     Related Pages:
 
@@ -1421,10 +1151,7 @@ class Validators(Enums):
     return self
 
   def numeric(self):
-    """
-    Description:
-    -----------
-    The float validator allows values that are valid floats.
+    """   The float validator allows values that are valid floats.
 
     Related Pages:
 
@@ -1434,10 +1161,7 @@ class Validators(Enums):
     return self
 
   def min(self, val):
-    """
-    Description:
-    -----------
-    The min validator allows numeric values that are greater than or equal to parameter.
+    """   The min validator allows numeric values that are greater than or equal to parameter.
 
     Related Pages:
 
@@ -1447,10 +1171,7 @@ class Validators(Enums):
     return self
 
   def max(self, val):
-    """
-    Description:
-    -----------
-    The max validator allows numeric values that are less than or equal to parameter.
+    """   The max validator allows numeric values that are less than or equal to parameter.
 
     Related Pages:
 
@@ -1460,10 +1181,7 @@ class Validators(Enums):
     return self
 
   def maxLength(self, val):
-    """
-    Description:
-    -----------
-    The maxLength validator allows string values that have a length less than or equal to parameter.
+    """   The maxLength validator allows string values that have a length less than or equal to parameter.
 
     Related Pages:
 
@@ -1473,10 +1191,7 @@ class Validators(Enums):
     return self
 
   def list(self, vals: list):
-    """
-    Description:
-    -----------
-    The in validator allows that values that match a value from the | delimited string in the parameter.
+    """   The in validator allows that values that match a value from the | delimited string in the parameter.
 
     Related Pages:
 
@@ -1486,10 +1201,7 @@ class Validators(Enums):
     return self
 
   def regex(self, val: str):
-    """
-    Description:
-    -----------
-    The regex validator allows values that match the supplied regex.
+    """   The regex validator allows values that match the supplied regex.
 
     Related Pages:
 
@@ -1507,10 +1219,7 @@ class Extensions(Options):
 
   @property
   def editors(self) -> TbEditors.ExtsEditors:
-    """
-    Description:
-    -----------
-    The edit module allows the user to change data in cells, header filters are also dependant on this module.
+    """   The edit module allows the user to change data in cells, header filters are also dependant on this module.
 
     More information on these functions can be found in the Editing Data Documentation.
 
@@ -1522,10 +1231,7 @@ class Extensions(Options):
 
   @property
   def formatters(self) -> TbFormatters.ExtsFormattors:
-    """
-    Description:
-    -----------
-    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+    """   You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
     You can pass an optional additional parameter with the formatter, formatterParams that should contain an object
     with additional information for configuring the formatter.
@@ -1538,10 +1244,7 @@ class Extensions(Options):
 
   @property
   def mutators(self) -> TbMutators.ExtsMutators:
-    """
-    Description:
-    -----------
-    Mutators are used to alter data as it is parsed into Tabulator.
+    """   Mutators are used to alter data as it is parsed into Tabulator.
     For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used
     to build the table.
 
@@ -1553,10 +1256,7 @@ class Extensions(Options):
 
   @property
   def validators(self) -> TbValidators.ExtsValidators:
-    """
-    Description:
-    -----------
-    The validate module allows for validation of edited data before it is stored in the table.
+    """   The validate module allows for validation of edited data before it is stored in the table.
     More information on these functions can be found in the Validation Documentation.
     This can be extended to add custom validator functions to the default list:
 
@@ -1570,13 +1270,8 @@ class Extensions(Options):
 class HeaderMenu(Options):
 
   def hide(self, label: str = "Hide Column", icon: Optional[str] = "fas fa-eye-slash", disabled: bool = False):
-    """
-    Description:
-    -----------
-    Hide the selected column.
-
-    Attributes:
-    ----------
+    """   Hide the selected column.
+ 
     :param label: Optional. Header menu label
     :param icon: Optional. Header icon
     :param disabled: Optional.
@@ -1592,13 +1287,8 @@ class HeaderMenu(Options):
     return self
 
   def custom(self, label: str, func: str, icon: str = None, disabled: bool = False):
-    """
-    Description:
-    -----------
-    Add a delete entry to the context menu.
-
-    Attributes:
-    ----------
+    """   Add a delete entry to the context menu.
+ 
     :param label:
     :param func: JavaScript expression or entire function starting with function(e, column){
     :param icon: Optional.
@@ -1626,10 +1316,7 @@ class Column(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    -----------
-    sets the text alignment for this column (left|center|right)
+    """   sets the text alignment for this column (left|center|right)
 
     Related Pages:
 
@@ -1643,10 +1330,7 @@ class Column(Options):
 
   @property
   def accessors(self) -> Accessors:
-    """
-    Description:
-    -----------
-    Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
+    """   Accessors are used to alter data as it is extracted from the table, through commands, the clipboard, or download.
 
     You can set accessors on a per column basis using the accessor option in the column definition object.
 
@@ -1658,13 +1342,9 @@ class Column(Options):
 
   def add_column(self, field: str, title: str = None):
     """
-    Description:
-    ------------
     Add new column to the underlying Tabulator object.
     # TODO find a way to define return type Column for this method
-
-    Attributes:
-    ----------
+ 
     :param field: The key in the row
     :param title: Optional. The title for the column. Default to the field
     """
@@ -1675,13 +1355,9 @@ class Column(Options):
 
   def cellClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1695,15 +1371,11 @@ class Column(Options):
 
   def cellEditing(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1718,15 +1390,11 @@ class Column(Options):
 
   def cellEdited(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1741,10 +1409,7 @@ class Column(Options):
 
   @property
   def cssClass(self):
-    """
-    Description:
-    -----------
-    sets css classes on header and cells in this column.
+    """   sets css classes on header and cells in this column.
     (value should be a string containing space separated class names).
 
     Related Pages:
@@ -1759,10 +1424,7 @@ class Column(Options):
 
   @property
   def cssClasses(self) -> EnumColCss:
-    """
-    Description:
-    -----------
-    sets css classes on header and cells in this column.
+    """   sets css classes on header and cells in this column.
     (value should be a string containing space separated class names)
 
     Related Pages:
@@ -1773,10 +1435,7 @@ class Column(Options):
 
   @property
   def editable(self):
-    """
-    Description:
-    -----------
-    callback to check if the cell is editable (see Manipulating Data for more details).
+    """   callback to check if the cell is editable (see Manipulating Data for more details).
     This does not support function, use editable_check() otherwise.
 
     Related Pages:
@@ -1790,10 +1449,7 @@ class Column(Options):
     self._config(val)
 
   def editable_check(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    This lets you set a callback that is executed before the editor is built, if this callback returns true the editor
+    """   This lets you set a callback that is executed before the editor is built, if this callback returns true the editor
     is added, if it returns false the edit is aborted and the cell remains a non-editable cell.
 
     Usage::
@@ -1807,9 +1463,7 @@ class Column(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.0/edit
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue,
       rowData, filterParams)
     :param profile: Optional. A flag to set the component performance storage
@@ -1824,10 +1478,7 @@ class Column(Options):
 
   @property
   def editableTitle(self):
-    """
-    Description:
-    -----------
-    Allows the user to edit the header titles.
+    """   Allows the user to edit the header titles.
 
     Related Pages:
 
@@ -1841,10 +1492,7 @@ class Column(Options):
 
   @property
   def exts(self):
-    """
-    Description:
-    -----------
-    Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
+    """   Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
     series of modules that provide all of its wonderful features.
 
     Related Pages:
@@ -1855,10 +1503,7 @@ class Column(Options):
 
   @property
   def editor(self):
-    """
-    Description:
-    -----------
-    Tabulator comes with a number of built-in editors including:
+    """   Tabulator comes with a number of built-in editors including:
 
     Related Pages:
 
@@ -1872,10 +1517,7 @@ class Column(Options):
 
   @property
   def editorParams(self):
-    """
-    Description:
-    -----------
-    Tabulator comes with a number of built-in editors including:
+    """   Tabulator comes with a number of built-in editors including:
 
     Related Pages:
 
@@ -1889,10 +1531,7 @@ class Column(Options):
 
   @property
   def editors(self):
-    """
-    Description:
-    -----------
-    Tabulator comes with a number of built-in editors including:
+    """   Tabulator comes with a number of built-in editors including:
 
     Related Pages:
 
@@ -1902,10 +1541,7 @@ class Column(Options):
 
   @property
   def field(self):
-    """
-    Description:
-    -----------
-    Required (not required in icon/button columns) this is the key for this column in the data array.
+    """   Required (not required in icon/button columns) this is the key for this column in the data array.
 
     Related Pages:
 
@@ -1919,10 +1555,7 @@ class Column(Options):
 
   @property
   def formatter(self):
-    """
-    Description:
-    -----------
-    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+    """   You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
     Related Pages:
 
@@ -1936,10 +1569,7 @@ class Column(Options):
 
   @property
   def formatterParams(self):
-    """
-    Description:
-    -----------
-    You can pass an optional additional parameter with the formatter, formatterParams that should contain an object
+    """   You can pass an optional additional parameter with the formatter, formatterParams that should contain an object
     with additional information for configuring the formatter.
 
     Related Pages:
@@ -1954,10 +1584,7 @@ class Column(Options):
 
   @property
   def formatters(self) -> Formattors:
-    """
-    Description:
-    -----------
-    You can set cell formatters on a per column basis using the formatter option in the column definition object.
+    """   You can set cell formatters on a per column basis using the formatter option in the column definition object.
 
     Related Pages:
 
@@ -1967,10 +1594,7 @@ class Column(Options):
 
   @property
   def frozen(self):
-    """
-    Description:
-    -----------
-    freezes the column in place when scrolling (see Frozen Columns for more details).
+    """   freezes the column in place when scrolling (see Frozen Columns for more details).
 
     Related Pages:
 
@@ -1984,10 +1608,7 @@ class Column(Options):
 
   @property
   def headerMenu(self) -> HeaderMenu:
-    """
-    Description:
-    -----------
-    Shortcut property to the headermenu items.
+    """   Shortcut property to the headermenu items.
 
     Related Pages:
 
@@ -1997,10 +1618,7 @@ class Column(Options):
 
   @property
   def headerFilter(self):
-    """
-    Description:
-    -----------
-    User can sort by clicking on the header (see Sorting Data for more detail.
+    """   User can sort by clicking on the header (see Sorting Data for more detail.
 
     Related Pages:
 
@@ -2010,10 +1628,7 @@ class Column(Options):
 
   @property
   def headerFilterPlaceholder(self):
-    """
-    Description:
-    -----------
-    Placeholder text for the header filter (see Header Filtering for more details)
+    """   Placeholder text for the header filter (see Header Filtering for more details)
 
     Related Pages:
 
@@ -2027,10 +1642,7 @@ class Column(Options):
 
   @property
   def headerFilterEmptyCheck(self):
-    """
-    Description:
-    -----------
-    Function to check when the header filter is empty (see Header Filtering for more details)
+    """   Function to check when the header filter is empty (see Header Filtering for more details)
 
     Related Pages:
 
@@ -2049,11 +1661,7 @@ class Column(Options):
   def headerFilterFunc(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                        func_ref: bool = False):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions or entire function e.g: function customHeaderFilter(headerValue, rowValue,
       rowData, filterParams)
     :param profile: Optional. A flag to set the component performance storage
@@ -2068,10 +1676,7 @@ class Column(Options):
 
   @property
   def headerFilterFuncParams(self):
-    """
-    Description:
-    -----------
-    Additional parameters object passed to the headerFilterFunc function (see Header Filtering for more details)
+    """   Additional parameters object passed to the headerFilterFunc function (see Header Filtering for more details)
 
     Related Pages:
 
@@ -2085,10 +1690,7 @@ class Column(Options):
 
   @property
   def headerFilterLiveFilter(self):
-    """
-    Description:
-    -----------
-    Disable live filtering of the table (see Header Filtering for more details)
+    """   Disable live filtering of the table (see Header Filtering for more details)
 
     Related Pages:
 
@@ -2102,10 +1704,7 @@ class Column(Options):
 
   @property
   def headerVertical(self):
-    """
-    Description:
-    -----------
-    change the orientation of the column header to vertical (see Vertical Column Headers for more details).
+    """   change the orientation of the column header to vertical (see Vertical Column Headers for more details).
 
     Related Pages:
 
@@ -2119,10 +1718,7 @@ class Column(Options):
 
   @property
   def headerSort(self):
-    """
-    Description:
-    -----------
-    user can sort by clicking on the header (see Sorting Data for more details).
+    """   user can sort by clicking on the header (see Sorting Data for more details).
 
     Related Pages:
 
@@ -2136,10 +1732,7 @@ class Column(Options):
 
   @property
   def headerSortStartingDir(self):
-    """
-    Description:
-    -----------
-    Set the starting sort direction when a user first clicks on a header (see Sorting Data for more details)
+    """   Set the starting sort direction when a user first clicks on a header (see Sorting Data for more details)
 
     Related Pages:
 
@@ -2153,10 +1746,7 @@ class Column(Options):
 
   @property
   def headerSortTristate(self):
-    """
-    Description:
-    -----------
-    Allow tristate toggling of column header sort direction (see Sorting Data for more details)
+    """   Allow tristate toggling of column header sort direction (see Sorting Data for more details)
 
     Related Pages:
 
@@ -2170,10 +1760,7 @@ class Column(Options):
 
   @property
   def headerPopup(self):
-    """
-    Description:
-    -----------
-    Add popup button to column header (see Header Popups for more details)
+    """   Add popup button to column header (see Header Popups for more details)
 
     Related Pages:
 
@@ -2187,10 +1774,7 @@ class Column(Options):
 
   @property
   def headerPopupIcon(self):
-    """
-    Description:
-    -----------
-    Add popup button to column header (see Header Popups for more details)
+    """   Add popup button to column header (see Header Popups for more details)
 
     Related Pages:
 
@@ -2204,10 +1788,7 @@ class Column(Options):
 
   @property
   def headerContextPopup(self):
-    """
-    Description:
-    -----------
-    Add context popup to column header (see Header Context Popups for more details)
+    """   Add context popup to column header (see Header Context Popups for more details)
 
     Related Pages:
 
@@ -2221,10 +1802,7 @@ class Column(Options):
 
   @property
   def headerVisible(self):
-    """
-    Description:
-    -----------
-    By setting the headerVisible option to false you can hide the column headers and present
+    """   By setting the headerVisible option to false you can hide the column headers and present
     the table as a simple list if needed.
 
     Related Pages:
@@ -2240,10 +1818,7 @@ class Column(Options):
 
   @property
   def hozAlign(self):
-    """
-    Description:
-    -----------
-    By setting the headerVisible option to false you can hide the column headers and present
+    """   By setting the headerVisible option to false you can hide the column headers and present
     the table as a simple list if needed.
 
     Related Pages:
@@ -2258,10 +1833,7 @@ class Column(Options):
 
   @property
   def sorter(self) -> EnumSorter:
-    """
-    Description:
-    -----------
-    By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained
+    """   By default Tabulator will attempt to guess which sorter should be applied to a column based on the data contained
     in the first row.
 
     Related Pages:
@@ -2272,10 +1844,7 @@ class Column(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the
+    """   sets the width of this column, this can be set in pixels or as a percentage of total table width (if not set the
     system will determine the best)
 
     Related Pages:
@@ -2290,10 +1859,7 @@ class Column(Options):
 
   @property
   def minwidth(self):
-    """
-    Description:
-    -----------
-    sets the minimum width of this column, this should be set in pixels (this takes priority over the global option
+    """   sets the minimum width of this column, this should be set in pixels (this takes priority over the global option
     of columnMinWidth)
 
     Related Pages:
@@ -2308,10 +1874,7 @@ class Column(Options):
 
   @property
   def mutators(self):
-    """
-    Description:
-    -----------
-    Mutators are used to alter data as it is parsed into Tabulator.
+    """   Mutators are used to alter data as it is parsed into Tabulator.
 
     For example if you wanted to convert a numeric column into a boolean based on its value, before the data is used
     to build the table.
@@ -2324,10 +1887,7 @@ class Column(Options):
 
   @property
   def widthGrow(self):
-    """
-    Description:
-    -----------
-    when using fitColumns layout mode, determines how much the column should grow to fill available
+    """   when using fitColumns layout mode, determines how much the column should grow to fill available
     space (see Table Layout for more details)
 
     Related Pages:
@@ -2342,10 +1902,7 @@ class Column(Options):
 
   @property
   def responsive(self):
-    """
-    Description:
-    -----------
-    an integer to determine when the column should be hidden in responsive mode (see Responsive Layout for more details)
+    """   an integer to determine when the column should be hidden in responsive mode (see Responsive Layout for more details)
 
     Related Pages:
 
@@ -2359,10 +1916,7 @@ class Column(Options):
 
   @property
   def resizable(self):
-    """
-    Description:
-    -----------
-    set whether column can be resized by user dragging its edges (see Table Layout for more details).
+    """   set whether column can be resized by user dragging its edges (see Table Layout for more details).
 
     Related Pages:
 
@@ -2376,10 +1930,7 @@ class Column(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
-    Required This is the title that will be displayed in the header for this column.
+    """   Required This is the title that will be displayed in the header for this column.
 
     Related Pages:
 
@@ -2393,10 +1944,7 @@ class Column(Options):
 
   @property
   def tooltip(self):
-    """
-    Description:
-    -----------
-    Required This is the title that will be displayed in the header for this column.
+    """   Required This is the title that will be displayed in the header for this column.
 
     Related Pages:
 
@@ -2410,10 +1958,7 @@ class Column(Options):
 
   @property
   def titleFormatter(self):
-    """
-    Description:
-    -----------
-    formatter function for header title (see Formatting Data for more details).
+    """   formatter function for header title (see Formatting Data for more details).
 
     Related Pages:
 
@@ -2428,8 +1973,6 @@ class Column(Options):
   @property
   def titleFormatterParams(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -2443,10 +1986,7 @@ class Column(Options):
 
   @property
   def topCalc(self):
-    """
-    Description:
-    -----------
-    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    """   Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
     information such as the sum of a columns data.
 
     Related Pages:
@@ -2461,10 +2001,7 @@ class Column(Options):
 
   @property
   def topCalcFormatter(self):
-    """
-    Description:
-    -----------
-    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    """   You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
     topCalcFormatter and bottomCalcFormatter options in a columns definition object.
 
     Related Pages:
@@ -2479,10 +2016,7 @@ class Column(Options):
 
   @property
   def topCalcFormatterParams(self):
-    """
-    Description:
-    -----------
-    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    """   You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
     topCalcFormatter and bottomCalcFormatter options in a columns definition object.
 
     Related Pages:
@@ -2497,10 +2031,7 @@ class Column(Options):
 
   @property
   def topCalcParams(self):
-    """
-    Description:
-    -----------
-    The column calculation parameters.
+    """   The column calculation parameters.
 
     Related Pages:
 
@@ -2514,10 +2045,7 @@ class Column(Options):
 
   @property
   def topCalcs(self):
-    """
-    Description:
-    -----------
-    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    """   Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
     information such as the sum of a columns data.
 
     Related Pages:
@@ -2528,10 +2056,7 @@ class Column(Options):
 
   @property
   def bottomCalc(self):
-    """
-    Description:
-    -----------
-    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    """   Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
     information such as the sum of a columns data.
 
     Related Pages:
@@ -2546,10 +2071,7 @@ class Column(Options):
 
   @property
   def bottomCalcFormatter(self):
-    """
-    Description:
-    -----------
-    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    """   You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
     topCalcFormatter and bottomCalcFormatter options in a columns definition object.
 
     Related Pages:
@@ -2568,10 +2090,7 @@ class Column(Options):
 
   @property
   def bottomCalcFormatterParams(self):
-    """
-    Description:
-    -----------
-    You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
+    """   You can apply formatters (see Formatting Data for more information) to any calculation cells, using the
     topCalcFormatter and bottomCalcFormatter options in a columns definition object.
 
     Related Pages:
@@ -2586,10 +2105,7 @@ class Column(Options):
 
   @property
   def bottomCalcParams(self):
-    """
-    Description:
-    -----------
-    The column calculation parameters.
+    """   The column calculation parameters.
 
     Related Pages:
 
@@ -2603,10 +2119,7 @@ class Column(Options):
 
   @property
   def bottomCalcs(self):
-    """
-    Description:
-    -----------
-    Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
+    """   Column calculations can be used to add a row of calculated values to the top or bottom of your table to display
     information such as the sum of a columns data.
 
     Related Pages:
@@ -2617,10 +2130,7 @@ class Column(Options):
 
   @property
   def validator(self):
-    """
-    Description:
-    -----------
-    set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details).
+    """   set the validator to be used to approve data when a user edits a cell. (see Manipulating Data for more details).
 
     Related Pages:
 
@@ -2633,10 +2143,7 @@ class ColumnsGroup(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
-    Set a title for a group of columns.
+    """   Set a title for a group of columns.
     """
     return self._config_get()
 
@@ -2646,10 +2153,7 @@ class ColumnsGroup(Options):
 
   @property
   def columns(self) -> Column:
-    """
-    Description:
-    -----------
-    Add columns to a group.
+    """   Add columns to a group.
     """
     return self._config_sub_data_enum("columns", Column)
 
@@ -2657,17 +2161,12 @@ class ColumnsGroup(Options):
 class Keybindings(Options):
 
   def addRow(self, keys):
-    """
-    Description:
-    -----------
-    Add a keyboard shortcut event on the table to Keycodes can be found using the function ord().
+    """   Add a keyboard shortcut event on the table to Keycodes can be found using the function ord().
 
     Related Pages:
 
       http://tabulator.info/docs/4.4/keybindings
-
-    Attributes:
-    ----------
+ 
     :param keys: String. The keys to trigger the event.
     """
     self.component.extendModule(
@@ -2676,19 +2175,14 @@ class Keybindings(Options):
     return self
 
   def deleteSelectedRows(self, keys):
-    """
-    Description:
-    -----------
-    Add a keyboard shortcut event on the table to delete the selected row.
+    """   Add a keyboard shortcut event on the table to delete the selected row.
 
     Keycodes can be found using the function ord()
 
     Related Pages:
 
       http://tabulator.info/docs/4.4/keybindings
-
-    Attributes:
-    ----------
+ 
     :param keys: String. The keys to trigger the event.
     """
     self.component.extendModule(
@@ -2699,19 +2193,14 @@ class Keybindings(Options):
 
   def bespoke(self, keys, func_name, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               prevent_default: bool = True):
-    """
-    Description:
-    -----------
-    Add a keyboard shortcut custom event on the table.
+    """   Add a keyboard shortcut custom event on the table.
 
     Keycodes can be found using the function ord()
 
     Related Pages:
 
       http://tabulator.info/docs/4.4/keybindings
-
-    Attributes:
-    ----------
+ 
     :param keys: The keys to trigger the event
     :param func_name: The function name / alias for this event
     :param js_funcs: The function definition of this event
@@ -2734,13 +2223,8 @@ class Keybindings(Options):
 class RowContextMenu(Options):
 
   def duplicate(self, label: str = "Duplicate", icon: str = None, disabled: bool = False, separator: bool = None):
-    """
-    Description:
-    -----------
-    Add a duplicate entry to the context menu.
-
-    Attributes:
-    ----------
+    """   Add a duplicate entry to the context menu.
+ 
     :param label: The message. Default Duplicate
     :param icon: The icon reference e.g: fas fa-trash
     :param disabled: Flag for the status
@@ -2758,18 +2242,13 @@ class RowContextMenu(Options):
     return self
 
   def delete(self, label: str = "Delete", icon: str = None, disabled: bool = False, separator: bool = None):
-    """
-    Description:
-    -----------
-    Add a delete entry to the context menu.
+    """   Add a delete entry to the context menu.
 
     Usage::
 
       table = page.ui.tables.tabulators.table(rows=["Test"], cols=["AA"])
       table.options.rowContextMenu.delete()
-
-    Attributes:
-    ----------
+ 
     :param label: The message. Default Duplicate
     :param icon: The icon reference e.g: fas fa-trash
     :param disabled: Flag for the status
@@ -2787,13 +2266,8 @@ class RowContextMenu(Options):
     return self
 
   def ajax(self, label: str, url: str, icon: str = None, disabled: bool = False, separator: bool = None):
-    """
-    Description:
-    -----------
-    Add a delete entry to the context menu.
-
-    Attributes:
-    ----------
+    """   Add a delete entry to the context menu.
+ 
     :param label: The label to be display
     :param url: The url of the underlying service
     :param icon: Optional. The font-awesome icon
@@ -2816,18 +2290,13 @@ class RowContextMenu(Options):
 
   def custom(self, label: str, js_funcs: types.JS_FUNCS_TYPES, icon: str = None, disabled: bool = False,
              separator: bool = None, func_ref: bool = False, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add a delete entry to the context menu.
+    """   Add a delete entry to the context menu.
 
     Usage::
 
         table = page.ui.tables.tabulators.table(rows=["Test"], cols=["AA"])
         table.options.rowContextMenu.custom("test", js_funcs="function(e, row){alert(row)}", icon="fas fa-trash")
-
-    Attributes:
-    ----------
+ 
     :param label: The message. Default Duplicate
     :param js_funcs: The Javascript functions.
     :param icon: The icon reference e.g: fas fa-trash
@@ -2854,11 +2323,7 @@ class RowContextMenu(Options):
 
   def config_js(self, attrs: dict = None):
     """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+ 
     :param attrs: Global dictionary with context menu properties.
     """
     items = []
@@ -2882,10 +2347,7 @@ class TableConfig(Options):
 
   @property
   def index(self):
-    """
-    Description:
-    -----------
-    A unique index value should be present for each row of data if you want to be able to programmatically alter that
+    """   A unique index value should be present for each row of data if you want to be able to programmatically alter that
     data at a later point, this should be either numeric or a string.
     By default Tabulator will look for this value in the id field for the data.
     If you wish to use a different field as the index, set this using the index option parameter.
@@ -2902,10 +2364,7 @@ class TableConfig(Options):
 
   @property
   def ajaxURL(self):
-    """
-    Description:
-    -----------
-    If you wish to retrieve your data from a remote source you can set the URL for the request in the ajaxURL option.
+    """   If you wish to retrieve your data from a remote source you can set the URL for the request in the ajaxURL option.
 
     Related Pages:
 
@@ -2919,10 +2378,7 @@ class TableConfig(Options):
 
   @property
   def ajaxParams(self):
-    """
-    Description:
-    -----------
-    If you would like to generate the parameters with each request you can instead pass a callback to the
+    """   If you would like to generate the parameters with each request you can instead pass a callback to the
     ajaxParams option.
     This function will be called every time a request is made and should return an object containing the request
     parameters.
@@ -2939,10 +2395,7 @@ class TableConfig(Options):
 
   @property
   def ajaxConfig(self):
-    """
-    Description:
-    -----------
-    By default Tabulator will make all ajax requests using the HTTP GET request method.
+    """   By default Tabulator will make all ajax requests using the HTTP GET request method.
     If you need to use a different request method you can pass this into the ajaxConfig option
 
     Related Pages:
@@ -2957,10 +2410,7 @@ class TableConfig(Options):
 
   @property
   def ajaxContentType(self):
-    """
-    Description:
-    -----------
-    When using a request method other than "GET" Tabulator will send any parameters with a content type of form data.
+    """   When using a request method other than "GET" Tabulator will send any parameters with a content type of form data.
     You can change the content type with the ajaxContentType option.
     This will ensure parameters are sent in the format you expect, with the correct headers.
 
@@ -2976,10 +2426,7 @@ class TableConfig(Options):
 
   @property
   def ajaxFiltering(self):
-    """
-    Description:
-    -----------
-    If you would prefer to filter your data server side rather than in Tabulator,
+    """   If you would prefer to filter your data server side rather than in Tabulator,
     you can use the ajaxFiltering option to send the filter data to the server instead of processing it client side.
 
     Related Pages:
@@ -2993,19 +2440,14 @@ class TableConfig(Options):
     self._config(flag)
 
   def ajaxURLGenerator(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    If you need more control over the url of the request that you can get from the ajaxURL and ajaxParams properties,
+    """   If you need more control over the url of the request that you can get from the ajaxURL and ajaxParams properties,
     the you can use the ajaxURLGenerator property to pass in a callback that will generate the URL for you.
     js_funcs must use url, config, params and return a string
 
     Related Pages:
 
       http://tabulator.info/docs/4.4/data
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3020,10 +2462,7 @@ class TableConfig(Options):
 
   @property
   def ajaxProgressiveLoad(self):
-    """
-    Description:
-    -----------
-    If you are loading a lot of data from a remote source into your table in one go, it can sometimes take a long time
+    """   If you are loading a lot of data from a remote source into your table in one go, it can sometimes take a long time
     for the server to return the request, which can slow down the user experience.
 
     Related Pages:
@@ -3038,10 +2477,7 @@ class TableConfig(Options):
 
   @property
   def ajaxProgressiveLoadDelay(self):
-    """
-    Description:
-    -----------
-    The ajaxProgressiveLoadDelay option to add a delay in milliseconds between each page request.
+    """   The ajaxProgressiveLoadDelay option to add a delay in milliseconds between each page request.
 
     Related Pages:
 
@@ -3055,10 +2491,7 @@ class TableConfig(Options):
 
   @property
   def ajaxProgressiveLoadScrollMargin(self):
-    """
-    Description:
-    -----------
-    The ajaxProgressiveLoadScrollMargin property determines how close to the bottom of the table in pixels,
+    """   The ajaxProgressiveLoadScrollMargin property determines how close to the bottom of the table in pixels,
     the scroll bar must be before the next page worth of data is loaded, by default it is set to twice the height of
     the table.
 
@@ -3074,10 +2507,7 @@ class TableConfig(Options):
 
   @property
   def autoColumns(self):
-    """
-    Description:
-    -----------
-    If you set the autoColumns option to true, every time data is loaded into the table through the data option or
+    """   If you set the autoColumns option to true, every time data is loaded into the table through the data option or
     through the setData function, Tabulator will examine the first row of the data and build columns to match that data.
 
     Related Pages:
@@ -3093,8 +2523,6 @@ class TableConfig(Options):
   @property
   def autoTables(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -3108,10 +2536,7 @@ class TableConfig(Options):
 
   @property
   def addRowPos(self):
-    """
-    Description:
-    -----------
-    The position in the table for new rows to be added, "bottom" or "top".
+    """   The position in the table for new rows to be added, "bottom" or "top".
 
     Related Pages:
 
@@ -3125,10 +2550,7 @@ class TableConfig(Options):
 
   @property
   def clipboard(self):
-    """
-    Description:
-    -----------
-    Enable clipboard module.
+    """   Enable clipboard module.
 
     Related Pages:
 
@@ -3142,10 +2564,7 @@ class TableConfig(Options):
 
   @property
   def columnCalcs(self):
-    """
-    Description:
-    -----------
-    The columnCalcs option lets you decided where the calculations should be displayed, it can take one of four values:
+    """   The columnCalcs option lets you decided where the calculations should be displayed, it can take one of four values:
 
     Related Pages:
 
@@ -3158,18 +2577,13 @@ class TableConfig(Options):
     self._config(val)
 
   def cellClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using
+    """   The cellClick callback is triggered when a user left clicks on a cell, it can be set on a per column basis using
     the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3184,15 +2598,11 @@ class TableConfig(Options):
 
   def cellEditing(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3206,17 +2616,12 @@ class TableConfig(Options):
     return self
 
   def clipboardPasted(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The clipboardPasted event is triggered whenever data is successfully pasted into the table.
+    """   The clipboardPasted event is triggered whenever data is successfully pasted into the table.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks#cell
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3230,18 +2635,13 @@ class TableConfig(Options):
     return self
 
   def cellDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis
+    """   The cellDblClick callback is triggered when a user double clicks on a cell, it can be set on a per column basis
     using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3256,18 +2656,13 @@ class TableConfig(Options):
     return self
 
   def cellContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using
+    """   The cellContext callback is triggered when a user right clicks on a cell, it can be set on a per column basis using
     the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3281,17 +2676,12 @@ class TableConfig(Options):
     return self
 
   def cellEditCancelled(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The cellEdited callback is triggered when data in an editable cell is changed.
+    """   The cellEdited callback is triggered when data in an editable cell is changed.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3305,17 +2695,12 @@ class TableConfig(Options):
     return self
 
   def cellEdited(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The cellEdited callback is triggered when data in an editable cell is changed.
+    """   The cellEdited callback is triggered when data in an editable cell is changed.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3330,10 +2715,7 @@ class TableConfig(Options):
 
   @property
   def clipboardPasteAction(self):
-    """
-    Description:
-    -----------
-    Clipboard paste action function.
+    """   Clipboard paste action function.
 
     Related Pages:
 
@@ -3347,10 +2729,7 @@ class TableConfig(Options):
 
   @property
   def columns(self) -> List[Column]:
-    """
-    Description:
-    -----------
-    Return a list of columns.
+    """   Return a list of columns.
 
     :rtype: list
     """
@@ -3359,8 +2738,6 @@ class TableConfig(Options):
   @property
   def dataSendParams(self):
     """
-    Description:
-    -----------
 
     """
     return self._config_get()
@@ -3371,10 +2748,7 @@ class TableConfig(Options):
 
   @property
   def importFormat(self):
-    """
-    Description:
-    -----------
-    This can be used to import custom data when the table is loaded.
+    """   This can be used to import custom data when the table is loaded.
 
     Related Pages:
 
@@ -3387,17 +2761,12 @@ class TableConfig(Options):
     self._config(val)
 
   def add_column(self, field: str, title: str = None) -> Column:
-    """
-    Description:
-    -----------
-    Holder for column definition array.
+    """   Holder for column definition array.
 
     Related Pages:
 
       http://tabulator.info/docs/4.2/options
-
-    Attributes:
-    ----------
+ 
     :param field: String. The title name.
     :param title: String. Optional. The visible title in the columns.
 
@@ -3411,13 +2780,9 @@ class TableConfig(Options):
 
   def get_column(self, by_field: str = None, by_title: str = None) -> Column:
     """
-    Description:
-    ------------
     Get the column from the underlying Tabulator object by field or by title.
     Pointing by field is recommended as the title might change quite easily.
-
-    Attributes:
-    ----------
+ 
     :param by_field: String. Optional. The field reference for the column.
     :param by_title: String. Optional. The title reference for the column.
     """
@@ -3433,8 +2798,6 @@ class TableConfig(Options):
   @property
   def columns_group(self) -> ColumnsGroup:
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -3446,10 +2809,7 @@ class TableConfig(Options):
 
   @property
   def columnVertAlign(self):
-    """
-    Description:
-    -----------
-    Vertical alignment for contents of column header (used in column grouping).
+    """   Vertical alignment for contents of column header (used in column grouping).
 
     Related Pages:
 
@@ -3463,10 +2823,7 @@ class TableConfig(Options):
 
   @property
   def filterMode(self):
-    """
-    Description:
-    -----------
-    If you would prefer to filter your data server side rather than in Tabulator, you can use the filterMode option to
+    """   If you would prefer to filter your data server side rather than in Tabulator, you can use the filterMode option to
     send the filter data to the server instead of processing it client side.
 
     Related Pages:
@@ -3481,10 +2838,7 @@ class TableConfig(Options):
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    Array to hold data that should be loaded on table creation.
+    """   Array to hold data that should be loaded on table creation.
 
     Related Pages:
 
@@ -3498,10 +2852,7 @@ class TableConfig(Options):
 
   @property
   def debugInvalidOptions(self):
-    """
-    Description:
-    -----------
-    Enabled by default this will provide a console warning if you are trying to set an option on the table that does
+    """   Enabled by default this will provide a console warning if you are trying to set an option on the table that does
     not exist.
     With the new optional modular structure this is particularly valuable as it will prompt you if you are trying to
     use an option for a module that has not been installed.
@@ -3519,8 +2870,6 @@ class TableConfig(Options):
   @property
   def fitColumns(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -3534,10 +2883,7 @@ class TableConfig(Options):
 
   @property
   def groupBy(self):
-    """
-    Description:
-    -----------
-    String/function to select field to group rows by.
+    """   String/function to select field to group rows by.
 
     Related Pages:
 
@@ -3551,10 +2897,7 @@ class TableConfig(Options):
 
   @property
   def groupToggleElement(self):
-    """
-    Description:
-    -----------
-    By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of
+    """   By default Tabulator allows users to toggle a group open or closed by clicking on the arrow icon in the left of
     the group header. If you would prefer a different behaviour you can use the groupToggleElement option to choose
     a different option:
 
@@ -3572,10 +2915,7 @@ class TableConfig(Options):
 
   @property
   def groupClosedShowCalcs(self):
-    """
-    Description:
-    -----------
-    If you would like column calculations to display when a group is closed, set the groupClosedShowCalcs
+    """   If you would like column calculations to display when a group is closed, set the groupClosedShowCalcs
     option to true.
 
     Related Pages:
@@ -3592,10 +2932,7 @@ class TableConfig(Options):
 
   @property
   def groupStartOpen(self):
-    """
-    Description:
-    -----------
-    You can set the default open state of groups using the groupStartOpen property.
+    """   You can set the default open state of groups using the groupStartOpen property.
 
     Related Pages:
 
@@ -3609,10 +2946,7 @@ class TableConfig(Options):
 
   @property
   def groupValues(self):
-    """
-    Description:
-    -----------
-    Array of values for groups.
+    """   Array of values for groups.
 
     Related Pages:
 
@@ -3625,18 +2959,13 @@ class TableConfig(Options):
     self._config(val)
 
   def headerClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per
+    """   The headerClick callback is triggered when a user left clicks on a column or group header, it can be set on a per
     column basis using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3650,18 +2979,13 @@ class TableConfig(Options):
     return self
 
   def headerDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a
+    """   The headerDblClick callback is triggered when a user double clicks on a column or group header, it can be set on a
     per column basis using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3675,18 +2999,13 @@ class TableConfig(Options):
     return self
 
   def headerContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The headerContext callback is triggered when a user right clicks on a column or group header,
+    """   The headerContext callback is triggered when a user right clicks on a column or group header,
     it can be set on a per column basis using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3700,18 +3019,13 @@ class TableConfig(Options):
     return self
 
   def headerTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a
+    """   The headerTap callback is triggered when a user taps on the column header on a touch display, it can be set on a
     per column basis using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3725,18 +3039,13 @@ class TableConfig(Options):
     return self
 
   def headerDblTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under
+    """   The headerDblTap callback is triggered when a user taps on the column header on a touch display twice in under
     300ms, it can be set on a per column basis using the option in the columns definition object.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -3751,10 +3060,7 @@ class TableConfig(Options):
 
   @property
   def height(self):
-    """
-    Description:
-    -----------
-    Sets the height of the containing element, can be set to any valid height css value.
+    """   Sets the height of the containing element, can be set to any valid height css value.
     If set to false (the default), the height of the table will resize to fit the table data.
 
     Related Pages:
@@ -3771,10 +3077,7 @@ class TableConfig(Options):
 
   @property
   def history(self):
-    """
-    Description:
-    -----------
-    Enable user interaction history functionality.
+    """   Enable user interaction history functionality.
 
     Related Pages:
 
@@ -3788,10 +3091,7 @@ class TableConfig(Options):
 
   @property
   def keybindings(self) -> Keybindings:
-    """
-    Description:
-    -----------
-    Add keys binding to the table.
+    """   Add keys binding to the table.
 
     Related Pages:
 
@@ -3801,10 +3101,7 @@ class TableConfig(Options):
 
   @property
   def lang(self):
-    """
-    Description:
-    -----------
-    hold localization templates.
+    """   hold localization templates.
 
     Related Pages:
 
@@ -3818,10 +3115,7 @@ class TableConfig(Options):
 
   @property
   def layout(self):
-    """
-    Description:
-    -----------
-    Layout mode for the table columns.
+    """   Layout mode for the table columns.
 
     Related Pages:
 
@@ -3839,10 +3133,7 @@ class TableConfig(Options):
 
   @property
   def layoutColumnsOnNewData(self):
-    """
-    Description:
-    -----------
-    If you would prefer that the column widths adjust to the data each time you load it into the table you can set the
+    """   If you would prefer that the column widths adjust to the data each time you load it into the table you can set the
     layoutColumnsOnNewData property to true.
 
     Related Pages:
@@ -3857,10 +3148,7 @@ class TableConfig(Options):
 
   @property
   def layouts(self) -> EnumLayout:
-    """
-    Description:
-    -----------
-    Layout mode for the table columns.
+    """   Layout mode for the table columns.
 
     Related Pages:
 
@@ -3872,10 +3160,7 @@ class TableConfig(Options):
 
   @property
   def movableColumns(self):
-    """
-    Description:
-    -----------
-    Allow users to move and reorder columns.
+    """   Allow users to move and reorder columns.
 
     Related Pages:
 
@@ -3889,10 +3174,7 @@ class TableConfig(Options):
 
   @property
   def movableRows(self):
-    """
-    Description:
-    -----------
-    Allow users to move and reorder rows.
+    """   Allow users to move and reorder rows.
 
     Related Pages:
 
@@ -3906,10 +3188,7 @@ class TableConfig(Options):
 
   @property
   def movableRowsConnectedTables(self):
-    """
-    Description:
-    -----------
-    Connection selector for receiving tables.
+    """   Connection selector for receiving tables.
 
     Related Pages:
 
@@ -3936,10 +3215,7 @@ class TableConfig(Options):
 
   @property
   def movableRowsReceiver(self):
-    """
-    Description:
-    -----------
-    Sender function to be executed when row has been received.
+    """   Sender function to be executed when row has been received.
 
     Related Pages:
 
@@ -3953,10 +3229,7 @@ class TableConfig(Options):
 
   @property
   def movableRowsSender(self):
-    """
-    Description:
-    -----------
-    Sender function to be executed when row has been sent.
+    """   Sender function to be executed when row has been sent.
 
     Related Pages:
 
@@ -3970,10 +3243,7 @@ class TableConfig(Options):
 
   @property
   def pagination(self):
-    """
-    Description:
-    -----------
-    Choose pagination method, "local" or "remote".
+    """   Choose pagination method, "local" or "remote".
 
     Related Pages:
 
@@ -3987,10 +3257,7 @@ class TableConfig(Options):
 
   @property
   def paginationMode(self):
-    """
-    Description:
-    -----------
-    The pagination option is now a boolean that enables pagination and the paginationMode option sets its mode.
+    """   The pagination option is now a boolean that enables pagination and the paginationMode option sets its mode.
 
     Related Pages:
 
@@ -4013,10 +3280,7 @@ class TableConfig(Options):
 
   @property
   def paginationSize(self):
-    """
-    Description:
-    -----------
-    Set the number of rows in each page.
+    """   Set the number of rows in each page.
 
     Related Pages:
 
@@ -4039,10 +3303,7 @@ class TableConfig(Options):
 
   @property
   def paginationSizeSelector(self):
-    """
-    Description:
-    -----------
-    Add page size selection select element to the table footer.
+    """   Add page size selection select element to the table footer.
 
     Related Pages:
 
@@ -4056,10 +3317,7 @@ class TableConfig(Options):
 
   @property
   def persistenceID(self):
-    """
-    Description:
-    -----------
-    ID tag used to identify persistent storage information.
+    """   ID tag used to identify persistent storage information.
 
     Related Pages:
 
@@ -4073,10 +3331,7 @@ class TableConfig(Options):
 
   @property
   def persistence(self) -> Persistence:
-    """
-    Description:
-    -----------
-    The persistence system has received an overhaul in this release, providing a more consistent way to configure
+    """   The persistence system has received an overhaul in this release, providing a more consistent way to configure
     table persistence and allow even more table options to be persisted between sessions.
 
     Related Pages:
@@ -4089,10 +3344,7 @@ class TableConfig(Options):
 
   @property
   def placeholder(self):
-    """
-    Description:
-    -----------
-    placeholder element to display on empty table.
+    """   placeholder element to display on empty table.
 
     Related Pages:
 
@@ -4131,8 +3383,6 @@ class TableConfig(Options):
   @property
   def progressiveLoad(self):
     """
-    Description:
-    ------------
     In load mode the table will sequentially add each page of data into the table untill all data is loaded.
 
     Related Pages:
@@ -4156,8 +3406,6 @@ class TableConfig(Options):
   @property
   def progressiveLoadScrollMargin(self):
     """
-    Description:
-    ------------
     The progressiveLoadScrollMargin property determines how close to the bottom of the table in pixels,
     the scroll bar must be before the next page worth of data is loaded, by default it is set to twice the height of the table.
 
@@ -4173,10 +3421,7 @@ class TableConfig(Options):
 
   @property
   def reactiveData(self):
-    """
-    Description:
-    -----------
-    enable data reactivity.
+    """   enable data reactivity.
 
     Related Pages:
 
@@ -4190,10 +3435,7 @@ class TableConfig(Options):
 
   @property
   def renderVertical(self):
-    """
-    Description:
-    -----------
-    The vertical renderer can now be set using the renderVertical option:
+    """   The vertical renderer can now be set using the renderVertical option:
 
     Related Pages:
 
@@ -4207,10 +3449,7 @@ class TableConfig(Options):
 
   @property
   def responsiveLayout(self):
-    """
-    Description:
-    -----------
-    Automatically hide/show columns to fit the width of the Tabulator element.
+    """   Automatically hide/show columns to fit the width of the Tabulator element.
 
     Related Pages:
 
@@ -4224,10 +3463,7 @@ class TableConfig(Options):
 
   @property
   def resizableColumns(self):
-    """
-    Description:
-    -----------
-    Allow user to resize columns (via handles on the left and right edges of the column header).
+    """   Allow user to resize columns (via handles on the left and right edges of the column header).
 
     Related Pages:
 
@@ -4240,17 +3476,12 @@ class TableConfig(Options):
     self._config(val)
 
   def rowAdded(self, js_funcs, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowAdded callback is triggered when a row is added to the table by the addRow and updateOrAddRow functions.
+    """   The rowAdded callback is triggered when a row is added to the table by the addRow and updateOrAddRow functions.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4265,10 +3496,7 @@ class TableConfig(Options):
 
   @property
   def rowContextMenu(self) -> RowContextMenu:
-    """
-    Description:
-    -----------
-    Shortcut property to the row context menu.
+    """   Shortcut property to the row context menu.
 
     Related Pages:
 
@@ -4278,10 +3506,7 @@ class TableConfig(Options):
     return context_menu
 
   def rowClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowClick callback is triggered when a user clicks on a row.
+    """   The rowClick callback is triggered when a user clicks on a row.
 
     Usage::
 
@@ -4291,9 +3516,7 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4308,10 +3531,7 @@ class TableConfig(Options):
     return self
 
   def rowDblClick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowDblClick callback is triggered when a user double clicks on a row.
+    """   The rowDblClick callback is triggered when a user double clicks on a row.
 
     Usage::
 
@@ -4321,9 +3541,7 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4339,10 +3557,7 @@ class TableConfig(Options):
 
   @property
   def rowClickPopup(self):
-    """
-    Description:
-    -----------
-    You can add a click popup to any row by passing the popup contents to the rowClickPopup option in the table
+    """   You can add a click popup to any row by passing the popup contents to the rowClickPopup option in the table
     constructor object.
 
     Related Pages:
@@ -4357,10 +3572,7 @@ class TableConfig(Options):
 
   @property
   def rowContextPopup(self):
-    """
-    Description:
-    -----------
-    You can add a right click popup to any row by passing the popup contents to the rowContextPopup option in the
+    """   You can add a right click popup to any row by passing the popup contents to the rowContextPopup option in the
     table constructor object.
 
     Related Pages:
@@ -4374,17 +3586,12 @@ class TableConfig(Options):
     self._config(text)
 
   def rowDelete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowDeleted callback is triggered when a row is deleted from the table by the deleteRow function.
+    """   The rowDeleted callback is triggered when a row is deleted from the table by the deleteRow function.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4398,10 +3605,7 @@ class TableConfig(Options):
     return self
 
   def rowContext(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowContext callback is triggered when a user right clicks on a row.
+    """   The rowContext callback is triggered when a user right clicks on a row.
 
     If you want to prevent the browsers context menu being triggered in this event you will need to include the
     preventDefault() function in your callback.
@@ -4409,9 +3613,7 @@ class TableConfig(Options):
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4425,18 +3627,13 @@ class TableConfig(Options):
     return self
 
   def rowFormatter(self, js_funcs: types.JS_FUNCS_TYPES, profile: Union[dict, bool] = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    Tabulator also allows you to define a row level formatter using the rowFormatter option.
+    """   Tabulator also allows you to define a row level formatter using the rowFormatter option.
     this lets you alter each row of the table based on the data it contains.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/format
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4450,17 +3647,12 @@ class TableConfig(Options):
     return self
 
   def rowMove(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowMoved callback will be triggered when a row has been successfully moved.
+    """   The rowMoved callback will be triggered when a row has been successfully moved.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4474,17 +3666,12 @@ class TableConfig(Options):
     return self
 
   def rowTap(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowTap callback is triggered when a user taps on a row on a touch display.
+    """   The rowTap callback is triggered when a user taps on a row on a touch display.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4498,18 +3685,13 @@ class TableConfig(Options):
     return self
 
   def rowUpdated(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or
+    """   The rowUpdated callback is triggered when a row is updated by the updateRow, updateOrAddRow, updateData or
     updateOrAddData, functions.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4523,17 +3705,12 @@ class TableConfig(Options):
     return self
 
   def rowSelected(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowSelected event is triggered when a row is selected, either by the user or programmatically.
+    """   The rowSelected event is triggered when a row is selected, either by the user or programmatically.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks#select
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4547,17 +3724,12 @@ class TableConfig(Options):
     return self
 
   def rowDeselected(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The rowDeselected event is triggered when a row is deselected, either by the user or programmatically.
+    """   The rowDeselected event is triggered when a row is deselected, either by the user or programmatically.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks#select
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4571,18 +3743,13 @@ class TableConfig(Options):
     return self
 
   def rowSelectionChanged(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    Whenever the number of selected rows changes, through selection or deselection, the rowSelectionChanged event
+    """   Whenever the number of selected rows changes, through selection or deselection, the rowSelectionChanged event
     is triggered.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/callbacks#select
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4597,10 +3764,7 @@ class TableConfig(Options):
 
   @property
   def selectable(self):
-    """
-    Description:
-    -----------
-    Enable/Disable row selection.
+    """   Enable/Disable row selection.
 
     Related Pages:
 
@@ -4614,10 +3778,7 @@ class TableConfig(Options):
 
   @property
   def selectableRollingSelection(self):
-    """
-    Description:
-    -----------
-    Disable rolling selection
+    """   Disable rolling selection
 
     Related Pages:
 
@@ -4631,10 +3792,7 @@ class TableConfig(Options):
 
   @property
   def selectablePersistence(self):
-    """
-    Description:
-    -----------
-    Disable rolling selection
+    """   Disable rolling selection
 
     Related Pages:
 
@@ -4647,19 +3805,14 @@ class TableConfig(Options):
     self._config(flag)
 
   def selectableCheck(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, func_ref: bool = False):
-    """
-    Description:
-    -----------
-    The selectableCheck options allows you to pass a function to check if the current row should be selectable,
+    """   The selectableCheck options allows you to pass a function to check if the current row should be selectable,
     returning true will allow row selection, false will result in nothing happening.
     The function should accept a RowComponent as its first argument.
 
     Related Pages:
 
       http://tabulator.info/docs/4.0/select
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: JavaScript expression or entire function starting with function(row, level)
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -4671,10 +3824,7 @@ class TableConfig(Options):
 
   @property
   def sortMode(self):
-    """
-    Description:
-    -----------
-    If you would prefer to sort your data server side rather than in Tabulator,
+    """   If you would prefer to sort your data server side rather than in Tabulator,
     you can use the sortMode option to send the sort data to the server instead of processing it client side.
 
     Related Pages:
@@ -4689,10 +3839,7 @@ class TableConfig(Options):
 
   @property
   def tooltips(self):
-    """
-    Description:
-    -----------
-    You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
+    """   You can set tooltips to be displayed when the cursor hovers over cells. By default, tooltips are not displayed.
 
     Related Pages:
 
@@ -4706,10 +3853,7 @@ class TableConfig(Options):
 
   @property
   def virtualDomBuffer(self):
-    """
-    Description:
-    -----------
-    In some situations, where you have a full screen table with a large number of columns,
+    """   In some situations, where you have a full screen table with a large number of columns,
     this can result in slow rendering performance in older browsers. In these situations it is possible to manually set
     the height of the buffer in pixels using the virtualDomBuffer option.
 
@@ -4725,10 +3869,7 @@ class TableConfig(Options):
 
   @property
   def virtualDom(self):
-    """
-    Description:
-    -----------
-    If you need to disable virtual rendering for any reason you can set the virtualDom option to false to force
+    """   If you need to disable virtual rendering for any reason you can set the virtualDom option to false to force
     standard rendering.
 
     Related Pages:
@@ -4746,10 +3887,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTree(self):
-    """
-    Description:
-    -----------
-    Enable tree layout.
+    """   Enable tree layout.
 
     Related Pages:
 
@@ -4763,10 +3901,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeSort(self):
-    """
-    Description:
-    -----------
-    Enable sorting of child rows.
+    """   Enable sorting of child rows.
 
     Related Pages:
 
@@ -4780,10 +3915,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeFilter(self):
-    """
-    Description:
-    -----------
-    Enable filtering of child rows.
+    """   Enable filtering of child rows.
 
     Related Pages:
 
@@ -4797,10 +3929,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeStartExpanded(self):
-    """
-    Description:
-    -----------
-    The default expansion state for tree nodes.
+    """   The default expansion state for tree nodes.
 
     Related Pages:
 
@@ -4814,10 +3943,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeSelectPropagate(self):
-    """
-    Description:
-    -----------
-    Allow selection of a row to propagate to its children.
+    """   Allow selection of a row to propagate to its children.
 
     Related Pages:
 
@@ -4831,10 +3957,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeChildField(self):
-    """
-    Description:
-    -----------
-    The data field to look for child rows.
+    """   The data field to look for child rows.
 
     Related Pages:
 
@@ -4848,10 +3971,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeElementColumn(self):
-    """
-    Description:
-    -----------
-    Choose which column to display the toggle element in.
+    """   Choose which column to display the toggle element in.
 
     Related Pages:
 
@@ -4865,10 +3985,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeBranchElement(self):
-    """
-    Description:
-    -----------
-    Show tree branch icon.
+    """   Show tree branch icon.
 
     Related Pages:
 
@@ -4882,10 +3999,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeChildIndent(self):
-    """
-    Description:
-    -----------
-    Tree level indent in pixels.
+    """   Tree level indent in pixels.
 
     Related Pages:
 
@@ -4899,10 +4013,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeCollapseElement(self):
-    """
-    Description:
-    -----------
-    boolean/string/DOM Element.
+    """   boolean/string/DOM Element.
 
     Related Pages:
 
@@ -4916,10 +4027,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeExpandElement(self):
-    """
-    Description:
-    -----------
-    The element to be used for the expand toggle button.
+    """   The element to be used for the expand toggle button.
 
     Related Pages:
 
@@ -4933,10 +4041,7 @@ class TableTreeConfig(TableConfig):
 
   @property
   def dataTreeChildColumnCalcs(self):
-    """
-    Description:
-    -----------
-    Include visible child rows in column calculations.
+    """   Include visible child rows in column calculations.
 
     Related Pages:
 
@@ -4951,14 +4056,10 @@ class TableTreeConfig(TableConfig):
   def dataTreeRowExpanded(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                           func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: JavaScript expression or entire function starting with function(row, level)
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function

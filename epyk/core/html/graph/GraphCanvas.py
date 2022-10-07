@@ -16,10 +16,7 @@ class Canvas(Html.Html):
 
   @property
   def dom(self) -> JsCanvas.Canvas:
-    """
-    Description:
-    -----------
-    Property to the DOM object.
+    """   Property to the DOM object.
     This will return the Canvas properties.
 
     Usage::
@@ -32,10 +29,7 @@ class Canvas(Html.Html):
 
   @property
   def ctx(self) -> JsCanvas.Canvas:
-    """
-    Description:
-    -----------
-    Return the 2D context options of the Canvas DOM component.
+    """   Return the 2D context options of the Canvas DOM component.
 
     Usage::
 

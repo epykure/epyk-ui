@@ -17,8 +17,6 @@ class TextReferences:
   def book(self, text, author=None, name=None, edition=None, year=None, page=None, html_code=None, profile=None,
            options=None):
     """
-    Description:
-    ------------
     Shortcut to quote an extra from a book.
 
     :tags:
@@ -29,8 +27,6 @@ class TextReferences:
     Related Pages:
 
 
-    Attributes:
-    ----------
     :param text: String. Optional. The text of the quote.
     :param author: String. Optional. The author.
     :param name: String. Optional.
@@ -50,8 +46,6 @@ class TextReferences:
 
   def website(self, author=None, name=None, site=None, url=None, html_code=None, profile=None, options=None):
     """
-    Description:
-    ------------
     Shortcut to data reference from another website.
 
     :tags:
@@ -64,8 +58,6 @@ class TextReferences:
       https://en.wikipedia.org/wiki/Wikipedia:Citing_sources
       https://apastyle.apa.org/style-grammar-guidelines/references/examples/webpage-website-references
 
-    Attributes:
-    ----------
     :param author: String. Optional. The author.
     :param name: String. Optional. The name of the page.
     :param site: String. Optional. The website name.
@@ -97,8 +89,6 @@ class TextReferences:
 
   def github(self, url=None, html_code=None, profile=None, options=None):
     """
-    Description:
-    ------------
     Shortcut to data reference from github.
 
     :tags:
@@ -111,8 +101,6 @@ class TextReferences:
       https://en.wikipedia.org/wiki/Wikipedia:Citing_sources
       https://apastyle.apa.org/style-grammar-guidelines/references/examples/webpage-website-references
 
-    Attributes:
-    ----------
     :param url: String. Optional. The url link to the data.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -137,8 +125,6 @@ class Texts:
            height: types.SIZE_TYPE =(None, "px"), html_code: str = None, tooltip: str = None, options: dict = None,
            helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
     """
-    Description:
-    ------------
     Add the HTML text component to the page.
 
     Usage::
@@ -161,8 +147,6 @@ class Texts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
 
-    Attributes:
-    ----------
     :param text: The string value to be displayed in the component.
     :param color: Optional. The color of the text.
     :param align: Optional. The position of the icon in the line (left, right, center).
@@ -194,8 +178,6 @@ class Texts:
             height: types.SIZE_TYPE =(None, "px"), html_code: str = None, tooltip: str = None, options: dict = None,
             helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
     """
-    Description:
-    ------------
     Add the HTML text component to the page.
 
     :tags:
@@ -221,8 +203,6 @@ class Texts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/markdown.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/postit.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component.
     :param color: Optional. The color of the text.
     :param align: Optional. The position of the icon in the line (left, right, center).
@@ -245,16 +225,12 @@ class Texts:
                width: types.SIZE_TYPE =('auto', ""), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param size_notch:
     :param top: Optional. A tuple with the integer for the component's distance to the top of the page
@@ -298,8 +274,6 @@ class Texts:
             height: types.SIZE_TYPE = ('auto', ""), html_code: str = None, tooltip: str = '',
             profile: types.PROFILE_TYPE = None, options: dict = None) -> html.HtmlText.Label:
     """
-    Description:
-    ------------
     The <label> tag defines a label for a <button>, <input>, <meter>, <output>, <progress>, <select>,
     or <textarea> element...
 
@@ -322,8 +296,6 @@ class Texts:
 
       https://www.w3schools.com/tags/tag_label.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -349,8 +321,6 @@ class Texts:
            height: types.SIZE_TYPE = None, html_code: str = None, tooltip: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Span:
     """
-    Description:
-    ------------
     The <span> tag is used to group inline-elements in a document.
 
     The <span> tag provides no visual change by itself.
@@ -378,8 +348,6 @@ class Texts:
 
       https://www.w3schools.com/tags/tag_span.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The color of the text
     :param align: Optional. The position of the icon in the line (left, right, center)
@@ -401,8 +369,6 @@ class Texts:
                  helper: str = None, options: dict = None,
                  profile: types.PROFILE_TYPE = None) -> html.HtmlText.Highlights:
     """
-    Description:
-    ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
@@ -422,8 +388,6 @@ class Texts:
 
       https://getbootstrap.com/docs/4.3/components/alerts/
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param title: Optional.
     :param icon: Optional. The component icon content from font-awesome references
@@ -450,8 +414,6 @@ class Texts:
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Highlights:
     """
-    Description:
-    ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
@@ -475,8 +437,6 @@ class Texts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param title:
     :param icon: Optional. A string with the value of the icon to display from font-awesome
@@ -507,8 +467,6 @@ class Texts:
               align: str = "left", options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlTextComp.Formula:
     """
-    Description:
-    ------------
     Interface to the mathjax Formulas object.
 
     :tags:
@@ -526,8 +484,6 @@ class Texts:
 
       https://mathjax.org/docs/index.html
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -552,8 +508,6 @@ class Texts:
            height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
            options: dict = None, helper: str = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Python Wrapper to the Bootstrap CODE Tag.
     This entry point compare to the ui.codes will be by default readonly.
 
@@ -572,8 +526,6 @@ class Texts:
 
       https://v4-alpha.getbootstrap.com/content/code/
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param language: Optional. The language used in the code cell
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -600,8 +552,6 @@ class Texts:
                 encoding: str = "UTF-8", helper: str = None, options: dict = None,
                 profile: types.PROFILE_TYPE = None) -> html.HtmlText.Paragraph:
     """
-    Description:
-    ------------
     Python Wrapper to the HTML P Tag.
 
     :tags:
@@ -623,8 +573,6 @@ class Texts:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The font color in the component. Default inherit
     :param background_color:
@@ -656,8 +604,6 @@ class Texts:
                 height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
                 helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.Pre:
     """
-    Description:
-    ------------
     Preformatted text:
     The <pre> tag defines preformatted text.
     Text in a <pre> element is displayed in a fixed-width font (usually Courier), and it preserves both spaces
@@ -679,8 +625,6 @@ class Texts:
       https://www.w3schools.com/html/html_styles.asp
       https://www.w3schools.com/tags/tag_pre.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -705,8 +649,6 @@ class Texts:
                  height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
                  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.BlockQuote:
     """
-    Description:
-    ------------
     The <blockquote> tag specifies a section that is quoted from another source.
     Browsers usually indent <blockquote> elements.
 
@@ -726,8 +668,6 @@ class Texts:
       https://v4-alpha.getbootstrap.com/content/typography/
       https://www.w3schools.com/TAGS/tag_blockquote.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param author: Optional. The quote's author
     :param color: Optional. The font color in the component. Default inherit
@@ -750,8 +690,6 @@ class Texts:
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, helper: str = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Up and down Text component.
 
     :tags:
@@ -769,8 +707,6 @@ class Texts:
 
       https://fontawesome.com/
 
-    Attributes:
-    ----------
     :param record: Optional. The component inputs
     :param components: List of HTML component to be added
     :param color: Optional. The font color in the component. Default inherit
@@ -799,8 +735,6 @@ class Texts:
              html_code=None, options: types.OPTION_TYPE = None, helper: str = None,
              width: types.SIZE_TYPE = (150, 'px'), profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -817,8 +751,6 @@ class Texts:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
     :param number: Optional. The value to be displayed to the component. Default 0
     :param title: Optional. The text title
     :param label: Optional. The text of label to be added to the component
@@ -850,8 +782,6 @@ class Texts:
             height: types.SIZE_TYPE = (None, "px"), align: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Add a title.
 
     :tags:
@@ -870,8 +800,6 @@ class Texts:
 
       https://www.w3schools.com/tags/tag_hn.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component.
     :param level:
     :param name:
@@ -913,8 +841,6 @@ class Texts:
   def fieldset(self, legend: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
                helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     The <fieldset> tag is used to group related elements in a form.
     The <fieldset> tag draws a box around the related elements.
 
@@ -934,8 +860,6 @@ class Texts:
       https://www.w3schools.com/tags/tag_legend.asp
       https://www.w3schools.com/tags/tag_fieldset.asp
 
-    Attributes:
-    ----------
     :param legend: Optional. The legend value
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -954,16 +878,12 @@ class Texts:
           height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
           options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param label: Optional. The text of label to be added to the component
     :param align: Optional. The text-align property within this component
@@ -996,8 +916,6 @@ class Texts:
             html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
     Provide contextual feedback messages for typical user actions with the handful of available and flexible
     alert messages.
 
@@ -1017,8 +935,6 @@ class Texts:
 
       https://getbootstrap.com/docs/4.3/components/alerts/
 
-    Attributes:
-    ----------
     :param text: Optional. The string value to be displayed in the component
     :param title: Optional.
     :param icon: Optional. The component icon content from font-awesome references
@@ -1052,8 +968,6 @@ class Texts:
   @property
   def references(self) -> TextReferences:
     """
-    Description:
-    ------------
     More custom toggles icons.
     """
     return TextReferences(self)
@@ -1061,9 +975,7 @@ class Texts:
   def button(self, text: str, icon: str = None, width: types.SIZE_TYPE = ('auto', ""), tooltip: str = None,
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
     :tags:
     :categories:
@@ -1072,8 +984,6 @@ class Texts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the button
     :param icon: Optional. The component icon content from font-awesome references
     :param tooltip: Optional. A string with the value of the tooltip
@@ -1098,8 +1008,6 @@ class Texts:
            html_code: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, helper: str = None):
     """
-    Description:
-    ------------
     This component is based on the Jquery Date Picker object.
 
     :tags:
@@ -1122,8 +1030,6 @@ class Texts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references

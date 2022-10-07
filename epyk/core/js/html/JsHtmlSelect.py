@@ -14,10 +14,7 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
   @property
   def val(self):
-    """
-    Description:
-    -----------
-    Return the val object.
+    """   Return the val object.
 
     Usage::
 
@@ -34,17 +31,13 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return JsHtml.ContentFormatters(self.page, "%s.checked" % self.component.checkbox.dom.varName)
 
   @property
   def label(self):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -57,9 +50,7 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
     return JsHtml.ContentFormatters(self.page, self.component.switch_text.dom.innerText())
 
   def set_text(self, value: Union[str, primitives.JsDataModel], is_on_val: bool = True):
-    """
-    Description:
-    ------------
+    """  
     Change the value of the text component.
 
     Usage::
@@ -68,8 +59,6 @@ class JsHtmlSwitch(JsHtml.JsHtmlRich):
       page.ui.button("test").click([
       sw.dom.set_text("ok")])
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] value: The new value.
     :param bool is_on_val: Optional. Change either the on or the off value displayed.
     """
@@ -85,9 +74,7 @@ class Tick(JsHtml.JsHtmlRich):
 
   @property
   def val(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsObjects.get(
@@ -96,9 +83,7 @@ class Tick(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected content from the Select component.
     """
     # the option variable is coming from the Tick class to get the icon details
@@ -110,24 +95,18 @@ class SelectOption(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     Get the value of the selected option.
     This will not return the text displayed in the UI.
     """
     return self.value()
 
   def text(self, value: Union[str, primitives.JsDataModel] = None):
-    """
-    Description:
-    ------------
+    """  
     Change the text of the selected option.
 
     Refresh of the selectPicker object is needed to make the changes visible.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] value: Optional. The value to be set to the option text.
     """
     if value is None:
@@ -137,14 +116,10 @@ class SelectOption(JsHtml.JsHtmlRich):
     return JsObjects.JsVoid("%(varId)s.innerText = %(value)s" % {"varId": self.varId, "value": value})
 
   def value(self, value: Union[str, primitives.JsDataModel] = None):
-    """
-    Description:
-    ------------
+    """  
     Set the value tag of the selected items in the selection box.
     This will not change the display but only the value tag in the selected option.
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] value: Optional. The value to be added to the tag.
     """
     if value is None:
@@ -155,9 +130,7 @@ class SelectOption(JsHtml.JsHtmlRich):
 
   @property
   def index(self):
-    """
-    Description:
-    ------------
+    """  
     Get the index of the selected option.
     """
     return JsObjects.JsVoid("%(varId)s.index" % {"varId": self.varId})
@@ -167,9 +140,7 @@ class DomSelect(JsHtml.JsHtmlRich):
 
   @property
   def val(self):
-    """
-    Description:
-    ------------
+    """  
     Get the select Picker selected values.
     """
     return JsObjects.JsObjects.get(
@@ -178,44 +149,34 @@ class DomSelect(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected content from the Select component.
     """
     return JsHtml.ContentFormatters(self.page, "%s.val()" % self.jquery.varId)
 
   @property
   def text(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected content from the Select component.
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').text()" % self.jquery.varId)
 
   @property
   def index(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected content from the Select component.
     """
     return JsObjects.JsObjects.get("%s.find('option:selected').index()" % self.jquery.varId)
 
   @property
   def all(self):
-    """
-    Description:
-    ------------
+    """  
     Get all the items in the selection box (selected or not).
     """
     return JsObjects.JsObjects.get("(function(){var result = []; %s.find('option').each(function(i, dom){result.push(dom.innerText)}); return result})()" % self.jquery.varId)
 
   def hide(self):
-    """
-    Description:
-    ------------
+    """  
     Hide the select component.
 
     Related Pages:
@@ -225,9 +186,7 @@ class DomSelect(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.selectpicker('hide')" % self.jquery.varId)
 
   def show(self):
-    """
-    Description:
-    ------------
+    """  
     Show the select component.
 
     Related Pages:
@@ -238,9 +197,7 @@ class DomSelect(JsHtml.JsHtmlRich):
 
   @property
   def selected(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected option DOM.
     """
     select_opt = SelectOption(self.component, page=self.page, set_var=False)
@@ -248,13 +205,9 @@ class DomSelect(JsHtml.JsHtmlRich):
     return select_opt
 
   def option(self, i: int):
-    """
-    Description:
-    ------------
+    """  
     Get a specific option HTML object in the select.
 
-    Attributes:
-    ----------
     :param int i: The index of the option in the select component.
     """
     select_opt = SelectOption(self.component, page=self.page, set_var=False)
@@ -266,9 +219,7 @@ class Radio(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Description:
-    ------------
+    """  
     Get the selected content from the Select component.
     """
     # the option variable is coming from the Tick class to get the icon details
@@ -276,21 +227,15 @@ class Radio(JsHtml.JsHtmlRich):
 
   @property
   def checked(self):
-    """
-    Description:
-    ------------
+    """  
     returns the checked DOM object.
     """
     return JsNodeDom.JsDoms.get(
       "%s.querySelector('input:checked').parentNode" % self.component.dom.varName, page=self.page)
 
   def select(self, value: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param value: String.
     """
     value = JsUtils.jsConvertData(value, None)

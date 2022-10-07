@@ -24,10 +24,7 @@ class Chart(Html.Html):
 
   @property
   def chartId(self):
-    """
-    Description:
-    -----------
-    Return the Javascript variable of the chart.
+    """   Return the Javascript variable of the chart.
 
     Usage::
 
@@ -36,9 +33,7 @@ class Chart(Html.Html):
 
   @property
   def options(self) -> OptVis.Options2D:
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -48,10 +43,7 @@ class Chart(Html.Html):
 
   @property
   def js(self) -> JsVis.VisGraph2D:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined in the framework.
+    """   Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     Usage::
@@ -65,14 +57,10 @@ class Chart(Html.Html):
     return self._js
 
   def build(self, data=None, options=None, profile=False, component_id=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data: String. A String corresponding to a JavaScript object.
     :param options: Dictionary. Optional. Specific Python options available for this component.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -106,10 +94,7 @@ class ChartLine(Chart):
 
   @property
   def js(self) -> JsVis.VisGraph2D:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined in the framework.
+    """   Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     Usage::
@@ -124,9 +109,7 @@ class ChartLine(Chart):
 
   @property
   def groups(self) -> JsVis.VisGroups:
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -137,14 +120,10 @@ class ChartLine(Chart):
     return self.__grps
 
   def add_item(self, x, y, group, label=None, end=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param x:
     :param y:
     :param group:
@@ -155,14 +134,10 @@ class ChartLine(Chart):
     return self
 
   def add_items(self, records):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param records:
     """
     for rec in records:
@@ -171,8 +146,6 @@ class ChartLine(Chart):
 
   def getCtx(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -209,10 +182,7 @@ class Chart3D(Chart):
 
   @property
   def js(self) -> JsVis.VisGraph3D:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined in the framework.
+    """   Return all the Javascript functions defined in the framework.
     THis is an entry point to the full Javascript ecosystem.
 
     Usage::
@@ -225,10 +195,7 @@ class Chart3D(Chart):
 
   @property
   def options(self) -> OptVis.Options3D:
-    """
-    Description:
-    -----------
-    Property to the component options.
+    """   Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -241,9 +208,7 @@ class Chart3D(Chart):
 
   @property
   def groups(self) -> JsVis.VisGroups:
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -254,14 +219,10 @@ class Chart3D(Chart):
     return self.__grps
 
   def add_items(self, records):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param records:
     """
     for rec in records:
@@ -269,14 +230,10 @@ class Chart3D(Chart):
     return self
 
   def add_item(self, x, y, z, group=0, style=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param x:
     :param y:
     :param z:
@@ -287,14 +244,10 @@ class Chart3D(Chart):
     return self
 
   def build(self, data=None, options=None, profile=False, component_id=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param options:
     :param profile:
@@ -307,8 +260,6 @@ class Chart3D(Chart):
 
   def getCtx(self):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -350,8 +301,6 @@ class ChartNetwork(Chart):
   @property
   def options(self) -> OptVis.OptionsNetwork:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -362,8 +311,6 @@ class ChartNetwork(Chart):
   @property
   def js(self) -> JsVis.VisNetwork:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
 
@@ -380,8 +327,6 @@ class ChartNetwork(Chart):
   @property
   def groups(self) -> JsVis.VisGroups:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -393,13 +338,9 @@ class ChartNetwork(Chart):
 
   def add_node(self, label, node_id=None, group=0):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param label:
     :param node_id:
     :param group:
@@ -408,14 +349,10 @@ class ChartNetwork(Chart):
     return self
 
   def add_edge(self, from_Id, to_Id, title=None, relation=None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
-    Attributes:
-    ----------
     :param from_Id:
     :param to_Id:
     :param title:
@@ -425,9 +362,7 @@ class ChartNetwork(Chart):
     return self
 
   def getCtx(self):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
     """
@@ -445,13 +380,9 @@ class ChartTimeline(Chart):
 
   def addClassName(self, name, css, css_hover=None):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param name:
     :param css:
     :param css_hover:
@@ -469,8 +400,6 @@ class ChartTimeline(Chart):
   @property
   def style(self) -> GrpClsCharts.ClassVisTimeline:
     """
-    Description:
-    ------------
     Property to the CSS Style of the component.
 
     Usage::
@@ -484,8 +413,6 @@ class ChartTimeline(Chart):
   @property
   def options(self) -> OptVis.OptionsTimeline:
     """
-    Description:
-    ------------
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
@@ -500,8 +427,6 @@ class ChartTimeline(Chart):
   @property
   def js(self) -> JsVis.VisTimeline:
     """
-    Description:
-    ------------
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
 
@@ -518,8 +443,6 @@ class ChartTimeline(Chart):
   @property
   def groups(self) -> JsVis.VisGroups:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -531,14 +454,10 @@ class ChartTimeline(Chart):
 
   def setGroups(self, groups):
     """
-    Description:
-    ------------
     Add group labels to the timeline.
 
     Usage::
 
-    Attributes:
-    ----------
     :param groups:
     """
     self.__cats = "%s.setGroups(%s)" % (self.chartId, JsUtils.jsConvertData(groups, None))
@@ -546,13 +465,9 @@ class ChartTimeline(Chart):
 
   def add_items(self, records):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param records:
     """
     self.items.extend(records)
@@ -560,8 +475,6 @@ class ChartTimeline(Chart):
 
   def getCtx(self):
     """
-    Description:
-    ------------
 
     Usage::
     """

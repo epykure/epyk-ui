@@ -12,15 +12,11 @@ class VegaChangeset:
 
   def remove(self, data: Any):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://vega.github.io/vega/docs/api/view/
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -29,8 +25,6 @@ class VegaChangeset:
 
   def removeAll(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -41,15 +35,11 @@ class VegaChangeset:
 
   def insert(self, data: Any):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://vega.github.io/vega/docs/api/view/
 
-    Attributes:
-    ----------
     :param data:
     """
     data = JsUtils.jsConvertData(data, None)
@@ -78,8 +68,6 @@ class VegaView:
 
   def change(self, name, changeset):
     """
-    Description:
-    ------------
     Updates the data set with the given name with the changes specified by the provided changeset instance.
     This method does not force an immediate update to the view: invoke the runAsync method when ready.
     To issue a series of changes, insertions, or deletions, be sure to await the results of runAsync before issuing
@@ -89,8 +77,6 @@ class VegaView:
 
       https://vega.github.io/vega/docs/api/view/
 
-    Attributes:
-    ----------
     :param name:
     :param changeset:
     """
@@ -98,8 +84,6 @@ class VegaView:
 
   def insert(self, name, tuples):
     """
-    Description:
-    ------------
     Inserts an array of new data tuples into the data set with the given name, then returns this view instance.
     The input tuples array should contain one or more data objects that are not already included in the data set.
     This method does not force an immediate update to the view: invoke the runAsync method when ready.
@@ -108,15 +92,11 @@ class VegaView:
 
       https://vega.github.io/vega/docs/api/view/
 
-    Attributes:
-    ----------
     :param name:
     :param tuples:
     """
   def remove(self, name, tuples):
     """
-    Description:
-    ------------
     Removes data tuples from the data set with the given name, then returns this view instance.
     The tuples argument can either be an array of tuples already included in the data set, or a predicate function
     indicating which tuples should be removed. This method does not force an immediate update to the view: invoke the
@@ -126,23 +106,17 @@ class VegaView:
 
       https://vega.github.io/vega/docs/api/view/
 
-    Attributes:
-    ----------
     :param name:
     :param tuples:
     """
 
   def run(self, encode=None, prerun=None, postrun=None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://vega.github.io/vega/docs/api/view/#view_run
 
-    Attributes:
-    ----------
     :param encode:
     :param prerun:
     :param postrun:
@@ -151,22 +125,16 @@ class VegaView:
 
   def runAfter(self, callback):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://vega.github.io/vega/docs/api/view/#view_runAfter
 
-    Attributes:
-    ----------
     :param callback:
     """
 
   def runAsync(self, encode=None, prerun=None, postrun=None):
     """
-    Description:
-    ------------
 
     :param encode:
     :param prerun:

@@ -33,8 +33,6 @@ class Titles:
            color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
            html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
 
     :tags:
@@ -46,8 +44,6 @@ class Titles:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -81,8 +77,6 @@ class Titles:
                color: bool = True, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
                html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -96,8 +90,6 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/calendar.py
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -129,8 +121,6 @@ class Titles:
             color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
             html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -142,8 +132,6 @@ class Titles:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
         https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -176,8 +164,6 @@ class Titles:
               color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
               html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -186,8 +172,6 @@ class Titles:
 
       t0 = page.ui.titles.section("Available Items")
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -221,8 +205,6 @@ class Titles:
              color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
              html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -233,8 +215,6 @@ class Titles:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -267,8 +247,6 @@ class Titles:
                height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
                profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -278,9 +256,7 @@ class Titles:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -318,8 +294,6 @@ class Titles:
               width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
               profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -329,9 +303,7 @@ class Titles:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -362,8 +334,6 @@ class Titles:
                 color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
                 html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -373,9 +343,7 @@ class Titles:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -409,8 +377,6 @@ class Titles:
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
            html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -420,9 +386,7 @@ class Titles:
     Templates:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip
@@ -453,16 +417,12 @@ class Titles:
                height: types.SIZE_TYPE = (None, "px"), align: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
 
     Usage::
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param name:
     :param contents:
@@ -491,8 +451,6 @@ class Titles:
             color: str = None, width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = ('auto', ""),
             html_code: str = None, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -506,9 +464,7 @@ class Titles:
 
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
         https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
-
-    Attributes:
-    -----------
+ -
     :param text: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param tooltip: Optional. A string with the value of the tooltip

@@ -104,10 +104,7 @@ class OptionsBackgroundColor(DataClass):
 
   @property
   def fill(self):
-    """
-    Description:
-    -----------
-    The chart fill color, as an HTML color string.
+    """   The chart fill color, as an HTML color string.
 
     Related Pages:
 
@@ -121,10 +118,7 @@ class OptionsBackgroundColor(DataClass):
 
   @property
   def stroke(self):
-    """
-    Description:
-    -----------
-    The color of the chart border, as an HTML color string.
+    """   The color of the chart border, as an HTML color string.
 
     Related Pages:
 
@@ -138,10 +132,7 @@ class OptionsBackgroundColor(DataClass):
 
   @property
   def strokeWidth(self):
-    """
-    Description:
-    -----------
-    The border width, in pixels.
+    """   The border width, in pixels.
 
     Related Pages:
 
@@ -239,10 +230,7 @@ class OptionsCameraPosition(DataClass):
 
   @property
   def horizontal(self):
-    """
-    Description:
-    -----------
-    Value in radians. It can have any value, but is normally in the range of 0 and 2*Pi.
+    """   Value in radians. It can have any value, but is normally in the range of 0 and 2*Pi.
 
     Related Pages:
 
@@ -256,10 +244,7 @@ class OptionsCameraPosition(DataClass):
 
   @property
   def vertical(self):
-    """
-    Description:
-    -----------
-    Value in radians between 0 and 0.5*Pi.
+    """   Value in radians between 0 and 0.5*Pi.
 
     Related Pages:
 
@@ -273,10 +258,7 @@ class OptionsCameraPosition(DataClass):
 
   @property
   def distance(self):
-    """
-    Description:
-    -----------
-    The (normalized) distance from the camera to the center of the graph, in the range of 0.71 to 5.0.
+    """   The (normalized) distance from the camera to the center of the graph, in the range of 0.71 to 5.0.
     A larger distance puts the graph further away, making it smaller.
 
     Related Pages:
@@ -294,10 +276,7 @@ class OptionsInterpolation(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggle the interpolation.
+    """   Toggle the interpolation.
 
     Related Pages:
 
@@ -311,10 +290,7 @@ class OptionsInterpolation(DataClass):
 
   @property
   def parametrization(self):
-    """
-    Description:
-    -----------
-    Define the type of parametrization for the catmullRom interpolation. Example 7 shows the different parametrizations.
+    """   Define the type of parametrization for the catmullRom interpolation. Example 7 shows the different parametrizations.
     The options are 'centripetal' (best results), 'chordal' and 'uniform'. Uniform is the computationally cheapest
     variant. If interpolation is disabled, linear interpolation is used.
 
@@ -473,10 +449,7 @@ class OptionsdrawPoints(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggles the drawing of the datapoints.
+    """   Toggles the drawing of the datapoints.
 
     Related Pages:
 
@@ -490,10 +463,7 @@ class OptionsdrawPoints(DataClass):
 
   @property
   def onRender(self):
-    """
-    Description:
-    -----------
-    Defines a render function for every datapoint. If a group has no drawPoints.onRender callback,
+    """   Defines a render function for every datapoint. If a group has no drawPoints.onRender callback,
     the graph2d drawPoints.onRender callback will be used. If neither is defined, the datapoint will be rendered
     according to the group setting of drawPoints.enabled. This callback must return true if the datapoint should be
     rendered, otherwise false.
@@ -510,10 +480,7 @@ class OptionsdrawPoints(DataClass):
 
   @property
   def size(self):
-    """
-    Description:
-    -----------
-    Determine the size at which the data points are drawn.
+    """   Determine the size at which the data points are drawn.
 
     Related Pages:
 
@@ -538,10 +505,7 @@ class OptionBarChart(DataClass):
 
   @property
   def align(self):
-    """
-    Description:
-    -----------
-    The alignment of the bars with regards to the coordinate. The options are 'left', 'right' or 'center'.
+    """   The alignment of the bars with regards to the coordinate. The options are 'left', 'right' or 'center'.
 
     Related Pages:
 
@@ -553,10 +517,7 @@ class OptionBarChart(DataClass):
 
   @property
   def sideBySide(self):
-    """
-    Description:
-    -----------
-    If two datapoints of a barchart overlap, they are drawn over eachother by default.
+    """   If two datapoints of a barchart overlap, they are drawn over eachother by default.
     If sideBySide is set to true, they will be drawn side by side, within the same width as a single bar..
     See example 10 for more information. When using groups, see example 11.
 
@@ -572,10 +533,7 @@ class OptionBarChart(DataClass):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    The width of the bars
+    """   The width of the bars
 
     Related Pages:
 
@@ -589,10 +547,7 @@ class OptionBarChart(DataClass):
 
   @property
   def minWidth(self):
-    """
-    Description:
-    -----------
-    The minimum width of the bars in pixels: by default the bars get smaller while zooming out to prevent overlap,
+    """   The minimum width of the bars in pixels: by default the bars get smaller while zooming out to prevent overlap,
     this value is the minimum width of the bar. Default behavior (when minWidth is not set) is 10% of the bar width.
 
     Related Pages:
@@ -610,10 +565,7 @@ class OptionsLegendPosition(DataClass):
 
   @property
   def visible(self):
-    """
-    Description:
-    -----------
-    Both axis, left and right, have a corresponding legend. This toggles the visibility of the legend that is coupled
+    """   Both axis, left and right, have a corresponding legend. This toggles the visibility of the legend that is coupled
     with the left axis.
 
     Related Pages:
@@ -628,10 +580,7 @@ class OptionsLegendPosition(DataClass):
 
   @property
   def position(self):
-    """
-    Description:
-    -----------
-    Determine the position of the legend coupled to the left axis. Options are 'top-left', 'top-right',
+    """   Determine the position of the legend coupled to the left axis. Options are 'top-left', 'top-right',
     'bottom-left' or 'bottom-right'.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
@@ -647,10 +596,7 @@ class OptionsLegend(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggle the legend.
+    """   Toggle the legend.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -662,10 +608,7 @@ class OptionsLegend(DataClass):
 
   @property
   def icons(self):
-    """
-    Description:
-    -----------
-    Show automatically generated icons on the legend.
+    """   Show automatically generated icons on the legend.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -677,9 +620,7 @@ class OptionsLegend(DataClass):
 
   @property
   def left(self):
-    """
-    Description:
-    -----------
+    """   
 
     :https://visjs.github.io/vis-timeline/docs/graph2d/
 
@@ -689,9 +630,7 @@ class OptionsLegend(DataClass):
 
   @property
   def right(self):
-    """
-    Description:
-    -----------
+    """   
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
 
@@ -712,10 +651,7 @@ class Options2D(DataClass):
 
   @property
   def configure(self):
-    """
-    Description:
-    -----------
-    When true, a configurator is loaded where all configuration options of the Graph2d can be changed live.
+    """   When true, a configurator is loaded where all configuration options of the Graph2d can be changed live.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -735,10 +671,7 @@ class Options2D(DataClass):
 
   @property
   def defaultGroup(self):
-    """
-    Description:
-    -----------
-    This is the label for the default, ungrouped items when shown in a legend.
+    """   This is the label for the default, ungrouped items when shown in a legend.
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
     """
@@ -750,9 +683,7 @@ class Options2D(DataClass):
 
   @property
   def drawPoints(self) -> OptionsdrawPoints:
-    """
-    Description:
-    -----------
+    """   
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
 
@@ -762,9 +693,7 @@ class Options2D(DataClass):
 
   @property
   def dataAxis(self) -> OptionAxis:
-    """
-    Description:
-    -----------
+    """   
 
     https://visjs.github.io/vis-timeline/docs/graph2d/
 
@@ -792,10 +721,7 @@ class Options2D(DataClass):
 
   @property
   def graphHeight(self):
-    """
-    Description:
-    -----------
-    This is the height of the graph SVG canvas.
+    """   This is the height of the graph SVG canvas.
     If it is larger than the height of the outer frame, you can drag up and down the vertical direction as well as the
     usual horizontal direction.
 
@@ -972,9 +898,7 @@ class Options2D(DataClass):
 
   @property
   def managed(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -987,10 +911,7 @@ class Options3D(DataClass):
 
   @property
   def animationInterval(self):
-    """
-    Description:
-    -----------
-    The animation interval in milliseconds. This determines how fast the animation runs.
+    """   The animation interval in milliseconds. This determines how fast the animation runs.
 
     Related Pages:
 
@@ -1004,10 +925,7 @@ class Options3D(DataClass):
 
   @property
   def animationPreload(self):
-    """
-    Description:
-    -----------
-    If false, the animation frames are loaded as soon as they are requested.
+    """   If false, the animation frames are loaded as soon as they are requested.
     if animationPreload is true, the graph will automatically load all frames in the background, resulting in a
     smoother animation as soon as all frames are loaded. The load progress is shown on screen.
 
@@ -1023,10 +941,7 @@ class Options3D(DataClass):
 
   @property
   def animationAutoStart(self):
-    """
-    Description:
-    -----------
-    If true, the animation starts playing automatically after the graph is created.
+    """   If true, the animation starts playing automatically after the graph is created.
 
     Related Pages:
 
@@ -1040,10 +955,7 @@ class Options3D(DataClass):
 
   @property
   def axisColor(self):
-    """
-    Description:
-    -----------
-    The color of the axis lines and the text along the axis.
+    """   The color of the axis lines and the text along the axis.
 
     Related Pages:
 
@@ -1089,10 +1001,7 @@ class Options3D(DataClass):
 
   @property
   def dotSizeRatio(self):
-    """
-    Description:
-    -----------
-    Ratio of the size of the dots with respect to the width of the graph.
+    """   Ratio of the size of the dots with respect to the width of the graph.
 
     Related Pages:
 
@@ -1106,10 +1015,7 @@ class Options3D(DataClass):
 
   @property
   def dotSizeMinFraction(self):
-    """
-    Description:
-    -----------
-    Size of minimum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
+    """   Size of minimum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
 
     Related Pages:
 
@@ -1123,10 +1029,7 @@ class Options3D(DataClass):
 
   @property
   def dotSizeMaxFraction(self):
-    """
-    Description:
-    -----------
-    Size of maximum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
+    """   Size of maximum-value dot as a fraction of dotSizeRatio. Applicable when using style dot-size.
 
     Related Pages:
 
@@ -1148,10 +1051,7 @@ class Options3D(DataClass):
 
   @property
   def gridColor(self):
-    """
-    Description:
-    -----------
-    The color of the grid lines.
+    """   The color of the grid lines.
 
     Related Pages:
 
@@ -1165,10 +1065,7 @@ class Options3D(DataClass):
 
   @property
   def height(self):
-    """
-    Description:
-    -----------
-    The height of the graph in pixels or as a percentage.
+    """   The height of the graph in pixels or as a percentage.
 
     Related Pages:
 
@@ -1184,10 +1081,7 @@ class Options3D(DataClass):
 
   @property
   def keepAspectRatio(self):
-    """
-    Description:
-    -----------
-    If keepAspectRatio is true, the x-axis and the y-axis keep their aspect ratio.
+    """   If keepAspectRatio is true, the x-axis and the y-axis keep their aspect ratio.
     If false, the axes are scaled such that they both have the same, maximum width.
 
     Related Pages:
@@ -1202,10 +1096,7 @@ class Options3D(DataClass):
 
   @property
   def rotateAxisLabels(self):
-    """
-    Description:
-    -----------
-    If rotateAxisLabels is true, the x-axis and y-axis labels will rotate with the graph. Useful with long label values.
+    """   If rotateAxisLabels is true, the x-axis and y-axis labels will rotate with the graph. Useful with long label values.
 
     Related Pages:
 
@@ -1219,10 +1110,7 @@ class Options3D(DataClass):
 
   @property
   def showAnimationControls(self):
-    """
-    Description:
-    -----------
-    If true, animation controls are created at the bottom of the Graph.
+    """   If true, animation controls are created at the bottom of the Graph.
     The animation controls consists of buttons previous, start/stop, next, and a slider showing the current frame.
     Only applicable when the provided data contains an animation.
 
@@ -1238,10 +1126,7 @@ class Options3D(DataClass):
 
   @property
   def showGrayBottom(self):
-    """
-    Description:
-    -----------
-    If true, draw the bottom side of the surface in gray.
+    """   If true, draw the bottom side of the surface in gray.
 
     Related Pages:
 
@@ -1255,10 +1140,7 @@ class Options3D(DataClass):
 
   @property
   def showGrid(self):
-    """
-    Description:
-    -----------
-    If true, grid lines are drawn in the x-y surface (the bottom of the 3d graph).
+    """   If true, grid lines are drawn in the x-y surface (the bottom of the 3d graph).
 
     Related Pages:
 
@@ -1272,10 +1154,7 @@ class Options3D(DataClass):
 
   @property
   def showXAxis(self):
-    """
-    Description:
-    -----------
-    If true, X axis and X axis labels are drawn
+    """   If true, X axis and X axis labels are drawn
 
     Related Pages:
 
@@ -1289,10 +1168,7 @@ class Options3D(DataClass):
 
   @property
   def showYAxis(self):
-    """
-    Description:
-    -----------
-    If true, Y axis and Y axis labels are drawn.
+    """   If true, Y axis and Y axis labels are drawn.
 
     Related Pages:
 
@@ -1306,10 +1182,7 @@ class Options3D(DataClass):
 
   @property
   def showZAxis(self):
-    """
-    Description:
-    -----------
-    If true, Z axis and Z axis labels are drawn.
+    """   If true, Z axis and Z axis labels are drawn.
 
     Related Pages:
 
@@ -1323,10 +1196,7 @@ class Options3D(DataClass):
 
   @property
   def showPerspective(self):
-    """
-    Description:
-    -----------
-    If true, the graph is drawn in perspective: points and lines which are further away are drawn smaller.
+    """   If true, the graph is drawn in perspective: points and lines which are further away are drawn smaller.
     Note that the graph currently does not support a gray colored bottom side when drawn in perspective.
 
     Related Pages:
@@ -1341,10 +1211,7 @@ class Options3D(DataClass):
 
   @property
   def showLegend(self):
-    """
-    Description:
-    -----------
-    If true, a legend is drawn for the graph (if the graph type supports it).
+    """   If true, a legend is drawn for the graph (if the graph type supports it).
     By default a legend is drawn for dot and dot-color style graphs.
 
     Related Pages:
@@ -1359,10 +1226,7 @@ class Options3D(DataClass):
 
   @property
   def showShadow(self):
-    """
-    Description:
-    -----------
-    Show shadow on the graph.
+    """   Show shadow on the graph.
 
     Related Pages:
 
@@ -1376,10 +1240,7 @@ class Options3D(DataClass):
 
   @property
   def showSurfaceGrid(self):
-    """
-    Description:
-    -----------
-    If true, grid lines are drawn on the surface of the graph itself (only effective if style: 'surface'.
+    """   If true, grid lines are drawn on the surface of the graph itself (only effective if style: 'surface'.
 
     Related Pages:
 
@@ -1393,10 +1254,7 @@ class Options3D(DataClass):
 
   @property
   def style(self) -> Enum3dStyles:
-    """
-    Description:
-    -----------
-    The style of the 3d graph
+    """   The style of the 3d graph
 
     Related Pages:
 
@@ -1408,10 +1266,7 @@ class Options3D(DataClass):
 
   @property
   def tooltip(self):
-    """
-    Description:
-    -----------
-    Show a tooltip showing the values of the hovered data point.
+    """   Show a tooltip showing the values of the hovered data point.
     The contents of the tooltip can be customized by providing a callback function as tooltip.
     In this case the function is called with an object containing parameters x, y, z, and data
     (the source JS object for the point) as an argument, and must return a string which may contain HTML.
@@ -1428,10 +1283,7 @@ class Options3D(DataClass):
 
   @property
   def tooltipDelay(self):
-    """
-    Description:
-    -----------
-    The delay time (in ms) for the tooltip to appear when the mouse cursor hovers over an x-y grid tile.
+    """   The delay time (in ms) for the tooltip to appear when the mouse cursor hovers over an x-y grid tile.
 
     Related Pages:
 
@@ -1453,10 +1305,7 @@ class Options3D(DataClass):
 
   @property
   def valueMax(self):
-    """
-    Description:
-    -----------
-    The maximum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
+    """   The maximum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
 
     Related Pages:
 
@@ -1470,10 +1319,7 @@ class Options3D(DataClass):
 
   @property
   def valueMin(self):
-    """
-    Description:
-    -----------
-    The minimum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
+    """   The minimum value for the value-axis. Only available in combination with the styles dot-color and dot-size.
 
     Related Pages:
 
@@ -1487,10 +1333,7 @@ class Options3D(DataClass):
 
   @property
   def verticalRatio(self):
-    """
-    Description:
-    -----------
-    A value between 0.1 and 1.0.
+    """   A value between 0.1 and 1.0.
     This scales the vertical size of the graph When keepAspectRatio is set to false, and verticalRatio is set to 1.0,
     the graph will be a cube.
 
@@ -1506,10 +1349,7 @@ class Options3D(DataClass):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    The width of the graph in pixels or as a percentage.
+    """   The width of the graph in pixels or as a percentage.
 
     Related Pages:
 
@@ -1525,10 +1365,7 @@ class Options3D(DataClass):
 
   @property
   def xCenter(self):
-    """
-    Description:
-    -----------
-    The horizontal center position of the graph, as a percentage or in pixels.
+    """   The horizontal center position of the graph, as a percentage or in pixels.
 
     Related Pages:
 
@@ -1542,10 +1379,7 @@ class Options3D(DataClass):
 
   @property
   def xMax(self):
-    """
-    Description:
-    -----------
-    The maximum value for the x-axis. If not set, the largest value for x in the data set is used.
+    """   The maximum value for the x-axis. If not set, the largest value for x in the data set is used.
 
     Related Pages:
 
@@ -1559,10 +1393,7 @@ class Options3D(DataClass):
 
   @property
   def xMin(self):
-    """
-    Description:
-    -----------
-    The minimum value for the x-axis. If not set, the smallest value for x in the data set is used.
+    """   The minimum value for the x-axis. If not set, the smallest value for x in the data set is used.
 
     Related Pages:
 
@@ -1576,10 +1407,7 @@ class Options3D(DataClass):
 
   @property
   def xBarWidth(self):
-    """
-    Description:
-    -----------
-    The width of bars in x direction. By default, the width is equal to the smallest distance between the data points.
+    """   The width of bars in x direction. By default, the width is equal to the smallest distance between the data points.
     Only applicable for styles 'bar' and 'bar-color'.
 
     Related Pages:
@@ -1594,10 +1422,7 @@ class Options3D(DataClass):
 
   @property
   def xValueLabel(self):
-    """
-    Description:
-    -----------
-    A function for custom formatting of the labels along the x-axis, for example function (x) {return (x * 100) + '%'}.
+    """   A function for custom formatting of the labels along the x-axis, for example function (x) {return (x * 100) + '%'}.
 
     Related Pages:
 
@@ -1611,10 +1436,7 @@ class Options3D(DataClass):
 
   @property
   def xStep(self):
-    """
-    Description:
-    -----------
-    Step size for the grid on the x-axis.
+    """   Step size for the grid on the x-axis.
 
     Related Pages:
 
@@ -1628,10 +1450,7 @@ class Options3D(DataClass):
 
   @property
   def yBarWidth(self):
-    """
-    Description:
-    -----------
-    The width of bars in y direction. By default, the width is equal to the smallest distance between the data points.
+    """   The width of bars in y direction. By default, the width is equal to the smallest distance between the data points.
     Only applicable for styles 'bar' and 'bar-color'.
 
     Related Pages:
@@ -1646,10 +1465,7 @@ class Options3D(DataClass):
 
   @property
   def yCenter(self):
-    """
-    Description:
-    -----------
-    The vertical center position of the graph, as a percentage or in pixels.
+    """   The vertical center position of the graph, as a percentage or in pixels.
 
     Related Pages:
 
@@ -1663,10 +1479,7 @@ class Options3D(DataClass):
 
   @property
   def yMax(self):
-    """
-    Description:
-    -----------
-    The maximum value for the y-axis. If not set, the largest value for y in the data set is used.
+    """   The maximum value for the y-axis. If not set, the largest value for y in the data set is used.
 
     Related Pages:
 
@@ -1680,10 +1493,7 @@ class Options3D(DataClass):
 
   @property
   def yMin(self):
-    """
-    Description:
-    -----------
-    The minimum value for the y-axis. If not set, the smallest value for y in the data set is used.
+    """   The minimum value for the y-axis. If not set, the smallest value for y in the data set is used.
 
     Related Pages:
 
@@ -1697,10 +1507,7 @@ class Options3D(DataClass):
 
   @property
   def yValueLabel(self):
-    """
-    Description:
-    -----------
-    A function for custom formatting of the labels along the y-axis, for example function (y) {return (y * 100) + '%'}.
+    """   A function for custom formatting of the labels along the y-axis, for example function (y) {return (y * 100) + '%'}.
 
     Related Pages:
 
@@ -1714,10 +1521,7 @@ class Options3D(DataClass):
 
   @property
   def yStep(self):
-    """
-    Description:
-    -----------
-    Step size for the grid on the y-axis.
+    """   Step size for the grid on the y-axis.
 
     Related Pages:
 
@@ -1731,10 +1535,7 @@ class Options3D(DataClass):
 
   @property
   def zValueLabel(self):
-    """
-    Description:
-    -----------
-    A function for custom formatting of the labels along the z-axis, for example function (z) {return (z * 100) + '%'}
+    """   A function for custom formatting of the labels along the z-axis, for example function (z) {return (z * 100) + '%'}
 
     Related Pages:
 
@@ -1748,10 +1549,7 @@ class Options3D(DataClass):
 
   @property
   def zMax(self):
-    """
-    Description:
-    -----------
-    The maximum value for the z-axis. If not set, the largest value for z in the data set is used.
+    """   The maximum value for the z-axis. If not set, the largest value for z in the data set is used.
 
     Related Pages:
 
@@ -1765,10 +1563,7 @@ class Options3D(DataClass):
 
   @property
   def zMin(self):
-    """
-    Description:
-    -----------
-    The minimum value for the z-axis. If not set, the smallest value for z in the data set is used.
+    """   The minimum value for the z-axis. If not set, the smallest value for z in the data set is used.
 
     Related Pages:
 
@@ -1782,9 +1577,7 @@ class Options3D(DataClass):
 
   @property
   def managed(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -1797,10 +1590,7 @@ class OptionsEditable(DataClass):
 
   @property
   def add(self):
-    """
-    Description:
-    -----------
-    If true, new items can be created by double tapping an empty space in the Timeline. See section Editing Items for
+    """   If true, new items can be created by double tapping an empty space in the Timeline. See section Editing Items for
     a detailed explanation.
 
     Related Pages:
@@ -1815,10 +1605,7 @@ class OptionsEditable(DataClass):
 
   @property
   def remove(self):
-    """
-    Description:
-    -----------
-    If true, items can be deleted by first selecting them, and then clicking the delete button on the top right of the
+    """   If true, items can be deleted by first selecting them, and then clicking the delete button on the top right of the
     item. See section Editing Items for a detailed explanation.
 
     Related Pages:
@@ -1833,10 +1620,7 @@ class OptionsEditable(DataClass):
 
   @property
   def updateGroup(self):
-    """
-    Description:
-    -----------
-    If true, items can be dragged from one group to another. Only applicable when the Timeline has groups.
+    """   If true, items can be dragged from one group to another. Only applicable when the Timeline has groups.
     See section Editing Items for a detailed explanation.
 
     Related Pages:
@@ -1851,10 +1635,7 @@ class OptionsEditable(DataClass):
 
   @property
   def updateTime(self):
-    """
-    Description:
-    -----------
-    If true, items can be dragged to another moment in time. See section Editing Items for a detailed explanation.
+    """   If true, items can be dragged to another moment in time. See section Editing Items for a detailed explanation.
 
     Related Pages:
 
@@ -1868,10 +1649,7 @@ class OptionsEditable(DataClass):
 
   @property
   def overrideItems(self):
-    """
-    Description:
-    -----------
-    If true, item specific editable properties are overridden by timeline settings
+    """   If true, item specific editable properties are overridden by timeline settings
 
     Related Pages:
 
@@ -1888,10 +1666,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def autoResize(self):
-    """
-    Description:
-    -----------
-    If true, the Timeline will automatically detect when its container is resized, and redraw itself accordingly.
+    """   If true, the Timeline will automatically detect when its container is resized, and redraw itself accordingly.
 
     Related Pages:
 
@@ -1905,9 +1680,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def editable(self) -> OptionsEditable:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -1921,10 +1694,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def end(self):
-    """
-    Description:
-    -----------
-    The initial end date for the axis of the timeline. If not provided, the latest date present in the items set is
+    """   The initial end date for the axis of the timeline. If not provided, the latest date present in the items set is
     taken as end date.
 
     Related Pages:
@@ -1939,10 +1709,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def clickToUse(self):
-    """
-    Description:
-    -----------
-    When a Timeline is configured to be clickToUse, it will react to mouse and touch events only when active.
+    """   When a Timeline is configured to be clickToUse, it will react to mouse and touch events only when active.
     When active, a blue shadow border is displayed around the Timeline. The Timeline is set active by clicking on it,
     and is changed to inactive again by clicking outside the Timeline or by pressing the ESC key.
 
@@ -1958,10 +1725,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def start(self):
-    """
-    Description:
-    -----------
-    The initial start date for the axis of the timeline. If not provided, the earliest date present in the events is
+    """   The initial start date for the axis of the timeline. If not provided, the earliest date present in the events is
     taken as start date.
 
     Related Pages:
@@ -1976,10 +1740,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def stack(self):
-    """
-    Description:
-    -----------
-    If true (default), items will be stacked on top of each other such that they do not overlap.
+    """   If true (default), items will be stacked on top of each other such that they do not overlap.
 
     Related Pages:
 
@@ -1993,10 +1754,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def stackSubgroups(self):
-    """
-    Description:
-    -----------
-    If true (default), subgroups will be stacked on top of each other such that they do not overlap.
+    """   If true (default), subgroups will be stacked on top of each other such that they do not overlap.
 
     Related Pages:
 
@@ -2010,10 +1768,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def multiselect(self):
-    """
-    Description:
-    -----------
-    If true, multiple items can be selected using ctrl+click, shift+click, or by holding items.
+    """   If true, multiple items can be selected using ctrl+click, shift+click, or by holding items.
     Only applicable when option selectable is true.
 
     Related Pages:
@@ -2028,10 +1783,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def sequentialSelection(self):
-    """
-    Description:
-    -----------
-    If true, then only sequential items are allowed to be selected (no gaps) when multiselect is true
+    """   If true, then only sequential items are allowed to be selected (no gaps) when multiselect is true
 
     Related Pages:
 
@@ -2045,9 +1797,7 @@ class OptionsTimeline(DataClass):
 
   @property
   def managed(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -2060,10 +1810,7 @@ class OptionLabel(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the
+    """   Toggle the scaling of the label on or off. If this option is not defined, it is set to true if any of the
     properties in this object are defined.
 
     Related Pages:
@@ -2078,10 +1825,7 @@ class OptionLabel(DataClass):
 
   @property
   def min(self):
-    """
-    Description:
-    -----------
-    The minimum font-size used for labels when scaling.
+    """   The minimum font-size used for labels when scaling.
 
     Related Pages:
 
@@ -2095,10 +1839,7 @@ class OptionLabel(DataClass):
 
   @property
   def max(self):
-    """
-    Description:
-    -----------
-    The maximum font-size used for labels when scaling.
+    """   The maximum font-size used for labels when scaling.
 
     Related Pages:
 
@@ -2112,10 +1853,7 @@ class OptionLabel(DataClass):
 
   @property
   def maxVisible(self):
-    """
-    Description:
-    -----------
-    When zooming in, the font is drawn larger as well.
+    """   When zooming in, the font is drawn larger as well.
     You can limit the perceived font size using this option.
     If set to 30, the font will never look larger than size 30 zoomed at 100%.
 
@@ -2131,10 +1869,7 @@ class OptionLabel(DataClass):
 
   @property
   def drawThreshold(self):
-    """
-    Description:
-    -----------
-    When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn.
+    """   When zooming out, the font will be drawn smaller. This defines a lower limit for when the font is drawn.
     When using font scaling, you can use this together with the maxVisible to first show labels of important edges when
     zoomed out and only show the rest when zooming in.
 
@@ -2310,10 +2045,7 @@ class OptionShadow(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggle the casting of shadows. If this option is not defined, it is set to true if any of the properties in
+    """   Toggle the casting of shadows. If this option is not defined, it is set to true if any of the properties in
     this object are defined.
 
     Related Pages:
@@ -2328,10 +2060,7 @@ class OptionShadow(DataClass):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
-    The color size of the shadow as a string. Supported formats are 'rgb(255,255,255)', 'rgba(255,255,255,1)'
+    """   The color size of the shadow as a string. Supported formats are 'rgb(255,255,255)', 'rgba(255,255,255,1)'
     and '#FFFFFF'.
 
     Related Pages:
@@ -2346,10 +2075,7 @@ class OptionShadow(DataClass):
 
   @property
   def size(self):
-    """
-    Description:
-    -----------
-    The blur size of the shadow.
+    """   The blur size of the shadow.
 
     Related Pages:
 
@@ -2363,10 +2089,7 @@ class OptionShadow(DataClass):
 
   @property
   def x(self):
-    """
-    Description:
-    -----------
-    The x offset.
+    """   The x offset.
 
     Related Pages:
 
@@ -2380,10 +2103,7 @@ class OptionShadow(DataClass):
 
   @property
   def y(self):
-    """
-    Description:
-    -----------
-    The y offset.
+    """   The y offset.
 
     Related Pages:
 
@@ -2400,10 +2120,7 @@ class OptionEdge(DataClass):
 
   @property
   def color(self) -> OptionColor:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self.has_attribute(OptionColor)
 
   @property
@@ -2416,10 +2133,7 @@ class OptionEdge(DataClass):
 
   @property
   def interaction(self) -> OptionInteraction:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self.has_attribute(OptionInteraction)
 
   @property
@@ -2432,18 +2146,12 @@ class OptionEdge(DataClass):
 
   @property
   def smooth(self) -> OptionSmooth:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self.has_attribute(OptionSmooth)
 
   @property
   def shadow(self) -> OptionShadow:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self.has_attribute(OptionShadow)
 
 
@@ -2451,10 +2159,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
-    Toggle the usage of the hierarchical layout system.
+    """   Toggle the usage of the hierarchical layout system.
     If this option is not defined, it is set to true if any of the properties in this object are defined.
 
     Related Pages:
@@ -2469,10 +2174,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def levelSeparation(self):
-    """
-    Description:
-    -----------
-    The distance between the different levels.
+    """   The distance between the different levels.
 
     Related Pages:
 
@@ -2486,10 +2188,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def nodeSpacing(self):
-    """
-    Description:
-    -----------
-    Minimum distance between nodes on the free axis. This is only for the initial layout.
+    """   Minimum distance between nodes on the free axis. This is only for the initial layout.
     If you enable physics, the node distance there will be the effective node distance
 
     Related Pages:
@@ -2504,10 +2203,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def treeSpacing(self):
-    """
-    Description:
-    -----------
-    Distance between different trees (independent networks). This is only for the initial layout.
+    """   Distance between different trees (independent networks). This is only for the initial layout.
     If you enable physics, the repulsion model will denote the distance between the trees.
 
     Related Pages:
@@ -2522,10 +2218,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def blockShifting(self):
-    """
-    Description:
-    -----------
-    Method for reducing whitespace. Can be used alone or together with edge minimization.
+    """   Method for reducing whitespace. Can be used alone or together with edge minimization.
     Each node will check for whitespace and will shift it's branch along with it for as far as it can,
     respecting the nodeSpacing on any level.
 
@@ -2544,10 +2237,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def edgeMinimization(self):
-    """
-    Description:
-    -----------
-    Method for reducing whitespace. Can be used alone or together with block shifting.
+    """   Method for reducing whitespace. Can be used alone or together with block shifting.
     Enabling block shifting will usually speed up the layout process.
     Each node will try to move along its free axis to reduce the total length of it's edges.
     This is mainly for the initial layout. If you enable physics, the layout will be determined by the physics.
@@ -2565,10 +2255,7 @@ class OPtionsHierarchical(DataClass):
 
   @property
   def parentCentralization(self):
-    """
-    Description:
-    -----------
-    When true, the parents nodes will be centered again after the layout algorithm has been finished.
+    """   When true, the parents nodes will be centered again after the layout algorithm has been finished.
 
     Related Pages:
 
@@ -2585,10 +2272,7 @@ class OptionLayout(DataClass):
 
   @property
   def randomSeed(self):
-    """
-    Description:
-    -----------
-    When NOT using the hierarchical layout, the nodes are randomly positioned initially.
+    """   When NOT using the hierarchical layout, the nodes are randomly positioned initially.
     This means that the settled result is different every time. If you provide a random seed manually,
     the layout will be the same every time.
     Ideally you try with an undefined seed, reload until you are happy with the layout and use the getSeed() method to
@@ -2606,10 +2290,7 @@ class OptionLayout(DataClass):
 
   @property
   def improvedLayout(self):
-    """
-    Description:
-    -----------
-    When enabled, the network will use the Kamada Kawai algorithm for initial layout.
+    """   When enabled, the network will use the Kamada Kawai algorithm for initial layout.
     For networks larger than 100 nodes, clustering will be performed automatically to reduce the amount of nodes.
     This can greatly improve the stabilization times. If the network is very interconnected (no or few leaf nodes),
     this may not work and it will revert back to the old method. Performance will be improved in the future
@@ -2626,10 +2307,7 @@ class OptionLayout(DataClass):
 
   @property
   def clusterThreshold(self):
-    """
-    Description:
-    -----------
-    Cluster threshold to which improvedLayout applies.
+    """   Cluster threshold to which improvedLayout applies.
 
     Related Pages:
 
@@ -2643,9 +2321,7 @@ class OptionLayout(DataClass):
 
   @property
   def hierarchical(self) -> OPtionsHierarchical:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -2669,10 +2345,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def autoResize(self):
-    """
-    Description:
-    -----------
-    If true, the Network will automatically detect when its container is resized, and redraw itself accordingly.
+    """   If true, the Network will automatically detect when its container is resized, and redraw itself accordingly.
     If false, the Network can be forced to repaint after its container has been resized using the function redraw()
     and setSize().
 
@@ -2688,10 +2361,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    the width of the canvas. Can be in percentages or pixels (ie. '400px').
+    """   the width of the canvas. Can be in percentages or pixels (ie. '400px').
 
     Related Pages:
 
@@ -2705,10 +2375,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def height(self):
-    """
-    Description:
-    -----------
-    the height of the canvas. Can be in percentages or pixels (ie. '400px').
+    """   the height of the canvas. Can be in percentages or pixels (ie. '400px').
 
     Related Pages:
 
@@ -2722,10 +2389,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def locale(self):
-    """
-    Description:
-    -----------
-    Select the locale. By default, the language is English
+    """   Select the locale. By default, the language is English
 
     Related Pages:
 
@@ -2739,10 +2403,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def nodes(self) -> OptionNode:
-    """
-    Description:
-    -----------
-    All options in this object are explained in the nodes module.
+    """   All options in this object are explained in the nodes module.
 
     Related Pages:
 
@@ -2754,10 +2415,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def edges(self) -> OptionEdge:
-    """
-    Description:
-    -----------
-    All options in this object are explained in the edges module.
+    """   All options in this object are explained in the edges module.
 
     Related Pages:
 
@@ -2767,9 +2425,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def layout(self) -> OptionLayout:
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -2781,10 +2437,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def physics(self) -> OptionPhysics:
-    """
-    Description:
-    -----------
-    All options in this object are explained in the physics module.
+    """   All options in this object are explained in the physics module.
 
     Related Pages:
 
@@ -2794,10 +2447,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def interaction(self) -> OptionInteraction:
-    """
-    Description:
-    -----------
-    All options in this object are explained in the interaction module.
+    """   All options in this object are explained in the interaction module.
 
     Related Pages:
 
@@ -2807,10 +2457,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def manipulation(self) -> OptionManipulation:
-    """
-    Description:
-    -----------
-    All options in this object are explained in the manipulation module.
+    """   All options in this object are explained in the manipulation module.
 
     Related Pages:
 
@@ -2820,9 +2467,7 @@ class OptionsNetwork(DataClass):
 
   @property
   def managed(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 

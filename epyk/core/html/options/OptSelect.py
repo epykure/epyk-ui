@@ -7,9 +7,7 @@ class OptionsSelect(Options):
 
   @property
   def all(self):
-    """
-    Description:
-    ------------
+    """  
     Specify if the all item should be added to the items.
 
     Related Pages:
@@ -24,9 +22,7 @@ class OptionsSelect(Options):
 
   @property
   def empty(self):
-    """
-    Description:
-    ------------
+    """  
     Specify if the Empty item should be added to the items.
 
     Related Pages:
@@ -41,9 +37,7 @@ class OptionsSelect(Options):
 
   @property
   def disabled(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -57,9 +51,7 @@ class OptionsSelect(Options):
 
   @property
   def drop_up(self):
-    """
-    Description:
-    ------------
+    """  
     dropupAuto is set to true by default, which automatically determines whether
     or not the menu should display above or below the select box.
     If dropupAuto is set to false, manually make the select a dropup menu by adding the .dropup class to the select.
@@ -76,9 +68,7 @@ class OptionsSelect(Options):
 
   @property
   def header(self):
-    """
-    Description:
-    ------------
+    """  
     Add a header to the dropdown menu, e.g. header: 'Select a condiment' or data-header="Select a condiment"
 
     Related Pages:
@@ -93,9 +83,7 @@ class OptionsSelect(Options):
 
   @property
   def live_search(self):
-    """
-    Description:
-    ------------
+    """  
     You can add a search input by passing data-live-search="true" attribute.
 
     Related Pages:
@@ -110,9 +98,7 @@ class OptionsSelect(Options):
 
   @property
   def max_options(self):
-    """
-    Description:
-    ------------
+    """  
     Limit the number of options that can be selected via the data-max-options attribute.
     It also works for option groups. Customize the message displayed when the limit is reached with maxOptionsText.
 
@@ -128,9 +114,7 @@ class OptionsSelect(Options):
 
   @property
   def placeholder(self):
-    """
-    Description:
-    ------------
+    """  
     Using the title attribute will set the default placeholder text when nothing is selected.
     This works for both multiple and standard select boxes:
 
@@ -146,9 +130,7 @@ class OptionsSelect(Options):
 
   @property
   def selected(self):
-    """
-    Description:
-    ------------
+    """  
     The selected items
     """
     return self.get(None)
@@ -159,9 +141,7 @@ class OptionsSelect(Options):
 
   @property
   def select_all(self):
-    """
-    Description:
-    ------------
+    """  
     Adds two buttons to the top of the menu - Select All & Deselect All with data-actions-box="true".
 
     Related Pages:
@@ -176,9 +156,7 @@ class OptionsSelect(Options):
 
   @property
   def selected_text_format(self):
-    """
-    Description:
-    ------------
+    """  
     Specify how the selection is displayed with the data-selected-text-format attribute on a multiple select.
 
     Related Pages:
@@ -193,9 +171,7 @@ class OptionsSelect(Options):
 
   @property
   def show_tick(self):
-    """
-    Description:
-    ------------
+    """  
     You can also show the checkmark icon on standard select boxes with the show-tick class:
 
     Related Pages:
@@ -210,9 +186,7 @@ class OptionsSelect(Options):
 
   @property
   def size(self):
-    """
-    Description:
-    ------------
+    """  
     Specify a number for data-size to choose the maximum number of items to show in the menu.
 
     Related Pages:
@@ -227,9 +201,7 @@ class OptionsSelect(Options):
 
   @property
   def style(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -243,9 +215,7 @@ class OptionsSelect(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    ------------
+    """  
     Using the title attribute will set the default placeholder text when nothing is selected.
     This works for both multiple and standard select boxes:
 
@@ -261,9 +231,7 @@ class OptionsSelect(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
@@ -281,10 +249,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def config_default(self):
-    """
-    Description:
-    -----------
-    The default value for the configuration in case of template.
+    """   The default value for the configuration in case of template.
     Default value is an empty list.
 
     Usage::
@@ -299,9 +264,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def actionsBox(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, adds two buttons to the top of the dropdown menu (Select All & Deselect All).
 
     Related Pages:
@@ -316,9 +279,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def auto_select(self):
-    """
-    Description:
-    ------------
+    """  
     Auto select the item at the defined index in the list.
     Default will select the first item in the list.
     """
@@ -330,9 +291,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def container(self):
-    """
-    Description:
-    ------------
+    """  
     When set to a string, appends the select to a specific element or selector, e.g., container: 'body' | '.main-body'
 
     Related Pages:
@@ -347,9 +306,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def deselectAllText(self):
-    """
-    Description:
-    ------------
+    """  
     The text on the button that deselects all options when actionsBox is enabled.
 
     Related Pages:
@@ -364,9 +321,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def dropdownAlignRight(self):
-    """
-    Description:
-    ------------
+    """  
     Align the menu to the right instead of the left. If set to 'auto', the menu will automatically align right
     if there isn't room for the menu's full width when aligned to the left.
 
@@ -382,9 +337,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def dropupAuto(self):
-    """
-    Description:
-    ------------
+    """  
     checks to see which has more room, above or below.
     If the dropup has enough room to fully open normally, but there is more room above, the dropup still opens normally.
     Otherwise, it becomes a dropup. If dropupAuto is set to false, dropups must be called manually.
@@ -401,9 +354,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def header(self):
-    """
-    Description:
-    ------------
+    """  
     adds a header to the top of the menu; includes a close button by default
 
     Related Pages:
@@ -418,9 +369,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def hideDisabled(self):
-    """
-    Description:
-    ------------
+    """  
     removes disabled options and optgroups from the menu data-hide-disabled: true
 
     Related Pages:
@@ -435,9 +384,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def iconBase(self):
-    """
-    Description:
-    ------------
+    """  
     Set the base to use a different icon font instead of Glyphicons.
     If changing iconBase, you might also want to change tickIcon,
     in case the new icon font uses a different naming scheme.
@@ -454,9 +401,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def liveSearch(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, adds a search box to the top of the selectpicker dropdown.
 
     Related Pages:
@@ -471,9 +416,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def liveSearchPlaceholder(self):
-    """
-    Description:
-    ------------
+    """  
     When set to a string, a placeholder attribute equal to the string will be added to the liveSearch input.
 
     Related Pages:
@@ -488,9 +431,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def liveSearchStyle(self):
-    """
-    Description:
-    ------------
+    """  
     When set to 'contains', searching will reveal options that contain the searched text.
     For example, searching for pl with return both Apple, Plum, and Plantain.
     When set to 'startsWith', searching for pl will return only Plum and Plantain.
@@ -507,9 +448,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def maxOptions(self):
-    """
-    Description:
-    ------------
+    """  
     When set to an integer and in a multi-select, the number of selected options cannot exceed the given value.
 
     Related Pages:
@@ -524,9 +463,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def maxOptionsText(self):
-    """
-    Description:
-    ------------
+    """  
     The text that is displayed when maxOptions is enabled and the maximum number of options for the given scenario have
     been selected.
 
@@ -542,9 +479,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def mobile(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, enables the device's native menu for select menus.
 
     Related Pages:
@@ -559,9 +494,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def noneSelectedText(self):
-    """
-    Description:
-    ------------
+    """  
     The text that is displayed when a multiple select has no selected options.
 
     Related Pages:
@@ -576,9 +509,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def noneResultsText(self):
-    """
-    Description:
-    ------------
+    """  
     The text displayed when a search doesn't return any results.
 
     Related Pages:
@@ -593,9 +524,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def selected(self):
-    """
-    Description:
-    ------------
+    """  
     The selected items
     """
     return self.get(None)
@@ -612,9 +541,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def selectAllText(self):
-    """
-    Description:
-    ------------
+    """  
     The text on the button that selects all options when actionsBox is enabled.
 
     Related Pages:
@@ -629,9 +556,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def selectOnTab(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, treats the tab character like the enter or space characters within the selectpicker dropdown.
 
     Related Pages:
@@ -646,9 +571,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def showContent(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, display custom HTML associated with selected option(s) in the button.
     When set to false, the option value will be displayed instead.
 
@@ -664,9 +587,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def showIcon(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, display icon(s) associated with selected option(s) in the button.
 
     Related Pages:
@@ -681,9 +602,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def showSubtext(self):
-    """
-    Description:
-    ------------
+    """  
     When set to true, display subtext associated with a selected option in the button.
 
     Related Pages:
@@ -698,9 +617,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def showTick(self):
-    """
-    Description:
-    ------------
+    """  
     Show checkmark on selected option (for items without multiple attribute).
 
     Related Pages:
@@ -715,9 +632,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def size(self):
-    """
-    Description:
-    ------------
+    """  
     When set to 'auto', the menu always opens up to show as many items as the window will allow without being cut off.
 
     Related Pages:
@@ -732,9 +647,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def style(self):
-    """
-    Description:
-    ------------
+    """  
     When set to a string, add the value to the button's style.
 
     Related Pages:
@@ -749,9 +662,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def styleBase(self):
-    """
-    Description:
-    ------------
+    """  
     The default class applied to the button. When using the setStyle method, this class will always remain.
 
     Related Pages:
@@ -766,9 +677,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def tickIcon(self):
-    """
-    Description:
-    ------------
+    """  
     Set which icon to use to display as the "tick" next to selected options.
 
     Related Pages:
@@ -783,9 +692,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def title(self):
-    """
-    Description:
-    ------------
+    """  
     The default title for the selectpicker.
 
     Related Pages:
@@ -800,9 +707,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def virtualScroll(self):
-    """
-    Description:
-    ------------
+    """  
     If enabled, the items in the dropdown will be rendered using virtualization
     (i.e. only the items that are within the viewport will be rendered).
 
@@ -821,9 +726,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
     When set to auto, the width of the selectpicker is automatically adjusted to accommodate the widest option.
 
     Related Pages:
@@ -838,9 +741,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def windowPadding(self):
-    """
-    Description:
-    ------------
+    """  
     This is useful in cases where the window has areas that the dropdown menu should not cover -
     for instance a fixed header. When set to an integer, the same padding will be added to all sides.
     Alternatively, an array of integers can be used in the format [top, right, bottom, left].
@@ -857,9 +758,7 @@ class OptionsSelectJs(OptionsSelect):
 
   @property
   def sanitize(self):
-    """
-    Description:
-    ------------
+    """  
     Enable or disable the sanitization. If activated, 'data-content' on individual options will be sanitized.
 
     Related Pages:

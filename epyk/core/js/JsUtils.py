@@ -19,13 +19,8 @@ PROFILE_COUNT = 0
 #                                                       DECORATORS
 #
 def incompatibleBrowser(browsers: List[str]):
-  """
-  Description:
-  ------------
-  Decorator to send a warning for functions or packages which are restricted to some browsers.
+  """  Decorator to send a warning for functions or packages which are restricted to some browsers.
 
-  Attributes:
-  ----------
   :param List[str] browsers: Incompatible browsers.
   """
   def decorator(func):
@@ -40,18 +35,13 @@ def incompatibleBrowser(browsers: List[str]):
 
 
 def fromVersion(data: dict):
-  """
-  Description:
-  ------------
-  This system decorate will decorate a component function to specify during the Python execution
+  """  This system decorate will decorate a component function to specify during the Python execution
   if a method is not yet available in the current state of the Javascript modules.
 
   Usage::
 
     .fromVersion({'jqueryui': '1.12.0'})
 
-  Attributes:
-  ----------
   :param dict data: Set the minimum version of a package for a specific function.
 
   :return: The decorated function
@@ -74,10 +64,7 @@ def fromVersion(data: dict):
 
 
 def untilVersion(data: dict, new_feature: str):
-  """
-  Description:
-  ------------
-  This system decorate will decorate a component function to specify during the Python execution
+  """  This system decorate will decorate a component function to specify during the Python execution
   if a method is not available since the current state of the Javascript modules.
   Indeed as it is possible to override JS version on the fly it is also important to get notify with functions
   are not compatible anymore.
@@ -87,8 +74,6 @@ def untilVersion(data: dict, new_feature: str):
 
       .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
-  Attributes:
-  ----------
   :param dict data: The maximum version number for a function by packages.
   :param str new_feature: The new function name.
 
@@ -114,17 +99,12 @@ def untilVersion(data: dict, new_feature: str):
 #                                                       FUNCTIONS
 #
 def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
-  """
-  Description:
-  ------------
-  Common function to check if the object exists in Python.
+  """  Common function to check if the object exists in Python.
 
   Usage::
 
      JsUtils.isJsData(attr)
 
-  Attributes:
-  ----------
   :param js_data: The Python Javascript data.
   """
   return hasattr(js_data, 'toStr')
@@ -132,17 +112,12 @@ def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
 
 def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list], js_funcs: Optional[Union[list, str]],
                   depth: bool = False) -> str:
-  """
-  Description:
-  ------------
-  Generic conversion function for any data in the internal framework.
+  """  Generic conversion function for any data in the internal framework.
   This will convert to String any data coming from the Javascript Python interface.
 
   Any pure Python object will be converted using the json function to be then written as a string
   to the resulting page.
 
-  Attributes:
-  ----------
   :param Union[str, primitives.JsDataModel, float, dict, list] js_data: The Python Javascript data.
   :param Optional[Union[list, str]] js_funcs: Optional. The conversion function (not used).
   :param bool depth: Optional. Set to true of it is a nested object.
@@ -184,8 +159,6 @@ def jsConvert(data: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData
   ------------
 
 
-  Attributes:
-  ----------
   :param data:
   :param jsDataKey:
   :param bool isPyData:
@@ -213,24 +186,16 @@ def jsConvert(data: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData
 
 
 def jsWrap(data: Any):
-  """
-  Description:
-  ------------
-  Shortcut to wrap a python object to a generic JavaScript object.
+  """  Shortcut to wrap a python object to a generic JavaScript object.
   This will avoid the automatic conversion to string if it is a variable.
 
-  Attributes:
-  ----------
   :param Any data: Object. A python object to be serialised.
   """
   return JsObject.JsObject.get(data)
 
 
 def getJsValid(value: str, fail: bool = True):
-  """
-  Description:
-  ------------
-  Return an error if the variable name is not valid following the Javascript naming conventions.
+  """  Return an error if the variable name is not valid following the Javascript naming conventions.
   Even if the function will fail it will propose a valid name to replace the one passed in input
 
   Usage::
@@ -250,8 +215,6 @@ def getJsValid(value: str, fail: bool = True):
 
       https://www.w3schools.com/js/js_conventions.asp
 
-  Attributes:
-  ----------
   :param str value: The Javascript variable name.
   :param bool fail: Optional. Flat to raise an exception if the name is not valid on the Javascript side.
 
@@ -270,13 +233,8 @@ def getJsValid(value: str, fail: bool = True):
 
 def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
                   jsFncVal=None, toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
-  """
-  Description:
-  ------------
-  Generic conversion function for all the PyJs functions.
+  """  Generic conversion function for all the PyJs functions.
 
-  Attributes:
-  ----------
   :param js_funcs: The PyJs functions.
   :param is_py_data: Optional. A flag to force the Python conversion using json.
   :param jsFncVal:
@@ -324,16 +282,11 @@ def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
 
 
 def cleanFncs(fnc):
-  """
-  Description:
-  ------------
-  Try to remove as much as possible all the characters in order to speed up the javascript
+  """  Try to remove as much as possible all the characters in order to speed up the javascript
   Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
   Thus pre-stored function code can be written to be easier to read.
 
-  Attributes:
-  ----------
   :param fnc: The Javascript String.
 
   :return: Return a cleaned a minify Javascript String.
@@ -342,17 +295,12 @@ def cleanFncs(fnc):
 
 
 def isNotDefined(varName: str):
-  """
-  Description:
-  ------------
-  Check if a variable is defined.
+  """  Check if a variable is defined.
 
   Usage::
 
     JsUtils.isNotDefined(varId)
 
-  Attributes:
-  ----------
   :param str varName: The varName.
 
   :return: A string in Python and a Boolean in Javascript.
@@ -371,8 +319,6 @@ class JsFile:
 
   def writeJs(self, js_funcs: Union[list, str]):
     """
-    Description:
-    ------------
     Write the Javascript piece of code to the file.
 
     Usage::
@@ -382,8 +328,6 @@ class JsFile:
         Js.JsConsole().log(dt.getDay()),
         Js.JsConsole().log(dt.getFullYear())])
 
-    Attributes:
-    ----------
     :param Union[list, str] js_funcs: The Javascript fragments.
 
     :return: The File object
@@ -393,13 +337,9 @@ class JsFile:
 
   def writeReport(self, page: primitives.PageModel):
     """
-    Description:
-    ------------
     Write the Javascript content of a report to a structure .js file.
     This could help on the investigation and can be directly used in Codepen for testing.
 
-    Attributes:
-    ----------
     :param primitives.PageModel page: The report object
     """
     props = page._src._props if hasattr(page, '_src') else page._props
@@ -428,16 +368,12 @@ class JsFile:
 
   def codepen(self, js_base: Any, css_obj: primitives.CssClsModel = None, target: str = '_self'):
     """
-    Description:
-    ------------
     Send the piece of Javascript to Codepen for testing.
 
     Related Pages:
 
       https://codepen.io/
 
-    Attributes:
-    ----------
     :param Any js_base: A Js or out Browser object.
     :param primitives.CssClsModel css_obj: The internal CSS object from the page.
     :param str target: A string flag to specify the target page in the browser.
@@ -466,12 +402,8 @@ class JsFile:
 
   def close(self, js_obj=None):
     """
-    Description:
-    ------------
     Write the file and close the buffer.
 
-    Attributes:
-    ----------
     :param js_obj: The internal JsObject
     """
     src_obj = js_obj.page if hasattr(js_obj, 'page') else js_obj

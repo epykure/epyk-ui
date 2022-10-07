@@ -29,15 +29,11 @@ class JsObject(primitives.JsDataModel):
   def __init__(self, data, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = False,
                page: primitives.PageModel = None, component: primitives.HtmlModel = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https//www.w3schools.com/js/js_type_conversion.asp
 
-    Attributes:
-    ----------
     :param js_code:
     :param data:
     :param set_var:
@@ -62,8 +58,6 @@ class JsObject(primitives.JsDataModel):
   def new(cls, data: Optional[Any] = None, js_code: Optional[str] = None, is_py_data: bool = True,
           page: primitives.PageModel = None):
     """
-    Description:
-    ------------
     Create a Python Javascript Object.
 
     Usage::
@@ -74,8 +68,6 @@ class JsObject(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/jsref_obj_date.asp
 
-    Attributes:
-    ----------
     :param data: Optional, The object data
     :param js_code: Optional, The object variable name
     :param is_py_data: Optional, To specify if it is a Python reference and if it should be converted to Json
@@ -92,8 +84,6 @@ class JsObject(primitives.JsDataModel):
   @classmethod
   def this(cls, page: primitives.PageModel = None):
     """
-    Description:
-    ------------
     Get the object this.
 
     Usage::
@@ -104,8 +94,6 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
 
-    Attributes:
-    ----------
     :param page: The internal page object
 
     :return: The python Javascript object
@@ -115,8 +103,6 @@ class JsObject(primitives.JsDataModel):
   @classmethod
   def get(cls, js_code: str, page: Optional[primitives.PageModel] = None, component: primitives.HtmlModel = None):
     """
-    Description:
-    ------------
     Get the Javascript Object by its reference.
 
     Usage::
@@ -128,8 +114,6 @@ class JsObject(primitives.JsDataModel):
 
       https://www.w3schools.com/jsref/jsref_obj_date.asp
 
-    Attributes:
-    ----------
     :param js_code: The Javascript object reference
     :param page: The internal report object
     :param component: Optional. The HTML component object.
@@ -141,8 +125,6 @@ class JsObject(primitives.JsDataModel):
   @property
   def varId(self):
     """
-    Description:
-    ------------
     The Javascript and Python reference ID.
 
     :return: The Javascript String of the object variable name
@@ -151,12 +133,8 @@ class JsObject(primitives.JsDataModel):
 
   def setVar(self, js_code: str, var_type: str = "var"):
     """
-    Description:
-    ------------
     The setVar() method will define the variable name and use this reference in the future.
 
-    Attributes:
-    ----------
     :param js_code: The variable name
     :param var_type: The type of variable to be set on the Javascript side
 
@@ -182,16 +160,12 @@ class JsObject(primitives.JsDataModel):
 
   def prototype(self, name: str, value: Any) -> str:
     """
-    Description:
-    ------------
     The prototype property allows you to add new properties and methods to existing object types.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/jsref_prototype_string.asp
 
-    Attributes:
-    ----------
     :param name: The object property name
     :param value: The object property values
 
@@ -201,8 +175,6 @@ class JsObject(primitives.JsDataModel):
 
   def add(self, n: Union[primitives.JsDataModel, float, str]):
     """
-    Description:
-    ------------
     Add value to a Javascript Number.
     The value will be added. It will return a new number object on the Javascript side.
 
@@ -210,8 +182,6 @@ class JsObject(primitives.JsDataModel):
 
       jsNumber.add(34.5)
 
-    Attributes:
-    ----------
     :param n: The number value.
 
     :return: A new Python Javascript Number
@@ -241,11 +211,7 @@ class JsObject(primitives.JsDataModel):
 
   def __eq__(self, a: Any):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -258,11 +224,7 @@ class JsObject(primitives.JsDataModel):
 
   def __lt__(self, a: Any):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -275,11 +237,7 @@ class JsObject(primitives.JsDataModel):
 
   def __le__(self, a: Any):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -292,11 +250,7 @@ class JsObject(primitives.JsDataModel):
 
   def __ne__(self, a: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -309,11 +263,7 @@ class JsObject(primitives.JsDataModel):
 
   def __gt__(self, a: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -326,11 +276,7 @@ class JsObject(primitives.JsDataModel):
 
   def __ge__(self, a: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param a:
     """
     if hasattr(a, 'toStr'):
@@ -343,8 +289,6 @@ class JsObject(primitives.JsDataModel):
 
   def isFrozen(self):
     """
-    Description:
-    ------------
     The Object.isFrozen() determines if an object is frozen.
 
     Usage::
@@ -366,8 +310,6 @@ class JsObject(primitives.JsDataModel):
 
   def freeze(self):
     """
-    Description:
-    ------------
     The Object.freeze() method freezes an object.
     A frozen object can no longer be changed; freezing an object prevents new properties from being added to it,
     existing properties from being removed, prevents changing the enumerability, configurability,
@@ -392,8 +334,6 @@ class JsObject(primitives.JsDataModel):
 
   def isSealed(self):
     """
-    Description:
-    ------------
     The Object.seal() method seals an object, preventing new properties from being added to it and marking all
     existing properties as non-configurable.
     Values of present properties can still be changed as long as they are writable
@@ -416,8 +356,6 @@ class JsObject(primitives.JsDataModel):
 
   def defineProperty(self, obj, prop: str, descriptor: str):
     """
-    Description:
-    ------------
     The static method Object.defineProperty() defines a new property directly on an object, or modifies an existing
     property on an object, and returns the object.
 
@@ -425,8 +363,6 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty
 
-    Attributes:
-    ----------
     :param obj: The object on which to define the property.
     :param prop: The name or Symbol of the property to be defined or modified.
     :param descriptor: The descriptor for the property being defined or modified.
@@ -439,8 +375,6 @@ class JsObject(primitives.JsDataModel):
 
   def getOwnPropertyNames(self, obj):
     """
-    Description:
-    ------------
     The Object.getOwnPropertyNames() method returns an array of all properties (including non-enumerable properties
     except for those which use Symbol) found directly in a given object.
 
@@ -448,8 +382,6 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames
 
-    Attributes:
-    ----------
     :param obj: The object whose enumerable and non-enumerable properties are to be returned.
 
     :return: An JsArray of strings that corresponds to the properties found directly in the given object.
@@ -460,8 +392,6 @@ class JsObject(primitives.JsDataModel):
 
   def seal(self):
     """
-    Description:
-    ------------
     The Object.seal() method seals an object, preventing new properties from being added to it and marking all existing
     properties as non-configurable.
     Values of present properties can still be changed as long as they are writable.
@@ -482,8 +412,6 @@ class JsObject(primitives.JsDataModel):
   def assign(self, target: Union[primitives.JsDataModel, str], sources: List[Union[primitives.JsDataModel, str]],
              js_obj=None):
     """
-    Description:
-    ------------
     The Object.assign() method is used to copy the values of all enumerable own properties from one or more source
     objects to a target object.
     It will return the target object.
@@ -493,8 +421,6 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
-    Attributes:
-    ----------
     :param target: The target object.
     :param sources: The source object(s).
     :param js_obj: Optional, The base Python Javascript object to add the polyfill
@@ -510,8 +436,6 @@ class JsObject(primitives.JsDataModel):
 
   def create(self, proto=None, propertiesObject=None):
     """
-    Description:
-    ------------
     The Object.create() method creates a new object, using an existing object as the prototype of the newly
     created object.
 
@@ -519,8 +443,6 @@ class JsObject(primitives.JsDataModel):
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
 
-    Attributes:
-    ----------
     :param proto: The object which should be the prototype of the newly-created object.
     :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties
       (that is, those properties defined upon itself and not enumerable properties along its prototype chain) specify
@@ -536,8 +458,6 @@ class JsObject(primitives.JsDataModel):
 
   def entries(self):
     """
-    Description:
-    ------------
     The entries() method returns an Array Iterator object with key/value pairs.
 
     Related Pages:
@@ -553,8 +473,6 @@ class JsObject(primitives.JsDataModel):
 
   def setattr(self, key: Union[primitives.JsDataModel, str], value: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -565,8 +483,6 @@ class JsObject(primitives.JsDataModel):
       https://www.w3schools.com/js/js_objects.asp
       https://www.w3schools.com/js/js_object_es5.asp
 
-    Attributes:
-    ----------
     :param key: The key to add to the object.
     :param value: The value corresponding to the key. Can be a Python object or a Javascript reference
 
@@ -583,12 +499,8 @@ class JsObject(primitives.JsDataModel):
 
   def addItem(self, key: Union[primitives.JsDataModel, str], value: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
     Wrapper to the setattr method.
 
-    Attributes:
-    ----------
     :param key:
     :param value:
     """
@@ -596,19 +508,13 @@ class JsObject(primitives.JsDataModel):
 
   def addComponent(self, component: primitives.HtmlModel):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param component:
     """
     return self.setattr(component.htmlCode, component.dom.content)
 
   def __getitem__(self, key: Union[primitives.JsDataModel, str]):
     """
-    Description:
-    ------------
     Return the value for a given key defined in the object.
 
     Usage::
@@ -619,8 +525,6 @@ class JsObject(primitives.JsDataModel):
 
       https://www.w3schools.com/js/js_object_es5.asp
 
-    Attributes:
-    ----------
     :param key: The String used as key.
 
     :return: The corresponding Javascript object
@@ -629,8 +533,6 @@ class JsObject(primitives.JsDataModel):
 
   def keys(self):
     """
-    Description:
-    ------------
     Returns an array of enumerable properties.
 
     Usage::
@@ -650,12 +552,8 @@ class JsObject(primitives.JsDataModel):
 
   def update(self, dico, js_obj=None):
     """
-    Description:
-    ------------
     This might not be supported by all the browser.
 
-    Attributes:
-    ----------
     :param dico:
     :param js_obj: Optional, The base Python Javascript object to add the polyfill
     """
@@ -667,8 +565,6 @@ class JsObject(primitives.JsDataModel):
 
   def toString(self, explicit: bool = True):
     """
-    Description:
-    ------------
     Converts an Object to a string, and returns the result
 
     Usage::
@@ -679,8 +575,6 @@ class JsObject(primitives.JsDataModel):
 
       https://www.w3schools.com/JS/js_number_methods.asp
 
-    Attributes:
-    ----------
     :param explicit: Optional, default True. Parameter to force the String conversion on the Js side
 
     :return: A Javascript String
@@ -694,8 +588,6 @@ class JsObject(primitives.JsDataModel):
 
   def toNumber(self):
     """
-    Description:
-    ------------
     """
     from epyk.core.js.primitives import JsNumber
 
@@ -703,8 +595,6 @@ class JsObject(primitives.JsDataModel):
 
   def isArray(self):
     """
-    Description:
-    ------------
     The isArray() method determines whether an object is an array.
 
     Usage::
@@ -723,8 +613,6 @@ class JsObject(primitives.JsDataModel):
 
   def toArray(self):
     """
-    Description:
-    ------------
     THis is not a standard Javascript method for an object.
     It is only defined for some objects like the Datatable data()
     """
@@ -734,8 +622,6 @@ class JsObject(primitives.JsDataModel):
 
   def toStr(self):
     """
-    Description:
-    ------------
     Internal function which return the object reference.
     This will either return the variable name if available and defined or the data itself
 
@@ -750,15 +636,11 @@ class JsObject(primitives.JsDataModel):
 
   def fromArrayToRecord(self, header: list = None):
     """
-    Description:
-    ------------
 
     Usage::
 
       row["Date"] = row["Date"].toISOString().slice(0, 10);
 
-    Attributes:
-    ----------
     :param header:
     """
     from epyk.core.js.primitives import JsArray
@@ -770,16 +652,12 @@ class JsObject(primitives.JsDataModel):
 
   def toRecord(self, header: list, js_code: str):
     """
-    Description:
-    ------------
 
     Usage::
 
       d = page.ui.div()
       d.drop([rptObj.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
-    Attributes:
-    ----------
     :param list header:
     :param str js_code:
     """
@@ -799,27 +677,19 @@ class JsObject(primitives.JsDataModel):
 
   @property
   def r(self):
-    """
-    Description:
-    -----------
-    Return the String representation of the Js object.
+    """   Return the String representation of the Js object.
     This will produce the chain, empty the internal buffer and produce the string.
     """
     return self.toStr()
 
   def clone(self, page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Create a shallow-copied clone of the provided plain object.
+    """   Create a shallow-copied clone of the provided plain object.
     Any nested objects or arrays will be copied by reference, not duplicated.
 
     Related Pages:
 
       https://underscorejs.org/#clone
 
-    Attributes:
-    ----------
     :param page: Optional. The page object
     """
     page = page or self.page
@@ -830,18 +700,13 @@ class JsObject(primitives.JsDataModel):
     return JsObject("(function(){ %s; return _.clone(%s) })()" % (self.toStr(), self.varName), is_py_data=False)
 
   def defaults(self, attrs: Union[primitives.JsDataModel, dict], page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Returns object after filling in its undefined properties with the first value present in the following list
+    """   Returns object after filling in its undefined properties with the first value present in the following list
     of defaults objects.
 
     Related Pages:
 
       https://underscorejs.org/#defaults
 
-    Attributes:
-    ----------
     :param attrs:
     :param page: Optional. The page object.
     """
@@ -855,18 +720,13 @@ class JsObject(primitives.JsDataModel):
       "(function(){ %s; return _.defaults(%s, %s) }()" % (self.toStr(), self.varName, attrs), is_py_data=False)
 
   def pick(self, keys: Union[primitives.JsDataModel, list], page: Optional[primitives.PageModel] = None):
-    """
-    Description:
-    -----------
-    Return a copy of the object, filtered to only have values for the whitelisted keys (or array of valid keys).
+    """   Return a copy of the object, filtered to only have values for the whitelisted keys (or array of valid keys).
     Alternatively accepts a predicate indicating which keys to pick.
 
     Related Pages:
 
       https://underscorejs.org/#pick
 
-    Attributes:
-    ----------
     :param keys:
     :param page: Optional. The page object.
     """
@@ -880,10 +740,7 @@ class JsObject(primitives.JsDataModel):
       "(function(){ %s; return _.pick(%s, ..%s) }()" % (self.toStr(), self.varName, keys), is_py_data=False)
 
   def jsonParse(self):
-    """
-    Description:
-    -----------
-    A common use of JSON is to exchange data to/from a web server.
+    """   A common use of JSON is to exchange data to/from a web server.
 
     When receiving data from a web server, the data is always a string.
 
@@ -896,10 +753,7 @@ class JsObject(primitives.JsDataModel):
     return JsObject("JSON.parse(%s)" % self.varId)
 
   def stringify(self):
-    """
-    Description:
-    -----------
-    The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values
+    """   The JSON.stringify() method converts a JavaScript object or value to a JSON string, optionally replacing values
     if a replacer function is specified or optionally including only the specified properties if a replacer array
     is specified.
 
@@ -910,13 +764,8 @@ class JsObject(primitives.JsDataModel):
     return JsObject("JSON.stringify(%s)" % self.varId)
 
   def fileParse(self, delimiter: Union[primitives.JsDataModel, str]):
-    """
-    Description:
-    -----------
-    Parse a file based on the delimiter and return an Array of Arrays on the Javascript side.
+    """   Parse a file based on the delimiter and return an Array of Arrays on the Javascript side.
 
-    Attributes:
-    ----------
     :param delimiter: The line delimiter in the file.
     """
     delimiter = JsUtils.jsConvertData(delimiter, None)
@@ -926,12 +775,8 @@ class JsObject(primitives.JsDataModel):
 
   def fileToDict(self, delimiter: Union[primitives.JsDataModel, str],
                  columns: Optional[Union[primitives.JsDataModel, list]] = None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param Union[primitives.JsDataModel, str] delimiter: The line delimiter in the file.
     :param Optional[Union[primitives.JsDataModel, list]] columns: The list of columns.
     """
@@ -958,10 +803,7 @@ class JsObject(primitives.JsDataModel):
     return self
 
   def __str__(self):
-    """
-    Description:
-    -----------
-    The str() method return the variable Javascript reference of the variable.
+    """   The str() method return the variable Javascript reference of the variable.
 
     According to the variable definition it can be either its name or its value
 

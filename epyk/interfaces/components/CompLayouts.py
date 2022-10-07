@@ -15,8 +15,6 @@ class Layouts:
 
   def br(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
     """
-    Description:
-    ------------
     Wrapper around the Br html tag.
 
     The <br> tag inserts a single line break.
@@ -36,8 +34,6 @@ class Layouts:
 
       https://www.w3schools.com/tags/tag_br.asp
 
-    Attributes:
-    ----------
     :param count: Integer. Optional. The number of empty line to put. Default 1.
     :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
@@ -47,8 +43,6 @@ class Layouts:
 
   def new_line(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
     """
-    Description:
-    ------------
     Wrapper around the Br html tag.
 
     The <br> tag inserts a single line break.
@@ -73,8 +67,6 @@ class Layouts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    ----------
     :param count: Integer. Optional. The number of empty line to put. Default 1.
     :param profile: Boolean | Dictionary. Optional. Activate the profiler.
     """
@@ -86,8 +78,6 @@ class Layouts:
          width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
          align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Wrapper around the HT html tag.
 
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
@@ -111,8 +101,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: Optional. The number of HR tag to be added.
     :param background_color: Optional. The component background color.
     :param margins: Optional. The margin top and bottom in pixels.
@@ -144,8 +132,6 @@ class Layouts:
   def underline(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (3, 'px'),
                 align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add a styles hr component to underline another component.
 
     :tags:
@@ -158,8 +144,6 @@ class Layouts:
     Templates:
 
 
-    Attributes:
-    ----------
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.
@@ -177,8 +161,6 @@ class Layouts:
   def accentuate(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (1, 'px'), align: str = None,
                  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add a styles hr component to lightly underline another component.
 
     :tags:
@@ -190,8 +172,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.
@@ -211,8 +191,6 @@ class Layouts:
           helper: str = None, options: dict = None,
           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
     """
-    Description:
-    ------------
     Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
@@ -240,8 +218,6 @@ class Layouts:
     Templates:
 
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param position: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -262,8 +238,6 @@ class Layouts:
           height: types.SIZE_TYPE = (None, 'px'), align: str = None, helper: str = None,
           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Row:
     """
-    Description:
-    ------------
     Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
@@ -291,8 +265,6 @@ class Layouts:
       https://getbootstrap.com/docs/4.0/layout/grid/
       https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param position: Optional. The CSS justify-content attribute
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -316,8 +288,6 @@ class Layouts:
             height: types.SIZE_TYPE = (None, 'px'), helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Table:
     """
-    Description:
-    ------------
     table layout for HTML components.
 
     :tags:
@@ -334,8 +304,6 @@ class Layouts:
     Templates:
 
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -353,8 +321,6 @@ class Layouts:
            align: str = None, position: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
-    Description:
-    ------------
     Python wrapper to the HTML Bootstrap Grid.
 
     :tags:
@@ -375,8 +341,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param rows:
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -396,8 +360,6 @@ class Layouts:
             helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Panel:
     """
-    Description:
-    ------------
 
     Underlying HTML Objects:
 
@@ -411,8 +373,6 @@ class Layouts:
     Templates:
 
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param title:
     :param color: Optional. The font color in the component. Default inherit.
@@ -438,8 +398,6 @@ class Layouts:
           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
           position: Union[bool, dict] = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -461,8 +419,6 @@ class Layouts:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param label:
     :param color:
@@ -498,8 +454,6 @@ class Layouts:
              height: types.SIZE_TYPE = (None, "px"), align: str = 'left', html_code: str = None,
              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -508,8 +462,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -529,8 +481,6 @@ class Layouts:
                height: types.SIZE_TYPE = (None, "px"), align: str = 'left', html_code: str = None,
                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -539,8 +489,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -559,8 +507,6 @@ class Layouts:
             height: types.SIZE_TYPE = (None, 'px'),
             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
     """
-    Description:
-    ------------
     Add a generic popup component to the page.
 
     :tags:
@@ -581,8 +527,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -601,8 +545,6 @@ class Layouts:
   def iframe(self, url: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (100, "%"),
              helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IFrame:
     """
-    Description:
-    ------------
     Add a iframe component to the page.
 
     :tags:
@@ -618,8 +560,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param url: Optional. The link to the underlying page.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -636,8 +576,6 @@ class Layouts:
               html_code: str = None, helper: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlEvent.Dialog:
     """
-    Description:
-    ------------
     Simple Jquery UI modal with a text.
 
     :tags:
@@ -654,8 +592,6 @@ class Layouts:
     Usage::
 
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -674,8 +610,6 @@ class Layouts:
             html_code: str = None, helper: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IconsMenu:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -695,8 +629,6 @@ class Layouts:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
 
-    Attributes:
-    ----------
     :param icon_names:
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -715,8 +647,6 @@ class Layouts:
 
   def form(self, components: List[html.Html.Html] = None, helper: str = None) -> html.HtmlContainer.Form:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -729,8 +659,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param helper: Optional. A tooltip helper.
     """
@@ -742,8 +670,6 @@ class Layouts:
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Header:
     """
-    Description:
-    ------------
     The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
     It may contain some heading elements but also a logo, a search form, an author name, and other elements.
 
@@ -765,8 +691,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -789,8 +713,6 @@ class Layouts:
               helper: str = None, options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Section:
     """
-    Description:
-    ------------
     The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections
     of the document.
 
@@ -812,8 +734,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: The different HTML objects to be added to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -835,8 +755,6 @@ class Layouts:
               height: types.SIZE_TYPE = (None, 'px'), align: str = None, position: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
     """
-    Description:
-    ------------
 
     :tags:
     :categories:
@@ -845,8 +763,6 @@ class Layouts:
 
     Templates:
 
-    Attributes:
-    ----------
     :param components: List. The different HTML objects to be added to the component.
     :param cols:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -881,8 +797,6 @@ class Delimiter:
   def line(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Wrapper around the HT html tag.
 
     :tags:
@@ -892,8 +806,6 @@ class Delimiter:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: Optional. The number of HR tag to be added.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.
@@ -909,8 +821,6 @@ class Delimiter:
   def double(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Wrapper around the HT html tag.
 
     :tags:
@@ -920,8 +830,6 @@ class Delimiter:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: Optional. The number of HR tag to be added.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.
@@ -938,8 +846,6 @@ class Delimiter:
   def dashed(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Wrapper around the HT html tag.
 
     :tags:
@@ -949,8 +855,6 @@ class Delimiter:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: Optional. The number of HR tag to be added.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.
@@ -969,8 +873,6 @@ class Delimiter:
   def dotted(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Wrapper around the HT html tag.
 
     :tags:
@@ -980,8 +882,6 @@ class Delimiter:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: Optional. The number of HR tag to be added.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param align: Optional. The content position. Values (left, right, center). Default center.

@@ -15,9 +15,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
 
   @property
   def cls_bubble(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
@@ -28,9 +26,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
 
   @property
   def cls_bubble_content(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
@@ -41,9 +37,7 @@ class ClassNetworkBot(GrpCls.ClassHtml):
 
   @property
   def cls_bubble_arrow(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """

@@ -9,13 +9,9 @@ class OptionDays(Options):
   @property
   def style(self):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css: Dictionary. CSS attributes
     """
     return self.get({})
@@ -27,15 +23,11 @@ class OptionDays(Options):
   @property
   def unit(self):
     """
-    Description:
-    ------------
     Change the unit to the calendar.
     Default is in percentage.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop num: Float. Change the scale
     """
     return self.get(100)
@@ -47,14 +39,10 @@ class OptionDays(Options):
   @property
   def overload(self):
     """
-    Description:
-    ------------
     Overload style of the day number when workload is above 100%.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css_attrs: Dictionary. CSS attributes.
     """
     return self.get({})
@@ -66,14 +54,10 @@ class OptionDays(Options):
   @property
   def number(self):
     """
-    Description:
-    ------------
     CSS Style for the day number.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css: Dictionary. CSS attributes.
     """
     return self.get({})
@@ -85,14 +69,10 @@ class OptionDays(Options):
   @property
   def today(self):
     """
-    Description:
-    ------------
     CSS Style for the today cell.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css: Dictionary. CSS attributes
     """
     return self.get({})
@@ -104,14 +84,10 @@ class OptionDays(Options):
   @property
   def header(self):
     """
-    Description:
-    ------------
     CSS Style for the table header.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css: Dictionary. CSS attributes.
     """
     return self.get({})

@@ -18,9 +18,7 @@ class SkillBar(JsPackage):
 
   @property
   def labels(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsVoid('''
@@ -31,9 +29,7 @@ let r=0; while(row=component.firstChild.rows[r++]){
 
   @property
   def records(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return JsObjects.JsVoid('''
 (function(component){let records = []; let row;
@@ -42,12 +38,8 @@ let r=0; while(row=component.firstChild.rows[r++]){
 }; return records})(%(varName)s)''' % {"varName": self.varName})
 
   def get(self, label: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param Union[str, primitives.JsDataModel] label:
     """
     label = JsUtils.jsConvertData(label, None)
@@ -59,12 +51,8 @@ let r=0; while(row=component.firstChild.rows[r++]){
 
   def value(self, label: Union[str, primitives.JsDataModel],
             value: Union[str, primitives.JsDataModel] = None, options: dict = None):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param Union[str, primitives.JsDataModel] label:
     :param Union[str, primitives.JsDataModel] value:
     :param dict options:
@@ -92,12 +80,8 @@ if (row != null){
     raise NotImplementedError()
 
   def remove(self, label: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+    """  
+ 
     :param Union[str, primitives.JsDataModel] label:
     """
     label = JsUtils.jsConvertData(label, None)

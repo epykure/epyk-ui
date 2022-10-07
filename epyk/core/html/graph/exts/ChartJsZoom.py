@@ -7,9 +7,7 @@ class ZoomRange(Options):
 
   @property
   def x(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -23,9 +21,7 @@ class ZoomRange(Options):
 
   @property
   def y(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -42,9 +38,7 @@ class ZoomAttrs(Options):
 
   @property
   def enabled(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -58,9 +52,7 @@ class ZoomAttrs(Options):
 
   @property
   def mode(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -74,9 +66,7 @@ class ZoomAttrs(Options):
 
   @property
   def rangeMin(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: ZoomRange
     """
@@ -84,9 +74,7 @@ class ZoomAttrs(Options):
 
   @property
   def rangeMax(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: ZoomRange
     """
@@ -94,9 +82,7 @@ class ZoomAttrs(Options):
 
   @property
   def speed(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -110,9 +96,7 @@ class ZoomAttrs(Options):
 
   @property
   def threshold(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -128,13 +112,8 @@ class ZoomAttrs(Options):
 class ZoomPan(ZoomAttrs):
 
   def onPan(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Function called while the user is zooming.
+    """   Function called while the user is zooming.
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -143,13 +122,8 @@ class ZoomPan(ZoomAttrs):
     self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onPanComplete(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Function called while the user is zooming.
+    """   Function called while the user is zooming.
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -162,10 +136,7 @@ class ZoomZoom(ZoomAttrs):
 
   @property
   def drag(self):
-    """
-    Description:
-    -----------
-    Enable drag-to-zoom behavior.
+    """   Enable drag-to-zoom behavior.
     """
     return self._config_get()
 
@@ -175,9 +146,7 @@ class ZoomZoom(ZoomAttrs):
 
   @property
   def sensitivity(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -190,13 +159,8 @@ class ZoomZoom(ZoomAttrs):
     self._config(num)
 
   def onZoom(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Function called while the user is zooming.
+    """   Function called while the user is zooming.
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -205,13 +169,8 @@ class ZoomZoom(ZoomAttrs):
     self._config("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   def onZoomComplete(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Function called once zooming is completed.
+    """   Function called once zooming is completed.
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -224,16 +183,12 @@ class Zoom(Options):
 
   def set_default(self, mode="xy"):
     """
-    Description:
-    ------------
     Set zoom default attributes.
 
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
 
-    Attributes:
-    ----------
     :param mode: String. Optional. Zooming directions.
     """
     self.pan.mode = mode
@@ -243,9 +198,7 @@ class Zoom(Options):
 
   @property
   def pan(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: ZoomPan
     """
@@ -253,9 +206,7 @@ class Zoom(Options):
 
   @property
   def zoom(self):
-    """
-    Description:
-    -----------
+    """   
 
     :rtype: ZoomZoom
     """

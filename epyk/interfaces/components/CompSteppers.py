@@ -14,8 +14,6 @@ class Steppers:
   def stepper(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
               color: str = None, options: dict = None, profile: Union[dict, bool] = False):
     """
-    Description:
-    ------------
     Entry point for the stepper object.
 
     Usage::
@@ -24,9 +22,7 @@ class Steppers:
         {"value": 'test 1', "status": 'success', 'label': 'test'},
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
-
-    Attributes:
-    ----------
+ 
     :param records: List. A list with the different steps defined in the workflow.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -53,8 +49,6 @@ class Steppers:
   def arrow(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
             color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -64,9 +58,7 @@ class Steppers:
         {"value": 'test 3'},
         {"value": 'test 4'}], height=70)
       stepper.options.width = 110
-
-    Attributes:
-    ----------
+ 
     :param records: List. A list with the different steps defined in the workflow.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -84,13 +76,9 @@ class Steppers:
   def rectangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
                 color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param records: List. A list with the different steps defined in the workflow.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -108,13 +96,9 @@ class Steppers:
   def triangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
                color: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
 
     Usage::
-
-    Attributes:
-    ----------
+ 
     :param records: List. A list with the different steps defined in the workflow.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -133,8 +117,6 @@ class Steppers:
                height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
                profile: Union[dict, bool] = None):
     """
-    Description:
-    ------------
     Entry point for the stepper object.
 
     Usage::
@@ -143,9 +125,7 @@ class Steppers:
         {"value": 'test 1', "status": 'success', 'label': 'test'},
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
-
-    Attributes:
-    ----------
+ 
     :param records: List. A list with the different steps defined in the workflow.
     :param shape: String. Optional. The steppers shape.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

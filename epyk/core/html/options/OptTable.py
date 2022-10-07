@@ -6,8 +6,6 @@ class OptionsTableRow(Options):
   @property
   def cssClasses(self):
     """
-    Description:
-    ------------
     """
     return self._config_get([])
 
@@ -20,8 +18,6 @@ class OptionsTableCell(Options):
   @property
   def cssClasses(self):
     """
-    Description:
-    ------------
     """
     return self._config_get([])
 
@@ -32,8 +28,6 @@ class OptionsTableCell(Options):
   @property
   def center(self):
     """
-    Description:
-    ------------
     Use the predefined bootstrap classes to align the cells content.
 
     Related Pages:
@@ -49,8 +43,6 @@ class OptionsTableCell(Options):
 
   def position(self, alias):
     """
-    Description:
-    ------------
     Use the predefined bootstrap classes to align the cells content.
 
     Related Pages:
@@ -61,8 +53,6 @@ class OptionsTableCell(Options):
 
   def align(self, alias):
     """
-    Description:
-    ------------
     Use the predefined bootstrap classes to align the cells content.
 
     Related Pages:
@@ -73,8 +63,6 @@ class OptionsTableCell(Options):
 
   def padding(self, value, position="s"):
     """
-    Description:
-    ------------
     Use the predefined bootstrap classes to align the cells content.
 
     Related Pages:
@@ -85,8 +73,6 @@ class OptionsTableCell(Options):
 
   def margin(self, value, position="s"):
     """
-    Description:
-    ------------
     Use the predefined bootstrap classes to align the cells content.
 
     Related Pages:
@@ -100,8 +86,6 @@ class OptionsBasic(Options):
   @property
   def bordered(self):
     """
-    Description:
-    ------------
     Add .table-bordered for borders on all sides of the table and cells.
 
     Related Pages:
@@ -120,8 +104,6 @@ class OptionsBasic(Options):
   @property
   def hover(self):
     """
-    Description:
-    ------------
     Add .table-hover to enable a hover state on table rows within a <tbody>.
 
     Related Pages:
@@ -137,8 +119,6 @@ class OptionsBasic(Options):
 
   def size(self, alias):
     """
-    Description:
-    ------------
     Add .table-sm to make any .table more compact by cutting all cell padding in half.
 
     Related Pages:
@@ -150,8 +130,6 @@ class OptionsBasic(Options):
   @property
   def striped(self):
     """
-    Description:
-    ------------
     Add the striped CSS class from Bootstrap.
 
     Related Pages:
@@ -168,8 +146,6 @@ class OptionsBasic(Options):
   @property
   def responsive(self):
     """
-    Description:
-    ------------
     Make the table responsive using Bootstrap class.
 
     Related Pages:
@@ -186,8 +162,6 @@ class OptionsBasic(Options):
   @property
   def rowCssClasses(self):
     """
-    Description:
-    ------------
     """
     return self._config_get([])
 
@@ -198,8 +172,6 @@ class OptionsBasic(Options):
   @property
   def colCssClasses(self):
     """
-    Description:
-    ------------
     """
     return self._config_get([])
 
@@ -210,8 +182,6 @@ class OptionsBasic(Options):
   @property
   def with_header(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -222,8 +192,6 @@ class OptionsBasic(Options):
   @property
   def with_hover(self):
     """
-    Description:
-    ------------
     """
     return self._config_get(True)
 
@@ -238,8 +206,6 @@ class OptionsPivot(Options):
   @property
   def aggregator(self):
     """
-    Description:
-    ------------
     Constructor for an object which will aggregate results per cell (see documentation)
 
     Related Pages:
@@ -255,8 +221,6 @@ class OptionsPivot(Options):
   @property
   def aggregatorName(self):
     """
-    Description:
-    ------------
     Name of the aggregator, used for display purposes in some renderers.
 
     Related Pages:
@@ -272,8 +236,6 @@ class OptionsPivot(Options):
   @property
   def cols(self):
     """
-    Description:
-    ------------
     Array of attribute names for use as columns.
 
     Related Pages:
@@ -289,8 +251,6 @@ class OptionsPivot(Options):
   @property
   def showUI(self):
     """
-    Description:
-    ------------
     Show the drag and drop UI panel
 
     Related Pages:
@@ -306,8 +266,6 @@ class OptionsPivot(Options):
   @property
   def rowOrder(self):
     """
-    Description:
-    ------------
     The order in which row data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z",
     "value_z_to_a", ordering by value orders by row total
 
@@ -324,8 +282,6 @@ class OptionsPivot(Options):
   @property
   def rows(self):
     """
-    Description:
-    ------------
     Array of attribute names to use as rows.
 
     Related Pages:
@@ -341,8 +297,6 @@ class OptionsPivot(Options):
   @property
   def colOrder(self):
     """
-    Description:
-    ------------
     the order in which column data is provided to the renderer, must be one of "key_a_to_z", "value_a_to_z",
     "value_z_to_a", ordering by value orders by column total
 
@@ -359,8 +313,6 @@ class OptionsPivot(Options):
   @property
   def derivedAttributes(self):
     """
-    Description:
-    ------------
     object to define derived attributes
 
     Related Pages:
@@ -376,8 +328,6 @@ class OptionsPivot(Options):
   @property
   def dataClass(self):
     """
-    Description:
-    ------------
     Constructor for the data class to be built and passed to the Renderer (should be a subclass of the default)
 
     Related Pages:
@@ -393,8 +343,6 @@ class OptionsPivot(Options):
   @property
   def filter(self):
     """
-    Description:
-    ------------
     Called on each record, returns false if the record is to be excluded from the input before rendering or
     true otherwise
 
@@ -411,8 +359,6 @@ class OptionsPivot(Options):
   @property
   def sorters(self):
     """
-    Description:
-    ------------
     accessed or called with an attribute name and can return a function which can be used as an argument to array.sort
     for output purposes.
     If no function is returned, the default sorting mechanism is a built-in "natural sort" implementation.
@@ -431,8 +377,6 @@ class OptionsPivot(Options):
   @property
   def rendererOptions(self):
     """
-    Description:
-    ------------
     Object passed through to renderer as options. See Renderers and Optional Extra Renderers for details.
 
     Related Pages:
@@ -458,8 +402,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def inclusions(self):
     """
-    Description:
-    ------------
     Object whose keys are attribute names and values are arrays of attribute values which denote records to include in
     rendering; used to prepopulate the filter menus that appear on double-click (overrides exclusions below).
 
@@ -476,8 +418,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def exclusions(self):
     """
-    Description:
-    ------------
     Object whose keys are attribute names and values are arrays of attribute values which denote records to exclude
     from rendering; used to prepopulate the filter menus that appear on double-click.
 
@@ -494,8 +434,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def hiddenAttributes(self):
     """
-    Description:
-    ------------
     Object whose keys are attribute names and values are arrays of attribute values which denote records to exclude
     from rendering; used to prepopulate the filter menus that appear on double-click.
 
@@ -512,8 +450,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def hiddenFromAggregators(self):
     """
-    Description:
-    ------------
     Contains attribute names to omit from the aggregator arguments dropdowns.
 
     Related Pages:
@@ -529,8 +465,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def hiddenFromDragDrop(self):
     """
-    Description:
-    ------------
     Contains attribute names to omit from the drag'n'drop portion of the UI.
 
     Related Pages:
@@ -546,8 +480,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def onRefresh(self):
     """
-    Description:
-    ------------
     Called upon renderer refresh with an object representing the current UI settings (see example).
 
     Related Pages:
@@ -563,8 +495,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def menuLimit(self):
     """
-    Description:
-    ------------
     maximum number of values to list in the double-click menu.
 
     Related Pages:
@@ -580,8 +510,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def autoSortUnusedAttrs(self):
     """
-    Description:
-    ------------
     controls whether or not unused attributes are kept sorted in the UI.
 
     Related Pages:
@@ -597,8 +525,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def unusedAttrsVertical(self):
     """
-    Description:
-    ------------
     Controls whether or not unused attributes are shown vertically instead of the default which is horizontally.
     true means always vertical, false means always horizontal. If set to a number (as is the default) then
     if the attributes' names' combined length in characters exceeds the number then the attributes will be shown
@@ -617,8 +543,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def rendererOptions(self):
     """
-    Description:
-    ------------
     passed through to renderer as options. See Renderers and Optional Extra Renderers for details.
 
     Related Pages:
@@ -634,8 +558,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def renderer(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -650,8 +572,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def renderers(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -666,8 +586,6 @@ class OptionsPivotUI(OptionsPivot):
   @property
   def rendererName(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 

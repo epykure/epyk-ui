@@ -11,10 +11,7 @@ class Components:
   def text(self, value: str = "", label: str = None, placeholder: str = "",
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            tooltip=None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Create beautifully simple form labels that float over your input fields.
+    """   Create beautifully simple form labels that float over your input fields.
 
     TODO: Fix but on label animation.
 
@@ -25,9 +22,7 @@ class Components:
     Related Pages:
 
         https://getbootstrap.com/docs/5.1/forms/floating-labels/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The value to be displayed to this component. Default empty.
     :param label: Optional. The text of label to be added to the component.
     :param placeholder: Optional.
@@ -66,10 +61,7 @@ class Components:
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
                html_code: str = None, tooltip: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    Add password component.
+    """   Add password component.
 
     Usage::
 
@@ -78,9 +70,7 @@ class Components:
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/forms/floating-labels/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The value to be displayed to this component. Default empty.
     :param label: Optional. The text of label to be added to the component.
     :param placeholder: Optional.
@@ -100,9 +90,7 @@ class Components:
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
             html_code: str = None, tooltip: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
+    """   
 
     Usage::
 
@@ -111,9 +99,7 @@ class Components:
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/forms/floating-labels/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The value to be displayed to this component. Default empty.
     :param label: Optional. The text of label to be added to the component.
     :param placeholder: Optional.
@@ -133,10 +119,7 @@ class Components:
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
                html_code: str = None, tooltip: str = None, options: dict = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-    By default, <textarea>s with .form-control will be the same height as <input>s.
+    """   By default, <textarea>s with .form-control will be the same height as <input>s.
 
     Usage::
 
@@ -145,9 +128,7 @@ class Components:
     Related Pages:
 
       https://getbootstrap.com/docs/5.1/forms/floating-labels/
-
-    Attributes:
-    ----------
+ 
     :param value: Optional. The value to be displayed to this component. Default empty.
     :param label: Optional. The text of label to be added to the component.
     :param placeholder: Optional.
@@ -191,12 +172,8 @@ class TextComponents:
   def small(self, text: str, width: types.SIZE_TYPE = (100, "px"), height: types.SIZE_TYPE = (None, "px"),
             html_code: str = None, tooltip: str = '',
             options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -211,12 +188,8 @@ class TextComponents:
 
   def strong(self, text: str, width: types.SIZE_TYPE = (100, "px"), height: types.SIZE_TYPE = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.

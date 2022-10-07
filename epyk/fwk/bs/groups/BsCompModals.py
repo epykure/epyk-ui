@@ -5,10 +5,7 @@ class Components:
     self.page = ui.page
 
   def dialog(self, text, title="", width=(100, '%'), height=(20, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a simple dialog modal.
+    """   Add a simple dialog modal.
 
     Related Pages:
 
@@ -18,8 +15,6 @@ class Components:
 
       oc = page.web.bs.modals.dialog("content", "Title")
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -36,17 +31,12 @@ class Components:
 
   def acknowledge(self, components=None, title="", width=(100, '%'), height=(None, 'px'), html_code=None,
                   options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add an acknowledgement modal.
+    """   Add an acknowledgement modal.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/utilities/borders/
 
-    Attributes:
-    ----------
     :param components:
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -68,17 +58,12 @@ class Components:
     return component
 
   def error(self, text, title="", width=(100, '%'), height=(20, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add an error modal.
+    """   Add an error modal.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -97,17 +82,12 @@ class Components:
     return component
 
   def success(self, text, title="", width=(100, '%'), height=(20, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add an success modal.
+    """   Add an success modal.
 
     Related Pages:
 
       https://getbootstrap.com/docs/4.0/utilities/borders/
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param title: String. Optional. A panel title. This will be attached to the title property.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -126,17 +106,12 @@ class Components:
     return component
 
   def title(self, value="", level=5, width=(100, '%'), height=(None, 'px'), html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-    Add a modal title component.
+    """   Add a modal title component.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
 
-    Attributes:
-    ----------
     :param value: String. Optional. The value to be displayed to the component.
     :param level: Integer. Optional.
     :param width: Tuple | Number. Optional. A tuple with the integer for the component width and its unit.
@@ -152,17 +127,12 @@ class Components:
 
   def button(self, modal,  text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
              html_code=None, tooltip=None, profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a button attached to the modal.
+    """   Add a button attached to the modal.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
 
-    Attributes:
-    ----------
     :param modal:
     :param text: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
@@ -181,17 +151,12 @@ class Components:
 
   def dismiss(self, text="", icon=None, category="primary", width=(None, "%"), height=(None, "px"),
               html_code=None, tooltip=None, profile=None, options=None):
-    """
-    Description:
-    -----------
-    Add a dismiss button to close all modals.
+    """   Add a dismiss button to close all modals.
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
 
-    Attributes:
-    ----------
     :param text: String. Optional. The value to be displayed to the component.
     :param icon: String. Optional. A string with the value of the icon to display from font-awesome.
     :param category:
@@ -232,16 +197,12 @@ class OffComponents:
     return btn
 
   def title(self, value="", level=5, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://getbootstrap.com/docs/5.0/components/modal/
 
-    Attributes:
-    ----------
     :param value: String. Optional. The value to be displayed to the component.
     :param level:
     :param width:

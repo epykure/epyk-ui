@@ -16,38 +16,28 @@ class JsFileData:
 
   @property
   def raw(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsObjects.get(self.varName)
 
   @property
   def headers(self) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsArray.JsArray.get(self.varName)[0].keys()
 
   @property
   def records(self) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    ------------
+    """  
 
     """
     return JsObjects.JsArray.JsArray.get(self.varName)
 
   def vector(self, name: str) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str name:
     """
     name = JsUtils.jsConvertData(name, None)
@@ -59,12 +49,8 @@ class JsFileData:
       ''' % (self.varName, name))
 
   def values(self, name: Union[str, primitives.JsDataModel], with_count: bool = False):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] name:
     :param bool with_count:
     """
@@ -81,12 +67,8 @@ class JsFileData:
       ''' % (with_count, self.varName, name))
 
   def series(self, names: Union[str, primitives.JsDataModel]) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] names:
     """
     names = JsUtils.jsConvertData(names, None)
@@ -103,21 +85,15 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
 
   @property
   def content(self) -> JsObjects.JsArray.JsArray:
-    """
-    Description:
-    ------------
+    """  
     Return the values of the items in the list.
     """
     return JsObjects.JsArray.JsArray.get("(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {
       "htmlCode": self.component.htmlCode})
 
   def store(self, delimiter: str = None, data_type: str = None, js_code: Union[str, primitives.JsDataModel] = None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param str delimiter: Optional. The file delimiter.
     :param str data_type: Optional. The data type like json for example.
     :param Union[str, primitives.JsDataModel] js_code: Optional.
@@ -143,9 +119,7 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
 
   @property
   def code(self):
-    """
-    Description:
-    ------------
+    """  
     The default data reference.
     """
     return "%s_data" % self.component.htmlCode

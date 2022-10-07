@@ -11,16 +11,12 @@ class Components:
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
                profile: types.PROFILE_TYPE = None, options: dict = None):
     """
-    Description:
-    ------------
 
     Related Pages:
 
       https://material.io/components/buttons-floating-action-button
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-fab
 
-    Attributes:
-    ----------
     :param text:
     :param icon:
     :param category:

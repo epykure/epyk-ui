@@ -13,8 +13,6 @@ class OffCanvas(JsPackage):
 
   def hide(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -24,8 +22,6 @@ class OffCanvas(JsPackage):
 
   def toggle(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -35,8 +31,6 @@ class OffCanvas(JsPackage):
 
   def show(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 

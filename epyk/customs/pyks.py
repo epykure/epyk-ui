@@ -9,8 +9,6 @@ class Bespoke:
   @property
   def data(self) -> epyk.customs.data.UI.Components:
     """
-    Description:
-    ------------
 
     :return:
     """
@@ -19,8 +17,6 @@ class Bespoke:
   @property
   def progress(self) -> epyk.customs.data.UI.ProgressComponents:
     """
-    Description:
-    ------------
 
     """
     return epyk.customs.data.UI.ProgressComponents(self.page)

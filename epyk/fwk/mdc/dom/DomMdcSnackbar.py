@@ -6,10 +6,7 @@ from epyk.core.js.primitives import JsObjects
 class DomSnackbar(JsHtml.JsHtmlRich):
 
   def isOpen(self) -> JsObjects.JsBoolean.JsBoolean:
-    """
-    Description:
-    -----------
-    Returns whether the snackbar is open.
+    """   Returns whether the snackbar is open.
 
     Related Pages:
 
@@ -18,10 +15,7 @@ class DomSnackbar(JsHtml.JsHtmlRich):
     return JsObjects.JsBoolean.JsBoolean.get("window['%s'].isOpen()" % self.component.htmlCode)
 
   def open(self) -> JsUtils.jsWrap:
-    """
-    Description:
-    -----------
-    Opens the snackbar.
+    """   Opens the snackbar.
 
     Related Pages:
 
@@ -30,17 +24,12 @@ class DomSnackbar(JsHtml.JsHtmlRich):
     return JsUtils.jsWrap("window['%s'].open()" % self.component.htmlCode)
 
   def close(self, reason: str = None):
-    """
-    Description:
-    -----------
-    Closes the snackbar, optionally with the specified action indicating why it was closed.
+    """   Closes the snackbar, optionally with the specified action indicating why it was closed.
 
     Related Pages:
 
       https://github.com/material-components/material-components-web/tree/master/packages/mdc-snackbar
 
-    Attributes:
-    ----------
     :param reason:
     """
     if reason is None:

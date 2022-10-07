@@ -6,27 +6,19 @@ class EnumDisplays(Enums):
 
   def withoutZeros(self):
     """
-    Description:
-    ------------
     Do not display the label for series with zero values.
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._set_value("function(context){return context.dataset.data[context.dataIndex] !== 0}", js_type=True)
 
   def aboveThreshold(self, value, included=True, absolute=False):
     """
-    Description:
-    ------------
     Display only the labels above a specific threshold.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param value: Float. The threshold value.
     :param included: Boolean. Optional. Specify if the value should be included.
     :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
@@ -42,15 +34,10 @@ class EnumDisplays(Enums):
 
   def belowThreshold(self, value, included=True, absolute=False):
     """
-    Description:
-    ------------
     Display only the labels below a specific threshold.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param value: Float. The threshold value.
     :param included: Boolean. Optional. Specify if the value should be included.
     :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
@@ -68,16 +55,10 @@ class EnumDisplays(Enums):
 class EnumFormatters(Enums):
 
   def details(self, digit=0, thousand_sep="."):
-    """
-    Description:
-    -----------
-    Display the label and its corresponding value.
+    """   Display the label and its corresponding value.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param digit: Integer. Optional. The number of digits.
     :param thousand_sep: String. Optional. The separator for the thousand.
     """
@@ -86,12 +67,9 @@ class EnumFormatters(Enums):
         digit, thousand_sep), js_type=True)
 
   def label(self):
-    """
-    Description:
-    -----------
+    """   
 
-    Usage:
-    -----
+    Usage::
 
     """
     return self._set_value("function(value, context) {return context.dataset.label}", js_type=True)
@@ -102,10 +80,7 @@ class Datalabels(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    -----------
-    The align option defines the position of the label relative to the anchor point position and orientation.
+    """   The align option defines the position of the label relative to the anchor point position and orientation.
 
     Related Pages:
 
@@ -119,10 +94,7 @@ class Datalabels(Options):
 
   @property
   def backgroundColor(self):
-    """
-    Description:
-    -----------
-    The text color for the label.
+    """   The text color for the label.
 
     Related Pages:
 
@@ -136,10 +108,7 @@ class Datalabels(Options):
 
   @property
   def borderColor(self):
-    """
-    Description:
-    -----------
-    The text color for the label.
+    """   The text color for the label.
 
     Related Pages:
 
@@ -153,10 +122,7 @@ class Datalabels(Options):
 
   @property
   def borderRadius(self):
-    """
-    Description:
-    -----------
-    The text color for the label.
+    """   The text color for the label.
 
     Related Pages:
 
@@ -170,10 +136,7 @@ class Datalabels(Options):
 
   @property
   def borderWidth(self):
-    """
-    Description:
-    -----------
-    The text color for the label.
+    """   The text color for the label.
 
     Related Pages:
 
@@ -187,10 +150,7 @@ class Datalabels(Options):
 
   @property
   def clamp(self):
-    """
-    Description:
-    -----------
-    The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the
+    """   The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the
     associated element.
 
     Related Pages:
@@ -205,10 +165,7 @@ class Datalabels(Options):
 
   @property
   def clip(self):
-    """
-    Description:
-    -----------
-    When the clip option is true, the part of the label which is outside the chart area will be masked.
+    """   When the clip option is true, the part of the label which is outside the chart area will be masked.
 
     Related Pages:
 
@@ -222,9 +179,7 @@ class Datalabels(Options):
 
   @property
   def display(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -238,10 +193,7 @@ class Datalabels(Options):
 
   @property
   def anchor(self):
-    """
-    Description:
-    -----------
-    An anchor point is defined by an orientation vector and a position on the data element.
+    """   An anchor point is defined by an orientation vector and a position on the data element.
 
     Related Pages:
 
@@ -255,10 +207,7 @@ class Datalabels(Options):
 
   @property
   def color(self):
-    """
-    Description:
-    -----------
-    The text color for the label.
+    """   The text color for the label.
 
     Related Pages:
 
@@ -280,10 +229,7 @@ class Datalabels(Options):
 
   @property
   def formatters(self):
-    """
-    Description:
-    -----------
-    Pre defined formatters to show label on the chart.
+    """   Pre defined formatters to show label on the chart.
 
     Related Pages:
 
@@ -295,10 +241,7 @@ class Datalabels(Options):
 
   @property
   def formatter(self):
-    """
-    Description:
-    -----------
-    Format the labels displayed on the chart.
+    """   Format the labels displayed on the chart.
 
     Related Pages:
 
@@ -312,10 +255,7 @@ class Datalabels(Options):
 
   @property
   def rotation(self):
-    """
-    Description:
-    -----------
-    This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the
+    """   This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the
     label center.
 
     Related Pages:
@@ -330,10 +270,7 @@ class Datalabels(Options):
 
   @property
   def textAlign(self):
-    """
-    Description:
-    -----------
-    The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing
+    """   The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing
     the label text.
 
     Related Pages:

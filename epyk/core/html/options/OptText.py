@@ -11,8 +11,6 @@ class OptionsText(Options):
   @property
   def editable(self):
     """
-    Description:
-    ------------
     Set the content of the component editable.
 
     Related Pages:
@@ -31,8 +29,6 @@ class OptionsText(Options):
   @property
   def spellcheck(self):
     """
-    Description:
-    ------------
     The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
 
     Related Pages:
@@ -49,8 +45,6 @@ class OptionsText(Options):
   @property
   def reset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -63,8 +57,6 @@ class OptionsText(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -87,8 +79,6 @@ class OptionsText(Options):
   @property
   def showdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -107,8 +97,6 @@ class OptionsText(Options):
   @property
   def limit_char(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -122,8 +110,6 @@ class OptionsText(Options):
   @property
   def red(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -137,8 +123,6 @@ class OptionsText(Options):
   @property
   def green(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -152,8 +136,6 @@ class OptionsText(Options):
   @property
   def orange(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -167,8 +149,6 @@ class OptionsText(Options):
   @property
   def font_size(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -196,8 +176,6 @@ class OptionsText(Options):
   @property
   def style_select(self):
     """
-    Description:
-    ------------
     Internal CSS class name to be used when the component is selected.
     """
     return self._config_get(None)
@@ -209,8 +187,6 @@ class OptionsText(Options):
   @property
   def html_encode(self):
     """
-    Description:
-    ------------
     Encode Python content to HTML format.
     """
     return self._config_get(True)
@@ -222,8 +198,6 @@ class OptionsText(Options):
   @property
   def multiline(self):
     """
-    Description:
-    ------------
     Replace the Python \n to the HTML tag <br/>.
     """
     return self._config_get(False)
@@ -238,8 +212,6 @@ class OptionsTitle(OptionsText):
   @property
   def content_table(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -256,12 +228,8 @@ class OptionsNumber(OptionsText):
   @property
   def label(self):
     """
-    Description:
-    ------------
     The label attached to a number component.
-
-    Attributes:
-    ----------
+ 
     :prop text: String. The value.
     """
     return self._config_get("")
@@ -273,8 +241,6 @@ class OptionsNumber(OptionsText):
   @property
   def digits(self):
     """
-    Description:
-    ------------
     decimal point separator.
 
     Related Pages:
@@ -290,8 +256,6 @@ class OptionsNumber(OptionsText):
   @property
   def format(self):
     """
-    Description:
-    ------------
     controls output: %s = symbol, %v = value/number.
 
     Related Pages:
@@ -307,8 +271,6 @@ class OptionsNumber(OptionsText):
   @property
   def symbol(self):
     """
-    Description:
-    ------------
     default currency symbol is ''.
 
     Related Pages:
@@ -325,8 +287,6 @@ class OptionsNumber(OptionsText):
   @property
   def thousand_sep(self):
     """
-    Description:
-    ------------
     thousands separator.
 
     Related Pages:
@@ -342,8 +302,6 @@ class OptionsNumber(OptionsText):
   @property
   def decimal_sep(self):
     """
-    Description:
-    ------------
     decimal point separator.
 
     Related Pages:
@@ -363,12 +321,8 @@ class OptionsNumberMoves(OptionsNumber):
   @property
   def css(self):
     """
-    Description:
-    ------------
     The label attached to a number component.
-
-    Attributes:
-    ----------
+ 
     :prop attrs: Dictionary. The CSS attributes.
     """
     return self._config_get({"text-align": "center", "margin-top": "5px",
@@ -381,8 +335,6 @@ class OptionsNumberMoves(OptionsNumber):
   @property
   def rotate(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -397,8 +349,6 @@ class OptionsNumberMoves(OptionsNumber):
   @property
   def font_size(self):
     """
-    Description:
-    ------------
     The font size used by the percentage and difference.
 
     Related Pages:
@@ -450,8 +400,6 @@ class OptionsNumberDelta(OptionsNumber):
   @property
   def threshold1(self):
     """
-    Description:
-    ------------
     The first threshold.
     """
     return self._config_get(100)
@@ -463,8 +411,6 @@ class OptionsNumberDelta(OptionsNumber):
   @property
   def threshold2(self):
     """
-    Description:
-    ------------
     The second threshold (smaller than the first one).
     """
     return self._config_get(50)
@@ -476,8 +422,6 @@ class OptionsNumberDelta(OptionsNumber):
   @property
   def previous_label(self):
     """
-    Description:
-    ------------
     Set the label displayed before the previous value in the component.
     """
     return self._config_get("Previous number: ")
@@ -492,8 +436,6 @@ class OptionsLink(OptionsText):
   @property
   def url(self):
     """
-    Description:
-    ------------
     The href attribute specifies the URL of the page the link goes to.
 
     Related Pages:
@@ -509,8 +451,6 @@ class OptionsLink(OptionsText):
   @property
   def href(self):
     """
-    Description:
-    ------------
     The href attribute specifies the URL of the page the link goes to.
 
     Related Pages:
@@ -526,8 +466,6 @@ class OptionsLink(OptionsText):
   @property
   def target(self):
     """
-    Description:
-    ------------
     The target attribute specifies where to open the linked document.
 
     Related Pages:
@@ -546,8 +484,6 @@ class OptionsConsole(OptionsText):
   @property
   def timestamp(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -561,8 +497,6 @@ class OptionsComposite(Options):
   @property
   def reset_class(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -577,8 +511,6 @@ class OptionsStatus(Options):
   @property
   def states(self):
     """
-    Description:
-    ------------
     """
     return self.get({})
 
@@ -589,8 +521,6 @@ class OptionsStatus(Options):
   @property
   def color(self):
     """
-    Description:
-    ------------
     """
     return self.get('white')
 
@@ -601,8 +531,6 @@ class OptionsStatus(Options):
   @property
   def background(self):
     """
-    Description:
-    ------------
     """
     return self.get('grey')
 
@@ -613,8 +541,6 @@ class OptionsStatus(Options):
   @property
   def change_menu(self):
     """
-    Description:
-    ------------
     """
     return self.get(False)
 
@@ -633,8 +559,6 @@ class OptContents(Options):
   @property
   def manual(self):
     """
-    Description:
-    ------------
     Define the way the content table is updated.
     """
     return self.get("manual", False)
@@ -649,13 +573,9 @@ class OptBreadCrumb(Options):
 
   def set_style(self, name: str):
     """
-    Description:
-    ------------
     Set the breadcrumb to a predefined style.
     Do not hesitate to share on Github if you think that a new configuration should be promoted to the package.
-
-    Attributes:
-    ----------
+ 
     :param name: String. The predefined style.
     """
     defined_styles = {
@@ -684,12 +604,8 @@ class OptBreadCrumb(Options):
   @property
   def delimiter(self):
     """
-    Description:
-    ------------
     Set the delimiter for the breadcrumb categories.
-
-    Attributes:
-    ----------
+ 
     :prop value: String. The delimiter. Default /.
     """
     return self._config_get(' / ')
@@ -701,12 +617,8 @@ class OptBreadCrumb(Options):
   @property
   def height(self):
     """
-    Description:
-    ------------
     Set the height for the breadcrumb items.
-
-    Attributes:
-    ----------
+ 
     :prop number: Integer. The height in pixel. Default 0.
     """
     return self._config_get(0)
@@ -718,17 +630,13 @@ class OptBreadCrumb(Options):
   @property
   def style_selected(self):
     """
-    Description:
-    ------------
     Set the style for the selected item.
     This style will be added on top of the common CSS style.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/
-
-    Attributes:
-    ----------
+ 
     :prop values: Dictionary. The CSS styles.
     """
     return self._config_get({})
@@ -744,8 +652,6 @@ class OptionsHighlights(Options):
   @property
   def close(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -756,10 +662,20 @@ class OptionsHighlights(Options):
     self._config(flag)
 
   @property
+  def close_css(self):
+    """
+
+    Related Pages:
+    """
+    return self._config_get({"float": "right", "font-size": "20px", "cursor": "pointer"})
+
+  @close_css.setter
+  def close_css(self, values: dict):
+    self._config(values)
+
+  @property
   def reset(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -772,8 +688,6 @@ class OptionsHighlights(Options):
   @property
   def markdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -796,8 +710,6 @@ class OptionsHighlights(Options):
   @property
   def showdown(self):
     """
-    Description:
-    ------------
     Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
@@ -820,8 +732,6 @@ class OptSearchResult(Options):
   @property
   def title(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -836,8 +746,6 @@ class OptSearchResult(Options):
   @property
   def dsc(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -851,8 +759,6 @@ class OptSearchResult(Options):
   @property
   def url(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -866,8 +772,6 @@ class OptSearchResult(Options):
   @property
   def visited(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -880,8 +784,6 @@ class OptSearchResult(Options):
   @property
   def link(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -894,8 +796,6 @@ class OptSearchResult(Options):
   @property
   def pageNumber(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -908,8 +808,6 @@ class OptSearchResult(Options):
   @property
   def currPage(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -922,8 +820,6 @@ class OptSearchResult(Options):
   @property
   def grey(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -936,8 +832,6 @@ class OptSearchResult(Options):
   @property
   def white(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """
@@ -954,8 +848,6 @@ class OptionsUpdate(Options):
   @property
   def icon(self):
     """
-    Description:
-    ------------
 
     Related Pages:
     """

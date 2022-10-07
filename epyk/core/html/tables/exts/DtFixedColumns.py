@@ -5,9 +5,7 @@ from epyk.core.html.options import Options
 class FixedColumns(Options):
 
   def activate(self):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
@@ -18,10 +16,7 @@ class FixedColumns(Options):
 
   @property
   def heightMatch(self):
-    """
-    Description:
-    -----------
-    FixedColumns operates by cloning the cells from the original table and then inserting them into the document,
+    """   FixedColumns operates by cloning the cells from the original table and then inserting them into the document,
     positioned visually above the DataTable - thus allowing them to appear fixed.
 
     Related Pages:

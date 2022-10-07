@@ -18,18 +18,13 @@ class Components:
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
              options: Union[dict, bool] = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param columns: Optional. The list of key from the record to be used as columns in the table.
     :param rows: Optional. The list of key from the record to be used as rows in the table.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -84,18 +79,13 @@ class Components:
   def filters(self, items=None, button=None, width: types.SIZE_TYPE = ("auto", ""),
               height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
               options: Union[dict, bool] = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param items:
     :param button:
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -159,16 +149,12 @@ class ProgressComponents:
 
   def gauge(self, value: float = 0, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (45, "px"),
             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Related Pages:
 
       https://codepen.io/jagathish/pen/ZXzbzN
 
-    Attributes:
-    ----------
     :param value:
     :param width:
     :param height:
@@ -195,16 +181,13 @@ class Gallery:
   def mosaic(self, pictures: list = None, columns: int = 6, path: str = None, width: types.SIZE_TYPE = (None, '%'),
              height: types.SIZE_TYPE = ('auto', ''), options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Mosaic of pictures.
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -212,8 +195,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param pictures: Optional. The list with the pictures.
     :param columns: Optional. The number of column for the mosaic component.
     :param path: Optional. The path for the picture.
@@ -321,15 +302,12 @@ class Gallery:
   def carousel(self, images: list = None, path: str = None, selected: int = 0, width: types.SIZE_TYPE = (100, "%"),
                height: types.SIZE_TYPE = (300, "px"), options: types.OPTION_TYPE = None,
                profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -337,8 +315,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param images: Optional. The list with the pictures.
     :param path: Optional. The path for the picture.
     :param selected: Optional. The selected index.
@@ -365,15 +341,12 @@ class Gallery:
   def pagination(self, count: int, selected: int = 1, width: types.SIZE_TYPE = (100, '%'),
                  height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -381,8 +354,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param count: The pagination count of items.
     :param selected: Optional. The selected value.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -399,15 +370,12 @@ class Gallery:
   def heroes(self, url: str, path: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (500, "px"), align: str = "center", html_code: str = None,
              options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -419,8 +387,6 @@ class Gallery:
 
       https://www.w3schools.com/cssref/pr_background-image.asp
 
-    Attributes:
-    ----------
     :param url: Optional. The picture url.
     :param path: Optional. The picture path.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -448,15 +414,12 @@ class Gallery:
   def fixed(self, url: str, path: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (300, "px"), align: str = "center", html_code: str = None,
             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -464,8 +427,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param url: Optional. The url link.
     :param path: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -492,22 +453,17 @@ class Gallery:
   def link(self, img: str, url: str = "#", path: str = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), align: str = "center", options: types.OPTION_TYPE = None,
            html_code: str = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Set a background as an image.
     This is wrapping the image.background base component.
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
-    Attributes:
-    ----------
     :param img:
     :param url: Optional. The url link.
     :param path: Optional. The picture path.
@@ -528,15 +484,12 @@ class Gallery:
   def overlay(self, img: str, text: str = None, path: str = None, width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (None, "px"), align: str = "center", options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -548,8 +501,6 @@ class Gallery:
 
       https://www.w3schools.com/howto/howto_css_image_overlay_slide.asp
 
-    Attributes:
-    ----------
     :param img:
     :param text: Optional. The content.
     :param path: Optional. The picture path.
@@ -656,17 +607,14 @@ class Gallery:
                 margin: int = 0, align: str = "center",
                 position: str = "middle", options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = False):
-    """
-    Description:
-    ------------
+    """  
     Set a background as an image.
     This is wrapping the image.background base component.
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -674,8 +622,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param url: Optional. The url link.
     :param width: Optional. A tuple with the integer for the component width and its unit.
     :param height: Optional. A tuple with the integer for the component height and its unit.
@@ -694,15 +640,12 @@ class Gallery:
   def animated(self, image: str = None, text: str = "", title: str = "", url: str = None, path: str = None,
                width: types.SIZE_TYPE = (200, "px"), height: types.SIZE_TYPE = (200, "px"),
                html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -710,8 +653,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param image: Optional.
     :param text: Optional. The value to be displayed to the component.
     :param title: Optional. A panel title. This will be attached to the title property.
@@ -731,15 +672,12 @@ class Gallery:
   def folders(self, path: str, columns: int = 6, images: dict = None, position: str = "top", width: types.SIZE_TYPE = (None, '%'),
               height: types.SIZE_TYPE = ('auto', ''), options: types.OPTION_TYPE = None,
               profile: types.OPTION_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -747,8 +685,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param path: Optional. The picture path.
     :param columns:
     :param images:
@@ -830,15 +766,12 @@ class Gallery:
   def list(self, path: str, urls: dict = None, width: types.SIZE_TYPE = ('auto', ''),
            height: types.SIZE_TYPE = ('auto', ''), options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     :tags:
     :categories:
 
-    Usage:
-    -----
+    Usage::
 
     Related Pages:
 
@@ -846,8 +779,6 @@ class Gallery:
 
     Templates:
 
-    Attributes:
-    ----------
     :param path: Optional. The picture path.
     :param urls: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit

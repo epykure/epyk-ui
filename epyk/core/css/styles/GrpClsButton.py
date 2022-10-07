@@ -10,10 +10,7 @@ class ClassButton(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrButton:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -27,10 +24,7 @@ class ClassButton(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogButton.CatalogButton:
-    """
-    Description:
-    -----------
-    The internal class used to put a custom Style to this object.
+    """   The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     Usage::
@@ -53,10 +47,7 @@ class ClassBadge(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrBadge:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -73,10 +64,7 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrButton:
-    """
-    Description:
-    -----------
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -99,10 +87,7 @@ class ClassButtonMenu(GrpCls.ClassHtml):
 
   @property
   def css_btn_content(self) -> Classes.CatalogButton.CatalogButton:
-    """
-    Description:
-    -----------
-    The CSS property of the underlying items panel.
+    """   The CSS property of the underlying items panel.
     This component will have a dedicated CSS class for the hover event.
 
     :rtype: Classes.CatalogButton.CatalogButton
@@ -115,10 +100,7 @@ class ClassButtonMenu(GrpCls.ClassHtml):
 
   @property
   def css_btn_link_hover(self) -> Classes.CatalogButton.CatalogButton:
-    """
-    Description:
-    -----------
-    The CSS property of the underlying item.
+    """   The CSS property of the underlying item.
     This component will have a dedicated CSS class for the hover event.
 
     :rtype: Classes.CatalogButton.CatalogButton

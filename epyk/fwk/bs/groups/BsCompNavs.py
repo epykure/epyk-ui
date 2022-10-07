@@ -5,12 +5,8 @@ class Components:
     self.page = ui.page
 
   def title(self, value="", level=5, width=(100, '%'), height=(None, 'px'), options=None, profile=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param value:
     :param level:
     :param width:
@@ -24,12 +20,8 @@ class Components:
 
   def link(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False,
            html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param text:
     :param url:
     :param icon:
@@ -47,12 +39,8 @@ class Components:
 
   def brand(self, text, url, icon=None, align="left", helper=None, height=(None, 'px'), decoration=False,
             html_code=None, options=None, profile=None):
-    """
-    Description:
-    -----------
-
-    Attributes:
-    ----------
+    """   
+ 
     :param text:
     :param url:
     :param icon:

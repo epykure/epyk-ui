@@ -16,8 +16,6 @@ class Package:
 
   def install(self):
     """
-    Description:
-    ------------
     Install Clarity Framework on top of your Angular framework.
 
     This will trigger the automatic install defined on the official website.
@@ -30,8 +28,6 @@ class Package:
 
   def update(self):
     """
-    Description:
-    ------------
     Install Clarity Framework on top of your Angular framework.
 
     This will trigger the automatic install defined on the official website.
@@ -56,8 +52,6 @@ class Components:
 
   def check(self):
     """
-    Description:
-    ------------
     Check if the package is installed on the server
     """
     if not os.path.exists(os.path.join(self.path, 'node_modules', MODULE)):

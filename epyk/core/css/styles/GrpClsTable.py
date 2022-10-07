@@ -10,10 +10,7 @@ class DataTableThemes:
     self.classlist = classlist
 
   def cell_border(self):
-    """
-    Description:
-    -----------
-    Add predefined CSS cell border class for DataTable.
+    """   Add predefined CSS cell border class for DataTable.
 
     Related Pages:
 
@@ -23,10 +20,7 @@ class DataTableThemes:
     return self
 
   def compact(self):
-    """
-    Description:
-    -----------
-    Reduce the amount of white-space the default styling for the DataTable uses, increasing the information density on
+    """   Reduce the amount of white-space the default styling for the DataTable uses, increasing the information density on
     screen, as shown below.
     Note that this style requires DataTables 1.10.1 or newer.
 
@@ -38,10 +32,7 @@ class DataTableThemes:
     return self
 
   def display_compact(self):
-    """
-    Description:
-    -----------
-    Add predefined CSS display compact class for DataTable.
+    """   Add predefined CSS display compact class for DataTable.
 
     Related Pages:
 
@@ -52,10 +43,7 @@ class DataTableThemes:
     return self
 
   def hover(self):
-    """
-    Description:
-    -----------
-    Add predefined CSS hover class for DataTable.
+    """   Add predefined CSS hover class for DataTable.
 
     Related Pages:
 
@@ -65,10 +53,7 @@ class DataTableThemes:
     return self
 
   def order_column(self):
-    """
-    Description:
-    -----------
-    Highlight the ordering column.
+    """   Highlight the ordering column.
 
     Related Pages:
 
@@ -78,10 +63,7 @@ class DataTableThemes:
     return self
 
   def nowrap(self):
-    """
-    Description:
-    -----------
-    Disable line wrapping of content in the table cells, so the text will always appear on one line.
+    """   Disable line wrapping of content in the table cells, so the text will always appear on one line.
     Note that this style requires DataTables 1.10.1 or newer.
 
     Related Pages:
@@ -92,10 +74,7 @@ class DataTableThemes:
     return self
 
   def row_border(self):
-    """
-    Description:
-    -----------
-    Border on the rows only.
+    """   Border on the rows only.
 
     Related Pages:
 
@@ -105,10 +84,7 @@ class DataTableThemes:
     return self
 
   def stripe(self):
-    """
-    Description:
-    -----------
-    Row striping.
+    """   Row striping.
 
     Related Pages:
 
@@ -118,17 +94,12 @@ class DataTableThemes:
     return self
 
   def bootstrap(self, striped: bool = True, bordered: bool = True):
-    """
-    Description:
-    -----------
-    Set default Bootstrap table style (striped and bordered).
+    """   Set default Bootstrap table style (striped and bordered).
 
     Related Pages:
 
       https://datatables.net/examples/styling/bootstrap4.html
-
-    Attributes:
-    ----------
+ 
     :param striped: Flag to add the striped style to the table
     :param bordered: Flag to add the bordered style to the table
     """
@@ -154,10 +125,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def themes(self) -> DataTableThemes:
-    """
-    Description:
-    -----------
-    Add the predefined themes in the javascript library.
+    """   Add the predefined themes in the javascript library.
 
     Related Pages:
 
@@ -167,10 +135,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def cls_datatable(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add CSS class for DataTable table
+    """   Add CSS class for DataTable table
     """
     if self._css_datatable is None:
       self._css_datatable = Classes.CatalogTable.CatalogTable(
@@ -179,10 +144,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def cls_datatable_header(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add CSS class for DataTable header
+    """   Add CSS class for DataTable header
     """
     if self._css_datatable_header is None:
       self._css_datatable_header = Classes.CatalogTable.CatalogTable(
@@ -191,10 +153,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def cls_datatable_odd(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add CSS class for DataTable odd rows
+    """   Add CSS class for DataTable odd rows
     """
     if self._css_datatable_row_odd is None:
       self._css_datatable_row_odd = Classes.CatalogTable.CatalogTable(
@@ -203,10 +162,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def cls_datatable_even(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add CSS class for DataTable even rows
+    """   Add CSS class for DataTable even rows
     """
     if self._css_datatable_row_even is None:
       self._css_datatable_row_even = Classes.CatalogTable.CatalogTable(
@@ -215,10 +171,7 @@ class Datatable(GrpCls.ClassHtml):
 
   @property
   def cls_datatable_footer(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add CSS class for DataTable footer
+    """   Add CSS class for DataTable footer
     """
     if self._css_datatable_footer is None:
       self._css_datatable_footer = Classes.CatalogTable.CatalogTable(
@@ -264,19 +217,14 @@ class Tabulator(GrpCls.ClassHtml):
     self.classList['other'].add(self.cls_header_filter_input)
 
   def strip(self, attrs: dict = None, important: bool = False):
-    """
-    Description:
-    -----------
-    Configure the style of the row.
+    """   Configure the style of the row.
 
     Usage::
 
       table.style.strip({"background": "yellow"}, important=True)
       # In the table definition
       table = page.ui.tables.tabulators.table(data[:50], width=(200, "px"), options={"stripped": True})
-
-    Attributes:
-    ----------
+ 
     :param attrs: bespoke CSS attributes
     :param important: Set the attributes as important to override the default classes
     """
@@ -293,10 +241,7 @@ class Tabulator(GrpCls.ClassHtml):
 
   @property
   def cls_tabulator(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    -----------
-    Add internal CSS class definition for tabulator tables.
+    """   Add internal CSS class definition for tabulator tables.
     """
     if self._css_tabulator is None:
       self._css_tabulator = Classes.CatalogTable.CatalogTable(
@@ -306,8 +251,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_header_filter_input(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_header_filter_input is None:
@@ -318,8 +261,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_sorter_asc(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_sorter_asc is None:
@@ -330,8 +271,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_sorter_desc(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_sorter_desc is None:
@@ -342,8 +281,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_sorter_none(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_sorter_none is None:
@@ -354,8 +291,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_row(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_row is None:
@@ -366,8 +301,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_cell(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_cell is None:
@@ -378,8 +311,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_col(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_col is None:
@@ -390,8 +321,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_col_title(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_col_title is None:
@@ -402,8 +331,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_col_content(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_col_content is None:
@@ -414,8 +341,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_menu(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_menu is None:
@@ -426,8 +351,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_menu_item(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_menu_item is None:
@@ -438,8 +361,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_selected(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_selected is None:
@@ -450,8 +371,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_even_row(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_even_row is None:
@@ -462,8 +381,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_even_row_no_strip(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_even_row_no_strip is None:
@@ -474,8 +391,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_even_row(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_odd_row is None:
@@ -486,8 +401,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_groups(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_groups is None:
@@ -498,8 +411,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_footer(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_footer is None:
@@ -510,8 +421,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_table(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_table is None:
@@ -522,8 +431,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_footer_pg(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_footer_pg is None:
@@ -534,8 +441,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_tree(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_tree is None:
@@ -546,8 +451,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tb_tree_exp(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tb_tree_exp is None:
@@ -558,8 +461,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_header(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_header is None:
@@ -570,8 +471,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_editing(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_editing is None:
@@ -582,8 +481,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_cell_editing(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_cell_editing is None:
@@ -594,8 +491,6 @@ class Tabulator(GrpCls.ClassHtml):
   @property
   def cls_tabulator_headers(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_tabulator_headers is None:
@@ -605,8 +500,6 @@ class Tabulator(GrpCls.ClassHtml):
 
   def get_classes_css(self):
     """
-    Description:
-    -----------
 
     """
     if not self.__strip:
@@ -615,10 +508,7 @@ class Tabulator(GrpCls.ClassHtml):
 
   def bespoke(self, name: str = None, css_table: dict = None, css_selected: dict = None, important: bool = True,
               css_col_content: dict = None, others: dict = None):
-    """
-    Description:
-    -----------
-    Override specific CSS classes.
+    """   Override specific CSS classes.
 
     Usage::
 
@@ -626,9 +516,7 @@ class Tabulator(GrpCls.ClassHtml):
                       css_col_content={"background": "red", "border": "red"}, important=True)
 
       table.style.bespoke(others={"tabulator-editing input": {"color": "purple"}})
-
-    Attributes:
-    ----------
+ 
     :param name: Optional. The table HTML tag name.
     :param css_table: Optional. The Tabulator table CSS attributes.
     :param css_selected: Optional. The Tabulator selected CSS attributes
@@ -683,8 +571,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_popup_checks_label(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_pop_checks_label is None:
@@ -695,8 +581,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_popup_checks(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_pop_checks is None:
@@ -707,8 +591,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_head(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_head is None:
@@ -719,8 +601,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_cell(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_cell is None:
@@ -731,8 +611,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_axis(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_axis is None:
@@ -743,8 +621,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_filter_box(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_box is None:
@@ -755,8 +631,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_popup_header(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_pop_header is None:
@@ -767,8 +641,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_popup_button(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_pop_button is None:
@@ -779,8 +651,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_popup(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_pop is None:
@@ -791,8 +661,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_val(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_val is None:
@@ -803,8 +671,6 @@ class Pivot(GrpCls.ClassHtml):
   @property
   def cls_pt_label(self) -> Classes.CatalogTable.CatalogTable:
     """
-    Description:
-    -----------
 
     """
     if self._css_pt_label is None:
@@ -822,9 +688,7 @@ class Aggrid(GrpCls.ClassHtml):
     self._css_cell_focus, self._css_cell, self._css_filter, self._css_menu, self._css_popup = 5 * [None]
 
   def theme(self, name: str, dark: bool = None):
-    """
-    Description:
-    ------------
+    """  
     Set a specific theme (alpine, balham or material.
 
     Usage::
@@ -843,9 +707,7 @@ class Aggrid(GrpCls.ClassHtml):
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/#reference-variables---ag-header-background-color
-
-    Attributes:
-    ----------
+ 
     :param name: The theme name
     :param dark: set the corresponding dark theme
     """
@@ -856,18 +718,14 @@ class Aggrid(GrpCls.ClassHtml):
       self.component.attr["class"].add("ag-theme-%s" % name)
 
   def strip(self, attrs: dict = None, important: bool = False):
-    """
-    Description:
-    ------------
+    """  
 
 
     Usage::
 
       grid = page.ui.tables.aggrids.table()
       grid.style.strip({"color": "blue"})
-
-    Attributes:
-    ----------
+ 
     :param attrs: Optional. The CSS attributes to be added to the class
     :param important: Optional. Set all the attributes as important
     """
@@ -883,9 +741,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def css_popup(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for filter popups.
     """
     if self._css_popup is None:
@@ -895,9 +751,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def css_menu(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for menu.
     """
     if self._css_menu is None:
@@ -907,9 +761,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def css_filter(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for filter.
     """
     if self._css_filter is None:
@@ -919,9 +771,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_head(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for header.
     """
     if self._css_head is None:
@@ -931,9 +781,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_row_even(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for rows.
     """
     if self._css_row_even is None:
@@ -943,9 +791,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_row(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for rows.
     """
     if self._css_row is None:
@@ -955,9 +801,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_row_odd(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for rows.
     """
     if self._css_row_odd is None:
@@ -967,9 +811,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_cell_focus(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for cells when focus.
     """
     if self._css_cell_focus is None:
@@ -979,9 +821,7 @@ class Aggrid(GrpCls.ClassHtml):
 
   @property
   def cls_cell(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    Description:
-    ------------
+    """  
     Property to the CSS Class definition for cells.
     """
     if self._css_cell is None:

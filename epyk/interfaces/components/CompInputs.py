@@ -19,8 +19,6 @@ class Inputs:
              html_code: str = None, options: types.OPTION_TYPE = None, attrs: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -30,8 +28,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.Input`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -59,8 +55,6 @@ class Inputs:
               options: types.OPTION_TYPE = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRadio:
     """
-    Description:
-    ------------
     Add a radio component.
 
     Usage::
@@ -71,8 +65,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.InputRadio`
 
-    Attributes:
-    ----------
     :param flag: Optional. The component init value
     :param group_name: Optional. The radio group name
     :param placeholder: Optional. Text visible when the input component is empty
@@ -98,8 +90,6 @@ class Inputs:
                attrs: dict = None, tooltip: str = None,
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     One of the new types of inputs in HTML5 is search
 
     Usage::
@@ -115,8 +105,6 @@ class Inputs:
       https://developer.mozilla.org/fr/docs/Web/HTML/Element/Input/search
       https://css-tricks.com/webkit-html5-search-inputs/
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -139,8 +127,6 @@ class Inputs:
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
                attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     Input field that will hide characters typed in.
 
     Usage::
@@ -151,8 +137,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.Input`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -175,8 +159,6 @@ class Inputs:
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     Input field that will hide characters typed in
 
     Usage::
@@ -187,8 +169,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.File`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -211,8 +191,6 @@ class Inputs:
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputTime:
     """
-    Description:
-    ------------
     A lightweight, customizable javascript timepicker plugin for jQuery inspired by Google Calendar.
 
     Usage::
@@ -223,8 +201,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.InputTime`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -248,8 +224,6 @@ class Inputs:
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputDate:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -259,8 +233,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.InputDate`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -283,8 +255,6 @@ class Inputs:
             attrs: dict = None, tooltip: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputInteger:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -294,8 +264,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.InputInteger`
 
-    Attributes:
-    ----------
     :param value: Optional. The value of this input number field
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -320,13 +288,9 @@ class Inputs:
               html_code: str = None, options: types.OPTION_TYPE = None, attrs: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputRange:
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :param value: Optional. The value of the component
     :param min_val: Optional. The minimum value
     :param max_val: Optional. The maximum value
@@ -352,8 +316,6 @@ class Inputs:
   def _output(self, value: str = "", options: types.OPTION_TYPE = None,
               profile: Optional[types.PROFILE_TYPE] = False) -> html.HtmlInput.Output:
     """
-    Description:
-    ------------
     Create a HTML output object.
 
     Usage::
@@ -364,8 +326,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.Output`
 
-    Attributes:
-    ----------
     :param value: Optional. The value to be displayed to the component
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
@@ -377,9 +337,7 @@ class Inputs:
   def textarea(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), rows: int = 5, placeholder: str = None,
                background_color: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
                tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.TextArea:
-    """
-    Description:
-    ------------
+    """ Add textarea component.
 
     Usage::
 
@@ -393,8 +351,6 @@ class Inputs:
 
       https://www.w3schools.com/tags/tag_textarea.asp
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param rows:
@@ -419,8 +375,6 @@ class Inputs:
                    attrs: dict = None, tooltip: str = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlInput.AutoComplete:
     """
-    Description:
-    ------------
     Enables users to quickly find and select from a pre-populated list of values as they type, leveraging searching
     and filtering.
 
@@ -438,8 +392,6 @@ class Inputs:
       https://jqueryui.com/autocomplete/
 
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -468,8 +420,6 @@ class Inputs:
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
             attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     Add a standard input component.
 
     Usage::
@@ -486,8 +436,6 @@ class Inputs:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -507,8 +455,6 @@ class Inputs:
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     Add a standard input component.
 
     Usage::
@@ -525,8 +471,6 @@ class Inputs:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/modal.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/popup_info.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -548,8 +492,6 @@ class Inputs:
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
     """
-    Description:
-    ------------
     Add a hidden input component to the page.
     This could be used to store data to then be passed to underlying services,
 
@@ -561,8 +503,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlInput.Input`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -584,8 +524,6 @@ class Inputs:
                options: types.OPTION_TYPE = None, attrs: dict = None, tooltip: str = "",
                profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Checkbox:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -599,8 +537,6 @@ class Inputs:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    ----------
     :param flag:
     :param label: Optional. The text of label to be added to the component
     :param group_name:
@@ -628,8 +564,6 @@ class Inputs:
             helper: str = None, options: types.OPTION_TYPE = None, tooltip: str = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -647,8 +581,6 @@ class Inputs:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/radio.py
 
-    Attributes:
-    ----------
     :param flag:
     :param label:
     :param group_name:
@@ -672,8 +604,6 @@ class Inputs:
              height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Editor:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -683,8 +613,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlTextEditor.Editor`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the componen
     :param language:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -706,8 +634,6 @@ class Inputs:
            height: types.SIZE_TYPE = (60, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Cell:
     """
-    Description:
-    ------------
 
     Usage::
 
@@ -717,8 +643,6 @@ class Inputs:
 
       - :class:`epyk.core.html.HtmlTextEditor.Cell`
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the componen
     :param language:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -741,8 +665,6 @@ class Inputs:
              html_code: str = None, tooltip: str = None, extensible: bool = False, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Search:
     """
-    Description:
-    ------------
     Add an input search component.
 
     Usage::
@@ -761,8 +683,6 @@ class Inputs:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list_filter.py
 
-    Attributes:
-    ----------
     :param text: Optional. The value to be displayed to the componen
     :param placeholder:
     :param align: Optional. The text-align property within this component
@@ -795,8 +715,6 @@ class Inputs:
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
             options: dict = None, attrs: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
     Add an input label component.
 
     Usage::
@@ -814,8 +732,6 @@ class Inputs:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    Attributes:
-    ----------
     :param label:
     :param text:
     :param placeholder:
@@ -851,11 +767,7 @@ class Inputs:
               helper: str = None, options: dict = None, autocomplete: bool = False,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param items:
     :param button:
     :param width: Optional. A tuple with the integer for the component width and its unit

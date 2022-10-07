@@ -53,8 +53,6 @@ class ReadableStream(JsPackage):
 
   def cancel(self):
     """
-    Description:
-    ------------
     The cancel() method of the ReadableStream interface cancels the associated stream.
     The supplied reason parameter will be given to the underlying source, which may or may not use it.
 
@@ -66,8 +64,6 @@ class ReadableStream(JsPackage):
 
   def getReader(self):
     """
-    Description:
-    ------------
     The getReader() method of the ReadableStream interface creates a reader and locks the stream to it.
     While the stream is locked, no other reader can be acquired until this one is released.
 
@@ -79,8 +75,6 @@ class ReadableStream(JsPackage):
 
   def pipeThrough(self, transform_stream, options: dict = None):
     """
-    Description:
-    ------------
     The pipeThrough() method of the ReadableStream interface provides a chainable way of piping the current stream
     through a transform stream or any other writable/readable pair.
 
@@ -102,8 +96,6 @@ class ReadableStream(JsPackage):
 
   def pipeTo(self, destination, options: dict = None):
     """
-    Description:
-    ------------
     The pipeTo() method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream
     and returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 
@@ -111,8 +103,6 @@ class ReadableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/pipeTo
 
-    Attributes:
-    ----------
     :param destination:
     :param options:
     """
@@ -123,8 +113,6 @@ class ReadableStream(JsPackage):
 
   def tee(self):
     """
-    Description:
-    ------------
     The tee() method of the ReadableStream interface tees the current readable stream, returning a two-element array
     containing the two resulting branches as new ReadableStream instances.
 
@@ -140,8 +128,6 @@ class WritableStreamDefaultWriter(JsPackage):
   @property
   def desiredSize(self):
     """
-    Description:
-    ------------
     The desiredSize read-only property of the WritableStreamDefaultWriter interface returns the desired size required
     to fill the stream's internal queue.
 
@@ -154,8 +140,6 @@ class WritableStreamDefaultWriter(JsPackage):
   @property
   def writer(self):
     """
-    Description:
-    ------------
     The closed read-only property of the WritableStreamDefaultWriter interface returns a promise that fulfills
     if the stream becomes closed or the writer's lock is released, or rejects if the stream errors.
 
@@ -168,8 +152,6 @@ class WritableStreamDefaultWriter(JsPackage):
   @property
   def ready(self):
     """
-    Description:
-    ------------
     The ready read-only property of the WritableStreamDefaultWriter interface returns a Promise that resolves when
     the desired size of the stream's internal queue transitions from non-positive to positive, signaling that it is
     no longer applying backpressure.
@@ -182,8 +164,6 @@ class WritableStreamDefaultWriter(JsPackage):
 
   def abort(self, reason: Union[str, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     The abort() method of the WritableStreamDefaultWriter interface aborts the stream, signaling that the producer
     can no longer successfully write to the stream and it is to be immediately moved to an error state, with any
     queued writes discarded.
@@ -200,8 +180,6 @@ class WritableStreamDefaultWriter(JsPackage):
 
   def close(self):
     """
-    Description:
-    ------------
     The close() method of the WritableStreamDefaultWriter interface closes the associated writable stream.
 
     Related Pages:
@@ -212,8 +190,6 @@ class WritableStreamDefaultWriter(JsPackage):
 
   def releaseLock(self):
     """
-    Description:
-    ------------
     The releaseLock() method of the WritableStreamDefaultWriter interface releases the writer's lock on the
     corresponding stream.
 
@@ -225,8 +201,6 @@ class WritableStreamDefaultWriter(JsPackage):
 
   def write(self, chunk: Union[str, primitives.JsDataModel]):
     """
-    Description:
-    ------------
     The write() property of the WritableStreamDefaultWriter interface writes a passed chunk of data to a
     WritableStream and its underlying sink, then returns a Promise that resolves to indicate the success or failure of
     the write operation.
@@ -235,8 +209,6 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/write
 
-    Attributes:
-    ----------
     :param chunk: A block of binary data to pass to the WritableStream.
     """
     chunk = JsUtils.jsConvertData(chunk, None)
@@ -248,8 +220,6 @@ class WritableStream(JsPackage):
   @property
   def locked(self):
     """
-    Description:
-    ------------
 
     Related Pages:
 
@@ -259,8 +229,6 @@ class WritableStream(JsPackage):
 
   def abort(self, reason: Union[str, primitives.JsDataModel] = None):
     """
-    Description:
-    ------------
     The abort() method of the WritableStream interface aborts the stream, signaling that the producer can no longer
     successfully write to the stream and it is to be immediately moved to an error state, with any queued writes
     discarded.
@@ -280,8 +248,6 @@ class WritableStream(JsPackage):
 
   def getWriter(self):
     """
-    Description:
-    ------------
     The getWriter() method of the WritableStream interface returns a new instance of WritableStreamDefaultWriter
     and locks the stream to that instance. While the stream is locked, no other writer can be acquired until this
     one is released.

@@ -12,16 +12,12 @@ class JsIf:
   def __init__(self, condition: str, js_funcs: types.JS_FUNCS_TYPES, context: Optional[primitives.PageModel] = None,
                profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Create a JavaScript If statement.
 
     Usage::
 
       JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue)
-
-    Attributes:
-    ----------
+ 
     :param condition: The Javascript condition. Can be a JsBoolean object.
     :param js_funcs: Optional. The Javascript functions.
     :param context: Optional. Metadata concerning the context.
@@ -36,12 +32,8 @@ class JsIf:
 
   def elif_(self, condition: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Add a Javascript elif statement to the loop.
-
-    Attributes:
-    ----------
+ 
     :param condition: The Javascript condition. Can be a JsBoolean object.
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -54,16 +46,12 @@ class JsIf:
 
   def else_(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
-    Description:
-    ------------
     Add the Javascript else statement to the loop.
 
     Usage::
 
       JsIf.JsIf(self.input.dom.hasClass("fa-check"), jsFncsTrue).else_(jsFncFalse)
-
-    Attributes:
-    ----------
+ 
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
 

@@ -42,11 +42,7 @@ class JsRecFunc(ABC):
   @staticmethod
   def extendArgs(category, originParams, newCols):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -57,11 +53,7 @@ class JsRecFunc(ABC):
   @abstractmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -73,11 +65,7 @@ class JsRowBuckets(JsRecFunc):
   @staticmethod
   def extendArgs(category, originParams, newCols):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -88,11 +76,7 @@ class JsRowBuckets(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -124,11 +108,7 @@ class JsRowTotal(JsRecFunc):
   @staticmethod
   def extendArgs(category, originParams, newCols):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param category:
     :param originParams:
     :param newCols:
@@ -139,11 +119,7 @@ class JsRowTotal(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -163,11 +139,7 @@ class JsAll(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -185,11 +157,7 @@ class JsSum(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -222,11 +190,7 @@ class JsPercentage(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -268,8 +232,6 @@ class JsOperations(JsRecFunc):
   @staticmethod
   def extendArgs(category, originParams, newCols):
     """
-    Description:
-    ------------
     This function will update the function argument according to the mode defined by the user. Indeed some properties
     can be received to validate the accuracy of the data.
     Those data should be added to the different transformation functions and the columns should be passed to the final
@@ -287,11 +249,7 @@ class JsOperations(JsRecFunc):
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param jsSchema:
     :param params:
     """
@@ -528,8 +486,6 @@ class JsIntensity:
   @staticmethod
   def extendColumns(jsSchema, params):
     """
-    Description:
-    ------------
 
     :param jsSchema:
     :param params:

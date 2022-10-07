@@ -4,7 +4,7 @@
 import re
 import os
 
-from typing import Optional, List, Union
+from typing import Optional, Union
 from epyk.core.py import primitives
 
 from epyk.core.html import Html
@@ -19,11 +19,15 @@ from epyk.core.css.styles import GrpCls
 
 
 class Label(Html.Html):
+  """
+  Label component.
+
+  """
   name = 'Label'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, page: primitives.PageModel, text=None, color=None, align=None, width=None, height=None,
-               html_code=None, tooltip=None, profile=None, options=None):
+  def __init__(self, page: primitives.PageModel, text: str = None, color: str = None, align: str = None,
+               width=None, height=None, html_code: str = None, tooltip: str = None, profile=None, options=None):
     text = text or []
     if not isinstance(text, list):
       text = [text]
@@ -39,10 +43,7 @@ class Label(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    -----------
-    Return all the Javascript functions defined for an HTML Component.
+    """   Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -58,9 +59,8 @@ class Label(Html.Html):
 
   @property
   def id_html(self) -> JsNodeDom.JsDoms:
-    """
-    Description:
-    ------------
+    """  Get the element by id.
+    This will return a DOM object and use document.getElementById to select the component.
 
     Related Pages:
 
@@ -70,19 +70,13 @@ class Label(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
-    Property to set all the possible object for a button.
+    """  Property to set all the possible object for a button.
     """
     return super().options
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
-    Add a click event for a component.
+    """  Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component.
     has been build.
@@ -96,12 +90,10 @@ class Label(Html.Html):
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
       https://www.w3schools.com/jsref/event_onload.asp
 
-    Attributes:
-    ----------
-    :param Union[list, str] js_funcs: The Javascript functions
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The component for the chaining.
     """
@@ -110,16 +102,12 @@ class Label(Html.Html):
     return self
 
   def selectable(self, flag: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
-    Attributes:
-    ----------
-    :param bool flag: Optional. Set the text not selectable.
+    :param flag: Optional. Set the text not selectable.
 
     :return: self to allow the chains
     """
@@ -128,12 +116,13 @@ class Label(Html.Html):
     return self
 
   _js__builder__ = ''' 
-      if (typeof data !== "undefined"){
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); 
-        var content = converter.makeHtml(data).replace(/<\/?p[^>]*>/ig, '')}  else {var content = data}
-        if(options._children > 0){htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
-        else{htmlObj.innerHTML = content};
-        if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
+if (typeof data !== "undefined"){
+  if(options.showdown){var converter = new showdown.Converter(options.showdown); 
+  var content = converter.makeHtml(data).replace(/<\/?p[^>]*>/ig, '')}  else {var content = data}
+  if(options._children > 0){
+    htmlObj.insertAdjacentHTML('beforeend', '<div style="display:inline-block;vertical-align:middle">'+ content +'</div>')}
+  else{htmlObj.innerHTML = content};
+  if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
     
   def __str__(self):
     res = []
@@ -150,6 +139,10 @@ class Label(Html.Html):
 
 
 class Span(Html.Html):
+  """
+  Span (text) component.
+
+  """
   name = 'Span'
   _option_cls = OptText.OptionsText
 
@@ -164,12 +157,7 @@ class Span(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
-    Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
+    """  Property to set all the possible object for a button.
     """
     return super().options
 
@@ -183,29 +171,21 @@ class Span(Html.Html):
 
   @property
   def id_html(self):
-    """
-    Description:
-    ------------
-
+    """  Get the element by id.
+    This will return a DOM object and use document.getElementById to select the component.
 
     Related Pages:
 
       https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName
-
     """
     return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
-    Return all the Javascript functions defined for an HTML Component.
+    """  Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -213,9 +193,7 @@ class Span(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component
@@ -230,12 +208,10 @@ class Span(Html.Html):
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
       https://www.w3schools.com/jsref/event_onload.asp
 
-    Attributes:
-    ----------
-    :param Union[list, str] js_funcs: The Javascript functions
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The HTML component.
     """
@@ -254,30 +230,24 @@ class Span(Html.Html):
 
 
 class Position(Span):
+  """
+  Position component (Span for Number)
+  """
 
   def digits(self, flag: bool = False):
-    """
-    Description:
-    ------------
+    """  
     Specify if the count should be done from the commas.
 
-    Attributes:
-    ----------
-    :param bool flag: Boolean (default false)
+    :param flag: Boolean (default false)
     """
     self._jsStyles["digits"] = flag
     return self
 
   def position(self, index: int, style: dict):
-    """
-    Description:
-    ------------
-    Set the CSS format for a specific character at a given position.
+    """  Set the CSS format for a specific character at a given position.
 
-    Attributes:
-    ----------
-    :param int index: A number.
-    :param dict style: The CSS Style to be used.
+    :param index: A number.
+    :param style: The CSS Style to be used.
     """
     self._jsStyles.setdefault("positions", {})[index] = style
     return self
@@ -306,10 +276,8 @@ class Position(Span):
             var span = document.createElement("span");
             span.innerHTML = content.slice(prevCursor, content.length);
             span.style.display = "inline-block";
-            htmlObj.appendChild(span);
-          }
-        }
-        '''
+            htmlObj.appendChild(span)}
+        }'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
@@ -317,10 +285,14 @@ class Position(Span):
 
 
 class Text(Html.Html):
+  """
+  Text component (based on DIV).
+  """
   name = 'Text'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, page: primitives.PageModel, text, color, align, width, height, html_code, tooltip, options, helper, profile):
+  def __init__(self, page: primitives.PageModel, text: str, color: str, align: str, width, height, html_code: str,
+               tooltip: str, options, helper: str, profile):
     super(Text, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
                                html_code=html_code, profile=profile, options=options)
     self.add_helper(helper)
@@ -330,18 +302,13 @@ class Text(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
-    Add a click event on the text component.
+    """  Add a click event on the text component.
     The style of the mouse on the component will be changed to make the event more visible.
 
-    Attributes:
-    ----------
-    :param Union[list, str] js_funcs: The Javascript functions
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = 'pointer'
     if "data-group" in self.attr:
@@ -354,19 +321,14 @@ class Text(Html.Html):
 
   def goto(self, url: str, js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None,
            target: str = "_blank", source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    -----------
-    Click event which redirect to another page.
+    """   Click event which redirect to another page.
 
-    Attributes:
-    ----------
-    :param str url: The url link.
-    :param Union[list, str] js_funcs: The Javascript Events triggered before the redirection.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param str target: Optional.
-    :param Optional[str] source_event: Optional. The event source.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param url: The url link
+    :param js_funcs: The Javascript Events triggered before the redirection
+    :param profile: Optional. A flag to set the component performance storage
+    :param target: Optional.
+    :param source_event: Optional. The event source
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -376,9 +338,7 @@ class Text(Html.Html):
 
   @property
   def val(self):
-    """
-    Description:
-    ------------
+    """  
     Property to get the jquery value of the HTML object in a python HTML object.
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
@@ -393,15 +353,11 @@ class Text(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -409,20 +365,13 @@ class Text(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
+    """  
     Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 
   def editable(self):
-    """
-    Description:
-    ------------
-    Change the component properties to be editable if double clicked.
+    """ Change the component properties to be editable if double clicked.
 
     Usage::
 
@@ -436,18 +385,13 @@ class Text(Html.Html):
     return self
 
   def write(self, timer: int = 50):
-    """
-    Description:
-    ------------
-    Add a typing effect on this text.
+    """ Add a typing effect on this text.
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_js_typewriter.asp
 
-    Attributes:
-    ----------
-    :param int timer: Optional. The speed for the typing effect.
+    :param timer: Optional. The speed for the typing effect
     """
     value = self.val
     self.val = ""
@@ -497,6 +441,9 @@ class Text(Html.Html):
 
 
 class Pre(Html.Html):
+  """
+  Pre-formatted text component.
+  """
   name = 'Pre formatted text'
   _option_cls = OptText.OptionsText
 
@@ -508,31 +455,21 @@ class Pre(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
-    Return all the Javascript functions defined for an HTML Component.
+    """  Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
 
   def selectable(self, flag: bool = False):
-    """
-    Description:
-    ------------
-    Make the label component not selectable.
+    """  Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
-    Attributes:
-    ----------
-    :param bool flag: Optional. A flag to the set items selectable.
+    :param flag: Optional. A flag to the set items selectable
 
     :return: self to allow the chains.
     """
@@ -542,12 +479,7 @@ class Pre(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
-    Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
+    """  Property to set all the possible object for a button.
     """
     return super().options
 
@@ -561,11 +493,15 @@ class Pre(Html.Html):
 
 
 class Paragraph(Html.Html):
+  """
+  Paragraph component.
+
+  """
   name = 'Paragraph'
   _option_cls = OptText.OptionsText
 
-  def __init__(self, page: primitives.PageModel, text, color, background_color, border, width, height, html_code, encoding, helper,
-               options, profile):
+  def __init__(self, page: primitives.PageModel, text, color, background_color, border, width, height, html_code,
+               encoding, helper, options, profile):
     tmp_text = []
     if not isinstance(text, list):
       content = []
@@ -598,12 +534,7 @@ class Paragraph(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    -----------
-    Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsText
+    """   Property to set all the possible object for a button.
     """
     return super().options
 
@@ -622,15 +553,10 @@ class Paragraph(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
-    Return all the Javascript functions defined for an HTML Component.
+    """  Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -642,6 +568,9 @@ class Paragraph(Html.Html):
 
 
 class BlockQuote(Html.Html):
+  """
+
+  """
   name = 'Block quotation'
 
   def __init__(self, page: primitives.PageModel, text, author, color, width, height, html_code, helper, options, profile):
@@ -651,10 +580,11 @@ class BlockQuote(Html.Html):
     self.__options = OptText.OptionsText(self, options)
 
   _js__builder__ = '''var div = htmlObj.querySelector('div'); div.innerHTML = '';
-        data.text.split("\\n").forEach(function(rec) {
-          if(options.showdown){var converter = new showdown.Converter(options.showdown); rec = converter.makeHtml(rec)} 
-          var p = document.createElement("p"); p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p) });
-        if(data.author != null){htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
+data.text.split("\\n").forEach(function(rec) {
+  if(options.showdown){var converter = new showdown.Converter(options.showdown); rec = converter.makeHtml(rec)} 
+  var p = document.createElement("p"); p.style.margin = 0; p.style.padding = 0; p.innerHTML = rec; div.appendChild(p)});
+if(data.author != null){
+  htmlObj.querySelector('div:last-child').innerHTML = '<small>by '+ data.author +'<cite></cite></small>'}'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
@@ -667,6 +597,9 @@ class BlockQuote(Html.Html):
 
 
 class Title(Html.Html):
+  """
+  Title component.
+  """
   name = 'Title'
   _option_cls = OptText.OptionsTitle
 
@@ -705,12 +638,7 @@ class Title(Html.Html):
 
   @property
   def style(self) -> GrpCls.ClassHtmlEmpty:
-    """
-    Description:
-    ------------
-    Property to the CSS Style of the component.
-
-    :rtype: GrpCls.ClassHtmlEmpty
+    """  Property to the CSS Style of the component.
     """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtmlEmpty(self)
@@ -718,15 +646,10 @@ class Title(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Description:
-    ------------
-    Return all the Javascript functions defined for an HTML Component.
+    """  Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -734,15 +657,10 @@ class Title(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsTitle:
-    """
-    Description:
-    ------------
-    Property to the component options.
+    """  Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsTitle
     """
     return super().options
 
@@ -754,10 +672,7 @@ class Title(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
-    Add a click event for a component.
+    """  Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component
     has been build.
@@ -771,12 +686,10 @@ class Title(Html.Html):
       https://www.w3schools.com/js/js_htmldom_eventlistener.asp
       https://www.w3schools.com/jsref/event_onload.asp
 
-    Attributes:
-    ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The HTML component.
     """
@@ -796,11 +709,15 @@ class Title(Html.Html):
 
 
 class Numeric(Html.Html):
+  """
+  Numeric component.
+  """
   name = 'Number'
   requirements = ('accounting', )
   _option_cls = OptText.OptionsNumber
 
-  def __init__(self, page: primitives.PageModel, number, title, label, icon, color, tooltip, html_code, options, helper, width, profile):
+  def __init__(self, page: primitives.PageModel, number, title, label, icon, color, tooltip, html_code, options,
+               helper, width, profile):
     super(Numeric, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                   css_attrs={"width": width, "color": color})
     # Add the components label and icon
@@ -814,23 +731,19 @@ class Numeric(Html.Html):
     self.css({'text-align': 'center', 'display': 'inline-block'})
     self.tooltip(tooltip)
 
-  def money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%s%v"):
-    """
-    Description:
-    -----------
-    Format any number into currency.
+  def money(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
+            fmt: str = "%s%v"):
+    """   Format any number into currency.
 
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
-    :param symbol: String. Optional. custom symbol.
-    :param digit: Integer. Optional. Number of digit.
-    :param thousand_sep: String. Optional. The thousand separator.
-    :param decimal_sep: String. Optional. The decimal separator.
-    :param fmt: String. Optional.
+    :param symbol: Optional. custom symbol
+    :param digit: Optional. Number of digit
+    :param thousand_sep: Optional. The thousand separator
+    :param decimal_sep: Optional. The decimal separator
+    :param fmt: Optional. Format representation for the value (%v) and currency (%s)
     """
     self.options.symbol = symbol
     self.options.format = fmt
@@ -839,21 +752,16 @@ class Numeric(Html.Html):
     self.options.decimal_sep = decimal_sep
     return self
 
-  def number(self, digits=0, thousand_sep=',', decimal_sep=","):
-    """
-    Description:
-    -----------
-    Format a number with custom precision and localisation.
+  def number(self, digits: int = 0, thousand_sep: str = ',', decimal_sep: str = ","):
+    """   Format a number with custom precision and localisation.
 
     Related Pages:
 
       http://openexchangerates.github.io/accounting.js/
 
-    Attributes:
-    ----------
-    :param digits: Integer. Optional. Number of digit.
-    :param thousand_sep: String. Optional. The thousand separator.
-    :param decimal_sep: String. Optional.
+    :param digits: Optional. Number of digit
+    :param thousand_sep: Optional. The thousand separator
+    :param decimal_sep: Optional. The decimal separator
     """
     self._jsStyles["type_number"] = "number"
     self.options.digits = digits
@@ -863,15 +771,11 @@ class Numeric(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlNumeric:
-    """
-    Description:
-    ------------
+    """  
     Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlNumeric
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlNumeric(self, page=self.page)
@@ -879,27 +783,17 @@ class Numeric(Html.Html):
 
   @property
   def js(self) -> JsCompNumber.CompNumber:
-    """
-    Description:
-    -----------
-    Return the Javascript internal object.
-
-    :return: A Javascript object
+    """   Return the Javascript internal object.
     """
     if self._js is None:
       self._js = JsCompNumber.CompNumber(page=self.page, selector=self.dom.varId, set_var=False, component=self)
     return self._js
 
   def to(self, number: int, timer: int = 1):
-    """
-    Description:
-    ------------
+    """  
 
-
-    Attributes:
-    ----------
     :param int number:
-    :param int timer: Integer. the append of the increase in millisecond
+    :param int timer: The increase in millisecond
     """
     self.page.body.onReady([
       self.page.js.objects.number(self.val, js_code="%s_counter" % self.htmlCode, set_var=True),
@@ -917,39 +811,33 @@ class Numeric(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Description:
-    ------------
-    Add a click event to the HTML component.
+    """  Add a click event to the HTML component.
 
-    Attributes:
-    ----------
-    :param js_funcs: String | List. The Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.add_classes.div.color_hover()
     return super(Numeric, self).click(js_funcs, profile, source_event, on_ready)
 
   @property
   def options(self) -> OptText.OptionsNumber:
-    """
-    Description:
-    ------------
+    """  
     Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsNumber
     """
     return super().options
 
   _js__builder__ = '''
-      if (options.type_number == 'money'){ htmlObj.querySelector('font').innerHTML = accounting.formatMoney(data, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
-      else { htmlObj.querySelector('font').innerHTML = accounting.formatNumber(data, options.digits, options.thousand_sep, options.decimal_sep) }      
-      '''
+if (options.type_number == 'money'){
+  htmlObj.querySelector('font').innerHTML = accounting.formatMoney(
+    data, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format) }
+else {
+  htmlObj.querySelector('font').innerHTML = accounting.formatNumber(
+    data, options.digits, options.thousand_sep, options.decimal_sep)}'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
@@ -989,12 +877,7 @@ class Highlights(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsHighlights:
-    """
-    Description:
-    ------------
-    Property to set all the possible object for a button.
-
-    :rtype: OptText.OptionsHighlights
+    """  Property to set all the possible object for a button.
     """
     return super().options
 
@@ -1002,9 +885,9 @@ class Highlights(Html.Html):
     val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
     if self.options.close:
       return '''
-        <div %s>
-          <span aria-hidden='true' style='float:right;font-size:20px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
-          <div name='content'>%s</div></div>%s
+<div %s>
+  <span aria-hidden='true' style='float:right;font-size:20px;cursor:pointer' onclick='this.parentNode.remove()'>&times;</span>
+  <div name='content'>%s</div></div>%s
       ''' % (self.get_attrs(css_class_names=self.style.get_classes()), val, self.helper)
 
     return '''<div %s><div name='content'>%s</div></div>%s
@@ -1028,15 +911,10 @@ class Fieldset(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Description:
-    ------------
-    Property to the component options.
+    """  Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 

@@ -10,10 +10,7 @@ class AutoFill(Options):
 
   @property
   def alwaysAsk(self):
-    """
-    Description:
-    -----------
-    Always ask the end user if an action should be taken or not.
+    """   Always ask the end user if an action should be taken or not.
 
     Related Pages:
 
@@ -27,10 +24,7 @@ class AutoFill(Options):
 
   @property
   def columns(self):
-    """
-    Description:
-    -----------
-    Select the columns that can be auto filled.
+    """   Select the columns that can be auto filled.
 
     Related Pages:
 
@@ -44,10 +38,7 @@ class AutoFill(Options):
 
   @property
   def enable(self):
-    """
-    Description:
-    -----------
-    Initial enablement state of AutoFill.
+    """   Initial enablement state of AutoFill.
 
     Related Pages:
 
@@ -61,10 +52,7 @@ class AutoFill(Options):
 
   @property
   def focus(self):
-    """
-    Description:
-    -----------
-    Action that will cause the auto fill drag handle to appear in a cell.
+    """   Action that will cause the auto fill drag handle to appear in a cell.
 
     Related Pages:
 
@@ -78,10 +66,7 @@ class AutoFill(Options):
 
   @property
   def horizontal(self):
-    """
-    Description:
-    -----------
-    Enable / disable user ability to horizontally drag and fill.
+    """   Enable / disable user ability to horizontally drag and fill.
 
     Related Pages:
 
@@ -95,10 +80,7 @@ class AutoFill(Options):
 
   @property
   def update(self):
-    """
-    Description:
-    -----------
-    Control automatic update of data when a fill drag is completed.
+    """   Control automatic update of data when a fill drag is completed.
 
     Related Pages:
 
@@ -112,10 +94,7 @@ class AutoFill(Options):
 
   @property
   def vertical(self):
-    """
-    Description:
-    -----------
-    Enable / disable user ability to vertically drag and fill.
+    """   Enable / disable user ability to vertically drag and fill.
 
     Related Pages:
 

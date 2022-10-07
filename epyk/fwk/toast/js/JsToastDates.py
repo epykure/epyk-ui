@@ -17,34 +17,24 @@ class DateBase(JsPackage):
     self._js, self._jquery = [], None
 
   def addCssClass(self, class_name: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Apply a CSS class to the date picker.
+    """   Apply a CSS class to the date picker.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/Calendar#addCssClass
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] class_name: Class name.
     """
     class_name = JsUtils.jsConvertData(class_name, None)
     return JsUtils.jsWrap("%s.addCssClass(%s)" % (self.component.input.dom.varName, class_name))
 
   def changeLanguage(self, language: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Change language.
+    """   Change language.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#changeLanguage
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] language: Language code. English('en') and Korean('ko') are
       provided as default.
     """
@@ -52,10 +42,7 @@ class DateBase(JsPackage):
     return JsUtils.jsWrap("%s.changeLanguage(%s)" % (self.component.input.dom.varName, language))
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Destroy the date picker.
+    """   Destroy the date picker.
 
     Related Pages:
 
@@ -64,16 +51,12 @@ class DateBase(JsPackage):
     return JsUtils.jsWrap("%s.destroy()" % self.component.input.dom.varName)
 
   def on(self, event, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#event-change
 
-    Attributes:
-    ----------
     :param event: String. The JavaScript DOM source for the event (can be a sug item).
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -85,12 +68,8 @@ class DateBase(JsPackage):
       self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def off(self, event, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param event: String. The JavaScript DOM source for the event (can be a sug item).
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -102,27 +81,19 @@ class DateBase(JsPackage):
       self.component.input.dom.varName, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def draw(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Occur after the calendar is drawn.
+    """   Occur after the calendar is drawn.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#event-draw
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("draw", js_funcs, profile)
 
   def getDate(self):
-    """
-    Description:
-    -----------
-    Return the selected date.
+    """   Return the selected date.
 
     Related Pages:
 
@@ -131,10 +102,7 @@ class DateBase(JsPackage):
     return JsObjects.JsObjects.get("%s.getDate()" % self.component.input.dom.varName)
 
   def getDateElements(self):
-    """
-    Description:
-    -----------
-    Return the date elements on the calendar.
+    """   Return the date elements on the calendar.
 
     Related Pages:
 
@@ -144,10 +112,7 @@ class DateBase(JsPackage):
     return JsObjects.JsObjects.get("%s.getDateElements()" % self.component.input.dom.varName)
 
   def getType(self):
-    """
-    Description:
-    -----------
-    Return the date picker's type.
+    """   Return the date picker's type.
 
     Related Pages:
 
@@ -156,18 +121,13 @@ class DateBase(JsPackage):
     return JsObjects.JsString.JsString.get("%s.getType()" % self.component.input.dom.varName)
 
   def removeCssClass(self, class_name: Union[str, primitives.JsDataModel]):
-    """
-    Description:
-    -----------
-    Remove a CSS class from the date picker.
+    """   Remove a CSS class from the date picker.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#removeCssClass
       https://nhn.github.io/tui.date-picker/latest/Calendar#removeCssClass
 
-    Attributes:
-    ----------
     :param Union[str, primitives.JsDataModel] class_name: Class name.
     """
     class_name = JsUtils.jsConvertData(class_name, None)
@@ -177,10 +137,7 @@ class DateBase(JsPackage):
 class Calendar(DateBase):
 
   def drawNext(self):
-    """
-    Description:
-    -----------
-    Draw the next page.
+    """   Draw the next page.
 
     Related Pages:
 
@@ -189,10 +146,7 @@ class Calendar(DateBase):
     return JsUtils.jsWrap("%s.drawNext()" % self.component.input.dom.varName)
 
   def drawPrev(self):
-    """
-    Description:
-    -----------
-    Draw the previous page.
+    """   Draw the previous page.
 
     Related Pages:
 
@@ -201,10 +155,7 @@ class Calendar(DateBase):
     return JsUtils.jsWrap("%s.drawPrev()" % self.component.input.dom.varName)
 
   def getNextDate(self):
-    """
-    Description:
-    -----------
-    Return the next date.
+    """   Return the next date.
 
     Related Pages:
 
@@ -213,10 +164,7 @@ class Calendar(DateBase):
     return JsObjects.JsObjects.get("%s.getNextDate()" % self.component.input.dom.varName)
 
   def getNextYearDate(self):
-    """
-    Description:
-    -----------
-    Return the date a year later.
+    """   Return the date a year later.
 
     Related Pages:
 
@@ -225,10 +173,7 @@ class Calendar(DateBase):
     return JsObjects.JsObjects.get("%s.getNextYearDate()" % self.component.input.dom.varName)
 
   def getPrevDate(self):
-    """
-    Description:
-    -----------
-    Return the previous date.
+    """   Return the previous date.
 
     Related Pages:
 
@@ -237,10 +182,7 @@ class Calendar(DateBase):
     return JsObjects.JsObjects.get("%s.getPrevDate()" % self.component.input.dom.varName)
 
   def getPrevYearDate(self):
-    """
-    Description:
-    -----------
-    Return the date a year previously.
+    """   Return the date a year previously.
 
     Related Pages:
 
@@ -249,10 +191,7 @@ class Calendar(DateBase):
     return JsObjects.JsObjects.get("%s.getPrevYearDate()" % self.component.input.dom.varName)
 
   def hide(self):
-    """
-    Description:
-    -----------
-    Hide the calendar.
+    """   Hide the calendar.
 
     Related Pages:
 
@@ -261,10 +200,7 @@ class Calendar(DateBase):
     return JsUtils.jsWrap("%s.hide()" % self.component.input.dom.varName)
 
   def show(self):
-    """
-    Description:
-    -----------
-    Show the calendar.
+    """   Show the calendar.
 
     Related Pages:
 
@@ -276,17 +212,12 @@ class Calendar(DateBase):
 class DatePickerRange(DateBase):
 
   def addRange(self, start, end):
-    """
-    Description:
-    -----------
-    Add a selectable range. Use Date instances or numbers(timestamp).
+    """   Add a selectable range. Use Date instances or numbers(timestamp).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#addRange
 
-    Attributes:
-    ----------
     :param start: Date | Number. the start date.
     :param end: Date | Number. the end date.
     """
@@ -295,10 +226,7 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.addRange(%s, %s)" % (self.component.input.dom.varName, start, end))
 
   def getEndDate(self):
-    """
-    Description:
-    -----------
-    Return the end date.
+    """   Return the end date.
 
     Related Pages:
 
@@ -307,10 +235,7 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.getEndDate()" % self.component.input.dom.varName)
 
   def getEndpicker(self):
-    """
-    Description:
-    -----------
-    Return a end-datepicker.
+    """   Return a end-datepicker.
 
     Related Pages:
 
@@ -319,10 +244,7 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.getEndpicker()" % self.component.input.dom.varName)
 
   def getStartDate(self):
-    """
-    Description:
-    -----------
-    Return the start date.
+    """   Return the start date.
 
     Related Pages:
 
@@ -331,10 +253,7 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.getStartDate()" % self.component.input.dom.varName)
 
   def getStartpicker(self):
-    """
-    Description:
-    -----------
-    Return a start-datepicker.
+    """   Return a start-datepicker.
 
     Related Pages:
 
@@ -343,17 +262,12 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.getStartpicker()" % self.component.input.dom.varName)
 
   def removeRange(self, start, end, type):
-    """
-    Description:
-    -----------
-    Remove a range. Use Date instances or numbers(timestamp).
+    """   Remove a range. Use Date instances or numbers(timestamp).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#removeRange
 
-    Attributes:
-    ----------
     :param start: Date | Number. the start date.
     :param end: Date | Number. the end date.
     :param str type: null'date''month''year'. Range type. If falsy, start and end values are considered as timestamp.
@@ -364,115 +278,84 @@ class DatePickerRange(DateBase):
     return JsObjects.JsObjects.get("%s.removeRange(%s, %s, %s)" % (self.component.input.dom.varName, start, end, type))
 
   def setEndDate(self, date):
-    """
-    Description:
-    -----------
-    Set the end date.
+    """   Set the end date.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#date
 
-    Attributes:
-    ----------
     :param date: Date. End date.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsObjects.JsObjects.get("%s.setEndDate(%s)" % (self.component.input.dom.varName, date))
 
   def setRanges(self, ranges):
-    """
-    Description:
-    -----------
-    Set selectable ranges.
+    """   Set selectable ranges.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#setRanges
 
-    Attributes:
-    ----------
     :param ranges: Array<Date | Number>. Selectable ranges. Use Date instances or numbers(timestamp).
     """
     ranges = JsUtils.jsConvertData(ranges, None)
     return JsObjects.JsObjects.get("%s.setRanges(%s)" % (self.component.input.dom.varName, ranges))
 
   def setStartDate(self, date):
-    """
-    Description:
-    -----------
-    Set the start date.
+    """   Set the start date.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#setStartDate
 
-    Attributes:
-    ----------
     :param date: Date. Start date.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsObjects.JsObjects.get("%s.setStartDate(%s)" % (self.component.input.dom.varName, date))
 
   def on_change_start(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#event-change:start
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("change:start", js_funcs, profile)
 
   def off_change_start(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#event-change:start
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.off("change:start", js_funcs, profile)
 
   def on_change_end(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#event-change:end
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("change:end", js_funcs, profile)
 
   def off_change_end(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
+    """   
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DateRangePicker#event-change:end
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -482,17 +365,12 @@ class DatePickerRange(DateBase):
 class DatePicker(DateBase):
 
   def addRange(self, start, end):
-    """
-    Description:
-    -----------
-    Add a selectable range. Use Date instances or numbers(timestamp).
+    """   Add a selectable range. Use Date instances or numbers(timestamp).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#addRange
 
-    Attributes:
-    ----------
     :param start: Date | Number. The start date.
     :param end: Date | Number. The end date.
     """
@@ -501,10 +379,7 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.addRange(%s, %s)" % (self.component.input.dom.varName, start, end))
 
   def close(self):
-    """
-    Description:
-    -----------
-    Close the date picker.
+    """   Close the date picker.
 
     Related Pages:
 
@@ -513,10 +388,7 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.close()" % self.component.input.dom.varName)
 
   def disable(self):
-    """
-    Description:
-    -----------
-    Disable the date picker.
+    """   Disable the date picker.
 
     Related Pages:
 
@@ -525,44 +397,31 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.disable()" % self.component.input.dom.varName)
 
   def drawLowerCalendar(self, date):
-    """
-    Description:
-    -----------
-    Lower the calendar type. (year -> month -> date).
+    """   Lower the calendar type. (year -> month -> date).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#drawLowerCalendar
 
-    Attributes:
-    ----------
     :param date: Date. Date to set.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsUtils.jsWrap("%s.drawLowerCalendar(%s)" % (self.component.input.dom.varName, date))
 
   def drawUpperCalendar(self, date):
-    """
-    Description:
-    -----------
-    Raise the calendar type. (date -> month -> year).
+    """   Raise the calendar type. (date -> month -> year).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#drawUpperCalendar
 
-    Attributes:
-    ----------
     :param date: Date. Date to set.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsUtils.jsWrap("%s.drawUpperCalendar(%s)" % (self.component.input.dom.varName, date))
 
   def enable(self):
-    """
-    Description:
-    -----------
-    Enable the date picker.
+    """   Enable the date picker.
 
     Related Pages:
 
@@ -571,17 +430,12 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.enable()" % self.component.input.dom.varName)
 
   def findOverlappedRange(self, startDate, endDate):
-    """
-    Description:
-    -----------
-    Raise the calendar type. (date -> month -> year).
+    """   Raise the calendar type. (date -> month -> year).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#findOverlappedRange
 
-    Attributes:
-    ----------
     :param startDate: Date | number. Start date to find overlapped range.
     :param endDate: Date | number. End date to find overlapped range.
     """
@@ -590,10 +444,7 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.findOverlappedRange(%s, %s)" % (self.component.input.dom.varName, startDate, endDate))
 
   def getCalendar(self):
-    """
-    Description:
-    -----------
-    Return the calendar instance.
+    """   Return the calendar instance.
 
     Related Pages:
 
@@ -602,10 +453,7 @@ class DatePicker(DateBase):
     return JsObjects.JsObjects.get("%s.getCalendar()" % self.component.input.dom.varName)
 
   def getCalendarType(self):
-    """
-    Description:
-    -----------
-    Return the current calendar's type.
+    """   Return the current calendar's type.
 
     Related Pages:
 
@@ -614,10 +462,7 @@ class DatePicker(DateBase):
     return JsObjects.JsObjects.get("%s.getCalendarType()" % self.component.input.dom.varName)
 
   def getLocaleText(self):
-    """
-    Description:
-    -----------
-    Return the locale text object.
+    """   Return the locale text object.
 
     Related Pages:
 
@@ -626,10 +471,7 @@ class DatePicker(DateBase):
     return JsObjects.JsString.JsString.get("%s.getLocaleText()" % self.component.input.dom.varName)
 
   def getTimePicker(self):
-    """
-    Description:
-    -----------
-    Return the time picker instance.
+    """   Return the time picker instance.
 
     Related Pages:
 
@@ -638,10 +480,7 @@ class DatePicker(DateBase):
     return JsObjects.JsObjects.get("%s.getTimePicker()" % self.component.input.dom.varName)
 
   def isDisabled(self):
-    """
-    Description:
-    -----------
-    Return whether the date picker is disabled.
+    """   Return whether the date picker is disabled.
 
     Related Pages:
 
@@ -650,10 +489,7 @@ class DatePicker(DateBase):
     return JsObjects.JsBoolean.JsBoolean.get("%s.isDisabled()" % self.component.input.dom.varName)
 
   def isOpened(self):
-    """
-    Description:
-    -----------
-    Return whether the datepicker opens or not.
+    """   Return whether the datepicker opens or not.
 
     Related Pages:
 
@@ -662,44 +498,31 @@ class DatePicker(DateBase):
     return JsObjects.JsBoolean.JsBoolean.get("%s.isOpened()" % self.component.input.dom.varName)
 
   def isSelectable(self, date):
-    """
-    Description:
-    -----------
-    Return whether the date is selectable.
+    """   Return whether the date is selectable.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#isSelectable
 
-    Attributes:
-    ----------
     :param date: Date. Date to check.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsObjects.JsBoolean.JsBoolean.get("%s.isSelectable(%s)" % (self.component.input.dom.varName, date))
 
   def isSelected(self, date):
-    """
-    Description:
-    -----------
-    Return whether the date is selected.
+    """   Return whether the date is selected.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#isSelected
 
-    Attributes:
-    ----------
     :param date: Date. Date to check.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsObjects.JsBoolean.JsBoolean.get("%s.isSelected(%s)" % (self.component.input.dom.varName, date))
 
   def open(self):
-    """
-    Description:
-    -----------
-    Open the date picker.
+    """   Open the date picker.
 
     Related Pages:
 
@@ -708,10 +531,7 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.open()" % self.component.input.dom.varName)
 
   def removeAllOpeners(self):
-    """
-    Description:
-    -----------
-    Remove all openers.
+    """   Remove all openers.
 
     Related Pages:
 
@@ -720,17 +540,12 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.removeAllOpeners()" % self.component.input.dom.varName)
 
   def removeRange(self, start, end, type):
-    """
-    Description:
-    -----------
-    Remove a range. Use Date instances or numbers(timestamp).
+    """   Remove a range. Use Date instances or numbers(timestamp).
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#removeRange
 
-    Attributes:
-    ----------
     :param start: Date | Number. the start date.
     :param end: Date | Number. the end date.
     :param type: String. Range type. If falsy, start and end values are considered as timestamp.
@@ -741,51 +556,36 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.removeRange(%s, %s, %s)" % (self.component.input.dom.varName, start, end, type))
 
   def setDate(self, date):
-    """
-    Description:
-    -----------
-    Select the date.
+    """   Select the date.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#setDate
 
-    Attributes:
-    ----------
     :param date: Date | Number. Date instance or timestamp to set.
     """
     date = JsUtils.jsConvertData(date, None)
     return JsUtils.jsWrap("%s.setDate(%s)" % (self.component.input.dom.varName, date))
 
   def setDateFormat(self, format):
-    """
-    Description:
-    -----------
-    Select the date by the date string format.
+    """   Select the date by the date string format.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#setDateFormat
 
-    Attributes:
-    ----------
     :param format: String. The date format.
     """
     format = JsUtils.jsConvertData(format, None)
     return JsUtils.jsWrap("%s.setDateFormat(%s)" % (self.component.input.dom.varName, format))
 
   def setInput(self, element, options):
-    """
-    Description:
-    -----------
-    Select the date by the date string format.
+    """   Select the date by the date string format.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#setInput
 
-    Attributes:
-    ----------
     :param element: String. Input element or selector.
     :param options: Dictionary.
     """
@@ -794,10 +594,7 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.setInput(%s, %s)" % (self.component.input.dom.varName, element, options))
 
   def setNull(self):
-    """
-    Description:
-    -----------
-    Set no date to be selected. (Selected date: null).
+    """   Set no date to be selected. (Selected date: null).
 
     Related Pages:
 
@@ -806,44 +603,31 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.setNull()" % self.component.input.dom.varName)
 
   def setRanges(self, ranges):
-    """
-    Description:
-    -----------
-    Set selectable ranges. Previous ranges will be removed.
+    """   Set selectable ranges. Previous ranges will be removed.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#setRanges
 
-    Attributes:
-    ----------
     :param ranges: Array<Date> | Array<Number>. Selectable ranges. Use Date instances or numbers(timestamp).
     """
     ranges = JsUtils.jsConvertData(ranges, None)
     return JsUtils.jsWrap("%s.setRanges(%s)" % (self.component.input.dom.varName, ranges))
 
   def setType(self, type):
-    """
-    Description:
-    -----------
-    Set the calendar's type.
+    """   Set the calendar's type.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#setType
 
-    Attributes:
-    ----------
     :param type: String. Calendar type.
     """
     type = JsUtils.jsConvertData(type, None)
     return JsUtils.jsWrap("%s.setType(%s)" % (self.component.input.dom.varName, type))
 
   def toggle(self):
-    """
-    Description:
-    -----------
-    Toggle the date picker.
+    """   Toggle the date picker.
 
     Related Pages:
 
@@ -852,34 +636,24 @@ class DatePicker(DateBase):
     return JsUtils.jsWrap("%s.toggle()" % self.component.input.dom.varName)
 
   def on_close(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Occur after the date picker closes..
+    """   Occur after the date picker closes..
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#event-close
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
     return self.on("close", js_funcs, profile)
 
   def on_open(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Occur after the calendar is drawn.
+    """   Occur after the calendar is drawn.
 
     Related Pages:
 
       https://nhn.github.io/tui.date-picker/latest/DatePicker#event-open
 
-    Attributes:
-    ----------
     :param js_funcs: String | List. The Javascript functions.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
@@ -894,27 +668,19 @@ class TimePicker(JsPackage):
     self._js, self._jquery = [], None
 
   def changeLanguage(self, language):
-    """
-    Description:
-    -----------
-    Change locale text of meridiem by language code.
+    """   Change locale text of meridiem by language code.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#changeLanguage
 
-    Attributes:
-    ----------
     :param language: String. Language code
     """
     language = JsUtils.jsConvertData(language, None)
     return JsUtils.jsWrap("%s.changeLanguage(%s)" % (self.component.var, language))
 
   def destroy(self):
-    """
-    Description:
-    -----------
-    Destroy the date picker.
+    """   Destroy the date picker.
 
     Related Pages:
 
@@ -923,10 +689,7 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.destroy()" % self.component.var)
 
   def getHout(self):
-    """
-    Description:
-    -----------
-    Get hour.
+    """   Get hour.
 
     Related Pages:
 
@@ -935,10 +698,7 @@ class TimePicker(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.getHour()" % self.component.var)
 
   def getHourStep(self):
-    """
-    Description:
-    -----------
-    Get step of hour.
+    """   Get step of hour.
 
     Related Pages:
 
@@ -947,10 +707,7 @@ class TimePicker(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.getHourStep()" % self.component.var)
 
   def getMinute(self):
-    """
-    Description:
-    -----------
-    Get minute.
+    """   Get minute.
 
     Related Pages:
 
@@ -959,10 +716,7 @@ class TimePicker(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.getMinute()" % self.component.var)
 
   def getMinuteStep(self):
-    """
-    Description:
-    -----------
-    Get step of minute.
+    """   Get step of minute.
 
     Related Pages:
 
@@ -971,10 +725,7 @@ class TimePicker(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.getMinuteStep()" % self.component.var)
 
   def hide(self):
-    """
-    Description:
-    -----------
-    Hide time picker element.
+    """   Hide time picker element.
 
     Related Pages:
 
@@ -983,10 +734,7 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.hide()" % self.component.var)
 
   def resetMinuteRange(self):
-    """
-    Description:
-    -----------
-    Reset minute selectable range.
+    """   Reset minute selectable range.
 
     Related Pages:
 
@@ -995,85 +743,60 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.resetMinuteRange()" % self.component.var)
 
   def setHour(self, hour):
-    """
-    Description:
-    -----------
-    Set hour
+    """   Set hour
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setHour
 
-    Attributes:
-    ----------
     :param hour: Number. for time picker - (0~23).
     """
     hour = JsUtils.jsConvertData(hour, None)
     return JsUtils.jsWrap("%s.setHour(%s)" % (self.component.var, hour))
 
   def setHourStep(self, step):
-    """
-    Description:
-    -----------
-    Set step of hour
+    """   Set step of hour
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setHourStep
 
-    Attributes:
-    ----------
     :param step: Array. Step to create items of hour.
     """
     step = JsUtils.jsConvertData(step, None)
     return JsUtils.jsWrap("%s.setHourStep(%s)" % (self.component.var, step))
 
   def setMinute(self, minute):
-    """
-    Description:
-    -----------
-    Set minute.
+    """   Set minute.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setMinute
 
-    Attributes:
-    ----------
     :param minute: Number. for time picker
     """
     minute = JsUtils.jsConvertData(minute, None)
     return JsUtils.jsWrap("%s.setMinute(%s)" % (self.component.var, minute))
 
   def setMinuteStep(self, step):
-    """
-    Description:
-    -----------
-    Set step of minute.
+    """   Set step of minute.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setMinuteStep
 
-    Attributes:
-    ----------
     :param step: Array. Step to create items of minute
     """
     step = JsUtils.jsConvertData(step, None)
     return JsUtils.jsWrap("%s.setMinuteStep(%s)" % (self.component.var, step))
 
   def setRange(self, begin, end=None):
-    """
-    Description:
-    -----------
-    Set selectable range
+    """   Set selectable range
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setRange
 
-    Attributes:
-    ----------
     :param begin: Dictionary. Contain begin hour and minute of range.
     :param end: Dictionary. Optional. Contain end hour and minute of range
     """
@@ -1085,17 +808,12 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.setRange(%s)" % (self.component.var, begin))
 
   def setTime(self, hour, minute):
-    """
-    Description:
-    -----------
-    Set time.
+    """   Set time.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#setTime
 
-    Attributes:
-    ----------
     :param hour: Number. for time picker - (0~23).
     :param minute: Number. for time picker.
     """
@@ -1104,10 +822,7 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.setTime(%s, %s)" % (self.component.var, hour, minute))
 
   def show(self):
-    """
-    Description:
-    -----------
-    Show time picker element.
+    """   Show time picker element.
 
     Related Pages:
 
@@ -1116,17 +831,12 @@ class TimePicker(JsPackage):
     return JsUtils.jsWrap("%s.show()" % self.component.var)
 
   def change(self, js_funcs, profile=None):
-    """
-    Description:
-    -----------
-    Change event - TimePicker.
+    """   Change event - TimePicker.
 
     Related Pages:
 
       https://nhn.github.io/tui.time-picker/latest/TimePicker#event-change
 
-    Attributes:
-    ----------
     :param js_funcs: List | String. Javascript functions.
     :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
     """

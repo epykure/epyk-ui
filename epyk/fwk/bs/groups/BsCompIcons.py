@@ -8,8 +8,6 @@ class Components:
   def icon(self, icon=None, width=(None, 'px'), html_code=None, height=(None, "px"), color=None,
            tooltip=None, align="left", options=None, profile=None):
     """
-    Description:
-    ------------
     Add a Bootstrap icon to the page.
 
     Usage::
@@ -20,8 +18,6 @@ class Components:
 
       https://icons.getbootstrap.com/#install
 
-    Attributes:
-    ----------
     :param icon: String. Optional. The component icon content from font-awesome references.
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -40,8 +36,6 @@ class Components:
   def close(self, width=(None, 'px'), html_code=None, height=(None, "px"), color=None, tooltip=None, align="left",
             options=None, profile=None):
     """
-    Description:
-    ------------
     Add a Bootstrap close icon to the page.
 
     Usage::
@@ -52,8 +46,6 @@ class Components:
 
       https://icons.getbootstrap.com
 
-    Attributes:
-    ----------
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
@@ -68,8 +60,6 @@ class Components:
   def edit(self, width=(None, 'px'), html_code=None, height=(None, "px"), color=None, tooltip=None, align="left",
            options=None, profile=None):
     """
-    Description:
-    ------------
     Add a Bootstrap edit icon to the page.
 
     Usage::
@@ -81,8 +71,6 @@ class Components:
 
       https://icons.getbootstrap.com
 
-    Attributes:
-    ----------
     :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.

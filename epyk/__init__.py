@@ -33,17 +33,12 @@ LOG_SERVICE = None
 
 
 def rename_css_cls(mappings: dict):
-  """
-  Description:
-  ------------
-  Change the name of the CSS classes in the framework.
+  """  Change the name of the CSS classes in the framework.
   This function need to be used before the creation of any component in the page.
 
   This will not change the content. it will only rename them.
   To remove a CSS class or to change it in a component type have a look at components_skin
 
-  Attributes:
-  ----------
   :param dict mappings: The CSS class names to be renamed
   """
   from epyk.core.css import Classes
@@ -56,8 +51,6 @@ def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
   All packages in this list will be considered as forbidden.
   The other packages will be authorised.
 
-  Attributes:
-  ----------
   :param List[str] pkgs_alias: A list of packages reference
   :param bool raise_exception: Optional. The kind of error triggered
   """
@@ -76,8 +69,6 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
   -----------
   All packages not in this lists will be considered as forbidden.
 
-  Attributes:
-  ----------
   :param List[str] pkgs_alias: A list of packages reference
   :param bool raise_exception: Optional. The kind of error triggered
   """

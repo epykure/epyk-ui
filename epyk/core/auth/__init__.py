@@ -7,9 +7,7 @@ class Auth(object):
 
   @packageImport('google-platform')
   def google_sign_in(self, client_id, scopes=['profile', 'email'], insert_button=True, debug=False):
-    """
-    Description:
-    -------------
+    """  -
     Allows to add a google signin capability to the page
     This needs a working server to work
 

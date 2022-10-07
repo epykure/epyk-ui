@@ -36,9 +36,7 @@ class OptionPanelSliding(Options):
 
   @property
   def expanded(self):
-    """
-    Description:
-    ------------
+    """  
 
     :return:
     """
@@ -50,9 +48,7 @@ class OptionPanelSliding(Options):
 
   @property
   def icon_expanded(self):
-    """
-    Description:
-    ------------
+    """  
     Add the open icon item.
     """
     if "material-design-icons" in self.component.requirements:
@@ -69,9 +65,7 @@ class OptionPanelSliding(Options):
 
   @property
   def icon_closed(self):
-    """
-    Description:
-    ------------
+    """  
     Add the close icon item.
     """
     if "material-design-icons" in self.component.requirements:
@@ -88,9 +82,7 @@ class OptionPanelSliding(Options):
 
   @property
   def icon_position(self):
-    """
-    Description:
-    ------------
+    """  
     Define the position for the arrow icon in the title.
     """
     return self.get("left")
@@ -101,9 +93,7 @@ class OptionPanelSliding(Options):
 
   @property
   def title_align(self):
-    """
-    Description:
-    ------------
+    """  
     Define the title position.
     """
     return self.get("left")
@@ -125,9 +115,7 @@ class OptionPanelTabs(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
     Set the with in pixel for the tabs.
     This will be applied to all the tabs in the container. It is possible to override the values for each tab.
     """
@@ -139,9 +127,7 @@ class OptionPanelTabs(Options):
 
   @property
   def css_tab(self):
-    """
-    Description:
-    ------------
+    """  
     The default CSS style for the tabs.
     This must be changed before adding components
     """
@@ -155,9 +141,7 @@ class OptionPanelTabs(Options):
 
   @property
   def css_tab_clicked(self):
-    """
-    Description:
-    ------------
+    """  
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
@@ -168,12 +152,8 @@ class OptionPanelTabs(Options):
     self.set(attrs)
 
   def tab_style(self, name, css_style=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param css_style:
     """
@@ -186,12 +166,8 @@ class OptionPanelTabs(Options):
     return self._attrs['tab_style'].get(name, css)
 
   def tab_clicked_style(self, name, css_style=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param css_style:
     """
@@ -204,12 +180,8 @@ class OptionPanelTabs(Options):
     return self._attrs['tab_style_clicked'].get(name, css)
 
   def tab_not_clicked_style(self, name=None, css_style=None):
-    """
-    Description:
-    ------------
+    """  
 
-    Attributes:
-    ----------
     :param name:
     :param css_style:
     """
@@ -225,9 +197,7 @@ class OptionPanelTable(Options):
 
   @property
   def header(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -237,9 +207,7 @@ class OptionPanelTable(Options):
 
   @property
   def cell_align(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get()
 
@@ -252,9 +220,7 @@ class OptionsDiv(Options):
 
   @property
   def inline(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(False)
 
@@ -264,9 +230,7 @@ class OptionsDiv(Options):
 
   @property
   def html_encode(self):
-    """
-    Description:
-    ------------
+    """  
     Encode Python content to HTML format.
     """
     return self._config_get(False)
@@ -277,9 +241,7 @@ class OptionsDiv(Options):
 
   @property
   def multiline(self):
-    """
-    Description:
-    ------------
+    """  
     Replace the Python \n to the HTML tag <br/>.
     """
     return self._config_get(False)
@@ -293,9 +255,7 @@ class OptionDrawer(Options):
 
   @property
   def side(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get("left")
 
@@ -305,9 +265,7 @@ class OptionDrawer(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get("200px")
 
@@ -321,13 +279,9 @@ class OptionDrawer(Options):
 class OptionsStepper(Options):
 
   def __add_colors(self, type, colors):
-    """
-    Description:
-    ------------
+    """  
     Set the colors for a step state
 
-    Attributes:
-    ----------
     :param type: String. The state
     :param colors: List or Dictionary. The color definition
     """
@@ -338,9 +292,7 @@ class OptionsStepper(Options):
 
   @property
   def success(self):
-    """
-    Description:
-    ------------
+    """  
     Add the success colors
     """
     return self._config_group_get('colors', {})
@@ -351,9 +303,7 @@ class OptionsStepper(Options):
 
   @property
   def error(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_group_get('colors', {})
@@ -364,9 +314,7 @@ class OptionsStepper(Options):
 
   @property
   def pending(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_group_get('colors', {})
@@ -377,9 +325,7 @@ class OptionsStepper(Options):
 
   @property
   def waiting(self):
-    """
-    Description:
-    ------------
+    """  
     The list of
     """
     return self._config_group_get('colors', {})
@@ -390,9 +336,7 @@ class OptionsStepper(Options):
 
   @property
   def blink(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_group_get('colors', {})
@@ -403,9 +347,7 @@ class OptionsStepper(Options):
 
   @property
   def circle_factor(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get(False)
@@ -416,9 +358,7 @@ class OptionsStepper(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self.svg_style['width']
@@ -429,9 +369,7 @@ class OptionsStepper(Options):
 
   @property
   def shape(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get('arrow')
@@ -442,9 +380,7 @@ class OptionsStepper(Options):
 
   @property
   def opacities(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get([])
@@ -455,9 +391,7 @@ class OptionsStepper(Options):
 
   @property
   def height(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get(50)
@@ -468,9 +402,7 @@ class OptionsStepper(Options):
 
   @property
   def line(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get(False)
@@ -483,9 +415,7 @@ class OptionsStepper(Options):
 
   @property
   def backgrounds(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get({})
@@ -496,9 +426,7 @@ class OptionsStepper(Options):
 
   @property
   def svg_style(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get({})
@@ -511,9 +439,7 @@ class OptionsStepper(Options):
 
   @property
   def text_color(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get('white')
@@ -524,9 +450,7 @@ class OptionsStepper(Options):
 
   @property
   def text_style(self):
-    """
-    Description:
-    ------------
+    """  
 
     """
     return self._config_get({})
@@ -542,9 +466,7 @@ class OptionGrid(Options):
 
   @property
   def autoSize(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -554,9 +476,7 @@ class OptionGrid(Options):
 
   @property
   def responsive(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -566,9 +486,7 @@ class OptionGrid(Options):
 
   @property
   def classe(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get("container-fluid")
 
@@ -578,9 +496,7 @@ class OptionGrid(Options):
 
   @property
   def noGutters(self):
-    """
-    Description:
-    ------------
+    """  
 
     https://getbootstrap.com/docs/4.0/layout/grid/
     """
@@ -597,9 +513,7 @@ class OptionPopup(Options):
 
   @property
   def background(self):
-    """
-    Description:
-    ------------
+    """  
     Boolean to mention if the popup should have a grey background.
     """
     return self.get(True)
@@ -610,9 +524,7 @@ class OptionPopup(Options):
 
   @property
   def draggable(self):
-    """
-    Description:
-    ------------
+    """  
     Specify if the popup window is draggable.
     If True this will set the background flag to False.
     """
@@ -626,9 +538,7 @@ class OptionPopup(Options):
 
   @property
   def closure(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(False)
 
@@ -644,9 +554,7 @@ class OptionPopup(Options):
 
   @property
   def top(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(100)
 
@@ -656,9 +564,7 @@ class OptionPopup(Options):
 
   @property
   def escape(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(True)
 
@@ -670,9 +576,7 @@ class OptionPopup(Options):
 
   @property
   def margin(self):
-    """
-    Description:
-    ------------
+    """  
     Set the margin. By default the value will be in percentage but the unit can be supplied
     """
     return self.get(10)
@@ -686,9 +590,7 @@ class OptionPopup(Options):
 
   @property
   def z_index(self):
-    """
-    Description:
-    ------------
+    """  
     """
     return self.get(800)
 

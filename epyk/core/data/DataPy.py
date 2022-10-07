@@ -18,8 +18,6 @@ class Plotly:
       -----------
       Transform a record to a valid data structure for Plotly surfaces.
 
-      Attributes:
-      ----------
       :param data: List of dictionaries. The data to be converted.
       :param y_columns: List. The keys in the dictionaries used as y axes.
       :param x_axis: String. The key in the dictionaries used as x axis.
@@ -50,26 +48,17 @@ class Plotly:
 
   @staticmethod
   def map(data):
-    """
-    Description:
-    -----------
+    """   
 
 
-    Attributes:
-    ----------
     :param data: List of Dictionaries.
     """
     return {'datasets': data, 'series': [], 'python': True}
 
   @staticmethod
   def countries(data, country_col, size_col, scale=False):
-    """
-    Description:
-    -----------
-    Process a record to return an object for map charts.
+    """   Process a record to return an object for map charts.
 
-    Attributes:
-    ----------
     :param data: List. The main records.
     :param country_col: String. The column name for the countries.
     :param size_col: String. The column name for the values.
@@ -95,12 +84,8 @@ class Plotly:
 
   @staticmethod
   def choropleth(data, country_col, size_col, scale=False):
-    """
-    Description:
-    -----------
+    """   
 
-    Attributes:
-    ----------
     :param data: List. The data.
     :param country_col: String. The country column name.
     :param size_col: String. The size column alias.
@@ -128,11 +113,7 @@ class Plotly:
   @staticmethod
   def locations(data, long_col, lat_col, size_col, scale=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param long_col:
     :param lat_col:
@@ -163,11 +144,7 @@ class Plotly:
   @staticmethod
   def xy(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python recordset
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record
@@ -204,11 +181,7 @@ class Plotly:
   @staticmethod
   def xy_text(data, y_columns, x_axis, text=None, options=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -247,11 +220,7 @@ class Plotly:
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -285,11 +254,7 @@ class Plotly:
   @staticmethod
   def x_yz(data, y_columns, x_axis, z_axis, dy=0, dx=0, dz=0):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -327,11 +292,7 @@ class Plotly:
   @staticmethod
   def table(data, columns, dflt=''):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param columns: List. The key in the record to be used to build the row.
     :param dflt: Optional. The default value if key is missing.
@@ -350,11 +311,7 @@ class Vis:
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param y_columns:
     :param x_axis:
@@ -377,11 +334,7 @@ class Vis:
   @staticmethod
   def xy(data, y_columns, x_axis):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param y_columns:
     :param x_axis:
@@ -405,16 +358,10 @@ class Vis:
 
   @staticmethod
   def timeline(data, start, content, end=None, type=None, group=None, options=None):
-    """
-    Description:
-    -----------
-    Data transformation for the Vis Timeline chart.
+    """   Data transformation for the Vis Timeline chart.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param start: String: The column in the record for the start date.
     :param content: String:
@@ -449,12 +396,8 @@ class ChartJs:
   @staticmethod
   def copy(records, empty=False):
     """
-    Description:
-    ------------
     Create a copy of the ChartJs dataset.
 
-    Attributes:
-    ----------
     :param records: Dictionary. A ChartJs data structure object.
     :param empty: Boolean. Optional. Specify of the data need to be removed.
     """
@@ -473,14 +416,9 @@ class ChartJs:
   @staticmethod
   def y(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -523,14 +461,9 @@ class ChartJs:
   @staticmethod
   def xy(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -564,14 +497,9 @@ class ChartJs:
   @staticmethod
   def xyz(data, y_columns, x_axis, z_axis=None, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -623,11 +551,7 @@ class C3:
   @staticmethod
   def y(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python records.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -674,14 +598,9 @@ class NVD3:
   @staticmethod
   def xy(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -719,14 +638,9 @@ class NVD3:
   @staticmethod
   def labely(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python record.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -759,15 +673,10 @@ class Datatable:
   @staticmethod
   def table(data, columns, dflt=''):
     """
-    Description:
-    ------------
     Transform the data in a list of list for Datatable
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python recordset
     :param columns: List. The key in the recordset to be used to build the row
     :param dflt: String. Optional. The default value if key is missing.
@@ -783,14 +692,9 @@ class Google:
   @staticmethod
   def y(data, y_columns, x_axis, options=None):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data: List of dict. The Python records.
     :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
     :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
@@ -828,14 +732,9 @@ class Google:
   @staticmethod
   def table(data, rows, cols):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param data:
     :param rows:
     :param cols:
@@ -854,11 +753,7 @@ class Checkbox:
   @staticmethod
   def from_records(data, column, all_checked=False, apply_sort=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data: List. A list of dictionaries.
     :param column: String. The column name (key in the dictionary).
     :param all_checked: Boolean. Optional.
@@ -870,11 +765,7 @@ class Checkbox:
   @staticmethod
   def from_df(df, column, all_checked=False, apply_sort=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param df: DataFrame. A pandas dataframe object.
     :param column: String. The column name in the dataframe.
     :param all_checked: Boolean. Optional.
@@ -889,11 +780,7 @@ class Checkbox:
   @staticmethod
   def from_list(data, checked=None, all_checked=False):
     """
-    Description:
-    ------------
 
-    Attributes:
-    ----------
     :param data:
     :param checked:
     :param all_checked:
@@ -911,14 +798,9 @@ class SelectionBox:
   @staticmethod
   def from_records(records, column, apply_sort=False, with_count=False):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param records:
     :param column:
     :param apply_sort:
@@ -932,14 +814,9 @@ class SelectionBox:
   @staticmethod
   def from_df(df, column, all_checked=False, apply_sort=False, with_count=False):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param df:
     :param column:
     :param all_checked:
@@ -955,14 +832,9 @@ class SelectionBox:
   @staticmethod
   def from_list(values, all_checked=False, apply_sort=False, with_count=False):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param values:
     :param all_checked:
     :param apply_sort:
@@ -973,14 +845,9 @@ class SelectionBox:
   @staticmethod
   def from_dict(values, all_checked=False):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param values:
     :param all_checked:
     """
@@ -992,14 +859,9 @@ class ListData:
   @staticmethod
   def from_records(records, column):
     """
-    Description:
-    ------------
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param records:
     :param column:
     """
@@ -1013,15 +875,10 @@ class HtmlComponents:
 
   def markdown(self, content, tooltips=None, case_sensitive=False):
     """
-    Description:
-    ------------
     Format the markdown text with tooltips.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param content: String. The markdown content.
     :param tooltips: Dictionary. Optional. The words to be replaced.
     :param case_sensitive: Boolean. Optional. Case sensitive flag.
@@ -1052,8 +909,6 @@ class HtmlComponents:
   @property
   def checkboxes(self):
     """
-    Description:
-    ------------
     Property to provide standard ways to build the data for the Checkboxes.
     Those transformation will be done on the Python side and they will not have any impact on the JavaScript side.
 
@@ -1067,8 +922,6 @@ class HtmlComponents:
   @property
   def radio(self):
     """
-    Description:
-    ------------
 
     """
     return Checkbox
@@ -1076,8 +929,6 @@ class HtmlComponents:
   @property
   def check(self):
     """
-    Description:
-    ------------
 
     """
     return Checkbox
@@ -1085,8 +936,6 @@ class HtmlComponents:
   @property
   def select(self):
     """
-    Description:
-    ------------
 
     """
     return SelectionBox
@@ -1094,8 +943,6 @@ class HtmlComponents:
   @property
   def list(self):
     """
-    Description:
-    ------------
 
     """
     return ListData
@@ -1105,13 +952,9 @@ class Tree:
 
   def __add_level(self, path, tree, root, excluded_folders, make_url=None, options=None):
     """
-    Description:
-    ------------
     Internal function to do the nesting for the folders definition.
     This is used in the folder method.
 
-    Attributes:
-    ----------
     :param path: String. The path.
     :param tree: List. The current tree pointer.
     :param root: String. The root path.
@@ -1138,16 +981,11 @@ class Tree:
 
   def folders(self, path, excluded_folders=None, make_url=None, style_leaf=None, style_node=None):
     """
-    Description:
-    ------------
     Get a tree structure from a path.
     This will get all the files and sub folders.
 
-    Usage:
-    -----
+    Usage::
 
-    Attributes:
-    ----------
     :param path: String. The path.
     :param excluded_folders: List | Tuple. Optional.
     :param make_url: Function. Optional.
@@ -1166,71 +1004,53 @@ class ListItems:
   @property
   def text(self):
     """
-    Description:
-    ------------
     """
     return ListData
 
   @property
   def link(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsLinkRec
 
   @property
   def box(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsBoxRec
 
   @property
   def tweet(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsTweetRec
 
   @property
   def icon(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsIconRec
 
   @property
   def check(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsCheckRec
 
   @property
   def radio(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsBoxRec
 
   @property
   def badge(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsBoxRec
 
   @property
   def button(self):
     """
-    Description:
-    ------------
     """
     return RecItems.ItemsBoxRec

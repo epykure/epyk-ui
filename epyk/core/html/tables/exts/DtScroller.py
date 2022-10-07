@@ -5,10 +5,7 @@ from epyk.core.html.options import Options
 class Scroller(Options):
 
   def activate(self):
-    """
-    Description:
-    -----------
-    Enable and configure the Scroller extension for DataTables
+    """   Enable and configure the Scroller extension for DataTables
 
     Related Pages:
 
@@ -19,10 +16,7 @@ class Scroller(Options):
 
   @property
   def boundaryScale(self):
-    """
-    Description:
-    -----------
-    Set the point at which new data will be loaded and drawn.
+    """   Set the point at which new data will be loaded and drawn.
 
     Related Pages:
 
@@ -36,10 +30,7 @@ class Scroller(Options):
 
   @property
   def displayBuffer(self):
-    """
-    Description:
-    -----------
-    The amount of data that Scroller should pre-buffer to ensure smooth scrolling.
+    """   The amount of data that Scroller should pre-buffer to ensure smooth scrolling.
 
     Related Pages:
 
@@ -53,10 +44,7 @@ class Scroller(Options):
 
   @property
   def loadingIndicator(self):
-    """
-    Description:
-    -----------
-    Display a loading message while Scroller is loading additional data.
+    """   Display a loading message while Scroller is loading additional data.
 
     Related Pages:
 
@@ -70,10 +58,7 @@ class Scroller(Options):
 
   @property
   def rowHeight(self):
-    """
-    Description:
-    -----------
-    Set the row height, or how the row height is calculated.
+    """   Set the row height, or how the row height is calculated.
 
     Related Pages:
 
@@ -87,10 +72,7 @@ class Scroller(Options):
 
   @property
   def serverWait(self):
-    """
-    Description:
-    -----------
-    Time delay before new data is requested when server-side processing is enabled.
+    """   Time delay before new data is requested when server-side processing is enabled.
 
     Related Pages:
 

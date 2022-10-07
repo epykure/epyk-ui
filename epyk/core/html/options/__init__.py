@@ -42,25 +42,17 @@ class Options(DataClass):
 
   def set_attrs(self, vals: dict):
     """
-    Description:
-    ------------
     Set the object internal attributes.
-
-    Attributes:
-    ----------
+ 
     :param vals: All the attributes to be added to the component
     """
     self.js_tree.update(vals)
 
   def from_json(self, vals: dict, schema: dict = None):
     """
-    Description:
-    ------------
     Load the option schema for a component from a json string
     TODO: add more feature to handle functions and enumeration
-
-    Attributes:
-    ----------
+ 
     :param vals: The input schema
     :param schema: The full object schema
     """
@@ -78,14 +70,10 @@ class Options(DataClass):
 
   def _config_get(self, dflt: Any = None, name: str = None):
     """
-    Description:
-    ------------
     Get the option attribute to be added on the Javascript side during the component build.
     Unlike the usual get from dict this method will take the default value as first parameter as
     the name is by default the property name using it.
-
-    Attributes:
-    ----------
+ 
     :param dflt: Optional. The default value for this category.
     :param name: Optional. The attribute name (default the function property).
     """
@@ -93,15 +81,11 @@ class Options(DataClass):
 
   def _config(self, value: Any, name: str = None, js_type: bool = False):
     """
-    Description:
-    ------------
     Set the option attribute to be added on the Javascript side during the component build.
 
     This method take the value as first parameter because the name is by default the property name if
     not defined. Very often the only information to supply if the value.
-
-    Attributes:
-    ----------
+ 
     :param Any value: The value for the name
     :param str name: Optional. The attribute name. Default is the property name.
     :param bool js_type: Optional. Specify if the parameter is a JavaScript fragment.
@@ -112,12 +96,8 @@ class Options(DataClass):
 
   def _config_group_get(self, group: str, dflt: Any = None, name: str = None):
     """
-    Description:
-    ------------
     Get second level configuration options.
-
-    Attributes:
-    ----------
+ 
     :param str group: The group attribute name.
     :param Any dflt: Optional.
     :param str name: Optional. The attribute name.
@@ -126,12 +106,8 @@ class Options(DataClass):
 
   def _config_group(self, group: str, value: Any, name: str = None):
     """
-    Description:
-    ------------
     Set second level configuration options.
-
-    Attributes:
-    ----------
+ 
     :param group: The group name.
     :param value: The value for the name.
     :param name: Optional. The attribute name.
@@ -142,13 +118,9 @@ class Options(DataClass):
 
   def _config_sub_data(self, name: str, clsObj):
     """
-    Description:
-    ------------
     Create a nested structure for the JavaScript configuration layer.
     This is required for Charts and Tables configurations.
-
-    Attributes:
-    ----------
+ 
     :param str name: The key to be added to the internal data dictionary.
     :param clsObj: Options. The object which will be added to the nested data structure.
     """
@@ -161,11 +133,7 @@ class Options(DataClass):
 
   def _config_sub_data_enum(self, name: str, cls_obj):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param str name: The key to be added to the internal data dictionary.
     :param cls_obj: Class. Object. The object which will be added to the nested data structure.
     """
@@ -179,17 +147,13 @@ class Options(DataClass):
 
   def custom_config(self, name: str, value: Any, js_type: bool = False):
     """
-    Description:
-    ------------
     Add a custom JavaScript configuration.
 
     Usage::
 
       chart = page.ui.charts.apex.scatter()
       chart.options.chart.zoom.custom_config("test", False)
-
-    Attributes:
-    ----------
+ 
     :param name: The key to be added to the attributes.
     :param value: String or JString. The value of the defined attributes.
     :param js_type: Optional. Specify if the parameter is a JavaScript fragment.
@@ -201,8 +165,6 @@ class Options(DataClass):
 
   def isJsContent(self, property_name: str):
     """
-    Description:
-    ------------
     Check if the content of a property is defined to always be a JavaScript fragment.
     Thus the framework will not convert it to a Json content.
 
@@ -210,22 +172,16 @@ class Options(DataClass):
 
       div = page.ui.div()
       print(div.options.isJsContent("inline"))
-
-    Attributes:
-    ----------
+ 
     :param property_name: String. The property name.
     """
     return self.js_type.get(property_name, False)
 
   def has_attribute(self, cls_obj, name: str = None):
     """
-    Description:
-    ------------
     Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
-
-    Attributes:
-    ----------
+ 
     :param cls_obj: Class. The sub data class used in the structure definition
     :param name: The sub attribute name
     """
@@ -239,8 +195,6 @@ class Options(DataClass):
   @property
   def managed(self):
     """
-    Description:
-    ------------
     Boolean flag to set if the component needs to be added to the page.
     If set to False the component has to be managed manually in the page.
 
@@ -248,9 +202,7 @@ class Options(DataClass):
 
       but = page.ui.button()
       but.options.managed = False
-
-    Attributes:
-    ----------
+ 
     :prop bool: Flag to specify if this component is automatically managed by the page
     """
     return self.get(True)
@@ -262,8 +214,6 @@ class Options(DataClass):
   @property
   def verbose(self):
     """
-    Description:
-    ------------
     Boolean flag to set if extra logs need to be displayed.
     This could help in debugging, default is the page verbose flag (default is false).
 
@@ -271,9 +221,7 @@ class Options(DataClass):
 
       but = page.ui.button()
       but.options.verbose = True
-
-    Attributes:
-    ----------
+ 
     :prop flag: Boolean. Flag to display / hide warning logs generated by the framework.
     """
     return self.get(self.component.page.verbose)
@@ -285,8 +233,6 @@ class Options(DataClass):
   @property
   def profile(self):
     """
-    Description:
-    ------------
     Boolean flag to set if extra logs need to be displayed.
     This could help in debugging, default is the page verbose flag (default is false).
 
@@ -294,9 +240,7 @@ class Options(DataClass):
 
       but = page.ui.button()
       but.options.verbose = True
-
-    Attributes:
-    ----------
+ 
     :prop flag: Flag to display / hide warning logs generated by the framework.
     """
     return self.get(self.component.page.verbose)
@@ -308,8 +252,6 @@ class Options(DataClass):
   @property
   def builder(self):
     """
-    Description:
-    ------------
     Add a JavaScript Builder function to the options.
     This will be used to automatically map the Python component to its corresponding JavaScript builder
     function used by the build method.
@@ -318,9 +260,7 @@ class Options(DataClass):
 
       but = page.ui.button()
       but.options.builder = "Button"
-
-    Attributes:
-    ----------
+ 
     :prop value: The JavaScript builder function name.
     """
     return self._config_get(None)
@@ -335,17 +275,12 @@ class Options(DataClass):
 
   @property
   def style(self):
-    """
-    Description:
-    -----------
-    Change some CSS attributes to the internal HTML component.
+    """   Change some CSS attributes to the internal HTML component.
 
     Related Pages:
 
       https://www.w3schools.com/cssref/
-
-    Attributes:
-    ----------
+ 
     :prop values: The CSS attributes.
     """
     return self._config_get({})
@@ -356,10 +291,7 @@ class Options(DataClass):
 
   @property
   def config_default(self):
-    """
-    Description:
-    -----------
-    The default value for the configuration in case of template.
+    """   The default value for the configuration in case of template.
     Default value is an empty string.
 
     Usage::
@@ -374,8 +306,6 @@ class Options(DataClass):
 
   def details(self):
     """
-    Description:
-    ------------
     Retrieve the defined properties details.
 
     This function will return a dictionary with all the component attributes (required and optional) ones.
@@ -403,8 +333,6 @@ class Options(DataClass):
 
   def required(self):
     """
-    Description:
-    ------------
     Return all the mandatory / required options with the default values.
     Those options are added by the framework to provide a default for the HTML components but they can be changed.
 
@@ -423,8 +351,6 @@ class Options(DataClass):
 
   def optional(self):
     """
-    Description:
-    ------------
     Return all options not added to the HTML component by default.
     Those are options which will impact either the Python or the JavaScript builders.
 
@@ -441,16 +367,12 @@ class Options(DataClass):
 
   def config_js(self, attrs: dict = None):
     """
-    Description:
-    ------------
     Return the JavaScript options used by the builders functions.
     Builder functions can be defined in the framework or external from the various packages.
 
     The returned dictionary is a copy so it can be changed or used in other processes.
     To change the internal component property, the options property should be used.
-
-    Attributes:
-    ----------
+ 
     :param attrs: Optional. The extra or overridden options.
     """
     js_attrs, attrs = [], attrs or {}
@@ -512,8 +434,6 @@ class Options(DataClass):
 
   def config_html(self):
     """
-    Description:
-    ------------
     Return the HTML options used by the python and passed to the HTML.
     THose options will not be available in the JavaScript layer and they are only defined either
     to build the HTML from Python or to set some HTML properties.
@@ -545,8 +465,6 @@ class Enums:
   @property
   def key(self):
     """
-    Description:
-    ------------
     Returns the predefined enumeration key which will be added with this object.
     """
     return self.__name
@@ -554,21 +472,15 @@ class Enums:
   @property
   def item(self):
     """
-    Description:
-    ------------
     Return the option object on which the key, value will be added.
     """
     return self.__option
 
   def _set_value(self, name: str = None, value: Any = None, js_type: bool = None):
     """
-    Description:
-    ------------
     Set the option value for a class with different functions.
     This function should be derived in the various package options to create static and documented enumerations.
-
-    Attributes:
-    ----------
+ 
     :param name: Optional. The key to be added to the attributes
     :param value: Optional. The value to be added to the attributes
     :param js_type: Optional. Specify if the parameter is a JavaScript fragment
@@ -583,11 +495,7 @@ class Enums:
 
   def _add_value(self, name: str = None, value: str = None, js_type: bool = None):
     """
-    Description:
-    ------------
-
-    Attributes:
-    ----------
+ 
     :param name: Optional. The key to be added to the attributes
     :param value: Optional. The value to be added to the attributes
     :param js_type: Optional. Specify if the parameter is a JavaScript fragment

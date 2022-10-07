@@ -18,9 +18,7 @@ class Lists:
   def select(self, records=None, html_code: str = None, selected: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
              options: dict = None):
-    """
-    Description:
-    ------------
+    """  
     HTML Select component.
 
     Usage::
@@ -44,8 +42,6 @@ class Lists:
       https://www.npmjs.com/package/bootstrap-select-v4
       https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
     :param selected: Optional. The selected value or values.
@@ -88,9 +84,7 @@ class Lists:
   def lookup(self, lookup=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
              options: dict = None):
-    """
-    Description:
-    ------------
+    """  
     HTML Select component.
 
     Usage::
@@ -118,8 +112,6 @@ class Lists:
       https://www.npmjs.com/package/bootstrap-select-v4
       https://www.jqueryscript.net/form/Bootstrap-4-Dropdown-Select-Plugin-jQuery.html
 
-    Attributes:
-    ----------
     :param lookup: Dictionary. Optional. The mapping to the list of recs to be loaded.
     :param html_code: Optional. The component identifier code (for bot
     :param width: Tuple. Optional. Integer for the component width
@@ -137,9 +129,7 @@ class Lists:
     return html_select
 
   def item(self, text: str = None, tag: str = None, options: dict = None) -> html.HtmlList.Li:
-    """
-    Description:
-    ------------
+    """  
     Add a dynamic and configurable list component.
 
     Usage::
@@ -155,8 +145,6 @@ class Lists:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    Attributes:
-    ----------
     :param text:
     :param tag:
     :param options:
@@ -171,9 +159,7 @@ class Lists:
   def list(self, data=None, color: str = None, width: types.SIZE_TYPE = ('auto', ""),
            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add a static list component.
 
     Usage::
@@ -193,8 +179,6 @@ class Lists:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list_dragdrop.py
 
-    Attributes:
-    ----------
     :param data: List. Optional. The list items.
     :param color: String. Optional. The font color in the component. Default inherit.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -217,16 +201,12 @@ class Lists:
 
   def drop(self, data=None, color=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       page.ui.lists
 
-    Attributes:
-    ----------
     :param data:
     :param color:
     :param width:
@@ -249,9 +229,7 @@ class Lists:
 
   def items(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
             options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -266,8 +244,6 @@ class Lists:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list_custom.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list_filter.py
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -305,16 +281,12 @@ class Lists:
 
   def pills(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
             options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
       page.ui.lists
 
-    Attributes:
-    ----------
     :param records:
     :param width:
     :param height:
@@ -332,9 +304,7 @@ class Lists:
 
   def box(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "%"),
           options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
     Special list configuration for a list of box with a title with a text and a list of icons
 
     Usage::
@@ -345,8 +315,6 @@ class Lists:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list_box.py
 
-    Attributes:
-    ----------
     :param records:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -368,9 +336,7 @@ class Lists:
 
   def numbers(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -385,8 +351,6 @@ class Lists:
       https://www.w3schools.com/html/html_lists.asp
       https://www.w3.org/wiki/CSS/Properties/list-style-type
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -405,9 +369,7 @@ class Lists:
 
   def alpha(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -417,8 +379,6 @@ class Lists:
 
       - :class:`epyk.core.html.HtmlList.List`
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -437,9 +397,7 @@ class Lists:
 
   def roman(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
             html_code: str = None, options: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Underlying HTML Objects:
 
@@ -449,8 +407,6 @@ class Lists:
 
       page.ui.lists
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -470,9 +426,7 @@ class Lists:
   def points(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
              align: str = None, html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
              helper: str = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -486,8 +440,6 @@ class Lists:
 
       https://www.w3schools.com/html/html_lists.asp
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -510,9 +462,7 @@ class Lists:
 
   def disc(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -530,8 +480,6 @@ class Lists:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -550,9 +498,7 @@ class Lists:
 
   def squares(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
               html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -566,8 +512,6 @@ class Lists:
 
       https://www.w3schools.com/cssref/pr_list-style-type.asp
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -587,9 +531,7 @@ class Lists:
   def groups(self, data=None, categories=None, color: str = None, width: types.SIZE_TYPE = ('auto', ""),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
              options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -605,8 +547,6 @@ class Lists:
       http://designbump.com/create-a-vertical-accordion-menu-using-css3-tutorial/
       http://thecodeplayer.com/walkthrough/vertical-accordion-menu-using-jquery-css3
 
-    Attributes:
-    ----------
     :param data:
     :param categories:
     :param color:
@@ -634,9 +574,7 @@ class Lists:
 
   def tree(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -647,7 +585,6 @@ class Lists:
 
       - :class:`epyk.core.html.HtmlTrees.Tree`
 
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -665,10 +602,7 @@ class Lists:
   def dropdown(self, records=None, text: str = "", width: types.SIZE_TYPE = ('auto', ""),
                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
                options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
-    Create a dropdown item.
+    """ Create a dropdown item.
 
     Underlying HTML Objects:
 
@@ -685,8 +619,6 @@ class Lists:
       https://github.com/epykure/epyk-templates/blob/master/locals/components/dropdown.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
 
-    Attributes:
-    ----------
     :param records: Optional. The list of dictionaries with the input data.
     :param text: Optional. The value to be displayed to the component.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -708,14 +640,19 @@ class Lists:
 
   def checks(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
              html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """ Add a list component with checkbox items.
 
     Usage::
 
       data = [{"label": "python", "value": False}, {"label": "Java", "value": 5}]
       checks = page.ui.lists.checklist(data)
+
+      ts = page.ui.lists.items(["menu %s" % i for i in range(10)])
+      its.options.checked_key = "selected"
+      #its.options.max_selected = 2
+      its.options.items_type = "check"
+      its.options.checked_key = "selected"
+      its.options.text_click = True
 
     Underlying HTML Objects:
 
@@ -725,8 +662,6 @@ class Lists:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/checkbox.py
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -747,9 +682,7 @@ class Lists:
 
   def badges(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
              html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -774,8 +707,6 @@ class Lists:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -796,9 +727,7 @@ class Lists:
 
   def icons(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
             html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -813,8 +742,6 @@ class Lists:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       https://v4-alpha.getbootstrap.com/components/list-group/
 
-    Attributes:
-    ----------
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -837,9 +764,7 @@ class Lists:
   def radios(self, data=None, group_name: str = 'group', width: types.SIZE_TYPE = ('auto', ""),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -850,8 +775,6 @@ class Lists:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlInput.Radio`
 
-    Attributes:
-    ----------
     :param data:
     :param group_name:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
@@ -874,9 +797,7 @@ class Lists:
 
   def brackets(self, records=None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (550, 'px'),
                options: dict = None, profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
 
     Usage::
 
@@ -892,8 +813,6 @@ class Lists:
 
         bt = page.ui.lists.brackets(minimalData)
 
-    Attributes:
-    ----------
     :param records:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -912,9 +831,7 @@ class Lists:
   def chips(self, items=None, category: str = 'group', placeholder: str = "", width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
-    """
-    Description:
-    ------------
+    """  
     Add a chip (filter) html component
 
     Usage::
@@ -934,8 +851,6 @@ class Lists:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/chips.py
         https://github.com/epykure/epyk-templates/blob/master/locals/components/list.py
 
-    Attributes:
-    ----------
     :param items: Selected items
     :param category: Optional. The group of the items.
     :param placeholder: Optional. The input field placeholder

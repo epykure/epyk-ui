@@ -30,15 +30,11 @@ class CellEditor(Enums):
 
   def agRichSelectCellEditor(self, values, **kwargs):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-cell-editing/
 
-    Attributes:
-    ----------
     :param values:
     """
     cell_editor_params = {'values': values}
@@ -61,8 +57,6 @@ class AggFnc(Enums):
 
   def null(self):
     """
-    Description:
-    -----------
 
 
     Related Pages:
@@ -73,8 +67,6 @@ class AggFnc(Enums):
 
   def sum(self):
     """
-    Description:
-    -----------
 
 
     Related Pages:
@@ -88,8 +80,6 @@ class ColType(Enums):
 
   def nonEditableColumn(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -99,8 +89,6 @@ class ColType(Enums):
 
   def dateColumn(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -110,8 +98,6 @@ class ColType(Enums):
 
   def numericColumn(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -121,8 +107,6 @@ class ColType(Enums):
 
   def numberColumn(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -132,8 +116,6 @@ class ColType(Enums):
 
   def medalColumn(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -143,8 +125,6 @@ class ColType(Enums):
 
   def rightAligned(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -162,10 +142,7 @@ class ColumnFilter(Enums):
     return self._set_value(value='false', js_type=True)
 
   def agTextColumnFilter(self, **kwargs):
-    """
-    Description:
-    -----------
-    A Text Filter for string comparisons.
+    """   A Text Filter for string comparisons.
 
     Related Pages:
 
@@ -176,10 +153,7 @@ class ColumnFilter(Enums):
     return self._set_value()
 
   def agDateColumnFilter(self, **kwargs):
-    """
-    Description:
-    -----------
-    A Date Filter for date comparisons.
+    """   A Date Filter for date comparisons.
 
     Related Pages:
 
@@ -190,10 +164,7 @@ class ColumnFilter(Enums):
     return self._set_value()
 
   def agNumberColumnFilter(self):
-    """
-    Description:
-    -----------
-    A Number Filter for number comparisons.
+    """   A Number Filter for number comparisons.
 
     Related Pages:
 
@@ -202,10 +173,7 @@ class ColumnFilter(Enums):
     return self._set_value()
 
   def agSetColumnFilter(self, filter_name):
-    """
-    Description:
-    -----------
-    A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
+    """   A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
 
     Related Pages:
 
@@ -227,10 +195,7 @@ class Column(Options):
 
   @property
   def aggFunc(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @aggFunc.setter
@@ -240,10 +205,7 @@ class Column(Options):
 
   @property
   def cellClassRules(self):
-    """
-    Description:
-    -----------
-    Rules that return true will have the class applied the second time.
+    """   Rules that return true will have the class applied the second time.
     Rules that return false will have the class removed second time.
 
     Related Pages:
@@ -258,10 +220,7 @@ class Column(Options):
 
   @property
   def cellRenderer(self):
-    """
-    Description:
-    -----------
-    Change the cell rendering.
+    """   Change the cell rendering.
 
     Usage::
 
@@ -281,10 +240,7 @@ class Column(Options):
 
   @property
   def cellRendererParams(self):
-    """
-    Description:
-    -----------
-    On top of the parameters provided by the grid, you can also provide your own parameters.
+    """   On top of the parameters provided by the grid, you can also provide your own parameters.
     This is useful if you want to 'configure' your Cell Renderer. For example, you might have a Cell
     Renderer for formatting currency but you need to provide what currency for your cell renderer to use.
 
@@ -301,8 +257,6 @@ class Column(Options):
   @property
   def children(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -317,8 +271,6 @@ class Column(Options):
   @property
   def colId(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -332,10 +284,7 @@ class Column(Options):
 
   @property
   def columnGroupShow(self):
-    """
-    Description:
-    -----------
-    values closed, open.
+    """   values closed, open.
 
     Related Pages:
 
@@ -349,10 +298,7 @@ class Column(Options):
 
   @property
   def editor(self) -> CellEditor:
-    """
-    Description:
-    -----------
-    Cell editing format
+    """   Cell editing format
 
     Related Pages:
 
@@ -362,10 +308,7 @@ class Column(Options):
 
   @property
   def editable(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @editable.setter
@@ -374,10 +317,7 @@ class Column(Options):
 
   @property
   def enableRowGroup(self):
-    """
-    Description:
-    -----------
-    Allow every column to be grouped.
+    """   Allow every column to be grouped.
 
     Related Pages:
 
@@ -391,10 +331,7 @@ class Column(Options):
 
   @property
   def field(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @field.setter
@@ -403,10 +340,7 @@ class Column(Options):
 
   @property
   def filters(self) -> ColumnFilter:
-    """
-    Description:
-    -----------
-    Set filtering on a column using the column definition property filter. The property can have one of the following
+    """   Set filtering on a column using the column definition property filter. The property can have one of the following
     values:
 
     Related Pages:
@@ -417,10 +351,7 @@ class Column(Options):
 
   @property
   def groupId(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @groupId.setter
@@ -429,10 +360,7 @@ class Column(Options):
 
   @property
   def hide(self):
-    """
-    Description:
-    -----------
-    True if the column is hidden, otherwise false.
+    """   True if the column is hidden, otherwise false.
 
     Related Pages:
 
@@ -446,10 +374,7 @@ class Column(Options):
 
   @property
   def headerName(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @headerName.setter
@@ -458,10 +383,7 @@ class Column(Options):
 
   @property
   def lockPinned(self):
-    """
-    Description:
-    -----------
-    If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
+    """   If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
     This will block the UI in the following way:
 
     Related Pages:
@@ -476,10 +398,7 @@ class Column(Options):
 
   @property
   def marryChildren(self):
-    """
-    Description:
-    -----------
-    Sometimes you want columns of the group to always stick together.
+    """   Sometimes you want columns of the group to always stick together.
     To achieve this, set the column group property marryChildren=true. The example below demonstrates the following:
 
     """
@@ -491,10 +410,7 @@ class Column(Options):
 
   @property
   def sortable(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @sortable.setter
@@ -504,8 +420,6 @@ class Column(Options):
   @property
   def suppressColumnsToolPanel(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -520,8 +434,6 @@ class Column(Options):
   @property
   def suppressMenu(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -536,8 +448,6 @@ class Column(Options):
   @property
   def floatingFilterComponent(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -552,8 +462,6 @@ class Column(Options):
   @property
   def floatingFilterComponentParams(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -568,8 +476,6 @@ class Column(Options):
   @property
   def toolPanelClass(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -584,10 +490,7 @@ class Column(Options):
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @filter.setter
@@ -596,10 +499,7 @@ class Column(Options):
 
   @property
   def flex(self):
-    """
-    Description:
-    -----------
-    It's often required that one or more columns fill the entire available space in the grid. For this scenario,
+    """   It's often required that one or more columns fill the entire available space in the grid. For this scenario,
     it is possible to use the flex config.
     Some columns could be set with a regular width config, while other columns would have a flex config.
 
@@ -615,10 +515,7 @@ class Column(Options):
 
   @property
   def checkboxSelection(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @checkboxSelection.setter
@@ -627,10 +524,7 @@ class Column(Options):
 
   @property
   def suppressMovable(self):
-    """
-    Description:
-    -----------
-    The column property suppressMovable changes whether the column can be dragged.
+    """   The column property suppressMovable changes whether the column can be dragged.
 
     Related Pages:
 
@@ -644,10 +538,7 @@ class Column(Options):
 
   @property
   def pinned(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @pinned.setter
@@ -656,10 +547,7 @@ class Column(Options):
 
   @property
   def lockPosition(self):
-    """
-    Description:
-    -----------
-    The column property lockPosition locks columns to the first position in the grid.
+    """   The column property lockPosition locks columns to the first position in the grid.
 
     Related Pages:
 
@@ -674,10 +562,7 @@ class Column(Options):
 
   @property
   def maxWidth(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @maxWidth.setter
@@ -686,10 +571,7 @@ class Column(Options):
 
   @property
   def minWidth(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @minWidth.setter
@@ -698,10 +580,7 @@ class Column(Options):
 
   @property
   def resizable(self):
-    """
-    Description:
-    -----------
-    Turn column resizing on for the grid by setting resizable=true for each column.
+    """   Turn column resizing on for the grid by setting resizable=true for each column.
     To set resizing for each column, set resizable=true on the default column definition.
 
     Related Pages:
@@ -716,10 +595,7 @@ class Column(Options):
 
   @property
   def rowDrag(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @rowDrag.setter
@@ -728,10 +604,7 @@ class Column(Options):
 
   @property
   def rowGroup(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @rowGroup.setter
@@ -740,10 +613,7 @@ class Column(Options):
 
   @property
   def rowGroupIndex(self):
-    """
-    Description:
-    -----------
-    The index of the row group. If the column is not grouped, this field is null.
+    """   The index of the row group. If the column is not grouped, this field is null.
     If multiple columns are used to group, this index provides the order of the grouping.
 
     Related Pages:
@@ -758,10 +628,7 @@ class Column(Options):
 
   @property
   def suppressSizeToFit(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @suppressSizeToFit.setter
@@ -771,8 +638,6 @@ class Column(Options):
   @property
   def types(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -782,10 +647,7 @@ class Column(Options):
 
   @property
   def type(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @type.setter
@@ -795,8 +657,6 @@ class Column(Options):
   @property
   def enableCellChangeFlash(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -811,8 +671,6 @@ class Column(Options):
   @property
   def suppressCellFlash(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -826,10 +684,7 @@ class Column(Options):
 
   @property
   def sortingOrder(self):
-    """
-    Description:
-    -----------
-    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+    """   It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
     colDef.
     If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common default,
     and then tailoring per column.
@@ -846,10 +701,7 @@ class Column(Options):
 
   @property
   def sort(self):
-    """
-    Description:
-    -----------
-    Cell editing format
+    """   Cell editing format
 
     Related Pages:
 
@@ -859,10 +711,7 @@ class Column(Options):
 
   @property
   def title(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get(name="headerName")
 
   @title.setter
@@ -872,8 +721,6 @@ class Column(Options):
   @property
   def valueGetter(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -888,8 +735,6 @@ class Column(Options):
   @property
   def valueSetter(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -903,10 +748,7 @@ class Column(Options):
 
   @property
   def volatile(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @volatile.setter
@@ -918,10 +760,7 @@ class DefaultColDef(Options):
 
   @property
   def filter(self):
-    """
-    Description:
-    -----------
-    set a filter for every columns.
+    """   set a filter for every columns.
     """
     return self._config_get()
 
@@ -931,10 +770,7 @@ class DefaultColDef(Options):
 
   @property
   def filters(self):
-    """
-    Description:
-    -----------
-    Set filtering on a column using the column definition property filter. The property can have one of the following
+    """   Set filtering on a column using the column definition property filter. The property can have one of the following
     values:
 
     Related Pages:
@@ -945,10 +781,7 @@ class DefaultColDef(Options):
 
   @property
   def flex(self):
-    """
-    Description:
-    -----------
-    It's often required that one or more columns fill the entire available space in the grid. For this scenario,
+    """   It's often required that one or more columns fill the entire available space in the grid. For this scenario,
     it is possible to use the flex config.
     Some columns could be set with a regular width config, while other columns would have a flex config.
 
@@ -964,10 +797,7 @@ class DefaultColDef(Options):
 
   @property
   def floatingFilter(self):
-    """
-    Description:
-    -----------
-    Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
+    """   Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
     Floating Filter Component to work alongside one of the grid's Provided Filters, or alongside a Custom Filter.
 
     Related Pages:
@@ -982,10 +812,7 @@ class DefaultColDef(Options):
 
   @property
   def groupDefaultExpanded(self):
-    """
-    Description:
-    -----------
-    To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
+    """   To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
 
     Related Pages:
 
@@ -1001,10 +828,7 @@ class DefaultColDef(Options):
 
   @property
   def minWidth(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @minWidth.setter
@@ -1013,10 +837,7 @@ class DefaultColDef(Options):
 
   @property
   def editable(self):
-    """
-    Description:
-    -----------
-    make every column editable
+    """   make every column editable
     """
     return self._config_get()
 
@@ -1026,10 +847,7 @@ class DefaultColDef(Options):
 
   @property
   def resizable(self):
-    """
-    Description:
-    -----------
-    Turn column resizing on for the grid by setting resizable=true for each column.
+    """   Turn column resizing on for the grid by setting resizable=true for each column.
     To set resizing for each column, set resizable=true on the default column definition.
 
     Related Pages:
@@ -1044,10 +862,7 @@ class DefaultColDef(Options):
 
   @property
   def sortable(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @sortable.setter
@@ -1057,8 +872,6 @@ class DefaultColDef(Options):
   @property
   def treeData(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1075,10 +888,7 @@ class DefaultColDef(Options):
 
   @property
   def width(self):
-    """
-    Description:
-    -----------
-    set every column width.
+    """   set every column width.
 
     Related Pages:
 
@@ -1095,10 +905,7 @@ class TableToolPanelsParams(Options):
 
   @property
   def suppressSyncLayoutWithGrid(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @suppressSyncLayoutWithGrid.setter
@@ -1110,10 +917,7 @@ class TableToolPanelsFilters(Options):
 
   @property
   def id(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @id.setter
@@ -1122,10 +926,7 @@ class TableToolPanelsFilters(Options):
 
   @property
   def labelDefault(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @labelDefault.setter
@@ -1134,10 +935,7 @@ class TableToolPanelsFilters(Options):
 
   @property
   def labelKey(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @labelKey.setter
@@ -1146,10 +944,7 @@ class TableToolPanelsFilters(Options):
 
   @property
   def iconKey(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @iconKey.setter
@@ -1158,10 +953,7 @@ class TableToolPanelsFilters(Options):
 
   @property
   def toolPanel(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @toolPanel.setter
@@ -1170,8 +962,6 @@ class TableToolPanelsFilters(Options):
 
   def toolPanelParams(self):
     """
-    Description:
-    -----------
 
     """
     return self.has_attribute(TableToolPanelsParams)
@@ -1181,8 +971,6 @@ class TableToolPanels(Options):
 
   def filters(self):
     """
-    Description:
-    -----------
 
     """
     return self.has_attribute(TableToolPanelsFilters)
@@ -1191,10 +979,7 @@ class TableToolPanels(Options):
 class EnumStatusPanelsPanels(Options):
   @property
   def statusPanel(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @statusPanel.setter
@@ -1203,10 +988,7 @@ class EnumStatusPanelsPanels(Options):
 
   @property
   def align(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @align.setter
@@ -1215,10 +997,7 @@ class EnumStatusPanelsPanels(Options):
 
   @property
   def key(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @key.setter
@@ -1229,10 +1008,7 @@ class EnumStatusPanelsPanels(Options):
 class TableStatusBar(Options):
 
   def statusPanels(self) -> EnumStatusPanelsPanels:
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_sub_data_enum('statusPanels', EnumStatusPanelsPanels)
 
 
@@ -1241,10 +1017,7 @@ class TableConfig(Options):
 
   @property
   def alignedGrids(self):
-    """
-    Description:
-    -----------
-    To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
+    """   To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
     alignedGrids property of the second grids.
 
     Related Pages:
@@ -1259,10 +1032,7 @@ class TableConfig(Options):
 
   @property
   def allowContextMenuWithControlKey(self):
-    """
-    Description:
-    -----------
-    If you always want the grid's context menu, even when Ctrl is pressed, then set allowContextMenuWithControlKey=true.
+    """   If you always want the grid's context menu, even when Ctrl is pressed, then set allowContextMenuWithControlKey=true.
     
     Related Pages:
 
@@ -1276,10 +1046,7 @@ class TableConfig(Options):
 
   @property
   def animateRows(self):
-    """
-    Description:
-    -----------
-    Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
+    """   Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
     Each of these animations is turned OFF by default. They are all turned on using the property animateRows=true.
 
     Related Pages:
@@ -1298,10 +1065,7 @@ class TableConfig(Options):
 
   @property
   def colResizeDefault(self):
-    """
-    Description:
-    -----------
-    If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent to
+    """   If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent to
     it. This means the total width for all columns will be constant.
 
     You can also change the default behaviour for resizing.
@@ -1320,10 +1084,7 @@ class TableConfig(Options):
 
   @property
   def columns(self) -> Column:
-    """
-    Description:
-    -----------
-    Set the columnDefs with all the column properties.
+    """   Set the columnDefs with all the column properties.
 
     Related Pages:
 
@@ -1333,10 +1094,7 @@ class TableConfig(Options):
 
   @property
   def columnTypes(self):
-    """
-    Description:
-    -----------
-    Define a column type (you can define as many as you like.
+    """   Define a column type (you can define as many as you like.
     Expect a valid Json object.
 
     Related Pages:
@@ -1351,10 +1109,7 @@ class TableConfig(Options):
 
   @property
   def defaultColDef(self) -> DefaultColDef:
-    """
-    Description:
-    -----------
-    contains properties that all columns will inherit.
+    """   contains properties that all columns will inherit.
 
     Related Pages:
 
@@ -1364,10 +1119,7 @@ class TableConfig(Options):
 
   @property
   def data(self):
-    """
-    Description:
-    -----------
-    Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API setRowData().
+    """   Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API setRowData().
 
     Related Pages:
 
@@ -1381,10 +1133,7 @@ class TableConfig(Options):
 
   @property
   def deltaColumnMode(self):
-    """
-    Description:
-    -----------
-    """
+    """   """
     return self._config_get()
 
   @deltaColumnMode.setter
@@ -1394,8 +1143,6 @@ class TableConfig(Options):
   @property
   def editType(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1408,10 +1155,7 @@ class TableConfig(Options):
 
   @property
   def enablePivot(self):
-    """
-    Description:
-    -----------
-    Allow every column to be pivoted
+    """   Allow every column to be pivoted
 
     Related Pages:
 
@@ -1426,8 +1170,6 @@ class TableConfig(Options):
   @property
   def enableRangeSelection(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1441,10 +1183,7 @@ class TableConfig(Options):
 
   @property
   def enableValue(self):
-    """
-    Description:
-    -----------
-    This means you can drag the columns to the values section, but you cannot drag them to the group or pivot sections.
+    """   This means you can drag the columns to the values section, but you cannot drag them to the group or pivot sections.
 
     Related Pages:
 
@@ -1458,10 +1197,7 @@ class TableConfig(Options):
 
   @property
   def ensureDomOrder(self):
-    """
-    Description:
-    -----------
-    ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
+    """   ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
 
     Related Pages:
 
@@ -1475,10 +1211,7 @@ class TableConfig(Options):
 
   @property
   def enterMovesDown(self):
-    """
-    Description:
-    -----------
-    Set to true to have Enter key move focus to the cell below if not editing.
+    """   Set to true to have Enter key move focus to the cell below if not editing.
     The default is Enter key starts editing the currently focused cell.
 
     Related Pages:
@@ -1493,10 +1226,7 @@ class TableConfig(Options):
 
   @property
   def enterMovesDownAfterEdit(self):
-    """
-    Description:
-    -----------
-    Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
+    """   Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
     The default is editing will stop and focus will remain on the editing cell.
 
     Related Pages:
@@ -1511,10 +1241,7 @@ class TableConfig(Options):
 
   @property
   def functionsReadOnly(self):
-    """
-    Description:
-    -----------
-    By setting the property functionsReadOnly=true, the grid will prevent changes to group, pivot or values
+    """   By setting the property functionsReadOnly=true, the grid will prevent changes to group, pivot or values
     through the GUI. This is useful if you want to show the user the group, pivot and values panel,
     so they can see which columns are used, but prevent them from making changes to the selection.
 
@@ -1534,11 +1261,7 @@ class TableConfig(Options):
   def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
     """
-    Description:
-    -----------
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1552,15 +1275,11 @@ class TableConfig(Options):
 
   def onGridReady(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1575,15 +1294,11 @@ class TableConfig(Options):
   def on(self, event_type: str, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
          func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://ag-grid.com/angular-data-grid/grid-interface/
 
-    Attributes:
-    ----------
     :param event_type: The event type
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -1600,17 +1315,12 @@ class TableConfig(Options):
 
   def onCellEditingStopped(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
-    """
-    Description:
-    -----------
-    Editing a cell has stopped.
+    """   Editing a cell has stopped.
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/cell-editing/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1624,18 +1334,13 @@ class TableConfig(Options):
 
   def onCellValueChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                          func_ref: bool = False):
-    """
-    Description:
-    -----------
-    Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
+    """   Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
     if cell value has changed as a result of paste operation.
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/cell-editing/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1650,15 +1355,11 @@ class TableConfig(Options):
   def onRowClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                    func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://ag-grid.com/angular-data-grid/grid-interface/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1673,15 +1374,11 @@ class TableConfig(Options):
   def onColumnResized(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                       func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://ag-grid.com/angular-data-grid/grid-interface/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1696,15 +1393,11 @@ class TableConfig(Options):
   def onPaginationChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                           func_ref: bool = False):
     """
-    Description:
-    -----------
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/row-pagination/
 
-    Attributes:
-    ----------
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
     :param func_ref: Optional. Specify if js_funcs point to an external function
@@ -1718,10 +1411,7 @@ class TableConfig(Options):
 
   @property
   def overlayLoadingTemplate(self):
-    """
-    Description:
-    -----------
-    Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+    """   Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
     Related Pages:
 
@@ -1735,10 +1425,7 @@ class TableConfig(Options):
 
   @property
   def overlayNoRowsTemplate(self):
-    """
-    Description:
-    -----------
-    Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+    """   Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
     Related Pages:
 
@@ -1752,10 +1439,7 @@ class TableConfig(Options):
 
   @property
   def paginateChildRows(self):
-    """
-    Description:
-    -----------
-    Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail. See Pagination & Child Rows.
+    """   Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail. See Pagination & Child Rows.
     Default: false
 
     Related Pages:
@@ -1770,10 +1454,7 @@ class TableConfig(Options):
 
   @property
   def pagination(self):
-    """
-    Description:
-    -----------
-    To enable pagination in, set the grid property pagination=true.
+    """   To enable pagination in, set the grid property pagination=true.
     The following simple example shows this, the only difference to this and previous examples is the pagination=true
     property.
 
@@ -1789,10 +1470,7 @@ class TableConfig(Options):
 
   @property
   def paginationPageSize(self):
-    """
-    Description:
-    -----------
-    How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored.
+    """   How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored.
     See Customising Pagination.
     Default: 100
 
@@ -1809,10 +1487,7 @@ class TableConfig(Options):
 
   @property
   def paginationAutoPageSize(self):
-    """
-    Description:
-    -----------
-    If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can fit.
+    """   If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can fit.
     This is demonstrated below. Note if you resize the display area of the grid, the page size automatically changes.
     To view this, open the example up in a new tab and resize your browser.
 
@@ -1827,10 +1502,7 @@ class TableConfig(Options):
     self._config(num)
 
   def paginationNumberFormatter(self):
-    """
-    Description:
-    -----------
-    Allows user to format the numbers in the pagination panel, i.e. 'row count' and 'page number' labels.
+    """   Allows user to format the numbers in the pagination panel, i.e. 'row count' and 'page number' labels.
     This is for pagination panel only, to format numbers inside the grid's cells (i.e. your data),
     then use valueFormatter in the column definitions.
 
@@ -1843,8 +1515,6 @@ class TableConfig(Options):
   @property
   def popupParent(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1859,8 +1529,6 @@ class TableConfig(Options):
   @property
   def pivotMode(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1875,8 +1543,6 @@ class TableConfig(Options):
   @property
   def pivotPanelShow(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -1890,10 +1556,7 @@ class TableConfig(Options):
 
   @property
   def groupSelectsChildren(self):
-    """
-    Description:
-    -----------
-    Filler groups do not keep their selection state should the filler group be moved.
+    """   Filler groups do not keep their selection state should the filler group be moved.
     For example if you have groups A->B->C, where C is the only row provided
     (so the grid creates groups A and B for you), and then you change the patch to D->B->C,
     group B will not keep it's selection.
@@ -1910,10 +1573,7 @@ class TableConfig(Options):
 
   @property
   def rowHeight(self):
-    """
-    Description:
-    -----------
-    By default, the grid will display rows with a height of 25px. You can change this for each row individually
+    """   By default, the grid will display rows with a height of 25px. You can change this for each row individually
     to give each row a different height.
 
     Related Pages:
@@ -1928,10 +1588,7 @@ class TableConfig(Options):
 
   @property
   def singleClickEdit(self):
-    """
-    Description:
-    -----------
-    To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
+    """   To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
     This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you
     get when inside Excel.
 
@@ -1947,10 +1604,7 @@ class TableConfig(Options):
 
   @property
   def suppressClickEdit(self):
-    """
-    Description:
-    -----------
-    The grid configures a cellRenderer with a button to start editing.
+    """   The grid configures a cellRenderer with a button to start editing.
 
     Related Pages:
 
@@ -1964,10 +1618,7 @@ class TableConfig(Options):
 
   @property
   def suppressPaginationPanel(self):
-    """
-    Description:
-    -----------
-    If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
+    """   If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
     This is useful is you want to provide your own navigation controls.
 
     Related Pages:
@@ -1982,10 +1633,7 @@ class TableConfig(Options):
 
   @property
   def suppressScrollOnNewData(self):
-    """
-    Description:
-    -----------
-    The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the
+    """   The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the
     page changes.
 
     Related Pages:
@@ -2000,10 +1648,7 @@ class TableConfig(Options):
 
   @property
   def suppressColumnVirtualisation(self):
-    """
-    Description:
-    -----------
-    Ensures all columns are rendered, i.e. appears in the DOM.
+    """   Ensures all columns are rendered, i.e. appears in the DOM.
 
     Related Pages:
 
@@ -2017,10 +1662,7 @@ class TableConfig(Options):
 
   @property
   def suppressDragLeaveHidesColumns(self):
-    """
-    Description:
-    -----------
-    Column animations happen when you move a column. The default is for animations to be turned on.
+    """   Column animations happen when you move a column. The default is for animations to be turned on.
     It is recommended that you leave the column move animations on unless your target platform (browser and hardware)
     is to slow to manage the animations.
     To turn OFF column animations, set the grid property suppressColumnMoveAnimation=true.
@@ -2038,8 +1680,6 @@ class TableConfig(Options):
   @property
   def suppressExcelExport(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -2053,10 +1693,7 @@ class TableConfig(Options):
 
   @property
   def rowMultiSelectWithClick(self):
-    """
-    Description:
-    -----------
-    Set to true to allow multiple rows to be selected with clicks.
+    """   Set to true to allow multiple rows to be selected with clicks.
     For example, if you click to select one row and then click to select another row, the first row will stay selected
     as well.
     Clicking a selected row in this mode will deselect the row.
@@ -2074,10 +1711,7 @@ class TableConfig(Options):
 
   @property
   def rowDeselection(self):
-    """
-    Description:
-    -----------
-    Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
+    """   Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
     By default, the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
     row is selected in its place).
 
@@ -2093,10 +1727,7 @@ class TableConfig(Options):
 
   @property
   def rowSelection(self):
-    """
-    Description:
-    -----------
-    Type of row selection, set to either 'single' or 'multiple' to enable selection.
+    """   Type of row selection, set to either 'single' or 'multiple' to enable selection.
     'single' will use single row selection, such that when you select a row, any previously selected row gets
     unselected.
     'multiple' allows multiple rows to be selected.
@@ -2113,10 +1744,7 @@ class TableConfig(Options):
 
   @property
   def rowBuffer(self):
-    """
-    Description:
-    -----------
-    Sets the number of rows rendered outside of the scrollable viewable area.
+    """   Sets the number of rows rendered outside of the scrollable viewable area.
 
     Related Pages:
 
@@ -2131,8 +1759,6 @@ class TableConfig(Options):
   @property
   def rowGroupPanelShow(self):
     """
-    Description:
-    -----------
 
     Related Pages:
 
@@ -2148,10 +1774,7 @@ class TableConfig(Options):
 
   @property
   def suppressRowClickSelection(self):
-    """
-    Description:
-    -----------
-    If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to
+    """   If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to
     also select the row when the row is clicked.
 
     Related Pages:
@@ -2166,10 +1789,7 @@ class TableConfig(Options):
 
   @property
   def sortingOrder(self):
-    """
-    Description:
-    -----------
-    It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+    """   It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
     colDef.
     If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common
     default, and then tailoring per column.
@@ -2187,8 +1807,6 @@ class TableConfig(Options):
   @property
   def sideBar(self):
     """
-    Description:
-    -----------
 
     """
     return self._config_get()
@@ -2203,8 +1821,6 @@ class TableConfig(Options):
 
   def statusBar(self) -> TableStatusBar:
     """
-    Description:
-    -----------
 
     """
     return self._config_sub_data("statusBar", TableStatusBar)

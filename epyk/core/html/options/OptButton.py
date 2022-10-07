@@ -11,14 +11,10 @@ class OptionsButton(Options):
   @property
   def category(self):
     """
-    Description:
-    ------------
     Button category to specify the style.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop value: String. The category of button.
     """
     return self.get("validate")
@@ -30,8 +26,6 @@ class OptionsButton(Options):
   @property
   def multiple(self):
     """
-    Description:
-    ------------
     Property to define if multiple buttons can be selected at the same time.
     Default value is false.
 
@@ -40,8 +34,6 @@ class OptionsButton(Options):
       but = page.ui.button("Click Me")
       but.options.multiple = False
 
-    Attributes:
-    ----------
     :prop bool: Boolean. To be used if multiple buttons are grouped.
     """
     return self.get(False)
@@ -53,8 +45,6 @@ class OptionsButton(Options):
   @property
   def group(self):
     """
-    Description:
-    ------------
     Property to set the group name of a button.
 
     Usage::
@@ -62,8 +52,6 @@ class OptionsButton(Options):
       but = page.ui.button("Click Me")
       but.options.group = "buttons"
 
-    Attributes:
-    ----------
     :prop val: String. The group name for several buttons.
     """
     return self.component.attr.get('name')
@@ -78,13 +66,9 @@ class OptionsBadge(Options):
   @property
   def badge_css(self):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :prop css:
     """
     return self.get()
@@ -100,13 +84,9 @@ class OptionsBadge(Options):
   @property
   def badge_position(self):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :prop position:
     """
     return self.get()
@@ -125,8 +105,6 @@ class OptMedia(Options):
   @property
   def controls(self):
     """
-    Description:
-    ------------
     Specifies that video controls should be displayed (such as a play/pause button etc).
 
     Usage::
@@ -136,8 +114,6 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_controls.asp
 
-    Attributes:
-    ----------
     :prop bool: Boolean. Optional. Default value is false.
     """
     return self.get(True)
@@ -149,8 +125,6 @@ class OptMedia(Options):
   @property
   def loop(self):
     """
-    Description:
-    ------------
     Specifies that the video will start over again, every time it is finished.
 
     Usage::
@@ -160,8 +134,6 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_loop.asp
 
-    Attributes:
-    ----------
     :prop bool: Boolean. Optional. Default value is false.
     """
     return self.get(False)
@@ -173,8 +145,6 @@ class OptMedia(Options):
   @property
   def preload(self):
     """
-    Description:
-    ------------
     Specifies if and how the author thinks the video should be loaded when the page loads.
 
     Usage::
@@ -184,8 +154,6 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_preload.asp
 
-    Attributes:
-    ----------
     :prop value: String. Optional. The preload attribute specifies if and how the author thinks that the video
     should be loaded when the page loads.
     """
@@ -201,8 +169,6 @@ class OptMedia(Options):
   @property
   def muted(self):
     """
-    Description:
-    ------------
     Specifies that the audio output of the video should be muted.
 
     The muted attribute is a boolean attribute.
@@ -216,8 +182,6 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_audio_muted.asp
 
-    Attributes:
-    ----------
     :prop flag: Boolean. Optional. Default value is false.
     """
     return self.get(False)
@@ -229,8 +193,6 @@ class OptMedia(Options):
   @property
   def poster(self):
     """
-    Description:
-    ------------
     Specifies an image to be shown while the video is downloading, or until the user hits the play button.
 
     The poster attribute specifies an image to be shown while the video is downloading,
@@ -241,8 +203,6 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_poster.asp
 
-    Attributes:
-    ----------
     :prop url: String. Url path for the image. Specifies the URL of the image file.
     """
     return self.get()
@@ -254,16 +214,12 @@ class OptMedia(Options):
   @property
   def autoplay(self):
     """
-    Description:
-    ------------
     Set the autoplay flag.
 
     Specifies that the video will start playing as soon as it is ready.
 
     Usage::
 
-    Attributes:
-    ----------
     :prop flag: Boolean. Optional. Default value is true.
     """
     return self.get(True)
@@ -279,13 +235,9 @@ class OptCheckboxes(Options):
   @property
   def icon(self):
     """
-    Description:
-    ------------
 
     Usage::
 
-    Attributes:
-    ----------
     :prop icon: String. The font-awesome icon reference.
     """
     return self._config_get("fas fa-check")
