@@ -12,6 +12,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
 
 from epyk.core.css import Defaults as cssDefaults
+from epyk.core.html import Defaults as htmlDefaults
 
 
 class Radio(Html.Html):
@@ -137,8 +138,9 @@ class Switch(Html.Html):
     if is_on:
       self.checkbox.attr["checked"] = is_on
 
-    self.switch_label = page.ui.texts.label(page.entities.non_breaking_space, width=(50, "px"))
+    self.switch_label = page.ui.texts.label(page.entities.non_breaking_space)
     self.switch_label.style.clear()
+    self.switch_label.style.css.width = "%spx" % htmlDefaults.INPUTS_TOGGLE_WIDTH
     self.switch_label.style.add_classes.radio.switch_label()
     self.switch_label.options.managed = False
     self.switch_label.style.css.line_height = "10px"

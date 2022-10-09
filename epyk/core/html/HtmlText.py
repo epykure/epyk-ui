@@ -36,7 +36,8 @@ class Label(Html.Html):
         obj.options.managed = False
     super(Label, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, "height": height, 'color': color, 'text-align': align})
-    self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block', 'line-height': '23px',
+    self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block',
+              'line-height': '%spx' % Default_html.LINE_HEIGHT,
               'vertical-align': 'middle', 'text-align': 'left'})
     if tooltip:
       self.set_attrs(name='title', value=tooltip)

@@ -1245,6 +1245,7 @@ class Fields:
     if options is not None:
       dfl_options.update(options)
     component = self.page.ui.div(width=width, height=height, options=dfl_options, profile=profile)
+    component.style.css.margin_top = 5
     component.input = html.HtmlRadio.Switch(
       self.page, record, color, ("auto", ''), height, html_code, dfl_options, profile)
     if label is not None:
@@ -1254,7 +1255,8 @@ class Fields:
         profile=profile)
       component.label.style.css.display = 'inline-block'
       component.label.style.css.margin = '0 5px'
-      component.label.style.css.width = '{}px'.format(Defaults.TEXTS_SPAN_WIDTH)
+      component.label.style.css.line_height = Defaults.LINE_HEIGHT
+      component.label.style.css.width = '{}px'.format(Defaults.INPUTS_MIN_WIDTH)
       component.extend([component.label, component.input])
     html.Html.set_component_skin(component)
     return component
@@ -1302,7 +1304,8 @@ class Fields:
         profile=profile)
       component.label.style.css.display = 'inline-block'
       component.label.style.css.margin = '0 5px'
-      component.label.style.css.width = '{}px'.format(Defaults.TEXTS_SPAN_WIDTH)
+      component.label.style.css.width = '{}px'.format(Defaults.INPUTS_MIN_WIDTH)
+      component.label.style.css.line_height = Defaults.LINE_HEIGHT
       component.extend([component.label, component.input])
     if orientation == "vertical":
       component.input.style.css.height = component.input.style.css.width

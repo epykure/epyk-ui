@@ -1,4 +1,5 @@
 import json
+import inspect
 
 from typing import List, Union, Callable
 from epyk.core import Page as Rpt
@@ -67,7 +68,7 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
   """
   Description:
   -----------
-  All packages not in this lists will be considered as forbidden.
+  All packages not in those lists will be considered as forbidden.
 
   :param List[str] pkgs_alias: A list of packages reference
   :param bool raise_exception: Optional. The kind of error triggered
@@ -93,61 +94,85 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
 
 
 class Interface:
+  """ Quick interface for building dashboards.
 
-  def __init__(self, inputs: dict, outputs: dict):
+  """
+  def __init__(self, inputs: dict, outputs: dict = None, event: dict = None, verbose: bool = False):
     self.page = Page()
+    out_components, in_components = [], []
+    for i, inp in enumerate(inputs):
+      component = self.__build_comp(inp, i, verbose=verbose)
+      if component is not None:
+        in_components.append(component)
+      else:
+        print("%s not defined" % inp)
+
+    for j, out in enumerate(outputs, start=1):
+      component = self.__build_comp(out, i+j)
+      if component is not None:
+        out_components.append(component)
+      else:
+        print("%s not defined" % out)
+
+    if event is not None:
+      btn = self.page.ui.buttons.large("Run", align="center", options={"colored": True})
+      btn.style.css.margin_top = 10
+      inputs_comps = []
+      for comp in in_components:
+        if hasattr(comp, 'input'):
+          inputs_comps.append(getattr(comp, 'input'))
+        else:
+          inputs_comps.append(comp)
+      btn.click(
+        getattr(self.page.js, event.get("method", "get").lower())(event["url"], components=inputs_comps).onSuccess([
+          out_components[0].build(events.data)
+      ]))
+      in_components.append(btn)
+    self.page.ui.row([in_components, out_components], position="top")
+
+  def __build_comp(self, inp: Union[str, dict], i: int = None, verbose: bool = False):
+    comp = None
+    if isinstance(inp, dict):
+      pos = self.page.ui
+      is_valid = True
+      for frg in inp["type"].split("."):
+        if hasattr(pos, frg):
+          pos = getattr(pos, frg)
+        else:
+          is_valid = False
+          break
+
+      if is_valid:
+        pmts = {}
+        funcs_args = inspect.getfullargspec(pos)[0][1:]
+        if verbose:
+          print("%s got arguments %s" % (pos.__name__, funcs_args))
+        for arg_name in funcs_args:
+          if arg_name in inp:
+            pmts[arg_name] = inp[arg_name]
+        if "html_code" not in pmts:
+          pmts["html_code"] = "comp_%s" % i
+        comp = pos(**pmts)
+        if 'css' in inp:
+          comp.css(inp["css"])
+        if 'class' in inp:
+          comp["attr"]["class"].add(inp["class"])
+    else:
+      pos = self.page.ui
+      is_valid = True
+      for frg in inp.split("."):
+        if hasattr(pos, frg):
+          pos = getattr(pos, frg)
+        else:
+          is_valid = False
+          break
+
+      if is_valid:
+        comp = pos(html_code="comp_%s" % i)
+    return comp
 
   def launch(self):
-    pass
+    if jupyter.is_notebook():
+      return self.page.outs.jupyter(closure=False)
 
-
-#
-# def from_ipynb(filename, page=None):
-#   page = page or Page()
-#   page.imports.extend(["requirejs", 'bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax'])
-#   # Add Jupyter internal packages
-#   with open(filename) as fp:
-#     nb = json.load(fp)
-#     for cell in nb["cells"]:
-#       if cell['cell_type'] == "code":
-#         for output in cell["outputs"]:
-#           if output['output_type'] == "stream":
-#             editor = page.ui.codes.markdown(output["text"], height="auto")
-#           elif output['output_type'] == "execute_result":
-#             div = page.ui.div()
-#             page.body.onReady([
-#               page.js.get("/frg", {"source": cell["source"]}).onSuccess([
-#                 "var htmlObj = $(data)",
-#                 "console.log(htmlObj)",
-#                 "var scripts = []",
-#                 "htmlObj.each(function(){if (this.nodeName == 'SCRIPT'){scripts.push(this.text)} })",
-#                 "var script = document.createElement('script')",
-#                 "script.type = 'text/javascript'",
-#                 "var inlineScript = document.createTextNode(scripts.join(';'));",
-#                 "script.appendChild(inlineScript); ",
-#                 "%s.appendChild(script)" % div.dom.varName,
-#                 div.dom.innerHTML(events.data),
-#               ]),
-#             ])
-#
-#       elif cell['cell_type'] == "markdown":
-#         if isinstance(cell["source"], list):
-#           cell["source"] = "".join(cell["source"])
-#         editor = page.ui.text(cell["source"], height="auto", options={"markdown": True})
-#         editor.style.css.inline()
-#         editor.style.css.margin_h = "5%"
-#         div = page.ui.div(editor)
-#         div.style.css.padding = "auto"
-#         div.style.css.margin_h = 20
-#         div.style.css.margin_v = 20
-#       else:
-#         if isinstance(cell["source"], list):
-#           cell["source"] = "".join(cell["source"])
-#         editor = page.ui.codes.python(cell["source"], height="auto")
-#         editor.style.css.inline()
-#         editor.style.css.margin_h = "5%"
-#         div = page.ui.div(editor)
-#         div.style.css.padding = "auto"
-#         div.style.css.margin_h = 20
-#         div.style.css.margin_v = 20
-#   return page
+    return self.page.outs.html()

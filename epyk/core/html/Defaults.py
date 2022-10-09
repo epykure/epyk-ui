@@ -27,6 +27,7 @@ FAVICON_DEV_URL = 'https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk
 # Component defaults
 BUTTONS_CHECK_HEIGHT = 20
 INPUTS_MIN_WIDTH = 140
+INPUTS_TOGGLE_WIDTH = 40
 LABEL_WIDTH = 100
 INPUTS_POSITION = "center"
 INPUTS_RANGE_THUMB = 10

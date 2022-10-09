@@ -1,9 +1,46 @@
 
 import os
+from typing import Any
 from epyk.core.js import JsUtils
 from epyk.core.py import PyNpm
 from epyk.core.css import Defaults as Defaults_css
 from epyk.web.components import widgets
+
+
+def is_notebook() -> bool:
+  """ Function to check if the code is running in a Jupyter notebook
+
+  Usages::
+
+  """
+  try:
+    from IPython import get_ipython
+
+    if "IPKernelApp" not in get_ipython().config:  # pragma: no cover
+      raise ImportError("console")
+      return False
+
+    if "VSCODE_PID" in os.environ:  # pragma: no cover
+      raise ImportError("vscode")
+      return False
+
+  except:
+    return False
+  else:  # pragma: no cover
+    return True
+
+
+def js_store_var(var_name: str, event_data: Any):
+  """ Store JavaScript results to a Python variable.
+
+  Usages::
+
+
+  :param var_name: The Python variable name
+  :param event_data: The JavaScript returned data
+  :return: Nothing but store the result to a python variable
+  """
+  return JsUtils.jsWrap('IPython.notebook.kernel.execute("%s=" + JSON.stringify(%s))' % (var_name, event_data))
 
 
 class NotebookJsCell:
