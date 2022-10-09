@@ -8,10 +8,7 @@ from epyk.web.components import widgets
 
 
 def is_notebook() -> bool:
-  """ Function to check if the code is running in a Jupyter notebook
-
-  Usages::
-
+  """ Function to check if the code is running in a Jupyter notebook.
   """
   try:
     from IPython import get_ipython
@@ -35,6 +32,13 @@ def js_store_var(var_name: str, event_data: Any):
 
   Usages::
 
+    # In a cell in a Jupyter notebook
+    btn = page.ui.button("Click")
+    btn.click([
+        page.js.get("http://127.0.0.1:5000/autocomplete").onSuccess([
+            pk.jupyter.js_store_var('foo', pk.events.data)
+        ])
+    ])
 
   :param var_name: The Python variable name
   :param event_data: The JavaScript returned data
