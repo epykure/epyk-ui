@@ -9,7 +9,7 @@ class Components:
     self.page = ui.page
 
   def button(self, text: str = "", icon: str = None, category: str = "primary", width: types.SIZE_TYPE = (None, "%"),
-             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None,
+             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, tooltip: str = None, align: str = None,
              profile: types.PROFILE_TYPE = None, options: dict = None):
     """   Add a button.
 

@@ -15,8 +15,6 @@ class ClassButton(GrpCls.ClassHtml):
     Usage::
 
       self.css.border = "1px solid red"
-
-    :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
       self._css_struct = AttrClsButtons.AttrButton(self.component)
@@ -29,9 +27,7 @@ class ClassButton(GrpCls.ClassHtml):
 
     Usage::
 
-      self.css_class.important()
-
-    :rtype: Classes.CatalogButton.CatalogButton
+      self.css_class.basic()
     """
     if self._css_class is None:
       if self.component.name == 'button' and self.component.options.category in ["delete"]:
@@ -52,8 +48,6 @@ class ClassBadge(GrpCls.ClassHtml):
     Usage::
 
       self.css.background = "white"
-
-    :rtype: AttrClsButtons.AttrBadge
     """
     if self._css_struct is None:
       self._css_struct = AttrClsButtons.AttrBadge(self.component)
@@ -69,8 +63,6 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
     Usage::
 
       self.css.color = "red"
-
-    :rtype: AttrClsButtons.AttrButton
     """
     if self._css_struct is None:
       self._css_struct = AttrClsButtons.AttrButton(self.component)
@@ -89,8 +81,6 @@ class ClassButtonMenu(GrpCls.ClassHtml):
   def css_btn_content(self) -> Classes.CatalogButton.CatalogButton:
     """   The CSS property of the underlying items panel.
     This component will have a dedicated CSS class for the hover event.
-
-    :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_btn_content_hover is None:
       self._css_btn_content_hover = Classes.CatalogButton.CatalogButton(
@@ -102,8 +92,6 @@ class ClassButtonMenu(GrpCls.ClassHtml):
   def css_btn_link_hover(self) -> Classes.CatalogButton.CatalogButton:
     """   The CSS property of the underlying item.
     This component will have a dedicated CSS class for the hover event.
-
-    :rtype: Classes.CatalogButton.CatalogButton
     """
     if self._css_btn_link_hover is None:
       self._css_btn_link_hover = Classes.CatalogButton.CatalogButton(

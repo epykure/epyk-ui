@@ -96,44 +96,91 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
 class Interface:
   """ Quick interface for building dashboards.
 
+  Usages::
+
+    interf = pk.Interface(
+      inputs=[
+        {"type": "fields.date", "label": "test"},
+        {"type": "fields.input", "label": "test"},
+        {"type": "fields.toggle", "label": "test"},
+        {"type": "fields.input", "label": "test"},
+        {"type": "fields.slider", "label": "test"},
+        {"type": "fields.toggle", "label": "test"},
+        {"type": "fields.input", "label": "test"},
+      ],
+      outputs=[{"type": "lists.items", "options": {
+            "checked_key": "selected",
+            "items_type": "check",
+            "text_click": True}
+                }],
+      event={"url": "/autocomplete"},
+      verbose=True,
+      family="tui"
+    )
+
+  TODO add more components.
+
+  :param inputs: The list of input components
+  :param outputs: The list of input components
+  :param event: The event definition
+  :param verbose: Print further logs messages
+  :param family: Set the web framework component family (default std components)
+  :param run_label: Button's label text
   """
-  def __init__(self, inputs: dict, outputs: dict = None, event: dict = None, verbose: bool = False):
+
+  def __init__(self, inputs: List[Union[str, dict]], outputs: List[Union[str, dict]] = None, event: dict = None,
+               verbose: bool = False, family: str = 'std', run_label: str = "Run"):
     self.page = Page()
     out_components, in_components = [], []
+    ui_components = getattr(self.page.web, family)
     for i, inp in enumerate(inputs):
-      component = self.__build_comp(inp, i, verbose=verbose)
+      component = self.__build_comp(inp, i, verbose=verbose, family=family)
       if component is not None:
         in_components.append(component)
       else:
         print("%s not defined" % inp)
 
     for j, out in enumerate(outputs, start=1):
-      component = self.__build_comp(out, i+j)
+      component = self.__build_comp(out, i+j, verbose=verbose, family=family)
       if component is not None:
         out_components.append(component)
       else:
         print("%s not defined" % out)
 
     if event is not None:
-      btn = self.page.ui.buttons.large("Run", align="center", options={"colored": True})
+      btn = ui_components.button(run_label, align="center", options={"colored": True})
       btn.style.css.margin_top = 10
+      btn.style.css.padding_top = "5px"
+      btn.style.css.padding_bottom = "5px"
+      btn.style.css.padding_left = "20px"
+      btn.style.css.padding_right = "20px"
       inputs_comps = []
       for comp in in_components:
         if hasattr(comp, 'input'):
           inputs_comps.append(getattr(comp, 'input'))
         else:
           inputs_comps.append(comp)
-      btn.click(
-        getattr(self.page.js, event.get("method", "get").lower())(event["url"], components=inputs_comps).onSuccess([
-          out_components[0].build(events.data)
-      ]))
+      if len(out_components) == 1:
+        btn.click(
+          getattr(self.page.js, event.get("method", "get").lower())(event["url"], components=inputs_comps).onSuccess([
+            out_components[0].build(events.data)
+        ]))
+      else:
+        btn.click(
+          getattr(self.page.js, event.get("method", "get").lower())(event["url"], components=inputs_comps).onSuccess([
+            self.page.js.if_(events.data.has_key(comp.html_code), [
+              comp.build(events.data[comp.html_code])]) for comp in out_components
+          ]))
       in_components.append(btn)
     self.page.ui.row([in_components, out_components], position="top")
 
-  def __build_comp(self, inp: Union[str, dict], i: int = None, verbose: bool = False):
+  def __build_comp(self, inp: Union[str, dict], i: int = None, verbose: bool = False, family: str = 'std'):
+    """ Internal private method to build the dashboard.
+    """
     comp = None
+    pos = getattr(self.page.web, family)
+    pos_std = self.page.web.std
     if isinstance(inp, dict):
-      pos = self.page.ui
       is_valid = True
       for frg in inp["type"].split("."):
         if hasattr(pos, frg):
@@ -141,6 +188,16 @@ class Interface:
         else:
           is_valid = False
           break
+
+      if not is_valid:
+        is_valid = True
+        pos = pos_std
+        for frg in inp["type"].split("."):
+          if hasattr(pos, frg):
+            pos = getattr(pos, frg)
+          else:
+            is_valid = False
+            break
 
       if is_valid:
         pmts = {}
@@ -158,7 +215,6 @@ class Interface:
         if 'class' in inp:
           comp["attr"]["class"].add(inp["class"])
     else:
-      pos = self.page.ui
       is_valid = True
       for frg in inp.split("."):
         if hasattr(pos, frg):
@@ -167,11 +223,23 @@ class Interface:
           is_valid = False
           break
 
+      if not is_valid:
+        is_valid = True
+        pos = pos_std
+        for frg in inp.split("."):
+          if hasattr(pos, frg):
+            pos = getattr(pos, frg)
+          else:
+            is_valid = False
+            break
+
       if is_valid:
         comp = pos(html_code="comp_%s" % i)
     return comp
 
   def launch(self):
+    """ Render either the HTML content or the Jupyter results.
+    """
     if jupyter.is_notebook():
       return self.page.outs.jupyter(closure=False)
 

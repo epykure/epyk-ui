@@ -287,6 +287,13 @@ class JsObject(primitives.JsDataModel):
 
     return "%s >= %s" % (self.varId, json.dumps(a))
 
+  def has_key(self, item: Union[primitives.JsDataModel, str]):
+    """ Check the key / attribute in the JavaScript object.
+
+    :param item: The key to lookup
+    """
+    return "typeof %s[%s] !== 'undefined'" % (self.varId, JsUtils.jsConvertData(item, None))
+
   def isFrozen(self):
     """
     The Object.isFrozen() determines if an object is frozen.

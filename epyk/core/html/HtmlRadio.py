@@ -146,7 +146,7 @@ class Switch(Html.Html):
     self.switch_label.style.css.line_height = "10px"
 
     self.switch_text = page.ui.tags.p(self.val['on'] if is_on else self.val['off'])
-    self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold"})
+    self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold", "margin-top": 0})
     self.switch_text.tooltip(self.val.get('text', ''))
     self.switch_text.options.managed = False
 

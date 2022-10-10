@@ -11,22 +11,17 @@ class CatalogButton(Catalog.CatalogGroup):
 
   def basic(self) -> CssStylesButton.CssButtonBasic:
     """   Basic style for a button.
-
-    :rtype: CssStylesButton.CssButtonBasic
     """
     return self._set_class(CssStylesButton.CssButtonBasic)
 
   def important(self) -> CssStylesButton.CssButtonImportant:
     """   Important style for a button.
-
-    :rtype: CssStylesButton.CssButtonImportant
     """
     return self._set_class(CssStylesButton.CssButtonImportant)
 
   def reset(self) -> CssStylesButton.CssButtonReset:
     """
 
-    :rtype: CssStylesButton.CssButtonReset
     """
     return self._set_class(CssStylesButton.CssButtonReset)
 

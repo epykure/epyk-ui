@@ -77,7 +77,7 @@ class Button(Html.Html):
       but = page.ui.button("Loading")
       page.body.onReady([but.loading()])
  
-    :param status: Optional. A flag to specify the status of the loading event.
+    :param status: Optional. A flag to specify the status of the loading event
     """
     if status:
       self.dom.setAttribute("data-content", self.dom.content)
@@ -114,11 +114,11 @@ class Button(Html.Html):
       button2 = page.ui.button("Go go Google")
       button2.goto("www.google.fr", target="_self")
  
-    :param url: The destination path.
-    :param js_funcs: The Javascript Events triggered before the redirection.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param target: Optional. The type of link to the next page.
-    :param source_event: Optional. The event source.
+    :param url: The destination path
+    :param js_funcs: The Javascript Events triggered before the redirection
+    :param profile: Optional. A flag to set the component performance storage
+    :param target: Optional. The type of link to the next page
+    :param source_event: Optional. The event source
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -161,10 +161,8 @@ class Button(Html.Html):
     self.attr['disabled'] = True
     return self
 
-  def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None,
-            js_release_funcs: types.JS_FUNCS_TYPES = None,
-            profile: types.PROFILE_TYPE = None,
-            on_ready: bool = False):
+  def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
+            profile: types.PROFILE_TYPE = None, on_ready: bool = False):
     """   Special click event to keep in memory the state of the component.
 
     Usage::
@@ -174,7 +172,7 @@ class Button(Html.Html):
     :param js_press_funcs: Optional. Javascript functions
     :param js_release_funcs: Optional. Javascript functions
     :param profile: Optional. A flag to set the component performance storage
-    :param on_ready: Optional.
+    :param on_ready: Optional. Event when component is ready on HTML side
     """
     str_fnc = ""
     if js_press_funcs is not None:
@@ -216,7 +214,6 @@ class Button(Html.Html):
 
       but = page.ui.button("Click Me")
       but.properties
-
     """
     return {"tag": self.name, 'selector': self.htmlCode}
 
@@ -531,7 +528,7 @@ class IconEdit(Html.Html):
 
       https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
  
-    :param angle: The rotation angle.
+    :param angle: The rotation angle
     """
     self.icon.rotate(angle)
     return self
@@ -549,7 +546,7 @@ class IconEdit(Html.Html):
 
       https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
  
-    :param position: Optional. The position of the icon in the page.
+    :param position: Optional. The position of the icon in the page
     """
     self.icon.pull(position)
     return self
@@ -684,11 +681,11 @@ class ButtonMenu(Html.Html):
     return self.components[i]
 
   _js__builder__ = '''
-      var panel = htmlObj.querySelector("div");
-      data.forEach(function(rec){
-        var href = document.createElement("a"); href.innerHTML = rec;
-        Object.keys(options).forEach(function(key){href.style[key] = options[key]});
-        panel.appendChild(href)})'''
+var panel = htmlObj.querySelector("div");
+data.forEach(function(rec){
+  var href = document.createElement("a"); href.innerHTML = rec;
+  Object.keys(options).forEach(function(key){href.style[key] = options[key]});
+  panel.appendChild(href)})'''
 
   @property
   def style(self) -> GrpClsButton.ClassButtonMenu:
