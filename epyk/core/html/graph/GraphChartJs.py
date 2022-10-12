@@ -11,6 +11,7 @@ from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js.packages import packageImport
 from epyk.core.js.primitives import JsObject
 
+from epyk.core.py import types
 from epyk.core.js.packages import JsChartJs
 
 
@@ -278,7 +279,7 @@ class Chart(Html.Html):
 
     return self._datasets[i]
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: list):
     """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
@@ -311,7 +312,8 @@ class Chart(Html.Html):
         rec.borderColor = self.options.colors[i]
       rec.borderWidth = 1
 
-  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
+            source_event: str = None, on_ready: bool = False):
     """   Add a click event on the chart.
 
     Related Pages:
@@ -333,7 +335,8 @@ class Chart(Html.Html):
         "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return super(Chart, self).click(tmp_js_funcs, profile)
 
-  def dblclick(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False, source_event: str = None,
+               on_ready: bool = False):
     """   Add a double click event on the chart.
 
     Related Pages:
@@ -355,7 +358,7 @@ class Chart(Html.Html):
         "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return super(Chart, self).dblclick(tmp_js_funcs, profile)
 
-  def hover(self, js_funcs, profile=False, source_event=None):
+  def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False, source_event: str = None):
     """   Add an on mouse hover event on the chart.
 
     Related Pages:
@@ -383,7 +386,7 @@ class Chart(Html.Html):
     """
     return self._datasets
 
-  def getCtx(self, options=None):
+  def getCtx(self, options: dict = None):
     """   Get the ChartJs context. The internal configuration of the chart.
     The context is a dictionary object with javascript fragments.
 
@@ -401,14 +404,15 @@ class Chart(Html.Html):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
+  def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
+            profile: types.PROFILE_TYPE = None, component_id: str = None):
     """  
     Update the chart with context and / or data changes.
 
-    :param data: List. Optional. The full datasets object expected by ChartJs.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Not used.
+    :param data: Optional. The full datasets object expected by ChartJs.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param component_id: Not used.
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self._chart__type)
@@ -426,7 +430,7 @@ class Chart(Html.Html):
     return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
-  def loading(self, status=True):
+  def loading(self, status: bool = True):
     """  
     Loading component on a chart.
 
@@ -436,7 +440,7 @@ class Chart(Html.Html):
         ....
         chart_obj.loading(False)
 
-    :param status: Boolean. Optional. Specific the status of the display of the loading component.
+    :param status: Optional. Specific the status of the display of the loading component.
     """
     if status:
       return ''' 
@@ -490,7 +494,7 @@ class Fabric(Html.Html):
       htmlObj.setAttribute("data-next", parseInt(htmlObj.getAttribute("data-next")) + 1);
       return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data=None, options: dict = None, profile=False, component_id=None):
     """  
 
     Usage::

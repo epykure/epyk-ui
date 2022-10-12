@@ -3,7 +3,7 @@
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
-from typing import Generator
+from typing import Generator, Dict
 from epyk.core.html.options import OptTableAgGrid
 
 from epyk.core.js.packages import JsAgGrid
@@ -25,7 +25,7 @@ class Table(Html.Html):
     if records is not None:
       self.options.data = records
 
-  def headers(self, cols_def: dict):
+  def headers(self, cols_def: Dict[str, dict]):
     """   Set columns definition.
 
     Usage::
@@ -34,7 +34,7 @@ class Table(Html.Html):
       grid.add_column("col1", "Column")
       grid.headers({"col1": {"headerName": "Column 1"}})
 
-    :param cols_def:
+    :param cols_def: A dictionary with the columns definition
     """
     defined_cols = []
     for col in self.options.js_tree.setdefault("columnDefs", []):
