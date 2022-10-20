@@ -3861,7 +3861,7 @@ class ImportManager:
       if not self.online:
         self.pkgs.get(js_alias).set_local(static_url=self.static_url)
       extra_configs = "?%s" % self.moduleConfigs[js_alias] if js_alias in self.moduleConfigs else ""
-      for url_module in list(self.jsImports[js_alias]['main']):
+      for url_module in list(self.jsImports.get(js_alias, {}).get('main', [])):
         if self.page._node_modules is not None:
           node_sub_path = JS_IMPORTS.get(js_alias, {}).get('register', {}).get('npm_path')
           if node_sub_path is not None:
