@@ -252,11 +252,57 @@ class Input(Html.Html):
     """
     if self.attr["type"] != "text":
       raise ValueError("Autocomplete can only be used with input text components")
+
     values = JsUtils.jsConvertData(values, None)
     options = options or {}
     self.page.body.onReady('''
 %s.autocomplete(Object.assign({source: %s}, %s))
 ''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), values, options))
+
+  @packages.packageImport('jqueryui', 'jqueryui')
+  def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
+                        with_cache: bool = True):
+    """
+    Add autocomplete features on textarea from remote service.
+    This will use jquery UI.
+
+    Usage::
+
+      t = page.ui.input()
+      t.autocomplete_from(page.js.get("/autocomplete"), with_cache=False)
+
+    Related Pages:
+
+      https://jqueryui.com/autocomplete/
+
+    :param xml_http_request: The request object to the remote server. Returned data must be a list
+    :param prefix: The prefix to be added to the selected item
+    :param min_length: The min length before querying the remove server
+    :param options: Autocomplete extra options
+    :param with_cache: Flag to cache the result to save server calls
+    """
+    if self.attr["type"] != "text":
+      raise ValueError("Autocomplete can only be used with input text components")
+
+    cached_var = "cached%s" % self.html_code
+    prefix_val = '%s + ui.item.value' % JsUtils.jsConvertData(prefix, None) if prefix is not None else 'ui.item.value'
+    xml_http_request.onSuccess(['''
+  %s = data; resp($.ui.autocomplete.filter(data, request.term)) 
+  ''' % cached_var])
+    options = options or {}
+    self.page.body.onReady('''
+    var %(cachedVar)s; 
+    %(jqUI)s.autocomplete(Object.assign({
+      minLength: %(minLength)s,
+      source: function(request, resp) {
+        if(%(useCache)s){
+          if(typeof %(cachedVar)s === 'undefined'){%(request)s}
+          else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term))}}
+        else{%(request)s}},
+      }, %(options)s))
+    ''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
+           "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length,
+           "request": xml_http_request.toStr(), "options": options})
 
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
@@ -1155,7 +1201,7 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   Add an javascript action when the key enter is pressed on the keyboard.
+    """   Add a javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
@@ -1172,7 +1218,7 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
         "jsFnc": JsUtils.jsConvertFncs(
           js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
 
-  _js__builder__ = 'htmlObj.innerHTML = data'
+  _js__builder__ = 'htmlObj.value = data'
 
   def __str__(self):
     return '<textarea %(strAttr)s>%(val)s</textarea>' % {

@@ -314,8 +314,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def content(self) -> ContentFormatters:
-    """   
-
+    """ Get the component content.
     """
     if self.component.attr.get('type') == "number":
       return ContentFormatters(self.page, "parseFloat(%s.value)" % self.varName)
@@ -323,8 +322,7 @@ class JsHtml(JsNodeDom.JsDoms):
     return ContentFormatters(self.page, "%s.value" % self.varName)
 
   def empty(self):
-    """   
-
+    """   Empty the component.
     """
     return '%s.value = ""' % self.varName
 
@@ -741,8 +739,7 @@ class JsHtmlRich(JsHtml):
     return JsObjects.JsObjects.get("%s.innerHTML += %s" % (self.htmlCode, value))
 
   def empty(self):
-    """
-    Empty the content of the HTML component using the innerHTML JavaScript property.
+    """ Empty the content of the HTML component using the innerHTML JavaScript property.
     """
     return '%s.innerHTML = ""' % self.varName
 

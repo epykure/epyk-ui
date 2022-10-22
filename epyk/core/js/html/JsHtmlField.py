@@ -146,8 +146,113 @@ class Textarea(JsHtml.JsHtmlRich):
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
-  def readonly(self):
-    """   
-
+  def isEmpty(self, js_funcs: types.JS_FUNCS_TYPES):
     """
-    return "%s.readOnly = true" % self.varName
+    Trigger an event when the textarea content is emtpy.
+
+    :param js_funcs: Javascript functions.
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return JsIf.JsIf('%s === ""' % self.component.dom.content.toStr(), js_funcs)
+
+  def disabled(self, data: types.JS_DATA_TYPES = None):
+    """
+    Sets or returns whether the text field is disabled, or not.
+
+    Usages::
+
+      auto_srv = page.ui.textarea()
+      btn.click([
+        auto_srv.dom.disabled(True)
+      ])
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_text_disabled.asp
+
+    :param data: A String corresponding to a JavaScript object.
+    """
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.disabled" % self.component.dom.varName)
+
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.disabled = %s" % (self.component.dom.varName, data))
+
+  def placeholder(self, data: types.JS_DATA_TYPES = None):
+    """
+    Set or get the placeholder for an HTML component.
+
+    Usages::
+
+      auto_srv = page.ui.textarea()
+      btn.click([
+        auto_srv.dom.placeholder("Test")
+      ])
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_text_placeholder.asp
+
+    :param data: A String corresponding to a JavaScript object.
+    """
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.placeholder" % self.component.dom.varName)
+
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.placeholder = %s" % (self.component.dom.varName, data))
+
+  def readOnly(self, data: types.JS_DATA_TYPES = None):
+    """
+    Sets or returns whether a text field is read-only, or not.
+
+    Usages::
+
+      auto_srv = page.ui.textarea()
+      btn.click([
+        auto_srv.dom.readOnly(True)
+      ])
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_text_readonly.asp
+
+    :param data: A String corresponding to a JavaScript object.
+    """
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.readOnly" % self.component.dom.varName)
+
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.readOnly = %s" % (self.component.dom.varName, data))
+
+  def required(self, data: types.JS_DATA_TYPES = None):
+    """
+    Sets or returns whether the text field must be filled out before submitting a form.
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_text_required.asp
+
+    :param data: A String corresponding to a JavaScript object.
+    """
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.required" % self.component.dom.varName)
+
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.required = %s" % (self.component.dom.varName, data))
+
+  def autofocus(self, data: types.JS_DATA_TYPES = None):
+    """
+    Sets or returns whether a text field should automatically get focus when the page loads.
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_text_autofocus.asp
+
+    :param data: A String corresponding to a JavaScript object.
+    """
+    if data is None:
+      return JsObjects.JsString.JsString.get("%s.autofocus" % self.component.dom.varName)
+
+    data = JsUtils.jsConvertData(data, None)
+    return JsUtils.jsWrap("%s.autofocus = %s" % (self.component.dom.varName, data))
