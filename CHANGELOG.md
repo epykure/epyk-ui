@@ -1,15 +1,18 @@
 ## [Unreleased]
 
+## [1.9.12] - 2022-10-22
+
 ### Added
 - Add components section in documentation
 - Add JqueryUI varId property
+- New features for Textarea
+- More autocomplete features for Input
 
 ### Changed
 - Change documentation in docstring
 - Change slider default behaviour for output display
 - Change type annotation
-
-### Fixed
+- Documentation reformatting
 
 
 ## [1.9.9] - 2022-09-25
