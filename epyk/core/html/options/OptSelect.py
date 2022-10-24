@@ -523,6 +523,17 @@ class OptionsSelectJs(OptionsSelect):
     self._config(value)
 
   @property
+  def placeholder(self):
+    """ The default value (placeholder) when empty.
+    """
+    return self._config_get(None)
+
+  @placeholder.setter
+  def placeholder(self, text: str):
+    self._config(text)
+    self.component._vals.insert(0, {"text": text, "value": '', "disabled": True, "hidden": True})
+
+  @property
   def selected(self):
     """  
     The selected items

@@ -256,3 +256,8 @@ class Textarea(JsHtml.JsHtmlRich):
 
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.autofocus = %s" % (self.component.dom.varName, data))
+
+  def empty(self):
+    """ Empty the content of the HTML component using the innerHTML JavaScript property.
+    """
+    return JsUtils.jsWrap('%s.value = ""' % self.varName)

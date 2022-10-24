@@ -3710,8 +3710,8 @@ class ImportManager:
           self.jsImports[mod['alias']]['dep'][i] = path
       mod = mod['alias']
     modules.append(mod)
-    if self.page.ext_packages is not None and mod in self.page.ext_packages:
-      import_hierarchy = self.page.ext_packages
+    #if self.page.ext_packages is not None and mod in self.page.ext_packages:
+    #  import_hierarchy = self.page.ext_packages
     req_key = "req"
     if use_require_js:
       if "req_js" in import_hierarchy.get(mod, {}):

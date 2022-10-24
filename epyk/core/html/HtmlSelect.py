@@ -54,7 +54,7 @@ class Optgroup(Html.Html):
 
 
 class Select(Html.Html):
-  requirements = ('bootstrap-select', )
+  requirements = ('bootstrap-select',)
   name = 'Select'
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
@@ -139,10 +139,15 @@ class Select(Html.Html):
       const attrs = ['icon', 'content']; var selections = [];
       if(typeof options.auto_select !== 'undefined'){
          if(typeof data[options.auto_select] === 'string'){selections.push(data[options.auto_select])}}
+      if (options.placeholder != null){
+        data = [{text: options.placeholder, value: '', disabled: true}].concat(data)
+      }
       for (var idx in data){var item = data[idx];
         if(typeof data[idx] === 'string'){item = {value: item}};
         var opt = document.createElement("OPTION"); opt.value = item.value;
-        opt.text = (typeof item.name !== 'undefined')? item.name : item.value;
+        opt.text = (typeof item.name !== 'undefined')? item.name : (typeof item.text !== 'undefined')? item.text : item.value;
+        if(item.disabled){opt.disabled = true};
+        if(item.hidden){opt.hidden = true};
         if(opt.selected){selections.push(item.value)}
         if(item.selected){selections.push(opt.value)}
         for(var a in attrs){var attrVal = item[attrs[a]];
@@ -155,7 +160,7 @@ class Select(Html.Html):
              profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None,
              on_ready: bool = False):
     """   Javascript event triggered when the value has changed.
- 
+
     :param js_funcs: Set of Javascript function to trigger on this event.
     :param empty_funcs: Optional. Set of Js function to trigger if the value is empty.
     :param profile: Optional. A flag to set the component performance storage.
@@ -177,7 +182,7 @@ class Select(Html.Html):
     Related Pages:
 
       https://github.com/truckingsim/Ajax-Bootstrap-Select
- 
+
     :param url: The request URL for the ajax call.
     :param js_data: The value of the item to be removed from the list.
     :param is_json: Optional. A flag to specific if the data are json (default True).
@@ -212,6 +217,10 @@ class Select(Html.Html):
                    self.options.selected is not None and self.options.selected == val['value'],
                    options={"data": {"content": val.get('content'), "icon": val.get('icon')}})
       opt.options.managed = False
+      if val.get("disabled"):
+        opt.set_attrs(name="disabled", value=True)
+      if val.get("hidden"):
+        opt.set_attrs(name="hidden", value=True)
       if 'group' in val:
         opt_groups.setdefault(val['group'], []).append(opt)
       else:
@@ -243,7 +252,7 @@ class Select(Html.Html):
 
 
 class Lookup(Select):
-  requirements = ('bootstrap-select', )
+  requirements = ('bootstrap-select',)
 
   def __init__(self, page: primitives.PageModel, records: list, html_code: Optional[str], width: tuple, height: tuple,
                profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict]):

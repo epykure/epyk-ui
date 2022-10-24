@@ -29,6 +29,13 @@ class JsHtmlDatePicker(JsHtml.JsHtml):
     """
     return JsHtml.ContentFormatters(self.page, '%s.val()' % self.component.dom.jquery.varId)
 
+  def empty(self):
+    """
+
+    :return:
+    """
+    return JsUtils.jsWrap("%s.val('')" % self.component.dom.jquery.varId)
+
 
 class JsHtmlDateFieldPicker(JsHtml.JsHtml):
 
@@ -47,6 +54,13 @@ class JsHtmlDateFieldPicker(JsHtml.JsHtml):
 
     """
     return JsHtml.ContentFormatters(self.page, '%s.val()' % self.component.input.dom.jquery.varId)
+
+  def empty(self):
+    """
+
+    :return:
+    """
+    return JsUtils.jsWrap("%s.val('')" % self.component.input.dom.jquery.varId)
 
 
 class JsHtmlProgressBar(JsHtml.JsHtml):
@@ -100,7 +114,12 @@ class JsHtmlProgressBar(JsHtml.JsHtml):
  
     :param Union[List[Union[str, primitives.JsDataModel]], str] js_funcs: Javascript functions.
     """
-    return self.position(100, js_funcs)
+    return self.position(self.component.options.max, js_funcs)
+
+  def empty(self):
+    """ Empty the progress bar with the min value.
+    """
+    return JsUtils.jsWrap('%s.progressbar("value", %s)' % (self.component.dom.jquery.varId, self.component.options.min))
 
 
 class JsHtmlTimePicker(JsHtml.JsHtml):
@@ -146,6 +165,9 @@ class JsHtmlTimePicker(JsHtml.JsHtml):
       https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
     """
     return JsObjects.JsObjects.get("%s.timepicker('show')" % self.component.dom.jquery.varId)
+
+  def empty(self):
+    return JsUtils.jsWrap("%s.val('')" % self.component.dom.jquery.varId)
 
 
 class JsHtmlSlider(JsHtml.JsHtml):

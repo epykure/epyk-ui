@@ -425,6 +425,21 @@ class OptionsProgBar(Options):
     self._config(num)
 
   @property
+  def min(self):
+    """
+    The min value of the progressbar.
+
+    Related Pages:
+
+      https://api.jqueryui.com/progressbar/#option-max
+    """
+    return self._config_get(0)
+
+  @min.setter
+  def min(self, num: int):
+    self._config(num)
+
+  @property
   def value(self):
     """
     The value of the progressbar.

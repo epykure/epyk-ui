@@ -741,7 +741,7 @@ class JsHtmlRich(JsHtml):
   def empty(self):
     """ Empty the content of the HTML component using the innerHTML JavaScript property.
     """
-    return '%s.innerHTML = ""' % self.varName
+    return JsUtils.jsWrap('%s.innerHTML = ""' % self.varName)
 
 
 class JsHtmlImg(JsHtml):

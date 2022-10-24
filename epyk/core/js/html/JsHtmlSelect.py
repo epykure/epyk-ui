@@ -214,6 +214,15 @@ class DomSelect(JsHtml.JsHtmlRich):
     select_opt.varName = "%s.querySelectorAll('option')[%s]" % (self.varId, i)
     return select_opt
 
+  def empty(self):
+    """ Change the selected items to be the empty value.
+
+    Related Pages:
+
+      https://developer.snapappointments.com/bootstrap-select/methods/
+    """
+    return JsUtils.jsWrap("%s.selectpicker('val', '')" % self.jquery.varId)
+
 
 class Radio(JsHtml.JsHtmlRich):
 
@@ -236,7 +245,7 @@ class Radio(JsHtml.JsHtmlRich):
   def select(self, value: Union[str, primitives.JsDataModel]):
     """  
 
-    :param value: String.
+    :param value:
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsVoid('''
