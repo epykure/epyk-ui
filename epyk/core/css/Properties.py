@@ -1366,6 +1366,15 @@ class CssMixin:
     self.css({"isolation": val})
 
   @property
+  def inline_size(self):
+    return self.css("inline-size")
+
+  @inline_size.setter
+  def inline_size(self, val):
+    val = val if val is not None else 'None'
+    self.css({"inline-size": val})
+    
+  @property
   def justify_content(self):
     """	The justify-content property aligns the flexible container's items when the items do not use all available space on
     the main-axis (horizontally). This property is not inherited.

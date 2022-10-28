@@ -579,7 +579,8 @@ window.prevScrollpos = currentScrollPos;
     html.Html.set_component_skin(component)
     return component
 
-  def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False):
+  def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False,
+           z_index: int = 20, overlay: bool = False):
     """
 
     :tags:
@@ -592,17 +593,17 @@ window.prevScrollpos = currentScrollPos;
       https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/st_news.py
 
-    :param components: List. The different HTML objects to be added to the component.
-    :param anchor: Component. Optional. The panel button to show / hide.
-    :param size: Integer. Optional. Panel's width in pixel.
-    :param position: String. Optional. A string with the vertical position of the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component.
+    :param anchor: Optional. The panel button to show / hide.
+    :param size: Optional. Panel's width in pixel.
+    :param position: Optional. A string with the vertical position of the component.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
     d.css({"background": self.page.theme.colors[2], "position": position_type, 'top': 0, 'height': '100%',
-           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': 20})
+           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': z_index})
     if position == 'left':
       d.css({
         'left': 0, 'margin-left': "-%spx" % size,
@@ -620,27 +621,50 @@ window.prevScrollpos = currentScrollPos;
 
     if Defaults_css.BODY_CONTAINER is not None:
       d.style.padding_top = Defaults_css.BODY_CONTAINER.get("padding-top", -10) + 10
+
+    if overlay:
+      overlay = self.page.ui.div(width=(100, "vw"), height=(100, "vh"))
+      overlay.style.css.z_index = z_index - 1
+      overlay.style.css.left = 0
+      overlay.style.css.top = 0
+      overlay.style.css.right = 0
+      overlay.style.css.display = None
+      overlay.style.css.position = "fixed"
+      overlay.style.css.cursor = "pointer"
+      overlay.style.css.background = "rgba(0, 0, 0, 0.3)"
+      overlay_event = [overlay.dom.toggle()]
+      d.overlay = overlay
+    else:
+      overlay_event = []
+    html.Html.set_component_skin(d)
     if anchor is None:
       if position == 'left':
-        i = self.page.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        i = self.page.ui.icon("fas fa-bars").click(
+          overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
         i.style.css.float = 'right'
         if position_type == "fixed":
           i.style.css.position = "fixed"
           i.style.css.right = 10
           i.style.css.top = 5
       else:
-        i = self.page.ui.icon("fas fa-bars").click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+        i = self.page.ui.icon("fas fa-bars").click(
+          overlay_event + [d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
         if position_type == "fixed":
           i.style.css.position = "fixed"
           i.style.css.left = 10
           i.style.css.top = 10
       i.css({"padding": '5px'})
+      if overlay:
+        overlay.click([i.dom.events.trigger("click")])
     else:
       if position == 'left':
-        anchor.click([d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        anchor.click(
+          overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
       else:
-        anchor.click([d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
-    html.Html.set_component_skin(d)
+        anchor.click(
+          overlay_event + [d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+      if overlay:
+        overlay.click([anchor.dom.events.trigger("click")])
     return d
 
   def pilcrow(self, text="", html_code=None, options=None, profile=None):
