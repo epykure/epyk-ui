@@ -393,7 +393,7 @@ class Navigation:
     return div
 
   def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None,
-          profile=False) -> html.HtmlMenu.HtmlNavBar:
+          avatar: bool = False, profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
 
     :tags:
@@ -416,7 +416,7 @@ class Navigation:
     """
     comp_id = 'page_nav_bar'
     if comp_id not in self.page.components:
-      nav_bar = self.bar(logo, title, width, height, options, html_code=comp_id, profile=profile)
+      nav_bar = self.bar(logo, title, width, height, options, avatar=avatar, html_code=comp_id, profile=profile)
     else:
       nav_bar = self.page.components[comp_id]
     if components is not None:
@@ -426,7 +426,7 @@ class Navigation:
     return nav_bar
 
   def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
-          profile=False) -> html.HtmlMenu.HtmlNavBar:
+          avatar: Union[bool, str] = False, profile=False) -> html.HtmlMenu.HtmlNavBar:
     """
 
     :tags:
@@ -454,11 +454,13 @@ class Navigation:
     height = Arguments.size(height, unit="px")
     components = []
     options, scroll_height = options or {}, -5
-    options['logo_height'] = tuple(height) if 'logo_height' not in options else Arguments.size(options['logo_height'], unit="px")
-    options['logo_width'] = tuple(height) if 'logo_width' not in options else Arguments.size(options['logo_width'], unit="px")
+    options['logo_height'] = (height[0]-10, height[1]) if 'logo_height' not in options else Arguments.size(options['logo_height'], unit="px")
+    options['logo_width'] = (height[0]-10, height[1]) if 'logo_width' not in options else Arguments.size(options['logo_width'], unit="px")
 
     if logo is None:
       logo = self.page.ui.icons.epyk(size=options['logo_height'])
+      logo.style.css.max_width = 40
+      logo.style.css.max_height = 40
       components.append(logo)
     else:
       if not hasattr(logo, 'options'):    # if it is not an option it is considered as a path
@@ -507,6 +509,12 @@ window.prevScrollpos = currentScrollPos;
     self.page.body.style.custom_class({
       "padding-top": '%spx' % (height[0] + 5 + scroll_height)}, "body", is_class=False)
     html.Html.set_component_skin(html_nav)
+    if avatar:
+      if isinstance(avatar, bool):
+        avatar = ""
+      html_nav.avatar = self.page.ui.images.avatar(
+        avatar, width=height[0]-10, height=height[0]-10, options={"status": False})
+      html_nav.avatar.style.css.margin_left = 20
     return html_nav
 
   def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):

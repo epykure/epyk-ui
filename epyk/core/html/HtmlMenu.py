@@ -31,6 +31,7 @@ class HtmlNavBar(Html.Html):
       for c in components:
         self.__add__(c)
     self.buttons = []
+    self.avatar = None
 
   @property
   def style(self) -> GrpClsMenu.ClassNav:
@@ -71,7 +72,7 @@ class HtmlNavBar(Html.Html):
 
   def no_background(self, to_top: bool = True):
     """   remove the default navigation bar background and remove the padding.
- 
+
     :param to_top: Optional. To define if the padding must be removed.
     """
     self.background = False
@@ -82,7 +83,7 @@ class HtmlNavBar(Html.Html):
     return self
 
   def set_theme(self):
-    """   
+    """
 
     """
     self.style.css.background_color = self.page.theme.colors[0]
@@ -91,7 +92,7 @@ class HtmlNavBar(Html.Html):
 
   def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False) -> Html.Html:
     """   Add component to the right.
- 
+
     :param component: Internal component to the framework.
     :param css: Optional. The CSS attributes.
     :param prepend: Optional.
@@ -108,12 +109,14 @@ class HtmlNavBar(Html.Html):
     component.style.add_classes.div.color_hover()
     component.style.css.color = self.page.theme.greys[self.page.theme.index]
     if not hasattr(self, '_right'):
-      self._right = self.page.ui.div(width=("auto", ''))
+      self._right = self.page.ui.div(width=("auto", ''), height=(100, "%"))
       self._right.style.css.display = 'inline-block'
       self._right.style.css.float = 'right'
       self._right.style.css.text_transform = 'uppercase'
       self._right.style.css.font_weight = 'bold'
       self._right.style.css.font_factor(0)
+      self._right.style.css.display = "flex"
+      self._right.style.css.align_items = "center"
       self._right.options.managed = False
       self._vals.append(self._right)
     if prepend:
@@ -125,7 +128,7 @@ class HtmlNavBar(Html.Html):
 
   def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
     """   Add an item to the nav bar.
- 
+
     :param text: The link to be added to the navbar.
     """
     if not hasattr(text, 'options'):
@@ -136,6 +139,8 @@ class HtmlNavBar(Html.Html):
     return text
 
   def __str__(self):
+    if self.avatar is not None:
+      self.add_right(self.avatar)
     if self.scroll is not None:
       self.val.append(self.scroll)
       if self.scroll.css('width') == '100%':
@@ -167,7 +172,7 @@ class HtmlFooter(Html.Html):
 
   @property
   def sections(self):
-    """   
+    """
 
     """
     if not self.__col_lst:
@@ -176,8 +181,8 @@ class HtmlFooter(Html.Html):
 
   @sections.setter
   def sections(self, col_lst):
-    """   
- 
+    """
+
     :param col_lst:
     """
     self.__col_lst = col_lst
@@ -201,7 +206,7 @@ class HtmlFooter(Html.Html):
 
   def __getitem__(self, i: int) -> Html.Html:
     """   Return the internal column in the row for the given index.
- 
+
     :param i: the column index.
     """
     return self.val[i]
@@ -220,7 +225,6 @@ class HtmlFooter(Html.Html):
 
 
 class ContextMenu(Html.Html):
-
   name = 'Context Menu'
   source = None
   _option_cls = OptList.OptionsLi
@@ -251,9 +255,9 @@ class ContextMenu(Html.Html):
       '''
 
   def add_item(self, value: str, icon: Optional[str] = None):
-    """  
+    """
     Add Item to the context menu.
- 
+
     :param value:
     :param icon: Optional. The Font awesome icon.
     """
@@ -261,16 +265,16 @@ class ContextMenu(Html.Html):
     return self
 
   def add(self, component: Html.Html) -> Html.Html:
-    """  
- 
+    """
+
     :param component: Internal component to the framework.
     """
     self.__add__(component)
     return self.val[-1].val
 
   def __add__(self, component: Html.Html):
-    """   
- 
+    """
+
     :param component: The new HTML component to be added to the main component.
     """
     if not hasattr(component, 'options'):
@@ -351,9 +355,9 @@ class PanelsBar(Html.Html):
     self.menus.style.css.padding = '5px 0'
 
   def add_panel(self, text: str, content: Html.Html):
-    """  
+    """
     Add a panel to the panel bar.
- 
+
     :param text: The anchor visible linked to a panel.
     :param content: The panel.
     """
@@ -370,7 +374,9 @@ class PanelsBar(Html.Html):
     return self
 
   def __str__(self):
-    css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options['position'] == 'top' else {"height": "auto", 'display': 'block', 'margin-bottom': '30px'}
+    css_menu = {"height": "auto", 'display': 'block', 'margin-top': '30px'} if self.__options[
+                                                                                 'position'] == 'top' else {
+      "height": "auto", 'display': 'block', 'margin-bottom': '30px'}
     for menu_item, panel in self.menu_mapping.items():
       menu_item.click([
         self.page.js.querySelectorAll(Selector.Selector(self.panels).with_child_element("div").excluding(panel)).css(
@@ -378,9 +384,9 @@ class PanelsBar(Html.Html):
         #
         expr.if_(self.page.js.querySelector(
           Selector.Selector(self.panels)).getAttribute("data-panel") == menu_item.htmlCode, [
-          self.page.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
-          self.page.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
-        ]).else_([
+                   self.page.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", ""),
+                   self.page.js.querySelector(Selector.Selector(self.panels)).css({"display": 'none'})
+                 ]).else_([
           self.page.js.querySelector(Selector.Selector(self.panels)).setAttribute("data-panel", menu_item.htmlCode),
           self.page.js.querySelector(Selector.Selector(self.panels)).css(css_menu),
           self.page.js.querySelector(Selector.Selector(panel)).css({'display': 'block'})
@@ -451,8 +457,8 @@ class Shortcut(Html.Html):
 
   def add_logo(self, icon: str, path: Optional[str] = None, align: str = "center",
                width: tuple = (32, 'px'), height: tuple = (32, 'px')):
-    """  
- 
+    """
+
     :param icon: The component icon content from font-awesome references
     :param path: Optional.
     :param align: Optional. A string with the horizontal position of the component

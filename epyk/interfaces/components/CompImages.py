@@ -328,11 +328,11 @@ class Images:
     html.Html.set_component_skin(html_image)
     return html_image
 
-  def avatar(self, text: str = "", image: str = "", path: str = None, status: str = None,
+  def avatar(self, text: str = "", image: str = None, path: str = None, status: str = None,
              width: types.SIZE_TYPE = (30, "px"), height: types.SIZE_TYPE = (30, "px"), align: str = "center",
-             html_code: str = None, profile: types.PROFILE_TYPE = None,
+             html_code: str = None, profile: types.PROFILE_TYPE = None, menu: html.Html.Html = None,
              options: types.OPTION_TYPE = None) -> html.HtmlContainer.Div:
-    """  
+    """
     Generate or load an avatar.
 
     :tags:
@@ -374,7 +374,7 @@ class Images:
       'out': self.page.theme.warning.base
     }
 
-    bgcolor, margin_top = None, -5
+    bgcolor, margin_top = None, "-20%"
     if image is not None:
       img = self.img(image, path, (width[0]-5, width[1]), (height[0]-5, height[1]), align="center", html_code=html_code,
                      profile=profile, options=options)
@@ -382,6 +382,8 @@ class Images:
       img.style.css.margin = 2
       margin_top = -8
     else:
+      if not text:
+        text = "anonymous"
       bgcolor = Colors.randColor(self.page.py.hash(text))
       img = self.page.ui.layouts.div(text[0].upper())
       img.style.css.line_height = width[0] - 5
@@ -391,11 +393,11 @@ class Images:
       img.style.css.padding = 0
     img.style.css.middle()
     if options.get('status', True):
-      status_o = self.page.ui.layouts.div("&nbsp;", width=(10, "px"), height=(10, "px"))
+      status_o = self.page.ui.layouts.div("&nbsp;", width=(30, "%"), height=(30, "%"))
       status_o.style.css.position = 'relative'
 
       status_o.style.css.background_color = status_map.get(status, self.page.theme.greys[5])
-      status_o.style.css.border_radius = 10
+      status_o.style.css.border_radius = 30
       status_o.style.css.margin_top = margin_top
       status_o.style.css.float = 'right'
 
@@ -404,11 +406,28 @@ class Images:
     else:
       div = self.page.ui.layouts.div([img], width=width, height=height)
     if bgcolor is not None:
-      div.style.css.background_color = bgcolor
-      div.style.css.text_stoke = "1px %s" % bgcolor
+      img.style.css.background_color = bgcolor
+      img.style.css.text_stoke = "1px %s" % bgcolor
+    img.style.css.borders_light()
+    img.style.css.border_radius = width[0]
     div.img = img
-    div.style.css.borders_light()
-    div.style.css.border_radius = width[0]
+
+    def add_menu(menu_item):
+      menu_item.style.css.position = "absolute"
+      menu_item.style.css.display = "None"
+      menu_item.style.css.border = "1px solid %s" % self.page.theme.greys[2]
+      menu_item.style.css.border_radius = 5
+      menu_item.style.css.background_color = self.page.theme.dark_or_white()
+      menu_item.style.css.min_height = 20
+      menu_item.style.css.margin_top = 10
+      menu_with = Arguments.size(menu_item.style.css.width)
+      menu_item.style.css.right = 5
+      menu_item.style.css.z_index = 600
+      div.__add__(menu_item)
+      div.style.css.position = "relative"
+      div.img.click([menu_item.dom.toggle()])
+
+    div.add_menu = add_menu
     div.img = img
     if align == 'center':
       div.style.css.margin = "auto"
