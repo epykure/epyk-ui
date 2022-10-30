@@ -404,15 +404,14 @@ class Navigation:
       page.ui.components_skin = {"nav": {"css": {"background-color": 'pink'}}}
       nav = page.ui.navigation.nav(height=60, options={"center": True, "logo_height": 50})
 
-    :param logo: String. Optional.
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param components: List. Optional. The Components to be added to the navbar.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options:  Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-
-    :rtype: html.HtmlMenu.HtmlNavBar
+    :param logo: Optional. The picture for the logo
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param components: Optional. The Components to be added to the navbar
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param avatar: Optional. Add a avatar picture to the right in the navbar
+    :param profile: Optional. A flag to set the component performance storage
     """
     comp_id = 'page_nav_bar'
     if comp_id not in self.page.components:

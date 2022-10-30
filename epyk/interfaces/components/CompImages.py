@@ -412,20 +412,24 @@ class Images:
     img.style.css.border_radius = width[0]
     div.img = img
 
-    def add_menu(menu_item):
+    def add_menu(menu_item: Union[html.Html.Html, list]):
+      if isinstance(menu_item, list):
+        menu_item = self.page.ui.div(menu_item, width="auto")
       menu_item.style.css.position = "absolute"
       menu_item.style.css.display = "None"
-      menu_item.style.css.border = "1px solid %s" % self.page.theme.greys[2]
+      menu_item.style.css.border = "1px solid %s" % self.page.theme.greys[4]
       menu_item.style.css.border_radius = 5
       menu_item.style.css.background_color = self.page.theme.dark_or_white()
       menu_item.style.css.min_height = 20
       menu_item.style.css.margin_top = 10
       menu_with = Arguments.size(menu_item.style.css.width)
-      menu_item.style.css.right = 5
+      menu_item.style.css.right = 2
+      menu_item.style.css.padding = 3
       menu_item.style.css.z_index = 600
       div.__add__(menu_item)
       div.style.css.position = "relative"
       div.img.click([menu_item.dom.toggle()])
+      div.menu = menu_item
 
     div.add_menu = add_menu
     div.img = img
