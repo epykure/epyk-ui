@@ -185,3 +185,92 @@ class Inputs(JsHtml.JsHtml):
 
     data = JsUtils.jsConvertData(data, None)
     return JsUtils.jsWrap("%s.name = %s" % (self.component.dom.varName, data))
+
+
+class InputFileDom:
+
+  def __init__(self, selector, page, component):
+    self.varId = selector
+    self.component = component
+    self.page = page
+
+  @property
+  def name(self):
+    """ Returns the name of the file referenced by the File object.
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsString.JsString.get("%s.name" % self.varId)
+
+  @property
+  def lastModified(self):
+    """ Returns the last modified time of the file, in millisecond since the UNIX epoch (January 1st, 1970 at Midnight).
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsString.JsString.get("%s.lastModified" % self.varId)
+
+  @property
+  def lastModifiedDate(self):
+    """ Returns the last modified Date of the file referenced by the File object.
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsDate.JsDate.get("%s.lastModifiedDate" % self.varId)
+
+  @property
+  def size(self):
+    """ Returns the size of the file in bytes.
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsNumber.JsNumber.get("%s.size" % self.varId)
+
+  @property
+  def type(self):
+    """ Returns the MIME type of the file.
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsString.JsString.get("%s.type" % self.varId)
+
+  @property
+  def webkitRelativePath(self):
+    """ Returns the path the URL of the File is relative to.
+
+    Related Pages:
+
+        https://developer.mozilla.org/en-US/docs/Web/API/File
+    """
+    return JsObjects.JsString.JsString.get("%s.webkitRelativePath" % self.varId)
+
+
+class InputFilesList:
+
+  def __init__(self, selector, page, component):
+    self.varId = selector
+    self.component = component
+    self.page = page
+
+  def __getitem__(self, x) -> InputFileDom:
+    return InputFileDom("%s[%s]" % (self.varId, x), page=self.page, component=self.component)
+
+  def toStr(self):
+    return JsObjects.JsArray.JsArray.get("%s.files" % self.varId)
+
+
+class InputFiles(Inputs):
+
+  @property
+  def files(self):
+    return InputFilesList(self.varId, page=self.page, component=self.component)
