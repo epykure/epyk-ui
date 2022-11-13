@@ -1,20 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
-from epyk.core.js.objects import JsNodeDom
 
 
 class JsHtmlTree(JsHtml.JsHtmlRich):
 
   def hide(self, i: int = None):
-    """
+    """ Hide the node for a given index.
+    If no index defined all tree will be collapsed.
 
     TODO: Extend this for tree with multiple dimensions.
 
-    :param i: Optional. The item index in the tree.
+    :param i: Optional. The item index in the tree
     """
     if i is not None:
       return JsObjects.JsVoid('''
@@ -28,11 +27,13 @@ document.querySelectorAll("#%(htmlCode)s i[name=item_arrow]").forEach( function(
 })''' % {"htmlCode": self.component.html_code, "iconOpen": self.component.options.icon_open})
 
   def expand(self, i: int = None):
-    """
+    """ Expand a specific node in the tree.
+
+    If no index defined it will expand the entire tree.
 
     TODO: Extend this for tree with multiple dimensions.
 
-    :param i: Optional. The item index in the tree.
+    :param i: Optional. The item index in the tree
     """
     if i is not None:
       return JsObjects.JsVoid('''
@@ -46,6 +47,8 @@ document.querySelectorAll("#%(htmlCode)s i[name=item_arrow]").forEach( function(
 ''' % {"htmlCode": self.component.html_code, "iconClose": self.component.options.icon_close})
 
   def copy(self):
+    """ Copy the tree data to clipboard
+    """
     return JsObjects.JsVoid('''
 let treeData = {}; var curBranch = [];
 document.querySelectorAll("#%(htmlCode)s span[name=item_value]").forEach( function(dom, k){
@@ -78,3 +81,21 @@ dummy.select();
 document.execCommand("copy");
 document.body.removeChild(dummy);
 ''' % {"htmlCode": self.component.html_code})
+
+  def current_path(self):
+    """ Get the path of the selected item in the tree
+
+    Usage::
+
+      hyr = page.ui.tree(data)
+      hyr.click([page.js.alert(hyr.dom.current_path())])
+    """
+    return JsObjects.JsArray.JsArray.get('''
+(function(src, parentCode){
+let childParentNode = src.parentNode; let childPath = []; childPath.push(src.outerText);
+  while (childParentNode.id != parentCode){
+    childParentNode = childParentNode.parentNode;
+    if (childParentNode.hasAttribute('data-parent')){
+      childPath.push(childParentNode.getAttribute('data-parent'))
+    };
+  }; return childPath; })(event.srcElement, '%s')''' % self.component.html_code)
