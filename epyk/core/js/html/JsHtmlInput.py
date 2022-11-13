@@ -273,4 +273,11 @@ class InputFiles(Inputs):
 
   @property
   def files(self):
+    """ The files property returns a FileList object, representing the file or files selected with the file
+    upload button.
+
+    Related Pages:
+
+        https://www.w3schools.com/jsref/prop_fileupload_files.asp
+    """
     return InputFilesList(self.varId, page=self.page, component=self.component)
