@@ -7,6 +7,43 @@ from epyk.core.js import JsUtils
 
 class OptionsInput(Options):
 
+  @property
+  def autocomplete(self):
+    """
+    The input autocomplete attribute specifies whether a form or an input field should have autocomplete on or off.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_textarea_maxlength.asp
+    """
+    return self.component.attr.get('autocomplete')
+
+  @autocomplete.setter
+  def autocomplete(self, flag: bool):
+    if flag:
+      self.component.set_attrs({"autocomplete": "on"})
+    else:
+      self.component.set_attrs({"autocomplete": "off"})
+
+  @property
+  def autofocus(self):
+    """
+    The input autofocus attribute specifies that an input field should automatically get focus when the page loads.
+
+    Related Pages:
+
+      https://www.w3schools.com/tags/att_textarea_maxlength.asp
+    """
+    return self.component.attr.get('autofocus')
+
+  @autofocus.setter
+  def autofocus(self, flag: bool):
+    if not flag and "autofocus" in self.component.attr:
+      del self.component.attr["autofocus"]
+
+    else:
+      self.component.set_attrs({"autofocus": flag})
+
   def css(self, attrs: dict):
     """   
 
@@ -134,6 +171,22 @@ class OptionsInput(Options):
     self.component.set_attrs({"name": num})
 
   @property
+  def pattern(self):
+    """
+    The input pattern attribute specifies a regular expression that the input field's value is checked against,
+    when the form is submitted.
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html_form_attributes.asp
+    """
+    return self.component.attr.get('pattern')
+
+  @pattern.setter
+  def pattern(self, value: str):
+    self.component.set_attrs({"pattern": value})
+
+  @property
   def placeholder(self):
     """
     The placeholder attribute specifies a short hint that describes the expected value of an input field
@@ -161,12 +214,12 @@ class OptionsInput(Options):
     return self.component.attr.get('required')
 
   @required.setter
-  def required(self, value):
-    if not value and "required" in self.component.attr:
+  def required(self, flag: bool):
+    if not flag and "required" in self.component.attr:
       del self.component.attr["required"]
 
     else:
-      self.component.set_attrs({"required": value})
+      self.component.set_attrs({"required": flag})
 
   @property
   def wrap(self):
@@ -236,6 +289,20 @@ class OptionsInput(Options):
   @select.setter
   def select(self, flag: bool):
     self.set(flag)
+
+  @property
+  def step(self):
+    """ The input step attribute specifies the legal number intervals for an input field.
+
+    Related Pages:
+
+      https://www.w3schools.com/html/html_form_attributes.asp
+    """
+    return self.component.attr.get('step')
+
+  @step.setter
+  def step(self, num: int):
+    self.component.set_attrs({"pattern": num})
 
 
 class OptionsInputRange(OptionsInput):
@@ -1679,3 +1746,34 @@ class OptionsTextarea(OptionsInput):
   def rows(self, value):
     self.component.set_attrs({"rows": value})
 
+
+class OptionsInputFile(OptionsInput):
+
+  @property
+  def accept(self):
+    """
+    The rows attribute specifies the visible height of a text area, in lines.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+    """
+    return self.component.attr.get('accept', "")
+
+  @accept.setter
+  def accept(self, value):
+    self.component.set_attrs({"accept": value})
+
+  @property
+  def multiple(self):
+    """
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+    """
+    return self.component.attr.get('multiple', "")
+
+  @multiple.setter
+  def multiple(self, value):
+    self.component.set_attrs({"multiple": value})

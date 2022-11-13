@@ -679,8 +679,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
            js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
            asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
-    """  
-    Create a POST HTTP request.
+    """  Create a POST HTTP request.
 
     :param method: The REST method used.
     :param url: The url path of the HTTP request.
@@ -697,6 +696,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
     request.profile = profile
     if components is not None:
+      for c in components:
+        if c.__class__.__name__ == 'InputFile':
+          is_json = False
       if data is None:
         data = components
       else:
@@ -704,7 +706,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
           if isinstance(c, tuple):
             data[c[1]] = c[0].dom.content
           else:
-            request.data.add(c)
+            request.data.add(c, is_json=is_json)
     request.send(data, stringify=is_json)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")

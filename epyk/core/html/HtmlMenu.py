@@ -90,12 +90,14 @@ class HtmlNavBar(Html.Html):
     self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
     return self
 
-  def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False) -> Html.Html:
+  def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False,
+                with_css_cls: bool = True) -> Html.Html:
     """   Add component to the right.
 
-    :param component: Internal component to the framework.
-    :param css: Optional. The CSS attributes.
-    :param prepend: Optional.
+    :param component: Internal component to the framework
+    :param css: Optional. The CSS attributes
+    :param prepend: Optional
+    :param with_css_cls: Add the default hover CSS class to the component
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.text(component, width=("auto", ''))
@@ -106,7 +108,8 @@ class HtmlNavBar(Html.Html):
       component.options.managed = False
       if css is not None:
         component.css(css)
-    component.style.add_classes.div.color_hover()
+    if with_css_cls:
+      component.style.add_classes.div.color_hover()
     component.style.css.color = self.page.theme.greys[self.page.theme.index]
     if not hasattr(self, '_right'):
       self._right = self.page.ui.div(width=("auto", ''), height=(100, "%"))
@@ -140,7 +143,7 @@ class HtmlNavBar(Html.Html):
 
   def __str__(self):
     if self.avatar is not None:
-      self.add_right(self.avatar)
+      self.add_right(self.avatar, with_css_cls=False)
     if self.scroll is not None:
       self.val.append(self.scroll)
       if self.scroll.css('width') == '100%':

@@ -133,8 +133,8 @@ class RawData(primitives.JsDataModel):
     This function is automatically used in the different components in order
     to guarantee the link of the data. This will also ensure that the same data set will be store only once in the page
  
-    :param component:
-    :param profile: Optional.
+    :param component: An HTML component to be linked to
+    :param profile: Optional. Activate the profiling features
     """
     self.page.properties.data.get_schema_containers(self._data_id)[component.htmlCode] = {
       'fncs': [], 'outs': None, "profile": profile}
@@ -204,22 +204,30 @@ class Datamap(primitives.JsDataModel):
       for k, v in attrs.items():
         self.attr(k, v)
 
-  def add(self, component: primitives.HtmlModel, html_code: str = None):
+  def add(self, component: primitives.HtmlModel, html_code: str = None, is_json: bool = True):
     """   Add an HTML component to the object.
-    The key will be the html_code.
- 
+
+    The key will be the html_code. If the format is not Json it will convert all data the Json string object.
+
     :param component: The HTML component.
     :param html_code: Optional. The Html code.
+    :param is_json: Optional. Flag to specify the data format. Default Json so True.
     """
-    self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    if is_json:
+      self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+    else:
+      self._data.append((
+        JsUtils.jsConvertData(html_code or component.htmlCode, None),
+        JsUtils.jsConvertData(component.dom.content.stringify(), None)))
     return self
 
   def attr(self, k: Union[str, primitives.JsDataModel], v: Any):
-    """   Add an key, value to the Datamap object.
+    """   Add a key, value to the Datamap object.
     Keys and value might be JavaScript objects.
  
     :param k: The key attribute to be added to the object.
     :param v: The value associated to the key.
+    :return: Self to allow the chaining
     """
     self._data.append((JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
     return self
@@ -228,21 +236,46 @@ class Datamap(primitives.JsDataModel):
     """   Add multiple attributes to the DataMap object.
  
     :param data: All the attributes to attach
+    :return: Self to allow the chaining
     """
     for k, v in data.items():
       self.attr(k, v)
     return self
 
-  def toStr(self):
+  def toStr(self) -> str:
     return "{%s}" % ",".join(["%s: %s" % (k, v) for k, v in self._data])
 
   def get(self, value: Union[str, primitives.JsDataModel], dfl=None):
+    """
+
+    :param value:
+    :param dfl:
+    :return:
+    """
     return JsObject.JsObject.get(
       "{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
 
   def update(self, attrs: dict):
+    """ Direct update of the object attributes.
+
+    :param attrs: A dictionary with the attributes to add
+    :return: The object to allow the chaining.
+    """
     self.attrs(attrs)
     return self
+
+  def toStrFormData(self) -> str:
+    """ Change the object to a FormData object.
+
+    :return: A string with the FormData entire definition.
+    """
+    str_frgs = []
+    for k, v in self._data:
+      if hasattr(v, "stringify"):
+        str_frgs.append("mapToFormData.append(%s, %s)" % (JsUtils.jsConvertData(k, None), v.stringify()))
+      else:
+        str_frgs.append("mapToFormData.append(%s, %s)" % (k, v))
+    return "(function(){let mapToFormData = new FormData(); %s; return mapToFormData})()" % ";".join(str_frgs)
 
   def __str__(self):
     return self.toStr()
@@ -252,8 +285,7 @@ class FormData(primitives.JsDataModel):
   alias = None
 
   def new(self, js_code: str, var_type: str = "let"):
-    """  
-    Define a JavaScript variable.
+    """  Define a JavaScript variable.
  
     :param js_code: The JavaScript variable name.
     :param var_type: The JavaScript variable type (let, const, var...)
@@ -262,8 +294,7 @@ class FormData(primitives.JsDataModel):
     return "%s %s = new FormData()" % (var_type, js_code)
 
   def get(self, js_code: str):
-    """  
-    Get a JavaScript variable.
+    """  Get a JavaScript variable.
  
     :param js_code: The JavaScript variable name.
     """
@@ -271,18 +302,22 @@ class FormData(primitives.JsDataModel):
     return self
 
   def append(self, name: Union[str, primitives.JsDataModel], value: Any):
-    """  
- 
-    :param name:
-    :param value:
+    """  Append an item to the FormData object.
+
+    Usage::
+
+
+    :param name: The item name
+    :param value: The item value
     """
-    return "%s.append(%s, %s)" % (self.alias, JsUtils.jsConvertData(name, None), value)
+    return "%s.append(%s, %s)" % (
+      self.alias, JsUtils.jsConvertData(name, None), JsUtils.jsConvertData(value, None))
 
   def add(self, component: primitives.HtmlModel, html_code: str = None):
-    """  
+    """
     Add an HTML component to the object.
     The key will be the html_code.
- 
+
     :param component: The HTML component.
     :param html_code: Optional. The Html code.
     """
@@ -304,7 +339,7 @@ class FormData(primitives.JsDataModel):
         appends.append(self.append(k, JsUtils.jsConvertData(v, None)))
     return appends
 
-  def toStr(self):
+  def toStr(self) -> str:
     return self.alias
 
 

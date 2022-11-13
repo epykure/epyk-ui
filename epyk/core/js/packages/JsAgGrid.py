@@ -498,6 +498,16 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.sizeColumnsToFit()" % self.varId)
 
+  def stopEditing(self):
+    """ The callback stopEditing (from the params above) gets called by the editor.
+    This is how your cell editor informs the grid to stop editing.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/cell-editing-start-stop/
+    """
+    return JsObjects.JsVoid("%s.api.stopEditing()" % self.varId)
+
   @property
   def columnApi(self):
     """   

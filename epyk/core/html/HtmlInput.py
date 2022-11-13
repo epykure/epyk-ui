@@ -321,6 +321,37 @@ class Input(Html.Html):
     return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
+class InputFile(Input):
+  name = 'InputFile'
+  _option_cls = OptInputs.OptionsInputFile
+
+  def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code, options, attrs, profile):
+    super(InputFile, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
+    self.set_attrs({"type": 'file'})
+
+  @property
+  def options(self) -> OptInputs.OptionsInputFile:
+    """   Property to set all the input component properties.
+    """
+    return super().options
+
+  @property
+  def dom(self) -> JsHtmlInput.InputFiles:
+    """   Return all the Javascript functions defined for an HTML Input Component.
+    Those functions will use plain javascript available for a DOM element by default.
+
+    Usage::
+
+      div = page.ui.input(htmlCode="testDiv")
+      print(div.dom.content)
+
+    :return: A Javascript Dom object.
+    """
+    if self._dom is None:
+      self._dom = JsHtmlInput.InputFiles(self, page=self.page)
+    return self._dom
+
+
 class InputRadio(Input):
   name = 'Input'
 

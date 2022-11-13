@@ -157,7 +157,7 @@ class Inputs:
 
   def file(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
-           attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Input:
+           attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputFile:
     """
     Input field that will hide characters typed in
 
@@ -167,7 +167,7 @@ class Inputs:
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlInput.File`
+      - :class:`epyk.core.html.HtmlInput.InputFile`
 
     :param text: Optional. The value to be displayed to the component
     :param placeholder: Optional. Text visible when the input component is empty
@@ -180,8 +180,7 @@ class Inputs:
     :param profile: Optional. A flag to set the component performance storage
     """
     attrs = attrs or {}
-    attrs.update({"type": 'file'})
-    component = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code, options, attrs, profile)
+    component = html.HtmlInput.InputFile(self.page, text, placeholder, width, height, html_code, options, attrs, profile)
     html.Html.set_component_skin(component)
     if tooltip:
       component.tooltip(tooltip)

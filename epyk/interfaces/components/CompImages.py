@@ -417,6 +417,7 @@ class Images:
         menu_item = self.page.ui.div(menu_item, width="auto")
       menu_item.style.css.position = "absolute"
       menu_item.style.css.display = "None"
+      menu_item.style.css.line_height = "normal"
       menu_item.style.css.border = "1px solid %s" % self.page.theme.greys[4]
       menu_item.style.css.border_radius = 5
       menu_item.style.css.background_color = self.page.theme.dark_or_white()

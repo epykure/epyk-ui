@@ -564,18 +564,18 @@ class XMLHttpRequest:
 
       https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
 
-    :param json_data:
-    :param encode_uri_data:
-    :param stringify:
+    :param json_data: Optional. JavaScript input data
+    :param encode_uri_data: Optional. Encode data for url
+    :param stringify: Optional. Force the JavaScript data to be changed to String. Default True
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if json_data:
       if isinstance(json_data, list):
         for obj in json_data:
           if hasattr(obj, 'options'):
-            self.data.add(obj)
+            self.data.add(obj, is_json=stringify)
           elif isinstance(obj, tuple):
-            self.data.add(obj[0], obj[1])
+            self.data.add(obj[0], obj[1], is_json=stringify)
           else:
             self.data.attrs(obj)
 
@@ -590,7 +590,7 @@ class XMLHttpRequest:
         self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
       else:
         # For data form when dealing with files
-        self.__req_send = "%s.send(%s)" % (self.varId, JsUtils.jsConvertData(self.data, None))
+        self.__req_send = "%s.send(%s)" % (self.varId, self.data.toStrFormData())
     elif encode_uri_data is not None:
       self.__url_prefix = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in encode_uri_data.items()])
       self.__req_send = "%s.send()" % self.varId
