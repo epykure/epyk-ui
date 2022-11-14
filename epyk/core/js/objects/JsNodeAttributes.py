@@ -79,7 +79,7 @@ class JsAttributes(JsObject.JsObject):
 
       https://www.w3schools.com/jsref/met_namednodemap_removenameditem.asp
  
-    :param str name: The name of the node in the namedNodeMap you want to remove.
+    :param name: The name of the node in the namedNodeMap you want to remove.
 
     :return: 	A Node object, representing the removed attribute node
     """

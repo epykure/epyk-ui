@@ -147,6 +147,23 @@ class ContentFormatters:
   def __floordiv__(self, obj):
     return JsObjects.JsObjects.get("%s // %s" % (self.selector, JsUtils.jsConvertData(obj, None)))
 
+  def isIn(self, values: Union[list, primitives.JsDataModel]) -> JsObjects.JsBoolean.JsBoolean:
+    """ Check if value is in a list.
+
+    Usage::
+
+      inp = page.ui.input()
+      values = ["A", "B"]
+      inp.enter([
+        page.js.if_(self.dom.content.isIn(values), [
+          page.js.alert("Ok")
+        ]).else_([])
+      ])
+
+    :param values: The values to use on the JavaScript side for the if statement
+    """
+    return JsObjects.JsBoolean.JsBoolean.get("%s.includes(%s)" % (JsUtils.jsConvertData(values, None), self.selector))
+
   def isTrue(self):
     return JsObjects.JsObjects.get("%s == true" % self.selector)
 

@@ -645,7 +645,7 @@ class JsObjects:
 
     :param alias: The variable name on the JavaScript side
     """
-    return JsObject.JsObject.get("data")
+    return JsObject.JsObject.get("data")[alias]
 
   @property
   def this(self) -> JsNodeDom.JsDoms:

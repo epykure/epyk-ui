@@ -884,7 +884,7 @@ class JsDoms(JsObject.JsObject):
     """
     tag_name = JsUtils.jsConvertData(tag_name, None)
     return cls(
-      data="document.createElement('%s')" % tag_name, js_code=js_code, set_var=set_var, is_py_data=is_py_data,
+      data="document.createElement(%s)" % tag_name, js_code=js_code, set_var=set_var, is_py_data=is_py_data,
       page=page)
 
   @property
@@ -1526,6 +1526,28 @@ class JsDoms(JsObject.JsObject):
     self._js.append("if(window.getComputedStyle(%(varId)s)['%(pivot_key)s'] == '%(pivot_val)s') {%(css_attrs_on)s} else {%(css_attrs_off)s}" % {"pivot_val": pivot_val, "varId": self.varId, "pivot_key": pivot_key, 'css_attrs_on': css_attrs_on, 'css_attrs_off': css_attrs_off})
     return self
 
+  def setCustomValidity(self, value: Union[str, primitives.JsDataModel]):
+    """ Add the :valid and :invalid pseudo classes.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_validation_api.asp
+
+    :param value: The string. If empty then valid
+    """
+    value = JsUtils.jsConvertData(value, None)
+    self._js.append("%s.setCustomValidity(%s)" % (self.varId, value))
+    return self
+
+  def checkValidity(self):
+    """ Returns true if an input element contains valid data.
+
+    Related Pages:
+
+      https://www.w3schools.com/js/js_validation_api.asp
+    """
+    return JsBoolean.JsBoolean.get("%s.checkValidity()" % self.varId)
+
   def toggleText(self, string_1: types.JS_DATA_TYPES, string_2: types.JS_DATA_TYPES):
     """
     Toggle (change) the content of the HTML component
@@ -1918,6 +1940,14 @@ class JsDoms(JsObject.JsObject):
     else:
       self._js.append("%s.insertBefore(%s, %s)" % (self.varId, new_node, existing_node))
     return self
+
+  def appendAfter(self, new_node, existing_node):
+    """ Append a node after an existing one.
+
+    :param new_node: The node object you want to insert
+    :param existing_node: The current node
+    """
+    return self.insertBefore(new_node, existing_node.nextSibling)
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES = None):
     """   Trigger a click event.

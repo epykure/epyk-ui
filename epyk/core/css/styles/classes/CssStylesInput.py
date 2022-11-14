@@ -158,10 +158,10 @@ class CssInputTextArea(CssStyle.Style):
 
 
 class CssInputValid(CssStyle.Style):
-  _valid = {'color': 'red'}
-  _invalid = {
-    'color': 'yellow', "background": "url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)",
-    "background-size": "10px", "background-repeat": 'no-repeat', "background-position": "0"}
+
+  def customize(self):
+    self.valid.css({"color": self.page.theme.success.base, "border": BORDER_1PX_EXPR.format(self.page.theme.colors[0])})
+    self.invalid.css({"color": self.page.theme.danger.base, "border": "1px solid %s" % self.page.theme.danger.base})
 
 
 class CssUIActive(CssStyle.Style):

@@ -153,6 +153,82 @@ class Input(Html.Html):
     self.style.add_classes.input.is_valid()
     return self
 
+  def validation_from(self, values, css_cls = None, disclaimer="&#9888; Error - Invalid value",
+                      css_disclaimer: dict = None, on_enter: bool = True):
+    """ Run more sophisticated validation checks using list or remote services.
+
+    Usage::
+
+      inp = page.ui.input(html_code="auto")
+      request = page.js.post("/validation", components=[inp])
+      inp.validation_from(request)
+
+
+    :param values: Can be a list of items or a XMLHttp request
+    :param css_cls: The CSS class for the input when validation error
+    :param disclaimer: The disclaimer text
+    :param css_disclaimer: CSS attributes for the disclaimer
+    :param on_enter: If trye, trigger the value when enter is pressed
+    """
+    if css_disclaimer is None:
+      css_disclaimer = {
+        "display": "None",
+        "font-size": "%spx" % (int(self.style.css.font_size[:2]) - 2),
+        "font-weight": "900",
+        "color": self.page.theme.danger.base
+      }
+    if css_cls is None:
+      css_cls = self.style.add_classes.input.is_valid()
+    if isinstance(css_cls, str):
+      classname = css_cls
+    else:
+      classname = css_cls.classname
+    self.page.properties.js.add_builders(JsUtils.jsConvertFncs([
+      self.page.js.createElement("span", "%s_disclaimer" % self.html_code).setAttribute(
+        "id", "%s_disclaimer" % self.html_code).css(css_disclaimer).innerHTML(disclaimer),
+      self.dom.parentNode.appendAfter(
+        self.page.js.getVar("%s_disclaimer" % self.html_code), self.dom)], toStr=True, profile=False))
+
+    if isinstance(values, list):
+      if on_enter:
+        self.enter([self.dom.events.trigger("blur")])
+      return self.on("blur", [
+        self.page.js.if_(self.dom.content.isIn(values), [
+          self.dom.setCustomValidity(""),
+          #self.dom.removeClass(classname).r,
+          self.page.js.getElementById("%s_disclaimer" % self.html_code).css("display", "None")
+        ]).else_([
+          self.dom.focus(),
+          self.dom.addClass(classname).r,
+          self.dom.setCustomValidity("Invalid field."),
+          self.page.js.getElementById("%s_disclaimer" % self.html_code).css("display", "block")
+        ]),
+      ])
+
+    elif hasattr(values, "onSuccess"):
+      if on_enter:
+        self.enter([self.dom.events.trigger("blur")])
+      return  self.on("blur", [
+        values.onSuccess([
+          self.page.js.if_(self.page.js.objects["result"], [
+            self.dom.setCustomValidity(""),
+            #self.dom.removeClass(classname).r,
+            self.page.js.getElementById("%s_disclaimer" % self.html_code).css("display", "None")
+          ]).else_([
+            self.dom.focus(),
+            self.dom.setCustomValidity("Invalid field."),
+            #self.dom.addClass(classname).r,
+            self.page.js.if_(self.page.js.objects["disclaimer"], [
+              self.page.js.getElementById("%s_disclaimer" % self.html_code).innerHTML(
+                self.page.js.objects["disclaimer"])
+            ]),
+            self.page.js.getElementById("%s_disclaimer" % self.html_code).css("display", "block")
+          ])
+        ])
+      ])
+
+    raise ValueError("Validation not predefined for this type of object")
+
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
     """
