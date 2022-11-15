@@ -4,7 +4,7 @@
 import json
 import os
 import base64
-from typing import Union, Optional, Any, List, Callable
+from typing import Union, Optional, Any, List, Callable, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -630,7 +630,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url)
 
   def get(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
-          js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+          js_code: str = "response", is_json: bool = True,
+          components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
           headers: Optional[dict] = None, asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  
     Create a GET HTTP request.
@@ -676,7 +677,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return request
 
   def rest(self, method: str, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
-           js_code: str = "response", is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+           js_code: str = "response", is_json: bool = True,
+           components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
            asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  Create a POST HTTP request.
@@ -716,7 +718,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return request
 
   def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
-           is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+           is_json: bool = True,
+           components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
            asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  
@@ -741,7 +744,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                      profile=profile, headers=headers, asynchronous=asynchronous)
 
   def put(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
-          is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+          is_json: bool = True,
+          components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
           profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
           asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  
@@ -766,7 +770,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                      profile=profile, headers=headers, asynchronous=asynchronous)
 
   def patch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
-            is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+            is_json: bool = True,
+            components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
             profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
             asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  
@@ -791,7 +796,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                      profile=profile, headers=headers, asynchronous=asynchronous)
 
   def delete(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
-             is_json: bool = True, components: Optional[List[primitives.HtmlModel]] = None,
+             is_json: bool = True,
+             components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
              asynchronous: bool = False) -> JsObjects.XMLHttpRequest:
     """  

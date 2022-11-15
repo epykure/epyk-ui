@@ -160,7 +160,7 @@ class CssInputTextArea(CssStyle.Style):
 class CssInputValid(CssStyle.Style):
 
   def customize(self):
-    self.valid.css({"color": self.page.theme.success.base, "border": BORDER_1PX_EXPR.format(self.page.theme.colors[0])})
+    self.valid.css({"color": self.page.theme.success.base})
     self.invalid.css({"color": self.page.theme.danger.base, "border": "1px solid %s" % self.page.theme.danger.base})
 
 
