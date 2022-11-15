@@ -254,6 +254,9 @@ class InputFileDom:
     """
     return JsObjects.JsString.JsString.get("%s.webkitRelativePath" % self.varId)
 
+  def toStr(self):
+    return JsObjects.JsArray.JsArray.get(self.varId)
+
 
 class InputFilesList:
 
@@ -263,7 +266,7 @@ class InputFilesList:
     self.page = page
 
   def __getitem__(self, x) -> InputFileDom:
-    return InputFileDom("%s[%s]" % (self.varId, x), page=self.page, component=self.component)
+    return InputFileDom("%s.files[%s]" % (self.varId, x), page=self.page, component=self.component)
 
   def toStr(self):
     return JsObjects.JsArray.JsArray.get("%s.files" % self.varId)

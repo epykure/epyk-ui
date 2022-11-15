@@ -193,7 +193,7 @@ class RawData(primitives.JsDataModel):
 class Datamap(primitives.JsDataModel):
 
   def __init__(self, components: List[primitives.HtmlModel] = None, attrs: dict = None):
-    self._data = []
+    self._data, self.__post_process = [], ""
     if components is not None:
       for c in components:
         if isinstance(c, tuple):
@@ -214,7 +214,14 @@ class Datamap(primitives.JsDataModel):
     :param is_json: Optional. Flag to specify the data format. Default Json so True.
     """
     if is_json:
-      self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+      if component.__class__.__name__ == "InputFile":
+        if component.options.multiple:
+          self.__post_process = "Array.from(%s).forEach(function(f, i){mapToFormData.append('%s['+ i +']', f)})" % (
+            component.dom.files.toStr(), component.html_code)
+        else:
+          self._data.append((html_code or component.attr["name"], JsUtils.jsConvertData(component.dom.files[0], None)))
+      else:
+        self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
     else:
       self._data.append((
         JsUtils.jsConvertData(html_code or component.htmlCode, None),
@@ -271,10 +278,9 @@ class Datamap(primitives.JsDataModel):
     """
     str_frgs = []
     for k, v in self._data:
-      if hasattr(v, "stringify"):
-        str_frgs.append("mapToFormData.append(%s, %s)" % (JsUtils.jsConvertData(k, None), v.stringify()))
-      else:
-        str_frgs.append("mapToFormData.append(%s, %s)" % (k, v))
+      str_frgs.append("mapToFormData.append(%s, %s)" % (JsUtils.jsConvertData(k, None), v))
+    if self.__post_process:
+      str_frgs.append(self.__post_process)
     return "(function(){let mapToFormData = new FormData(); %s; return mapToFormData})()" % ";".join(str_frgs)
 
   def __str__(self):

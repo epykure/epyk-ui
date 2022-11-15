@@ -697,20 +697,21 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     url = JsUtils.jsConvertData(url, None)
     request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
     request.profile = profile
+    stringify = True
     if components is not None:
       for c in components:
         if c.__class__.__name__ == 'InputFile':
-          is_json = False
+          stringify = False
       if data is None:
         data = components
       else:
         for c in components:
           if isinstance(c, tuple):
-            data[c[1]] = c[0].dom.content
+            request.data.add(c[0], c[1], is_json=is_json)
           else:
             request.data.add(c, is_json=is_json)
-    request.send(data, stringify=is_json)
-    if is_json:
+    request.send(data, stringify=stringify, is_json=is_json)
+    if stringify:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     if headers is not None:
       for k, v in headers.items():

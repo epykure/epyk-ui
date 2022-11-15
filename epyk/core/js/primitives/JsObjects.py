@@ -553,7 +553,7 @@ class XMLHttpRequest:
     """
 
   def send(self, json_data: types.JS_DATA_TYPES = None, encode_uri_data: dict = None,
-           stringify: bool = True):
+           stringify: bool = True, is_json: bool = True):
     """
     The XMLHttpRequest method send() sends the request to the server.
     If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the
@@ -567,15 +567,16 @@ class XMLHttpRequest:
     :param json_data: Optional. JavaScript input data
     :param encode_uri_data: Optional. Encode data for url
     :param stringify: Optional. Force the JavaScript data to be changed to String. Default True
+    :param is_json: Optional. Specify the type of data. Default True
     """
     #Initialize jsonData with potential initial data passed in the constructor
     if json_data:
       if isinstance(json_data, list):
         for obj in json_data:
           if hasattr(obj, 'options'):
-            self.data.add(obj, is_json=stringify)
+            self.data.add(obj, is_json=is_json)
           elif isinstance(obj, tuple):
-            self.data.add(obj[0], obj[1], is_json=stringify)
+            self.data.add(obj[0], obj[1], is_json=is_json)
           else:
             self.data.attrs(obj)
 

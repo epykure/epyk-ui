@@ -401,6 +401,7 @@ class InputFile(Input):
   def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code, options, attrs, profile):
     super(InputFile, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
     self.set_attrs({"type": 'file'})
+    self.set_attrs({"name": "%s[]" % self.html_code})
 
   @property
   def options(self) -> OptInputs.OptionsInputFile:
