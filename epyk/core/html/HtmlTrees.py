@@ -12,7 +12,6 @@ from epyk.core.js.html import JsHtmlTree
 from epyk.core.html.options import OptTrees
 
 from epyk.core.css.styles import GrpClsList
-from epyk.core.css import Defaults as cssDefaults
 
 
 class Tree(Html.Html):
@@ -39,8 +38,6 @@ class Tree(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlTree.JsHtmlTree
     """
     if self._dom is None:
       self._dom = JsHtmlTree.JsHtmlTree(self, page=self.page)
@@ -52,8 +49,6 @@ class Tree(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptTrees.OptionsTree
     """
     return super().options
 
@@ -82,14 +77,14 @@ class Tree(Html.Html):
 	  var currBranchPath = []; checFiltBranch(data, currBranchPath, true)}; options.is_root = false};
       data.forEach(function(item, i){
         if((typeof options.filter_on === 'undefined') || (options.filter_on == '') || item._meta.visible){
-        var li = document.createElement("li");
-        var a = document.createElement("a");
+        var li = document.createElement("li"); var a = document.createElement("a");
         a.style["white-space"] = 'nowrap';
         if(typeof item.css !== "undefined"){for(const attr in item.css){a.style[attr] = item.css[attr]}};
         if(typeof item.items !== 'undefined'){
           var ul = document.createElement("ul"); 
           ul.setAttribute("data-depth", parseInt(htmlObj.getAttribute("data-depth")) + 1);
           ul.setAttribute("data-parent", item.value);
+          if (!options.expanded){ul.style.display = 'none'};
           for(const attr in options.style){ul.style[attr] = options.style[attr]};
           options.builder(ul, item.items, options);
           var icon = document.createElement("i"); 
@@ -105,7 +100,8 @@ class Tree(Html.Html):
               icon.setAttribute("class", options.icon_close)}
           };
           icon.style.cursor = "pointer"; icon.style.color = "grey";
-          options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)});
+          if (options.expanded){options.icon_open.split(" ").forEach(function(s){icon.classList.add(s)})}
+          else {options.icon_close.split(" ").forEach(function(s){icon.classList.add(s)})}
           var span = document.createElement("span"); 
           span.setAttribute("data-value", item.value);
           if(typeof item.label !== "undefined"){span.innerHTML = item.label;}
@@ -166,8 +162,8 @@ class Tree(Html.Html):
   def click_node(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """   
 
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.options.click_node(js_funcs, profile)
     return self
@@ -176,10 +172,10 @@ class Tree(Html.Html):
             source_event: Optional[str] = None, on_ready: bool = False):
     """   
 
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.options.click_leaf(js_funcs, profile)
     return self
@@ -240,8 +236,6 @@ class DropDown(Html.Html):
   def style(self) -> GrpClsList.ClassDropDown:
     """   The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
-
-    :rtype: GrpClsList.ClassDropDown
     """
     if self._styleObj is None:
       self._styleObj = GrpClsList.ClassDropDown(self)
@@ -250,8 +244,6 @@ class DropDown(Html.Html):
   @property
   def options(self) -> OptTrees.OptDropDown:
     """   Property to set all the possible object for a DropDown.
-
-    :rtype: OptTrees.OptDropDown
     """
     return super().options
 
@@ -259,11 +251,10 @@ class DropDown(Html.Html):
             source_event: Optional[str] = None, on_ready: bool = False):
     """   The onclick event occurs when the user clicks on an element.
 
-    :param Union[list, str] js_funcs: A Javascript Python function
-    :param Optional[Union[bool, dict]] profile: Optional. Set to true to get the profile for the function on the
-    Javascript console.
-    :param Optional[str] source_event: Optional. The source target for the event.
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param source_event: Optional. The source target for the event.
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
     """
     self.options.onClick(js_funcs)
     return self

@@ -318,3 +318,11 @@ class ChartJs(JsCanvas.Canvas):
     """
     return JsObjects.JsVoid(
       "(function(canvas){var image = new Image(); image.src = canvas.toDataURL('image/png'); return image})(%s)" % self.varName)
+
+  def active(self):
+    """ Return the active clicked point.
+    """
+    return JsObjects.JsObject.JsObject.get("{x: %s, y: %s}" % (
+      self.component.activePoints().label,
+      self.component.activePoints().y,
+    ))

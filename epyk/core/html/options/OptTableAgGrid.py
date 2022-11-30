@@ -255,6 +255,21 @@ class Column(Options):
     self._config(values)
 
   @property
+  def cellStyle(self):
+    """   Rules that return true will have the class applied the second time.
+    Rules that return false will have the class removed second time.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/cell-styles/
+    """
+    return self._config_get()
+
+  @cellStyle.setter
+  def cellStyle(self, values: dict):
+    self._config(values)
+
+  @property
   def children(self):
     """
 
@@ -747,6 +762,21 @@ class Column(Options):
     self._config(val, js_type=True)
 
   @property
+  def valueFormatter(self):
+    """ Value formatters allow you to format values for display. This is useful when data is one type (e.g. numeric)
+    but needs to be converted for human reading (e.g. putting in currency symbols and number formatting).
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-formatters/
+    """
+    return self._config_get()
+
+  @valueFormatter.setter
+  def valueFormatter(self, val: str):
+    self._config(val)
+
+  @property
   def volatile(self):
     """   """
     return self._config_get()
@@ -1032,7 +1062,8 @@ class TableConfig(Options):
 
   @property
   def allowContextMenuWithControlKey(self):
-    """   If you always want the grid's context menu, even when Ctrl is pressed, then set allowContextMenuWithControlKey=true.
+    """  If you always want the grid's context menu, even when Ctrl is pressed, then set
+    allowContextMenuWithControlKey=true.
     
     Related Pages:
 
@@ -1119,7 +1150,8 @@ class TableConfig(Options):
 
   @property
   def data(self):
-    """   Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API setRowData().
+    """   Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API
+    setRowData().
 
     Related Pages:
 
@@ -1183,7 +1215,8 @@ class TableConfig(Options):
 
   @property
   def enableValue(self):
-    """   This means you can drag the columns to the values section, but you cannot drag them to the group or pivot sections.
+    """   This means you can drag the columns to the values section, but you cannot drag them to the group or pivot
+    sections.
 
     Related Pages:
 
@@ -1257,6 +1290,26 @@ class TableConfig(Options):
 
   def getContextMenuItems(self):
     pass
+
+  def getRowClass(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+    """ Callback version of property rowClass to set class(es) for each row individually.
+    Function should return either a string (class name), array of strings (array of class names) or undefined
+    for no class.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-styles/#reference-styling-getRowClass
+
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(params)") and not func_ref:
+      str_func = "function(params){%s}" % str_func
+    self._config(str_func, js_type=True)
 
   def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
@@ -1572,6 +1625,34 @@ class TableConfig(Options):
     self._config(flag)
 
   @property
+  def rowClass(self):
+    """ The style properties to apply to all rows. Set to an object of key (style names) and values (style values).
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-styles/
+    """
+    return self._config_get(None)
+
+  @rowClass.setter
+  def rowClass(self, values: Union[str, list]):
+    self._config(values)
+
+  @property
+  def rowClassRules(self):
+    """ The following snippet shows rowClassRules applying classes to rows using expressions on an age column value:
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-styles/
+    """
+    return self._config_get(None)
+
+  @rowClassRules.setter
+  def rowClassRules(self, values: Union[str, dict]):
+    self._config(values)
+
+  @property
   def rowHeight(self):
     """   By default, the grid will display rows with a height of 25px. You can change this for each row individually
     to give each row a different height.
@@ -1585,6 +1666,20 @@ class TableConfig(Options):
   @rowHeight.setter
   def rowHeight(self, num: int):
     self._config(int(num))
+
+  @property
+  def rowStyle(self):
+    """  Property to set style for all rows. Set to an object of key (style names) and values (style values).
+
+    Related Pages:
+
+      http://54.222.217.254/javascript-grid-row-styles/#row-style
+    """
+    return self._config_get(None)
+
+  @rowStyle.setter
+  def rowStyle(self, values: Union[dict, str]):
+    self._config(values)
 
   @property
   def singleClickEdit(self):

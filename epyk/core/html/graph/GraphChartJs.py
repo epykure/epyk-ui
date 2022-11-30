@@ -51,6 +51,17 @@ class ChartJsActivePoints:
     return JsObject.JsObject.get("%s.data.datasets[%s].label" % (self.chartId, self.num))
 
   @property
+  def y(self):
+    """   Get the value of the selected series.
+
+    Usage::
+
+      line = page.ui.charts.chartJs.line()
+      line.click([line.activePoints().y])
+    """
+    return JsObject.JsObject.get("%s.data.datasets[%s].data[activePoints[0].index]" % (self.chartId, self.num))
+
+  @property
   def labels(self):
     """   Get the series label name.
 
@@ -121,6 +132,10 @@ class ChartJsActivePoints:
     """
     return JsObject.JsObject.get("%s.data.datasets[activePoints[Math.min(%s, activePoints.length - 1)]._datasetIndex].data[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (self.chartId, self.num, self.num))
 
+  def toStr(self):
+    """ """
+    return JsObject.JsObject.get("activePoints")
+
 
 class Chart(Html.Html):
   name = 'ChartJs'
@@ -141,7 +156,7 @@ class Chart(Html.Html):
     self._attrs["type"] = self._chart__type
     self.attr["class"].add("chart-container")
 
-  def activePoints(self, i: int = None):
+  def activePoints(self, i: int = None) -> ChartJsActivePoints:
     """   The current active points selected by an event on a chart.
 
     Usage::
@@ -152,7 +167,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/developers/api.html
 
-    :param i: Integer. Optional. The series index. Default it is the series clicked.
+    :param i: Optional. The series index. Default it is the series clicked.
     """
     return ChartJsActivePoints(self.chartId, i, self.page)
 
@@ -194,8 +209,6 @@ class Chart(Html.Html):
     Usage::
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtmlCharts.ChartJs
     """
     if self._dom is None:
       self._dom = JsHtmlCharts.ChartJs(page=self.page, component=self)
@@ -320,19 +333,21 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    :param js_funcs: List. Set of Javascript function to trigger on this event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Set of Javascript function to trigger on this event
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
     if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
       tmp_js_funcs = [
         "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
-        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+        "if(activePoints.length > 0){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     else:
       tmp_js_funcs = [
         "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
-        "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
+        "if(activePoints.length > 0){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
     return super(Chart, self).click(tmp_js_funcs, profile)
 
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False, source_event: str = None,
@@ -343,10 +358,10 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    :param js_funcs: List. Set of Javascript function to trigger on this event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Set of Javascript function to trigger on this event
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
       tmp_js_funcs = [
@@ -365,9 +380,9 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/general/interactions/events.html
 
-    :param js_funcs: List. Set of Javascript function to trigger on this event.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param source_event: String. Optional. The JavaScript DOM source for the event (can be a sug item).
+    :param js_funcs: Set of Javascript function to trigger on this event
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
     """
     if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
       tmp_js_funcs = [
@@ -394,7 +409,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/configuration/
 
-    :param options: Dictionary. Optional. The chart options.
+    :param options: Optional. The chart options
     """
     obj_datasets = "[%s]" % ", ".join([d.toStr() for d in self._datasets])
     self._data_attrs['datasets'] = JsObject.JsObject.get(obj_datasets)
@@ -409,10 +424,10 @@ class Chart(Html.Html):
     """  
     Update the chart with context and / or data changes.
 
-    :param data: Optional. The full datasets object expected by ChartJs.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param component_id: Not used.
+    :param data: Optional. The full datasets object expected by ChartJs
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. Not used
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self._chart__type)
@@ -440,22 +455,21 @@ class Chart(Html.Html):
         ....
         chart_obj.loading(False)
 
-    :param status: Optional. Specific the status of the display of the loading component.
+    :param status: Optional. Specific the status of the display of the loading component
     """
     if status:
       return ''' 
-        if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
-          var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
-          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; 
-          divLoading.style.background = '%(background)s';
-          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
-          divLoading.style.zIndex = 200;
-          divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
-          divLoading.style.paddingTop = '50vh';
-          divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
-          document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
-        }''' % {
-        "htmlId": self.htmlCode, 'color': self.page.theme.success[1], 'background': self.page.theme.greys[0]}
+if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+  var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
+  divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; 
+  divLoading.style.background = '%(background)s';
+  divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
+  divLoading.style.zIndex = 200;
+  divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
+  divLoading.style.paddingTop = '50vh';
+  divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+  document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
+}''' % {"htmlId": self.htmlCode, 'color': self.page.theme.success[1], 'background': self.page.theme.greys[0]}
 
     return '''
       if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
@@ -500,8 +514,8 @@ class Fabric(Html.Html):
     Usage::
 
     :param data:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     :param component_id:
     """
     return '''%(chartId)s = new Chart(%(dom)s.getContext('2d'), {type: 'bar'}); 
@@ -515,9 +529,9 @@ class Fabric(Html.Html):
     Usage::
 
     :param data:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param attrs: Dictionary. Optional.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component
+    :param attrs: Optional.
+    :param profile: Optional. A flag to set the component performance storage
     """
     return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
       var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
@@ -545,7 +559,7 @@ class Datasets:
 
     Usage::
 
-    :param data: List. A list of numbers.
+    :param data: A list of numbers
     """
     self.__data.append(data)
     return self
@@ -556,7 +570,7 @@ class ChartLine(Chart):
   _option_cls = OptChartJs.OptionsLine
 
   @property
-  def options(self):
+  def options(self) -> OptChartJs.OptionsLine:
     """  
     Property to the specific ChartJs Line chart.
 
@@ -565,8 +579,6 @@ class ChartLine(Chart):
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/line.html
-
-    :rtype: OptChartJs.OptionsLine
     """
     return super().options
 
@@ -583,12 +595,12 @@ class ChartLine(Chart):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    :param index: Integer. The index of the dataset in the chart list of datasets.
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index: The index of the dataset in the chart list of datasets
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     data = JsChartJs.DataSetScatterLine(self.page, attrs={"data": data})
     if opacity is None:
@@ -616,11 +628,11 @@ class ChartLine(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    :param data: List. The list of points (float).
-    :param label: List. Optional. The list of points (float).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
-    :param kind: String. Optional. The chart type.
+    :param data: The list of points (float)
+    :param label: Optional. The list of points (float)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
+    :param kind: Optional. The chart type
     """
     data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, kind=None, **kwargs)
     self._datasets.append(data)
@@ -675,12 +687,12 @@ class ChartBubble(Chart):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    :param index: Integer. The index of the dataset in the chart list of datasets.
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index: The index of the dataset in the chart list of datasets
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     data = JsChartJs.DataSetBubble(self.page, attrs={"data": data})
     data.fill = False
@@ -705,10 +717,10 @@ class ChartBubble(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    :param data: List. The list of points (float).
-    :param label: List. The list of points (float).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
+    :param data: The list of points (float)
+    :param label: The list of points (float)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, **kwargs)
     self._datasets.append(data)

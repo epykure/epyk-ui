@@ -99,3 +99,14 @@ let childParentNode = src.parentNode; let childPath = []; childPath.push(src.out
       childPath.push(childParentNode.getAttribute('data-parent'))
     };
   }; return childPath; })(event.srcElement, '%s')''' % self.component.html_code)
+
+  def active(self):
+    return JsObjects.JsArray.JsArray.get('''
+    (function(src, parentCode){
+    let childParentNode = src.parentNode; let childPath = []; childPath.push(src.outerText);
+      while (childParentNode.id != parentCode){
+        childParentNode = childParentNode.parentNode;
+        if (childParentNode.hasAttribute('data-parent')){
+          childPath.push(childParentNode.getAttribute('data-parent'))
+        };
+      }; return childPath; })(event.srcElement, '%s')''' % self.component.html_code)

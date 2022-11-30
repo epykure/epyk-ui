@@ -271,6 +271,7 @@ class XMLHttpRequest:
     self.__mod_name, self.__mod_path, self.method, self.__data_ref = None, None, method_type, "data"
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
     self.__on = {}
+    self.__stringify = True
     self.__url_prefix, self.__responseType = "", 'json'
     self.varId, self.profile, self.timeout, self.asynchronous = js_code, False, None, asynchronous
     if url is not None:
@@ -553,7 +554,7 @@ class XMLHttpRequest:
     """
 
   def send(self, json_data: types.JS_DATA_TYPES = None, encode_uri_data: dict = None,
-           stringify: bool = True, is_json: bool = True):
+           stringify: bool = None, is_json: bool = True):
     """
     The XMLHttpRequest method send() sends the request to the server.
     If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the
@@ -569,6 +570,8 @@ class XMLHttpRequest:
     :param stringify: Optional. Force the JavaScript data to be changed to String. Default True
     :param is_json: Optional. Specify the type of data. Default True
     """
+    if stringify is not None:
+      self.__stringify = stringify
     #Initialize jsonData with potential initial data passed in the constructor
     if json_data:
       if isinstance(json_data, list):
@@ -581,13 +584,15 @@ class XMLHttpRequest:
             self.data.attrs(obj)
 
       elif isinstance(json_data, dict):
-        self.data.update(json_data)
-
+        if is_json:
+          self.data.update(json_data)
+        else:
+          for k, v in json_data.items():
+            self.data.attr(k, v)
       else:   # formdata
         self.data = json_data
-
     if json_data:
-      if stringify:
+      if self.__stringify:
         self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
       else:
         # For data form when dealing with files

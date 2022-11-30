@@ -187,6 +187,17 @@ class Table(Html.Html):
 
     return self.js.hideOverlay()
 
+  def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
+            on_ready: bool = False, data_ref: str = "data"):
+    self.options.rowSelection = 'single'
+    row_style = self.options.rowStyle
+    if row_style is None:
+      self.options.rowStyle = {"cursor": 'pointer'}
+    else:
+      row_style.update({"cursor": 'pointer'})
+      self.options.rowStyle = row_style
+    return super(Table, self).click(js_funcs, profile, source_event, on_ready)
+
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))

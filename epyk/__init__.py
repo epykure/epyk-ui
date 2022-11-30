@@ -244,3 +244,147 @@ class Interface:
       return self.page.outs.jupyter(closure=False)
 
     return self.page.outs.html()
+
+
+
+MAP_FIELDS = {
+  "div": {"values": "components"},
+  "row": {"values": "components"},
+  "button": {"value": "text"},
+  "colored": {"value": "text"},
+  "text": {"value": "text"},
+  "bar": {"y": "y_columns", "x": "x_axis"},
+  "line": {"y": "y_columns", "x": "x_axis"},
+  "pie": {"y": "y_columns", "x": "x_axis"},
+}
+
+
+def from_json_to_html(content: str, page: Rpt = None):
+  if page is None:
+    page = Page()
+  components = content["components"] if "components" in content else content
+  for alias, component in components.items():
+    comp_type = component.get("type", alias)
+    comp_category = component.get("category")
+    comp_family = component.get("family", "ui")
+    comp_library = component.get("library")
+    component["html_code"] = alias
+    ui_age = getattr(page, comp_family)
+    if comp_category is not None:
+       ui_age = getattr(ui_age, comp_category)
+    if comp_library is not None:
+       ui_age = getattr(ui_age, comp_library)
+    ui_component_cls = getattr(ui_age, comp_type)
+    funcs_args = inspect.getfullargspec(ui_component_cls)[0][1:]
+    pmts = {}
+    for field, mapped_field in MAP_FIELDS.get(comp_type, {}).items():
+      if field in component:
+        component[mapped_field] = component[field]
+        del component[field]
+
+    if comp_type in ["div", "row"]:
+      values = []
+      for val in component["components"]:
+        if val in page.components:
+          values.append(page.components[val])
+        else:
+          values.append(val)
+      component["components"] = values
+    for arg_name in funcs_args:
+      if arg_name in component:
+        pmts[arg_name] = component[arg_name]
+    ui_component = ui_component_cls(**pmts)
+    if 'css' in component:
+      ui_component.css(component["css"])
+    if "style" in component:
+      if "theme" in component["style"]:
+        ui_component.style.theme(component["style"]["theme"])
+    if 'class' in component:
+      ui_component["attr"]["class"].add(component["class"])
+  # Second loop to add the events
+  event_count = 1
+  for alias, component in components.items():
+    for event, event_details in component.get("events", {}).items():
+      event_frgs = []
+      if "print" in event_details:
+        if event_details["print"] in page.components:
+          event_frgs.append(page.js.alert(page.components[event_details["print"]].dom.content))
+        else:
+          event_frgs.append(page.js.alert(event_details["print"]))
+      if "console" in event_details:
+        if event_details["console"] == "event":
+          event_frgs.append(page.js.console.log(events.event))
+        elif event_details["console"] == "data":
+          event_frgs.append(page.js.console.log(events.data))
+        else:
+          event_frgs.append(page.js.console.log(event_details["console"]))
+      for target_alias, target_value in event_details.get("targets", {}).items():
+        if isinstance(target_value, dict):
+          event_frgs.append(page.components[target_alias].build(events.data[target_value["field"]]))
+        elif target_value in page.components:
+          event_frgs.append(page.components[target_alias].build(page.components[target_value].dom.content))
+        else:
+          event_frgs.append(page.components[target_alias].build(target_value))
+      if hasattr(page.components[alias], event):
+        if "url" in event_details:
+          query_inputs, query_data = None, {}
+          if "inputs" in event_details:
+            query_inputs = []
+            for query_alias in event_details["inputs"]:
+              if isinstance(query_alias, dict):
+                for k, v in query_alias.items():
+                  if isinstance(v, dict):
+                    if "type" in v and k in page.components:
+                      if "transform" in v:
+                        if v["transform"] == 'stringify':
+                          query_data[k] = page.js.json.stringify(getattr(page.components[k].dom, v["type"])())
+                      else:
+                        query_data[k] = getattr(page.components[k].dom, v["type"])()
+                  else:
+                    query_inputs.append((page.components[k], v))
+                    #query_inputs.append((v, page.components[k]))
+              else:
+                query_inputs.append(page.components[query_alias])
+          url_method = event_details.get("method", 'post').lower()
+          for data in event_details.get("data", []):
+            if isinstance(data, dict):
+              for k, v in data.items():
+                if isinstance(v, dict):
+                  if "type" in v and k in page.components:
+                    if "transform" in v:
+                      if v["transform"] == 'stringify':
+                        query_data[k] = page.js.json.stringify(getattr(page.components[k].dom, v["type"])())
+                    else:
+                      query_data[k] = getattr(page.components[k].dom, v["type"])()
+                else:
+                  query_data[k] = v
+          getattr(page.components[alias], event)([
+            page.js.rest(url_method, url=event_details["url"], data=query_data or None, components=query_inputs,
+                         js_code="response%s" % event_count, headers={'Access-Control-Allow-Origin': '*'},
+                         stringify=event_details.get("json", True) # default use json
+            ).onSuccess(event_frgs)])
+          event_count += 1
+        else:
+          getattr(page.components[alias], event)(event_frgs)
+      else:
+        if "url" in event_details:
+          query_inputs = None
+          if "inputs" in event_details:
+            query_inputs = []
+            for query_alias in event_details["inputs"]:
+              if isinstance(query_alias, dict):
+                for k, v in query_alias.items():
+                  query_inputs.append((v, page.components[k]))
+              else:
+                query_inputs.append(page.components[query_alias])
+          url_method = event_details.get("method", 'post').lower()
+          page.components[alias].on(
+            page.js.rest(url_method)(event_details["url"]).onSuccess(event_frgs))
+        else:
+          page.components[alias].on(event, event_frgs)
+
+  if "body" in content:
+    if "css" in content["body"]:
+      page.body.css(content["body"]["css"])
+  return page
+

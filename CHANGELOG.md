@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+## [1.9.21] - 2022-11-30
+
+### Added
+- Added documentation and type annotation
+- New functions for underlying modules (Tabulator, ChartJs and AgGrid)
+- New features for the Tree component.
+- New standard features - active() and selection() dom (in progress)
+
+### Fixed
+- Fixed issues with REST 
+
+
 ## [1.9.12] - 2022-10-22
 
 ### Added
