@@ -785,6 +785,15 @@ class Column(Options):
   def volatile(self, flag: bool):
     self._config(flag)
 
+  @property
+  def width(self):
+    """   """
+    return self._config_get()
+
+  @width.setter
+  def width(self, value: int):
+    self._config(value)
+
 
 class DefaultColDef(Options):
 

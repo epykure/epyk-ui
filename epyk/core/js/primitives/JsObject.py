@@ -294,6 +294,12 @@ class JsObject(primitives.JsDataModel):
     """
     return "typeof %s[%s] !== 'undefined'" % (self.varId, JsUtils.jsConvertData(item, None))
 
+  def isUndefined(self):
+    return "typeof %s !== 'undefined'" % self.varId
+
+  def isNumber(self):
+    return "isNaN(parseFloat(%s))" % self.varId
+
   def isFrozen(self):
     """
     The Object.isFrozen() determines if an object is frozen.

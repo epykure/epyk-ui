@@ -2190,7 +2190,11 @@ class ImportModule:
     self.page = page
     self.community_version = True
     self._defer, self._async, self.attrs = False, False, {}
-    self._js = js[name]
+    if page is not None and name not in js and name.startswith("local_"):
+      # In this case the configuration needs to be retrieved from the page context instead
+      self._js = self.page.imports.jsImports[name]
+    else:
+      self._js = js[name]
     self._css = css.get(name, {})
     if links is not None:
       links[self._name] = self

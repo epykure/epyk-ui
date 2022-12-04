@@ -189,7 +189,8 @@ class Table(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False, data_ref: str = "data"):
-    self.options.rowSelection = 'single'
+    if self.options.rowSelection is None:
+      self.options.rowSelection = 'single'
     row_style = self.options.rowStyle
     if row_style is None:
       self.options.rowStyle = {"cursor": 'pointer'}

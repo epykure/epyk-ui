@@ -445,6 +445,11 @@ class JsString(JsObject.JsObject):
       js_obj._addImport("babel-polyfill")
     return JsBoolean.JsBoolean("%s.includes(%s, %s)" % (self.varId, search_value, start), is_py_data=False)
 
+  def isNumber(self):
+    """
+    """
+    return "isNaN(parseFloat(%s))" % self.varId
+
   def startsWith(self, search_value: Union[str, primitives.JsDataModel], start: Union[int, primitives.JsDataModel] = 0,
                  js_funcs: Optional[Union[list, str]] = None, js_obj=None):
     """

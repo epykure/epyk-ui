@@ -180,6 +180,34 @@ class Tree(Html.Html):
     self.options.click_leaf(js_funcs, profile)
     return self
 
+  def loading(self, status: bool = True, color: str = None):
+    """
+
+    :param status:
+    :param color:
+    """
+    self.require.add(self.page.icons.get(None)["icon_family"])
+    if status:
+      return ''' 
+        if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+          var divLoading = document.createElement("div"); 
+          window['popup_loading_%(htmlId)s'] = divLoading; 
+          divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
+          divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
+          divLoading.style.display = 'flex'; divLoading.style.flexDirectio = 'column'; divLoading.style.justifyContent = 'center';
+          divLoading.style.zIndex = 200; divLoading.style.alignItems = 'center';
+          divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
+          divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+          document.getElementById('%(htmlId)s').appendChild(divLoading)
+        } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success.base,
+                 'background': self.page.theme.greys[0],
+                 "size": self.page.body.style.globals.font.size + 5}
+
+    return '''
+      if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
+        document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
+        window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
+
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return '<ul %s></ul>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)

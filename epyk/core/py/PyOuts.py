@@ -440,7 +440,8 @@ if (typeof icon === "undefined"){
         f.write(results["cssStyle"])
     return path
 
-  def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None):
+  def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None,
+                print_paths: bool = False):
     """ Function used to generate a static HTML page for the report.
 
     Usage::
@@ -452,9 +453,10 @@ if (typeof icon === "undefined"){
       # To generate multiple files using local packages
       page.imports.static_url = "C:\epyks\statics"
       page.outs.html_file(name="test.html", options={"split": True, "minify": True, "static_path": page.imports.static_url})
- 
-    :param path: Optional. The path in which the output files will be created.
-    :param name: Optional. The filename without the extension.
+
+    :param path: Optional. The path in which the output files will be created
+    :param name: Optional. The filename without the extension
+    :param print_paths: Optional. Print the page for the created file
     :param options: Optional.
 
     :return: The file full path.
@@ -499,21 +501,27 @@ if (typeof icon === "undefined"){
           static_path = os.path.join(path, options.get("static_path"))
         if not os.path.exists(os.path.join(static_path, 'css')):
           os.makedirs(os.path.join(static_path, 'css'))
-        with open(os.path.join(static_path, 'css', "%s.css" % css_filename), "w") as f:
+        css_file_path = os.path.join(static_path, 'css', "%s.css" % css_filename)
+        with open(css_file_path, "w") as f:
           if options.get("minify", False):
             f.write(results['cssStyle'].replace("\n", ""))
           else:
             f.write(results['cssStyle'])
-          results['cssStyle'] = "" # empty the styles as written in an external file.
+          results['cssStyle'] = ""  # empty the styles as written in an external file.
+        if print_paths:
+          print("css", "file:///%s" % css_file_path.replace("\\", "/"))
       if options["split"] is True or options["split"] == "js":
         js_filename = "%s.min" % name if options.get("minify", False) else name
         body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
           body, options.get("js_route", '%s/js' % static_url), js_filename)
         if not os.path.exists(os.path.join(static_path, 'js')):
           os.makedirs(os.path.join(static_path, 'js'))
-        with open(os.path.join(static_path, 'js', "%s.js" % js_filename), "w") as f:
+        js_file_path = os.path.join(static_path, 'js', "%s.js" % js_filename)
+        with open(js_file_path, "w") as f:
           funcs = [JsLinter.parse(v, minify=options.get("minify", False)) for v in results['jsFrgsCommon'].values()]
           f.write("\n\n".join(funcs))
+        if print_paths:
+          print("js", "file:///%s" % js_file_path.replace("\\", "/"))
 
     # Add the worker sections when no server available
     for js_id, wk_content in self.page._props.get('js', {}).get("workers", {}).items():
@@ -522,6 +530,8 @@ if (typeof icon === "undefined"){
       results['body'] = body
       results['header'] = self.page.headers
       f.write(HtmlTmplBase.STATIC_PAGE % results)
+    if print_paths:
+      print("html", "file:///%s" % html_file_path.replace("\\", "/"))
 
     if configs.keys:
       with open(os.path.join(path, "%s.json" % name), "w") as fp:
