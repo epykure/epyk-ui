@@ -155,6 +155,7 @@ class Chart(Html.Html):
     self.options.maintainAspectRatio = False
     self._attrs["type"] = self._chart__type
     self.attr["class"].add("chart-container")
+    self.__defined_options = None
 
   def activePoints(self, i: int = None) -> ChartJsActivePoints:
     """   The current active points selected by an event on a chart.
@@ -419,6 +420,23 @@ class Chart(Html.Html):
     str_ctx = "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])
     return str_ctx
 
+  def define(self, options: types.JS_DATA_TYPES = None) -> str:
+    """ Override the chart settings on the JavaScript side.
+    This will allow ot set specific styles for some series or also add commons properties.
+
+    Usage:
+
+      chart.onReady([chart.define({"commons": {"backgroundColor": ["pink"], "label": "Other series"}})])
+
+    :param options: JavaScript of Python attributes
+    """
+    self.options.config_js()
+    defined_options = "window.%s_options" % self.html_code
+    js_expr = "window.%s = Object.assign(%s, %s)" % (
+      defined_options, self.__defined_options or self.options.config_js(), JsUtils.jsConvertData(options, None))
+    self.__defined_options = defined_options
+    return js_expr
+
   def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
     """  
@@ -441,7 +459,7 @@ class Chart(Html.Html):
       return """Object.assign(window['%(chartId)s'].data, %(chartFnc)s(%(data)s, %(options)s)); 
         window['%(chartId)s'].update()""" % {
         'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
-        "options": self.options.config_js(options)}
+        "options": self.__defined_options or self.options.config_js(options)}
     return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 

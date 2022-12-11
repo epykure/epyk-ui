@@ -537,14 +537,19 @@ class AgGrid(JsPackage):
     return ColumnApi(self.page, "%s.api.expandAll" % self.varId)
 
   def setColumnDefs(self, col_defs: Any):
-    """   Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
+    """   Call to set new column definitions. The grid will redraw all the column headers, and then redraw all
+    of the rows.
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
 
-    :param col_defs:
+    :param col_defs: The new table definition. If None update the existing ones.
     """
+    if col_defs is None:
+      return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
+        self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+
     return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
 
   def getColumnDefs(self):
@@ -565,6 +570,10 @@ class AgGrid(JsPackage):
 
     :param rows:
     """
+    if self.component.options.rowTotal:
+      return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
+        self.varId, JsUtils.jsConvertData(rows, None), self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
+
     return JsObjects.JsVoid("%s.api.setRowData(%s)" % (self.varId, JsUtils.jsConvertData(rows, None)))
 
   def applyTransaction(self, transaction):
@@ -592,7 +601,7 @@ class AgGrid(JsPackage):
       self.varId, JsUtils.jsConvertData(transaction, None), callback))
 
   def exportDataAsCsv(self):
-    """   
+    """
 
     https://www.ag-grid.com/javascript-data-grid/csv-export/
     """
@@ -626,7 +635,7 @@ class AgGrid(JsPackage):
     return JsObjects.JsVoid("%s.api.getLastDisplayedRow()" % self.varId)
 
   def hideColumns(self, columns):
-    """   
+    """
 
     :param columns:
     """
@@ -634,7 +643,7 @@ class AgGrid(JsPackage):
       'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def showColumns(self, columns):
-    """   
+    """
 
     :param columns:
     """
@@ -642,7 +651,7 @@ class AgGrid(JsPackage):
       'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
   def hideColumn(self, column):
-    """   
+    """
 
     Related Pages:
 
@@ -654,7 +663,7 @@ class AgGrid(JsPackage):
       'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
 
   def showColumn(self, column):
-    """   
+    """
 
     Related Pages:
 
@@ -778,7 +787,7 @@ class AgGrid(JsPackage):
     return JsObjects.JsObject.JsObject("%s.api.destroyFilter()" % self.varId)
 
   def getFilterInstance(self, data: types.JS_DATA_TYPES):
-    """   
+    """
 
     Related Pages:
 
@@ -1089,6 +1098,35 @@ class AgGrid(JsPackage):
 
     """
     return JsObjects.JsVoid("%s.api.getSortModel()" % self.varId)
+
+  def setPinnedBottomRowData(self, rowData):
+    """
+    https://www.ag-grid.com/javascript-data-grid/row-pinning/
+
+    :param rowData:
+    """
+    return JsObjects.JsVoid("%s.api.setPinnedBottomRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
+
+  def setPinnedTopRowData(self, rowData):
+    """
+    https://www.ag-grid.com/javascript-data-grid/row-pinning/
+
+    :param rowData:
+    """
+    return JsObjects.JsVoid("%s.api.setPinnedTopRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
+
+  def setTotalRow(self, rowData, cols = None):
+      return JsObjects.JsVoid('''
+const calcTotalCols = %s;
+const totalRow = function(api) {
+      let result = [{}];
+      calcTotalCols.forEach(function (params){result[0][params] = 0});
+      calcTotalCols.forEach(function (params){%s.forEach(function (line) {result[0][params] += line[params];})});
+      api.setPinnedBottomRowData(result);
+  }; totalRow(%s.api)''' % (
+        JsUtils.jsConvertData(cols, None),
+        JsUtils.jsConvertData(rowData, None),
+        self.varId))
 
   @property
   def _(self):

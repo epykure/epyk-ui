@@ -132,7 +132,12 @@ class Table(Html.Html):
     col_def.colId = field
     col_def.headerName = field if title is None else title
     if attrs is not None:
-      col_def.update(attrs)
+      if "children" in attrs:
+        for child in attrs["children"]:
+            col_def.add_children(child)
+        del attrs["children"]
+
+      col_def.update_config(attrs)
     return col_def
 
   @property

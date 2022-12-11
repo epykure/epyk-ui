@@ -1,4 +1,3 @@
-
 import logging
 
 from typing import Union
@@ -219,6 +218,16 @@ class Column(Options):
     self._config(value)
 
   @property
+  def cellRenderers(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+    """
+    return self._config_sub_data("cellRenderer", CellRenderer)
+
+  @property
   def cellRenderer(self):
     """   Change the cell rendering.
 
@@ -283,6 +292,15 @@ class Column(Options):
   def children(self, val):
     self._config(val)
 
+  def add_children(self, attrs: dict):
+    """ Integrated way to add children to the header definition.
+
+    :param attrs: The different columns properties to set.
+    """
+    col = self._config_sub_data_enum("children", Column)
+    col.update_config(attrs)
+    return col
+
   @property
   def colId(self):
     """
@@ -308,7 +326,7 @@ class Column(Options):
     return self._config_get()
 
   @columnGroupShow.setter
-  def columnGroupShow(self, val):
+  def columnGroupShow(self, val: str):
     self._config(val)
 
   @property
@@ -365,12 +383,55 @@ class Column(Options):
     return ColumnFilter(self, 'filter')
 
   @property
+  def filterValueGetter(self):
+    """   Function or expression. Gets the value for filtering purposes.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-getters/
+    """
+    return self._config_get()
+
+  @filterValueGetter.setter
+  def filterValueGetter(self, value: str):
+    self._config(value, js_type=True)
+
+  @property
   def groupId(self):
     """   """
     return self._config_get()
 
   @groupId.setter
   def groupId(self, val: str):
+    self._config(val)
+
+  @property
+  def groupRowsSticky(self):
+    """ To enable sticky groups, set the groupRowsSticky property to true.
+    This behaviour applies to all row group levels.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/
+    """
+    return self._config_get()
+
+  @groupRowsSticky.setter
+  def groupRowsSticky(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def groupDisplayType(self):
+    """ To display each row group using group rows set groupDisplayType = 'groupRows' as shown below:
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/
+    """
+    return self._config_get()
+
+  @groupDisplayType.setter
+  def groupDisplayType(self, val: str):
     self._config(val)
 
   @property
@@ -388,13 +449,78 @@ class Column(Options):
     self._config(flag)
 
   @property
+  def headerClass(self):
+    """ Similarly to styling cells, the grid will use the result of headerClass
+    from the column definition to style the grid headers.
+
+    Related Pages:
+
+      https://ag-grid.com/javascript-data-grid/excel-export-styles/#styling-headers
+    """
+    return self._config_get()
+
+  @headerClass.setter
+  def headerClass(self, val: str):
+    self._config(val)
+
+  @property
   def headerName(self):
-    """   """
+    """ The name to render in the column header.
+    If not specified and field is specified, the field name will be used as the header name.
+
+    Related Pages:
+
+      https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+    """
     return self._config_get()
 
   @headerName.setter
   def headerName(self, val: str):
     self._config(val)
+
+  @property
+  def headerCheckboxSelection(self):
+    """ If true or the callback returns true, a 'select all' checkbox will be put into the header.
+    See Header Checkbox Selection.
+
+    Related Pages:
+
+      https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+    """
+    return self._config_get()
+
+  @headerCheckboxSelection.setter
+  def headerCheckboxSelection(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def headerTooltip(self):
+    """ When we want to display a header tooltip, we set the headerTooltip config as a string,
+    and that string will be displayed as the tooltip.
+
+    Related Pages:
+
+      https://ag-grid.com/javascript-data-grid/component-tooltip/#header-tooltip-with-custom-tooltip
+    """
+    return self._config_get()
+
+  @headerTooltip.setter
+  def headerTooltip(self, val: str):
+    self._config(val)
+
+  @property
+  def headerValueGetter(self):
+    """   Function or expression. Gets the value for display in the header.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-getters/
+    """
+    return self._config_get()
+
+  @headerValueGetter.setter
+  def headerValueGetter(self, value: str):
+    self._config(value, js_type=True)
 
   @property
   def lockPinned(self):
@@ -487,6 +613,18 @@ class Column(Options):
   @floatingFilterComponentParams.setter
   def floatingFilterComponentParams(self, values: dict):
     self._config(values)
+
+  @property
+  def tooltipField(self):
+    """
+
+    https://www.ag-grid.com/javascript-data-grid/component-tooltip/
+    """
+    return self._config_get()
+
+  @tooltipField.setter
+  def tooltipField(self, val: str):
+    self._config(val)
 
   @property
   def toolPanelClass(self):
@@ -794,6 +932,21 @@ class Column(Options):
   def width(self, value: int):
     self._config(value)
 
+  @property
+  def wrapHeaderText(self):
+    """  If enabled then column header names that are too long for the column width will wrap onto the next line.
+    Default false
+
+    Related Pages:
+
+      https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+    """
+    return self._config_get(False)
+
+  @wrapHeaderText.setter
+  def wrapHeaderText(self, flag: bool):
+    self._config(flag)
+
 
 class DefaultColDef(Options):
 
@@ -1073,7 +1226,7 @@ class TableConfig(Options):
   def allowContextMenuWithControlKey(self):
     """  If you always want the grid's context menu, even when Ctrl is pressed, then set
     allowContextMenuWithControlKey=true.
-    
+
     Related Pages:
 
       https://www.ag-grid.com/javascript-data-grid/context-menu/
@@ -1319,6 +1472,37 @@ class TableConfig(Options):
     if not str_func.startswith("function(params)") and not func_ref:
       str_func = "function(params){%s}" % str_func
     self._config(str_func, js_type=True)
+
+  @property
+  def groupIncludeFooter(self):
+    """  If you want to include a footer with each group, set the property groupIncludeFooter to true.
+    It is also possible to include a 'grand' total footer for all groups using the property groupIncludeTotalFooter.
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/
+
+    """
+    return self._config_get()
+
+  @groupIncludeFooter.setter
+  def groupIncludeFooter(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def groupIncludeTotalFooter(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/
+
+    """
+    return self._config_get()
+
+  @groupIncludeTotalFooter.setter
+  def groupIncludeTotalFooter(self, flag: bool):
+    self._config(flag)
 
   def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
@@ -1877,6 +2061,16 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def rowTotal(self):
+    """ Predefined way to add a row total attached to the table.
+    """
+    return self._config_get(False)
+
+  @rowTotal.setter
+  def rowTotal(self, flag: bool):
+    self._config(flag)
+
+  @property
   def suppressRowClickSelection(self):
     """   If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to
     also select the row when the row is clicked.
@@ -1928,3 +2122,33 @@ class TableConfig(Options):
 
     """
     return self._config_sub_data("statusBar", TableStatusBar)
+
+  @property
+  def valueCache(self):
+    """ Set to true to turn on the value cache.
+    Default: false
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-getters/
+    """
+    return self._config_get(False)
+
+  @valueCache.setter
+  def valueCache(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def valueCacheNeverExpires(self):
+    """ Set to true to configure the value cache to not expire after data updates.
+    Default: false
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/value-getters/
+    """
+    return self._config_get(False)
+
+  @valueCacheNeverExpires.setter
+  def valueCacheNeverExpires(self, flag: bool):
+    self._config(flag)

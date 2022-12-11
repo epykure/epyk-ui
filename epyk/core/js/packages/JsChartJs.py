@@ -561,6 +561,15 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.toggleDataVisibility(%s)" % (self.toStr(), dataset_index))
 
+  def setTitle(self, value: primitives.JsDataModel):
+    """
+
+    :param value:
+    :return:
+    """
+    return JsObjects.JsString.JsString.get("%s.options.plugins.title.text = %s" % (
+        self.component.chartId, JsUtils.jsConvertData(value, None)))
+
   def toStr(self):
     """
     Javascript representation.

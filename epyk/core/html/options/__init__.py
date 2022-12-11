@@ -145,6 +145,15 @@ class Options(DataClass):
       self.js_tree.setdefault(name, []).append(enum_data)
     return enum_data
 
+  def update_config(self, attrs: dict):
+    """ Update the option configuration.
+
+    :param attrs: The attributes to set
+    """
+    for k, v in attrs.items():
+      setattr(self, k, v)
+    return self
+
   def custom_config(self, name: str, value: Any, js_type: bool = False):
     """
     Add a custom JavaScript configuration.
