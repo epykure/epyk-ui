@@ -259,7 +259,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/axes/labelling.html
 
-    :param labels: List. An array of labels.
+    :param labels: An array of labels.
     """
     self._data_attrs['labels'] = labels
     return self
@@ -269,8 +269,8 @@ class Chart(Html.Html):
 
     Usage::
 
-    :param i: Integer. The series index according to the y_columns.
-    :param name: String. The new name to be set.
+    :param i: The series index according to the y_columns.
+    :param name: The new name to be set.
     """
     self.dataset(i).label = name
     return self
@@ -284,9 +284,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/master/general/data-structures
 
-    :param i: Integer. Optional. The series index according to the y_columns.
-
-    :rtype: JsChartJs.DataSetPie
+    :param i: Optional. The series index according to the y_columns.
     """
     if i is None:
       return self._datasets[-1]
@@ -484,10 +482,11 @@ if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
   divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
   divLoading.style.zIndex = 200;
   divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
-  divLoading.style.paddingTop = '50vh';
-  divLoading.innerHTML = "<div style='font-size:50px'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+  divLoading.style.paddingTop = '30vh';
+  divLoading.innerHTML = "<div style='font-size:%(size)s'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
   document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
-}''' % {"htmlId": self.htmlCode, 'color': self.page.theme.success[1], 'background': self.page.theme.greys[0]}
+}''' % {"htmlId": self.htmlCode, 'size': self.page.body.style.globals.font.normal(-1),
+        'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0]}
 
     return '''
       if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
