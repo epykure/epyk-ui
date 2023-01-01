@@ -259,7 +259,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/axes/labelling.html
 
-    :param labels: An array of labels.
+    :param labels: List. An array of labels.
     """
     self._data_attrs['labels'] = labels
     return self
@@ -269,8 +269,8 @@ class Chart(Html.Html):
 
     Usage::
 
-    :param i: The series index according to the y_columns.
-    :param name: The new name to be set.
+    :param i: Integer. The series index according to the y_columns.
+    :param name: String. The new name to be set.
     """
     self.dataset(i).label = name
     return self
@@ -284,7 +284,9 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/master/general/data-structures
 
-    :param i: Optional. The series index according to the y_columns.
+    :param i: Integer. Optional. The series index according to the y_columns.
+
+    :rtype: JsChartJs.DataSetPie
     """
     if i is None:
       return self._datasets[-1]
@@ -395,7 +397,7 @@ class Chart(Html.Html):
 
   @property
   def datasets(self):
-    """   
+    """
 
     """
     return self._datasets
@@ -437,7 +439,7 @@ class Chart(Html.Html):
 
   def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
-    """  
+    """
     Update the chart with context and / or data changes.
 
     :param data: Optional. The full datasets object expected by ChartJs
@@ -462,7 +464,7 @@ class Chart(Html.Html):
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
   def loading(self, status: bool = True):
-    """  
+    """
     Loading component on a chart.
 
     Usage::
@@ -513,7 +515,7 @@ class Fabric(Html.Html):
     self.chart.chartId = "window['%s_' + %s]" % (self.htmlCode, self.dom.getAttribute("data-current"))
 
   def new(self):
-    """  
+    """
 
     Usage::
 
@@ -526,7 +528,7 @@ class Fabric(Html.Html):
       return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
   def build(self, data=None, options: dict = None, profile=False, component_id=None):
-    """  
+    """
 
     Usage::
 
@@ -541,7 +543,7 @@ class Fabric(Html.Html):
       "data": self.chart.build(data, options, profile)}
 
   def create(self, data=None, options=None, attrs=None, profile=False):
-    """  
+    """
 
     Usage::
 
@@ -571,7 +573,7 @@ class Datasets:
     self.page, self.__data = page, []
 
   def add(self, data):
-    """  
+    """
     Add a series to an existing dataset.
 
     Usage::
@@ -588,7 +590,7 @@ class ChartLine(Chart):
 
   @property
   def options(self) -> OptChartJs.OptionsLine:
-    """  
+    """
     Property to the specific ChartJs Line chart.
 
     Usage::
@@ -600,7 +602,7 @@ class ChartLine(Chart):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """  
+    """
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -636,7 +638,7 @@ class ChartLine(Chart):
     return data
 
   def add_dataset(self, data, label="", colors=None, opacity=None, kind=None, **kwargs):
-    """  
+    """
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -686,7 +688,8 @@ class ChartLine(Chart):
               for(var attr in options.commons){dataSet[attr] = options.commons[attr]}}
               labels.forEach(function(x){
                 if (temp[series][x] == undefined){dataSet.data.push(null)} else {dataSet.data.push(temp[series][x])}}); 
-          result.datasets.push(dataSet)})
+          result.datasets.push(dataSet)});
+          if (typeof options.labels !== "undefined"){ result.labels = options.labels}
       }; return result'''
 
 
@@ -694,7 +697,7 @@ class ChartBubble(Chart):
   _chart__type = 'bubble'
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """  
+    """
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -725,7 +728,7 @@ class ChartBubble(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-    """  
+    """
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -766,7 +769,8 @@ class ChartBubble(Chart):
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]}); 
-        result.datasets.push(dataSet)})
+        result.datasets.push(dataSet)});
+        if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
       }; return result'''
 
 
@@ -776,7 +780,7 @@ class ChartBar(ChartLine):
 
   @property
   def options(self):
-    """  
+    """
     Property to the bar chart options.
 
     Usage::
@@ -790,7 +794,7 @@ class ChartBar(ChartLine):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """  
+    """
     Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
@@ -823,7 +827,7 @@ class ChartBar(ChartLine):
     return data
 
   def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None, **kwargs):
-    """  
+    """
     Add a new Dataset to the chart list of Datasets.
 
     Usage::
@@ -856,7 +860,7 @@ class ChartPolar(Chart):
 
   @property
   def options(self):
-    """  
+    """
     Property to the Polar chart options.
 
     Usage::
@@ -870,7 +874,7 @@ class ChartPolar(Chart):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -901,7 +905,7 @@ class ChartPolar(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -946,7 +950,8 @@ class ChartPolar(Chart):
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)})
+          }); result.datasets.push(dataSet)});
+          if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
       }; return result'''
 
 
@@ -969,7 +974,7 @@ class ChartPie(Chart):
     return super().options
 
   def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None, **kwargs):
-    """  
+    """
 
     Usage::
 
@@ -994,7 +999,7 @@ class ChartPie(Chart):
     return data
 
   def add_dataset(self, data, label="", colors=None, opacity=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -1035,15 +1040,16 @@ class ChartPie(Chart):
           labels.forEach(function(x, i){
             dataSet.backgroundColor.push(options.colors);
             if(temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)})}
-      return result'''
+          }); result.datasets.push(dataSet)});
+          if (typeof options.labels !== "undefined"){ result.labels = options.labels}
+      }; return result'''
 
 
 class ChartRadar(Chart):
   _chart__type = 'radar'
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -1069,7 +1075,7 @@ class ChartRadar(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -1109,15 +1115,15 @@ class ChartRadar(Chart):
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else {dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)})}
-      return result'''
+          }); result.datasets.push(dataSet)}); if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
+      }; return result'''
 
 
 class ChartScatter(Chart):
   _chart__type = 'scatter'
 
   def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -1141,7 +1147,7 @@ class ChartScatter(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, **kwargs):
-    """   
+    """
 
     Usage::
 
@@ -1177,8 +1183,8 @@ class ChartScatter(Chart):
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]}); 
-        result.datasets.push(dataSet)})}
-    return result'''
+        result.datasets.push(dataSet)}); if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
+    }; return result'''
 
 
 class ChartTreeMap(Chart):
