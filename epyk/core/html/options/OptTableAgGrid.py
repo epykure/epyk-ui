@@ -261,7 +261,10 @@ class Column(Options):
 
   @cellRendererParams.setter
   def cellRendererParams(self, values: dict):
-    self._config(values)
+    if not isinstance(values, dict):
+      self._config(values, js_type=True)
+    else:
+      self._config(values, js_type=False)
 
   @property
   def cellStyle(self):
@@ -276,7 +279,10 @@ class Column(Options):
 
   @cellStyle.setter
   def cellStyle(self, values: dict):
-    self._config(values)
+    if not isinstance(values, dict):
+      self._config(values, js_type=True)
+    else:
+      self._config(values, js_type=False)
 
   @property
   def children(self):
