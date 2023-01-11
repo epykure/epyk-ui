@@ -430,10 +430,9 @@ class Chart(Html.Html):
 
     :param options: JavaScript of Python attributes
     """
-    self.options.config_js()
     defined_options = "window.%s_options" % self.html_code
-    js_expr = "window.%s = Object.assign(%s, %s)" % (
-      defined_options, self.__defined_options or self.options.config_js(), JsUtils.jsConvertData(options, None))
+    js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
+      defined_options, defined_options, self.options.config_js(), JsUtils.jsConvertData(options, None))
     self.__defined_options = defined_options
     return js_expr
 
