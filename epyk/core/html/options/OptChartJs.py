@@ -4,7 +4,7 @@
 from typing import List, Optional
 from epyk.core.py import types as etypes
 from epyk.core.html.options import Options
-from epyk.core.js.packages import packageImport
+from epyk.core.js.packages import packageImport, until_version, from_version
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
@@ -210,7 +210,7 @@ class OptionAxesTicks(Options):
 
   @property
   def fontSize(self):
-    """   
+    """
 
     Related Pages:
 
@@ -224,7 +224,7 @@ class OptionAxesTicks(Options):
 
   @property
   def beginAtZero(self):
-    """   
+    """
 
     Related Pages:
 
@@ -238,21 +238,21 @@ class OptionAxesTicks(Options):
 
   @property
   def major(self) -> OptionAxesTicksMajor:
-    """  
+    """
 
     """
     return self._config_sub_data("major", OptionAxesTicksMajor)
 
   @property
   def minor(self) -> OptionAxesTicksMajor:
-    """  
+    """
 
     """
     return self._config_sub_data("minor", OptionAxesTicksMajor)
 
   @property
   def max(self):
-    """   
+    """
 
     Related Pages:
 
@@ -266,7 +266,7 @@ class OptionAxesTicks(Options):
 
   @property
   def min(self):
-    """   
+    """
 
     Related Pages:
 
@@ -280,7 +280,7 @@ class OptionAxesTicks(Options):
 
   @property
   def mirror(self):
-    """  
+    """
     Flips tick labels around axis, displaying the labels inside the chart instead of outside.
     Note: Only applicable to vertical scales.
 
@@ -296,7 +296,7 @@ class OptionAxesTicks(Options):
 
   @property
   def maxTicksLimit(self):
-    """  
+    """
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/line.html
@@ -309,7 +309,7 @@ class OptionAxesTicks(Options):
 
   @property
   def suggestedMin(self):
-    """   
+    """
 
     Related Pages:
 
@@ -323,7 +323,7 @@ class OptionAxesTicks(Options):
 
   @property
   def suggestedMax(self):
-    """   
+    """
 
     Related Pages:
 
@@ -352,7 +352,7 @@ class OptionAxesTicks(Options):
 
   @packageImport("accounting")
   def scale(self, factor: int = 1000, alias: str = None, digits: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-    """   
+    """
 
     :param factor:
     :param alias:
@@ -363,14 +363,14 @@ class OptionAxesTicks(Options):
     alias = alias or {1000: "k", 1000000: "m"}.get(factor, "")
     self._config('''function(label, index, labels){
 var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'}''' % (
-        factor, digits, thousand_sep, alias), name="callback", js_type=True)
+      factor, digits, thousand_sep, alias), name="callback", js_type=True)
     return self
 
   @packageImport("accounting")
   def toMoney(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
               decimal_sep: etypes.JS_DATA_TYPES = ",", fmt: etypes.JS_DATA_TYPES = "%v %s", factor: float = None,
               alias: str = ""):
-    """   
+    """
 
     :param symbol:
     :param digit:
@@ -406,7 +406,7 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
     return self
 
   def callback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
-    """   
+    """
 
 
     Related Pages:
@@ -454,6 +454,80 @@ class OptionLabels(Options):
 
   @fontColor.setter
   def fontColor(self, val: str):
+    self._config(val)
+
+
+class OptionAxesBorder(Options):
+
+  @property
+  def display(self):
+    """   If false, do not display grid lines for this axis.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @display.setter
+  def display(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def color(self):
+    """   The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
+    to the second grid line and so on.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @color.setter
+  def color(self, val: str):
+    self._config(val)
+
+  @property
+  def dash(self):
+    """   Length and spacing of dashes on grid lines.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @dash.setter
+  def dash(self, val: List[int]):
+    self._config(val)
+
+  @property
+  def dashOffset(self):
+    """   Offset for line dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @dashOffset.setter
+  def dashOffset(self, val):
+    self._config(val)
+
+  @property
+  def width(self):
+    """   Offset for line dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @width.setter
+  def width(self, val):
     self._config(val)
 
 
@@ -515,6 +589,10 @@ class OptionAxesGridLine(Options):
 
   @borderColor.setter
   def borderColor(self, val: str):
+    is_valid, msg = until_version(self.page.imports.pkgs.chart_js.version, "4")
+    if not is_valid:
+      raise ValueError("grid.borderColor %s of ChartJs - must use border.color instead" % msg)
+
     self._config(val)
 
   @property
@@ -528,7 +606,11 @@ class OptionAxesGridLine(Options):
     return self._config_get()
 
   @borderDash.setter
-  def borderDash(self, val):
+  def borderDash(self, val: List[int]):
+    is_valid, msg = until_version(self.page.imports.pkgs.chart_js.version, "4")
+    if not is_valid:
+      raise ValueError("grid.borderDash %s of ChartJs - must use border.dash instead" % msg)
+
     self._config(val)
 
   @property
@@ -543,6 +625,28 @@ class OptionAxesGridLine(Options):
 
   @borderDashOffset.setter
   def borderDashOffset(self, val):
+    is_valid, msg = until_version(self.page.imports.pkgs.chart_js.version, "4")
+    if not is_valid:
+      raise ValueError("grid.borderDashOffset %s of ChartJs - must use border.dashOffset instead" % msg)
+
+    self._config(val)
+
+  @property
+  def borderWidth(self):
+    """   Offset for line dashes.
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+    """
+    return self._config_get()
+
+  @borderWidth.setter
+  def borderWidth(self, val):
+    is_valid, msg = until_version(self.page.imports.pkgs.chart_js.version, "4")
+    if not is_valid:
+      raise ValueError("grid.borderWidth %s of ChartJs - must use border.width instead" % msg)
+
     self._config(val)
 
   @property
@@ -618,7 +722,7 @@ class OptionAxesGridLine(Options):
 
   @property
   def tickColor(self):
-    """   
+    """
 
     Related Pages:
 
@@ -742,7 +846,7 @@ class OptionAxesScaleLabel(Options):
     self._config(val)
 
   def label(self, value: str):
-    """  
+    """
     Shortcut to the labelString and display property.
 
     :param value: The label value.
@@ -766,7 +870,7 @@ class OptionAxesTime(Options):
 
   @property
   def displayFormats(self) -> OptionDisplayFormats:
-    """  
+    """
     """
     return self._config_sub_data("displayFormats", OptionDisplayFormats)
 
@@ -775,7 +879,7 @@ class OptionTitle(Options):
 
   @property
   def align(self):
-    """  
+    """
 
     Related Pages:
 
@@ -789,7 +893,7 @@ class OptionTitle(Options):
 
   @property
   def display(self):
-    """  
+    """
 
     Related Pages:
 
@@ -804,7 +908,7 @@ class OptionTitle(Options):
 
   @property
   def text(self):
-    """  
+    """
 
     Related Pages:
 
@@ -818,7 +922,7 @@ class OptionTitle(Options):
 
   @property
   def color(self):
-    """  
+    """
 
     Related Pages:
 
@@ -888,7 +992,7 @@ class OptionTitle(Options):
 
   @property
   def font(self) -> OptionLabelFont:
-    """  
+    """
 
     """
     return self._config_sub_data("font", OptionLabelFont)
@@ -914,7 +1018,7 @@ class OptionAxes(Options):
 
   @property
   def reverse(self):
-    """   
+    """
 
     Related Pages:
 
@@ -942,7 +1046,7 @@ class OptionAxes(Options):
 
   @property
   def stacked(self):
-    """   
+    """
 
     Related Pages:
 
@@ -956,7 +1060,7 @@ class OptionAxes(Options):
 
   @property
   def id(self):
-    """   
+    """
 
     Related Pages:
 
@@ -970,7 +1074,7 @@ class OptionAxes(Options):
 
   @property
   def offset(self):
-    """   
+    """
 
     Related Pages:
 
@@ -984,7 +1088,7 @@ class OptionAxes(Options):
 
   @property
   def position(self):
-    """   
+    """
 
     Related Pages:
 
@@ -998,7 +1102,7 @@ class OptionAxes(Options):
 
   @property
   def suggestedMin(self):
-    """   
+    """
 
     Related Pages:
 
@@ -1012,7 +1116,7 @@ class OptionAxes(Options):
 
   @property
   def suggestedMax(self):
-    """   
+    """
 
     Related Pages:
 
@@ -1026,8 +1130,8 @@ class OptionAxes(Options):
 
   @property
   def stepSize(self):
-    """   
-  
+    """
+
 
     Related Pages:
 
@@ -1041,45 +1145,51 @@ class OptionAxes(Options):
 
   @property
   def ticks(self) -> OptionAxesTicks:
-    """  
+    """
     """
     return self._config_sub_data("ticks", OptionAxesTicks)
 
   @property
   def time(self) -> OptionAxesTime:
-    """  
+    """
     """
     return self._config_sub_data("time", OptionAxesTime)
 
   @property
   def gridLines(self) -> OptionAxesGridLine:
-    """  
+    """
     """
     return self._config_sub_data("gridLines", OptionAxesGridLine)
 
   @property
   def grid(self) -> OptionAxesGridLine:
-    """  
+    """
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+      https://www.chartjs.org/docs/latest/migration/v4-migration.html
     """
     return self._config_sub_data("grid", OptionAxesGridLine)
 
   @property
-  def ticks(self) -> OptionAxesTicks:
-    """  
+  def border(self) -> OptionAxesBorder:
+    """
 
     Related Pages:
 
-      https://www.chartjs.org/docs/latest/axes/styling.html
+      https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+      https://www.chartjs.org/docs/latest/migration/v4-migration.html
     """
-    return self._config_sub_data("grid", OptionAxesTicks)
+    is_valid, msg = from_version(self.page.imports.pkgs.chart_js.version, "4")
+    if not is_valid:
+      raise ValueError("border %s of ChartJs - must use grid instead" % msg)
+
+    return self._config_sub_data("border", OptionAxesBorder)
 
   @property
   def title(self) -> OptionTitle:
-    """  
+    """
     Namespace: options.scales[scaleId].title, it defines options for the scale title.
     Note that this only applies to cartesian axes.
 
@@ -1091,12 +1201,12 @@ class OptionAxes(Options):
 
   @property
   def scaleLabel(self) -> OptionAxesScaleLabel:
-    """  
+    """
     """
     return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
   def add_label(self, text: str, color: str = None):
-    """  
+    """
 
     :param text:
     :param color:
@@ -1108,7 +1218,7 @@ class OptionAxes(Options):
     return self
 
   def category(self, vals):
-    """  
+    """
 
     :param vals:
     """
@@ -1136,7 +1246,7 @@ class OptionScalePointLabels(Options):
 
   @property
   def font(self) -> OptionLabelFont:
-    """  
+    """
 
     Related Pages:
 
@@ -1149,7 +1259,7 @@ class OptionScaleR(Options):
 
   @property
   def pointLabels(self) -> OptionScalePointLabels:
-    """  
+    """
 
     Related Pages:
 
@@ -1162,7 +1272,7 @@ class OptionScales(Options):
 
   @property
   def xAxes(self):
-    """  
+    """
     Shortcut property to the last x_axes definition.
     Use the function x_axes to be more specific.
     """
@@ -1170,7 +1280,7 @@ class OptionScales(Options):
 
   @property
   def yAxes(self):
-    """  
+    """
     Shortcut property to the last y_axis definition.
     Use the function y_axis to be more specific.
 
@@ -1179,17 +1289,18 @@ class OptionScales(Options):
     return self.y_axis()
 
   def add_y_axis(self):
-    """  
+    """
 
     """
     return self._config_sub_data("y", OptionAxes)
 
   def y_axis(self, i: int = None) -> OptionAxes:
-    """  
+    """
 
     :param i: optional. Default take the latest one
     """
-    if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
+    is_valid, msg = from_version(self.page.imports.pkgs.chart_js.version, "3")
+    if is_valid:
       return self.add_y_axis()
 
     if "yAxes" not in self.js_tree:
@@ -2199,9 +2310,13 @@ class OptionChartJsTooltipsCallbacks(Options):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     if self.component.options.type == 'horizontalBar':
-      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
+      self._config(
+        "function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.xLabel, %s, %s, %s) }" % (
+        digit, thousand_sep, decimal_sep), name="label", js_type=True)
     else:
-      self._config("function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (digit, thousand_sep, decimal_sep), name="label", js_type=True)
+      self._config(
+        "function(tooltipItem, data) {return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatNumber(tooltipItem.yLabel, %s, %s, %s) }" % (
+        digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
   @packageImport("accounting")
   def labelCurrency(self, symbol: etypes.JS_DATA_TYPES = "", digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
@@ -2271,7 +2386,7 @@ return data.labels[indice] +': '+ accounting.formatNumber(data.datasets[0].data[
     self._config('''
 function(tooltipItem, data) {var indice = tooltipItem.index; 
 return data.labels[indice] +': '+ accounting.formatMoney(data.datasets[0].data[indice], %s, %s, %s, %s) }''' % (
-        symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
+      symbol, digit, thousand_sep, decimal_sep), name="label", js_type=True)
 
 
 class OptionChartJsTooltips(Options):

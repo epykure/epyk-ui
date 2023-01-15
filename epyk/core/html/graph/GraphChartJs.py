@@ -687,6 +687,8 @@ class ChartLine(Chart):
               for(var attr in options.commons){dataSet[attr] = options.commons[attr]}}
               labels.forEach(function(x){
                 if (temp[series][x] == undefined){dataSet.data.push(null)} else {dataSet.data.push(temp[series][x])}}); 
+            if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])}
           result.datasets.push(dataSet)});
           if (typeof options.labels !== "undefined"){ result.labels = options.labels}
       }; return result'''
@@ -768,6 +770,8 @@ class ChartBubble(Chart):
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]}); 
+          if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])}
         result.datasets.push(dataSet)});
         if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
       }; return result'''
@@ -949,7 +953,10 @@ class ChartPolar(Chart):
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)});
+          }); 
+          if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])}
+          result.datasets.push(dataSet)});
           if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
       }; return result'''
 
@@ -1039,7 +1046,10 @@ class ChartPie(Chart):
           labels.forEach(function(x, i){
             dataSet.backgroundColor.push(options.colors);
             if(temp[series][x] == undefined) {dataSet.data.push(null)} else{dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)});
+          }); 
+          if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])}
+          result.datasets.push(dataSet)});
           if (typeof options.labels !== "undefined"){ result.labels = options.labels}
       }; return result'''
 
@@ -1114,7 +1124,10 @@ class ChartRadar(Chart):
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x){
             if (temp[series][x] == undefined) {dataSet.data.push(null)} else {dataSet.data.push(temp[series][x])}
-          }); result.datasets.push(dataSet)}); if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
+          }); 
+          if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])}
+          result.datasets.push(dataSet)}); if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
       }; return result'''
 
 
@@ -1181,7 +1194,9 @@ class ChartScatter(Chart):
           dataSet = {label: series, data: [], backgroundColor: options.colors[i], type: options.type};
           if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
-          labels.forEach(function(x, i){dataSet.data = temp[series]}); 
+          labels.forEach(function(x, i){dataSet.data = temp[series]});
+        if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+              dataSet = Object.assign(dataSet, options.datasets[series])} 
         result.datasets.push(dataSet)}); if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
     }; return result'''
 

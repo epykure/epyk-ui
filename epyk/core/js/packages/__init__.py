@@ -1,5 +1,5 @@
 
-from typing import Any
+from typing import Any, List, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -42,6 +42,77 @@ def packageImport(js_package: str = None, css_package: str = None, if_true: bool
     return inner
 
   return wrap
+
+
+def from_version(current_versions: List[str], first_version: str, included: bool = True) -> Tuple[bool, str]:
+  """ Check a feature based on the package version.
+
+  :usages:
+
+    is_valid, msg = from_version(self.page.imports.pkgs.chart_js.version, "4")
+
+  :param current_versions: The current versions defined for the package
+  :param first_version: The first version for this package and feature
+  :param included: Flag to specify how to consider the last version
+  """
+  split_vr = list(map(lambda x: int(x), first_version.split(".")))
+  is_valid, msg = True, ""
+  for vr in current_versions:
+    vrs = list(map(lambda x: int(x), vr.split(".")))
+    for i, r in enumerate(split_vr):
+      if not included:
+        if r <= vrs[i]:
+          if r == vrs[i]:
+            is_valid = False
+            msg = "cannot be used with version %s (min allowed: %s)" % (vr, first_version)
+          elif r < vrs[i]:
+            is_valid = True
+            msg = ""
+            continue
+
+          else:
+            return (False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version))
+
+      if r > vrs[i]:
+          return (False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version))
+
+  return (is_valid, msg)
+
+
+def until_version(current_versions: List[str], last_version: str, included: bool = False) -> Tuple[bool, str]:
+  """ Check a feature based on the package version.
+
+  :usages:
+
+    is_valid, msg = until_version(self.page.imports.pkgs.chart_js.version, "4")
+
+  :param current_versions: The current versions defined for the package
+  :param last_version: The last version for this package and feature
+  :param included: Flag to specify how to consider the last version
+  """
+  split_vr = list(map(lambda x: int(x), last_version.split(".")))
+  is_valid, msg = True, ""
+  for vr in current_versions:
+    vrs = list(map(lambda x: int(x), vr.split(".")))
+    for i, r in enumerate(split_vr):
+      if not included:
+        if r >= vrs[i]:
+          if r == vrs[i]:
+            is_valid = False
+            msg = "cannot be used with version %s (max allowed: %s)" % (vr, last_version)
+          elif r > vrs[i]:
+            is_valid = True
+            msg = ""
+            continue
+
+          else:
+            return (False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version))
+
+      else:
+        if r > vrs[i]:
+          return (False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version))
+
+  return (is_valid, msg)
 
 
 class JsPackage(primitives.JsDataModel):

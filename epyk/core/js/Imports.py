@@ -2276,7 +2276,13 @@ class ImportModule:
       new_js[k.replace(v, val)] = val
     self._js["versions"] = [val]
     self._js["main"] = new_js
-
+    # Change the package for ChartJs versions above 4
+    # https://www.chartjs.org/docs/latest/migration/v4-migration.html
+    if self.alias == "chart.js" and int(val.split(".")[0]) > 3:
+      new_js = collections.OrderedDict()
+      for k, v in self._js["main"].items():
+        new_js[k.replace(v, val).replace("chart.min.js", "chart.umd.min.js")] = val
+      self._js["main"] = new_js
     if self._css:
       new_css = collections.OrderedDict()
       for k, v in self._css["main"].items():
