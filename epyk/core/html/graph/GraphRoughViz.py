@@ -35,8 +35,6 @@ class RoughViz(Html.Html):
   @property
   def options(self) -> OptChartRoughViz.RoughVizLine:
     """   Chart specific options.
-
-    :rtype: OptChartRoughViz.RoughVizLine
     """
     return super().options
 
@@ -50,8 +48,6 @@ class RoughViz(Html.Html):
   @property
   def d3(self) -> JsD3.D3Select:
     """   Property to the D3 library.
-
-    :rtype: JsD3.D3Select
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(page=self.page, component=self, selector="d3.select('#%s')" % self.htmlCode, setVar=False)

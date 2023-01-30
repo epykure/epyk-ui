@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # https://bl.ocks.org/ctufts/f38ef0187f98c537d791d24fda4a6ef9
-
+from epyk.core.py import types as etypes
+from typing import List, Union
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -28,15 +29,13 @@ class Script(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptChart.OptionsChart
     """
     return super().options
 
-  def colors(self, hex_values):
+  def colors(self, hex_values: List[str]):
     """   Set specific chart color codes.
 
-    :param hex_values: List. Color codes.
+    :param hex_values: Color codes.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -52,8 +51,9 @@ class Script(Html.Html):
         bg_colors.append(h[0])
     self.options.colors = line_colors
     self.options.background_colors = bg_colors
+    return self
 
-  def data(self, data):
+  def data(self, data: Union[list, dict, str]):
     """   
 
     :param data:
@@ -62,16 +62,16 @@ class Script(Html.Html):
       data = data.split(" ")
     self._vals = data
 
-  def loader(self, str_frg):
-    """  
-    Loader for the script.
+  def loader(self, str_frg: str):
+    """ Loader for the script.
 
-    :param str_frg: String. The javascript fragments.
+    :param str_frg: The javascript fragments.
     """
     self.builder_name = "D3Builder%s" % self.page.py.hash(str_frg)
     self._js__builder__ = 'if (!htmlObj.select("svg").empty()){htmlObj.select("svg").remove()}; %s' % str_frg
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
+            profile: etypes.PROFILE_TYPE = False, component_id: str = None) -> str:
     return super().build(data, options, profile, component_id=self.dom.d3.varId)
 
   def responsive(self):

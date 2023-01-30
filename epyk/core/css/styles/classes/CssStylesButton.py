@@ -19,9 +19,8 @@ class CssButtonBasic(CssStyle.Style):
     self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit',
               'line-height': '%spx' % Defaults.LINE_HEIGHT})
     self.hover.css(
-      {'background-color': self.page.theme.greys[0], #self.page.theme.colors[0],
-       'color': "inherit", # self.page.theme.notch(),
-       'border': '1px solid %s' % self.page.theme.notch()}, important=True)
+      {'background-color': self.page.theme.greys[0], 'line-height': '%spx' % Defaults.LINE_HEIGHT,
+       'color': "inherit",  'border': '1px solid %s' % self.page.theme.notch()}, important=True)
     self.disabled.css({
       'background-color': self.page.theme.colors[-1], 'color': self.page.theme.notch(2), 'font-style': 'italic'})
 

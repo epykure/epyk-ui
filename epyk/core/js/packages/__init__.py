@@ -1,4 +1,5 @@
 
+import sys
 from typing import Any, List, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -9,12 +10,8 @@ from epyk.core.js import JsUtils
 
 
 def packageImport(js_package: str = None, css_package: str = None, if_true: bool = False):
-  """
-  Description
-  ---------------
-  Simple decorator to allow people to declare packages that need to be imported when they are manipulating
-  HTML components.
-  The alias for the package needs to be defined in the Import.py module.
+  """ Simple decorator to allow people to declare packages that need to be imported when they are manipulating
+  HTML components. The alias for the package needs to be defined in the Import.py module.
 
   Usage::
 
@@ -71,12 +68,12 @@ def from_version(current_versions: List[str], first_version: str, included: bool
             continue
 
           else:
-            return (False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version))
+            return False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version)
 
       if r > vrs[i]:
-          return (False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version))
+          return False, "cannot be used with version %s (min allowed: %s)" % (vr, first_version)
 
-  return (is_valid, msg)
+  return is_valid, msg
 
 
 def until_version(current_versions: List[str], last_version: str, included: bool = False) -> Tuple[bool, str]:
@@ -106,13 +103,13 @@ def until_version(current_versions: List[str], last_version: str, included: bool
             continue
 
           else:
-            return (False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version))
+            return False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version)
 
       else:
         if r > vrs[i]:
-          return (False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version))
+          return False, "cannot be used with version %s (max allowed: %s)" % (vr, last_version)
 
-  return (is_valid, msg)
+  return is_valid, msg
 
 
 class JsPackage(primitives.JsDataModel):
@@ -142,34 +139,31 @@ class JsPackage(primitives.JsDataModel):
 
   @property
   def varId(self):
-    """
-    The Javascript and Python reference ID.
+    """ The Javascript and Python reference ID.
     """
     return self._selector if self.varName is None else self.varName
 
   def version(self, tag: str, js: dict = None, css: dict = None):
-    """
-    Change the package version number.
+    """ Change the package version number.
 
     Usage::
 
       bar.chart.version("1.11.0")
 
-    :param tag: The package versions example 1.11.0.
-    :param js: Optional. The JavaScript packages to be added.
-    :param css: Optional. The CSS packages to be added.
+    :param tag: The package versions example 1.11.0
+    :param js: Optional. The JavaScript packages to be added
+    :param css: Optional. The CSS packages to be added
     """
     self.page.imports.setVersion(self.lib_alias, tag, js, css)
     return self
 
   def fnc(self, data: Any, unique: bool = False):
-    """
-    Base function to allow the object chain.
-    THis will add the elements to the current section in the object structure.
+    """ Base function to allow the object chain.
+    This will add the elements to the current section in the object structure.
     All the items at the same level wil be chained.
 
-    :param data: The Javascript fragment to be added.
-    :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
+    :param data: The Javascript fragment to be added
+    :param unique: Ensure the function is available one time in the chain. If not the last call we will present
 
     :return: "Self" to allow the chains
     """
@@ -183,11 +177,10 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def fnc_enum(self, name: str, data_class):
-    """
-    Base function to allow the creation of function with parameters which are list of dataclasses.
+    """ Base function to allow the creation of function with parameters which are list of dataclasses.
     Basically this will be then transpiled to a list of dictionary.
 
-    :param name: The function Name.
+    :param name: The function Name
     :param data_class: The Python Data class
     """
     index = len(self._js) - 1
@@ -201,16 +194,15 @@ class JsPackage(primitives.JsDataModel):
     return self._js_enums[index][name][-1]
 
   def fnc_closure(self, data: str, check_undefined: bool = False, unique: bool = False):
-    """
-    Add the function string to the existing object definition but create a new entry point for the next ones.
+    """ Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
 
-    Thanks to this Python can always keep the same structure and produce the correct Javascript definition
-    There will be no chain in the Javascript side
+    Thanks to this Python can always keep the same structure and produce the correct Javascript definition.
+    There will be no chain in the Javascript side.
 
-    :param data: The Javascript fragment to be added.
-    :param check_undefined: Add a check on the variable definition.
-    :param unique: Ensure the function is available one time in the chain. If not the last call we will present.
+    :param data: The Javascript fragment to be added
+    :param check_undefined: Add a check on the variable definition
+    :param unique: Ensure the function is available one time in the chain. If not the last call we will present
 
     :return: The "self" to allow the chains
     """
@@ -228,14 +220,13 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def fnc_closure_in_promise(self, data: str, check_undefined: bool = False):
-    """
-    Base function to allow the creation of a promise.
+    """ Base function to allow the creation of a promise.
 
     A Js promise is an event attached toa function which will be only executed after the function.
     In case of success the then will be triggered otherwise the exception will be caught.
 
-    :param data: The Javascript fragment to be added.
-    :param check_undefined: Add a check on the variable definition.
+    :param data: The Javascript fragment to be added
+    :param check_undefined: Add a check on the variable definition
 
     :return: The promise
     """
@@ -247,15 +238,13 @@ class JsPackage(primitives.JsDataModel):
 
   @property
   def var(self):
-    """
-    Property to return the variable name as a valid pyJs object
+    """ Property to return the variable name as a valid pyJs object.
     """
     return JsString.JsString(self.varId, is_py_data=False)
 
   def set_var(self, flag: bool):
-    """
-    Change the flag to define if the variable should be defined on the Javascript side.
-    Default this is set to True
+    """ Change the flag to define if the variable should be defined on the Javascript side.
+    Default this is set to True.
 
     :param flag: A python boolean
 
@@ -265,10 +254,9 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def getStr(self, empty_stack: bool = True) -> str:
-    """
-    Get the current string representation for the object and remove the stack.
+    """ Get the current string representation for the object and remove the stack.
 
-    :param empty_stack:
+    :param empty_stack: Emtpy the various JavaScript fragments stored for this object
     """
     js_stack = None
     if not empty_stack:
@@ -282,33 +270,30 @@ class JsPackage(primitives.JsDataModel):
     return content
 
   def _mapVarId(self, func: types.JS_FUNCS_TYPES, js_code: str):
-    """
-    Special function used for some external packages used to fix the problem of function override.
+    """ Special function used for some external packages used to fix the problem of function override.
     Indeed in Datatable row.add is used as a class method compare to the other functions used at object level.
 
-    :param str func: The function string.
-    :param str js_code: The object reference.
+    :param func: The function string
+    :param js_code: The object reference
 
     :return: The converted object reference
     """
     return js_code
 
   def custom(self, func_nam: str, *argv):
-    """
-    Generic function to call any missing function form a package.
+    """ Generic function to call any missing function form a package.
     This will automatically convert the object to JavaScript and also put the right object reference.
 
-    :param func_nam: The function name.
-    :param argv: Optional. The function arguments on the JavasScript side.
+    :param func_nam: The function name
+    :param argv: Optional. The function arguments on the JavasScript side
     """
     js_args = []
     for arg in argv:
       js_args.append(str(JsUtils.jsConvertData(arg, None)))
     return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varId, func_nam, ", ".join(js_args)))
 
-  def toStr(self):
-    """
-    Javascript representation
+  def toStr(self) -> str:
+    """ Javascript representation
 
     :return: Return the Javascript String
     """
@@ -340,8 +325,7 @@ class JsPackage(primitives.JsDataModel):
           self.setVar = False
         else:
           if str_fnc:
-            if i in self._u:
-              # to avoid raising an error when the variable is not defined
+            if i in self._u:    # to avoid raising an error when the variable is not defined
               str_fnc = "if(%s !== undefined){%s.%s}" % (self.varId, self.varId, str_fnc)
             else:
               str_fnc = "%s.%s" % (self._mapVarId(str_fnc, self.varId), str_fnc)
@@ -359,18 +343,18 @@ class JsPackage(primitives.JsDataModel):
 
 
 class DataAttrs(primitives.JsDataModel):
+
   def __init__(self, page: primitives.PageModel, attrs: dict = None, options: dict = None):
     self.page, self.options, self._attrs = page, options, attrs or {}
 
   def custom(self, name: str, value: types.JS_DATA_TYPES):
-    """
-    Custom function to add a bespoke attribute to a class.
+    """ Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
 
-    :param name: The key to be added to the attributes.
-    :param value: The value of the defined attributes.
+    :param name: The key to be added to the attributes
+    :param value: The value of the defined attributes
 
     :return: The DataAttrs to allow the chains
     """
@@ -378,11 +362,10 @@ class DataAttrs(primitives.JsDataModel):
     return self
 
   def attr(self, name: str, value: Any):
-    """
-    Add an attribute to the Javascript underlying dictionary
+    """ Add an attribute to the Javascript underlying dictionary.
 
-    :param str name: The attribute name.
-    :param Any value: The attribute value.
+    :param name: The attribute name.
+    :param value: The attribute value.
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -390,25 +373,33 @@ class DataAttrs(primitives.JsDataModel):
     return self
 
   def attrs(self, values: dict):
-    """
-    Set multiple attributes to the underlying data directly from a dictionary.
+    """ Set multiple attributes to the underlying data directly from a dictionary.
 
-    :param dict values: The data to set.
+    :param values: The data to set.
 
     :return: "Self" to allow the chains on the Python side
     """
     self._attrs.update(values)
     return self
 
-  def __str__(self):
+  def set_val(self, value: str, name: str = None, js_type: bool = False):
+    """ Default way to set values for properties.
+    This will manage functions in the case of callback within strings.
+
+    :param value: The property value
+    :param name: The property name
+    :param js_type: For the process to consider the value as JavaScript
     """
-    Produce the resulting string to be added to the Javascript section of the web page
+    if (hasattr(value, "startswith") and value.startswith("function(")) or js_type:
+      value = JsUtils.jsWrap(value)
+    self.attr(name or sys._getframe().f_back.f_code.co_name, value)
+
+  def __str__(self):
+    """ Produce the resulting string to be added to the Javascript section of the web page.
     """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])
 
-  def toStr(self):
-    """
-
-    :return:
+  def toStr(self) -> str:
+    """ Serialise the object.
     """
     return "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])

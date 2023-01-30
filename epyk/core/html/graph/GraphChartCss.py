@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import List
 
+from epyk.core.py import types as etypes
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css.styles.attributes import CssInline
@@ -15,26 +17,25 @@ class ChartCss(Html.Html):
 
   def __init__(self,  page: primitives.PageModel, width, height, html_code, options, profile):
     super(ChartCss, self).__init__(
-      report, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
+      page, [], html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.attr["class"].clear()
     self.attr["class"].add("charts-css %s" % self._chart__type)
     self._datasets, self._labels, self.row_style = [], [], CssInline()
 
   @property
   def options(self) -> OptChartCss.ChartCssOptions:
-    """
-    Set the ChartCss options.
+    """ Set the ChartCss options.
+
+    Related Pages:
 
       https://chartscss.org/charts/area/
-
-    :rtype: OptChartCss.ChartCssOptions
     """
     return super().options
 
-  def labels(self, values):
-    """
+  def labels(self, values: List[str]):
+    """ Set the chart labels.
  
-    :param values: List. The different values for the x axis.
+    :param values: The different values for the x-axis.
     """
     self._labels = values
 
@@ -45,7 +46,7 @@ class ChartCss(Html.Html):
 
       https://www.chartjs.org/docs/master/general/data-structures
  
-    :param i: Integer. Optional. The series index according to the y_columns.
+    :param i: Optional. The series index according to the y_columns.
 
     :rtype: JsChartJs.DataSetPie
     """

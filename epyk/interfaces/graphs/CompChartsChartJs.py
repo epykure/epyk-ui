@@ -8,6 +8,7 @@ from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.js import Imports
 from epyk.core.css import Colors
+from epyk.core.js.packages import until_version
 
 
 class ChartJs:
@@ -25,26 +26,27 @@ class ChartJs:
 
       page.ui.charts.chartJs.set_version("2.9.4").line(languages, y_columns=['change'], x_axis="name")
 
-    :param v: The version number.
+    :param v: The version number
     """
     if v.startswith("2"):
       self.page.imports.setVersion("chart.js", v, js={'register': {
         'alias': 'Chart', 'module': 'Chart.min', 'npm': 'chart.js', 'npm_path': 'dist'}, 'modules': [
-        {'script': 'Chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]},
-                                   css={'modules': [
-        {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]})
-    if v.startswith("3"):
+        {'script': 'Chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/',
+         'cdnjs': Imports.CDNJS_REPO}]}, css={'modules': [
+        {'script': 'Chart.min.css', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/',
+         'cdnjs': Imports.CDNJS_REPO}]})
+    elif v.startswith("3") or v.startswith("4"):
       self.page.imports.setVersion("chart.js", v, js={'register': {
         'alias': 'chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'}, 'modules': [
-        {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': Imports.CDNJS_REPO}]},
-                                   css=False)
+        {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/',
+         'cdnjs': Imports.CDNJS_REPO}]}, css=False)
     return self
 
   def plot(self, record: list = None, y: list = None, x: str = None, kind: str = "line",
            profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None) -> graph.GraphChartJs.Chart:
-    """
+    """ Generic way to define ChartJs charts.
 
     :tags:
     :categories:
@@ -52,6 +54,8 @@ class ChartJs:
     Usage::
 
     Related Pages:
+
+      https://www.chartjs.org/
 
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -80,6 +84,7 @@ class ChartJs:
 
     Related Pages:
 
+      https://www.chartjs.org/
       https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
 
     :param record: Optional. The list of dictionaries with the input data
@@ -117,6 +122,7 @@ class ChartJs:
 
     Related Pages:
 
+      https://www.chartjs.org/
       https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
 
     :param record: Optional. The list of dictionaries with the input data
@@ -202,7 +208,7 @@ class ChartJs:
     pie_chart = graph.GraphChartJs.ChartPie(self.page, width, height, html_code, dfl_options, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart.options.type = "doughnut"
-    pie_chart._attrs["type"] = "doughnut"
+    pie_chart.type = "doughnut"
     pie_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
       pie_chart.add_dataset(d["data"], d['label'], opacity=self.opacity)
@@ -643,7 +649,7 @@ class ChartJs:
     component = graph.GraphChartJs.Fabric(self.page, width, height, html_code, options, profile)
     return component
 
-  def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+  def treemap(self, record: list = None, y_columns: list = None, groups: list = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None) -> graph.GraphChartJs.ChartTreeMap:
     """ Display a treemap chart from ChartJs.
@@ -659,25 +665,49 @@ class ChartJs:
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param groups: Optional. The columns corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
     :param options: Optional. Specific Python options available for this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
+    prev_version = until_version(self.page.imports.pkgs.chart_js.version, "3.8.0", included=False)
+    if prev_version[0]:
+      self.page.imports.pkgs.chart_js_extensions.treemap.version = "2.0.1"
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
-    data = self.page.data.chartJs.y(record, y_columns, x_axis)
+    options.update({
+      'y_columns': y_columns or [],
+      "groups": groups,
+      'commons': {
+        "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
+    if len(groups) == 1:
+      options["x_axis"] = groups[0]
+    else:
+      options["groups"] = groups
+    data = self.page.data.chartJs.y(record, y_columns, None)
     treemap_chart = graph.GraphChartJs.ChartTreeMap(self.page, width, height, html_code, options, profile)
     treemap_chart.colors(self.page.theme.charts)
     treemap_chart.labels(data['labels'])
     treemap_chart.options.scales.y_axis().display = False
     for i, d in enumerate(data['datasets']):
-      treemap_chart.add_dataset(d["data"], d['label'])
-      treemap_chart.datasets[-1].labels.display = True
-      treemap_chart.datasets[-1].labels.formatter(data['labels'])
-      treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
+      if "data" not in d:
+        treemap_chart.add_dataset(d, data['labels'][0], kind="tree")
+        treemap_chart.datasets[-1].labels.display = True
+        treemap_chart.datasets[-1].groups = groups
+        treemap_chart.datasets[-1].backgroundColor = '''function(ctx) {var item = ctx.dataset.data[ctx.dataIndex];
+if (item){
+  var a = item.v / (item.gs || item.s) / 2 + 0.5;
+  if(item.l === 0){return Chart.helpers.color("%s").alpha(a).rgbString()}
+  if(item.l === 1){return Chart.helpers.color("white").alpha(0.3).rgbString()}
+  else{return Chart.helpers.color("%s").alpha(a).rgbString()}}
+}''' % (options['commons']["colors"]["light"], options['commons']["colors"]["base"])
+        treemap_chart.plugins.legend.display = False
+      else:
+        treemap_chart.add_dataset(d["data"], d['label'])
+        treemap_chart.datasets[-1].labels.display = True
+        treemap_chart.datasets[-1].labels.formatter(data['labels'])
+        treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
     return treemap_chart

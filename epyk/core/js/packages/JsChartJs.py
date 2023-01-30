@@ -1212,8 +1212,8 @@ class DataSet(DataAttrs):
     return self._attrs.get("backgroundColor")
 
   @backgroundColor.setter
-  def backgroundColor(self, val: str):
-    self._attrs["backgroundColor"] = val
+  def backgroundColor(self, color: str):
+    self.set_val(color)
 
   @property
   def borderColor(self):
@@ -1227,8 +1227,8 @@ class DataSet(DataAttrs):
     return self._attrs.get("borderColor")
 
   @borderColor.setter
-  def borderColor(self, val: str):
-    self._attrs["borderColor"] = val
+  def borderColor(self, color: str):
+    self.set_val(color)
 
   @property
   def borderWidth(self):
@@ -1273,6 +1273,36 @@ class DataSet(DataAttrs):
       else:
         color = Colors.getHexToRgb(self._attrs["backgroundColor"])
         self._attrs["backgroundColor"] = "rgba(%s, %s, %s, %s)" % (color[0], color[1], color[2], val)
+
+  @property
+  def fontColor(self):
+    """
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs.get("fontColor")
+
+  @fontColor.setter
+  def fontColor(self, color: str):
+    self.set_val(color)
+
+  @property
+  def fontFamily(self):
+    """
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/charts/doughnut.html
+      https://www.chartjs.org/docs/latest/charts/line.html
+    """
+    return self._attrs.get("fontFamily")
+
+  @fontFamily.setter
+  def fontFamily(self, value: str):
+    self.set_val(value)
 
   def set_style(self, background_color: str = None, fill_opacity: int = None, border_width: int = None,
                 border_color: str = None):
@@ -2686,9 +2716,43 @@ class DataSetBubble(DataSet):
 
 
 class DataSetTreeMap(DataSet):
+
+  @property
+  def captions(self):
+    """ The captions options can control if and how a captions, to represent the group of the chart,
+    can be shown in the rectangle, with the following properties:
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#captions
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-optionsl
+    """
+    return self._attrs["captions"]
+
+  @captions.setter
+  def captions(self, values: dict):
+    self._attrs["captions"] = values
+
+  @property
+  def dividers(self):
+    """ The divider is a line which splits a treemap elements in grouped elements and can be controlled with
+    the following properties.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dividers
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-optionsl
+    """
+    return self._attrs["dividers"]
+
+  @dividers.setter
+  def dividers(self, values: dict):
+    self._attrs["dividers"] = values
+
   @property
   def label(self):
-    """
+    """ The labels options can control if and how a label, to represent the data, can be shown in the rectangle,
+    with the following properties:
 
     Related Pages:
 
@@ -2698,11 +2762,11 @@ class DataSetTreeMap(DataSet):
 
   @label.setter
   def label(self, val: str):
-    self._attrs["label"] = val
+    self.set_val(val)
 
   @property
   def spacing(self):
-    """
+    """ Fixed distance (in pixels) between all treemap elements.
 
     Related Pages:
 
@@ -2716,8 +2780,7 @@ class DataSetTreeMap(DataSet):
 
   @property
   def rtl(self):
-    """
-    If true, the treemap elements are rendering from right to left.
+    """ If true, the treemap elements are rendering from right to left.
 
     Related Pages:
 
@@ -2731,8 +2794,7 @@ class DataSetTreeMap(DataSet):
 
   @property
   def tree(self):
-    """
-    Tree data should be provided in tree property of dataset. data is then automatically build.
+    """ Tree data should be provided in tree property of dataset. data is then automatically build.
 
     Related Pages:
 
@@ -2745,9 +2807,23 @@ class DataSetTreeMap(DataSet):
     self._attrs["tree"] = values
 
   @property
-  def key(self):
+  def treeLeafKey(self):
+    """ The name of the key where the object key of leaf node of tree object is stored.
+    Used only when tree is an object, as hierarchical data.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
     """
-    Define the key name in data objects to use for value.
+    return self._attrs.get("treeLeafKey")
+
+  @treeLeafKey.setter
+  def treeLeafKey(self, values):
+    self._attrs["treeLeafKey"] = values
+
+  @property
+  def key(self):
+    """ Define the key name in data objects to use for value.
 
     Related Pages:
 
@@ -2761,8 +2837,7 @@ class DataSetTreeMap(DataSet):
 
   @property
   def groups(self):
-    """
-    Define how to display multiple levels of hierarchy. Data is summarized to groups internally.
+    """ Define how to display multiple levels of hierarchy. Data is summarized to groups internally.
 
     Related Pages:
 
@@ -2771,14 +2846,8 @@ class DataSetTreeMap(DataSet):
     return self._attrs.get("groups")
 
   @groups.setter
-  def groups(self, value: str):
-    self._attrs["groups"] = value
-
-  def backgrounds(self, labels):
-    self.custom("backgroundColor", JsUtils.jsWrap(
-      "function(ctx){let treeLabels = %(labels)s; return treeLabels[ctx.dataIndex]}" % {
-        "labels": JsUtils.jsConvertData(labels, None)
-      }))
+  def groups(self, values: List[str]):
+    self._attrs["groups"] = values
 
   @property
   def labels(self) -> OptionsLabels:
@@ -2788,6 +2857,25 @@ class DataSetTreeMap(DataSet):
     if self._attrs.get("labels") is None:
       self._attrs['labels'] = OptionsLabels(self.page)
     return self._attrs['labels']
+
+  @property
+  def sumKeys(self):
+    """ Define multiple keys to add additional sums, on top of the key one, for scriptable options use.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#dataset-options
+    """
+    return self._attrs.get("sumKeys")
+
+  @sumKeys.setter
+  def sumKeys(self, values: List[str]):
+    self._attrs["sumKeys"] = values
+
+
+
+
+
 
 # class ChartJsType(object):
 #

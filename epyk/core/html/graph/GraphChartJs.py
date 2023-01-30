@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List, Dict
 from epyk.core.py import primitives
 from epyk.core.css import Colors
 from epyk.core.html import Html
@@ -173,6 +174,14 @@ class Chart(Html.Html):
     return ChartJsActivePoints(self.chartId, i, self.page)
 
   @property
+  def type(self):
+    return self._attrs["type"]
+
+  @type.setter
+  def type(self, value: str):
+    self._attrs["type"] = value
+
+  @property
   def shared(self):
     """   All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
@@ -195,8 +204,6 @@ class Chart(Html.Html):
       page.ui.button("Load").click([line.js.add(6, {"test 2": 34})])
 
     :return: A Javascript object.
-
-    :rtype: JsChartJs.ChartJs
     """
     if self._js is None:
       self._js = JsChartJs.ChartJs(selector="window['%s']" % self.chartId, component=self, page=self.page)
@@ -221,7 +228,6 @@ class Chart(Html.Html):
 
     Usage::
 
-    :rtype: OptChartJs.ChartJsOptions
     """
     return super().options
 
@@ -250,7 +256,7 @@ class Chart(Html.Html):
     self.options._attrs['dragData'] = True
     return self.options
 
-  def labels(self, labels):
+  def labels(self, labels: list):
     """   Set the labels of the different series in the chart.
 
     Usage::
@@ -259,7 +265,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/latest/axes/labelling.html
 
-    :param labels: List. An array of labels.
+    :param labels: An array of labels
     """
     self._data_attrs['labels'] = labels
     return self
@@ -269,8 +275,8 @@ class Chart(Html.Html):
 
     Usage::
 
-    :param i: Integer. The series index according to the y_columns.
-    :param name: String. The new name to be set.
+    :param i: The series index according to the y_columns
+    :param name: The new name to be set
     """
     self.dataset(i).label = name
     return self
@@ -284,9 +290,7 @@ class Chart(Html.Html):
 
       https://www.chartjs.org/docs/master/general/data-structures
 
-    :param i: Integer. Optional. The series index according to the y_columns.
-
-    :rtype: JsChartJs.DataSetPie
+    :param i: Optional. The series index according to the y_columns
     """
     if i is None:
       return self._datasets[-1]
@@ -301,7 +305,7 @@ class Chart(Html.Html):
 
     Usage::
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -397,8 +401,7 @@ class Chart(Html.Html):
 
   @property
   def datasets(self):
-    """
-
+    """ Get all the datasets defined for a chart.
     """
     return self._datasets
 
@@ -438,8 +441,7 @@ class Chart(Html.Html):
 
   def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
             profile: types.PROFILE_TYPE = None, component_id: str = None):
-    """
-    Update the chart with context and / or data changes.
+    """ Update the chart with context and / or data changes.
 
     :param data: Optional. The full datasets object expected by ChartJs
     :param options: Optional. Specific Python options available for this component
@@ -463,8 +465,7 @@ class Chart(Html.Html):
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
   def loading(self, status: bool = True):
-    """
-    Loading component on a chart.
+    """ Loading component on a chart.
 
     Usage::
 
@@ -572,8 +573,7 @@ class Datasets:
     self.page, self.__data = page, []
 
   def add(self, data):
-    """
-    Add a series to an existing dataset.
+    """ Add a series to an existing dataset.
 
     Usage::
 
@@ -589,8 +589,7 @@ class ChartLine(Chart):
 
   @property
   def options(self) -> OptChartJs.OptionsLine:
-    """
-    Property to the specific ChartJs Line chart.
+    """ Property to the specific ChartJs Line chart.
 
     Usage::
 
@@ -601,8 +600,7 @@ class ChartLine(Chart):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Add a new series to the chart datasets.
+    """ Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
     For a chart line the default Opacity is None which will set the fill to attribute to False.
@@ -636,9 +634,8 @@ class ChartLine(Chart):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label="", colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Add a new Dataset to the chart list of Datasets.
+  def add_dataset(self, data, label: str = "", colors=None, opacity=None, kind=None, **kwargs):
+    """ Add a new Dataset to the chart list of Datasets.
 
     Usage::
 
@@ -698,8 +695,7 @@ class ChartBubble(Chart):
   _chart__type = 'bubble'
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Add a new series to the chart datasets.
+    """ Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
     Usage::
@@ -729,8 +725,7 @@ class ChartBubble(Chart):
     return data
 
   def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-    """
-    Add a new Dataset to the chart list of Datasets.
+    """ Add a new Dataset to the chart list of Datasets.
 
     Usage::
 
@@ -783,8 +778,7 @@ class ChartBar(ChartLine):
 
   @property
   def options(self):
-    """
-    Property to the bar chart options.
+    """ Property to the bar chart options.
 
     Usage::
 
@@ -797,8 +791,7 @@ class ChartBar(ChartLine):
     return super().options
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-    """
-    Add a new series to the chart datasets.
+    """ Add a new series to the chart datasets.
     The dataset structure of a chart is a list of dataset.
 
     Usage::
@@ -807,12 +800,12 @@ class ChartBar(ChartLine):
 
       https://www.chartjs.org/docs/latest/configuration/elements.html
 
-    :param index: Integer. The index of the dataset in the chart list of datasets.
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index: The index of the dataset in the chart list of datasets
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     series_attrs = {"data": data, 'type': kind or self.options.type}
     if series_attrs['type'] == 'line':
@@ -829,9 +822,9 @@ class ChartBar(ChartLine):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None, **kwargs):
-    """
-    Add a new Dataset to the chart list of Datasets.
+  def add_dataset(self, data, label: str, kind: str = None, colors: List[str] = None, opacity: float = None,
+                  alias: str = None, **kwargs) -> JsChartJs.DataSetScatterLine:
+    """ Add a new Dataset to the chart list of Datasets.
 
     Usage::
 
@@ -839,12 +832,12 @@ class ChartBar(ChartLine):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Float. Optional. The opacity level for the content.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
-    :param alias: String. The chart alias name visible in the legend. Default the label.
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity level for the content
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
+    :param alias: The chart alias name visible in the legend. Default the label
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, opacity=opacity, kind=kind, **kwargs)
     self._datasets.append(data)
@@ -862,22 +855,20 @@ class ChartPolar(Chart):
   _option_cls = OptChartJs.OptionsPolar
 
   @property
-  def options(self):
-    """
-    Property to the Polar chart options.
+  def options(self) -> OptChartJs.OptionsPolar:
+    """ Property to the Polar chart options.
 
     Usage::
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/charts/polar.html
-
-    :rtype: OptChartJs.OptionsPolar
     """
     return super().options
 
-  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """
+  def new_dataset(self, index: int, data, label: str, colors: List[str] = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetPolar:
+    """Add anew dataset.
 
     Usage::
 
@@ -885,11 +876,11 @@ class ChartPolar(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    :param index: Integer. The index of the dataset in the chart list of datasets.
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index: The index of the dataset in the chart list of datasets
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param kind: Optional. The series type. Default to the chart type if not supplied
     """
     if kind is not None:
       data = JsChartJs.DataSetPolar(self.page, attrs={"data": data, 'type': kind})
@@ -907,7 +898,8 @@ class ChartPolar(Chart):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None, kind=None, **kwargs):
+  def add_dataset(self, data, label: str, colors: List[str] = None, opacity: float = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetPolar:
     """
 
     Usage::
@@ -916,11 +908,11 @@ class ChartPolar(Chart):
 
       https://www.chartjs.org/docs/latest/developers/updates.html
 
-    :param data: List. The list of points (float).
-    :param label: String. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param data: The list of points (float)
+    :param label: The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    :param kind: Optional. The series type. Default to the chart type if not supplied
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, **kwargs)
     self._datasets.append(data)
@@ -970,26 +962,26 @@ class ChartPie(Chart):
   _option_cls = OptChartJs.OptionsPie
 
   @property
-  def options(self):
+  def options(self) -> OptChartJs.OptionsPie:
     """   Property to the Pie Chart options.
 
     Usage::
 
-    :rtype: OptChartJs.OptionsPie
     """
     return super().options
 
-  def new_dataset(self, index, data, label="", colors=None, opacity=None, kind=None, **kwargs):
+  def new_dataset(self, index: int, data, label: str = "", colors: List[str] = None, opacity: float = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetPie:
     """
 
     Usage::
 
-    :param index: Integer.
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index:
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     data = JsChartJs.DataSetPie(self.page, attrs={"data": data})
     if colors is None:
@@ -1004,15 +996,16 @@ class ChartPie(Chart):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label="", colors=None, opacity=None, **kwargs):
+  def add_dataset(self, data, label: str = "", colors: List[str] = None,
+                  opacity: float = None, **kwargs) -> JsChartJs.DataSetPie:
     """
 
     Usage::
 
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
     """
     data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, **kwargs)
     self._datasets.append(data)
@@ -1057,17 +1050,18 @@ class ChartPie(Chart):
 class ChartRadar(Chart):
   _chart__type = 'radar'
 
-  def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
+  def new_dataset(self, index: int, data, label: str, colors: List[str] = None, opacity: float = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetRadar:
     """
 
     Usage::
 
-    :param index: Integer.
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index:
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    :param kind: Optional. The series type. Default to the chart type if not supplied
     """
     data = JsChartJs.DataSetRadar(self.page, attrs={"data": data})
     data.label = label
@@ -1083,15 +1077,16 @@ class ChartRadar(Chart):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
+  def add_dataset(self, data, label: str, colors: List[str] = None,
+                  opacity: float = None, **kwargs) -> JsChartJs.DataSetRadar:
     """
 
     Usage::
 
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
     """
     dataset = self.new_dataset(len(self._datasets), data, label, colors, opacity, **kwargs)
     self._datasets.append(dataset)
@@ -1134,16 +1129,17 @@ class ChartRadar(Chart):
 class ChartScatter(Chart):
   _chart__type = 'scatter'
 
-  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
+  def new_dataset(self, index: int, data, label: str, colors: List[str] = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetScatterLine:
     """
 
     Usage::
 
-    :param index: Integer.
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index:
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     data = JsChartJs.DataSetScatterLine(self.page, attrs={"data": data})
     data.fill = False
@@ -1158,14 +1154,14 @@ class ChartScatter(Chart):
         data._attrs[k] = v
     return data
 
-  def add_dataset(self, data, label, colors=None, **kwargs):
+  def add_dataset(self, data, label: str, colors: List[str] = None, **kwargs) -> JsChartJs.DataSetScatterLine:
     """
 
     Usage::
 
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
     """
     data = self.new_dataset(len(self._datasets), data, label, colors, **kwargs)
     self._datasets.append(data)
@@ -1206,32 +1202,38 @@ class ChartTreeMap(Chart):
   _chart__type = 'treemap'
   _option_cls = OptChartJs.OptionsTreeMap
 
-  def add_dataset(self, tree, label, colors=None, **kwargs):
-    """   
+  def add_dataset(self, tree: List[dict], label: str, colors: List[str] = None, **kwargs) -> JsChartJs.DataSetTreeMap:
+    """ Add a dataset for the tree map.
 
     Usage::
 
-    :param tree: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
+    :param tree: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
     """
+    if "kind" not in kwargs:
+      kwargs["kind"] = "data"
     data = self.new_dataset(len(self._datasets), tree, label, colors, **kwargs)
     self._datasets.append(data)
     return data
 
-  def new_dataset(self, index, data, label, colors=None, kind=None, **kwargs):
-    """   
+  def new_dataset(self, index: int, data, label: str, colors: List[str] = None, kind: str = None,
+                  **kwargs) -> JsChartJs.DataSetTreeMap:
+    """ Override an existing dataset.
 
     Usage::
 
-    :param index: Integer.
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param index: The series index
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
-    data = JsChartJs.DataSetTreeMap(self.page, attrs={"data": data})
-    data.label = label
+    data = JsChartJs.DataSetTreeMap(self.page, attrs={kind: data})
+    if kind == "tree":
+      data.key = label
+    else:
+      data.label = label
     if colors is None:
       data.backgroundColor = self.options.colors[index]
       data.borderColor = self.options.colors[index]
@@ -1241,6 +1243,51 @@ class ChartTreeMap(Chart):
       else:
         data._attrs[k] = v
     return data
+
+  def backgrounds(self, colors: Dict[str, str]):
+    """ Specific mapping rules for the background colors.
+
+    :param colors: The color mapping based on the section label
+    """
+    self.options.commons["backgroundColorMaps"] = colors
+    self.dataset().custom("backgroundColor", JsUtils.jsWrap('''function(ctx){var item = ctx.dataset.data[ctx.dataIndex];
+if (item){
+  var a = item.v / (item.gs || item.s) / 2 + 0.5;
+  var colorsMaps = %s; if(colorsMaps[item.g]){return colorsMaps[item.g]}
+  if(item.l === 0){return Chart.helpers.color("%s").alpha(a).rgbString()}
+  if(item.l === 1){return Chart.helpers.color("white").alpha(0.3).rgbString()}
+  else{return Chart.helpers.color("%s").alpha(a).rgbString()}}
+}''' % (colors, self.options['commons']["colors"]["light"], self.options['commons']["colors"]["base"])
+    ))
+
+  _js__builder__ = '''
+    if(data.python){
+      result = {datasets: [], labels: data.labels};
+      data.datasets.forEach(function(dataset, i){
+        if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors};
+        if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors};
+        if(typeof dataset.hoverBackgroundColor === "undefined"){
+          dataset.hoverBackgroundColor = options.background_colors};
+        if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)};
+        result.datasets.push(dataset)})
+    } else {
+      result = {datasets: [], labels: []};
+      result.datasets.push({
+        tree: data, key: options.y_columns[0], groups: options.groups, labels: {display: true}});
+      result.datasets.forEach(function(dataset, i){
+        if (options.commons.backgroundColorMaps){
+          dataset.backgroundColor = function(ctx) {var item = ctx.dataset.data[ctx.dataIndex];
+              if (item){
+                var a = item.v / (item.gs || item.s) / 2 + 0.5;
+                var colorsMaps = options.commons.backgroundColorMaps; if(colorsMaps[item.g]){return colorsMaps[item.g]}
+                if(item.l === 0){return Chart.helpers.color(options.commons.colors.light).alpha(a).rgbString()}
+                if(item.l === 1){return Chart.helpers.color("white").alpha(0.3).rgbString()}
+                else{return Chart.helpers.color(options.commons.colors.base).alpha(a).rgbString()}}}
+        } else {  
+          dataset.backgroundColor = options.colors[i];
+        }
+      })
+    }; return result'''
 
 
 class ChartExts(ChartPie):

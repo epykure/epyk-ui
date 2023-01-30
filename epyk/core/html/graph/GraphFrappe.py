@@ -45,8 +45,6 @@ class Frappe(Html.Html):
       ])
 
     :return: A Javascript Dom object functions.
-
-    :rtype: JsFrappe.FrappeCharts
     """
     if self._js is None:
       self._js = JsFrappe.FrappeCharts(selector="window['%s']" % self.chartId, component=self)
@@ -55,8 +53,6 @@ class Frappe(Html.Html):
   @property
   def options(self) -> OptChartFrappe.FrappeLine:
     """   Chart specific options.
-
-    :rtype: OptChartFrappe.FrappeLine
     """
     return super().options
 
@@ -68,7 +64,7 @@ class Frappe(Html.Html):
 
     Usage::
 
-    :param list hex_values: An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -83,11 +79,12 @@ class Frappe(Html.Html):
         line_colors.append(h[0])
         bg_colors.append(h[0])
     self.options.colors = line_colors
+    return self
 
   def labels(self, values: list):
-    """
+    """ Set the series labels.
 
-    :param list values: The different values for the x axis.
+    :param values: The different values for the x-axis
     """
     self.options.data.labels = values
 

@@ -36,7 +36,6 @@ class Sparklines(Html.Html):
 
     Usage::
 
-    :rtype: GrpClsChart.ClassBSpartlines
     """
     if self._styleObj is None:
       self._styleObj = GrpClsChart.ClassBSpartlines(self)
@@ -48,7 +47,6 @@ class Sparklines(Html.Html):
 
     Usage::
 
-    :rtype: OptSparkline.OptionsSparkLine
     """
     return super().options
 
@@ -60,8 +58,6 @@ class Sparklines(Html.Html):
     Usage::
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlJqueryUI.JsHtmlSparkline
     """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlSparkline(component=self, page=self.page)
@@ -108,7 +104,7 @@ class Sparklines(Html.Html):
       self.dom.jquery.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
     return self
 
-  def color(self, hex_value, background=None):
+  def color(self, hex_value: str, background: str = None):
     """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
@@ -116,7 +112,8 @@ class Sparklines(Html.Html):
 
     Usage::
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_value: hexadecimal color code.
+    :param background:
     """
     if background is None:
       self.options.fillColor = "rgba(%s, %s, %s, %s" % (

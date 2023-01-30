@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from epyk.core.py import types as etypes
 
 from epyk.core.html.options import Options
 from epyk.core.html.options import Enums
@@ -12,53 +13,55 @@ from epyk.core.html.options import OptChart
 
 class OptionsChartSharedC3(OptChart.OptionsChartShared):
 
-  def x_format(self, js_funcs, profile=None):
+  def x_format(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     raise NotImplementedError()
 
-  def x_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def x_format_money(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
+                     fmt: str = "%v %s", factor: float = None, alias: str = ""):
     self.component.options.axis.x.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
     return self
 
-  def x_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+  def x_format_number(self, factor: float = 1, alias: str = None, digits: int = 0, thousand_sep: str = "."):
     self.component.options.axis.x.tick.formats.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def x_label(self, value):
-    """   Set the label of the x axis.
+  def x_label(self, value: str):
+    """   Set the label of the x-axis.
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-y-label
 
-    :param value: String. The axis label.
+    :param value: The axis label
     """
     self.component.options.axis.x.label.text = value
     return self
 
-  def x_tick_count(self, num):
+  def x_tick_count(self, num: int):
     self.component.options.axis.x.tick.count = num
     return self
 
-  def y_format(self, js_funcs, profile=None):
+  def y_format(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     raise NotImplementedError()
 
-  def y_format_money(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def y_format_money(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
+                     fmt: str = "%v %s", factor: float = None, alias: str = ""):
     self.component.options.axis.y.tick.formats.toMoney(symbol, digit, thousand_sep, decimal_sep, fmt, factor, alias)
     return self
 
-  def y_format_number(self, factor=1, alias=None, digits=0, thousand_sep="."):
+  def y_format_number(self, factor: float = 1, alias: str = None, digits: int = 0, thousand_sep: str = "."):
     self.component.options.axis.x.tick.formats.scale(factor, alias, digits, thousand_sep)
     return self
 
-  def y_label(self, value):
-    """   Set the label of the y axis.
+  def y_label(self, value: str):
+    """ Set the label of the y-axis.
 
-    :param value: String. The axis label.
+    :param value: The axis label.
     """
     self.component.options.axis.y.label.text = value
     return self
 
-  def y_tick_count(self, num):
+  def y_tick_count(self, num: int):
     self.component.options.axis.y.tick.count = num
     return self
 
@@ -92,7 +95,7 @@ class EnumAxisTypes(Enums):
     """
     self._set_value()
 
-  def category(self, categories=None):
+  def category(self, categories: list = None):
     """
 
     Related Pages:
@@ -118,14 +121,14 @@ class EnumTickFormat(Enums):
         return label.getFullYear() +"-"+ (label.getMonth() + 1) +"-"+ label.getDate()}''', js_type=True)
 
   @packageImport("accounting")
-  def toNumber(self, digit=0, thousand_sep="."):
+  def toNumber(self, digit: int = 0, thousand_sep: str = "."):
     """   Convert to number using the accounting Javascript module-
 
     Related Pages:
 
       https://openexchangerates.github.io/accounting.js/
 
-    :param digit: Integer. The number of digit to be displayed
+    :param digit: The number of digit to be displayed
     :param thousand_sep: The thousand symbol separator
     """
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -134,16 +137,17 @@ class EnumTickFormat(Enums):
     return self
 
   @packageImport("accounting")
-  def toMoney(self, symbol="", digit=0, thousand_sep=".", decimal_sep=",", fmt="%v %s", factor=None, alias=""):
+  def toMoney(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
+              fmt: str = "%v %s", factor: float = None, alias: str = ""):
     """
 
-    :param symbol: String. Optional.
-    :param digit: Integer. Optional.
-    :param thousand_sep: String. Optional.
-    :param decimal_sep: String. Optional.
-    :param fmt: String. Optional.
-    :param factor: Number. Optional.
-    :param alias: String. Optional.
+    :param symbol: Optional.
+    :param digit: Optional.
+    :param thousand_sep: Optional.
+    :param decimal_sep: Optional.
+    :param fmt: Optional.
+    :param factor: Optional.
+    :param alias: Optional.
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -154,7 +158,7 @@ class EnumTickFormat(Enums):
       factor or 1, "'%s'+ %s" % (alias, symbol), digit, thousand_sep, decimal_sep, fmt), js_type=True)
 
   @packageImport("accounting")
-  def scale(self, factor=1000, alias=None, digits=0, thousand_sep="."):
+  def scale(self, factor: float = 1000, alias: str = None, digits: int = 0, thousand_sep: str = "."):
     """
 
     :param factor:
@@ -199,8 +203,7 @@ class EnumTickFormat(Enums):
 class EnumStepTypes(Enums):
 
   def linear(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -209,8 +212,7 @@ class EnumStepTypes(Enums):
     self._set_value()
 
   def linear_closed(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -219,8 +221,7 @@ class EnumStepTypes(Enums):
     self._set_value("linear-closed")
 
   def basis(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -229,8 +230,7 @@ class EnumStepTypes(Enums):
     self._set_value()
 
   def basis_open(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -239,8 +239,7 @@ class EnumStepTypes(Enums):
     self._set_value("basis-open")
 
   def basis_closed(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -249,8 +248,7 @@ class EnumStepTypes(Enums):
     self._set_value("basis-closed")
 
   def bundle(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -259,8 +257,7 @@ class EnumStepTypes(Enums):
     self._set_value()
 
   def cardinal(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -269,8 +266,7 @@ class EnumStepTypes(Enums):
     self._set_value()
 
   def cardinal_open(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -279,8 +275,7 @@ class EnumStepTypes(Enums):
     self._set_value(value="cardinal-open")
 
   def cardinal_closed(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -289,8 +284,7 @@ class EnumStepTypes(Enums):
     self._set_value(value="cardinal-closed")
 
   def monotone(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -299,8 +293,7 @@ class EnumStepTypes(Enums):
     self._set_value()
 
   def step(self):
-    """
-    Set type of curve interpolation.
+    """ Set type of curve interpolation.
 
     Related Pages:
 
@@ -382,12 +375,75 @@ class OptionPadding(Options):
     self._config(val)
 
 
+class OptionLines(Options):
+
+  @property
+  def value(self):
+    """
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
+    """
+    return self._config_get()
+
+  @value.setter
+  def value(self, num):
+    self._config(num)
+
+  @property
+  def css_class(self):
+    """
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
+    """
+    return self._config_get()
+
+  @css_class.setter
+  def css_class(self, css_id):
+    self._config(css_id)
+
+  @property
+  def text(self):
+    """
+
+    Related Pages:
+
+      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
+    """
+    return self._config_get()
+
+  @text.setter
+  def text(self, value):
+    self._config(value)
+
+  @property
+  def position(self):
+    """
+    Show additional grid lines along x axis.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#grid-x-lines
+    """
+    return self._config_get(None)
+
+  @position.setter
+  def position(self, val):
+    self._config(val)
+
+  @property
+  def positions(self) -> EnumTextPosition:
+    return EnumTextPosition(self, "position")
+
+
 class OptionsGridAxis(Options):
 
   @property
   def show(self):
-    """
-    Show grids along x axis.
+    """ Show grids along x axis.
 
     Related Pages:
 
@@ -399,9 +455,8 @@ class OptionsGridAxis(Options):
   def show(self, val):
     self._config(val)
 
-  def add_lines(self, value, css_class=None, text=None, position=None):
-    """
-    Add lines to the chart.
+  def add_lines(self, value, css_class=None, text=None, position=None) -> OptionLines:
+    """ Add lines to the chart.
 
     Related Pages:
 
@@ -428,20 +483,14 @@ class OptionsGridAxis(Options):
 class OptionsGrid(Options):
 
   @property
-  def x(self):
-    """
-    Property to the grid x axis.
-
-    :rtype: OptionsGridAxis
+  def x(self) -> OptionsGridAxis:
+    """ Property to the grid x axis.
     """
     return self._config_sub_data("x", OptionsGridAxis)
 
   @property
-  def y(self):
-    """
-    Property to the grid y axis.
-
-    :rtype: OptionsGridAxis
+  def y(self) -> OptionsGridAxis:
+    """ Property to the grid y axis.
     """
     return self._config_sub_data("y", OptionsGridAxis)
 
@@ -465,8 +514,7 @@ class OptionsLegend(Options):
 
   @property
   def hide(self):
-    """
-    Show or hide legend.
+    """ Show or hide legend.
 
     Related Pages:
 
@@ -475,7 +523,7 @@ class OptionsLegend(Options):
     return self._config_get(False)
 
   @hide.setter
-  def hide(self, flag):
+  def hide(self, flag: bool):
     self._config(flag)
 
   @property
@@ -496,7 +544,7 @@ class OptionsLegend(Options):
     self._config(text)
 
   @property
-  def positions(self):
+  def positions(self) -> EnumLegendPosition:
     """
 
     :return:
@@ -589,8 +637,7 @@ class OptionsTooltip(Options):
 
   @property
   def contents(self):
-    """
-    Set custom HTML for the tooltip.
+    """ Set custom HTML for the tooltip.
 
     Specified function receives data, defaultTitleFormat, defaultValueFormat and color of the data point to show.
     If tooltip.grouped is true, data includes multiple data points.
@@ -607,8 +654,7 @@ class OptionsTooltip(Options):
 
   @property
   def horizontal(self):
-    """
-    Show the tooltips based on the horizontal position of the mouse.
+    """ Show the tooltips based on the horizontal position of the mouse.
 
     Related Pages:
 
@@ -617,7 +663,7 @@ class OptionsTooltip(Options):
     return self._config_get(None)
 
   @horizontal.setter
-  def horizontal(self, flag):
+  def horizontal(self, flag: bool):
     self._config(flag)
 
 
@@ -625,8 +671,7 @@ class OptionsSubchart(Options):
 
   @property
   def show(self):
-    """
-    Show sub chart on the bottom of the chart.
+    """ Show sub chart on the bottom of the chart.
 
     Related Pages:
 
@@ -639,19 +684,18 @@ class OptionsSubchart(Options):
     self._config(val)
 
   @property
-  def axis(self):
+  def axis(self) -> OptionsGrid:
     """
 
-    :rtype: OptionsGrid
     """
     return self._config_sub_data("axis", OptionsGrid)
 
 
 class OptionsZoom(Options):
+
   @property
   def enabled(self):
-    """
-    Enable zooming.
+    """ Enable zooming.
 
     Related Pages:
 
@@ -665,8 +709,7 @@ class OptionsZoom(Options):
 
   @property
   def type(self):
-    """
-    There are two types of zoom behavior: 'scroll' and 'drag'.
+    """ There are two types of zoom behavior: 'scroll' and 'drag'.
 
     Related Pages:
 
@@ -680,8 +723,7 @@ class OptionsZoom(Options):
 
   @property
   def rescale(self):
-    """
-    Enable to rescale after zooming.
+    """ Enable to rescale after zooming.
 
     If true set, y domain will be updated according to the zoomed region.
 
@@ -697,8 +739,7 @@ class OptionsZoom(Options):
 
   @property
   def extent(self):
-    """
-    Change zoom extent.
+    """ Change zoom extent.
 
     Related Pages:
 
@@ -710,7 +751,7 @@ class OptionsZoom(Options):
   def extent(self, val):
     self._config(val)
 
-  def onzoom(self, jsFncs, profile=None):
+  def onzoom(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
     Set callback that is called when the chart is zooming.
 
@@ -720,14 +761,13 @@ class OptionsZoom(Options):
 
       https://c3js.org/reference.html#zoom-onzoom
 
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def onzoomstart(self, jsFncs, profile=None):
-    """
-    Set callback that is called when zooming starts.
+  def onzoomstart(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
+    """ Set callback that is called when zooming starts.
 
     Specified function receives the zoom event.
 
@@ -735,14 +775,13 @@ class OptionsZoom(Options):
 
       https://c3js.org/reference.html#zoom-onzoomstart
 
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def onzoomend(self, jsFncs, profile=None):
-    """
-    Set callback that is called when zooming ends.
+  def onzoomend(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
+    """ Set callback that is called when zooming ends.
 
     Specified function receives the zoomed domain.
 
@@ -750,18 +789,17 @@ class OptionsZoom(Options):
 
       https://c3js.org/reference.html#zoom-onzoomend
 
-    :param jsFncs: List | String. Javascript functions.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function (value){%s}" % JsUtils.jsConvertFncs(jsFncs, toStr=True, profile=profile), js_type=True)
+    self._config("function (value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
 
 class OptionsPoints(Options):
 
   @property
   def show(self):
-    """
-    Whether to show each point in line.
+    """ Whether to show each point in line.
 
     Related Pages:
 
@@ -770,13 +808,12 @@ class OptionsPoints(Options):
     return self._config_get(None)
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   @property
   def r(self):
-    """
-    The radius size of each point.
+    """ The radius size of each point.
 
     Related Pages:
 
@@ -785,7 +822,7 @@ class OptionsPoints(Options):
     return self._config_get(None)
 
   @r.setter
-  def r(self, num):
+  def r(self, num: float):
     self._config(num)
 
   @property
@@ -833,8 +870,7 @@ class OptionsPadding(Options):
 
   @property
   def top(self):
-    """
-    The padding on the top of the chart.
+    """ The padding on the top of the chart.
 
     Related Pages:
 
@@ -849,8 +885,7 @@ class OptionsPadding(Options):
 
   @property
   def left(self):
-    """
-    Change padding for the chart.
+    """ Change padding for the chart.
 
     Related Pages:
 
@@ -865,8 +900,7 @@ class OptionsPadding(Options):
 
   @property
   def right(self):
-    """
-    Change padding for the chart.
+    """ Change padding for the chart.
 
     Related Pages:
 
@@ -881,8 +915,7 @@ class OptionsPadding(Options):
 
   @property
   def bottom(self):
-    """
-    Change padding for the chart.
+    """ Change padding for the chart.
 
     Related Pages:
 
@@ -900,8 +933,7 @@ class OptionsSize(Options):
 
   @property
   def height(self):
-    """
-    The desired height of the chart element.
+    """ The desired height of the chart element.
 
     If this option is not specified, the height of the chart will be calculated by the size of the parent element
     it's appended to.
@@ -918,8 +950,7 @@ class OptionsSize(Options):
 
   @property
   def width(self):
-    """
-    The desired width of the chart element.
+    """ The desired width of the chart element.
 
     If this option is not specified, the width of the chart will be calculated by the size of the parent element
     it's appended to.
@@ -959,15 +990,14 @@ class OptionsLabel(Options):
   def position(self, text):
     self._config(text)
 
-  def format(self, jsFunc, profile=None):
-    """
-    Set formatter for the label on each donut piece.
+  def format(self, js_funcs, profile=None):
+    """ Set formatter for the label on each donut piece.
 
     Related Pages:
 
       https://c3js.org/reference.html#donut-label-format
 
-    :param jsFunc:
+    :param js_funcs:
     :param profile:
     """
     pass
@@ -976,8 +1006,7 @@ class OptionsLabel(Options):
 class OptionsPieLabel(OptionsLabel):
   @property
   def show(self):
-    """
-    Show or hide label on each pie piece.
+    """ Show or hide label on each pie piece.
 
     Related Pages:
 
@@ -1005,8 +1034,7 @@ class OptionsPieLabel(OptionsLabel):
 
   @property
   def threshold(self):
-    """
-    Set threshold to show/hide labels.
+    """ Set threshold to show/hide labels.
 
     Related Pages:
 
@@ -1015,7 +1043,7 @@ class OptionsPieLabel(OptionsLabel):
     return self._config_get(0.05)
 
   @threshold.setter
-  def threshold(self, num):
+  def threshold(self, num: float):
     self._config(num)
 
 
@@ -1036,77 +1064,230 @@ class OptionsDonutLabel(OptionsPieLabel):
     self._config(num)
 
 
-class OptionLines(Options):
+class OptionCulling(Options):
 
   @property
-  def value(self):
+  def max(self):
+    """ The number of tick texts will be adjusted to less than this value.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-culling-max
+    """
+    return self._config_get(10)
+
+  @max.setter
+  def max(self, num):
+    self._config(num)
+
+
+class OptionTick(Options):
+
+  @property
+  def centered(self):
+    """ Centerise ticks on category axis.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-centered
+    """
+    return self._config_get(True)
+
+  @centered.setter
+  def centered(self, flag):
+    self._config(flag)
+
+  @property
+  def autorotate(self):
     """
 
     Related Pages:
 
-      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
-    """
-    return self._config_get()
 
-  @value.setter
-  def value(self, num):
+    """
+    return self._config_get(None)
+
+  @autorotate.setter
+  def autorotate(self, flag):
+    self._config(flag)
+
+  def format(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
+    """
+    A function to format tick value. Format string is also available for timeseries data.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-format
+
+    :param js_funcs:
+    :param profile:
+    """
+    pass
+
+  @property
+  def formats(self):
+    return EnumTickFormat(self, "format")
+
+  @property
+  def count(self):
+    """ Set the number of y axis ticks.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-tick-count
+    """
+    return self._config_get(None)
+
+  @count.setter
+  def count(self, val):
+    self._config(val)
+
+  @property
+  def default(self):
+    """ This option set the default value for y axis when there is no data on init.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-default
+    """
+    return self._config_get(None)
+
+  @default.setter
+  def default(self, values):
+    self._config(values)
+
+  @property
+  def fit(self):
+    """ Fit x axis ticks.
+
+    If true set, the ticks will be positioned nicely.
+    If false set, the ticks will be positioned according to x value of the data points.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-fit
+    """
+    return self._config_get(True)
+
+  @fit.setter
+  def fit(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def multiline(self):
+    """ Enable multiline.
+
+    If this option is set true, when a tick's text on the x-axis is too long,
+    it splits the text into multiple lines in order to avoid text overlapping.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-multiline
+    """
+    return self._config_get(True)
+
+  @multiline.setter
+  def multiline(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def multilineMax(self):
+    """ If this option is set and is above 0, the number of lines will be adjusted to less than this value and
+    tick's text is ellipsified.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-multilineMax
+    """
+    return self._config_get(0)
+
+  @multilineMax.setter
+  def multilineMax(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def rotate(self):
+    """ Rotate x-axis tick text.
+
+    If you set negative value, it will rotate to opposite direction.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-rotate
+    """
+    return self._config_get(0)
+
+  @rotate.setter
+  def rotate(self, num):
     self._config(num)
 
   @property
-  def css_class(self):
+  def outer(self):
+    """ Show x-axis outer tick.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-tick-outer
+    """
+    return self._config_get(True)
+
+  @outer.setter
+  def outer(self, val: bool):
+    self._config(val)
+
+  @property
+  def values(self):
+    """ Set y-axis tick values manually.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-y-tick-values
+    """
+    return self._config_get(None)
+
+  @values.setter
+  def values(self, values):
+    self._config(values)
+
+  @property
+  def culling(self) -> OptionCulling:
+    """ Setting for culling ticks.
+
+    Related Pages:
+
+      https://c3js.org/reference.html#axis-x-tick-culling
+    """
+    return self._config_sub_data("culling", OptionCulling)
+
+  @property
+  def stepSize(self):
     """
 
     Related Pages:
 
-      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
+      https://naver.github.io/billboard.js/demo/#Axis.StepSizeForYAxis
     """
     return self._config_get()
 
-  @css_class.setter
-  def css_class(self, css_id):
-    self._config(css_id)
+  @stepSize.setter
+  def stepSize(self, num):
+    self._config(num)
 
   @property
   def text(self):
     """
-
     Related Pages:
 
-      https://naver.github.io/billboard.js/demo/#Style.StyleForGrid
+      https://naver.github.io/billboard.js/demo/#Axis.XAxisTickPosition
     """
-    return self._config_get()
-
-  @text.setter
-  def text(self, value):
-    self._config(value)
-
-  @property
-  def position(self):
-    """
-    Show additional grid lines along x axis.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#grid-x-lines
-    """
-    return self._config_get(None)
-
-  @position.setter
-  def position(self, val):
-    self._config(val)
-
-  @property
-  def positions(self):
-    return EnumTextPosition(self, "position")
+    return self._config_sub_data("text", OptionsText)
 
 
 class OptionsAxis(Options):
 
   @property
-  def label(self):
+  def label(self) -> OptionsLabel:
     """
-
-    :rtype: OptionsLabel
     """
     return self._config_sub_data("label", OptionsLabel)
 
@@ -1118,13 +1299,12 @@ class OptionsAxis(Options):
     return self._config_get(0)
 
   @center.setter
-  def center(self, num):
+  def center(self, num: float):
     self._config(num)
 
   @property
   def categories(self):
-    """
-    Set category names on category axis.
+    """ Set category names on category axis.
 
     This must be an array that includes category names in string. If category names are included in the date by data.x
     option, this is not required.
@@ -1147,13 +1327,12 @@ class OptionsAxis(Options):
     return self._config_get(False)
 
   @inverted.setter
-  def inverted(self, flag):
+  def inverted(self, flag: bool):
     self._config(flag)
 
   @property
   def localtime(self):
-    """
-    Set how to treat the timezone of x values.
+    """ Set how to treat the timezone of x values.
 
     If true, treat x value as localtime. If false, convert to UTC internally.
 
@@ -1165,13 +1344,12 @@ class OptionsAxis(Options):
     return self._config_get(True)
 
   @localtime.setter
-  def localtime(self, flag):
+  def localtime(self, flag: bool):
     self._config(flag)
 
   @property
   def type(self):
-    """
-    Set type of x axis.
+    """ Set type of x-axis.
 
     Related Pages:
 
@@ -1185,8 +1363,7 @@ class OptionsAxis(Options):
 
   @property
   def types(self):
-    """
-    Set type of x axis.
+    """ Set type of x-axis.
 
     Related Pages:
 
@@ -1196,8 +1373,7 @@ class OptionsAxis(Options):
 
   @property
   def show(self):
-    """
-    Show or hide x axis.
+    """ Show or hide x-axis.
 
     Related Pages:
 
@@ -1211,8 +1387,7 @@ class OptionsAxis(Options):
 
   @property
   def min(self):
-    """
-    Set min value of x axis range.
+    """ Set min value of x-axis range.
 
     Related Pages:
 
@@ -1226,8 +1401,7 @@ class OptionsAxis(Options):
 
   @property
   def max(self):
-    """
-    Set max value of x axis range.
+    """ Set max value of x-axis range.
 
     Related Pages:
 
@@ -1241,8 +1415,7 @@ class OptionsAxis(Options):
 
   @property
   def height(self):
-    """
-    Set height of x axis.
+    """ Set height of x-axis.
 
     Related Pages:
 
@@ -1256,8 +1429,7 @@ class OptionsAxis(Options):
 
   @property
   def extend(self):
-    """
-    Set default extent for subchart and zoom. This can be an array or function that returns an array.
+    """ Set default extent for subchart and zoom. This can be an array or function that returns an array.
 
     Related Pages:
 
@@ -1270,27 +1442,23 @@ class OptionsAxis(Options):
     self._config(values)
 
   @property
-  def tick(self):
+  def tick(self) -> OptionTick:
     """
 
-    :rtype: OptionTick
     """
     return self._config_sub_data("tick", OptionTick)
 
   @property
-  def padding(self):
-    """
-    Set padding for the selected axis.
+  def padding(self) -> OptionPadding:
+    """ Set padding for the selected axis.
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-x-padding
-
-    :rtype: OptionPadding
     """
     return self._config_sub_data("padding", OptionPadding)
 
-  def add_lines(self, value, class_css=None, text=None):
+  def add_lines(self, value, class_css=None, text=None) -> OptionLines:
     """
 
     Related Pages:
@@ -1300,8 +1468,6 @@ class OptionsAxis(Options):
     :param value: Number
     :param class_css: String. Optional.
     :param text: String. Optional.
-
-    :rtype: OptionLines
     """
     line = self._config_sub_data_enum("lines", OptionLines)
     line.value = value
@@ -1321,9 +1487,10 @@ class OptionsAxis(Options):
 
 
 class OptionsSelection(Options):
+
   @property
   def enabled(self):
-    """   Set data selection enabled.
+    """  Set data selection enabled.
 
     If this option is set true, we can select the data points and get/set its state of selection by API (e.g. select,
     unselect, selected).
@@ -1335,13 +1502,12 @@ class OptionsSelection(Options):
     return self._config_get(None)
 
   @enabled.setter
-  def enabled(self, val):
+  def enabled(self, val: bool):
     self._config(val)
 
   @property
   def grouped(self):
-    """
-    Set grouped selection enabled.
+    """ Set grouped selection enabled.
 
     If this option set true, multiple data points that have same x value will be selected by one selection.
 
@@ -1357,8 +1523,7 @@ class OptionsSelection(Options):
 
   @property
   def multiple(self):
-    """
-    Set multiple data points selection enabled.
+    """ Set multiple data points selection enabled.
 
     If this option set true, multiple data points can have the selected state at the same time.
     If false set, only one data point can have the selected state and the others will be unselected when the new
@@ -1371,13 +1536,12 @@ class OptionsSelection(Options):
     return self._config_get(None)
 
   @multiple.setter
-  def multiple(self, flag):
+  def multiple(self, flag: bool):
     self._config(flag)
 
   @property
   def draggable(self):
-    """
-    Enable to select data points by dragging.
+    """ Enable to select data points by dragging.
 
     If this option set true, data points can be selected by dragging.
 
@@ -1388,10 +1552,10 @@ class OptionsSelection(Options):
     return self._config_get(None)
 
   @draggable.setter
-  def draggable(self, val):
+  def draggable(self, val: bool):
     self._config(val)
 
-  def isselectable(self, jsFuncs, profile=None):
+  def isselectable(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
     Set a callback for each data point to determine if it's selectable or not.
 
@@ -1405,24 +1569,21 @@ class OptionsSelection(Options):
 class OptionsEmpty(Options):
 
   @property
-  def label(self):
-    """
-    Set text displayed when empty data.
+  def label(self) -> OptionsLabel:
+    """ Set text displayed when empty data.
 
     Related Pages:
 
       https://c3js.org/reference.html#data-empty-label-text
-
-    :rtype: OptionsLabel
     """
     return self._config_sub_data("label", OptionsLabel)
 
 
 class OptionsStack(Options):
+
   @property
   def normalize(self):
-    """
-    Set the stacking to be normalized
+    """ Set the stacking to be normalized.
 
     For stacking, the `data.groups` option should be set and have positive values.
     The yAxis will be set in percentage value (0 ~ 100%).
@@ -1434,17 +1595,17 @@ class OptionsStack(Options):
     return self._config_get(False)
 
   @normalize.setter
-  def normalize(self, flag):
+  def normalize(self, flag: bool):
     self._config(flag)
 
 
 class OptionsData(Options):
+
   component_properties = ("columns", "types", 'colors')
 
   @property
   def x(self):
-    """
-    Specify the key of x values in the data.
+    """ Specify the key of x values in the data.
 
     Related Pages:
 
@@ -1458,8 +1619,7 @@ class OptionsData(Options):
 
   @property
   def xs(self):
-    """
-    Specify the keys of the x values for each data.
+    """ Specify the keys of the x values for each data.
 
     Related Pages:
 
@@ -1473,8 +1633,7 @@ class OptionsData(Options):
 
   @property
   def xFormat(self):
-    """
-    Set a format to parse string specified as x.
+    """ Set a format to parse string specified as x.
 
     Related Pages:
 
@@ -1488,8 +1647,7 @@ class OptionsData(Options):
 
   @property
   def names(self):
-    """
-    Set custom data name.
+    """ Set custom data name.
 
     Related Pages:
 
@@ -1503,8 +1661,7 @@ class OptionsData(Options):
 
   @property
   def classes(self):
-    """
-    Set custom data class.
+    """ Set custom data class.
 
     Related Pages:
 
@@ -1518,8 +1675,7 @@ class OptionsData(Options):
 
   @property
   def groups(self):
-    """
-    Set groups for the data for stacking.
+    """ Set groups for the data for stacking.
 
     Related Pages:
 
@@ -1533,8 +1689,7 @@ class OptionsData(Options):
 
   @property
   def axes(self):
-    """
-    Set y axis the data related to. y and y2 can be used.
+    """ Set y-axis the data related to. y and y2 can be used.
 
     Related Pages:
 
@@ -1548,8 +1703,7 @@ class OptionsData(Options):
 
   @property
   def type(self):
-    """
-    Set chart type at once.
+    """ Set chart type at once.
 
     Related Pages:
 
@@ -1578,8 +1732,7 @@ class OptionsData(Options):
 
   @property
   def labels(self):
-    """
-    Show labels on each data points.
+    """ Show labels on each data points.
 
     Related Pages:
 
@@ -1593,8 +1746,7 @@ class OptionsData(Options):
 
   @property
   def order(self):
-    """
-    Define the order of the data.
+    """ Define the order of the data.
 
     Related Pages:
 
@@ -1606,23 +1758,21 @@ class OptionsData(Options):
   def order(self, val):
     self._config(val)
 
-  def color(self, jsFunc, profile=None):
-    """
-    Set color converter function.
+  def color(self, js_funcs, profile=None):
+    """ Set color converter function.
 
     Related Pages:
 
       https://c3js.org/reference.html#data-color
 
-    :param jsFunc:
+    :param js_funcs:
     :param profile:
     """
     pass
 
   @property
   def colors(self):
-    """
-    Set color for each data.
+    """ Set color for each data.
 
     Related Pages:
 
@@ -1636,8 +1786,7 @@ class OptionsData(Options):
 
   @property
   def columns(self):
-    """
-    Load data from a multidimensional array, with each element containing an array consisting of a
+    """ Load data from a multidimensional array, with each element containing an array consisting of a
     datum name and associated data values.
 
     Related Pages:
@@ -1652,8 +1801,7 @@ class OptionsData(Options):
 
   @property
   def rows(self):
-    """
-    Load data from a multidimensional array, with the first element containing the data names,
+    """ Load data from a multidimensional array, with the first element containing the data names,
     the following containing related data in that order.
 
     Related Pages:
@@ -1668,8 +1816,7 @@ class OptionsData(Options):
 
   @property
   def hide(self):
-    """
-    Hide each data when the chart appears.
+    """ Hide each data when the chart appears.
 
     If true specified, all of data will be hidden. If multiple ids specified as an array, those will be hidden.
 
@@ -1680,38 +1827,33 @@ class OptionsData(Options):
     return self._config_get(False)
 
   @hide.setter
-  def hide(self, val):
+  def hide(self, val: bool):
     self._config(val)
 
   @property
-  def selection(self):
+  def selection(self) -> OptionsSelection:
     """
 
-    :rtype: OptionsSelection
     """
     return self._config_sub_data("selection", OptionsSelection)
 
   @property
-  def stack(self):
+  def stack(self) -> OptionsStack:
     """
 
     Related Pages:
 
       https://c3js.org/reference.html#data-stack-normalize
-
-    :rtype: OptionsStack
     """
     return self._config_sub_data("stack", OptionsStack)
 
   @property
-  def empty(self):
+  def empty(self) -> OptionsEmpty:
     """
-
-    :rtype: OptionsEmpty
     """
     return self._config_sub_data("empty", OptionsEmpty)
 
-  def onclick(self, jsFuncs, profile=False):
+  def onclick(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
     """
     Set a callback for click event on each data point.
 
@@ -1719,41 +1861,38 @@ class OptionsData(Options):
 
       https://c3js.org/reference.html#data-onclick
 
-    :param jsFuncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function(){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def onmouseover(self, jsFuncs, profile=False):
-    """
-    Set a callback for mouseover event on each data point.
+  def onmouseover(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
+    """ Set a callback for mouseover event on each data point.
 
     Related Pages:
 
       https://c3js.org/reference.html#data-onmouseover
 
-    :param jsFuncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function(){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
-  def onmouseout(self, jsFuncs, profile=False):
-    """
-    Set a callback for mouseout event on each data point.
+  def onmouseout(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
+    """ Set a callback for mouseout event on each data point.
 
     Related Pages:
 
       https://c3js.org/reference.html#data-onmouseout
 
-    :param jsFuncs: String | List. The Javascript functions
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
-    self._config("function(){%s}" % JsUtils.jsConvertFncs(jsFuncs, toStr=True, profile=profile), js_type=True)
+    self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
   @property
   def url(self):
-    """
-    Load a CSV or JSON file from a URL.
+    """ Load a CSV or JSON file from a URL.
     Note that this will not work if loading via the "file://" protocol as the most browsers will block XMLHTTPRequests.
 
     Related Pages:
@@ -1763,7 +1902,7 @@ class OptionsData(Options):
     return self._config_get(None)
 
   @url.setter
-  def url(self, val):
+  def url(self, val: str):
     self._config(val)
 
 
@@ -1781,245 +1920,12 @@ class OptionEpochs(Options):
     self._config(val)
 
 
-class OptionCulling(Options):
-
-  @property
-  def max(self):
-    """
-    The number of tick texts will be adjusted to less than this value.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-culling-max
-    """
-    return self._config_get(10)
-
-  @max.setter
-  def max(self, num):
-    self._config(num)
-
-
-class OptionTick(Options):
-
-  @property
-  def centered(self):
-    """
-    Centerise ticks on category axis.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-centered
-    """
-    return self._config_get(True)
-
-  @centered.setter
-  def centered(self, flag):
-    self._config(flag)
-
-  @property
-  def autorotate(self):
-    """
-
-    Related Pages:
-
-
-    """
-    return self._config_get(None)
-
-  @autorotate.setter
-  def autorotate(self, flag):
-    self._config(flag)
-
-  def format(self, jsFuncs, profile=None):
-    """
-    A function to format tick value. Format string is also available for timeseries data.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-format
-
-    :param jsFuncs:
-    :param profile:
-    """
-    pass
-
-  @property
-  def formats(self):
-    return EnumTickFormat(self, "format")
-
-  @property
-  def count(self):
-    """
-    Set the number of y axis ticks.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-tick-count
-    """
-    return self._config_get(None)
-
-  @count.setter
-  def count(self, val):
-    self._config(val)
-
-  @property
-  def default(self):
-    """
-    This option set the default value for y axis when there is no data on init.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-default
-    """
-    return self._config_get(None)
-
-  @default.setter
-  def default(self, values):
-    self._config(values)
-
-  @property
-  def fit(self):
-    """
-    Fit x axis ticks.
-
-    If true set, the ticks will be positioned nicely.
-    If false set, the ticks will be positioned according to x value of the data points.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-fit
-    """
-    return self._config_get(True)
-
-  @fit.setter
-  def fit(self, flag):
-    self._config(flag)
-
-  @property
-  def multiline(self):
-    """
-    Enable multiline.
-
-    If this option is set true, when a tick's text on the x-axis is too long,
-    it splits the text into multiple lines in order to avoid text overlapping.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-multiline
-    """
-    return self._config_get(True)
-
-  @multiline.setter
-  def multiline(self, flag):
-    self._config(flag)
-
-  @property
-  def multilineMax(self):
-    """
-    If this option is set and is above 0, the number of lines will be adjusted to less than this value and
-    tick's text is ellipsified.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-multilineMax
-    """
-    return self._config_get(0)
-
-  @multilineMax.setter
-  def multilineMax(self, flag):
-    self._config(flag)
-
-  @property
-  def rotate(self):
-    """
-    Rotate x axis tick text.
-
-    If you set negative value, it will rotate to opposite direction.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-rotate
-    """
-    return self._config_get(0)
-
-  @rotate.setter
-  def rotate(self, num):
-    self._config(num)
-
-  @property
-  def outer(self):
-    """
-    Show x axis outer tick.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-tick-outer
-    """
-    return self._config_get(True)
-
-  @outer.setter
-  def outer(self, val):
-    self._config(val)
-
-  @property
-  def values(self):
-    """
-    Set y axis tick values manually.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-y-tick-values
-    """
-    return self._config_get(None)
-
-  @values.setter
-  def values(self, values):
-    self._config(values)
-
-  @property
-  def culling(self):
-    """
-    Setting for culling ticks.
-
-    Related Pages:
-
-      https://c3js.org/reference.html#axis-x-tick-culling
-
-    :rtype: OptionCulling
-    """
-    return self._config_sub_data("culling", OptionCulling)
-
-  @property
-  def stepSize(self):
-    """
-
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Axis.StepSizeForYAxis
-    """
-    return self._config_get()
-
-  @stepSize.setter
-  def stepSize(self, num):
-    self._config(num)
-
-  @property
-  def text(self):
-    """
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Axis.XAxisTickPosition
-    """
-    return self._config_sub_data("text", OptionsText)
-
-
 class OptionX(Options):
 
   @property
-  def tick(self):
+  def tick(self) -> OptionTick:
     """
 
-    :rtype: OptionTick
     """
     return self._config_sub_data("tick", OptionTick)
 
@@ -2028,8 +1934,7 @@ class OptionAxis(Options):
 
   @property
   def rotated(self):
-    """
-    Switch x and y axis position.
+    """ Switch x and y-axis position.
 
     Related Pages:
 
@@ -2042,39 +1947,33 @@ class OptionAxis(Options):
     self._config(val)
 
   @property
-  def x(self):
+  def x(self) -> OptionsAxis:
     """
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-y2-show
       https://c3js.org/reference.html#axis-x-show
-
-    :rtype: OptionsAxis
     """
     return self._config_sub_data("x", OptionsAxis)
 
   @property
-  def y(self):
+  def y(self) -> OptionsAxis:
     """
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-y2-show
-
-    :rtype: OptionsAxis
     """
     return self._config_sub_data("y", OptionsAxis)
 
   @property
-  def y2(self):
+  def y2(self) -> OptionsAxis:
     """
 
     Related Pages:
 
       https://c3js.org/reference.html#axis-y2-show
-
-    :rtype: OptionsAxis
     """
     return self._config_sub_data("y2", OptionsAxis)
 
@@ -2118,8 +2017,7 @@ class OptionsColor(Options):
 
   @property
   def pattern(self):
-    """
-    Set custom color pattern.
+    """ Set custom color pattern.
 
     Related Pages:
 
@@ -2132,8 +2030,8 @@ class OptionsColor(Options):
   def pattern(self, colors):
     self._config(colors)
 
-  def tiles(self, jsFuncs, profile=None):
-    raise Exception("Not yet implemented")
+  def tiles(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
+    raise NotImplementedError()
 
 
 class OptionsPosition(Options):
@@ -2171,11 +2069,11 @@ class OptionsText(Options):
     return self._config_get([])
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   @property
-  def position(self):
+  def position(self) -> OptionsPosition:
     """
 
     Related Pages:
@@ -2195,7 +2093,7 @@ class OptionsTitle(Options):
     return self._config_get([])
 
   @text.setter
-  def text(self, value):
+  def text(self, value: str):
     if isinstance(value, list):
       value = "\n".join(value)
     self._config(value)
@@ -2214,7 +2112,7 @@ class OptionsRender(Options):
     return self._config_get([])
 
   @lazy.setter
-  def lazy(self, flag):
+  def lazy(self, flag: bool):
     self._config(flag)
 
   @property
@@ -2228,7 +2126,7 @@ class OptionsRender(Options):
     return self._config_get([])
 
   @observe.setter
-  def observe(self, flag):
+  def observe(self, flag: bool):
     self._config(flag)
 
 
@@ -2245,7 +2143,7 @@ class OptionStep(Options):
     return self._config_get()
 
   @type.setter
-  def type(self, value):
+  def type(self, value: str):
     self._config(value)
 
   @property
@@ -2271,8 +2169,7 @@ class OptionsLine(Options):
 
   @property
   def connectNull(self):
-    """
-    Set if null data point will be connected or not.
+    """ Set if null data point will be connected or not.
 
     If true set, the region of null data will be connected without any data point.
     If false set, the region of null data will not be connected and get empty.
@@ -2284,11 +2181,11 @@ class OptionsLine(Options):
     return self._config_get(False)
 
   @connectNull.setter
-  def connectNull(self, flag):
+  def connectNull(self, flag: bool):
     self._config(flag)
 
   @property
-  def step(self):
+  def step(self) -> OptionStep:
     """
 
     Related Pages:
@@ -2302,8 +2199,7 @@ class OptionsInteraction(Options):
 
   @property
   def enabled(self):
-    """
-    Indicate if the chart should have interactions.
+    """ Indicate if the chart should have interactions.
 
     If false is set, all of interactions (showing/hiding tooltip, selection, mouse events, etc) will be disabled.
 
@@ -2314,7 +2210,7 @@ class OptionsInteraction(Options):
     return self._config_get(True)
 
   @enabled.setter
-  def enabled(self, flag):
+  def enabled(self, flag: bool):
     self._config(flag)
 
 
@@ -2322,8 +2218,7 @@ class OptionsTransition(Options):
 
   @property
   def duration(self):
-    """
-    Set duration of transition (in milliseconds) for chart animation.
+    """ Set duration of transition (in milliseconds) for chart animation.
 
     Related Pages:
 
@@ -2332,7 +2227,7 @@ class OptionsTransition(Options):
     return self._config_get(350)
 
   @duration.setter
-  def duration(self, num):
+  def duration(self, num: int):
     self._config(num)
 
 
@@ -2358,20 +2253,16 @@ class C3(OptChart.OptionsChart):
   def axis(self) -> OptionAxis:
     """
 
-    :return: OptionAxis
     """
     return self._config_sub_data("axis", OptionAxis)
 
   @property
   def legend(self) -> OptionsLegend:
-    """
-    Set visibility of legend.
+    """ Set visibility of legend.
 
     Related Pages:
 
-      https://c3js.org/samples/options_legend.html
-
-    :return: OptionsLegend
+      https://c3js.org/sampl
     """
     return self._config_sub_data("legend", OptionsLegend)
 
@@ -2379,15 +2270,12 @@ class C3(OptChart.OptionsChart):
   def point(self) -> OptionsPoints:
     """
 
-    :rtype: OptionsPoints
     """
     return self._config_sub_data("point", OptionsPoints)
 
   @property
   def grid(self):
     """
-
-    :rtype: OptionsGrid
     """
     return self._config_sub_data("grid", OptionsGrid)
 
@@ -2399,8 +2287,6 @@ class C3(OptChart.OptionsChart):
     Related Pages:
 
       https://c3js.org/samples/interaction_zoom.html
-
-    :rtype: OptionsZoom
     """
     return self._config_sub_data("zoom", OptionsZoom)
 
@@ -2412,26 +2298,21 @@ class C3(OptChart.OptionsChart):
     Related Pages:
 
       https://c3js.org/samples/options_subchart.html
-
-    :rtype: OptionsSubchart
     """
     return self._config_sub_data("subchart", OptionsSubchart)
 
   @property
-  def data(self):
+  def data(self) -> OptionsData:
     """
 
     Related Pages:
 
       https://c3js.org/reference.html#data-url
-
-    :rtype: OptionsData
     """
     return self._config_sub_data("data", OptionsData)
 
-  def add_region(self, axis, start=None, end=None, class_css=None):
-    """
-    Show rectangles inside the chart.
+  def add_region(self, axis, start=None, end=None, class_css=None) -> OptionsRegion:
+    """ Show rectangles inside the chart.
 
     Related Pages:
 
@@ -2442,8 +2323,6 @@ class C3(OptChart.OptionsChart):
     :param start:
     :param end:
     :param class_css:
-
-    :rtype: OptionsRegion
     """
     region = self._config_sub_data_enum("regions", OptionsRegion)
     region.axis = axis
@@ -2467,129 +2346,106 @@ class C3(OptChart.OptionsChart):
     :param class_css:
     """
 
-  def size(self):
-    """
-    Set chart size in px.
+  def size(self) -> OptionsSize:
+    """ Set chart size in px.
 
     Related Pages:
 
       https://c3js.org/samples/options_size.html
-
-    :rtype: OptionsSize
     """
     return self._config_sub_data("size", OptionsSize)
 
-  def padding(self):
-    """
-    Change padding for the chart.
+  def padding(self) -> OptionsPadding:
+    """ Change padding for the chart.
 
     Related Pages:
 
       https://c3js.org/samples/options_size.html
-
-    :rtype: OptionsPadding
     """
     return self._config_sub_data("padding", OptionsPadding)
 
   @property
-  def title(self):
-    """
-    Add a title to the chart.
+  def title(self) -> OptionsTitle:
+    """ Add a title to the chart.
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#Title.MultilinedTitle
-
-    :rtype: OptionsTitle
     """
     return self._config_sub_data("title", OptionsTitle)
 
   @property
-  def color(self):
-    """
-    Add a title to the chart.
+  def color(self) -> OptionsColor:
+    """ Add a title to the chart.
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#ChartOptions.ColorPattern
       https://naver.github.io/billboard.js/demo/#ChartOptions.ColorTiles3
-
-    :rtype: OptionsTitle
     """
     return self._config_sub_data("color", OptionsColor)
 
   @property
-  def render(self):
+  def render(self) -> OptionsRender:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#ChartOptions.LazyRender
-
-    :rtype: OptionsRender
     """
     return self._config_sub_data("render", OptionsRender)
 
   @property
-  def line(self):
+  def line(self) -> OptionsLine:
     """
 
-    :rtype: OptionsLine
     """
     return self._config_sub_data("line", OptionsLine)
 
   @property
-  def interaction(self):
-    """
-    Configure the interaction on the chart.
+  def interaction(self) -> OptionsInteraction:
+    """ Configure the interaction on the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#interaction-enabled
-
-    :rtype: OptionsInteraction
     """
     return self._config_sub_data("interaction", OptionsInteraction)
 
   @property
-  def transition(self):
-    """
-    Set duration of transition (in milliseconds) for chart animation.
+  def transition(self) -> OptionsTransition:
+    """ Set duration of transition (in milliseconds) for chart animation.
 
     Related Pages:
 
       https://c3js.org/reference.html#transition-duration
-
-    :rtype: OptionsTransition
     """
     return self._config_sub_data("transition", OptionsTransition)
 
-  def oninit(self, jsFuncs, profile=None):
-    """
-    Set a callback to execute when the chart is initialized.
+  def oninit(self, js_funcs, profile=None):
+    """ Set a callback to execute when the chart is initialized.
 
     https://c3js.org/reference.html#oninit
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
 
-  def onrendered(self, jsFuncs, profile=None):
-    """
-    Set a callback which is executed when the chart is rendered.
+  def onrendered(self, js_funcs, profile=None):
+    """ Set a callback which is executed when the chart is rendered.
     Basically, this callback will be called in each time when the chart is redrawed.
 
     Related Pages:
 
       https://c3js.org/reference.html#onrendered
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
 
-  def onmouseover(self, jsFuncs, profile=None):
+  def onmouseover(self, js_funcs, profile=None):
     """
     Set a callback to execute when mouse enters the chart.
 
@@ -2597,46 +2453,43 @@ class C3(OptChart.OptionsChart):
 
       https://c3js.org/reference.html#onmouseover
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
 
-  def onmouseover(self, jsFuncs, profile=None):
-    """
-    Set a callback to execute when mouse leaves the chart.
+  def onmouseover(self, js_funcs, profile=None):
+    """ Set a callback to execute when mouse leaves the chart.
 
     Related Pages:
 
       https://c3js.org/reference.html#onmouseout
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
 
-  def onmouseover(self, jsFuncs, profile=None):
-    """
-    Set a callback to execute when user resizes the screen.
+  def onmouseover(self, js_funcs, profile=None):
+    """ Set a callback to execute when user resizes the screen.
 
     Related Pages:
 
       https://c3js.org/reference.html#onresize
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
 
-  def onresized(self, jsFuncs, profile=None):
-    """
-    Set a callback to execute when screen resize finished.
+  def onresized(self, js_funcs, profile=None):
+    """ Set a callback to execute when screen resize finished.
 
     Related Pages:
 
       https://c3js.org/reference.html#onresized
 
-    :param jsFuncs:
+    :param js_funcs:
     :param profile:
     """
     pass
@@ -2646,8 +2499,7 @@ class OptionsDonut(Options):
 
   @property
   def title(self):
-    """
-    Set title of donut chart.
+    """ Set title of donut chart.
 
     Related Pages:
 
@@ -2664,10 +2516,8 @@ class OptionsDonut(Options):
     self._config(text)
 
   @property
-  def label(self):
+  def label(self) -> OptionsDonutLabel:
     """
-
-    :rtype: OptionsDonutLabel
     """
     return self._config_sub_data("label", OptionsDonutLabel)
 
@@ -2704,8 +2554,7 @@ class OptionsDonut(Options):
 
   @property
   def width(self):
-    """
-    Set width of donut chart.
+    """ Set width of donut chart.
 
     Related Pages:
 
@@ -2721,14 +2570,12 @@ class OptionsDonut(Options):
 class C3Donut(C3):
 
   @property
-  def donut(self):
+  def donut(self) -> OptionsDonut:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#DonutChartOptions.LabelRatio
-
-    :rtype: OptionsDonut
     """
     return self._config_sub_data("donut", OptionsDonut)
 
@@ -2736,10 +2583,8 @@ class C3Donut(C3):
 class OptionsGauge(Options):
 
   @property
-  def label(self):
+  def label(self) -> OptionsDonutLabel:
     """
-
-    :rtype: OptionsDonutLabel
     """
     return self._config_sub_data("label", OptionsDonutLabel)
 
@@ -2748,8 +2593,7 @@ class OptionsGauge(Options):
 
   @property
   def units(self):
-    """
-    Set width of donut chart.
+    """ Set width of donut chart.
 
     Related Pages:
 
@@ -2763,8 +2607,7 @@ class OptionsGauge(Options):
 
   @property
   def max(self):
-    """
-    Set max value of the gauge.
+    """ Set max value of the gauge.
 
     Related Pages:
 
@@ -2778,8 +2621,7 @@ class OptionsGauge(Options):
 
   @property
   def min(self):
-    """
-    Set min value of the gauge.
+    """ Set min value of the gauge.
 
     Related Pages:
 
@@ -2793,8 +2635,7 @@ class OptionsGauge(Options):
 
   @property
   def width(self):
-    """
-    Set width of donut chart.
+    """ Set width of donut chart.
 
     Related Pages:
 
@@ -2809,14 +2650,12 @@ class OptionsGauge(Options):
 
 class C3Gauge(C3):
   @property
-  def gauge(self):
+  def gauge(self) -> OptionsGauge:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#DonutChartOptions.LabelRatio
-
-    :rtype: OptionsGauge
     """
     return self._config_sub_data("gauge", OptionsGauge)
 
@@ -2841,14 +2680,12 @@ class OptionsPieExpand(Options):
 class OptionsPie(Options):
 
   @property
-  def expand(self):
+  def expand(self) -> OptionsPieExpand:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#PieChartOptions.ExpandRate
-
-    :rtype: OptionsPieExpand
     """
     return self._config_sub_data("expand", OptionsPieExpand)
 
@@ -2925,14 +2762,12 @@ class OptionsPie(Options):
     self._config(value)
 
   @property
-  def label(self):
+  def label(self) -> OptionsPieLabel:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#PieChartOptions.LabelRatio
-
-    :rtype: OptionsPieLabel
     """
     return self._config_sub_data("label", OptionsPieLabel)
 
@@ -2940,40 +2775,34 @@ class OptionsPie(Options):
 class C3Pie(C3):
 
   @property
-  def pie(self):
+  def pie(self) -> OptionsPie:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#PieChartOptions.ExpandRate
-
-    :rtype: OptionsPie
     """
     return self._config_sub_data("pie", OptionsPie)
 
 
 class OptionsRadar(Options):
 
-  def axis(self):
+  def axis(self) -> OptionsAxis:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#RadarChartOptions.RadarAxis
-
-    :rtype: OptionsAxis
     """
     return self._config_sub_data("axis", OptionsAxis)
 
   @property
-  def size(self):
+  def size(self) -> OptionsSize:
     """
 
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#RadarChartOptions.RadarSize
-
-    :rtype: OptionsSize
     """
     return self._config_sub_data("size", OptionsSize)
 
@@ -3009,7 +2838,7 @@ class OptionsLevel(Options):
     return self._config_get(True)
 
   @show.setter
-  def show(self, flag):
+  def show(self, flag: bool):
     self._config(flag)
 
   def format(self, js_func, profile=None):
@@ -3042,8 +2871,6 @@ class C3Radar(C3):
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#RadarChartOptions.RadarAxis
-
-    :rtype: OptionsRadar
     """
     return self._config_sub_data("radar", OptionsRadar)
 
@@ -3054,8 +2881,6 @@ class C3Radar(C3):
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#RadarChartOptions.RadarAxis
-
-    :rtype: OptionsLevel
     """
     return self._config_sub_data("level", OptionsLevel)
 
@@ -3066,8 +2891,6 @@ class C3Radar(C3):
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#Chart.RadarChart
-
-    :rtype: OptionsDirection
     """
     return self._config_sub_data("direction", OptionsDirection)
 
@@ -3086,7 +2909,7 @@ class OptionsArea(Options):
     return self._config_get(True)
 
   @zerobased.setter
-  def zerobased(self, flag):
+  def zerobased(self, flag: bool):
     self._config(flag)
 
 
@@ -3099,8 +2922,6 @@ class C3Area(C3):
     Related Pages:
 
       https://c3js.org/reference.html#area-zerobased
-
-    :rtype: OptionsArea
     """
     return self._config_sub_data("area", OptionsArea)
 
@@ -3118,13 +2939,12 @@ class OptionsBar(Options):
     return self._config_get("auto")
 
   @width.setter
-  def width(self, num):
+  def width(self, num: bool):
     self._config(num)
 
   @property
   def zerobased(self):
-    """
-    Set if min or max value will be 0 on bar chart.
+    """ Set if min or max value will be 0 on bar chart.
 
     Related Pages:
 
@@ -3133,7 +2953,7 @@ class OptionsBar(Options):
     return self._config_get(True)
 
   @zerobased.setter
-  def zerobased(self, flag):
+  def zerobased(self, flag: bool):
     self._config(flag)
 
 
@@ -3146,8 +2966,6 @@ class C3Bar(C3):
     Related Pages:
 
       https://c3js.org/reference.html#bar-width
-
-    :rtype: OptionsArea
     """
     return self._config_sub_data("bar", OptionsBar)
 
@@ -3157,8 +2975,6 @@ class OptionsSpline(Options):
   @property
   def interpolation(self) -> OptionStep:
     """
-
-    :rtype: OptionStep
     """
     return self._config_sub_data("interpolation", OptionStep)
 
@@ -3168,8 +2984,6 @@ class C3Spline(C3):
   @property
   def spline(self) -> OptionsSpline:
     """
-
-    :rtype: OptionsSpline
     """
     return self._config_sub_data("spline", OptionsSpline)
 
@@ -3214,8 +3028,6 @@ class C3Bubble(C3):
     Related Pages:
 
       https://naver.github.io/billboard.js/demo/#Chart.BubbleDimensionChart
-
-    :rtype: OptionsBubble
     """
     return self._config_sub_data("bubble", OptionsBubble)
 
@@ -3242,39 +3054,29 @@ class C3Stanford(OptChart.OptionsChart):
   @property
   def axis(self) -> OptionAxis:
     """
-
-    :return: OptionAxis
     """
     return self._config_sub_data("axis", OptionAxis)
 
   @property
   def point(self) -> OptionsPoints:
     """
-
-    :rtype: OptionsPoints
     """
     return self._config_sub_data("point", OptionsPoints)
 
   @property
   def data(self) -> C3StanfordData:
     """
-
-    :rtype: C3StanfordData
     """
     return self._config_sub_data("data", C3StanfordData)
 
   @property
   def grid(self) -> OptionsGrid:
     """
-
-    :rtype: OptionsGrid
     """
     return self._config_sub_data("grid", OptionsGrid)
 
   @property
   def zoom(self) -> OptionsZoom:
     """
-
-    :rtype: OptionsZoom
     """
     return self._config_sub_data("zoom", OptionsZoom)

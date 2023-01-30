@@ -37,7 +37,6 @@ class Chart(Html.Html):
 
     Usage::
 
-    :rtype: OptVis.Options2D
     """
     return super().options
 
@@ -49,8 +48,6 @@ class Chart(Html.Html):
     Usage::
 
     :return: A Javascript object
-
-    :rtype: JsVis.VisGraph2D
     """
     if self._js is None:
       self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, page=self.page, component=self)
@@ -100,8 +97,6 @@ class ChartLine(Chart):
     Usage::
 
     :return: A Javascript object
-
-    :rtype: JsVis.VisGraph2D
     """
     if self._js is None:
       self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, page=self.page, component=self)
@@ -112,8 +107,6 @@ class ChartLine(Chart):
     """   
 
     Usage::
-
-    :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(component=self, page=self.page, set_var=True, js_code="%s_group" % self.chartId)
@@ -186,8 +179,6 @@ class Chart3D(Chart):
     THis is an entry point to the full Javascript ecosystem.
 
     Usage::
-
-    :rtype: JsVis.VisGraph3D
     """
     if self._js is None:
       self._js = JsVis.VisGraph3D(component=self, page=self.page, js_code=self.chartId)
@@ -202,7 +193,6 @@ class Chart3D(Chart):
 
     Usage::
 
-    :rtype: OptVis.Options3D
     """
     return super().options
 
@@ -212,7 +202,6 @@ class Chart3D(Chart):
 
     Usage::
 
-    :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.chartId, component=self)
@@ -404,7 +393,6 @@ class ChartTimeline(Chart):
 
     Usage::
 
-    :rtype: GrpClsCharts.ClassVisTimeline
     """
     if self._styleObj is None:
       self._styleObj = GrpClsCharts.ClassVisTimeline(self)
@@ -420,7 +408,6 @@ class ChartTimeline(Chart):
 
     Usage::
 
-    :rtype: OptVis.OptionsTimeline
     """
     return super().options
 
@@ -433,8 +420,6 @@ class ChartTimeline(Chart):
     Usage::
 
     :return: A Javascript object
-
-    :rtype: JsVis.VisTimeline
     """
     if self._js is None:
       self._js = JsVis.VisTimeline(selector=self.chartId, component=self, page=self.page)
@@ -445,8 +430,6 @@ class ChartTimeline(Chart):
     """
 
     Usage::
-
-    :rtype: JsVis.VisGroups
     """
     if self.__grps is None:
       self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.chartId, component=self)

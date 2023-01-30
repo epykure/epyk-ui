@@ -42,13 +42,11 @@ class Chart(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptChart.OptionsChart
     """
     return super().options
 
   @property
-  def chartId(self):
+  def chartId(self) -> str:
     """
     Return the Javascript variable of the chart.
     """
@@ -67,7 +65,7 @@ class Chart(Html.Html):
 
     Usage::
 
-    :param int i: Optional. An Index number.
+    :param i: Optional. An Index number.
     """
     if i is None:
       return self._datasets[-1]
@@ -87,7 +85,7 @@ class Chart(Html.Html):
     """
     raise NotImplementedError()
 
-  def add_trace(self, data, name=""):
+  def add_trace(self, data, name: str = ""):
     """
 
     Usage::
@@ -102,21 +100,21 @@ class Chart(Html.Html):
     self._datasets.append(dataset)
     return self
 
-  def labels(self, values):
+  def labels(self, values: list):
     """
 
-    :param values: List. The different values for the x axis.
+    :param values: The different values for the x axis.
     """
     self._labels = values
 
-  def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
+  def add_dataset(self, data, label: str, colors: list = None, opacity: float = None, kind: str = None):
     """
 
-    :param data: List. The list of points (float).
-    :param label: String. Optional. The series label (visible in the legend).
-    :param colors: List. Optional. The color for this series. Default the global definition.
-    :param opacity: Number. Optional. The opacity factory from 0 to 1.
-    :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
     """
     return self.add_trace([{"x": l, "y": data[i]} for i, l in enumerate(self._labels)], name=label)
 
@@ -126,8 +124,6 @@ class Chart(Html.Html):
     Property to the underlying D3 module.
 
     Usage::
-
-    :rtype: JsD3.D3Select
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False,
@@ -140,7 +136,7 @@ class Chart(Html.Html):
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -159,6 +155,7 @@ class Chart(Html.Html):
     self.dom.color(line_colors)
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
+    return self
 
   def build(self, data=None, options=None, profile=None, component_id=None):
     """
@@ -202,11 +199,10 @@ class ChartLine(Chart):
 
   @property
   def dom(self) -> JsNvd3.JsNvd3Line:
-    """
+    """ Interface to the Dom element of a NVD3 line chart.
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Line
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Line(page=self.page, js_code=self.chartId, component=self)
@@ -241,11 +237,10 @@ class ChartScatter(ChartLine):
 
   @property
   def dom(self) -> JsNvd3.JsNvd3Scatter:
-    """
+    """ Interface to the Dom element of a NVd3 Scatter chart.
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Scatter
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Scatter(page=self.page, js_code=self.chartId, component=self)
@@ -274,7 +269,6 @@ class ChartCumulativeLine(ChartLine):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3CumulativeLine
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3CumulativeLine(page=self.page, js_code=self.chartId, component=self)
@@ -289,7 +283,6 @@ class ChartFocusLine(ChartLine):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3LineWithFocus
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3LineWithFocus(page=self.page, js_code=self.chartId, component=self)
@@ -304,7 +297,6 @@ class ChartBar(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Bar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Bar(page=self.page, js_code=self.chartId, component=self)
@@ -318,7 +310,7 @@ class ChartBar(Chart):
 
     Usage::
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -337,6 +329,7 @@ class ChartBar(Chart):
     self.dom.color(line_colors)
     for i, rec in enumerate(self._datasets):
       rec['color'] = self.options.colors[i]
+    return self
 
   def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
     """
@@ -388,7 +381,6 @@ class ChartHorizontalBar(ChartBar):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3MultiBarHorizontal
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3MultiBarHorizontal(page=self.page, js_code=self.chartId, component=self)
@@ -406,7 +398,6 @@ class ChartMultiBar(ChartBar):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3MultiBar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3MultiBar(page=self.page, js_code=self.chartId, component=self)
@@ -420,7 +411,7 @@ class ChartMultiBar(ChartBar):
 
     Usage::
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -452,7 +443,6 @@ class ChartPie(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Pie
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Pie(page=self.page, js_code=self.chartId, component=self)
@@ -515,7 +505,6 @@ class ChartArea(ChartBar):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Area
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Area(page=self.page, js_code=self.chartId, component=self)
@@ -530,7 +519,6 @@ class ChartHistoBar(ChartBar):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3HistoricalBar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3HistoricalBar(page=self.page, js_code=self.chartId, component=self)
@@ -545,7 +533,6 @@ class ChartParallelCoord(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3ParallelCoordinates
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3ParallelCoordinates(page=self.page, js_code=self.chartId, component=self)
@@ -582,7 +569,6 @@ class ChartSunbrust(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3Sunburst
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3Sunburst(page=self.page, js_code=self.chartId, component=self)
@@ -641,7 +627,6 @@ class ChartBoxPlot(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3BoxPlot
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3BoxPlot(page=self.page, js_code=self.chartId, component=self)
@@ -698,7 +683,6 @@ class ChartCandlestick(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3CandlestickBar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3CandlestickBar(page=self.page, js_code=self.chartId, component=self)
@@ -713,7 +697,6 @@ class ChartOhlcBar(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3OhlcBar
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3OhlcBar(page=self.page, js_code=self.chartId, component=self)
@@ -728,7 +711,6 @@ class ChartForceDirected(Chart):
 
     Usage::
 
-    :rtype: JsNvd3.JsNvd3ForceDirectedGraph
     """
     if self._dom is None:
       self._dom = JsNvd3.JsNvd3ForceDirectedGraph(page=self.page, js_code=self.chartId, component=self)

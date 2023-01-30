@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 from epyk.core import html
 from epyk.interfaces import Arguments
 
@@ -11,10 +11,10 @@ class Steppers:
   def __init__(self, ui):
     self.page = ui.page
 
-  def stepper(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
-              color: str = None, options: dict = None, profile: Union[dict, bool] = False):
-    """
-    Entry point for the stepper object.
+  def stepper(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
+              height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+              profile: Union[dict, bool] = False) -> html.HtmlStepper.Stepper:
+    """ Entry point for the stepper object.
 
     Usage::
 
@@ -23,12 +23,12 @@ class Steppers:
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
  
-    :param records: List. A list with the different steps defined in the workflow.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color: String. Optional. The text color code.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. A list with the different steps defined in the workflow
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The text color code
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -46,9 +46,10 @@ class Steppers:
     html.Html.set_component_skin(st)
     return st
 
-  def arrow(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
-            color: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
+  def arrow(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
+            height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+            profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
+    """ Create a stepper with arrows for nodes.
 
     Usage::
 
@@ -59,12 +60,12 @@ class Steppers:
         {"value": 'test 4'}], height=70)
       stepper.options.width = 110
  
-    :param records: List. A list with the different steps defined in the workflow.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color: String. Optional. The text color code.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. A list with the different steps defined in the workflow
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The text color code
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dft_options = {"shape": 'arrow'}
     if options is not None:
@@ -73,18 +74,19 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def rectangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
-                color: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
+  def rectangle(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
+                height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+                profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
+    """ Create a stepper with rectangles for nodes.
 
     Usage::
  
-    :param records: List. A list with the different steps defined in the workflow.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color: String. Optional. The text color code.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. A list with the different steps defined in the workflow
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The text color code
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dft_options = {"shape": 'rectangle'}
     if options is not None:
@@ -93,18 +95,19 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def triangle(self, records, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (70, 'px'),
-               color: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
+  def triangle(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
+               height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+               profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
+    """ Create a stepper with triangle for nodes.
 
     Usage::
  
-    :param records: List. A list with the different steps defined in the workflow.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color: String. Optional. The text color code.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. A list with the different steps defined in the workflow
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The text color code
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dft_options = {"shape": 'triangle'}
     if options is not None:
@@ -113,11 +116,10 @@ class Steppers:
     html.Html.set_component_skin(component)
     return component
 
-  def vertical(self, records, shape: str = 'circle', width: Union[tuple, int] = ("auto", ''),
+  def vertical(self, records: List[dict] = None, shape: str = 'circle', width: Union[tuple, int] = ("auto", ''),
                height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
-               profile: Union[dict, bool] = None):
-    """
-    Entry point for the stepper object.
+               profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
+    """ Entry point for the stepper object.
 
     Usage::
 
@@ -126,13 +128,13 @@ class Steppers:
         {"value": 'test 2', "status": 'error'},
         {"value": 'test 3', "status": 'pending'}])
  
-    :param records: List. A list with the different steps defined in the workflow.
-    :param shape: String. Optional. The steppers shape.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param color: String. Optional. The text color code.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param records: Optional. A list with the different steps defined in the workflow
+    :param shape: Optional. The steppers shape
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param color: Optional. The text color code
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")

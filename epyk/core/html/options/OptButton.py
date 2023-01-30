@@ -15,12 +15,11 @@ class OptionsButton(Options):
 
     Usage::
 
-    :prop value: String. The category of button.
     """
     return self.get("validate")
 
   @category.setter
-  def category(self, value):
+  def category(self, value: str):
     self.set(value)
 
   @property
@@ -57,7 +56,7 @@ class OptionsButton(Options):
     return self.component.attr.get('name')
 
   @group.setter
-  def group(self, val):
+  def group(self, val: str):
     self.component.set_attrs(name='name', value=val)
 
 
@@ -104,8 +103,7 @@ class OptMedia(Options):
 
   @property
   def controls(self):
-    """
-    Specifies that video controls should be displayed (such as a play/pause button etc).
+    """ Specifies that video controls should be displayed (such as a play/pause button etc).
 
     Usage::
 
@@ -114,7 +112,7 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_controls.asp
 
-    :prop bool: Boolean. Optional. Default value is false.
+    :prop bool: Optional. Default value is false.
     """
     return self.get(True)
 
@@ -124,8 +122,7 @@ class OptMedia(Options):
 
   @property
   def loop(self):
-    """
-    Specifies that the video will start over again, every time it is finished.
+    """ Specifies that the video will start over again, every time it is finished.
 
     Usage::
 
@@ -134,7 +131,7 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_loop.asp
 
-    :prop bool: Boolean. Optional. Default value is false.
+    :prop bool: Optional. Default value is false.
     """
     return self.get(False)
 
@@ -144,8 +141,7 @@ class OptMedia(Options):
 
   @property
   def preload(self):
-    """
-    Specifies if and how the author thinks the video should be loaded when the page loads.
+    """ Specifies if and how the author thinks the video should be loaded when the page loads.
 
     Usage::
 
@@ -154,7 +150,7 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_preload.asp
 
-    :prop value: String. Optional. The preload attribute specifies if and how the author thinks that the video
+    :prop value: Optional. The preload attribute specifies if and how the author thinks that the video
     should be loaded when the page loads.
     """
     return self.get('none')
@@ -168,8 +164,7 @@ class OptMedia(Options):
 
   @property
   def muted(self):
-    """
-    Specifies that the audio output of the video should be muted.
+    """ Specifies that the audio output of the video should be muted.
 
     The muted attribute is a boolean attribute.
 
@@ -182,7 +177,7 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_audio_muted.asp
 
-    :prop flag: Boolean. Optional. Default value is false.
+    :prop flag: Optional. Default value is false.
     """
     return self.get(False)
 
@@ -203,7 +198,7 @@ class OptMedia(Options):
       https://www.w3schools.com/tags/tag_video.asp
       https://www.w3schools.com/tags/att_video_poster.asp
 
-    :prop url: String. Url path for the image. Specifies the URL of the image file.
+    :prop url: Url path for the image. Specifies the URL of the image file.
     """
     return self.get()
 
@@ -220,7 +215,7 @@ class OptMedia(Options):
 
     Usage::
 
-    :prop flag: Boolean. Optional. Default value is true.
+    :prop flag: Optional. Default value is true.
     """
     return self.get(True)
 
@@ -238,12 +233,12 @@ class OptCheckboxes(Options):
 
     Usage::
 
-    :prop icon: String. The font-awesome icon reference.
+    :prop icon: The font-awesome icon reference.
     """
     return self._config_get("fas fa-check")
 
   @icon.setter
-  def icon(self, value):
+  def icon(self, value: str):
     self._config(value)
 
   @property
@@ -259,7 +254,7 @@ class OptCheckboxes(Options):
     return self._config_get("")
 
   @tooltip.setter
-  def tooltip(self, value):
+  def tooltip(self, value: str):
     self._config(value)
 
   @property

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import Union
 from epyk.core.html.options import Options
 
 
@@ -277,13 +278,13 @@ class OptionDrawer(Options):
 
 
 class OptionsStepper(Options):
+  component_properties = ("column_title", "column_text", "column_label", "column_tooltip")
 
-  def __add_colors(self, type, colors):
-    """  
-    Set the colors for a step state
+  def __add_colors(self, type: str, colors: Union[list, dict]):
+    """ Set the colors for a step state
 
-    :param type: String. The state
-    :param colors: List or Dictionary. The color definition
+    :param type: The state
+    :param colors: The color definition
     """
     if not isinstance(colors[0], dict):
       s = 100 / (len(colors) - 1)
@@ -298,7 +299,7 @@ class OptionsStepper(Options):
     return self._config_group_get('colors', {})
 
   @success.setter
-  def success(self, colors):
+  def success(self, colors: Union[list, dict]):
     self.__add_colors('success', colors)
 
   @property
@@ -309,18 +310,18 @@ class OptionsStepper(Options):
     return self._config_group_get('colors', {})
 
   @error.setter
-  def error(self, colors):
+  def error(self, colors: Union[list, dict]):
     self.__add_colors('error', colors)
 
   @property
   def pending(self):
-    """  
+    """
 
     """
     return self._config_group_get('colors', {})
 
   @pending.setter
-  def pending(self, colors):
+  def pending(self, colors: Union[list, dict]):
     self.__add_colors('pending', colors)
 
   @property
@@ -331,7 +332,7 @@ class OptionsStepper(Options):
     return self._config_group_get('colors', {})
 
   @waiting.setter
-  def waiting(self, colors):
+  def waiting(self, colors: Union[list, dict]):
     self.__add_colors('waiting', colors)
 
   @property
@@ -342,7 +343,7 @@ class OptionsStepper(Options):
     return self._config_group_get('colors', {})
 
   @blink.setter
-  def blink(self, colors):
+  def blink(self, colors: Union[list, dict]):
     self.__add_colors('blink', colors)
 
   @property
@@ -375,7 +376,7 @@ class OptionsStepper(Options):
     return self._config_get('arrow')
 
   @shape.setter
-  def shape(self, value):
+  def shape(self, value: str):
     self._config(value)
 
   @property
@@ -397,7 +398,7 @@ class OptionsStepper(Options):
     return self._config_get(50)
 
   @height.setter
-  def height(self, num):
+  def height(self, num: int):
     self._config(num)
 
   @property
@@ -408,7 +409,7 @@ class OptionsStepper(Options):
     return self._config_get(False)
 
   @line.setter
-  def line(self, attrs):
+  def line(self, attrs: Union[dict, bool]):
     if attrs is True:
       attrs = {"stroke": 'grey', 'stroke-width': 2}
     self._config(attrs)
@@ -421,7 +422,7 @@ class OptionsStepper(Options):
     return self._config_get({})
 
   @backgrounds.setter
-  def backgrounds(self, color):
+  def backgrounds(self, color: str):
     self._config(color)
 
   @property
@@ -432,7 +433,7 @@ class OptionsStepper(Options):
     return self._config_get({})
 
   @svg_style.setter
-  def svg_style(self, css):
+  def svg_style(self, css: dict):
     attrs = self._config_get({})
     attrs.update(css)
     self._config(attrs)
@@ -456,10 +457,50 @@ class OptionsStepper(Options):
     return self._config_get({})
 
   @text_style.setter
-  def text_style(self, css):
+  def text_style(self, css: dict):
     attrs = self._config_get({})
     attrs.update(css)
     self._config(attrs)
+
+  @property
+  def column_title(self):
+    """ Column name for the title in the recordset.
+    """
+    return self._config_get("title")
+
+  @column_title.setter
+  def column_title(self, value: str):
+    self._config(value)
+
+  @property
+  def column_text(self):
+    """ Column name for the text in the recordset.
+    """
+    return self._config_get("text")
+
+  @column_text.setter
+  def column_text(self, value: str):
+    self._config(value)
+
+  @property
+  def column_label(self):
+    """ Column name for the label in the recordset.
+    """
+    return self._config_get("label")
+
+  @column_label.setter
+  def column_label(self, value: str):
+    self._config(value)
+
+  @property
+  def column_tooltip(self):
+    """ Column name for the tootlip in the recordset.
+    """
+    return self._config_get("tooltip")
+
+  @column_tooltip.setter
+  def column_tooltip(self, value: str):
+    self._config(value)
 
 
 class OptionGrid(Options):

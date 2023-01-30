@@ -35,7 +35,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def val(self):
-    """   Return a Javascript val object.
+    """ Return a Javascript val object.
     """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
@@ -43,8 +43,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def by_name(self) -> JsNodeDom.JsDomsList:
-    """   
-
+    """ Get Chart objects by name.
     """
     if self.component.attr.get('name') is not None:
       return JsNodeDom.JsDomsList(
@@ -54,7 +53,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def isInViewPort(self) -> JsObjects.JsObject.JsObject:
-    """   Check if the component is in the visible part of the page (the viewport).
+    """ Check if the component is in the visible part of the page (the viewport).
 
     :return: A Javascript boolean
     """
@@ -65,7 +64,7 @@ class ChartJs(JsCanvas.Canvas):
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
   def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
-    """   Trigger some code when the component is visible on the visible part of the page (the viewpport).
+    """ Trigger some code when the component is visible on the visible part of the page (the viewpport).
  
     :param js_funcs: The Javascript events
     """
@@ -73,7 +72,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def content(self):
-    """   The component content object
+    """ The component content object.
     """
     return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
@@ -82,13 +81,13 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def events(self) -> JsNodeDom.JsDomEvents:
-    """   Link to the events attached to a Javascript DOM object.
+    """ Link to the events attached to a Javascript DOM object.
     """
     return JsNodeDom.JsDomEvents(self.component)
 
   @property
   def jquery(self) -> JsQuery.JQuery:
-    """   Link to the JQuery functions.
+    """ Link to the JQuery functions.
     """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(component=self.component,
@@ -97,7 +96,7 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """   Wrapper to the D3 library.
+    """ Wrapper to the D3 library.
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(component=self.component, selector="d3.select('#%s')" % self.component.htmlCode)
@@ -105,19 +104,18 @@ class ChartJs(JsCanvas.Canvas):
 
   @property
   def objects(self) -> JsObjects.JsObjects:
-    """   Interface to the main Javascript Classes and Primitives.
+    """ Interface to the main Javascript Classes and Primitives.
     """
     return JsObjects.JsObjects(self.page)
 
   @property
   def format(self) -> JsHtml.Formatters:
-    """
-    Specific formatters for the HTML components.
+    """ Specific formatters for the HTML components.
     """
     return JsHtml.Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
-    """   Style property to change from the javascript the CSS attributes of an HTML object.
+    """ Style property to change from the javascript the CSS attributes of an HTML object.
 
     Usage::
 
@@ -140,7 +138,7 @@ class ChartJs(JsCanvas.Canvas):
 
   def registerFunction(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[dict] = None,
                        profile: types.PROFILE_TYPE = None):
-    """   Javascript Framework extension
+    """ Javascript Framework extension
 
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
@@ -170,7 +168,7 @@ class ChartJs(JsCanvas.Canvas):
     return self.css("display", "none")
 
   def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-    """   Display the component.
+    """ Display the component.
 
     Usage::
 
@@ -202,13 +200,12 @@ class ChartJs(JsCanvas.Canvas):
       "if(%s){%s} else{%s}" % (data, self.show(inline, display_value=display_value).r, self.hide().r))
 
   def select(self):
-    """   Select the content of the HTMl component.
+    """ Select the content of the HTMl component.
     """
     return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
   def toggle(self, attr: str = "display", js_val1: Optional[str] = None, js_val2: str = "none"):
-    """
-    Toggle (hide / show) the display of the component
+    """ Toggle (hide / show) the display of the component
 
     Usage::
 
@@ -265,8 +262,7 @@ class ChartJs(JsCanvas.Canvas):
 
   def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
                profile: types.PROFILE_TYPE = None):
-    """
-    Load during a Javascript event a component within the one using this method.
+    """ Load during a Javascript event a component within the one using this method.
     This cannot be tested during the Python execution and should be tested in the browser.
 
     Tip: It is possible to add a break point to debug in the browser by adding.
@@ -297,8 +293,7 @@ class ChartJs(JsCanvas.Canvas):
     return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
   def options(self, options: Optional[dict] = None):
-    """
-    Return the builder options used to generate the object on the Javascript side.
+    """ Return the builder options used to generate the object on the Javascript side.
     This is not necessarily the same object as the component options as some can be only used on the Python side.
 
     This will not change the original option object used during the first object creation.

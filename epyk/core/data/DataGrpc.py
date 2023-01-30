@@ -1,5 +1,4 @@
-"""
-This module will propose an implementation of a GPRC call.
+""" This module will propose an implementation of a GPRC call.
 
 THis module has been designed based on the examples available here: https://github.com/grpc/grpc/tree/v1.23.0
 """
@@ -11,14 +10,13 @@ import importlib
 class DataGrpc:
 
   def __init__(self, service_name: str, path: str, module: str, host: str, port: int):
-    """  
-    The path will be added to the python path.
+    """ The path will be added to the python path.
 
-    :param str service_name: The Service name (the class name in the python module).
-    :param str path: The path with the GRPC features.
-    :param str module: The python module name for the service.
-    :param str host: The service host name (e.g localhost).
-    :param int port: The service port.
+    :param service_name: The Service name (the class name in the python module)
+    :param path: The path with the GRPC features
+    :param module: The python module name for the service
+    :param host: The service host name (e.g localhost)
+    :param port: The service port
     """
     if path not in sys.path:
       sys.path.append(path)
@@ -29,7 +27,7 @@ class DataGrpc:
 
   @property
   def py(self):
-    """   Return the main module in the GRPC service for the data.
+    """ Return the main module in the GRPC service for the data.
     Namely is return the module without the _grpc.
 
     Usage::
@@ -41,13 +39,13 @@ class DataGrpc:
     return self.imp(self.module.replace("_grpc", ""))
 
   def imp(self, module: str):
-    """   Return any module from the GRPC service based on its module name.
+    """ Return any module from the GRPC service based on its module name.
 
     Usage::
 
       grpc.imp(self.module)
 
-    :param str module: The python module name.
+    :param module: The python module name.
 
     :return: A python module
     """
@@ -57,15 +55,15 @@ class DataGrpc:
     return self._libs[module]
 
   def request(self, method: str, data: dict = None, options: dict = None):
-    """   Run the GRPC call from the service definition in the init.
+    """ Run the GRPC call from the service definition in the init.
 
     Usage::
 
       grpc.request("SayHello", data)
 
-    :param str method: The function name to be called for the request.
-    :param dict data: Optional. The data to be passed during the call.
-    :param dict options: Optional. The GRPC service call options.
+    :param method: The function name to be called for the request
+    :param data: Optional. The data to be passed during the call
+    :param options: Optional. The GRPC service call options
     """
     import grpc
 

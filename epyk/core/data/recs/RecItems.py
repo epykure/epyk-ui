@@ -1,18 +1,19 @@
 
-from typing import Callable, Dict, Any
+from typing import Callable, Dict, Any, List
 
 
 class ItemsLinkRec:
 
   @staticmethod
-  def from_records(records, column, text: Callable = None, other_fields: Dict[str, Any] = None):
+  def from_records(records: List[dict], column: Callable, text: Callable = None,
+                   other_fields: Dict[str, Any] = None) -> list:
     """
 
     Usage::
 
     :param records:
     :param column:
-    :param text: A Python function to transform the text displayed.
+    :param text: A Python function to transform the text displayed
     :param other_fields:
     """
     if text is None:
@@ -42,7 +43,7 @@ class ItemsLinkRec:
 class ItemsIconRec:
 
   @staticmethod
-  def from_records(records, column, icon=None, other_fields: Dict[str, Any] = None):
+  def from_records(records: List[dict], column: Any, icon: str = None, other_fields: Dict[str, Any] = None) -> list:
     other_fields = other_fields or {}
     other_fields["icon"] = icon
     return ItemsLinkRec.from_records(records, column, other_fields=other_fields)
@@ -51,7 +52,8 @@ class ItemsIconRec:
 class ItemsCheckRec:
 
   @staticmethod
-  def from_records(records, column, text=None, checked=None, other_fields: Dict[str, Any] = None):
+  def from_records(records: List[dict], column, text: str = None, checked: str = None,
+                   other_fields: Dict[str, Any] = None) -> list:
     other_fields = other_fields or {}
     other_fields["checked"] = checked
     return ItemsLinkRec.from_records(records, column, text=text, other_fields=other_fields)
@@ -60,7 +62,7 @@ class ItemsCheckRec:
 class ItemsBoxRec:
 
   @staticmethod
-  def from_records(records, column, title=None, color=None, icons=None):
+  def from_records(records: List[dict], column: Any, title: str = None, color: str = None, icons=None) -> list:
     """
 
     Usage::
@@ -80,7 +82,6 @@ class ItemsBoxRec:
     else:
       for rec in records:
         result[rec[column]] = {"title": rec[title], "text": rec[column]}
-
     return [result[k] for k in sorted(result.keys())]
 
 

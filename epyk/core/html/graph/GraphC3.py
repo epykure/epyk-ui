@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import List
 
+from epyk.core.py import types as etypes
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -33,8 +35,6 @@ class Chart(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptChartC3.C3
     """
     return super().options
 
@@ -44,8 +44,6 @@ class Chart(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object.
-
-    :rtype: OptChartC3.C3
     """
     if self._dom is None:
       self._dom = OptChartC3.C3(page=self.page, component=self)
@@ -64,7 +62,7 @@ class Chart(Html.Html):
     return OptChartC3.OptionsChartSharedC3(self)
 
   @property
-  def chartId(self):
+  def chartId(self) -> str:
     """   Return the Javascript variable of the chart.
     """
     return "%s_obj" % self.htmlCode
@@ -78,20 +76,18 @@ class Chart(Html.Html):
       https://c3js.org/reference.html#api-show
 
     :return: A Javascript object
-
-    :rtype: JsC3.C3
     """
     if self._js is None:
       self._js = JsC3.C3(js_code=self.chartId, page=self.page, component=self)
     return self._js
 
-  def colors(self, hex_values: list):
+  def colors(self, hex_values: List[str]):
     """   Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
-    :param hex_values: List. An array of hexadecimal color codes.
+    :param hex_values: An array of hexadecimal color codes.
     """
     line_colors, bg_colors = [], []
     for h in hex_values:
@@ -112,8 +108,10 @@ class Chart(Html.Html):
       if name[0] in self.options.data.colors:
         self.options.data.colors[name[0]] = self.options.colors[series_count]
         series_count += 1
+    return self
 
-  def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
+  def click(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False,
+            source_event: str = None, on_ready: bool = False):
     """   Set a callback for click event on each data point.
 
     Related Pages:
@@ -130,22 +128,21 @@ class Chart(Html.Html):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """   Property to the D£ library.
-
-    :rtype: JsD3.D3Select
+    """   Property to the D3 library.
     """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False,
                                component=self)
     return self._d3
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
+            profile: etypes.PROFILE_TYPE = False, component_id: str = None) -> str:
     """
 
-    :param data: List. The dataset to be added to the chart.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional. The component reference (the htmlCode).
+    :param data: Optional. The dataset to be added to the chart
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. The component reference (the htmlCode)
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.__name__)
@@ -157,11 +154,11 @@ class Chart(Html.Html):
 
     return '%s = c3.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
 
-  def generate(self, data, options=None):
+  def generate(self, data: etypes.JS_DATA_TYPES, options=None) -> str:
     """
 
-    :param data: List. The dataset to be added to the chart.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The dataset to be added to the chart
+    :param options: Optional. Specific Python options available for this component
     """
     js_convertor = "%s%s" % (self.name, self.__class__.__name__)
     self.page.properties.js.add_constructor(
@@ -182,23 +179,23 @@ class ChartLine(Chart):
     super(ChartLine, self).__init__(page, width, height, html_code, options, profile)
     self.options.bindto = "#%s" % self.htmlCode
 
-  def labels(self, labels, series_id='x'):
+  def labels(self, labels: list, series_id: str = 'x'):
     """
 
-    :param labels: List.
-    :param series_id: String. Optional. The series ID.
+    :param labels: The list of labels for the series
+    :param series_id: Optional. The series ID
     """
     self.options.data.x = series_id
     self.options.data.columns.append([series_id] + labels)
     if labels and not isinstance(labels[0], (int, float)):
       self.options.axis.x.type = "category"
 
-  def add_dataset(self, data, name, kind=None):
-    """
+  def add_dataset(self, data: list, name: str, kind: str = None):
+    """ Add a new dataset.
 
-    :param data: List. The series of numbers to be added to the chart.
-    :param name: String. The series name.
-    :param kind: String. Optional. The chart type.
+    :param data: The series of numbers to be added to the chart
+    :param name: The series name
+    :param kind: Optional. The chart type
     """
     self.options.data.columns.append([name] + data)
     self.options.data.colors[name] = self.options.colors[len(self.options.data.colors)]
@@ -256,14 +253,14 @@ class ChartBar(ChartLine):
 class ChartScatter(ChartLine):
   _type = 'scatter'
 
-  def labels(self, labels, series_id='x'):
+  def labels(self, labels: list, series_id: str = 'x'):
     """
 
     Usage::
 
 
-    :param labels: List.
-    :param series_id: String. Optional. The series ID.
+    :param labels:
+    :param series_id: Optional. The series ID.
     """
     pass
 
@@ -317,7 +314,7 @@ class ChartPie(ChartLine):
         var result = {columns: columns, type: options.type}
       }; return result'''
 
-  def labels(self, labels, series_id='x'):
+  def labels(self, labels: list, series_id: str = 'x'):
     """
 
     Usage::
@@ -328,13 +325,13 @@ class ChartPie(ChartLine):
     """
     self._labels = labels
 
-  def add_dataset(self, values, name, kind=None):
+  def add_dataset(self, values: list, name: str, kind: str = None):
     """   Add a dataset to a pie chart.
     If multiple datasets are added the value will be summed up in the resulting pue chart.
 
-    :param values: List. The series of numbers to be added to the chart
-    :param name: String. The series name.
-    :param kind: String. Optional. The chart type.
+    :param values: The series of numbers to be added to the chart
+    :param name: The series name
+    :param kind: Optional. The chart type
     """
     for i, value in enumerate(values):
       series_index = None
@@ -364,25 +361,26 @@ class ChartGauge(ChartPie):
   _type = 'gauge'
   _option_cls = OptChartC3.C3Gauge
 
-  def build(self, data=None, options=None, profile=False, component_id=None):
+  def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
+            profile: etypes.PROFILE_TYPE = False, component_id: str = None) -> str:
     """
 
-    :param data: List. The dataset to be added to the chart.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Optional. The component reference (the htmlCode).
+    :param data: The dataset to be added to the chart
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. The component reference (the htmlCode)
     """
     if data:
       return '%(chartId)s.load({columns: [["data", %(value)s]]})' % {'chartId': self.chartId, 'value': data}
 
     return '%s = c3.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
 
-  def add_dataset(self, value, name, kind=None):
+  def add_dataset(self, value: list, name: str, kind: str = None):
     """
 
-    :param value: List. The series of numbers to be added to the chart.
-    :param name: String. The series name.
-    :param kind: String. Optional. The chart type.
+    :param value: The series of numbers to be added to the chart.
+    :param name: The series name.
+    :param kind: Optional. The chart type.
     """
     self.options.data.columns.append(["data", value])
     self.options.data.colors["data"] = self.options.colors[len(self.options.data.colors)]
@@ -419,7 +417,7 @@ class ChartStanford(ChartLine):
         var result = {columns: columns, type: options.type, point: options.point}
       }; return result'''
 
-  def epoch(self, series, name):
+  def epoch(self, series: list, name: str):
     """
 
     :param series:
@@ -428,12 +426,12 @@ class ChartStanford(ChartLine):
     self.options.data.epochs = JsUtils.jsConvertData(str(name), None)
     self.options.data.columns.append([str(name)] + series)
 
-  def add_dataset(self, data, name, kind=None):
+  def add_dataset(self, data: list, name: str, kind: str = None):
     """
 
-    :param data: List. The series of numbers to be added to the chart.
-    :param name: String. The series name.
-    :param kind: String. Optional. The chart type.
+    :param data: The series of numbers to be added to the chart
+    :param name: The series name
+    :param kind: Optional. The chart type
     """
     self.options.data.columns.append([name] + data)
     self.options.data.type = kind or self._type

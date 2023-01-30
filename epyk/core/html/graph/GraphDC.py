@@ -17,7 +17,7 @@ class Chart(Html.Html):
     self.style.css.margin = "10px 0"
 
   @property
-  def chartId(self):
+  def chartId(self) -> str:
     """   Return the Javascript variable of the chart.
 
     Usage::
@@ -67,8 +67,6 @@ class ChartLine(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_line_chart.htm
-
-    :rtype: JsDc.Line
     """
     if self._dom is None:
       self._dom = JsDc.Line(page=self.page, js_code=self.chartId, component=self)
@@ -89,8 +87,6 @@ class ChartBar(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_bar_chart.htm
-
-    :rtype: JsDc.Bar
     """
     if self._dom is None:
       self._dom = JsDc.Bar(page=self.page, js_code=self.chartId, component=self)
@@ -101,11 +97,10 @@ class ChartRow(Chart):
 
   @property
   def dom(self) -> JsDc.Row:
-    """   
+    """   Interface for the Row Chart component.
 
     Usage::
 
-    :rtype: JsDc.Row
     """
     if self._dom is None:
       self._dom = JsDc.Row(page=self.page, js_code=self.chartId, component=self)
@@ -126,8 +121,6 @@ class ChartScatter(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_scatter_plot.htm
-
-    :rtype: JsDc.Scatter
     """
     if self._dom is None:
       self._dom = JsDc.Scatter(page=self.page, js_code=self.chartId, component=self)
@@ -148,8 +141,6 @@ class ChartBubble(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
-
-    :rtype: JsDc.Bubble
     """
     if self._dom is None:
       self._dom = JsDc.Bubble(page=self.page, js_code=self.chartId, component=self)
@@ -167,8 +158,6 @@ class ChartPie(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_pie_chart.htm
-
-    :rtype: JsDc.Pie
     """
     if self._dom is None:
       self._dom = JsDc.Pie(page=self.page, js_code=self.chartId, component=self)
@@ -179,11 +168,10 @@ class ChartSunburst(Chart):
 
   @property
   def dom(self) -> JsDc.Sunburst:
-    """   
+    """ Get the interface for the Sunburst Dom element.
 
     Usage::
 
-    :rtype: JsDc.Sunburst
     """
     if self._dom is None:
       self._dom = JsDc.Sunburst(page=self.page, js_code=self.chartId, component=self)
@@ -201,8 +189,6 @@ class ChartSeries(Chart):
     Related Pages:
 
       https://www.tutorialspoint.com/dcjs/dcjs_series_chart.htm
-
-    :rtype: JsDc.Series
     """
     if self._dom is None:
       self._dom = JsDc.Series(page=self.page, js_code=self.chartId, component=self)

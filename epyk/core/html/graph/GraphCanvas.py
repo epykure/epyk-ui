@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import List
 
+from epyk.core.py import types as etypes
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js.objects import JsCanvas
@@ -21,7 +23,6 @@ class Canvas(Html.Html):
 
     Usage::
 
-    :rtype: JsCanvas.Canvas
     """
     if self._dom is None:
       self._dom = JsCanvas.Canvas(page=self.page, component=self)
@@ -33,7 +34,6 @@ class Canvas(Html.Html):
 
     Usage::
 
-    :rtype: JsCanvas.Canvas
     """
     if self.__ctx is None:
       self._dom = JsCanvas.Canvas(page=self.page, component=self)

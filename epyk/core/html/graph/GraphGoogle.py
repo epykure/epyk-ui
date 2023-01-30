@@ -36,8 +36,6 @@ class Chart(Html.Html):
     """   Property to the series options.
 
     Usage::
-
-    :rtype: OptChartGoogle.OptionGoogle
     """
     return super().options
 

@@ -19,12 +19,11 @@ class DataConfig:
     return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
   def get(self, key: str, dfl: Any = "", doc: str = ""):
-    """
-    Get the key from the configuration on the JavaScript side and add the documentation.
+    """ Get the key from the configuration on the JavaScript side and add the documentation.
 
-    :param str key: The key to look up from the JavaScript configuration.
-    :param Any dfl: Optional. The default value in the configuration.
-    :param str doc: Optional. The doc for this key in the Json.
+    :param key: The key to look up from the JavaScript configuration
+    :param dfl: Optional. The default value in the configuration
+    :param doc: Optional. The doc for this key in the Json
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -34,17 +33,16 @@ class DataConfig:
 
   def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None,
                  end_point: str = "/static/configs"):
-    """
-    Get the configuration for loading the report from json files.
+    """ Get the configuration for loading the report from json files.
     This will allow the creation of templates on the Python side and configuration in a static manner in json.
 
     By using this way of working it is easier to split the page and the configuration and non developers can
     change the content or create new ones based on the templates.
 
-    :param k: String. The alias of the cache, variable.
-    :param Any default: Object. Optional. The default value of the cache.
-    :param primitives.PageModel page: Optional. The page object.
-    :param end_point: String. Optional. THe static end point for the configurations.
+    :param k: The alias of the cache, variable
+    :param Any default: Optional. The default value of the cache
+    :param page: Optional. The page object
+    :param end_point: Optional. THe static end point for the configurations
     """
     if page.json_config_file is None:
       raise ValueError("json_config_file must be attached to the page to load the corresponding configuration")
@@ -70,12 +68,11 @@ class DataConfig:
       })(%(key)s)
       ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
-  def to_json(self, sort_keys: bool = True, indent: int = 4):
-    """
-    Return the json configuration inputs for the page.
+  def to_json(self, sort_keys: bool = True, indent: int = 4) -> str:
+    """ Return the json configuration inputs for the page.
 
-    :param bool sort_keys: Optional. Set the order for the keys.
-    :param int indent: Optional. Add number of indent to the Json.
+    :param sort_keys: Optional. Set the order for the keys
+    :param indent: Optional. Add number of indent to the Json
     """
     vals = {}
     if sort_keys:
@@ -92,24 +89,21 @@ class TabulatorEvents:
 
   @property
   def row(self):
-    """
-    Get a Tabulator Row object.
+    """ Get a Tabulator Row object.
     """
     from epyk.core.js.packages import JsTabulator
     return JsTabulator.RowComponent(set_var=False, js_code=None)
 
   @property
   def cell(self):
-    """
-    Get a Tabulator cell object.
+    """ Get a Tabulator cell object.
     """
     from epyk.core.js.packages import JsTabulator
     return JsTabulator.CellComponent(set_var=False, js_code=None)
 
   @property
   def column(self):
-    """
-    Get a Tabulator column object.
+    """ Get a Tabulator column object.
     """
     from epyk.core.js.packages import JsTabulator
     return JsTabulator.ColumnComponent(set_var=False, js_code=None)
@@ -122,32 +116,28 @@ class DataFile:
 
   @property
   def name(self):
-    """
-    Get the filename.
+    """ Get the filename.
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%s.name" % self.varName)
 
   @property
   def size(self):
-    """
-    Get the file size.
+    """ Get the file size.
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%s.size" % self.varName)
 
   @property
   def lastModifiedDate(self):
-    """
-    Get the last modified date for the file.
+    """ Get the last modified date for the file.
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsDate.JsDate("%s.lastModifiedDate" % self.varName)
 
   @property
   def lastModified(self):
-    """
-    Get the last modified date for the file.
+    """ Get the last modified date for the file.
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsDate.JsDate("%s.lastModified" % self.varName)
@@ -163,8 +153,7 @@ class DataFile:
 
   @property
   def description(self):
-    """
-    Get file description (name, size and date).
+    """ Get file description (name, size and date).
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsString.JsString.get("%(varName)s.name +', '+ (%(varName)s.size / 1024) +'Ko, '+ %(dt)s" % {
@@ -174,8 +163,7 @@ class DataFile:
 class DataEvents:
 
   def __getitem__(self, alias: str):
-    """
-    Get a bespoke variable.
+    """ Get a bespoke variable.
 
     Examples::
 
@@ -189,8 +177,7 @@ class DataEvents:
 
   @property
   def tabulator(self) -> TabulatorEvents:
-    """
-    Interface to the Tabulator events.
+    """ Interface to the Tabulator events.
     """
     return TabulatorEvents()
 
@@ -211,8 +198,7 @@ class DataEvents:
 
   @property
   def data(self):
-    """
-    Interface to a standard data object available in any Event.
+    """ Interface to a standard data object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.primitives import JsObjects
@@ -220,8 +206,7 @@ class DataEvents:
 
   @property
   def target(self):
-    """
-    Interface to a standard data object available in any Event.
+    """ Interface to a standard data object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.objects import JsNodeDom
@@ -229,8 +214,7 @@ class DataEvents:
 
   @property
   def value(self):
-    """
-    Interface to a standard value object available in any Event.
+    """ Interface to a standard value object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.primitives import JsObjects
@@ -238,8 +222,7 @@ class DataEvents:
 
   @property
   def response(self):
-    """
-    Get the response from a promise event in the then statement.
+    """ Get the response from a promise event in the then statement.
 
     Related Pages:
 
@@ -250,8 +233,7 @@ class DataEvents:
 
   @property
   def event(self):
-    """
-    Interface to the standard event.
+    """ Interface to the standard event.
     """
     from epyk.core.js.objects import JsEvents
 
@@ -259,8 +241,7 @@ class DataEvents:
 
   @property
   def mouse(self):
-    """
-    Interface to the standard mouse event.
+    """ Interface to the standard mouse event.
     """
     from epyk.core.js.objects import JsEvents
 
@@ -268,8 +249,7 @@ class DataEvents:
 
   @property
   def ui(self):
-    """
-    Interface to the UI generic event.
+    """ Interface to the UI generic event.
     """
     from epyk.core.js.objects import JsEvents
 
@@ -277,8 +257,7 @@ class DataEvents:
 
   @property
   def touch(self):
-    """
-    Interface to a standard touch event.
+    """ Interface to a standard touch event.
     This object is available in any event specific to touch screens.
     """
     from epyk.core.js.objects import JsEvents
@@ -287,8 +266,7 @@ class DataEvents:
 
   @property
   def key(self):
-    """
-    Interface to a standard keyboard event.
+    """ Interface to a standard keyboard event.
     This object is available in any keyup, keydown... events
     """
     from epyk.core.js.objects import JsEvents
@@ -297,8 +275,7 @@ class DataEvents:
 
   @property
   def d3(self):
-    """
-    Get a D3 component. Wrap the d3.select(this) statement.
+    """ Get a D3 component. Wrap the d3.select(this) statement.
 
     Related Pages:
 
@@ -329,7 +306,7 @@ class DataLoops:
 
   @property
   def value(self):
-    """   The value returned by forEach statement.
+    """ The value returned by forEach statement.
 
     Note. For nested loop make sure you store the important information in new variable names.
     """
@@ -354,8 +331,7 @@ class DataLoops:
 
   @property
   def i(self):
-    """
-    The index value return in loop statement.
+    """ The index value return in loop statement.
     """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsNumber.JsNumber.get("index")
@@ -371,8 +347,8 @@ class DataPrimitives:
     """   
 
 
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -384,8 +360,8 @@ class DataPrimitives:
   def dict(self, data: list = None, name: str = None):
     """   
 
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -397,9 +373,8 @@ class DataPrimitives:
   def str(self, data: list = None, name: str = None):
     """   
 
-
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -411,8 +386,8 @@ class DataPrimitives:
   def float(self, data: list = None, name: str = None):
     """   
 
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -424,8 +399,8 @@ class DataPrimitives:
   def int(self, data: list = None, name: str = None):
     """   
 
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -437,8 +412,8 @@ class DataPrimitives:
   def date(self, data: list = None, name: str = None):
     """   
 
-    :param data: Optional. The Python object used to feed the list.
-    :param name: Optional. The variable name used on the JavaScript.
+    :param data: Optional. The Python object used to feed the list
+    :param name: Optional. The variable name used on the JavaScript
     """
     from epyk.core.js.primitives import JsObjects
 
@@ -458,8 +433,7 @@ class GeolocationCoordinates:
 
   @property
   def coords(self):
-    """
-    Returns a GeolocationCoordinates object defining the current location.
+    """ Returns a GeolocationCoordinates object defining the current location.
 
     This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
@@ -473,8 +447,7 @@ class GeolocationCoordinates:
 
   @property
   def accuracy(self):
-    """
-    Returns a double representing the accuracy of the latitude and longitude properties, expressed in meters.
+    """ Returns a double representing the accuracy of the latitude and longitude properties, expressed in meters.
 
     Related Pages:
 
@@ -487,8 +460,7 @@ class GeolocationCoordinates:
 
   @property
   def altitudeAccuracy(self):
-    """
-    Returns a double representing the accuracy of the altitude expressed in meters. This value can be null
+    """ Returns a double representing the accuracy of the altitude expressed in meters. This value can be null
 
     Related Pages:
 
@@ -501,9 +473,8 @@ class GeolocationCoordinates:
 
   @property
   def heading(self):
-    """
-    Returns a double representing the direction towards which the device is facing. This value, specified in degrees,
-    indicates how far off from heading true north the device is.
+    """ Returns a double representing the direction towards which the device is facing. This value, specified in
+    degrees, indicates how far off from heading true north the device is.
 
     Related Pages:
 
@@ -516,8 +487,7 @@ class GeolocationCoordinates:
 
   @property
   def altitude(self):
-    """
-    Returns a double representing the position's altitude in meters, relative to sea level.
+    """ Returns a double representing the position's altitude in meters, relative to sea level.
     This value can be null if the implementation cannot provide the data.
 
     Related Pages:
@@ -531,8 +501,7 @@ class GeolocationCoordinates:
 
   @property
   def latitude(self):
-    """
-    Returns a double representing the position's latitude in decimal degrees.
+    """ Returns a double representing the position's latitude in decimal degrees.
 
     Related Pages:
 
@@ -540,13 +509,11 @@ class GeolocationCoordinates:
       https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
     """
     from epyk.core.js.primitives import JsNumber
-
     return JsNumber.JsNumber.get("%s.coords.latitude" % self.varName)
 
   @property
   def longitude(self):
-    """
-    Returns a double representing the position's longitude in decimal degrees.
+    """ Returns a double representing the position's longitude in decimal degrees.
 
     Related Pages:
 
@@ -554,13 +521,11 @@ class GeolocationCoordinates:
       https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
     """
     from epyk.core.js.primitives import JsNumber
-
     return JsNumber.JsNumber.get("%s.coords.longitude" % self.varName)
 
   @property
   def speed(self):
-    """
-    Returns a double representing the velocity of the device in meters per second. This value can be null.
+    """ Returns a double representing the velocity of the device in meters per second. This value can be null.
 
     Related Pages:
 
@@ -568,23 +533,19 @@ class GeolocationCoordinates:
       https://developer.mozilla.org/en-US/docs/Web/API/GeolocationCoordinates
     """
     from epyk.core.js.primitives import JsNumber
-
     return JsNumber.JsNumber.get("%s.coords.speed" % self.varName)
 
   @property
   def timestamp(self):
-    """
-    Returns a DOMTimeStamp representing the time at which the location was retrieved.
+    """ Returns a DOMTimeStamp representing the time at which the location was retrieved.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
     """
     from epyk.core.js.primitives import JsNumber
-
     return JsNumber.JsNumber.get("%s.timestamp" % self.varName)
 
   def toStr(self):
     from epyk.core.js.primitives import JsObject
-
     return JsObject.JsObject.get(self.varName)

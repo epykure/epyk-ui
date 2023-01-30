@@ -1,7 +1,5 @@
 
-
 from epyk.core.html import Html
-from epyk.core.css import Colors
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsVega
 from epyk.core.html.options import OptChartVega
@@ -14,8 +12,8 @@ class VegaEmdedCharts(Html.Html):
   _chart__type = "VegaChart"
 
   def __init__(self, report, data, width, height, html_code, options, profile):
-    super(VegaEmdedCharts, self).__init__(report, data, html_code=html_code, profile=profile, options=options,
-                                     css_attrs={"width": width, "height": height})
+    super(VegaEmdedCharts, self).__init__(
+      report, data, html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
     self.style.css.padding = "5px 50px"
     self.options.schema = "https://vega.github.io/schema/vega-lite/v5.json"
 
@@ -26,7 +24,7 @@ class VegaEmdedCharts(Html.Html):
     return "window['%s_obj']" % self.htmlCode
 
   @property
-  def vega(self):
+  def vega(self) -> JsVega.Vega:
     """   JavaScript Vega Chart reference API.
 
     Related Pages:
@@ -34,15 +32,13 @@ class VegaEmdedCharts(Html.Html):
       https://c3js.org/reference.html#api-show
 
     :return: A Javascript object
-
-    :rtype: JsVega.VegaChart
     """
     if self._js is None:
-      self._js = JsVega.Vega(self, varName=self.chartId, report=self._report)
+      self._js = JsVega.Vega(self, js_code=self.chartId, page=self.page)
     return self._js
 
   @property
-  def js(self):
+  def js(self) -> JsVega.VegaChart:
     """   JavaScript Vega Chart reference API.
 
     Related Pages:
@@ -50,11 +46,9 @@ class VegaEmdedCharts(Html.Html):
       https://c3js.org/reference.html#api-show
 
     :return: A Javascript object
-
-    :rtype: JsVega.VegaChart
     """
     if self._js is None:
-      self._js = JsVega.VegaChart(self, varName=self.chartId, report=self._report)
+      self._js = JsVega.VegaChart(self, js_code=self.chartId, page=self.page)
     return self._js
 
   _js__builder__ = '''
@@ -89,4 +83,4 @@ class VegaEmdedCharts(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(pyClassNames=self.style.get_classes())
+    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

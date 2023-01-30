@@ -5,6 +5,7 @@ import re
 import os
 import logging
 
+from typing import List, Union, Optional
 from epyk.core.py import OrderedSet
 from epyk.core.data.recs import RecItems
 
@@ -12,16 +13,16 @@ from epyk.core.data.recs import RecItems
 class Plotly:
 
   @staticmethod
-  def surface(data, y_columns, x_axis, z_axis):
+  def surface(data: List[dict], y_columns: List[str], x_axis: str, z_axis: str) -> dict:
       """
       Description:
       -----------
       Transform a record to a valid data structure for Plotly surfaces.
 
-      :param data: List of dictionaries. The data to be converted.
-      :param y_columns: List. The keys in the dictionaries used as y axes.
-      :param x_axis: String. The key in the dictionaries used as x axis.
-      :param z_axis: String. The key in the dictionaries used as z axis.
+      :param data: The data to be converted
+      :param y_columns: The keys in the dictionaries used as y axes
+      :param x_axis: The key in the dictionaries used as x-axis
+      :param z_axis: The key in the dictionaries used as z-axis
       """
       naps = {'datasets': [], 'series': [], 'python': True}
 
@@ -47,29 +48,28 @@ class Plotly:
       return naps
 
   @staticmethod
-  def map(data):
-    """   
+  def map(data: List[dict]) -> dict:
+    """
 
-
-    :param data: List of Dictionaries.
+    :param data: Data to be converted
     """
     return {'datasets': data, 'series': [], 'python': True}
 
   @staticmethod
-  def countries(data, country_col, size_col, scale=False):
-    """   Process a record to return an object for map charts.
+  def countries(data: List[dict], country_col: str, size_col: str, scale: bool = False) -> List[dict]:
+    """ Process a record to return an object for map charts.
 
-    :param data: List. The main records.
-    :param country_col: String. The column name for the countries.
-    :param size_col: String. The column name for the values.
-    :param scale: Float. Optional. The factor to apply on the values
+    :param data: The main records
+    :param country_col: The column name for the countries
+    :param size_col: The column name for the values
+    :param scale: Optional. The factor to apply on the values
     """
     aggregated = {}
     for rec in data:
       if country_col in rec:
         try:
           aggregated[rec[country_col]] = aggregated.get(rec[country_col], 0) + float(rec.get(size_col, 0))
-        except: pass
+        except Exception as err: pass
 
     records = []
     if aggregated:
@@ -83,13 +83,13 @@ class Plotly:
     return records
 
   @staticmethod
-  def choropleth(data, country_col, size_col, scale=False):
+  def choropleth(data: List[dict], country_col: str, size_col: str, scale: Union[float, bool] = False) -> List[dict]:
     """   
 
-    :param data: List. The data.
-    :param country_col: String. The country column name.
-    :param size_col: String. The size column alias.
-    :param scale: Number. Optional. A scaling factor for the points on the map.
+    :param data: The data.
+    :param country_col: The country column name.
+    :param size_col: The size column alias.
+    :param scale: Optional. A scaling factor for the points on the map
     """
     aggregated = {}
     for rec in data:
@@ -111,14 +111,15 @@ class Plotly:
     return records
 
   @staticmethod
-  def locations(data, long_col, lat_col, size_col, scale=False):
+  def locations(data: List[dict], long_col: str, lat_col: str, size_col: str,
+                scale: Union[float, bool] = False) -> List[dict]:
     """
 
     :param data:
-    :param long_col:
-    :param lat_col:
-    :param size_col:
-    :param scale:
+    :param long_col: The column alias for longitude coordinates
+    :param lat_col: The column alias for latitude coordinates
+    :param size_col: The size column alias.
+    :param scale: Optional. A scaling factor for the points on the map
     """
     aggregated = {}
     for rec in data:
@@ -142,12 +143,13 @@ class Plotly:
     return records
 
   @staticmethod
-  def xy(data, y_columns, x_axis, options=None):
+  def xy(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
-    :param data: List of dict. The Python recordset
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record
+    :param data: The Python recordset
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Various options for the data conversion
     """
     if data is None:
       return {'datasets': [], 'python': True, 'series': y_columns}
@@ -157,7 +159,7 @@ class Plotly:
       for y in y_columns:
         series = {'x': [], 'y': [], 'text': []}
         for rec in data:
-          if not x_axis in rec:
+          if x_axis not in rec:
             continue
 
           series["x"].append(rec[x_axis])
@@ -179,14 +181,14 @@ class Plotly:
     return {'datasets': results, 'python': True, 'series': y_columns}
 
   @staticmethod
-  def xy_text(data, y_columns, x_axis, text=None, options=None):
+  def xy_text(data: List[dict], y_columns: List[str], x_axis: str, text: str = None, options: dict = None) -> dict:
     """
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param text: String. The column corresponding to the key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param text: Optional. The column corresponding to the key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     if text is None:
       return Plotly.xy(data, y_columns, x_axis, options=options)
@@ -218,12 +220,12 @@ class Plotly:
     return {'datasets': results, 'python': True, 'series': y_columns}
 
   @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis):
+  def xyz(data: List[dict], y_columns: List[str], x_axis: str, z_axis: str) -> dict:
     """
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
     :param z_axis:
     """
     agg_data, agg_z = {}, {}
@@ -252,7 +254,8 @@ class Plotly:
     return is_data
 
   @staticmethod
-  def x_yz(data, y_columns, x_axis, z_axis, dy=0, dx=0, dz=0):
+  def x_yz(data: List[dict], y_columns: List[str], x_axis: str, z_axis: str, dy: float = 0, dx: float = 0,
+           dz: float = 0) -> dict:
     """
 
     :param data: List of dict. The Python record.
@@ -290,12 +293,12 @@ class Plotly:
     return is_data
 
   @staticmethod
-  def table(data, columns, dflt=''):
+  def table(data: List[dict], columns: List[str], dflt: str = '') -> dict:
     """
 
-    :param data: List of dict. The Python record.
-    :param columns: List. The key in the record to be used to build the row.
-    :param dflt: Optional. The default value if key is missing.
+    :param data: The Python record
+    :param columns: The key in the record to be used to build the row
+    :param dflt: The default value if key is missing
     """
     result = {'values': [], 'python': True, 'header': [[c] for c in columns]}
     if data is None:
@@ -309,13 +312,13 @@ class Plotly:
 class Vis:
 
   @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis):
+  def xyz(data: List[dict], y_columns: List[str], x_axis: str, z_axis: str) -> List[List[dict]]:
     """
 
-    :param data:
-    :param y_columns:
-    :param x_axis:
-    :param z_axis:
+    :param data: Original records
+    :param y_columns: The list of columns for series from the data records
+    :param x_axis: Column name for the x-axis
+    :param z_axis: Column name for the z-axis
     """
     agg_data = {}
     for rec in data:
@@ -332,7 +335,7 @@ class Vis:
     return data
 
   @staticmethod
-  def xy(data, y_columns, x_axis):
+  def xy(data: List[dict], y_columns: List[str], x_axis: str) -> List[List[dict]]:
     """
 
     :param data:
@@ -394,7 +397,7 @@ class Vis:
 class ChartJs:
 
   @staticmethod
-  def copy(records, empty=False):
+  def copy(records: dict, empty: bool = False) -> dict:
     """
     Create a copy of the ChartJs dataset.
 
@@ -414,19 +417,22 @@ class ChartJs:
     return result
 
   @staticmethod
-  def y(data, y_columns, x_axis, options=None):
+  def y(data, y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
       return is_data
+
+    if x_axis is None:
+      return {"labels": y_columns, 'datasets': [data], 'series': [], 'python': True}
 
     agg_data = {}
     for rec in data:
@@ -459,15 +465,15 @@ class ChartJs:
     return is_data
 
   @staticmethod
-  def xy(data, y_columns, x_axis, options=None):
+  def xy(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     agg_data = {}
     for rec in data:
@@ -495,16 +501,16 @@ class ChartJs:
     return is_data
 
   @staticmethod
-  def xyz(data, y_columns, x_axis, z_axis=None, options=None):
+  def xyz(data: List[dict], y_columns: List[str], x_axis: str, z_axis: str = None, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param z_axis:
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param z_axis: Optional.
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -549,13 +555,13 @@ class ChartJs:
 class C3:
 
   @staticmethod
-  def y(data, y_columns, x_axis, options=None):
+  def y(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
-    :param data: List of dict. The Python records.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python records
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -596,15 +602,15 @@ class C3:
 class NVD3:
 
   @staticmethod
-  def xy(data, y_columns, x_axis, options=None):
+  def xy(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -636,15 +642,15 @@ class NVD3:
     return is_data
 
   @staticmethod
-  def labely(data, y_columns, x_axis, options=None):
+  def labely(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python record.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python record
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
     if data is None or y_columns is None:
@@ -671,15 +677,14 @@ class NVD3:
 class Datatable:
 
   @staticmethod
-  def table(data, columns, dflt=''):
-    """
-    Transform the data in a list of list for Datatable
+  def table(data: List[dict], columns: List[str], dflt: str = '') -> List[List[dict]]:
+    """ Transform the data in a list of list for Datatable.
 
     Usage::
 
-    :param data: List of dict. The Python recordset
-    :param columns: List. The key in the recordset to be used to build the row
-    :param dflt: String. Optional. The default value if key is missing.
+    :param data: The Python recordset
+    :param columns: The key in the recordset to be used to build the row
+    :param dflt: Optional. The default value if key is missing.
     """
     records = []
     for rec in data:
@@ -690,15 +695,15 @@ class Datatable:
 class Google:
 
   @staticmethod
-  def y(data, y_columns, x_axis, options=None):
+  def y(data: List[dict], y_columns: List[str], x_axis: str, options: dict = None) -> dict:
     """
 
     Usage::
 
-    :param data: List of dict. The Python records.
-    :param y_columns: List. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. The column corresponding to a key in the dictionaries in the record.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param data: The Python records
+    :param y_columns: The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: The column corresponding to a key in the dictionaries in the record
+    :param options: Optional. Specific Python options available for this component
     """
     is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
     if data is None:
@@ -730,7 +735,7 @@ class Google:
     return is_data
 
   @staticmethod
-  def table(data, rows, cols):
+  def table(data: List[dict], rows: List[str], cols: List[str]) -> dict:
     """
 
     Usage::
@@ -751,25 +756,25 @@ class Google:
 class Checkbox:
 
   @staticmethod
-  def from_records(data, column, all_checked=False, apply_sort=False):
+  def from_records(data: List[dict], column: str, all_checked: bool = False, apply_sort: bool = False) -> List[dict]:
     """
 
-    :param data: List. A list of dictionaries.
-    :param column: String. The column name (key in the dictionary).
-    :param all_checked: Boolean. Optional.
-    :param apply_sort: Boolean. Optional.
+    :param data: A list of dictionaries
+    :param column: The column name (key in the dictionary)
+    :param all_checked: Optional.
+    :param apply_sort: Optional.
     """
     result = [{"value": rec[column], "checked": all_checked} for rec in data]
     return result
 
   @staticmethod
-  def from_df(df, column, all_checked=False, apply_sort=False):
+  def from_df(df, column: str, all_checked: bool = False, apply_sort: bool = False) -> List[dict]:
     """
 
-    :param df: DataFrame. A pandas dataframe object.
-    :param column: String. The column name in the dataframe.
-    :param all_checked: Boolean. Optional.
-    :param apply_sort: Boolean. Optional.
+    :param df: DataFrame. A pandas dataframe object
+    :param column: The column name in the dataframe
+    :param all_checked: Optional.
+    :param apply_sort: Optional.
     """
     if sorted:
       result = [{"value": rec[column], "checked": all_checked} for rec in sorted(df[column].unique().tolist())]
@@ -778,7 +783,7 @@ class Checkbox:
     return result
 
   @staticmethod
-  def from_list(data, checked=None, all_checked=False):
+  def from_list(data: List[dict], checked: str = None, all_checked: bool = False) -> List[dict]:
     """
 
     :param data:
@@ -788,7 +793,7 @@ class Checkbox:
     result = []
     for value in data:
       result.append({"value": value})
-      if checked is not None and value == checked:
+      if all_checked or (checked is not None and value == checked):
         result[-1]["checked"] = True
     return result
 
@@ -796,7 +801,7 @@ class Checkbox:
 class SelectionBox:
 
   @staticmethod
-  def from_records(records, column, apply_sort=False, with_count=False):
+  def from_records(records: List[dict], column: str, apply_sort: bool = False, with_count: bool = False) -> List[dict]:
     """
 
     Usage::
@@ -812,7 +817,8 @@ class SelectionBox:
     return [result[k] for k in sorted(result.keys())]
 
   @staticmethod
-  def from_df(df, column, all_checked=False, apply_sort=False, with_count=False):
+  def from_df(df, column: str, all_checked: bool = False, apply_sort: bool = False,
+              with_count: bool = False) -> List[dict]:
     """
 
     Usage::
@@ -830,7 +836,8 @@ class SelectionBox:
     return [{'value': r, 'name': "%s (%s)" % (r, counters[r]) if with_count else r} for r in df[column].unique().tolist()]
 
   @staticmethod
-  def from_list(values, all_checked=False, apply_sort=False, with_count=False):
+  def from_list(values: List[str], all_checked: bool = False, apply_sort: bool = False,
+                with_count: bool = False) -> List[dict]:
     """
 
     Usage::
@@ -840,10 +847,13 @@ class SelectionBox:
     :param apply_sort:
     :param with_count:
     """
+    if all_checked:
+      return [{'name': r, 'value': r, 'checked': True} for r in values]
+
     return [{'name': r, 'value': r} for r in values]
 
   @staticmethod
-  def from_dict(values, all_checked=False):
+  def from_dict(values, all_checked: bool = False) -> List[dict]:
     """
 
     Usage::
@@ -851,13 +861,16 @@ class SelectionBox:
     :param values:
     :param all_checked:
     """
+    if all_checked:
+      return [{'name': values[k], 'value': k, 'checked': True} for k in sorted(values.keys())]
+
     return [{'name': values[k], 'value': k} for k in sorted(values.keys())]
 
 
 class ListData:
 
   @staticmethod
-  def from_records(records, column):
+  def from_records(records: List[dict], column: str) -> List[str]:
     """
 
     Usage::
@@ -873,15 +886,14 @@ class ListData:
 
 class HtmlComponents:
 
-  def markdown(self, content, tooltips=None, case_sensitive=False):
-    """
-    Format the markdown text with tooltips.
+  def markdown(self, content: str, tooltips: dict = None, case_sensitive: bool = False) -> str:
+    """ Format the Markdown text with tooltips.
 
     Usage::
 
-    :param content: String. The markdown content.
-    :param tooltips: Dictionary. Optional. The words to be replaced.
-    :param case_sensitive: Boolean. Optional. Case sensitive flag.
+    :param content: The markdown content
+    :param tooltips: Optional. The words to be replaced
+    :param case_sensitive: Optional. Case-sensitive flag
     """
     if tooltips is None:
       return content
@@ -910,9 +922,9 @@ class HtmlComponents:
   def checkboxes(self):
     """
     Property to provide standard ways to build the data for the Checkboxes.
-    Those transformation will be done on the Python side and they will not have any impact on the JavaScript side.
+    Those transformations will be done on the Python side and they will not have any impact on the JavaScript side.
 
-    The purpose here is the prepare the data before passing it to the HTML container.
+    The purpose here is to prepare the data before passing it to the HTML container.
 
     Those functions can be used in the interface but also in the build method to ensure the format for the
     JavaScript processing.
@@ -950,17 +962,17 @@ class HtmlComponents:
 
 class Tree:
 
-  def __add_level(self, path, tree, root, excluded_folders, make_url=None, options=None):
-    """
-    Internal function to do the nesting for the folders definition.
+  def __add_level(self, path: str, tree: list, root: str, excluded_folders: Optional[tuple], make_url=None,
+                  options: dict = None):
+    """ Internal function to do the nesting for the folders definition.
     This is used in the folder method.
 
-    :param path: String. The path.
-    :param tree: List. The current tree pointer.
-    :param root: String. The root path.
-    :param excluded_folders: Tuple. The excluded folders.
-    :param make_url: Function. Optional. A make url function to build this in the leaves.
-    :param options: Dictionary. Optional. All the options added to this function (styles...).
+    :param path: The path
+    :param tree: The current tree pointer
+    :param root: The root path
+    :param excluded_folders: The excluded folders
+    :param make_url: Optional. A make url function to build this in the leaves
+    :param options: Optional. All the options added to this function (styles...)
     """
     for fp in os.listdir(path):
       if fp.startswith(".") or fp.startswith("__") or (excluded_folders is not None and fp in excluded_folders):
@@ -979,23 +991,26 @@ class Tree:
         if make_url is not None:
           tree[-1]["url"] = make_url({"path": fp_path, "root": root, "file": fp})
 
-  def folders(self, path, excluded_folders=None, make_url=None, style_leaf=None, style_node=None):
+  def folders(self, path: str, excluded_folders: Optional[tuple] = None, make_url=None,
+              style_leaf: dict = None, style_node: dict = None) -> List[dict]:
     """
     Get a tree structure from a path.
     This will get all the files and sub folders.
 
     Usage::
 
-    :param path: String. The path.
-    :param excluded_folders: List | Tuple. Optional.
+    :param path: The path.
+    :param excluded_folders: Optional.
     :param make_url: Function. Optional.
-    :param style_leaf: Dictionary. Optional. The style to be used for the nodes.
-    :param style_node: Dictionary. Optional. The style to be used for the children.
+    :param style_leaf: Optional. The style to be used for the nodes
+    :param style_node: Optional. The style to be used for the children
     """
     _, root_folder = os.path.split(path)
     result = [{"value": root_folder, "items": [], "_path": path}]
     if path is not None:
-      self.__add_level(path, result[0]["items"], path, excluded_folders, make_url, options={"styles": {"leaf": style_leaf, "node": style_node}})
+      self.__add_level(
+        path, result[0]["items"], path, excluded_folders, make_url, options={
+          "styles": {"leaf": style_leaf, "node": style_node}})
     return result
 
 

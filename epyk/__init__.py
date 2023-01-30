@@ -237,14 +237,19 @@ class Interface:
         comp = pos(html_code="comp_%s" % i)
     return comp
 
-  def launch(self):
+  def launch(self, force_jupyter: bool = False, lab: bool = False):
     """ Render either the HTML content or the Jupyter results.
+
+    :param force_jupyter:
+    :param lab:
     """
-    if jupyter.is_notebook():
+    if jupyter.is_notebook() or force_jupyter:
+      if lab:
+        return self.page.outs.jupyterlab()
+
       return self.page.outs.jupyter(closure=False)
 
     return self.page.outs.html()
-
 
 
 MAP_FIELDS = {

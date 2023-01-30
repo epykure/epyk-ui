@@ -248,7 +248,11 @@ class PyOuts:
       else:
         importMng = Imports.ImportManager(page=self.page)
       require_js = importMng.to_requireJs(results, self.excluded_packages)
-      results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
+      lib_paths = []
+      for k, p in require_js['paths'].items():
+        if not k.startswith("'local_"):
+          lib_paths.append("%s: '%s'" % (k, p))
+      results['paths'] = "{%s}" % ", ".join(lib_paths)
       results['jsFrgs_in_req'] = require_js['jsFrgs']
     if self.__requireJs_attrs:
       results.update(self.__requireJs_attrs)

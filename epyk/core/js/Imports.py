@@ -1232,7 +1232,7 @@ JS_IMPORTS = {
   # ChartJs modules width CDN links
   'chart.js': {
     'website': 'https://www.chartjs.org/',
-    'version': '3.7.1',  # 2.9.4
+    'version': '3.9.1',  # 2.9.4
     'v_prefix': 'v',
     'repository': 'https://github.com/chartjs/Chart.js',
     'register': {'alias': 'Chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
@@ -1251,7 +1251,7 @@ JS_IMPORTS = {
   # ChartJs Treemap
   'chartjs-chart-treemap': {
     'website': 'https://github.com/kurkle/chartjs-chart-treemap',
-    'version': '2.0.2',
+    'version': '2.3.0', # 2.0.2
     'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-chart-treemap.min.js', 'path': 'chartjs-chart-treemap@%(version)s/dist/',
@@ -2815,10 +2815,23 @@ class ImportPackagesDataTableExts:
 
 
 class ImportPackagesChartJsExts:
+
   def __init__(self, js: dict, css: dict, links: Optional[dict] = None):
     self._js = js
     self._css = css
-    self.links = links
+    self.__linked = links
+
+  def get(self, name: str):
+    if name in self.__linked:
+      return self.__linked[name]
+
+    return ImportModule(name, self._js, self._css, self.__linked)
+
+  @property
+  def treemap(self) -> ImportModule:
+    """
+    """
+    return self.get("chartjs-chart-treemap")
 
 
 class ImportPackagesTabulatorExts:
@@ -3038,15 +3051,13 @@ class ImportPackages:
     return self.get("chart.js")
 
   @property
-  def chart_js_extensions(self):
+  def chart_js_extensions(self) -> ImportPackagesChartJsExts:
     """  
     Simple yet flexible JavaScript charting for designers & developers.
 
     Related Pages:
 
       https://www.chartjs.org/
-
-    :rtype: ImportPackagesChartJsExts
     """
     return ImportPackagesChartJsExts(self._js, self._css, self.__linked)
 
@@ -4188,7 +4199,7 @@ class ImportManager:
           m_versions[req['alias']] = req['version']
     # Produce the dependency tree for requirejs
     for m in self.cleanImports(self.page.jsImports, JS_IMPORTS, use_require_js=True):
-      if excluded_packages is not None and m in excluded_packages:
+      if m.startswith("local_") or (excluded_packages is not None and m in excluded_packages):
         continue
 
       if not self.online:

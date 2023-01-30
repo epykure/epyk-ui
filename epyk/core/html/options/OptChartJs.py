@@ -2990,9 +2990,7 @@ class OptionsGeo(ChartJsOptions):
 
   @property
   def plugins(self) -> OptionPlugins:
-    """  
-
-    :rtype: OptionPlugins
+    """
     """
     return self._config_sub_data("plugins", OptionPlugins)
 

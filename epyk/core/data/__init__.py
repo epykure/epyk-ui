@@ -4,6 +4,7 @@
 import json
 import sys
 
+from typing import Any
 from epyk.core.data import Data
 from epyk.core.data import DataPy
 from epyk.core.data import DataEvent
@@ -13,7 +14,7 @@ from epyk.core.js.JsLocation import URLSearchParams
 
 
 # Shortcut data in the framework.
-# All those features are available in the report object but this allow a shortcut when the context is not necessary
+# All those features are available in the report object but this allows a shortcut when the context is not necessary
 chartJs = DataPy.ChartJs()
 
 apexCharts = DataPy.ChartJs()
@@ -57,10 +58,9 @@ class Sent:
     self.__data = data
 
   def get(self, name: str = None):
-    """
-    Set the option attribute to be added on the Javascript side during the component build
+    """ Set the option attribute to be added on the Javascript side during the component build.
 
-    :param str name: The attribute name.
+    :param name: The attribute name
     """
     return self.__data[name or sys._getframe().f_back.f_code.co_name]
 
@@ -74,21 +74,19 @@ class Received:
     self.__tags = tags
     self.__response_tags = set()
 
-  def set(self, value, name=None):
-    """
-    Set the option attribute to be added on the Javascript side during the component build
+  def set(self, value: Any, name: str = None):
+    """ Set the option attribute to be added on the Javascript side during the component build.
 
-    :param value: Object. The value for the name
-    :param name: String. The attribute name
+    :param value: The value for the name
+    :param name: The attribute name
     """
     self.__response_tags.add(name or sys._getframe().f_back.f_code.co_name)
     self.__data[name or sys._getframe().f_back.f_code.co_name] = value
 
-  def get(self, name=None):
-    """
-    Set the option attribute to be added on the Javascript side during the component build
+  def get(self, name: str = None):
+    """ Set the option attribute to be added on the Javascript side during the component build.
 
-    :param name: String. The attribute name
+    :param name: The attribute name
     """
     if self.__data is not None:
       return self.__data[name or sys._getframe().f_back.f_code.co_name]
@@ -99,8 +97,7 @@ class Received:
   def s(self):
     """
 
-    TODO: Find a way to keep autocompletion without overidding this property
-    :return:
+    TODO: Find a way to keep autocompletion without overriding this property.
     """
     if self.data_sent is None:
       raise ValueError("data_sent must be defined")

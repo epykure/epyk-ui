@@ -9,7 +9,7 @@ BOOTSTRAP = {
       {'alias': 'moment'},
       {'alias': 'jquery'}],
     'website': 'https://getdatepicker.com/5-4/Installing/',
-    'register': {'alias': 'datetimepicker', 'module': 'bootstrap-datetimepicker.min', 'npm': 'datetimepicker'},
+    'register': {'alias': 'datetimepicker', 'module': 'tempusdominus-bootstrap-4.min', 'npm': 'datetimepicker'},
     'modules': [
       {'script': 'tempusdominus-bootstrap-4.min.js', 'path': 'tempusdominus-bootstrap-4/%(version)s/js/'},
       {'script': 'tempusdominus-bootstrap-4.min.css', 'path': 'tempusdominus-bootstrap-4/%(version)s/css/'},
