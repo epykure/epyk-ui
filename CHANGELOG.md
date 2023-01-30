@@ -1,5 +1,21 @@
 ## [Unreleased]
 
+## [1.9.27] - 2023-01-30
+
+### Added
+- New features for charts and functions alignment
+- More type annotation
+- New options for Aggrid tables
+
+### Fixed
+- Bug fixes for ApexCharts
+
+### Changed
+- Review docstrings in functions
+- Change stepper HTML component
+- Extend internal Js DataClass to pick up JavaScript string automatically
+- Change Database module (Mainly bug fixes)
+
 ## [1.9.21] - 2022-11-30
 
 ### Added
