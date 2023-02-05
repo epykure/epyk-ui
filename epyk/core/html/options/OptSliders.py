@@ -837,7 +837,7 @@ class OptionBar(Options):
 
 
 class OptionsSkillbars(Options):
-  component_properties = ("success", "warning", "danger", "percentage")
+  component_properties = ("success", "warning", "danger", "percentage", "digits")
 
   def set_thresholds(self, inf: float = 20, sup: float = 50):
     self._config([inf, sup], name="thresholds")
@@ -845,6 +845,16 @@ class OptionsSkillbars(Options):
   @property
   def thresholds(self):
     return self._config_get([20, 50])
+
+  @property
+  def digits(self):
+    """ Number of digit for the percentage value..
+    """
+    return self._config_get(2)
+
+  @digits.setter
+  def digits(self, num: int):
+    self._config(num)
 
   @property
   def percentage(self):
@@ -896,3 +906,23 @@ class OptionsSkillbars(Options):
   @width.setter
   def width(self, num: float):
     self._config(num)
+
+  @property
+  def value(self):
+    """ Key used in the record to get the value
+    """
+    return self._config_get("value")
+
+  @value.setter
+  def value(self, name: str):
+    self._config(name)
+
+  @property
+  def label(self):
+    """ Key used in the record to get the label
+    """
+    return self._config_get("label")
+
+  @label.setter
+  def label(self, name: str):
+    self._config(name)

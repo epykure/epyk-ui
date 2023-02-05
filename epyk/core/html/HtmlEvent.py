@@ -25,7 +25,7 @@ from epyk.core.css import Defaults as cssDefaults
 
 
 class ProgressBar(Html.Html):
-  requirements = ('jqueryui', )
+  requirements = ('jqueryui',)
   name = 'Progress Bar'
   _option_cls = OptSliders.OptionsProgBar
 
@@ -116,7 +116,7 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
 
 class Menu(Html.Html):
-  requirements = ('jqueryui', )
+  requirements = ('jqueryui',)
   name = 'Menu'
   _option_cls = OptSliders.OptionsMenu
 
@@ -194,11 +194,12 @@ class Menu(Html.Html):
 
 
 class Dialog(Html.Html):
-  requirements = ('jqueryui', )
+  requirements = ('jqueryui',)
   name = 'Menu'
   _option_cls = OptSliders.OptionDialog
 
-  def __init__(self, report: primitives.PageModel, text: Union[Html.Html, str], width: tuple, height: tuple, helper: str,
+  def __init__(self, report: primitives.PageModel, text: Union[Html.Html, str], width: tuple, height: tuple,
+               helper: str,
                options: Optional[dict], html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
                                  profile=profile, options=options)
@@ -268,7 +269,7 @@ class Dialog(Html.Html):
 
 
 class Slider(Html.Html):
-  requirements = ('jqueryui', )
+  requirements = ('jqueryui',)
   name = 'Slider'
   _option_cls = OptSliders.OptionsSlider
   is_range = False
@@ -482,7 +483,6 @@ class SliderDate(Slider):
 
 
 class SliderDates(SliderDate):
-
   _js__builder__ = '''
       const minDt = new Date(options.min).getTime() / 1000;
       const maxDt = new Date(options.max).getTime() / 1000;
@@ -511,6 +511,8 @@ class SkillBar(Html.Html):
     self.add_title(title, options={'content_table': False})
     self.innerPyHTML = page.ui.layouts.table(options={"header": False})
     self.innerPyHTML.options.managed = False
+    self.options.value = y_column
+    self.options.label = x_axis
     for rec in data:
       value = page.ui.div(EntHtml4.NO_BREAK_SPACE).css(
         {"width": '%s%s' % (rec[y_column], options.get("unit", '%')), 'margin-left': "2px",
@@ -551,7 +553,7 @@ class SkillBar(Html.Html):
       self._js = JsComponents.SkillBar(self, js_code=self.dom.varName, page=self.page)
     return self._js
 
-  _js__builder__ = ''' 
+  _js__builder__ = '''
       var table = htmlObj.querySelector("table"); table.innerHTML = "";
       var thead = document.createElement("thead"); var tbody = document.createElement("tbody");
       tbody.style["box-sizing"] = "border-box";
@@ -563,35 +565,35 @@ class SkillBar(Html.Html):
           var content = document.createElement("a"); content.href =  rec.url} 
         else {
           var content = document.createElement("span")};
-        content.innerHTML = rec.value.toFixed(2) + "%";
+        content.innerHTML = rec[options.value].toFixed(options.digits) + "%";
         content.style.whiteSpace = "nowrap";
         var tr = document.createElement("tr");
         tr.style.width = options.width + "px"; tr.title = tooltip;
         var col = document.createElement("td");
         col.style.textAlign = "right"; col.style.padding = "0 5px";
-        var p = document.createElement("span"); p.innerHTML = rec.label;
+        var p = document.createElement("span"); p.innerHTML = rec[options.label];
         col.appendChild(p); tr.appendChild(col);
         var row = document.createElement("td");
         row.style["box-sizing"] = "border-box";
         row.style.width = "100%";
         var div = document.createElement("div");
-        div.style.width = rec.value.toFixed(2) + "%";
-        if( rec.value.toFixed(2) > options.thresholds[1]){ div.style.backgroundColor = options.success}
-        else if(rec.value.toFixed(2) > options.thresholds[0]) {div.style.backgroundColor = options.warning}
+        div.style.width = rec[options.value].toFixed(options.digits) + "%";
+        if( rec[options.value].toFixed(options.digits) > options.thresholds[1]){ div.style.backgroundColor = options.success}
+        else if(rec[options.value].toFixed(options.digits) > options.thresholds[0]) {div.style.backgroundColor = options.warning}
         else {div.style.backgroundColor = options.danger}
-        div.style.fontSize = "10px";
-        div.style.lineHeight = "20px";
-        div.style.verticalAlign = "middle%";
-        div.style.display = "block";
-        div.style.paddingLeft = "5px";
-        if (options.percentage){ div.appendChild(content)} 
-        else { div.innerHTML = "&nbsp;"; div.title = rec.value.toFixed(2) + "%" }
+        div.style.fontSize = "10px"; div.style.lineHeight = "20px"; div.style.verticalAlign = "middle%";
+        div.style.display = "block"; div.style.paddingLeft = "5px";
+        if (options.percentage){div.appendChild(content)} 
+        else { div.innerHTML = "&nbsp;"; div.title = rec[options.value].toFixed(options.digits) + "%" }
         row.appendChild(div); tr.appendChild(row);
         tbody.appendChild(tr)
       })'''
 
   def __str__(self):
     for row in self.innerPyHTML:
+      if row is None:
+        break
+
       percent = int(float(row[1][0].css("width")[:-1]))
       if percent > self.options.thresholds[1]:
         row[1][0].style.css.background = self.options.success
@@ -608,7 +610,7 @@ class SkillBar(Html.Html):
 
 
 class OptionsBar(Html.Html):
-  requirements = (cssDefaults.ICON_FAMILY, )
+  requirements = (cssDefaults.ICON_FAMILY,)
   name = 'Options'
   _option_cls = OptSliders.OptionBar
 
@@ -652,12 +654,12 @@ class OptionsBar(Html.Html):
 
 
 class SignIn(Html.Html):
-  requirements = (cssDefaults.ICON_FAMILY, )
+  requirements = (cssDefaults.ICON_FAMILY,)
   name = 'SignIn'
 
   def __init__(self, page: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str]):
     super(SignIn, self).__init__(page, text, css_attrs={"width": size, 'height': size})
-    self.size, self.icon = "%s%s" % (size[0]-8, size[1]), icon
+    self.size, self.icon = "%s%s" % (size[0] - 8, size[1]), icon
     self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
               "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "display": "inline-block",
               "border": "1px solid %s" % self.page.theme.colors[3], 'cursor': 'pointer'})
@@ -681,7 +683,7 @@ class SignIn(Html.Html):
 
 class Filters(Html.Html):
   name = 'Filters'
-  requirements = (cssDefaults.ICON_FAMILY, )
+  requirements = (cssDefaults.ICON_FAMILY,)
   _option_cls = OptList.OptionsTagItems
 
   def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile):
@@ -734,7 +736,7 @@ class Filters(Html.Html):
     return self
 
   def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
-    """   
+    """
 
 
     :param js_funcs: The Javascript functions.
@@ -746,7 +748,7 @@ class Filters(Html.Html):
     return super(Filters, self).drop(js_funcs, prevent_default, profile)
 
   def delete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   
+    """
 
 
     :param js_funcs: The Javascript functions.
@@ -763,7 +765,7 @@ class Filters(Html.Html):
 
   def append(self, value: Any, category: Optional[str] = None, name: Optional[str] = None,
              disabled: bool = False, fixed: bool = False):
-    """   
+    """
 
 
     :param value:
@@ -832,7 +834,7 @@ class Filters(Html.Html):
           div.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
         }
         panel.appendChild(div);
-        
+
         const maxHeight = options.max_height;
         if(maxHeight > 0){
           panel.style.maxHeight = ""+ maxHeight + "px";
@@ -851,4 +853,4 @@ class Filters(Html.Html):
       self.input.style.css.display = False
     return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {
       'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
-      'input': self.input.html(), 'selections': self.selections.html(),  'helper': self.helper}
+      'input': self.input.html(), 'selections': self.selections.html(), 'helper': self.helper}

@@ -98,7 +98,7 @@ class Graphs:
     height = Arguments.size(height, unit="px")
     options = options or {}
     html_skillbar = html.HtmlEvent.SkillBar(
-      self.page, records, y_column, x_axis, title, width, height, html_code, options, profile)
+      self.page, records or [], y_column, x_axis, title, width, height, html_code, options, profile)
     html.Html.set_component_skin(html_skillbar)
     return html_skillbar
 
