@@ -137,6 +137,12 @@ class JsPackage(primitives.JsDataModel):
         if 'js' in self.lib_alias:
           self.page.jsImports.add(self.lib_alias['js'])
 
+  def add_to_imports(self):
+    """ Base function to force the package to be added to the imports.
+    This can be used when module is required in some plain JavaScript text and not wrapped within an internal function.
+    """
+    ...
+
   @property
   def varId(self):
     """ The Javascript and Python reference ID.
@@ -237,7 +243,7 @@ class JsPackage(primitives.JsDataModel):
     return data
 
   @property
-  def var(self):
+  def var(self) -> JsString.JsString:
     """ Property to return the variable name as a valid pyJs object.
     """
     return JsString.JsString(self.varId, is_py_data=False)
@@ -375,7 +381,7 @@ class DataAttrs(primitives.JsDataModel):
   def attrs(self, values: dict):
     """ Set multiple attributes to the underlying data directly from a dictionary.
 
-    :param values: The data to set.
+    :param values: The data to set
 
     :return: "Self" to allow the chains on the Python side
     """

@@ -4,16 +4,15 @@ import os
 
 class Deno:
 
-  def __init__(self, app_path: str, name: str = None):
+  def __init__(self, app_path: str, name: str = None, page = None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
-    self._page = None
+    self._page = page
 
   def router(self, target_path: str):
-    """
-    Create a simple router file for your different views on your server.
+    """ Create a simple router file for your different views on your server.
 
-    :param str target_path: The target path where the views are stored
+    :param target_path: The target path where the views are stored
     """
     router_path = os.path.join(self._app_path, "server.ts")
     with open(router_path, "w") as f:
@@ -36,11 +35,10 @@ for await (const req of server) {
 }''' % target_path)
 
   def launcher(self, app_name: str, target_path: str):
-    """
-    Create a single launcher for the application.
+    """ Create a single launcher for the application.
 
-    :param str app_name: The deno path (This should contain the deno.exe file)
-    :param str target_path: The target path for the views
+    :param app_name: The deno path (This should contain the deno.exe file)
+    :param target_path: The target path for the views
     """
     out_path = os.path.join(self._app_path, "launchers")
     if not os.path.exists(out_path):
@@ -68,8 +66,7 @@ for await (const req of server) {
 } ''' % (target_path, app_name))
 
   def page(self, selector=None, name=None, page=None, auto_route=False, target_folder="views"):
-    """
-    Publish a new application on the deno server.
+    """ Publish a new application on the deno server.
     This will create a static rich HTML file.
 
     :param selector:
@@ -85,10 +82,9 @@ for await (const req of server) {
     self.auto_route = auto_route
 
   def publish(self, target_path: str = None):
-    """
-    Publish the application to the target path within the Deno Server
+    """ Publish the application to the target path within the Deno Server.
 
-    :param str target_path: The target path for the transpiled views
+    :param target_path: The target path for the transpiled views
     """
     out_path = os.path.join(self._app_path, target_path or self.target_folder)
     if not os.path.exists(out_path):

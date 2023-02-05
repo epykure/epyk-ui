@@ -1,4 +1,5 @@
 
+from typing import Any
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
@@ -6,94 +7,87 @@ from epyk.core.js.packages import JsPackage
 
 class MomentDate(JsPackage):
 
-  def week(self, number=None):
-    """  
-    Gets or sets the week of the year.
+  def week(self, number: float = None):
+    """ Gets or sets the week of the year.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/week/
 
-    :param number: Number. Optional. The week's number.
+    :param number: Optional. The week's number
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.week()" % self.varId)
 
     return JsUtils.jsWrap("%s.week(%s)" % (self.varId, number))
 
-  def weeks(self, number=None):
-    """  
-    Gets or sets the week of the year.
+  def weeks(self, number: float = None):
+    """  Gets or sets the week of the year.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/week/
 
-    :param number: Number. Optional. The week's number.
+    :param number: Optional. The week's number.
     """
     return self.week(number)
 
-  def weekYear(self, number=None):
-    """  
-    Gets or sets the week-year according to the locale.
+  def weekYear(self, number: float = None):
+    """  Gets or sets the week-year according to the locale.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/week-year/
 
-    :param number: Number. Optional. The week's number from this year.
+    :param number: Optional. The week's number from this year
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.weekYear()" % self.varId)
 
     return JsUtils.jsWrap("%s.weekYear(%s)" % (self.varId, number))
 
-  def get(self, text):
-    """  
-    Getter.
+  def get(self, text: str):
+    """ Getter.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/iso-weeks-in-year/
 
-    :param text: String. The object property name.
+    :param text: The object property name
     """
     text = JsUtils.jsConvertData(text, None)
     return JsObjects.JsObject.JsObject.get("%s.get(%s)" % (self.varId, text))
 
   def set(self, name, value):
-    """  
-    Getter.
+    """ Getter.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/iso-weeks-in-year/
 
-    :param name: String. The object property name.
-    :param value: String. The object property value.
+    :param name: The object property name
+    :param value: The object property value
     """
     name = JsUtils.jsConvertData(name, None)
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObject.JsObject.get("%s.set(%s, %s)" % (self.varId, name, value))
 
-  def isoWeekYear(self, number=None):
-    """  
-    Gets or sets the ISO week-year.
+  def isoWeekYear(self, number: float = None):
+    """ Gets or sets the ISO week-year.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/iso-week-year/
 
-    :param number: Number. Optional. The week's number from this year.
+    :param number: Optional. The week's number from this year
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.isoWeekYear()" % self.varId)
 
     return JsUtils.jsWrap("%s.isoWeekYear(%s)" % (self.varId, number))
 
-  def weeksInYear(self):
-    """  
-    Gets the number of weeks in the current moment's year, according to ISO weeks.
+  def weeksInYear(self) -> JsObjects.JsNumber.JsNumber:
+    """ Gets the number of weeks in the current moment's year, according to ISO weeks.
 
     Related Pages:
 
@@ -102,8 +96,7 @@ class MomentDate(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.weeksInYear()" % self.varId)
 
   def isoWeeksInYear(self):
-    """  
-    Gets the number of weeks in the current moment's year, according to ISO weeks.
+    """ Gets the number of weeks in the current moment's year, according to ISO weeks.
 
     Related Pages:
 
@@ -121,24 +114,22 @@ class MomentDate(JsPackage):
     return JsObjects.JsNumber.JsNumber.get("%s.isValid()" % self.varId)
 
   def invalid(self):
-    """  
-    You can create your own invalid Moment objects, which is useful in making your own parser.
+    """ You can create your own invalid Moment objects, which is useful in making your own parser.
 
     Related Pages:
 
       https://momentjs.com/docs/#/utilities/invalid/
     """
 
-  def format(self, value=None):
-    """  
-    This is the most robust display option.
+  def format(self, value: float = None):
+    """ This is the most robust display option.
     It takes a string of tokens and replaces them with their corresponding values.
 
     Related Pages:
 
       https://momentjs.com/docs/#/displaying/format/
 
-    :param value: Object. Optional. The format definition.
+    :param value: Optional. The format definition
     """
     if value is None:
       return JsObjects.JsObjects.get("%s.format()" % self.varId)
@@ -146,32 +137,30 @@ class MomentDate(JsPackage):
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.format(%s)" % (self.varId, value))
 
-  def quarter(self, number=None):
-    """  
-    Gets / Sets the quarter (1 to 4).
+  def quarter(self, number: float = None):
+    """ Gets / Sets the quarter (1 to 4).
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/quarter/
 
-    :param number: Number. Optional. The quarter's number.
+    :param number: Optional. The quarter's number
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.quarter()" % self.varId)
 
     return JsUtils.jsWrap("%s.quarter(%s)" % (self.varId, number))
 
-  def add(self, unit, value, js_code=None):
-    """  
-    Add value.
+  def add(self, unit: int, value: str, js_code: str = None):
+    """ Add value.
 
     Related Pages:
 
       https://momentjs.com/docs/#/displaying/difference/
 
-    :param unit: Integer.
-    :param value: String.
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param unit:
+    :param value:
+    :param js_code: Optional. The variable name created in the Javascript
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
@@ -180,17 +169,16 @@ class MomentDate(JsPackage):
 
     return MomentDate(selector="%s.add(%s, %s)" % (self.varId, unit, value), set_var=False)
 
-  def subtract(self, unit, value, js_code=None):
-    """  
-    Subtract value.
+  def subtract(self, unit: int, value: str, js_code: str = None):
+    """ Subtract value.
 
     Related Pages:
 
       https://momentjs.com/docs/#/displaying/difference/
 
-    :param unit: Integer.
-    :param value: String.
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param unit:
+    :param value:
+    :param js_code: Optional. The variable name created in the Javascript
     """
     unit = JsUtils.jsConvertData(unit, None)
     value = JsUtils.jsConvertData(value, None)
@@ -199,39 +187,36 @@ class MomentDate(JsPackage):
 
     return MomentDate(selector="%s.subtract(%s, %s)" % (self.varId, unit, value), set_var=False)
 
-  def year(self, number=None):
-    """  
-    Gets or sets the year..
+  def year(self, number: int = None):
+    """   Gets or sets the year.
 
     Related Pages:
 
       https://momentjs.com/docs/#/get-set/year/
 
-    :param number: Number. Optional. The year's number.
+    :param number: Optional. The year's number
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.year()" % self.varId)
 
     return JsUtils.jsWrap("%s.year(%s)" % (self.varId, number))
 
-  def clone(self, js_code=None):
-    """  
-    All moments are mutable. If you want a clone of a moment, you can do so implicitly or explicitly.
+  def clone(self, js_code: str = None):
+    """ All moments are mutable. If you want a clone of a moment, you can do so implicitly or explicitly.
 
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/moment-clone/
 
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if js_code is not None:
       return MomentDate(selector="%s.clone()" % self.varId, js_code=js_code, set_var=True)
 
     return MomentDate(selector="%s.clone()" % self.varId, set_var=False)
 
-  def date(self, number=None):
-    """  
-    Gets or sets the day of the month.
+  def date(self, number: int = None):
+    """ Gets or sets the day of the month.
 
     Accepts numbers from 1 to 31. If the range is exceeded, it will bubble up to the months.
 
@@ -239,16 +224,15 @@ class MomentDate(JsPackage):
 
       https://momentjs.com/docs/#/get-set/date/
 
-    :param number: Number. Optional. The month number of days.
+    :param number: Optional. The month number of days
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.date()" % self.varId)
 
     return JsUtils.jsWrap("%s.date(%s)" % (self.varId, number))
 
-  def isoWeek(self, number=None):
-    """  
-    Gets or sets the ISO week of the year.
+  def isoWeek(self, number: int = None):
+    """ Gets or sets the ISO week of the year.
 
     When setting the week of the year, the day of the week is retained.
 
@@ -256,7 +240,7 @@ class MomentDate(JsPackage):
 
       https://momentjs.com/docs/#/get-set/iso-week/
 
-    :param number: Number. Optional. The year's number.
+    :param number: Optional. The year's number
     """
     if number is None:
       return JsObjects.JsNumber.JsNumber.get("%s.isoWeek()" % self.varId)
@@ -817,33 +801,31 @@ class Moment(JsPackage):
   lib_alias = {"js": 'moment'}
   lib_selector = 'moment'
 
-  def now(self, js_code=None):
-    """  
-    To get the current date and time, just call moment() with no parameters.
+  def now(self, js_code: str = None):
+    """ To get the current date and time, just call moment() with no parameters.
 
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/now/
 
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if js_code is not None:
       return MomentDate(selector="moment()", js_code=js_code, set_var=True)
 
     return MomentDate(selector="moment()", set_var=False)
 
-  def time(self, hour, minute, second, js_code=None):
-    """  
-    To get the current time, just call moment() with no parameters.
+  def time(self, hour: int, minute: int, second: int, js_code: str = None) -> MomentDate:
+    """ To get the current time, just call moment() with no parameters.
 
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/now/
 
-    :param hour: Integer. Optional. The hours' value
-    :param minute: Integer. Optional. The minutes' value.
-    :param second: Integer. Optional. The seconds' value.
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param hour: Optional. The hours' value
+    :param minute: Optional. The minutes' value
+    :param second: Optional. The seconds' value
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if js_code is not None:
       return MomentDate(
@@ -851,29 +833,31 @@ class Moment(JsPackage):
 
     return MomentDate(selector="moment().hour(%s).minute(%s).second(%s)" % (hour, minute, second), set_var=False)
 
-  def var(self, js_code):
-    """  
-    Get the defined moment variable.
+  def var(self, js_code: str):
+    """ Get the defined moment variable.
 
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/now/
 
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param js_code: Optional. The variable name created in the Javascript
     """
     return MomentDate(selector=js_code, set_var=False)
 
-  def new(self, date=None, format=None, js_code=None):
-    """  
-    When creating a moment from a string, we first check if the string matches known ISO 8601 formats,
+  def new(self, date: Any = None, format: str = None, js_code: str = None) -> MomentDate:
+    """ When creating a moment from a string, we first check if the string matches known ISO 8601 formats,
+
+    Usages:
+
+      page.js.moment.new(1399919400000).format('dddd, MMMM Do YYYY, h:mm:ss a')
 
     Related Pages:
 
       https://momentjs.com/docs/#/parsing/string/
 
-    :param date:
-    :param format:
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param date: The initial date to be loaded
+    :param format: The resulting format for the date
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if date is None:
       return self.now()
@@ -891,7 +875,7 @@ class Moment(JsPackage):
 
     return MomentDate(selector="moment(%s, %s)" % (date, fmt), set_var=False)
 
-  def parseZone(self, date=None, format=None, js_code=None):
+  def parseZone(self, date=None, format=None, js_code=None) -> MomentDate:
     """  
 
     Related Pages:
@@ -900,7 +884,7 @@ class Moment(JsPackage):
 
     :param date:
     :param format:
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if date is None:
       if js_code is not None:
@@ -922,8 +906,7 @@ class Moment(JsPackage):
     return MomentDate(selector="%s.parseZone(%s, %s)" % (self.varId, date, format), set_var=False)
 
   def isMoment(self):
-    """  
-    To check if a variable is a moment object, use moment.isMoment().
+    """ To check if a variable is a moment object, use moment.isMoment().
 
     Related Pages:
 
@@ -932,8 +915,7 @@ class Moment(JsPackage):
     return JsObjects.JsBoolean.JsBoolean.get("%s.isMoment()" % self.varId)
 
   def isDate(self):
-    """  
-    To check if a variable is a native js Date object, use moment.isDate().
+    """ To check if a variable is a native js Date object, use moment.isDate().
 
     Related Pages:
 
@@ -941,15 +923,14 @@ class Moment(JsPackage):
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.isDate()" % self.varId)
 
-  def lang(self, value):
-    """  
-    The local lang
+  def lang(self, value: str) -> JsUtils.jsWrap:
+    """ The local lang.
 
     Related Pages:
 
       https://momentjs.com/docs/#/i18n/changing-locale/
 
-    :param value: String. The lang reference.
+    :param value: The lang reference
     """
     value = JsUtils.jsConvertData(value, None)
     return JsUtils.jsWrap("%s.lang(%s)" % (self.varId, value))
@@ -966,7 +947,7 @@ class Moment(JsPackage):
     https://momentjs.com/docs/#/get-set/min/
     """
 
-  def locale(self, value="en"):
+  def locale(self, value: str = "en") -> JsUtils.jsWrap:
     """  
 
     Related Pages:
@@ -978,9 +959,8 @@ class Moment(JsPackage):
     value = JsUtils.jsConvertData(value, None)
     return JsUtils.jsWrap("%s.locale(%s)" % (self.varId, value))
 
-  def locales(self):
-    """  
-    As of version 2.12.0 it is possible to list all locales that have been loaded and are available to use:
+  def locales(self) -> JsUtils.jsWrap:
+    """ As of version 2.12.0 it is possible to list all locales that have been loaded and are available to use:
 
     Related Pages:
 
@@ -988,23 +968,22 @@ class Moment(JsPackage):
     """
     return JsUtils.jsWrap("%s.locales()" % self.varId)
 
-  def updateLocale(self, category, values):
+  def updateLocale(self, category: str, values: dict) -> JsUtils.jsWrap:
     """  
 
     Related Pages:
 
       https://momentjs.com/docs/#/customization/month-names/
 
-    :param category: String.
-    :param values: Dictionary.
+    :param category:
+    :param values:
     """
     category = JsUtils.jsConvertData(category, None)
     values = JsUtils.jsConvertData(values, None)
     return JsUtils.jsWrap("%s.updateLocale(%s, %s)" % (self.varId, category, values))
 
-  def utc(self, value=None, js_code=None):
-    """  
-    By default, moment parses and displays in local time.
+  def utc(self, value=None, js_code: str = None) -> MomentDate:
+    """ By default, moment parses and displays in local time.
 
     If you want to parse or display a moment in UTC, you can use moment.utc() instead of moment().
 
@@ -1013,7 +992,7 @@ class Moment(JsPackage):
       https://momentjs.com/docs/#/parsing/utc/
 
     :param value:
-    :param js_code: String. Optional. The variable name created in the Javascript.
+    :param js_code: Optional. The variable name created in the Javascript
     """
     if value is None:
       if js_code is not None:
@@ -1027,9 +1006,8 @@ class Moment(JsPackage):
 
     return MomentDate(selector="%s.utc(%s)" % (self.varId, value), set_var=False)
 
-  def months(self):
-    """  
-    Returns the list of months in the current locale.
+  def months(self) -> JsObjects.JsArray.JsArray:
+    """ Returns the list of months in the current locale.
 
     Related Pages:
 
@@ -1037,9 +1015,8 @@ class Moment(JsPackage):
     """
     return JsObjects.JsArray.JsArray.get("%s.months()" % self.varId)
 
-  def weekdays(self, value, index=None):
-    """  
-    Week days names.
+  def weekdays(self, value, index: int = None) -> JsObjects.JsArray.JsArray:
+    """ Week days names.
 
     Related Pages:
 
@@ -1055,9 +1032,8 @@ class Moment(JsPackage):
 
     return JsObjects.JsArray.JsArray.get("%s.weekdays(%s, %s)" % (self.varId, value, index))
 
-  def weekdaysShort(self, value=None, index=None):
-    """  
-    Weekdays abbreviations.
+  def weekdaysShort(self, value=None, index: int = None) -> JsObjects.JsArray.JsArray:
+    """ Weekdays abbreviations.
 
     Related Pages:
 
@@ -1076,9 +1052,8 @@ class Moment(JsPackage):
 
     return JsObjects.JsArray.JsArray.get("%s.weekdaysShort(%s, %s)" % (self.varId, value, index))
 
-  def weekdaysMin(self, value=None, index=None):
-    """  
-    Minimal Weekday Abbreviations.
+  def weekdaysMin(self, value=None, index: int = None) -> JsObjects.JsArray.JsArray:
+    """ Minimal Weekday Abbreviations.
 
     Related Pages:
 
@@ -1097,9 +1072,8 @@ class Moment(JsPackage):
 
     return JsObjects.JsArray.JsArray.get("%s.weekdaysMin(%s, %s)" % (self.varId, value, index))
 
-  def monthsShort(self, value=None, index=None):
-    """  
-    Month abbreviations.
+  def monthsShort(self, value=None, index=None) -> JsObjects.JsArray.JsArray:
+    """ Month abbreviations.
 
     Related Pages:
 

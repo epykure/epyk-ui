@@ -15,11 +15,12 @@ import os
 import json
 import subprocess
 
+# To be added to the tsconfig.json file
+# strictPropertyInitialization: True
+
 
 def app(path: str, name: str = None):
   """
-  Description:
-  ------------
 
   :param str path: The server path
   :param str name: Optional. The application name on the server
@@ -43,126 +44,116 @@ class NGModule:
     self._ang_app_path = ang_app_path
 
   def class_(self, name: str):
-    """  
-    Creates a new generic class definition in the given or default project.
+    """  Creates a new generic class definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#class-command
 
-    :param str name: The name of the interface
+    :param name: The name of the interface
     """
     subprocess.run('ng generate class %s' % name, shell=True, cwd=self._ang_app_path)
 
   def component(self, name: str):
-    """  
-    Creates a new generic component definition in the given or default project.
+    """  Creates a new generic component definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#component-command
 
-    :param str name: The name of the interface
+    :param name: The name of the interface
     """
     subprocess.run('ng generate component %s' % name, shell=True, cwd=self._ang_app_path)
 
   def directive(self, name: str):
-    """  
-    Creates a new generic directive definition in the given or default project.
+    """ Creates a new generic directive definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#directive-command
 
-    :param str name: The name of the interface
+    :param name: The name of the interface
     """
     subprocess.run('ng generate directive %s' % name, shell=True, cwd=self._ang_app_path)
 
   def enum(self, name: str):
-    """  
-    Generates a new, generic enum definition for the given or default project.
+    """ Generates a new, generic enum definition for the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#enum-command
 
-    :param str name: The name of the interface
+    :param name: The name of the interface
     """
     subprocess.run('ng generate enum %s' % name, shell=True, cwd=self._ang_app_path)
 
   def guard(self, name: str):
-    """  
-    Generates a new, generic route guard definition in the given or default project.
+    """ Generates a new, generic route guard definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#guard-command
 
-    :param str name: The name of the new route guard.
+    :param name: The name of the new route guard
     """
     subprocess.run('ng generate guard %s' % name, shell=True, cwd=self._ang_app_path)
 
   def interceptor(self, name: str):
-    """  
-    Creates a new, generic interceptor definition in the given or default project.
+    """ Creates a new, generic interceptor definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#interceptor-command
 
-    :param str name: The name of the interceptor.
+    :param name: The name of the interceptor
     """
     subprocess.run('ng generate interceptor %s' % name, shell=True, cwd=self._ang_app_path)
 
   def interface(self, name: str, type: str):
-    """  
-    Creates a new generic interface definition in the given or default project.
+    """ Creates a new generic interface definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#interface-command
 
-    :param str name: The name of the interface
-    :param str type: Adds a developer-defined type to the filename, in the format "name.type.ts".
+    :param name: The name of the interface
+    :param type: Adds a developer-defined type to the filename, in the format "name.type.ts"
     """
     subprocess.run('ng generate interface %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def library(self, name: str, type: str):
-    """  
-    Creates a new generic library project in the current workspace.
+    """ Creates a new generic library project in the current workspace.
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    :param str name: The name of the interface
-    :param str type:
+    :param name: The name of the interface
+    :param type:
     """
     subprocess.run('ng generate library %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def module(self, name: str, type: str):
-    """  
-    Creates a new generic NgModule definition in the given or default project
+    """ Creates a new generic NgModule definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    :param str name: The name of the interface
-    :param str type:
+    :param name: The name of the interface
+    :param type:
     """
     subprocess.run('ng generate module %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
   def service(self, name: str, type: str):
-    """  
-    Creates a new, generic service definition in the given or default project.
+    """ Creates a new, generic service definition in the given or default project.
 
     Related Pages:
 
       https://angular.io/cli/generate#library-command
 
-    :param str name: The name of the interface
-    :param str type:
+    :param name: The name of the interface
+    :param type:
     """
     subprocess.run('ng generate service %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
 
@@ -172,30 +163,28 @@ class NG:
     self._app_path, self._app_name, self.envs = app_path, app_name, env
 
   def e2e(self, app_name: str = None):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/e2e
 
-    :param str app_name: The application name
+    :param app_name: The application name
     """
     app_name = app_name or self._app_name
     if app_name is None:
-      raise ValueError("An Angular aplication name is required!")
+      raise ValueError("An Angular application name is required!")
 
     subprocess.run('ng e2e %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def lint(self, app_name: str = None):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/lint
 
-    :param str app_name: The application name
+    :param app_name: The application name
     """
     app_name = app_name or self._app_name
     if app_name is None:
@@ -204,15 +193,14 @@ class NG:
     subprocess.run('ng lint %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def new(self, name: str, path: str = None):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/new
 
-    :param str name: The application name
-    :param str path: The server path
+    :param name: The application name
+    :param path: The server path
     """
     if path is not None:
       subprocess.run('ng new %s --directory %s' % (name, path), shell=True, cwd=self._app_path)
@@ -221,26 +209,24 @@ class NG:
     print('ng new %s' % name)
 
   def doc(self, keyword: str):
-    """  
-    Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
+    """ Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
 
     Related Pages:
 
       https://angular.io/cli
 
-    :param str keyword:
+    :param keyword:
     """
     subprocess.run('ng doc %s' % keyword, shell=True, cwd=self._app_path)
 
   def add(self, package: str):
-    """  
-    Add package to the Angular server node modules
+    """ Add package to the Angular server node modules.
 
     Related Pages:
 
       https://angular.io/cli
 
-    :param str package: The package name
+    :param package: The package name
     """
     if self.envs is not None:
       for env in self.envs:
@@ -255,14 +241,13 @@ class NG:
     pass
 
   def help(self, options: dict = None):
-    """  
-    Lists available commands and their short descriptions.
+    """ Lists available commands and their short descriptions.
 
     Related Pages:
 
       https://angular.io/cli
 
-    :param dict options:
+    :param options:
     """
     if options is None:
       subprocess.run('ng help', shell=True, cwd=self._app_path)
@@ -276,7 +261,7 @@ class NG:
 
       https://angular.io/cli
 
-    :param str app_name:
+    :param app_name:
     """
     app_name = app_name or self._app_name
     if app_name is None:
@@ -285,15 +270,14 @@ class NG:
     subprocess.run('ng test %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
   def build(self, app_name: str = None):
-    """  
-    Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed from within
-    a workspace directory.
+    """ Compiles an Angular app into an output directory named dist/ at the given output path. Must be executed
+    from within a workspace directory.
 
     Related Pages:
 
       https://angular.io/cli
 
-    :param str app_name:
+    :param app_name:
     """
     app_name = app_name or self._app_name
     if app_name is None:
@@ -302,33 +286,30 @@ class NG:
     subprocess.run('ng build %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
 
   def version(self):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
     """
     subprocess.run('ng version', shell=True, cwd=os.path.join(self._app_path, self._app_name))
 
   def serve(self, host: str = "localhost", port: int = 8081):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/serve
 
-    :param str host: The server url
-    :param int port: The server port
+    :param host: The server url
+    :param port: The server port
     """
     subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True,
                    cwd=os.path.join(self._app_path, self._app_name))
 
   def npm(self, packages: list):
-    """  
-    This will add the npm requirements to the Angular app but also update directly the angular.json for anything needed
-    at the start of the application.
+    """ This will add the npm requirements to the Angular app but also update directly the angular.json for anything
+    needed at the start of the application.
 
     This is mainly used for generic and common libraries like Jquery and Jquery UI
 
-    :param list packages: The packages names to install
+    :param packages: The packages names to install
     """
     if self.envs is not None:
       for env in self.envs:
@@ -356,21 +337,19 @@ class NG:
 
   @property
   def create(self) -> NGModule:
-    """  
-    Shortcut to the various generate entry points in the Angular Framework
+    """ Shortcut to the various generate entry points in the Angular Framework.
     """
     return NGModule(os.path.join(self._app_path, self._app_name))
 
   def generate(self, schematic: str, name: str):
-    """  
-    Generates and/or modifies files based on a schematic.
+    """ Generates and/or modifies files based on a schematic.
 
     Related Pages:
 
       https://angular.io/cli/generate
 
-    :param str schematic:
-    :param str name:
+    :param schematic:
+    :param name:
     """
     subprocess.run(
       'ng generate %s %s' % (schematic, name), shell=True, cwd=os.path.join(self._app_path, self._app_name))
@@ -399,12 +378,11 @@ class RouteModule:
       self.ngModule = "%s%s" % (self.ngModule, split_content[1])
 
   def add(self, component: str, alias: str, path: str):
-    """  
-    Add an entry to the Angular routing app
+    """ Add an entry to the Angular routing app.
 
-    :param str component: String the Component module name
-    :param str alias: The url shortcut
-    :param str path: The component relative path
+    :param component: String the Component module name
+    :param alias: The url shortcut
+    :param path: The component relative path
     """
     if self.ng_modules is None:
       self.ng_modules = NgModules(self._app_path, self._app_name)
@@ -413,11 +391,10 @@ class RouteModule:
     self.routes[component] = alias
 
   def export(self, file_name=None, target_path: str = None):
-    """  
-    Publish the new Angular routing Application
+    """ Publish the new Angular routing Application.
 
-    :param file_name: String. Optional. The filename
-    :param str target_path: Optional. The new routing file
+    :param file_name: Optional. The filename
+    :param target_path: Optional. The new routing file
     """
     file_name = 'app-routing.module.ts' or self.file_name
     if target_path is None:
@@ -465,16 +442,16 @@ class NgModules:
   def add(self, component: str, path: str):
     """  
 
-    :param str component: The component name
-    :param str path: The component path
+    :param component: The component name
+    :param path: The component path
     """
     self.modules[component] = path
 
   def add_import(self, component: str, path: str):
     """  
 
-    :param str component:
-    :param str path:
+    :param component:
+    :param path:
     """
     self.modules[component] = path
 
@@ -484,8 +461,8 @@ class NgModules:
   def export(self, file_name: str = None, target_path: str = None):
     """  
 
-    :param str file_name: Optional. The filename
-    :param str target_path:
+    :param file_name: Optional. The filename
+    :param target_path:
     """
     file_name = 'app.module.ts' or self.file_name
     if target_path is None:
@@ -516,13 +493,12 @@ class ComponentSpec:
     self.__comp_structure = {}
 
   def export(self, path: str = None, target_path: str = None):
-    """  
-    Export the spec of the component
+    """ Export the spec of the component.
 
     TODO: make this generation more flexible
 
-    :param str path: String.
-    :param str target_path: for example ['src', 'app']
+    :param path:
+    :param target_path: for example ['src', 'app']
     """
     self.__path = path or self.__path
     if target_path is None:
@@ -787,28 +763,26 @@ class App:
 class Angular(node.Node):
 
   def create(self, name: str):
-    """  
-    To create a new project, run:
+    """ To create a new project, run:
 
     Related Pages:
 
       https://cli.vuejs.org/guide/creating-a-project.html
 
-    :param str name: The application name
+    :param name: The application name
     """
     subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
 
   def serve(self, app_name: str, host: str = "localhost", port: int = 8081):
-    """  
-    Builds and serves an Angular app, then runs end-to-end tests using Protractor.
+    """ Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
     Related Pages:
 
       https://angular.io/cli/serve
 
-    :param str app_name:
-    :param str host:
-    :param int port:
+    :param app_name:
+    :param host:
+    :param port:
     """
     path = os.path.join(self._app_path, app_name)
     subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=path)
@@ -820,7 +794,7 @@ class Angular(node.Node):
 
       https://stackoverflow.com/questions/44990030/how-to-add-a-routing-module-to-an-existing-module-in-angular-cli-version-1-1-1
 
-    :param str app_name:
+    :param app_name:
     """
     path = os.path.join(self._app_path, app_name)
     subprocess.run('ng generate module app-routing --module app --flat', shell=True, cwd=path)
@@ -863,23 +837,22 @@ export class AppRoutingModule { }
 
       https://angular.io/cli/
 
-    :param str app_name: The angular application name
+    :param app_name: The angular application name
     """
     app_name = app_name or self._app_name
     return NG(self._app_path, app_name, self.envs)
 
   def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
            target_folder: str = "apps"):
-    """  
-    Create a specific Application as a component in the Angular framework.
+    """ Create a specific Application as a component in the Angular framework.
 
     Unlike a basic component, the application will be routed to be accessed directly.
   
-    :param primitives.PageModel page: A report object
-    :param str selector: The url route for this report in the Angular app
-    :param str name: The component classname in the Angular framework
-    :param bool auto_route:
-    :param bool target_folder:
+    :param page: A report object
+    :param selector: The url route for this report in the Angular app
+    :param name: The component classname in the Angular framework
+    :param auto_route:
+    :param target_folder:
     """
     if name is None:
       script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
@@ -893,13 +866,10 @@ export class AppRoutingModule { }
     return self._page
 
   def ng_modules(self, app_name: str = None, file_name: str = None) -> NgModules:
-    """  
-    Read the file app.module.ts
+    """ Read the file app.module.ts
 
-    :param str app_name: Optional. THe Angular application name
-    :param str file_name:
-
-    :rtype: NgModules
+    :param app_name: Optional. THe Angular application name
+    :param file_name: Optional.
     """
     if self._fmw_modules is None:
       if self._route is not None and self._route.ng_modules is not None:
@@ -909,14 +879,10 @@ export class AppRoutingModule { }
     return self._fmw_modules
 
   def route(self, app_name: str = None, file_name: str = None) -> RouteModule:
-    """  
+    """ Read the file app-routing.module.ts from the Angular app
 
-    Read the file app-routing.module.ts from the Angular app
-
-    :param str app_name: Optional. THe Angular application name
-    :param str file_name: Optional.
-
-    :rtype: RouteModule
+    :param app_name: Optional. THe Angular application name
+    :param file_name: Optional.
     """
     if self._route is None:
       path, name = os.path.split(self._app_path)
@@ -926,8 +892,8 @@ export class AppRoutingModule { }
   def publish(self, app_name: str = None, target_path: list = None):
     """  
 
-    :param str app_name:
-    :param list target_path: List for example ['src', 'app']
+    :param app_name:
+    :param target_path: List for example ['src', 'app']
     """
     if self._page is not None:
       self._page.export(target_path=target_path)
@@ -936,8 +902,7 @@ export class AppRoutingModule { }
       self._route.export()
 
   def home_page(self, page, app_name: str = None, with_router: bool = False):
-    """  
-    Change the Angular App home page
+    """ Change the Angular App home page
 
     :param page:
     :param app_name:

@@ -1090,8 +1090,7 @@ class OptionsLabels(DataAttrs):
 
   @property
   def display(self):
-    """
-    Display the labels.
+    """ Display the labels.
 
     Related Pages:
 
@@ -1105,8 +1104,7 @@ class OptionsLabels(DataAttrs):
 
   @property
   def align(self):
-    """
-    Align property specifies the text horizontal alignment used when drawing the label.
+    """ Align property specifies the text horizontal alignment used when drawing the label.
 
     Related Pages:
 
@@ -1120,8 +1118,7 @@ class OptionsLabels(DataAttrs):
 
   @property
   def color(self):
-    """
-    The label align position.
+    """ The label align position.
 
     Related Pages:
 
@@ -1163,8 +1160,7 @@ class OptionsLabels(DataAttrs):
 
   @property
   def position(self):
-    """
-    The position property specifies the text vertical alignment used when drawing the label.
+    """ The position property specifies the text vertical alignment used when drawing the label.
 
     Related Pages:
 
@@ -1176,11 +1172,26 @@ class OptionsLabels(DataAttrs):
   def position(self, text: str):
     self._attrs["position"] = text
 
-  def formatter(self, labels):
+  def formatter_map(self, labels):
     self.custom("formatter", JsUtils.jsWrap(
       "function(ctx){let treeLabels = %(labels)s; return treeLabels[ctx.dataIndex]}" % {
         "labels": JsUtils.jsConvertData(labels, None)
       }))
+
+  @property
+  def formatter(self):
+    """ Data values are converted to string.
+    If values are grouped, the value of the group and the value (as string) are shown.
+
+    Related Pages:
+
+      https://chartjs-chart-treemap.pages.dev/usage.html#labels
+    """
+    return self._attrs["formatter"]
+
+  @formatter.setter
+  def formatter(self, text: str):
+    self.set_val(text)
 
 
 class Options(DataAttrs):
@@ -2851,7 +2862,9 @@ class DataSetTreeMap(DataSet):
 
   @property
   def labels(self) -> OptionsLabels:
-    """
+    """ The labels options can control if and how a label, to represent the data, can be shown in the rectangle.
+
+    https://chartjs-chart-treemap.pages.dev/usage.html#labels
 
     """
     if self._attrs.get("labels") is None:

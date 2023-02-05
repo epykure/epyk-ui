@@ -121,7 +121,21 @@ class JsBase:
     self.alert = self.window.alert
     self.log = self.console.log
     self._breadcrumb, self.__data, self.__location = None, None, None
-    self.__media_recorder = None
+    self.__media_recorder, self.__accounting = None, None
+
+  @property
+  def accounting(self):
+    """ Shortcut to accounting properties
+
+    Related Pages:
+
+      http://openexchangerates.github.io/accounting.js/
+    """
+    from epyk.core.js.packages import JsAccounting
+
+    if self.__accounting is None:
+      self.__accounting = JsAccounting.Accounting(page=self.page)
+    return self.__accounting
 
   @property
   def viewHeight(self):
@@ -242,8 +256,7 @@ class JsBase:
 
   @property
   def moment(self):
-    """  
-    Parse, validate, manipulate, and display dates and times in JavaScript.
+    """ Parse, validate, manipulate, and display dates and times in JavaScript.
 
     Usage::
 
@@ -255,6 +268,7 @@ class JsBase:
     Related Pages:
 
       https://momentjs.com/
+      https://github.com/you-dont-need/You-Dont-Need-Momentjs
     """
     from epyk.core.js.packages import JsMoment
 

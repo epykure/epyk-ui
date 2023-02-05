@@ -17,8 +17,8 @@ def requirements(page: primitives.PageModel, app_path: str = None):
   Packages can be installed in the app using the command
     > nmp install package1 package2 .....
 
-  :param primitives.PageModel page: Python object. The report object
-  :param str app_path:
+  :param page: Python object. The report object
+  :param app_path:
   """
   npms = []
   import_mng = Imports.ImportManager(page=page)
@@ -44,7 +44,7 @@ def npm_packages(packages: list):
 
   TODO: Fully align the names
 
-  :param list packages: All the packages
+  :param packages: All the packages
   """
   mapped_packages = []
   for p in packages:
@@ -67,16 +67,15 @@ class App:
     self.comps = {}
 
   def require(self, module: str, alias: str = None, launcher: str = ""):
-    """
-    Add external modules to the application
+    """ Add external modules to the application.
 
     Related Pages:
 
       https://www.w3schools.com/nodejs/nodejs_modules.asp
 
-    :param str module: The module name.
-    :param str alias: Optional. The alias name for the JavaScript Variable name
-    :param str launcher: Optional. The JavasCript String to be added to the page just after the imports
+    :param module: The module name
+    :param alias: Optional. The alias name for the JavaScript Variable name
+    :param launcher: Optional. The JavasCript String to be added to the page just after the imports
     """
     self.imports[module] = alias or module
     if launcher:
@@ -84,23 +83,20 @@ class App:
 
   @property
   def name(self):
-    """
-    Return the prefix of the component module (without any extension)
+    """ Return the prefix of the component module (without any extension).
     """
     return self.className
 
   @property
   def path(self):
-    """
-    Return the full path of the component modules
+    """ Return the full path of the component modules.
     """
     return os.path.join("./", self.__path, self.name).replace("\\", "/")
 
   def checkImports(self, app_path: str = None):
-    """
-    Check if the npm modules are defined on the server for the defined application.
+    """ Check if the npm modules are defined on the server for the defined application.
 
-    :param str app_path: Optional. the Path of the NodeJs application
+    :param app_path: Optional. the Path of the NodeJs application
     """
     app_path = app_path or self._app_path
     node_modules = os.path.join(app_path, "node_modules")
@@ -112,11 +108,10 @@ class App:
             logging.warning("Missing module - %s - on the nodeJsServer" % imp)
 
   def export(self, path: str = None, target_path: str = None):
-    """
-    Export the NodeJs application
+    """ Export the NodeJs application.
 
-    :param str path: The NodeJs server path
-    :param str target_path: The folder location on the server. for example ['src', 'app']
+    :param path: The NodeJs server path
+    :param target_path: The folder location on the server. for example ['src', 'app']
     """
     self.__path = path or self.__path
     if target_path is None:
@@ -181,8 +176,7 @@ class Cli(object):
     subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
 
   def react(self):
-    """
-    react.cli is ReactJS command line interface.
+    """ react.cli is ReactJS command line interface.
     Using this cli you can generate modules and components very easily. This cli was created for
     React-Redux-Boilerplate.
     If your project does not have a similar architecture, you can not use this tool.
@@ -199,15 +193,14 @@ class Cli(object):
 
 class Node:
 
-  def __init__(self, app_path: str, name: str = None):
+  def __init__(self, app_path: str, name: str = None, page = None):
     self._app_path, self._app_name = app_path, name
     self._route, self._fmw_modules = None, None
-    self._page, self.envs = None, None
+    self._page, self.envs = page, None
 
   @property
   def clis(self) -> Cli:
-    """
-    All the CLI for the most popular web frameworks
+    """ All the CLI for the most popular web frameworks.
     """
     if self._app_name is not None:
       path = os.path.join(self._app_path, self._app_name)
@@ -216,14 +209,13 @@ class Node:
     return Cli(path, self.envs)
 
   def proxy(self, username: str, password: str, proxy_host: str, proxy_port: int, protocols: list = None):
-    """
-    Set NPM proxy
+    """ Set NPM proxy
 
-    :param str username:
-    :param str password:
-    :param str proxy_host:
-    :param int proxy_port:
-    :param list protocols:
+    :param username:
+    :param password:
+    :param proxy_host:
+    :param proxy_port:
+    :param protocols:
     """
     if self.envs is None:
       self.envs = []
@@ -235,12 +227,11 @@ class Node:
         protocol, username, password, proxy_host, proxy_port))
 
   def npm(self, packages: list):
-    """
-    Use npm install on a package.
+    """ Use npm install on a package.
     Can be done directly on the nodeJs app using the command line:
       npm install package1 package2 .....
 
-    :param list packages: The list of packages to install retrieved from requirements()
+    :param packages: The list of packages to install retrieved from requirements()
     """
     if self.envs is not None:
       for env in self.envs:
@@ -250,18 +241,16 @@ class Node:
     print("%s packages installed" % len(packages))
 
   def ls(self):
-    """
-    Search the registry for packages matching terms
+    """ Search the registry for packages matching terms
     """
     subprocess.run('npm ls', shell=True, cwd=self._app_path)
 
   def launcher(self, app_name: str, target_path: str, port: int = 3000):
-    """
-    Create a single launcher for the application.
+    """ Create a single launcher for the application.
 
-    :param str app_name: String. The deno path (This should contain the deno.exe file)
-    :param str target_path: String. The target path for the views
-    :param int port:
+    :param app_name: String. The deno path (This should contain the deno.exe file)
+    :param target_path: String. The target path for the views
+    :param port:
     """
     out_path = os.path.join(self._app_path, "launchers")
     if not os.path.exists(out_path):
@@ -287,9 +276,9 @@ fs.readFile('./%s/%s.html', function (err, html) {
   def launch(self, app_name: str, target_folder: str = None, port: int = 3000):
     """
 
-    :param str app_name:
-    :param str target_folder:
-    :param int port:
+    :param app_name:
+    :param target_folder:
+    :param port:
     """
     out_path = os.path.join(self._app_path, "launchers")
     router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
@@ -299,11 +288,10 @@ fs.readFile('./%s/%s.html', function (err, html) {
     self.run(name="./launchers/launcher_%s.js" % app_name)
 
   def router(self, target_folder: str, port: int = 3000):
-    """
-    Create a simple router file for your different views on your server.
+    """ Create a simple router file for your different views on your server.
 
-    :param str target_folder: The target path where the views are stored
-    :param int port:
+    :param target_folder: The target path where the views are stored
+    :param port:
     """
     router_path = os.path.join(self._app_path, "server.js")
     with open(router_path, "w") as f:
@@ -324,15 +312,14 @@ http.createServer(function(request, response) {
  ''' % (target_folder, port))
 
   def run(self, name: str, port: int = 3000):
-    """
-    The file you have just created must be initiated by Node.js before any action can take place.
+    """ The file you have just created must be initiated by Node.js before any action can take place.
 
     Related Pages:
 
       https://www.w3schools.com/nodejs/nodejs_get_started.asp
 
-    :param str name: The script name
-    :param int port: The port number for the node server
+    :param name: The script name
+    :param port: The port number for the node server
     """
     print("Node server url: 127.0.0.1:%s" % port)
     subprocess.run('node %s --port %s' % (name, port), shell=True, cwd=self._app_path)
@@ -349,18 +336,17 @@ http.createServer(function(request, response) {
       subprocess.run('node --inspect %s ' % name, shell=True, cwd=self._app_path)
 
   def docs(self, package: str):
-    """
-    Display the README.md / documentation / npmjs.org page of a give library
+    """ Display the README.md / documentation / npmjs.org page of a give library
 
-    :param str package: The package alias
+    :param package: The package alias
     """
     subprocess.run('npm docs %s' % package, shell=True, cwd=self._app_path)
 
   def update(self, packages: list):
-    """
-    Update all the packages listed to the latest version (specified by the tag config). Also install missing packages
+    """ Update all the packages listed to the latest version (specified by the tag config).
+    Also install missing packages
 
-    :param list packages: The list of packages to be installed
+    :param packages: The list of packages to be installed
     """
     if self.envs is not None:
       for env in self.envs:
@@ -369,26 +355,24 @@ http.createServer(function(request, response) {
     print("%s packages updated" % len(packages))
 
   def uninstall(self, packages: list):
-    """
-    Uninstall a package, completely removing everything npm installed on its behalf
+    """ Uninstall a package, completely removing everything npm installed on its behalf.
 
-    :param list packages: The list of packages to be installed
+    :param packages: The list of packages to be installed
     """
     subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self._app_path)
     print("%s packages uninstalled" % len(packages))
 
   def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
            target_folder: str = "views"):
-    """
-    Create a specific Application as a component in the Angular framework.
+    """ Create a specific Application as a component in the Angular framework.
 
     Unlike a basic component, the application will be routed to be accessed directly.
 
-    :param primitives.PageModel page: A report object
-    :param str selector: The url route for this report in the Angular app
-    :param str name: The component classname in the Angular framework
-    :param bool auto_route:
-    :param str target_folder:
+    :param page: A report object
+    :param selector: The url route for this report in the Angular app
+    :param name: The component classname in the Angular framework
+    :param auto_route:
+    :param target_folder:
     """
     if name is None:
       script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
@@ -402,10 +386,9 @@ http.createServer(function(request, response) {
     return self._page
 
   def publish(self, target_folder: str = None):
-    """
-    Publish the Node.js application
+    """ Publish the Node.js application
 
-    :param str target_folder: The target path for the transpiled views
+    :param target_folder: The target path for the transpiled views
     """
     out_path = os.path.join(self._app_path, target_folder or self.target_folder)
     if self._page is not None:
