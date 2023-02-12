@@ -1,5 +1,27 @@
 ## [Unreleased]
 
+## [1.9.28] - 2023-02-12
+
+### Added
+- More doc and type annotation
+- Warning for deprecated modules
+- Remote method for heavy tree components
+- Add .js property for Accounting
+- Add .js property for Moment 
+- New method add_to_import for packages not directly used in components
+
+### Fixed
+- Problem type with js variable definition (js.getVar)
+- Fix migration for ChartJs
+- Add more features for datasets
+- Align compatibility for plugin
+- Fix definition for skillbar components (more options)
+- Bug fix for primitive JsDate
+
+### Changed
+- Update imports modules
+- Update interface for web frameworks (in progress)
+
 ## [1.9.27] - 2023-01-30
 
 ### Added
