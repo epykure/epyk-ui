@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import logging
+
 from typing import List, Optional
 from epyk.core.py import types as etypes
 from epyk.core.html.options import Options
@@ -9,10 +11,15 @@ from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
 # ChartJs extensions
+from epyk.core.html.graph.exts import ChartJsStacked
+from epyk.core.html.graph.exts import ChartJsDragData
+from epyk.core.html.graph.exts import ChartJsHierarchical
+from epyk.core.html.graph.exts import ChartJsDeferred
 from epyk.core.html.graph.exts import ChartJsZoom
 from epyk.core.html.graph.exts import ChartJsDataLabels
 from epyk.core.html.graph.exts import ChartJsCrosshair
 from epyk.core.html.graph.exts import ChartJsAnnotation
+from epyk.core.html.options import OptChartJsDataSets
 
 
 class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
@@ -33,7 +40,7 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     return self
 
   def x_label(self, value: etypes.JS_DATA_TYPES):
-    """   Set the label of the x-axis.
+    """ Set the label of the x-axis.
 
     :param value: The axis label.
     """
@@ -63,7 +70,7 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
     return self
 
   def y_label(self, value: etypes.JS_DATA_TYPES):
-    """   Set the label of the y-axis.
+    """ Set the label of the y-axis.
 
     :param value: The axis label.
     """
@@ -83,7 +90,7 @@ class OptionLabelFont(Options):
 
   @property
   def size(self):
-    """   Change the font-size.
+    """ Change the font-size.
     """
     return self._config_get()
 
@@ -93,7 +100,7 @@ class OptionLabelFont(Options):
 
   @property
   def family(self):
-    """   Change the font family.
+    """ Change the font family.
 
     Related Pages:
 
@@ -107,7 +114,7 @@ class OptionLabelFont(Options):
 
   @property
   def weight(self):
-    """   Change the font weight.
+    """ Change the font weight.
 
     Related Pages:
 
@@ -121,7 +128,7 @@ class OptionLabelFont(Options):
 
   @property
   def style(self):
-    """   Change the CSS font style property.
+    """ Change the CSS font style property.
 
     Related Pages:
 
@@ -137,7 +144,7 @@ class OptionLabelFont(Options):
 class OptionAxesTicksMajor(Options):
   @property
   def fontColor(self):
-    """   Change the font color.
+    """ Change the font color.
 
     Related Pages:
 
@@ -154,7 +161,7 @@ class OptionAxesTicks(Options):
 
   @property
   def color(self):
-    """   Change the font color.
+    """ Change the font color.
 
     Related Pages:
 
@@ -168,7 +175,7 @@ class OptionAxesTicks(Options):
 
   @property
   def fontColor(self):
-    """   Change the font color.
+    """ Change the font color.
 
     Related Pages:
 
@@ -182,7 +189,7 @@ class OptionAxesTicks(Options):
 
   @property
   def textStrokeColor(self):
-    """   Change the font color.
+    """ Change the font color.
 
     Related Pages:
 
@@ -196,7 +203,7 @@ class OptionAxesTicks(Options):
 
   @property
   def backdropColor(self):
-    """   Change the font color.
+    """ Change the font color.
 
     Related Pages:
 
@@ -210,7 +217,7 @@ class OptionAxesTicks(Options):
 
   @property
   def fontSize(self):
-    """
+    """ Change the labels CSS font size.
 
     Related Pages:
 
@@ -1805,34 +1812,78 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-datalabels')
   def datalabels(self) -> ChartJsDataLabels.Datalabels:
-    """   Display labels on data for any type of charts.
+    """ Display labels on data for any type of charts.
 
     Related Pages:
 
       https://chartjs-plugin-datalabels.netlify.app/
+      https://github.com/chartjs/chartjs-plugin-datalabels
     """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if prev_version[0]:
+      self.page.imports.pkgs.chart_js_extensions.annotation.version = "0.7.0"
+    self.page.properties.js.add_constructor("ChartJsDatalabels", "Chart.register(ChartDataLabels)")
     return self._config_sub_data("datalabels", ChartJsDataLabels.Datalabels)
+
+  @property
+  @packageImport('chartjs-plugin-deferred')
+  def deferred(self) -> ChartJsDeferred.Deferred:
+    """ Chart.js plugin to defer initial chart updates until the user scrolls and the canvas appears inside the
+    viewport, and thus trigger the initial chart animations when the user is likely to see them.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+      https://chartjs-plugin-deferred.netlify.app/guide/
+    """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if prev_version[0]:
+      self.page.imports.pkgs.chart_js_extensions.annotation.version = "1.0.2"
+    self.page.properties.js.add_constructor("ChartJsDeferred", "Chart.register(ChartDeferred)")
+    return self._config_sub_data("deferred", ChartJsDeferred.Deferred)
+
+  @property
+  @packageImport('')
+  def hierarchical(self) -> ChartJsHierarchical.Hierarchical:
+    """ Adds hierarchical scales that can be collapsed, expanded, and focused
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+      https://github.com/sgratzl/chartjs-plugin-hierarchical
+    """
+    self.page.properties.js.add_constructor("ChartJsHierarchical", "Chart.register(HierarchicalScale)")
+    return self._config_sub_data("hierarchical", ChartJsHierarchical.Hierarchical)
 
   @property
   @packageImport('chartjs-plugin-zoom')
   def zoom(self) -> ChartJsZoom.Zoom:
-    """   A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
+    """ A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
 
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/awesome
+      https://www.chartjs.org/chartjs-plugin-zoom/latest/
     """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if prev_version[0]:
+      self.page.imports.pkgs.chart_js_extensions.annotation.version = "0.7.7"
     return self._config_sub_data("zoom", ChartJsZoom.Zoom)
 
   @property
   @packageImport('chartjs-plugin-crosshair')
   def crosshair(self) -> ChartJsCrosshair.Crosshair:
-    """   
+    """ Adds a data crosshair to line and scatter charts
 
     Related Pages:
 
       https://github.com/chartjs/chartjs-plugin-zoom
+      https://github.com/chartjs/awesome#charts
     """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.4.0", included=False)
+    if not prev_version[0]:
+      logging.warning("Chartjs plugin - crosshair - might not work well with this version of Python")
     return self._config_sub_data("crosshair", ChartJsCrosshair.Crosshair)
 
   @property
@@ -1848,9 +1899,52 @@ class OptionChartJsPlugins(Options):
 
     Related Pages:
 
-      https://github.com/chartjs/chartjs-plugin-zoom
+      https://www.chartjs.org/chartjs-plugin-annotation/latest/
     """
+    prev_version = until_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if prev_version[0]:
+      self.page.imports.pkgs.chart_js_extensions.annotation.version = "0.5.7"
+    else:
+      prev_version = until_version(self.page.imports.pkgs.chart_js.version, "3.6.2", included=True)
+      if prev_version[0]:
+        self.page.imports.pkgs.chart_js_extensions.annotation.version = "1.4.0"
+      else:
+        self.page.properties.js.add_constructor("ChartJsHierarchical", "Chart.register(annotationPlugin)")
     return self._config_sub_data("annotation", ChartJsAnnotation.Annotation)
+
+  @property
+  @packageImport('chartjs-plugin-stacked100')
+  def stacked100(self) -> Optional[ChartJsStacked.Stacked100]:
+    """ This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+    #TODO add check on the chart types.
+
+    Related Pages:
+
+      https://github.com/y-takey/chartjs-plugin-stacked100
+    """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if not prev_version[0]:
+      logging.warning("Chartjs plugin - stacked100 - Not compatible")
+      return None
+
+    self.page.properties.js.add_constructor("ChartJsStacked100", "Chart.register(ChartjsPluginStacked100.default)")
+    return self._config_sub_data("stacked100", ChartJsStacked.Stacked100)
+
+  @property
+  @packageImport('chartjs-plugin-dragdata')
+  def dragdata(self) -> Optional[ChartJsDragData.DragData]:
+    """ This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+
+    Related Pages:
+
+      https://github.com/chrispahm/chartjs-plugin-dragdata
+    """
+    prev_version = from_version(self.page.imports.pkgs.chart_js.version, "3.0.0", included=False)
+    if not prev_version[0]:
+      logging.warning("Chartjs plugin - dragData - Not compatible")
+      return None
+
+    return self._config_sub_data("dragData", ChartJsDragData.DragData)
 
   @property
   def chartAreaBorder(self) -> OptionChartAreaBorder:
@@ -2012,6 +2106,19 @@ class OptionsBar(ChartJsOptions):
     self.scales.x_axes().stacked = val
     self.scales.y_axis().stacked = val
 
+  @property
+  def datasets(self) -> OptChartJsDataSets.Bar:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Bar(self.component, page=self.page)
+
+
+class OptionsRadar(ChartJsOptions):
+
+  @property
+  def datasets(self) -> OptChartJsDataSets.Radar:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Radar(self.component, page=self.page)
+
 
 class OptionsPie(ChartJsOptions):
 
@@ -2068,6 +2175,19 @@ class OptionsPie(ChartJsOptions):
     """  
     """
     return self._config_sub_data("animation", OptionPieAnimation)
+
+  @property
+  def datasets(self) -> OptChartJsDataSets.Pie:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Pie(self.component, page=self.page)
+
+
+class OptionsBubble(ChartJsOptions):
+
+  @property
+  def datasets(self) -> OptChartJsDataSets.Bubble:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Bubble(self.component, page=self.page)
 
 
 class OptionsLine(ChartJsOptions):
@@ -2255,6 +2375,11 @@ class OptionsLine(ChartJsOptions):
     """
     return self._config_sub_data("elements", OptionElementsLine)
 
+  @property
+  def datasets(self) -> OptChartJsDataSets.Line:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Line(self.component, page=self.page)
+
 
 class OptionsPolar(ChartJsOptions):
 
@@ -2279,6 +2404,11 @@ class OptionsPolar(ChartJsOptions):
     """  
     """
     return self._config_sub_data("animation", OptionPieAnimation)
+
+  @property
+  def datasets(self) -> OptChartJsDataSets.Polar:
+    """ Common datasets configuration for all series """
+    return OptChartJsDataSets.Polar(self.component, page=self.page)
 
 
 class OptionChartJsTooltipsCallbacks(Options):

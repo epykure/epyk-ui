@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 from epyk.core import html
+from epyk.core.py import types as etypes
 from epyk.core.data import tree as data_tree
 from epyk.interfaces import Arguments
 
@@ -12,9 +13,10 @@ class Trees:
   def __init__(self, ui):
     self.page = ui.page
 
-  def tree(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
-           html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
+  def tree(self, data: List[dict] = None, width: etypes.SIZE_TYPE = (100, "%"), height: etypes.SIZE_TYPE = (None, 'px'),
+           html_code: str = None, helper: str = None, options: etypes.OPTION_TYPE = None,
+           profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.Tree:
+    """ Addd a tree / hierarchy component to the page.
 
     Usage::
 
@@ -43,13 +45,13 @@ class Trees:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/tree.py
  
-    :param data:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
+    :param data: Optional. The records
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -57,8 +59,11 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def inputs(self, data=None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
-             html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def inputs(
+    self, data: List[dict] = None,
+    width: etypes.SIZE_TYPE = (100, "%"), height: etypes.SIZE_TYPE = (None, 'px'),
+    html_code: str = None, helper: str = None, options: etypes.OPTION_TYPE = None,
+    profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.TreeInput:
     """
 
     Usage::
@@ -67,13 +72,13 @@ class Trees:
 
       - :class:`epyk.core.html.HtmlTrees.TreeInput`
  
-    :param data:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
+    :param data: Optional. The records
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -82,8 +87,8 @@ class Trees:
     html.Html.set_component_skin(html_tree)
     return html_tree
 
-  def menu(self, component:  html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'),
-           update_funcs=None, options: dict = None, profile: Union[bool, dict] = None):
+  def menu(self, component: html.HtmlTrees.Tree, title: Union[str, dict] = None, add: bool = False, height=(18, 'px'),
+           update_funcs=None, options: etypes.OPTION_TYPE = None, profile: etypes.PROFILE_TYPE = None):
     commands = [
       ("", "fas fa-compress-arrows-alt", "Compress", 15),
       ("", "fas fa-expand-arrows-alt", "Expand", 15),
@@ -97,7 +102,8 @@ class Trees:
         if isinstance(icon, tuple):
           icon = icon[0]
         r = self.page.ui.icons.awesome(
-          icon, align="center", tooltip=tooltip, text=typ, height=height, width=(size, 'px'), options=options, profile=profile)
+          icon, align="center", tooltip=tooltip, text=typ, height=height, width=(size, 'px'),
+          options=options, profile=profile)
         r.span.style.css.line_height = r.style.css.height
         r.icon.style.css.font_factor(-4)
         r.style.css.font_factor(-3)
@@ -145,9 +151,9 @@ class Trees:
     html.Html.set_component_skin(container)
     return container
 
-  def dropdown(self, record=None, text: str = "", width: Union[tuple, int] = (100, "%"),
-               height: Union[tuple, int] = (None, 'px'), html_code: str = None, helper: str = None,
-               options: dict = None, profile: Union[dict, bool] = None):
+  def dropdown(self, record: List[dict] = None, text: str = "", width: etypes.SIZE_TYPE = (100, "%"),
+               height: etypes.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
+               options: etypes.OPTION_TYPE = None, profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.DropDown:
     """
 
     Usage::
@@ -166,14 +172,14 @@ class Trees:
       https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_hover
       https://codepen.io/antoniputra/pen/BzyWmb
  
-    :param record:
-    :param text:
-    :param width:
-    :param height:
-    :param html_code:
-    :param helper:
-    :param options:
-    :param profile:
+    :param record: Optional. The records
+    :param text: Optional. Dropdown label
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -184,8 +190,19 @@ class Trees:
     html.Html.set_component_skin(html_d)
     return html_d
 
-  def folder(self, folder: str = None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, 'px'),
-             html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = None):
+  def folder(self, folder: str = None, width: etypes.SIZE_TYPE = (100, "%"), height: etypes.SIZE_TYPE = (None, 'px'),
+             html_code: str = None, helper: str = None, options: etypes.OPTION_TYPE = None,
+             profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.Tree:
+    """ Add a tree component from a folder structure.
+
+    :param folder: The path to be displayed
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    """
     options = options or {}
     if folder is not None:
       data = data_tree.folders(

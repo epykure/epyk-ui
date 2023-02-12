@@ -711,3 +711,94 @@ if (item){
         treemap_chart.datasets[-1].labels.formatter(data['labels'])
         treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
     return treemap_chart
+
+  def sankey(self, record: list = None, from_axis: str = None, to_axis: str = None, profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+             options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartSankey:
+    raise NotImplementedError()
+
+  def venn(self):
+    raise NotImplementedError()
+
+  def matrix(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+             options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartMatrix:
+    """ Display a matrix chart from ChartJs.
+
+    :tags:
+    :categories:
+
+    Usage::
+
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-matrix
+      https://chartjs-chart-matrix.pages.dev/
+
+    :param record: Optional. The list of dictionaries with the input data
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    data = self.page.data.chartJs.y(record, y_columns, x_axis)
+    matrix_chart = graph.GraphChartJs.ChartMatrix(self.page, width, height, html_code, options, profile)
+    matrix_chart.options.scales.x.display = False
+    matrix_chart.options.scales.x.offset = False
+    matrix_chart.options.scales.x.min = 0.5
+    matrix_chart.options.scales.x.max = 0.5
+    matrix_chart.options.scales.y.display = False
+    matrix_chart.options.scales.y.offset = False
+    matrix_chart.options.scales.y.min = 0.5
+    matrix_chart.options.scales.y.max = 0.5
+    matrix_chart.colors(self.page.theme.charts)
+    matrix_chart.labels(data['labels'])
+    matrix_chart.options.scales.y_axis().display = False
+    for i, d in enumerate(data['datasets']):
+      matrix_chart.add_dataset(d["data"], d['label'])
+    return matrix_chart
+
+  def wordcloud(self, record: list = None, y_columns: list = None, x_axis: str = None,
+                profile: types.PROFILE_TYPE = None,
+                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartWordCloud:
+    """ Chart.js module for charting word or tag clouds. Adding new chart type: wordCloud.
+
+    :tags:
+    :categories:
+
+    Usage::
+
+    Related Pages:
+
+      https://github.com/sgratzl/chartjs-chart-wordcloud
+
+    :param record: Optional. The list of dictionaries with the input data
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    options = options or {}
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
+    data = self.page.data.chartJs.y(record, y_columns, x_axis)
+    wc_chart = graph.GraphChartJs.ChartWordCloud(self.page, width, height, html_code, options, profile)
+    wc_chart.colors(self.page.theme.charts)
+    wc_chart.labels(data['labels'])
+    wc_chart.options.scales.y_axis().display = False
+    for i, d in enumerate(data['datasets']):
+      wc_chart.add_dataset(d["data"], d['label'])
+    return wc_chart
+

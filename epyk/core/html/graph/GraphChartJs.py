@@ -233,11 +233,12 @@ class Chart(Html.Html):
 
   @property
   def plugins(self):
-    """   Shortcut property to all the external plugins defined in the framework.
+    """ Shortcut property to all the external plugins defined in the framework.
 
     Related Pages:
 
       https://www.chartjs.org/docs/2.7.2/notes/extensions.html
+      https://github.com/chartjs/awesome#charts
     """
     return self.options.plugins
 
@@ -257,7 +258,7 @@ class Chart(Html.Html):
     return self.options
 
   def labels(self, labels: list):
-    """   Set the labels of the different series in the chart.
+    """ Set the labels of the different series in the chart.
 
     Usage::
 
@@ -271,7 +272,7 @@ class Chart(Html.Html):
     return self
 
   def label(self, i: int, name: str):
-    """   Change the series name.
+    """ Change the series name.
 
     Usage::
 
@@ -464,7 +465,7 @@ class Chart(Html.Html):
     return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
-  def loading(self, status: bool = True):
+  def loading(self, status: bool = True, loading: str = "Loading....", z_index: int = 500):
     """ Loading component on a chart.
 
     Usage::
@@ -474,21 +475,22 @@ class Chart(Html.Html):
         chart_obj.loading(False)
 
     :param status: Optional. Specific the status of the display of the loading component
+    :param loading: Optional.
+    :param z_index: Optional. Specifies the stack order of an element
     """
     if status:
       return ''' 
 if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
   var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
-  divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; 
-  divLoading.style.background = '%(background)s';
+  divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
   divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
-  divLoading.style.zIndex = 200;
-  divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
-  divLoading.style.paddingTop = '30vh';
-  divLoading.innerHTML = "<div style='font-size:%(size)s'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+  divLoading.style.zIndex = %(z_index)s; divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
+  divLoading.style.paddingTop = '40%%';
+  divLoading.innerHTML = "<div style='font-size:%(size)s'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>%(label)s</div>";
   document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
 }''' % {"htmlId": self.htmlCode, 'size': self.page.body.style.globals.font.normal(-1),
-        'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0]}
+        'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
+        'label': loading, "z_index": z_index}
 
     return '''
       if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
@@ -693,6 +695,7 @@ class ChartLine(Chart):
 
 class ChartBubble(Chart):
   _chart__type = 'bubble'
+  _option_cls = OptChartJs.OptionsBubble
 
   def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
     """ Add a new series to the chart datasets.
@@ -1049,6 +1052,7 @@ class ChartPie(Chart):
 
 class ChartRadar(Chart):
   _chart__type = 'radar'
+  _option_cls = OptChartJs.OptionsRadar
 
   def new_dataset(self, index: int, data, label: str, colors: List[str] = None, opacity: float = None,
                   kind: str = None, **kwargs) -> JsChartJs.DataSetRadar:
@@ -1288,6 +1292,95 @@ if (item){
         }
       })
     }; return result'''
+
+
+class ChartMatrix(Chart):
+  requirements = ('chart.js', 'chartjs-chart-matrix')
+  _chart__type = 'matrix'
+
+  def new_dataset(self, index: int, data, label: str = "", colors: List[str] = None, opacity: float = None,
+                  kind: str = None, **kwargs) -> JsChartJs.DataSetPie:
+    """
+
+    Usage::
+
+    :param index:
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    :param kind: Optional. THe series type. Default to the chart type if not supplied
+    """
+    data = JsChartJs.DataSetPie(self.page, attrs={"data": data})
+    if colors is None:
+      data.set_style(
+        background_colors=self.options.background_colors,
+        fill_opacity=opacity or self.options.opacity, border_width=1,
+        border_colors=self.options.colors)
+    for k, v in kwargs.items():
+      if hasattr(data, k):
+        setattr(data, k, v)
+      else:
+        data._attrs[k] = v
+    return data
+
+  def add_dataset(self, data, label: str = "", colors: List[str] = None,
+                  opacity: float = None, **kwargs) -> JsChartJs.DataSetPie:
+    """
+
+    Usage::
+
+    :param data: The list of points (float)
+    :param label: Optional. The series label (visible in the legend)
+    :param colors: Optional. The color for this series. Default the global definition
+    :param opacity: Optional. The opacity factory from 0 to 1
+    """
+    data = self.new_dataset(len(self._datasets), data, label, colors=colors, opacity=opacity, **kwargs)
+    self._datasets.append(data)
+    return data
+
+  _js__builder__ = '''
+        if(data.python){
+          result = {datasets: [], labels: data.series};
+          data.datasets.forEach(function(dataset, i){
+            if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
+            if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
+            if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
+            result.datasets.push(dataset) })
+        } else {
+          var temp = {}; var labels = [];
+          options.y_columns.forEach(function(series){temp[series] = []});
+          data.forEach(function(rec){ 
+            options.y_columns.forEach(function(name){
+              if(rec[options.x_axis] !== undefined){
+                labels.push(rec[options.x_axis]);
+                temp[name].push({y: rec[name], x: rec[options.x_axis]})}})});
+          result = {datasets: [], labels: labels};
+          options.y_columns.forEach(function(series, i){
+            dataSet = {label: series, type: options.type, data: [], backgroundColor: options.colors[i]};
+            if(typeof options.commons !== 'undefined'){
+              for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
+            labels.forEach(function(x, i){dataSet.data = temp[series]}); 
+            if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
+                dataSet = Object.assign(dataSet, options.datasets[series])}
+          result.datasets.push(dataSet)});
+          if (typeof options.labels !== "undefined"){ result.labels = options.labels} 
+        }; console.log(result); return result'''
+
+
+class ChartSankey(Chart):
+  requirements = ('chart.js', 'chartjs-chart-sankey')
+  _chart__type = 'sankey'
+
+
+class ChartWordCloud(ChartPolar):
+  requirements = ('chart.js', 'chartjs-chart-wordcloud')
+  _chart__type = 'wordCloud'
+
+
+class ChartVenn(Chart):
+  requirements = ('chart.js', 'chartjs-chart-venn')
+  _chart__type = 'venn'
 
 
 class ChartExts(ChartPie):

@@ -1239,6 +1239,51 @@ JS_IMPORTS = {
     'modules': [
       {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
+  # ChartJs stacked100 plugin modules width CDN links
+  'chartjs-plugin-stacked100': {
+    'website': 'https://github.com/y-takey/chartjs-plugin-stacked100',
+    'version': '1.3.0',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'index.min.js', 'path': 'chartjs-plugin-stacked100@%(version)s/build/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # ChartJs Matrix plugin modules width CDN links
+  'chartjs-chart-matrix': {
+    'website': 'https://github.com/kurkle/chartjs-chart-matrix',
+    'version': '2.0.1',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'chartjs-chart-matrix.min.js', 'path': 'chartjs-chart-matrix@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # ChartJs Sankey plugin modules width CDN links
+  'chartjs-chart-sankey': {
+    'website': 'https://github.com/kurkle/chartjs-chart-sankey',
+    'version': '0.12.0',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'chartjs-chart-sankey.min.js', 'path': 'chartjs-chart-sankey@%(version)s/dist/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # ChartJs WordCloud plugin modules width CDN links
+  'chartjs-chart-wordcloud': {
+    'website': 'https://github.com/sgratzl/chartjs-chart-wordcloud',
+    'version': '4.1.1',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'index.umd.min.js', 'path': 'chartjs-chart-wordcloud@%(version)s/build/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
+  # ChartJs Venn plugin modules width CDN links
+  'chartjs-chart-venn': {
+    'website': 'https://github.com/kurkle/chartjs-chart-sankey',
+    'version': '4.1.1',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'index.umd.min.js', 'path': 'chartjs-chart-venn@%(version)s/build/',
+       'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
+
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-dragdata': {
     'website': 'https://www.chartjs.org/',
@@ -1260,15 +1305,24 @@ JS_IMPORTS = {
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-annotation': {
     'website': 'https://www.chartjs.org/',
-    'version': '0.5.7',
+    'version': '2.1.2',
     'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-annotation.min.js', 'path': 'chartjs-plugin-annotation/%(version)s/',
        'cdnjs': CDNJS_REPO}]},
 
+  # ChartJs deferred plugin modules width CDN links
+  'chartjs-plugin-deferred': {
+    'version': '2.0.0',
+    'website': 'https://chartjs-plugin-deferred.netlify.app/guide/',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'chartjs-plugin-deferred.min.js', 'path': 'chartjs-plugin-deferred@%(version)s/dist/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+
   # ChartJs datalabels plugin modules width CDN links
   'chartjs-plugin-datalabels': {
-    'version': '0.7.0',
+    'version': '2.2.0',
     'website': 'https://chartjs-plugin-datalabels.netlify.app/',
     'req': [{'alias': 'chart.js'}],
     'modules': [
@@ -1287,16 +1341,16 @@ JS_IMPORTS = {
 
   # ChartJs Crosshair plugin modules width CDN links
   'chartjs-plugin-crosshair': {
-    'version': '1.1.6',
+    'version': '1.2.0',
     'website': 'https://www.chartjs.org/',
     'req': [{'alias': 'chart.js'}],
     'modules': [
-      {'script': 'chartjs-plugin-crosshair.js', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
+      {'script': 'chartjs-plugin-crosshair.min.js', 'path': '', 'cdnjs': "https://chartjs-plugin-crosshair.netlify.app/"}]},
 
   # ChartJs Zoom plugin modules width CDN links
   'chartjs-plugin-zoom': {
     'website': 'https://www.chartjs.org/',
-    'version': '0.7.7',
+    'version': '2.0.0',
     'req': [{'alias': 'chart.js'}, {"alias": 'hammer'}],
     'modules': [
       {'script': 'chartjs-plugin-zoom.min.js', 'path': 'chartjs-plugin-zoom/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -2829,9 +2883,140 @@ class ImportPackagesChartJsExts:
 
   @property
   def treemap(self) -> ImportModule:
-    """
+    """ Adds treemap chart type.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
     """
     return self.get("chartjs-chart-treemap")
+
+  @property
+  def annotation(self) -> ImportModule:
+    """ Draws lines and boxes on the chart area.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-annotation")
+
+  @property
+  def datalabels(self) -> ImportModule:
+    """ Displays labels on data for any type of charts.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-datalabels")
+
+  @property
+  def deferred(self) -> ImportModule:
+    """ Defers initial chart update until chart scrolls into viewport.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-deferred")
+
+  @property
+  def zoom(self) -> ImportModule:
+    """ Enables zooming and panning on charts.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-zoom")
+
+  @property
+  def crosshair(self) -> ImportModule:
+    """ Adds a data crosshair to line and scatter charts.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-crosshair")
+
+  @property
+  def stacked100(self) -> ImportModule:
+    """ This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-stacked100")
+
+  @property
+  def matrix(self) -> ImportModule:
+    """ Adds matrix chart type.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-chart-matrix")
+
+  @property
+  def sankey(self) -> ImportModule:
+    """ Adds sankey diagram chart type.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-chart-sankey")
+
+  @property
+  def wordcloud(self) -> ImportModule:
+    """ Adds word-cloud chart type.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-chart-wordcloud")
+
+  @property
+  def venn(self) -> ImportModule:
+    """ Adds venn and euler chart type.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-chart-venn")
+
+  @property
+  def dragdata(self) -> ImportModule:
+    """ Lets users drag data points on the chart.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-plugin-dragdata")
+
+  @property
+  def geo(self) -> ImportModule:
+    """ Adds geographic map chart types such as choropleth and bubble map.
+
+    Related Pages:
+
+      https://github.com/chartjs/awesome#charts
+    """
+    return self.get("chartjs-chart-geo")
+
+
+  @property
+  def labels(self) -> ImportModule:
+    """
+    """
+    return self.get("chartjs-plugin-labels")
 
 
 class ImportPackagesTabulatorExts:

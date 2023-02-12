@@ -1817,8 +1817,8 @@ class Body(Html):
       ...
       page.body.loading(False)
 
-    :param status: Optional. A flag to specify the status of the loading event.
-    :param z_index: Optional. Specifies the stack order of an element.
+    :param status: Optional. A flag to specify the status of the loading event
+    :param z_index: Optional. Specifies the stack order of an element
     :param label: Optional.
     :param component: Optional.
     :param attrs: Optional.

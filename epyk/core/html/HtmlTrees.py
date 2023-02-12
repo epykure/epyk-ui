@@ -1,14 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, List, Tuple
 from epyk.core.py import primitives
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
 
 from epyk.core.js.html import JsHtmlTree
-
+from epyk.core.js import JsUtils
 from epyk.core.html.options import OptTrees
 
 from epyk.core.css.styles import GrpClsList
@@ -90,7 +90,9 @@ class Tree(Html.Html):
           var icon = document.createElement("i"); 
           icon.setAttribute("name", "item_arrow");
           for(const attr in options.icon_style){icon.style[attr] = options.icon_style[attr]};
-          icon.onclick = function(){ 
+          icon.onclick = function(){
+            if (((typeof options.remote !== "undefined") && ul.children.length == 0) || (options.remoteAlways)){
+              options.remote(ul, options)}
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
             if(ulDisplay == 'none'){ 
               this.parentNode.querySelector('ul').style.display = 'block';
@@ -159,6 +161,53 @@ class Tree(Html.Html):
         }
       })'''
 
+  def remote(
+    self, method: str, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
+    js_code: str = "treeRemoveRest", is_json: bool = True,
+    components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
+    profile: Optional[Union[dict, bool]] = None,
+    headers: Optional[dict] = None,
+    stringify: bool = True,
+    js_func_name: str = None,
+    always: bool = False
+  ):
+    """ Get data from a remote service and update the tree.
+
+    :param url: The url path of the HTTP request
+    :param method: The REST method used
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param stringify: Optional. Stringify the request data for json exchange
+    :param js_func_name: Optional. The post process for the data returned by the remote service
+    :param always: Optional. If true force the tree to always call the remote server
+    """
+    if data is None:
+      data = {"path": self.dom.current_path()}
+    else:
+      data["path"] = self.dom.current_path()
+    self.options._config(always, "remoteAlways")
+    if js_func_name is not None:
+      self.options._config(JsUtils.jsWrap("function(ul, options){%s; %s}" % (
+        self.page.js.rest(
+          method, url, js_code=js_code, is_json=is_json, components=components, data=data,
+          profile=profile, headers=headers, stringify=stringify
+        ).onSuccess([
+          JsUtils.jsWrap("options.builder(ul, %s(data), options)" % js_func_name)
+        ]).toStr(), js_code)), "remote")
+    else:
+      self.options._config(JsUtils.jsWrap("function(ul, options){%s; %s}" % (
+        self.page.js.rest(
+          method, url, js_code=js_code, is_json=is_json, components=components, data=data,
+          profile=profile, headers=headers, stringify=stringify
+        ).onSuccess([
+          JsUtils.jsWrap("options.builder(ul, data, options)")
+        ]).toStr(), js_code)), "remote")
+    return self
+
   def click_node(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
     """   
 
@@ -180,11 +229,13 @@ class Tree(Html.Html):
     self.options.click_leaf(js_funcs, profile)
     return self
 
-  def loading(self, status: bool = True, color: str = None):
+  def loading(self, status: bool = True, color: str = None, loading: str = "Loading....", z_index: int = 500):
     """
 
     :param status:
     :param color:
+    :param loading:
+    :param z_index:
     """
     self.require.add(self.page.icons.get(None)["icon_family"])
     if status:
@@ -195,12 +246,12 @@ class Tree(Html.Html):
           divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
           divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
           divLoading.style.display = 'flex'; divLoading.style.flexDirectio = 'column'; divLoading.style.justifyContent = 'center';
-          divLoading.style.zIndex = 200; divLoading.style.alignItems = 'center';
+          divLoading.style.zIndex = %(z_index)s; divLoading.style.alignItems = 'center';
           divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
-          divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
+          divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>%(label)s</div>";
           document.getElementById('%(htmlId)s').appendChild(divLoading)
         } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success.base,
-                 'background': self.page.theme.greys[0],
+                 'background': self.page.theme.greys[0], 'label': loading, "z_index": z_index,
                  "size": self.page.body.style.globals.font.size + 5}
 
     return '''

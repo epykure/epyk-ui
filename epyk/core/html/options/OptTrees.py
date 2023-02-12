@@ -1,6 +1,7 @@
 
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
+from epyk.core.py import types as etypes
 
 
 class OptionsTree(Options):
@@ -20,10 +21,9 @@ class OptionsTree(Options):
 
   @property
   def icon_open(self):
-    """
-    Set the icon when the node is open.
+    """ Set the icon when the node is open.
  
-    :prop icon: String. The icon reference from font-awesome.
+    :prop icon: The icon reference from font-awesome
     """
     return self._config_get("fas fa-folder-open")
 
@@ -33,10 +33,9 @@ class OptionsTree(Options):
 
   @property
   def icon_close(self):
-    """
-    Set the icon when the node is closed.
+    """ Set the icon when the node is closed.
  
-    :prop icon: String. The icon reference from font-awesome.
+    :prop icon: The icon reference from font-awesome
     """
     return self._config_get("fas fa-folder")
 
@@ -46,10 +45,9 @@ class OptionsTree(Options):
 
   @property
   def icon_style(self):
-    """
-    Set the CSS attributes to each node and leaf in the tree.
+    """ Set the CSS attributes to each node and leaf in the tree.
  
-    :prop css: Dictionary. The CSS Style to be used.
+    :prop css: The CSS Style to be used
     """
     return self._config_get({"margin-right": "5px"})
 
@@ -61,10 +59,9 @@ class OptionsTree(Options):
 
   @property
   def expanded(self):
-    """
-    Flag to set the initial state of the tree.
+    """ Flag to set the initial state of the tree.
  
-    :prop flag: Boolean. A flag to specify the state of the tree.
+    :prop flag: A flag to specify the state of the tree
     """
     return self._config_get(True)
 
@@ -74,10 +71,9 @@ class OptionsTree(Options):
 
   @property
   def style(self):
-    """
-    Set the CSS attributes to each node and leaf in the tree.
+    """ Set the CSS attributes to each node and leaf in the tree.
  
-    :prop css: Dictionary. The CSS Style to be used.
+    :prop css: The CSS Style to be used
     """
     return self._config_get({})
 
@@ -87,10 +83,9 @@ class OptionsTree(Options):
 
   @property
   def with_badge(self):
-    """
-    Display a badge with the count of leaves in the tree for a given node.
+    """ Display a badge with the count of leaves in the tree for a given node.
  
-    :prop flag: Boolean. A flag to specify if the badge with the count of leaves is visible.
+    :prop flag: A flag to specify if the badge with the count of leaves is visible
     """
     return self._config_get(False)
 
@@ -102,7 +97,7 @@ class OptionsTree(Options):
   def with_icon(self):
     """
  
-    :prop key: The key in the data used to display an icon.
+    :prop key: The key in the data used to display an icon
     """
     return self._config_get(None)
 
@@ -114,7 +109,7 @@ class OptionsTree(Options):
   def filter_on(self):
     """
  
-    :prop str key: The sub string to filter the tree result.
+    :prop key: The sub string to filter the tree result
     """
     return self._config_get(None)
 
@@ -122,12 +117,11 @@ class OptionsTree(Options):
   def filter_on(self, text: str):
     self._config(text)
 
-  def click_node(self, js_funcs, profile=None):
-    """
-    Add event on the node label.
+  def click_node(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: bool = None):
+    """ Add event on the node label.
  
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -135,12 +129,11 @@ class OptionsTree(Options):
       "function(event, value, data){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
       js_type=True, name="clickNode")
 
-  def click_leaf(self, js_funcs, profile=None):
-    """
-    Add a specific event on the leaf nodes in the hierarchy view.
+  def click_leaf(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: bool = None):
+    """ Add a specific event on the leaf nodes in the hierarchy view.
  
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -153,15 +146,14 @@ class OptDropDown(Options):
 
   @property
   def width(self):
-    """
-    Set the width of the dropdown item.
+    """ Set the width of the dropdown item.
  
-    :prop number: Integer. The width of the item in pixel.
+    :prop number: The width of the item in pixel
     """
     return self._config_get(False)
 
   @width.setter
-  def width(self, value):
+  def width(self, value: int):
     if isinstance(value, int):
       value = "%spx" % value
     #
@@ -190,11 +182,11 @@ class OptDropDown(Options):
   def ul(self, css: dict):
     self._config(css)
 
-  def onClick(self, js_funcs, profile=None):
+  def onClick(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: bool = None):
     """
  
-    :param js_funcs: List | String. A Javascript Python function.
-    :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

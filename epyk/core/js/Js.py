@@ -699,16 +699,16 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
            asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
     """  Create a POST HTTP request.
 
-    :param method: The REST method used.
-    :param url: The url path of the HTTP request.
-    :param data: Optional. Corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous).
-    :param stringify: Optional. Stringify the request data for json exchange.
+    :param method: The REST method used
+    :param url: The url path of the HTTP request
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous)
+    :param stringify: Optional. Stringify the request data for json exchange
     """
     if method.upper() == "GET":
       # Redirect to the specific get method
@@ -1453,33 +1453,32 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     """
     return JsNumber.JsNumber("Date.parse(%s)" % value, is_py_data=False)
 
-  def getVar(self, js_code: str, var_type: str = "var"):
-    """  
-    Get the Javascript Variable name.
+  def getVar(self, js_code: Union[str, primitives.JsDataModel], var_type: str = "var") -> JsObjects.JsObject.JsObject:
+    """ Get the Javascript Variable name.
 
-    :param js_code: The Variable name.
-    :param var_type: Optional. The scope of the variable.
+    :param js_code: The Variable name
+    :param var_type: Optional. The scope of the variable
 
     :return: Return the piece of script to be added to the Javascript.
     """
     if var_type == 'var':
-      return "window['%s']" % js_code
+      js_code = JsUtils.jsConvertData(js_code, None)
+      return JsObjects.JsObject.JsObject.get("window[%s]" % js_code)
 
-    return js_code
+    return JsObjects.JsObject.JsObject.get(js_code)
 
   def info(self, data: Union[str, primitives.JsDataModel], css_style: Optional[dict] = None,
            icon: str = "fas fa-spinner fa-spin", seconds: int = 10000):
-    """  
-    Display a message.
+    """  Display a message.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
 
     :param data: A String corresponding to a JavaScript object
-    :param css_style: Optional. The CSS attributes to be added to the HTML component.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param seconds: Optional. The number of second the info will be visible.
+    :param css_style: Optional. The CSS attributes to be added to the HTML component
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param seconds: Optional. The number of second the info will be visible
     """
     if css_style is None:
       css_style = {"position": "fixed", "bottom": "5px", "right": "10px", "padding": '2px 7px',

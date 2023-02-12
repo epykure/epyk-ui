@@ -3,6 +3,7 @@ from epyk.core.html.options import Enums
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import packageImport
+from epyk.core.py import types as etypes
 
 
 class EnumRender(Enums):
@@ -31,42 +32,41 @@ class EnumRender(Enums):
     """
     return self._set_value()
 
-  def custom(self, jsFncs):
+  def custom(self, js_funcs):
     """   
 
     """
     return self._set_value()
 
   @packageImport("accounting")
-  def details(self, digit=0, thousand_sep="."):
-    """  
-    Display both the label and its value.
+  def details(self, digit: int = 0, thousand_sep: str = "."):
+    """ Display both the label and its value.
 
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
+    :param digit: Optional. Decimal point separator
+    :param thousand_sep: Optional. thousands separator
     """
     return self._set_value(
       "function (args) {return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s') }" % (
         digit, thousand_sep), js_type=True)
 
   @packageImport("accounting")
-  def labelNumber(self, digit=0, thousand_sep="."):
+  def labelNumber(self, digit: int = 0, thousand_sep: str = "."):
     """  
 
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
+    :param digit: Optional. Decimal point separator
+    :param thousand_sep: Optional. thousands separator
     """
     return self._set_value(
       "function (args) {return accounting.formatNumber(args.value, %s, '%s') }" % (digit, thousand_sep), js_type=True)
 
   @packageImport("accounting")
-  def labelCurrency(self, symbol="", digit=0, thousand_sep=".", decimal_sep=","):
+  def labelCurrency(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
     """  
 
-    :param symbol: String. Optional. Default currency symbol is ''
-    :param digit: String. Optional. Decimal point separator
-    :param thousand_sep: String. Optional. thousands separator
-    :param decimal_sep: String. Optional. Decimal point separator
+    :param symbol: Optional. Default currency symbol is ''
+    :param digit: Optional. Decimal point separator
+    :param thousand_sep: Optional. thousands separator
+    :param decimal_sep: Optional. Decimal point separator
     """
     symbol = JsUtils.jsConvertData(symbol, None)
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
