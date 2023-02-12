@@ -46,7 +46,7 @@ class EnumRender(Enums):
     :param thousand_sep: Optional. thousands separator
     """
     return self._set_value(
-      "function (args) {return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s') }" % (
+      value="function (args) {return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s')}" % (
         digit, thousand_sep), js_type=True)
 
   @packageImport("accounting")
@@ -57,7 +57,8 @@ class EnumRender(Enums):
     :param thousand_sep: Optional. thousands separator
     """
     return self._set_value(
-      "function (args) {return accounting.formatNumber(args.value, %s, '%s') }" % (digit, thousand_sep), js_type=True)
+      value="function (args) {return accounting.formatNumber(args.value, %s, '%s')}" % (digit, thousand_sep),
+      js_type=True)
 
   @packageImport("accounting")
   def labelCurrency(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
@@ -72,7 +73,7 @@ class EnumRender(Enums):
     thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
     decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
     return self._set_value(
-      "function(args) { return accounting.formatMoney(args.value, %s, %s, %s, %s) }" % (
+      value="function(args) { return accounting.formatMoney(args.value, %s, %s, %s, %s) }" % (
       symbol, digit, thousand_sep, decimal_sep), js_type=True)
 
 

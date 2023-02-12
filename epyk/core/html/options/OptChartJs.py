@@ -11,6 +11,7 @@ from epyk.core.js import JsUtils
 from epyk.core.html.options import OptChart
 
 # ChartJs extensions
+from epyk.core.html.graph.exts import ChartJsLabels
 from epyk.core.html.graph.exts import ChartJsStacked
 from epyk.core.html.graph.exts import ChartJsDragData
 from epyk.core.html.graph.exts import ChartJsHierarchical
@@ -1772,14 +1773,14 @@ class OptionChartJsPlugins(Options):
 
   @property
   @packageImport('chartjs-plugin-labels')
-  def labels(self):
+  def labels(self) -> ChartJsLabels.Labels:
     """   Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
 
     Related Pages:
 
       https://github.com/emn178/chartjs-plugin-labels
     """
-    from epyk.core.html.graph.exts import ChartJsLabels
+    logging.warning("DEPRECATED module - should use datalabels instead")
     return self._config_sub_data("labels", ChartJsLabels.Labels)
 
   @property
