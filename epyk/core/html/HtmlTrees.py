@@ -92,7 +92,7 @@ class Tree(Html.Html):
           for(const attr in options.icon_style){icon.style[attr] = options.icon_style[attr]};
           icon.onclick = function(){
             if (((typeof options.remote !== "undefined") && ul.children.length == 0) || (options.remoteAlways)){
-              options.remote(ul, options)}
+              options.remote(ul, options, item.value)}
             var ulDisplay = this.parentNode.querySelector('ul').style.display;
             if(ulDisplay == 'none'){ 
               this.parentNode.querySelector('ul').style.display = 'block';
@@ -186,12 +186,13 @@ class Tree(Html.Html):
     :param always: Optional. If true force the tree to always call the remote server
     """
     if data is None:
-      data = {"path": self.dom.current_path()}
+      data = {"path": self.dom.current_path(), "node": JsUtils.jsWrap("node")}
     else:
       data["path"] = self.dom.current_path()
+      data["node"] = JsUtils.jsWrap("node")
     self.options._config(always, "remoteAlways")
     if js_func_name is not None:
-      self.options._config(JsUtils.jsWrap("function(ul, options){%s; %s}" % (
+      self.options._config(JsUtils.jsWrap("function(ul, options, node){%s; %s}" % (
         self.page.js.rest(
           method, url, js_code=js_code, is_json=is_json, components=components, data=data,
           profile=profile, headers=headers, stringify=stringify
@@ -199,7 +200,7 @@ class Tree(Html.Html):
           JsUtils.jsWrap("options.builder(ul, %s(data), options)" % js_func_name)
         ]).toStr(), js_code)), "remote")
     else:
-      self.options._config(JsUtils.jsWrap("function(ul, options){%s; %s}" % (
+      self.options._config(JsUtils.jsWrap("function(ul, options, node){%s; %s}" % (
         self.page.js.rest(
           method, url, js_code=js_code, is_json=is_json, components=components, data=data,
           profile=profile, headers=headers, stringify=stringify
