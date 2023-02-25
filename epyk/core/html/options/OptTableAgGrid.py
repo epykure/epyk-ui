@@ -218,7 +218,7 @@ class Column(Options):
     self._config(value)
 
   @property
-  def cellRenderers(self):
+  def cellRenderers(self) -> CellRenderer:
     """
 
     Related Pages:
@@ -318,7 +318,7 @@ class Column(Options):
     return self._config_get()
 
   @colId.setter
-  def colId(self, val):
+  def colId(self, val: str):
     self._config(val)
 
   @property
@@ -351,7 +351,7 @@ class Column(Options):
     return self._config_get()
 
   @editable.setter
-  def editable(self, val):
+  def editable(self, val: bool):
     self._config(val)
 
   @property
@@ -365,7 +365,7 @@ class Column(Options):
     return self._config_get()
 
   @enableRowGroup.setter
-  def enableRowGroup(self, val):
+  def enableRowGroup(self, val: bool):
     self._config(val)
 
   @property
@@ -561,7 +561,7 @@ class Column(Options):
     return self._config_get()
 
   @sortable.setter
-  def sortable(self, val):
+  def sortable(self, val: bool):
     self._config(val)
 
   @property
@@ -786,16 +786,50 @@ class Column(Options):
     self._config(val)
 
   @property
+  def rowSpan(self):
+    """ By default, each cell will take up the height of one row. You can change this behaviour to allow cells to
+    span multiple rows. This feature is similar to 'cell merging' in Excel or 'row spanning' in HTML tables.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-spanning/
+    """
+    return self._config_get()
+
+  @rowSpan.setter
+  def rowSpan(self, val: Union[str, int]):
+    self._config(val)
+
+  def rowSpanFunc(self, data: etypes.JS_DATA_TYPES):
+    """ Set a rowSpan function. This can be a callback function or even a string pointing to a
+    JavaScript function.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-spanning/
+
+    :param data: JavaScript expression
+    """
+    self._config(data, name="rowSpan", js_type=True)
+
+  @property
   def suppressSizeToFit(self):
-    """   """
+    """ If you don't want a particular column to be included in the auto resize, then set the column definition
+    suppressSizeToFit=true. This is helpful if, for example, you want the first column to remain fixed width,
+    but all other columns to fill the width of the table.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/column-sizing/
+    """
     return self._config_get()
 
   @suppressSizeToFit.setter
-  def suppressSizeToFit(self, val):
-    self._config(val)
+  def suppressSizeToFit(self, flag: bool):
+    self._config(flag)
 
   @property
-  def types(self):
+  def types(self) -> ColType:
     """
 
     Related Pages:
@@ -815,17 +849,19 @@ class Column(Options):
 
   @property
   def enableCellChangeFlash(self):
-    """
+    """ The grid can flash cells to highlight data changes. This is a great visual indicator to users of the grid who
+    want data changes to be noticed.
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-refresh/
+      https://www.ag-grid.com/angular-data-grid/flashing-cells/
     """
     return self._config_get()
 
   @enableCellChangeFlash.setter
-  def enableCellChangeFlash(self, val):
-    self._config(val)
+  def enableCellChangeFlash(self, flag: bool):
+    self._config(flag)
 
   @property
   def suppressCellFlash(self):
@@ -1264,8 +1300,8 @@ class TableConfig(Options):
 
   @property
   def colResizeDefault(self):
-    """   If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent to
-    it. This means the total width for all columns will be constant.
+    """ If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
+    to it. This means the total width for all columns will be constant.
 
     You can also change the default behaviour for resizing.
     Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when
@@ -1691,12 +1727,14 @@ class TableConfig(Options):
 
   @property
   def paginateChildRows(self):
-    """   Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail. See Pagination & Child Rows.
+    """   Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail.
+    See Pagination & Child Rows.
+
     Default: false
 
     Related Pages:
 
-      hhttps://www.ag-grid.com/javascript-data-grid/row-pagination/
+      https://www.ag-grid.com/javascript-data-grid/row-pagination/
     """
     return self._config_get(False)
 
@@ -1739,7 +1777,7 @@ class TableConfig(Options):
 
   @property
   def paginationAutoPageSize(self):
-    """   If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can fit.
+    """ If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can fit.
     This is demonstrated below. Note if you resize the display area of the grid, the page size automatically changes.
     To view this, open the example up in a new tab and resize your browser.
 
@@ -1809,6 +1847,7 @@ class TableConfig(Options):
   @property
   def groupSelectsChildren(self):
     """   Filler groups do not keep their selection state should the filler group be moved.
+
     For example if you have groups A->B->C, where C is the only row provided
     (so the grid creates groups A and B for you), and then you change the patch to D->B->C,
     group B will not keep it's selection.
@@ -1882,7 +1921,7 @@ class TableConfig(Options):
 
   @property
   def singleClickEdit(self):
-    """   To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
+    """To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
     This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you
     get when inside Excel.
 
@@ -1912,7 +1951,7 @@ class TableConfig(Options):
 
   @property
   def suppressPaginationPanel(self):
-    """   If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
+    """ If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
     This is useful is you want to provide your own navigation controls.
 
     Related Pages:
@@ -1927,8 +1966,8 @@ class TableConfig(Options):
 
   @property
   def suppressScrollOnNewData(self):
-    """   The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when the
-    page changes.
+    """ The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when
+    the page changes.
 
     Related Pages:
 
@@ -1957,6 +1996,7 @@ class TableConfig(Options):
   @property
   def suppressDragLeaveHidesColumns(self):
     """   Column animations happen when you move a column. The default is for animations to be turned on.
+
     It is recommended that you leave the column move animations on unless your target platform (browser and hardware)
     is to slow to manage the animations.
     To turn OFF column animations, set the grid property suppressColumnMoveAnimation=true.
@@ -1988,6 +2028,7 @@ class TableConfig(Options):
   @property
   def rowMultiSelectWithClick(self):
     """   Set to true to allow multiple rows to be selected with clicks.
+
     For example, if you click to select one row and then click to select another row, the first row will stay selected
     as well.
     Clicking a selected row in this mode will deselect the row.
@@ -2078,8 +2119,8 @@ class TableConfig(Options):
 
   @property
   def suppressRowClickSelection(self):
-    """   If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't want to
-    also select the row when the row is clicked.
+    """ If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't
+    want to also select the row when the row is clicked.
 
     Related Pages:
 
@@ -2092,10 +2133,25 @@ class TableConfig(Options):
     self._config(val)
 
   @property
+  def suppressRowTransform(self):
+    """ The property suppressRowTransform=true is used to stop the grid positioning rows using CSS transform and
+    instead the grid will use CSS top.
+
+    Related Pages:
+
+      https://www.ag-grid.com/angular-data-grid/row-spanning/
+    """
+    return self._config_get()
+
+  @suppressRowTransform.setter
+  def suppressRowTransform(self, flag: bool):
+    self._config(flag)
+
+  @property
   def sortingOrder(self):
     """   It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
     colDef.
-    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common
+    If defined both in colDef and gridOptions, the colDef will get preference, allowing you to define a common
     default, and then tailoring per column.
 
     Related Pages:
@@ -2132,6 +2188,7 @@ class TableConfig(Options):
   @property
   def valueCache(self):
     """ Set to true to turn on the value cache.
+
     Default: false
 
     Related Pages:
@@ -2147,6 +2204,7 @@ class TableConfig(Options):
   @property
   def valueCacheNeverExpires(self):
     """ Set to true to configure the value cache to not expire after data updates.
+
     Default: false
 
     Related Pages:

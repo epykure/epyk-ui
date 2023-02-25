@@ -880,6 +880,7 @@ class AgGrid(JsPackage):
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-api/
+      https://www.ag-grid.com/angular-data-grid/flashing-cells/
     """
     params = JsUtils.jsConvertData(params, None)
     return JsObjects.JsVoid("%s.api.flashCells(%s)" % (self.varId, params))

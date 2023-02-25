@@ -47,8 +47,7 @@ class Table(Html.Html):
         self.add_column(col_id, attrs=col_attrs)
 
   def get_columns(self) -> Generator[OptTableAgGrid.Column, None, None]:
-    """
-    Get a generator with all the columns defined for the table on the Python side.
+    """ Get a generator with all the columns defined for the table on the Python side.
 
     This function will only return columns defined from the Python side.
     """
@@ -62,8 +61,8 @@ class Table(Html.Html):
 
     This function will only get columns defined from the Python side.
 
-    :param by_field: Optional. The field reference for the column.
-    :param by_title: Optional. The title reference for the column.
+    :param by_field: Optional. The field reference for the column
+    :param by_title: Optional. The title reference for the column
     """
     for c in self.get_columns():
       if by_field is not None and by_field == c.field:
@@ -87,8 +86,7 @@ class Table(Html.Html):
 
   @property
   def options(self) -> OptTableAgGrid.TableConfig:
-    """
-    Ag Grid table options.
+    """ Ag Grid table options.
 
     Usage::
 
@@ -151,8 +149,7 @@ class Table(Html.Html):
     return "%s_obj" % self.htmlCode
 
   def define(self, options: types.JS_DATA_TYPES = None):
-    """
-    Common JavaScript function to set the table columns definition.
+    """ Common JavaScript function to set the table columns definition.
 
     :param options: Optional. The header attributes
     """
