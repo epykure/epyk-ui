@@ -990,7 +990,47 @@ class Column(Options):
     self._config(flag)
 
 
+class CellRendererParams(Options):
+
+  @property
+  def checkbox(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tree-data/
+    """
+    return self._config_get()
+
+  @checkbox.setter
+  def checkbox(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def suppressCount(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tree-data/
+    """
+    return self._config_get()
+
+  @suppressCount.setter
+  def suppressCount(self, flag: bool):
+    self._config(flag)
+
+  def innerRenderer(self, js_func: etypes.JS_DATA_TYPES):
+    self._config(js_func, "innerRenderer", js_type=True)
+
+
 class DefaultColDef(Options):
+
+  @property
+  def cellRendererParams(self) -> CellRendererParams:
+    """
+    """
+    return self._config_sub_data("cellRendererParams", CellRendererParams)
 
   @property
   def filter(self):
@@ -1101,6 +1141,20 @@ class DefaultColDef(Options):
 
   @sortable.setter
   def sortable(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def suppressMovable(self):
+    """   The column property suppressMovable changes whether the column can be dragged.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-grid-column-moving/
+    """
+    return self._config_get()
+
+  @suppressMovable.setter
+  def suppressMovable(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1299,6 +1353,20 @@ class TableConfig(Options):
     return self._config_sub_data("autoGroupColumnDef", DefaultColDef)
 
   @property
+  def cacheBlockSize(self):
+    """
+
+    Related Pages:
+
+      http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+    """
+    return self._config_get()
+
+  @cacheBlockSize.setter
+  def cacheBlockSize(self, num: int):
+    self._config(num)
+
+  @property
   def colResizeDefault(self):
     """ If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
     to it. This means the total width for all columns will be constant.
@@ -1368,6 +1436,20 @@ class TableConfig(Options):
     self._config(val, name="rowData")
 
   @property
+  def debug(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/data-update-row-data/
+    """
+    return self._config_get()
+
+  @debug.setter
+  def debug(self, flag: bool):
+    self._config(flag)
+
+  @property
   def deltaColumnMode(self):
     """   """
     return self._config_get()
@@ -1388,6 +1470,20 @@ class TableConfig(Options):
   @editType.setter
   def editType(self, value: str):
     self._config(value)
+
+  @property
+  def enableColResize(self):
+    """
+
+    Related Pages:
+
+      http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+    """
+    return self._config_get()
+
+  @enableColResize.setter
+  def enableColResize(self, flag: bool):
+    self._config(flag)
 
   @property
   def enablePivot(self):
@@ -1492,6 +1588,23 @@ class TableConfig(Options):
   def functionsReadOnly(self, flag: bool):
     self._config(flag)
 
+  def getServerSideGroupKey(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                            func_ref: bool = False):
+    """
+
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(dataItem)") and not func_ref:
+      if "return " not in str_func:
+        str_func = "return %s" % str_func
+      str_func = "function(dataItem){%s}" % str_func
+    self._config(str_func, js_type=True)
+
   def getContextMenuItems(self):
     pass
 
@@ -1514,6 +1627,20 @@ class TableConfig(Options):
     if not str_func.startswith("function(params)") and not func_ref:
       str_func = "function(params){%s}" % str_func
     self._config(str_func, js_type=True)
+
+  @property
+  def groupAggFiltering(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tree-data/
+    """
+    return self._config_get()
+
+  @groupAggFiltering.setter
+  def groupAggFiltering(self, flag: bool):
+    self._config(flag)
 
   @property
   def groupIncludeFooter(self):
@@ -1560,6 +1687,37 @@ class TableConfig(Options):
     if not str_func.startswith("function(param)") and not func_ref:
       str_func = "function(param){%s}" % str_func
     self._config(str_func, js_type=True)
+
+  def isServerSideGroup(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                        func_ref: bool = False):
+    """
+
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(dataItem)") and not func_ref:
+      if "return " not in str_func:
+        str_func = "return %s" % str_func
+      str_func = "function(dataItem){%s}" % str_func
+    self._config(str_func, js_type=True)
+
+  @property
+  def maxBlocksInCache(self):
+    """
+
+    Related Pages:
+
+      http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+    """
+    return self._config_get()
+
+  @maxBlocksInCache.setter
+  def maxBlocksInCache(self, num: int):
+    self._config(num)
 
   def onGridReady(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
     """
@@ -1863,6 +2021,20 @@ class TableConfig(Options):
     self._config(flag)
 
   @property
+  def rowModelType(self):
+    """
+
+    Related Pages:
+
+      http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+    """
+    return self._config_get()
+
+  @rowModelType.setter
+  def rowModelType(self, value: str):
+    self._config(value)
+
+  @property
   def rowClass(self):
     """ The style properties to apply to all rows. Set to an object of key (style names) and values (style values).
 
@@ -1934,6 +2106,20 @@ class TableConfig(Options):
   @singleClickEdit.setter
   def singleClickEdit(self, val):
     self._config(val)
+
+  @property
+  def suppressAggFilteredOnly(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/tree-data/
+    """
+    return self._config_get()
+
+  @suppressAggFilteredOnly.setter
+  def suppressAggFilteredOnly(self, flag: bool):
+    self._config(flag)
 
   @property
   def suppressClickEdit(self):
@@ -2129,8 +2315,8 @@ class TableConfig(Options):
     return self._config_get()
 
   @suppressRowClickSelection.setter
-  def suppressRowClickSelection(self, val):
-    self._config(val)
+  def suppressRowClickSelection(self, flag: bool):
+    self._config(flag)
 
   @property
   def suppressRowTransform(self):
@@ -2184,6 +2370,23 @@ class TableConfig(Options):
 
     """
     return self._config_sub_data("statusBar", TableStatusBar)
+
+  @property
+  def treeData(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/documentation/javascript/tree-data/
+    """
+    return self._config_get()
+
+  @treeData.setter
+  def treeData(self, flag: bool):
+    if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
+      logging.warning("treeData not available in the community version")
+
+    self._config(flag)
 
   @property
   def valueCache(self):

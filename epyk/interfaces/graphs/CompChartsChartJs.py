@@ -802,3 +802,41 @@ if (item){
       wc_chart.add_dataset(d["data"], d['label'])
     return wc_chart
 
+  def hierarchical(self, record: list = None, labels: list = None, profile: types.PROFILE_TYPE = None,
+                   width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
+                   options: dict = None, horizontal: bool = False, kind: str = "bar",
+                   html_code: str = None) -> graph.GraphChartJs.ChartHyr:
+    """ Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
+
+    Related Pages:
+
+      https://github.com/sgratzl/chartjs-plugin-hierarchical
+      https://github.com/sgratzl/chartjs-plugin-hierarchical/blob/main/samples/deep_hierarchy.html
+
+    :param record:
+    :param labels:
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. The width of the component in the page, default (100, '%')
+    :param height: Optional. The height of the component in the page, default (330, "px")
+    :param horizontal: Optional.
+    :param kind: Optional.
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    """
+    hyr_chart = graph.GraphChartJs.ChartHyr(self.page, width, height, html_code, options, profile)
+    hyr_chart._attrs["type"] = kind
+    hyr_chart.colors(self.page.theme.charts)
+    hyr_chart._data_attrs['labels'] = labels
+    hyr_chart._datasets = record
+    if horizontal:
+      hyr_chart.options.scales.y.type = "hierarchical"
+      hyr_chart.options.scales.y.padding = 0
+      hyr_chart.options.scales.y.attributes = {"backgroundColor": 'gray'}
+      hyr_chart.options.layout.paddings = {"left": 50}
+    else:
+      hyr_chart.options.scales.x.type = "hierarchical"
+      hyr_chart.options.scales.x.attributes = {"backgroundColor": 'gray'}
+      hyr_chart.options.layout.paddings = {"bottom": 60}
+    hyr_chart.options.responsive = True
+    return hyr_chart
+

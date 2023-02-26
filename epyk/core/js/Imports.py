@@ -256,7 +256,7 @@ JS_IMPORTS = {
   'ag-grid-community': {
     'website': 'https://www.ag-grid.com/javascript-grid/',
     'repository': 'https://github.com/ag-grid/ag-grid',
-    'version': '25.0.1',
+    'version': '25.1.0',
     "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
     'modules': [
       {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/', 'cdnjs': CDNJS_REPO}]
@@ -1318,6 +1318,15 @@ JS_IMPORTS = {
     'req': [{'alias': 'chart.js'}],
     'modules': [
       {'script': 'chartjs-plugin-deferred.min.js', 'path': 'chartjs-plugin-deferred@%(version)s/dist/',
+       'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
+
+  # ChartJs hierarchical plugin modules width CDN links
+  'chartjs-plugin-hierarchical': {
+    'version': '4.1.1',
+    'website': 'https://github.com/sgratzl/chartjs-plugin-hierarchical',
+    'req': [{'alias': 'chart.js'}],
+    'modules': [
+      {'script': 'index.umd.min.js', 'path': 'chartjs-plugin-hierarchical@%(version)s/build/',
        'cdnjs': 'https://cdn.jsdelivr.net/npm'}]},
 
   # ChartJs datalabels plugin modules width CDN links
@@ -2426,7 +2435,7 @@ class ImportModule:
       self._css["main"] = new_css
     self.overriden = True
 
-  def set_enterprise(self):
+  def set_enterprise(self, version: str = None):
     """  
     Change the package to the enterprise version.
     This feature will only work for few modules like AGGrid.
@@ -2435,6 +2444,8 @@ class ImportModule:
 
       page = pk.Page()
       page.imports.pkgs.ag_grid.set_enterprise()
+
+    :param version: Set the package version number
     """
     pgks = ("ag-grid-community",)
     if self._name not in pgks:
@@ -2443,7 +2454,7 @@ class ImportModule:
     self.community_version = False
     self.page.imports.add(self._name)
     if self._name == 'ag-grid-community':
-      version = "28.1.0"
+      version = version or "29.1.0"
       JS_IMPORTS['ag-grid-community']["version"] = version
       JS_IMPORTS['ag-grid-community']["register"]["module"] = "ag-grid-enterprise.min"
       JS_IMPORTS['ag-grid-community']["register"]["npm"] = "ag-grid-enterprise"
@@ -2457,13 +2468,12 @@ class ImportModule:
       self._js["versions"] = [version]
 
       CSS_IMPORTS['ag-grid-community']['modules'] = [
-        {'script': 'ag-theme-alpine.min.css', 'path': 'ag-grid-enterprise@%(version)s/dist/styles/',
-         'cdnjs': JSDELIVER},
+        {'script': 'ag-grid.min.css', 'path': 'ag-grid-enterprise@%(version)s/styles/', 'cdnjs': JSDELIVER}
       ]
       self._css["main"] = {
-        "%s/ag-grid-enterprise@%s/dist/styles/ag-theme-alpine.min.css" % (JSDELIVER, version): version}
+        "%s/ag-grid-enterprise@%s/styles/ag-grid.min.css" % (JSDELIVER, version): version}
       self._css["type"] = {
-        "%s/ag-grid-enterprise@%s/dist/styles/ag-theme-alpine.min.css" % (JSDELIVER, version): 'text/javascript'}
+        "%s/ag-grid-enterprise@%s/styles/ag-grid.min.css" % (JSDELIVER, version): 'text/javascript'}
       self._css["dep"] = ["/static\\ag-grid/%s/styles/ag-theme-alpine.min.css" % version]
       self._css["versions"] = [version]
 
@@ -2920,6 +2930,16 @@ class ImportPackagesChartJsExts:
       https://github.com/chartjs/awesome#charts
     """
     return self.get("chartjs-plugin-deferred")
+
+  @property
+  def hierarchical(self) -> ImportModule:
+    """ Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
+
+    Related Pages:
+
+      https://github.com/sgratzl/chartjs-plugin-hierarchical
+    """
+    return self.get("chartjs-plugin-hierarchical")
 
   @property
   def zoom(self) -> ImportModule:

@@ -1009,6 +1009,14 @@ class OptionTitle(Options):
 class OptionAxes(Options):
 
   @property
+  def attributes(self):
+    return self._config_get()
+
+  @attributes.setter
+  def attributes(self, values: dict):
+    self._config(values)
+
+  @property
   def display(self):
     return self._config_get()
 
@@ -1023,6 +1031,16 @@ class OptionAxes(Options):
   @distribution.setter
   def distribution(self, val):
     self._config(val)
+
+  @property
+  def padding(self):
+    """
+    """
+    return self._config_get()
+
+  @padding.setter
+  def padding(self, num: int):
+    self._config(num)
 
   @property
   def reverse(self):
@@ -1065,6 +1083,16 @@ class OptionAxes(Options):
   @stacked.setter
   def stacked(self, val: bool):
     self._config(val)
+
+  @property
+  def static(self):
+    """
+    """
+    return self._config_get()
+
+  @static.setter
+  def static(self, flag: bool):
+    self._config(flag)
 
   @property
   def id(self):
@@ -1471,6 +1499,16 @@ class OptionLayout(Options):
     """
     return self._config_sub_data("padding", OptionPadding)
 
+  @property
+  def paddings(self):
+    """
+    """
+    return self._config_get()
+
+  @paddings.setter
+  def paddings(self, values):
+    self._config(values, "padding")
+
 
 class OptionLegend(Options):
 
@@ -1844,7 +1882,7 @@ class OptionChartJsPlugins(Options):
     return self._config_sub_data("deferred", ChartJsDeferred.Deferred)
 
   @property
-  @packageImport('')
+  @packageImport('chartjs-plugin-hierarchical')
   def hierarchical(self) -> ChartJsHierarchical.Hierarchical:
     """ Adds hierarchical scales that can be collapsed, expanded, and focused
 

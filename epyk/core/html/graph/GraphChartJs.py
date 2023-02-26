@@ -1386,6 +1386,13 @@ class ChartVenn(Chart):
   _chart__type = 'venn'
 
 
+class ChartHyr(Chart):
+  requirements = ('chart.js', 'chartjs-plugin-hierarchical')
+  _chart__type = 'bar'
+
+  _js__builder__ = '''return data'''
+
+
 class ChartExts(ChartPie):
 
   def __init__(self, page, width, height, html_code, options, profile):

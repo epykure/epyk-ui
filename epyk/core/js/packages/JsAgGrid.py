@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Any, Union
+from typing import Any, Union, Optional, List, Tuple
 from epyk.core.py import primitives, types
 from epyk.core.js.packages import JsPackage
 from epyk.core.js import JsUtils
@@ -642,6 +642,17 @@ class AgGrid(JsPackage):
     return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {
       'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
 
+  def purgeServerSideCache(self, route):
+    """
+
+    Related Pages:
+
+        http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+
+    :param route:
+    """
+    return JsObjects.JsVoid("%s.api.purgeServerSideCache(%s)" % (self.varId, JsUtils.jsConvertData(route, None)))
+
   def showColumns(self, columns):
     """
 
@@ -1103,7 +1114,10 @@ class AgGrid(JsPackage):
 
   def setPinnedBottomRowData(self, rowData):
     """
-    https://www.ag-grid.com/javascript-data-grid/row-pinning/
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-pinning/
 
     :param rowData:
     """
@@ -1111,7 +1125,10 @@ class AgGrid(JsPackage):
 
   def setPinnedTopRowData(self, rowData):
     """
-    https://www.ag-grid.com/javascript-data-grid/row-pinning/
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-pinning/
 
     :param rowData:
     """
@@ -1130,10 +1147,46 @@ const totalRow = function(api) {
         JsUtils.jsConvertData(rowData, None),
         self.varId))
 
+  def setServerSideDatasource(self, data):
+    """ Set new datasource for Server-Side Row Model.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grid-api/#reference-serverSideRowModel
+
+    :param data:
+    """
+    return JsObjects.JsVoid("%s.api.setServerSideDatasource(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+
+  def fetch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
+            is_json: bool = True,
+            components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
+            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+            asynchronous: bool = False, stringify: bool = True, method: str = "GET") -> JsObjects.XMLHttpRequest:
+      rest_call = self.page.js.rest(
+        method, url, data, js_code, is_json=is_json, components=components, profile=profile, headers=headers,
+        asynchronous=asynchronous, stringify=stringify)
+      rest_call.onSuccess(['''
+  var fakeServer = {
+      getData: (request) => {
+        const requestedRows = %s.response.slice(request.startRow, request.endRow);
+        return {success: true, rows: requestedRows};
+      },
+  };
+  %s.api.setServerSideDatasource({
+    getRows: (params) => {
+      const response = fakeServer.getData(params.request);
+      setTimeout(function () {
+        if (response.success) {params.success({ rowData: response.rows })} 
+        else {params.fail();}
+      }, 500);
+    }});
+  ''' % (js_code, self.varId)])
+      return rest_call
+
   @property
   def _(self):
-    """
-    Aggrid standard components (mainly for events).
+    """ Aggrid standard components (mainly for events).
 
     Usage::
 
