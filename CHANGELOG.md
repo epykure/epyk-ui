@@ -1,5 +1,21 @@
 ## [Unreleased]
 
+## [1.9.30] - 2023-02-26
+
+### Added
+- More doc and type annotation
+- New Aggrid options
+- New ChartJs options
+- ChartJs Hierarchy plugin support
+- Add version setter for Aggrid enterprise
+
+### Fixed
+- Fix issue with import of Aggrid enterprise
+
+### Changed
+- Upgrade default community and enterprise version for Aggrid
+
+
 ## [1.9.28] - 2023-02-12
 
 ### Added

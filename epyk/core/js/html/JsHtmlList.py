@@ -52,6 +52,8 @@ class JsItemsDef:
     if(typeof options.style !== 'undefined'){
       Object.keys(options.style).forEach(function(key){item.style[key] = options.style[key] })}
     if(typeof data === 'object'){ 
+      if(typeof data.style !== 'undefined'){
+        Object.keys(data.style).forEach(function(key){item.style[key] = data.style[key] })}
       item.innerHTML = data.text} else { item.innerHTML = data }'''
     return self._item(item_def)
 
