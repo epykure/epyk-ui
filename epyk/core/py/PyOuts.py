@@ -161,7 +161,9 @@ class PyOuts:
       onloadPartsCommon = self.page._props.get('js', {}).get("constructors", {})
     else:
       for c, d in self.page._props.get('js', {}).get("constructors", {}).items():
-        onloadParts.append(d)
+        if d is not None:
+          # Do not put None values (when definition is defined in Native files).
+          onloadParts.append(d)
     for c, d in self.page._props.get('js', {}).get("configs", {}).items():
       onloadParts.append(str(d))
 
