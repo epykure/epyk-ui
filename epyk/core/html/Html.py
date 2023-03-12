@@ -413,8 +413,8 @@ class Html(primitives.HtmlModel):
       comp_title.style.css.color = self.page.theme.greys[-2]
       menu_items.insert(0, comp_title)
 
-    :param i: The position for the component in the container.
-    :param component: Component added to the val main component.
+    :param i: The position for the component in the container
+    :param component: Component added to the val main component
     """
     if not hasattr(component, 'options'):
       component = self.page.ui.div(component)
@@ -435,6 +435,32 @@ class Html(primitives.HtmlModel):
 
     return self.val[i]
 
+  def set_builder(self, name: str, all_components: bool = True):
+    """ Change the default builder definition.
+
+    This method can be used to externalise the JavaScript expression to dedicated modules.
+    If nothing is defined the default one defined in the class property `_js__builder__`  will be used.
+
+    Usage::
+
+      page = pk.Page()
+      page.properties.js.add_text('''
+      function NewButton(htmlObj, data, options){
+        htmlObj.style.color = "red"; htmlObj.innerHTML = data}
+      ''')
+      page.properties.js.set_constructor("NewButton")
+      btn = page.ui.button("click")
+      btn.set_builder("NewButton")
+      btn2 = page.ui.button("click 2")
+      btn.click([btn.build("Clicked"), btn2.build("Clicked")])
+
+    :param name: The builder name (alias but also function name)
+    :param all_components: Apply the builder change to all components generated from this class
+    """
+    self.builder_name = name
+    if all_components:
+      self.__class__.builder_name = name
+
   @property
   def style(self) -> GrpCls.ClassHtml:
     """   The CSS style (class and attributes) of the HTML component.
@@ -451,6 +477,19 @@ class Html(primitives.HtmlModel):
 
   @property
   def html_code(self) -> str:
+    """   Unique reference for any HTML component in the framework. This must be defined in the interface and cannot be
+    changed in the report.
+
+    This reference can be used in the Python to get the html object from components in the page but it is also
+    used in any web framework by the JavaScript to get the DOM object and apply the necessary transformations.
+
+    There is no setter for this property in order to ensure a consistency in Python and JavaScript.
+
+    Usage::
+
+      div = page.ui.div(html_code="testDiv")
+      print(div.html_code)
+    """
     if self.__htmlCode is not None:
       return self.__htmlCode
 

@@ -52,15 +52,12 @@ class ClassPage:
 
   @property
   def globals(self) -> Defaults_css.GlobalStyle:
-    """
-    Reference for all the global setting in the page.
-    This should be changed in order to be the proxy to the Default CSS settings in the framework.
+    """ Reference for all the global setting in the page.
 
+    This should be changed in order to be the proxy to the Default CSS settings in the framework.
     Changing this should only impact the report default settings.
 
     TODO: Extend to more than the font
-
-    :rtype: Defaults_css.GlobalStyle
     """
     if self.__global_styles is None:
       self.__global_styles = Defaults_css.GlobalStyle(self.page)
@@ -68,47 +65,32 @@ class ClassPage:
 
   @property
   def scrollbar_webkit(self) -> CssStyleScrollbar.CssWebkitScrollbar:
-    """
-    Scrollbars predefined styles.
-
-    :rtype: CssStyleScrollbar.CssWebkitScrollbar
-    """
+    """ Scrollbars predefined styles. """
     if not self.__webkitscrollbar:
       self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.page)
     return self.__webkitscrollbar
 
   @property
   def scrollbar_webkit_thumb(self) -> CssStyleScrollbar.CssWebkitScrollbarThumb:
-    """
-    Scrollbars predefined styles.
-
-    :rtype: CssStyleScrollbar.CssWebkitScrollbarThumb
-    """
+    """ Scrollbars predefined styles. """
     if not self.__webkitscrollbar_thumb:
       self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.page)
     return self.__webkitscrollbar_thumb
 
   @property
   def scrollbar_webkit_track(self):
-    """
-    Scrollbars predefined styles.
-
-    :rtype: CssStyleScrollbar.CssWebkitScrollbarTrack
-    """
+    """ Scrollbars predefined styles. """
     if not self.__webkitscrollbar_track:
       self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.page)
     return self.__webkitscrollbar_track
 
   @property
   def selection(self) -> CssStyleScrollbar.CssWebkitSelection:
-    """
-    Selection predefined style (background color based on the selected theme).
+    """ Selection predefined style (background color based on the selected theme).
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_text_selection.asp
-
-    :rtype: CssStyleScrollbar.CssWebkitSelection
     """
     if not self.__selection:
       self.__selection = CssStyleScrollbar.CssWebkitSelection(self.page)
@@ -116,38 +98,32 @@ class ClassPage:
 
   @property
   def moz_selection(self) -> CssStyleScrollbar.CssWebkitMozSelection:
-    """
-    Selection predefined style (background color based on the selected theme).
+    """ Selection predefined style (background color based on the selected theme).
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_text_selection.asp
-
-    :rtype: CssStyleScrollbar.CssWebkitMozSelection
     """
     if not self.__moz_selection:
       self.__moz_selection = CssStyleScrollbar.CssWebkitMozSelection(self.page)
     return self.__moz_selection
 
   def contenteditable(self) -> CssStylesPage.CssPageContentEditable:
-    """
-    Set the border color of the editable content according to the selected theme.
+    """ Set the border color of the editable content according to the selected theme.
 
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_contenteditable_border.asp
-
-    :rtype: CssStylesPage.CssPageContentEditable
     """
     if not self.__contenteditable:
       self.__contenteditable = CssStylesPage.CssPageContentEditable(self.page)
       self.classList['other'].add(self.__contenteditable)
     return self.__contenteditable
 
-  def fit_screen_height(self, margin_size=None):
+  def fit_screen_height(self, margin_size: int = None):
     """
  
-    :param margin_size: Integer. Optional.
+    :param margin_size: Optional.
     """
     if margin_size is not None:
       self.component.page.properties.css.add_text(
@@ -158,38 +134,28 @@ class ClassPage:
 
   @property
   def defaults(self):
-    """
-    The Default CSS Attributes in the framework.
-    """
+    """ The Default CSS Attributes in the framework. """
     return Defaults_css
 
   @property
   def add_classes(self) -> Classes.Catalog:
-    """
-    Property to get access to the catalog of CSS classes to be added to the HTML class tag component.
-
-    :rtype: Classes.Catalog
-    """
+    """ Property to get access to the catalog of CSS classes to be added to the HTML class tag component. """
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('main')
 
   @property
   def define_classes(self) -> Classes.Catalog:
-    """
-    Property to get access to the catalog of CSS classes to be loaded in the page.
-    Those classes will not be automatically added to any HTML tag and they need to be added manually.
+    """ Property to get access to the catalog of CSS classes to be loaded in the page.
 
-    :rtype: Classes.Catalog
+    Those classes will not be automatically added to any HTML tag and they need to be added manually.
     """
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('other')
 
   def get_classes(self):
-    """
-    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
-    """
+    """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
     for css_cls in self.classList.values():
       for c in css_cls:
         if hasattr(c, 'get_ref'):
@@ -197,9 +163,7 @@ class ClassPage:
     return self.classList
 
   def get_classes_css(self):
-    """
-    Attach the predefined styles for the scrollbar and selection then return all the classes.
-    """
+    """ Attach the predefined styles for the scrollbar and selection then return all the classes. """
     self.classList['other'].add(self.scrollbar_webkit)
     self.classList['other'].add(self.scrollbar_webkit_thumb)
     self.classList['other'].add(self.scrollbar_webkit_track)
@@ -213,10 +177,11 @@ class ClassPage:
           css_frgs[c.get_ref()] = str(c)
     return css_frgs
 
-  def custom_class(self, css_attrs, classname=None, selector=None, is_class=True, important=False):
-    """   This will create dynamic CSS class which will not be added to any component.
+  def custom_class(self, css_attrs: dict, classname: str = None, selector: str = None, is_class: bool = True,
+                   important: bool = False) -> dict:
+    """ This will create dynamic CSS class which will not be added to any component.
+    
     The class definition can then be reused in multiple components.
-
     The CSS style of the body can only be done using predefined classes or inline CSS.
 
     TODO: Enable the important for nested css_attrs.
@@ -225,11 +190,11 @@ class ClassPage:
 
       page.body.style.custom_class(css_attrs={"_attrs": {"fill": 'red'}}, classname='nvd3.nv-pie .nv-pie-title')
  
-    :param css_attrs: Dictionary. Nested dictionary with the different attributes.
-    :param classname: Optional. String. The classname in the CSS definition.
-    :param selector: Optional. String. The class selector (if it is not a classname using . but a strict definition).
-    :param is_class: Optional. Boolean. Automatically transform the name to a CSS class definition by adding a dot.
-    :param important: Boolean. Optional. Specify if the style is important.
+    :param css_attrs: Nested dictionary with the different attributes
+    :param classname: Optional. The classname in the CSS definition
+    :param selector: Optional. The class selector (if it is not a classname using . but a strict definition)
+    :param is_class: Optional. Automatically transform the name to a CSS class definition by adding a dot
+    :param important: Optional. Specify if the style is important
     """
     if classname is None:
       cls_def = {"classname": False, '_selector': selector}
@@ -260,9 +225,7 @@ class ClassHtml:
 
   @property
   def varName(self) -> str:
-    """
-    Unique identifier for the CSS object on the Javascript side.
-    """
+    """ Unique identifier for the CSS object on the Javascript side. """
     return "%s_css" % self.component.htmlCode
 
   @property
@@ -362,6 +325,23 @@ class ClassHtml:
     if self.__cls_catalog is None:
       self.__cls_catalog = Classes.Catalog(self.page, self.classList)
     return self.__cls_catalog._class_type('other')
+
+  def add_class(self, name: str):
+    """ Add bespoke class to a component.
+
+    Usage::
+
+      page = pk.Page()
+      page.properties.css.add_text('''
+      .redCls {color: red}
+      ''')
+      text = page.ui.text("Hello World !")
+      text.style.add_class("redCls")
+      page.outs.html_file(name="test", print_paths=True)
+
+    :param name: Classname
+    """
+    self.classList['main'].add(name)
 
   def attr(self, key: str, name: str, dflt: Optional[str] = None, suffix: str = "temp"):
     """
@@ -522,8 +502,7 @@ class ClassHtml:
     return self
 
   def clear(self, no_default: bool = False):
-    """
-    Remove the predefined class and set the default one for the div components.
+    """ Remove the predefined class and set the default one for the div components.
  
     :param no_default: Optional. Remove the default class.
 
@@ -542,10 +521,9 @@ class ClassHtml:
     return self
 
   def clear_all(self, no_default: bool = False):
-    """
-    Clear all the Style, Classes and CSS attributes for the HTML component.
-    Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
+    """ Clear all the Style, Classes and CSS attributes for the HTML component.
 
+    Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
     Set the default style to no margin and no padding.
  
     :param no_default: Optional. Remove the default class.
@@ -557,20 +535,18 @@ class ClassHtml:
     return self
 
   def builder(self, name: str, js_frg: str):
-    """
-    Attach a Javascript Builder to a CSS style.
+    """ Attach a Javascript Builder to a CSS style.
+
     It will be triggered only once for all the HTML components using this style.
  
-    :param name: The Javascript variable name.
-    :param js_frg: The Javascript framework corresponding to the Js builder.
+    :param name: The Javascript variable name
+    :param js_frg: The Javascript framework corresponding to the Js builder
     """
     self.component.page.properties.css.add_builders("const %s = %s" % (name, js_frg))
     return self
 
   def get_classes(self):
-    """
-    Returns the list of Internal and bespoke classes to be added to the class HTML table on the component.
-    """
+    """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
     if self.__css_virtual and '_attrs' not in self.__css_virtual:
       self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
       self.__css_virtual["_attrs"].update(dict(self.css.attrs))
@@ -610,8 +586,7 @@ class ClassHtml:
 
   @property
   def bs(self) -> BsCssClasses.Style:
-    """
-    Add shortcut to the Bootstrap predefined styles.
+    """ Add shortcut to the Bootstrap predefined styles.
 
     Related Pages:
 
@@ -626,9 +601,7 @@ class ClassHtmlEmpty(ClassHtml):
 
   @property
   def css(self) -> Empty:
-    """
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
-    """
+    """ Property to the underlying CSS definition to be added to the style HTML tag of a component. """
     if self._css_struct is None:
       self._css_struct = Empty(self.component, page=self.page)
     return self._css_struct

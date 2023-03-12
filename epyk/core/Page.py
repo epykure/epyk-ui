@@ -1,4 +1,5 @@
 
+import logging
 import json
 import collections
 import time
@@ -38,21 +39,36 @@ class JsProperties:
 
   @property
   def frgs(self):
-    """ Return the extra JavaScript function manually added.
-    """
+    """ Return the extra JavaScript function manually added. """
     return self._context["text"]
+
+  @property
+  def constructors(self):
+    """ Get the list of needed contractors """
+    return self._context['constructors'].keys()
+
+  @property
+  def functions(self):
+    """ Get the list of needed javasScript functions """
+    return self._context['functions'].keys()
 
   def add_text(self, text: str):
     """ Add JavaScript fragments from String.
 
-    :param text: JavaScript fragments to be directly included to the page.
+    Usage::
+
+      page = pk.Page()
+      page.properties.js.add_text('''alert(new Date())''')
+      page.outs.html_file(name="test", print_paths=True)
+
+    :param text: JavaScript fragments to be directly included to the page
     """
     self._context["text"].append(text)
 
-  def add_event(self, event: str, value: str):
+  def add_event(self, event: str, value):
     """ Add JavaScript fragments from String.
 
-    :param event: JavaScript fragments to be directly included to the page.
+    :param event: JavaScript fragments to be directly included to the page
     :param value:
     """
     self._context["events"][event] = value
@@ -75,29 +91,92 @@ class JsProperties:
         self._context['builders'].append(builder_def)
 
   def add_on_ready(self, builder_def: str):
-    """
+    """ Add JavaScript expression in the onReady selection of the HTML page.
 
-    :param builder_def: The builder definition function.
+    Usage::
+
+      page = pk.Page()
+      page.properties.js.add_on_ready("alert('Hello World!')")
+      page.outs.html_file(name="test", print_paths=True)
+
+    :param builder_def: The builder definition function
     """
     self._context['onReady'].add(builder_def)
 
-  def add_constructor(self, name: str, content: str) -> str:
-    """  Register the constructor function and return its reference.
+  def add_constructor(self, name: str, content: str, override: bool = False, verbose: bool = False) -> str:
+    """ Register the constructor function and return its reference.
 
-    :param name:
-    :param content:
+    :param name: The constructor name
+    :param content: The entire definition
+    :param override: Override the method if already defined if set to true
+    :param verbose: Display extra messages if set to true
     """
+    if not override and name in self._context['constructors']:
+      if verbose:
+        logging.warning("[add_constructor] Function %s already defined" % name)
+      return name
+
     self._context['constructors'][name] = content
     return name
 
   def has_constructor(self, name: str):
-    """
-    :param name:
+    """ Check if a constructor is already defined.
+
+    :param name: The constructor name
     """
     return name in self._context['constructors']
 
-  def add_function(self, name: str, js_funcs: Union[list, str], pmts: list):
+  def get_constructor(self, name: str):
+    """ Get the constructor definition. """
+    return self._context['constructors'].get(name)
+
+  def set_constructor(self, name: str, content: str = None, func_ref: bool = False):
+    """ Set a constructor.
+
+    Usage::
+
+      page = pk.Page()
+      page.properties.js.set_constructor("Button", "htmlObj.innerHTML = 'Test'")
+      btn = page.ui.button("click")
+      btn.click([btn.build("Clicked")])
+
+    :param name: The constructor alias (must of the same name than the function)
+    :param content: The constructor expression in JavaScript
+    :param func_ref:
+    """
+    if content is None:
+      self._context['constructors'][name] = None
+    elif not content.startswith("function ") and not func_ref:
+      self._context['constructors'][name] = "function %s(htmlObj, data, options){%s}" % (name, content)
+    else:
+      self._context['constructors'][name] = content
+
+  def add_function(self, name: str, js_funcs: Union[list, str], pmts: list) -> dict:
+    """ Add JavaScript function to the page.
+
+    This method will build the JavaScript method and it will be in charge during the conversion to JavaScript to
+    write function [name] ( [pmts] ){ [js_funcs] }
+
+    Usage::
+
+      page = pk.Page()
+      page.properties.js.add_function("testJs", "alert('Hello ' + name)", ["name='world'"])
+      btn = page.ui.button("click")
+      btn.click(["testJs('click')"])
+      page.outs.html_file(name="test", print_paths=True)
+
+    :param name: The function name
+    :param js_funcs: The function definition (JavaScript expression)
+    :param pmts: The function's parameters
+    """
     self._context['functions'][name] = {'content': js_funcs, 'pmt': pmts}
+    return self._context['functions'][name]
+
+  def get_function(self, name: str) -> str:
+    """ Get an existing function definition. """
+    if name in self._context['functions']:
+      func = self._context['functions'][name]
+      return "function %s(%s){%s}" % (name, ", ".join(func['pmt']), func['content'])
 
 
 class CssProperties:
@@ -106,15 +185,22 @@ class CssProperties:
     self._context = context
 
   @property
-  def text(self):
-    """ Return the extra CSS styles manually added.
-    """
+  def text(self) -> str:
+    """ Return the extra CSS styles manually added. """
     return "\n".join(self._context['css']["text"])
 
   def add_text(self, text: str):
     """ Add CSS style from String.
 
-    :param text: CSS Style to be directly included to the page.
+    Usage::
+
+      page = pk.Page()
+      page.properties.css.add_text('''.redCls {color: red}''')
+      text = page.ui.text("Hello World !")
+      text.style.add_class("redCls")
+      page.outs.html_file(name="test", print_paths=True)
+
+    :param text: CSS Style to be directly included to the page
     """
     self._context['css']["text"].append(text)
 
@@ -131,7 +217,8 @@ class CssProperties:
       self._context['js']['builders_css'].append(builder_def)
 
   def container_style(self, css: dict):
-    """
+    """ Set the container CSS style.
+
     :param css: The CSS attributes to be applied.
     """
     self._context['css']['container'].update(css)
@@ -139,11 +226,11 @@ class CssProperties:
   def font_face(self, font_family: str, src, stretch: str = "normal", style: str = "normal", weight: str = "normal"):
     """ Set the font.
 
-    :param font_family: Defines the name of the font.
-    :param src: Defines the URL(s) where the font should be downloaded from.
-    :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
-    :param style: Optional. Defines how the font should be styled. Default value is "normal".
-    :param weight: Optional. Defines the boldness of the font. Default value is "normal".
+    :param font_family: Defines the name of the font
+    :param src: Defines the URL(s) where the font should be downloaded from
+    :param stretch: Optional. Defines how the font should be stretched. Default value is "normal"
+    :param style: Optional. Defines how the font should be styled. Default value is "normal"
+    :param weight: Optional. Defines the boldness of the font. Default value is "normal"
     """
     self._context['css']["font-face"][font_family] = {
       'src': "url(%s)" % src, 'font-stretch': stretch, 'font-style': style, 'font-weight': weight}
@@ -156,19 +243,18 @@ class Properties:
 
   @property
   def context(self):
-    """ Return the common Page context.
-    """
+    """ Return the common Page context. """
     return self._context['context']
 
   @property
   def icon(self):
-    """ Return the page icons definition
-    """
+    """ Return the page icons definition. """
     return self._context['icon']
 
   @property
   def js(self) -> JsProperties:
     """ The JavaScript page properties.
+
     This will keep track of all the global functions used by the components.
     """
     return JsProperties(self._context['js'])
@@ -176,16 +262,17 @@ class Properties:
   @property
   def css(self) -> CssProperties:
     """ The Css page properties.
-    This will keep track of all the global functions used by the components.
 
+    This will keep track of all the global functions used by the components.
     CSS Properties will work on both the CSS and JS section of the underlying prop dictionary.
     """
     return CssProperties(self._context)
 
   @property
   def data(self) -> data.DataProperties:
-    """
+    """ Get the predefined data structures.
 
+    Those data structures are mainly helper to input the different libraries available in this UI framework.
     """
     if "data" in self._context:
       self._context["data"] = {"sources": {}, "schema": {}}
@@ -213,7 +300,23 @@ class Report:
   _node_modules = None    # Path for the external packages (default to the CDNJS is not available)
 
   def __init__(self, inputs: dict = None, script: str = None):
-    """=
+    """ Create a Report object.
+
+    This is the starting point for any web resource.
+    This interface will create a generic ui schema which will be then converted.
+    For the moment only few output formats are available and web UI are preferred.
+
+    The target of this components is not to replaced libraries but only to easy the use of the most popular ones without
+    having to change languages, This module will help with the versioning, the interactivity and the documentation.
+
+    Indeed libraries interfaces will point to the real documentation to allow you to learn by using it.
+
+    Usage::
+
+      import epyk as pk
+      page = pk.Page()
+      page.ui.text("Hello World !")
+      page.outs.html_file(name="test", print_paths=True)
 
     :param inputs: Optional. The global input data for the defined components in the page.
       Passing data for a given component with an htmlCode will override the value.
@@ -269,14 +372,12 @@ class Report:
 
   @property
   def properties(self):
-    """ Property to the different Page properties JavaScript and CSS.
-    """
+    """ Property to the different Page properties JavaScript and CSS. """
     return Properties(self._props)
 
   @property
   def root__script(self) -> str:
-    """ Return the name of the script creating the Page object.
-    """
+    """ Return the name of the script creating the Page object. """
     return self._props["context"]["script"]
 
   @property
@@ -286,9 +387,7 @@ class Report:
     Usage::
 
       page = Report()
-      page.body.onReady([
-        page.js.alert("Loading started")
-      ])
+      page.body.onReady([page.js.alert("Loading started")])
     """
     if self.__body is None:
       self.__body = html.Html.Body(self, None, html_code='body')
@@ -328,7 +427,15 @@ class Report:
   @property
   def skins(self) -> skins.Skins:
     """ Add a special skin to the page.
+
     This could be used for special event or season during the year (Christmas for example).
+
+    Usage::
+
+      page = pk.Page()
+      page.ui.text("Hello World !")
+      page.skins.rains()
+      page.outs.html_file(name="test", print_paths=True)
     """
     return skins.Skins(self)
 
@@ -350,8 +457,8 @@ class Report:
   def imports(self) -> Imports.ImportManager:
     """ Return the :doc:`report/import_manager`, which allows to import automatically packages for certain components to
     run.
-    By default the imports are retrieved online from CDNJS paths.
 
+    By default the imports are retrieved online from CDNJS paths.
     This can be changed by loading the packages locally and switching off the online mode.
 
     Usage::
@@ -452,6 +559,7 @@ class Report:
   @property
   def js(self) -> js.Js.JsBase:
     """ Go to the Javascript section. Property to get all the JavaScript features.
+
     Most of the standard modules will be available in order to add event and interaction to the Js transpiled.
 
     Usage::
@@ -462,8 +570,6 @@ class Report:
     Related Pages:
 
       https://www.w3schools.com/js/default.asp
-
-    :return: Python HTML object
     """
     if self._js is None:
       self._js = js.Js.JsBase(self)
@@ -472,6 +578,7 @@ class Report:
   @property
   def py(self) -> PyExt.PyExt:
     """ Python external module section.
+
     Those are pre-defined Python function to simplify the use of the various components.
 
     Usage::
@@ -482,8 +589,6 @@ class Report:
     Related Pages:
 
       https://www.w3schools.com/js/default.asp
-
-    :return: Python HTML object.
     """
     if self._py is None:
       self._py = PyExt.PyExt(self)
@@ -536,20 +641,21 @@ class Report:
       page.ui.div('this is a div')
       page.register(obj3)
 
-    :param ext_components: The external components to be added.
+    :param ext_components: The external components to be added
     """
     if type(ext_components) != list:
       ext_components = [ext_components]
 
     for comp in ext_components:
 
-      if comp.htmlCode in self.components:
-        raise ValueError("Duplicated Html Code %s in the script !" % comp.htmlCode)
+      if comp.html_code in self.components:
+        raise ValueError("Duplicated Html Code %s in the script !" % comp.html_code)
 
-      self.components[comp.htmlCode] = comp
+      self.components[comp.html_code] = comp
 
   def get_components(self, html_codes: Union[list, str]):
     """ Retrieve the components based on their ID.
+
     This should be used when the htmlCode is defined for a component.
 
     Usage::
@@ -558,7 +664,7 @@ class Report:
       page.ui.button(htmlCode="Button")
       but = page.get_components(["Button"])
 
-    :param html_codes: The reference of the HTML components loaded on the page.
+    :param html_codes: The reference of the HTML components loaded on the page
     """
     if not isinstance(html_codes, list):
       return self.components[html_codes]
@@ -582,13 +688,14 @@ class Report:
       page.ui.text("This is an example")
       page.framework("Vue")
 
-    :param name: The destination framework for the page.
+    :param name: The destination framework for the page
     """
     self._props['context']['framework'] = name.upper()
 
   @property
   def outs(self) -> PyOuts.PyOuts:
     """ Link to the possible output formats for a page.
+
     This will transpile the Python code to web artifacts. Those outputs are standard outputs files in web development.
 
     The property framework should be used to link to other web framework.
@@ -635,7 +742,7 @@ class Report:
 
       https://docs.python.org/2/library/json.html
 
-    :param result: The python dictionary or data structure.
+    :param result: The python dictionary or data structure
 
     :return: The serialised data
     """
