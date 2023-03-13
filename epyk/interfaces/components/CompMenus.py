@@ -328,30 +328,40 @@ class Menus:
     html.Html.set_component_skin(row)
     return row
 
-  def icons(self, data, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
+  def icons(self, data: list = None, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
             options: dict = None, profile: Union[bool, dict] = False):
-    """  
+    """
     Add a menu bar with font awesome icons.
 
     Usage::
 
-      page.ui.lists.
+      icons = page.ui.menus.icons([
+          "bi-1-circle-fill",
+          "bi-search-heart-fill",
+          "bi-x-circle-fill",
+      ], options={"icon_family": "bootstrap-icons"})
 
-    :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param data: Optional. Parameter bar icons
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dfl_options = {"margin-right": 5}
     if options is not None:
       dfl_options.update(options)
     div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
-    for d in data:
-      div.add(self.page.ui.icons.fluent(icon=d, text="", width=(15, 'px'), options={"icon_family": 'fluent'}))
-      div[-1].style.css.margin_right = dfl_options["margin-right"]
+    div.style.css.text_align = "right"
+    icons = []
+    if data:
+      for d in data:
+        icons.append(self.page.ui.icons.fluent(
+          icon=d, text="", width=(15, 'px'), options={"icon_family": dfl_options.get("icon_family", 'fluent')}))
+        icons[-1].style.css.margin = "0 %spx 0 0" % dfl_options["margin-right"]
+        div.add(icons[-1])
     html.Html.set_component_skin(div)
+    div.icons = icons
     return div
 
   def buttons(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),

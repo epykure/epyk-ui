@@ -577,6 +577,22 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"border-left-width": val})
 
+  def border_line(self, size: Union[tuple, int] = (1, "px"), color: str = "black"):
+    """ Shortcut for border line.
+
+    Usage::
+
+      div = page.ui.div([icons])
+      div.style.css.border_line(color="black", size=(2, 'px'))
+
+    :param size: Set the border size
+    :param color: Set the border color
+    """
+    if not isinstance(size, tuple):
+      size = (size, "px")
+    self.border = "%s%s solid %s" % (size[0], size[1], color)
+    return self
+
   @property
   def border_radius(self):
     """	The border-radius property defines the radius of the element's corners.

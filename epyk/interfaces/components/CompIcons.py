@@ -102,7 +102,7 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = self.page.icons.get(icon)
+    icon_details = self.page.icons.get(icon, options=options)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     html_edit = html.HtmlButton.IconEdit(

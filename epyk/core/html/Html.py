@@ -40,7 +40,10 @@ regex = re.compile('[^a-zA-Z0-9_]')
 
 
 def cleanData(value: str):
-  """ Function to clean the javascript data to allow the use of variables """
+  """ Function to clean the javascript data to allow the use of variables
+
+  :param value: The value to clean
+  """
   return regex.sub('', value.strip())
 
 
@@ -50,8 +53,6 @@ def cleanData(value: str):
 # ---------------------------------------------------------------------------------------------------------
 def deprecated(comment: str):
   """
-  Description:
-  -----------
   This is a decorator which can be used to mark functions as deprecated. It will result in a warning being emitted
   when the function is used.
 
@@ -74,10 +75,7 @@ def deprecated(comment: str):
 
 
 def inprogress(func):
-  """
-  Description:
-  -----------
-  Decorator to specify a function is still in development so the result might not be fully tested yet.
+  """ Decorator to specify a function is still in development so the result might not be fully tested yet.
 
   :param func: Function. A python function.
   """
