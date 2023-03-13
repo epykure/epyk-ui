@@ -110,12 +110,11 @@ class IconModel:
     return {"icon": icon, "icon_family": family}
 
   def add(self, alias: str, imports: dict, set_default: bool = True):
-    """
+    """ Register another icons library to the framework.
 
-    :param alias:
+    :param alias: The full icon definition or an alias from the internal mapping
     :param imports:
     :param set_default:
-    :return:
     """
     self.page.ext_packages.update(imports)
     self.page.imports.reload()

@@ -715,7 +715,7 @@ class Images:
       background_color = self.page.theme.greys[0]
     if color is None:
       color = self.page.theme.success.base
-    icon_details = self.page.icons.get(icon)
+    icon_details = self.page.icons.get(icon, options=options)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     component = html.HtmlImage.Badge(
