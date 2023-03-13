@@ -12,7 +12,8 @@ class Menus:
   def __init__(self, ui):
     self.page = ui.page
 
-  def top(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (30, 'px'), html_code: str = None,
+  def top(self, data: List[dict] = None, color: str = None, width: Union[tuple, int] = (100, "%"),
+          height: Union[tuple, int] = (30, 'px'), html_code: str = None,
           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """  
     Add a menu item at the top of the page.
@@ -20,7 +21,6 @@ class Menus:
 
     Usage::
 
-      l = page.ui.lists.list(["A", "B"])
       page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
@@ -36,14 +36,14 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    :param data:
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param Union[tuple, int] width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage
+    :param data: Optional. The top menu values
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -96,7 +96,7 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def bottom(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+  def bottom(self, data: List[dict] = None, color: str = None, width: Union[tuple, int] = (100, "%"),
              height: Union[tuple, int] = (30, 'px'), html_code: str = None,
              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """  
@@ -105,8 +105,7 @@ class Menus:
 
     Usage::
 
-      l = page.ui.lists.list(["A", "B"])
-      page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
+      page.ui.menus.bottom([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
 
@@ -120,14 +119,14 @@ class Menus:
       https://www.w3schools.com/bootstrap/bootstrap_list_groups.asp
       http://astronautweb.co/snippet/font-awesome/
 
-    :param data:
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param data: Optional. The top menu values
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -180,14 +179,14 @@ class Menus:
     html.Html.set_component_skin(html_div)
     return html_div
 
-  def menu(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+  def menu(self, data: list = None, color: str = None, width: Union[tuple, int] = (100, "%"),
            height: Union[tuple, int] = (None, 'px'), html_code: str = None,
            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """  
 
     Usage::
 
-      page.ui.menus.bar([
+      page.ui.menus.menu([
         {"value": "File", "children": [
           {"url": "Test", "text": "Test"}
         ]}
@@ -207,13 +206,13 @@ class Menus:
       http://astronautweb.co/snippet/font-awesome/
 
     :param data:
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     menu_li, menu_title, menu_items, menu_divs = [], [], [], []
     records = []
@@ -263,7 +262,11 @@ class Menus:
 
     Usage::
 
-      l = page.ui.lists.list(["A", "B"])
+      page.ui.menus.bar([
+        {"value": "File", "children": [
+          {"url": "Test", "text": "Test"}
+        ]}
+      ])
 
     Underlying HTML Objects:
 
@@ -279,13 +282,13 @@ class Menus:
       http://astronautweb.co/snippet/font-awesome/
 
     :param data:
-    :param align: String. Optional. A string with the horizontal position of the component
-    :param position: String. Optional. A string with the vertical position of the component
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param align: Optional. A string with the horizontal position of the component
+    :param position: Optional. A string with the vertical position of the component
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     records = []
     dfl_options = {"target": '_self'}
@@ -364,7 +367,7 @@ class Menus:
     div.icons = icons
     return div
 
-  def buttons(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
+  def buttons(self, data: list = None, color: str = None, width: Union[tuple, int] = (100, "%"),
               height: Union[tuple, int] = (None, 'px'), html_code: str = None,
               helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """  
@@ -381,13 +384,13 @@ class Menus:
       - :class:`epyk.core.html.HtmlButton.Buttons`
 
     :param data:
-    :param color: String. Optional. The font color in the component. Default inherit
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -400,7 +403,7 @@ class Menus:
     html.Html.set_component_skin(component)
     return component
 
-  def images(self, data, path: str = None, width: Union[tuple, int] = (100, '%'),
+  def images(self, data: list = None, path: str = None, width: Union[tuple, int] = (100, '%'),
              height: Union[tuple, int] = (None, 'px'), align: str = "center",
              options: dict = None, profile: Union[bool, dict] = False):
     """  
@@ -411,34 +414,36 @@ class Menus:
 
     :param path:
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param align:
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dfl_options = {"margin-left": 20, "margin-right": 20, 'image-width': 50}
     if options is not None:
       dfl_options.update(options)
     div = self.page.ui.div(width=width, height=height, align=align, options=options, profile=profile)
-    for d in data:
-      img_attrs = {'width': (dfl_options['image-width'], 'px')}
-      if not isinstance(d, dict):
-        img_attrs['image'] = d
-      else:
-        img_attrs.update(d)
-      if path is not None:
-        img_attrs['path'] = path
-      url = None
-      if 'url' in img_attrs:
-        url = img_attrs['url']
-        del img_attrs['url']
-      img = self.page.ui.img(**img_attrs)
-      if url is not None:
-        img.goto(url)
-      img.style.css.display = 'inline-block'
-      div.add(img)
-      div[-1].style.css.margin_right = dfl_options["margin-right"]
+    if data is not None:
+      for d in data:
+        img_attrs = {'width': (dfl_options['image-width'], 'px')}
+        if not isinstance(d, dict):
+          img_attrs['image'] = d
+        else:
+          img_attrs.update(d)
+        if path is not None:
+          img_attrs['path'] = path
+        url = None
+        if 'url' in img_attrs:
+          url = img_attrs['url']
+          del img_attrs['url']
+
+        img = self.page.ui.img(**img_attrs)
+        if url is not None:
+          img.goto(url)
+        img.style.css.display = 'inline-block'
+        div.add(img)
+        div[-1].style.css.margin_right = dfl_options["margin-right"]
     html.Html.set_component_skin(div)
     return div
 
@@ -453,12 +458,12 @@ class Menus:
 
     :param data:
     :param color:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param html_code:
     :param helper:
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -568,10 +573,10 @@ class Menus:
     :param value:
     :param components:
     :param symbol:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     div = self.page.ui.div(width=width, height=height, options=options, profile=profile)
     div.items = components if isinstance(components, list) else [components]
@@ -591,7 +596,7 @@ class Menus:
     html.Html.set_component_skin(div)
     return div
 
-  def toolbar(self, data, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'),
+  def toolbar(self, data: list = None, width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'),
               options: dict = None, profile: Union[bool, dict] = False):
     """  
 
@@ -611,30 +616,31 @@ class Menus:
       - :class:`epyk.core.html.HtmlContainer.Div`
       - :class:`epyk.core.html.HtmlImage.Badge`
 
-    :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param data: Optional. The list of icons
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
     div = self.page.ui.div(width=width, height=height, options=options, profile=profile)
     div.style.css.background = self.page.theme.greys[1]
     div.style.css.margin = "2px 0 0 0"
-    for d in data:
-      div += self.page.ui.images.badge(
-        icon=d, text="", width=(15, 'px'), options={
-          "badge_position": 'right', "icon_family": options.get("icon_family")})
-      div.style.css.padding = "0 2px 2px 2px"
-      div[-1].style.clear(no_default=True)
-      div[-1].attr["class"].add("badge")
-      div[-1].style.css.width = 25
-      div[-1].style.css.padding = 0
-      div[-1].style.css.height = False
-      div[-1].style.css.text_align = 'center'
-      div[-1].style.css.cursor = 'pointer'
-      div[-1].style.css.margin = 0
-      div[-1].icon.style.css.float = None
+    if data is not None:
+      for d in data:
+        div += self.page.ui.images.badge(
+          icon=d, text="", width=(15, 'px'), options={
+            "badge_position": 'right', "icon_family": options.get("icon_family")})
+        div.style.css.padding = "0 2px 2px 2px"
+        div[-1].style.clear(no_default=True)
+        div[-1].attr["class"].add("badge")
+        div[-1].style.css.width = 25
+        div[-1].style.css.padding = 0
+        div[-1].style.css.height = False
+        div[-1].style.css.text_align = 'center'
+        div[-1].style.css.cursor = 'pointer'
+        div[-1].style.css.margin = 0
+        div[-1].icon.style.css.float = None
     html.Html.set_component_skin(div)
     return div
 
@@ -664,12 +670,12 @@ class Menus:
       https://jqueryui.com/menu/
 
     :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -684,8 +690,10 @@ class Menus:
     html.Html.set_component_skin(html_pr)
     return html_pr
 
-  def contextual(self, record=None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, 'px'),
-                 html_code: str = None, visible: bool = False, options: dict = None, profile: Union[bool, dict] = None):
+  def contextual(self, record: list = None, width: Union[tuple, int] = (None, '%'),
+                 height: Union[tuple, int] = (None, 'px'),
+                 html_code: str = None, visible: bool = False, options: dict = None,
+                 profile: Union[bool, dict] = None):
     """  
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work.
@@ -700,12 +708,12 @@ class Menus:
         https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
 
     :param record: Optional.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param visible: Boolean. Optional.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param visible: Optional.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -714,34 +722,35 @@ class Menus:
     html.Html.set_component_skin(html_menu)
     return html_menu
 
-  def pills(self, data, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (50, 'px'),
+  def pills(self, data: List = None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (50, 'px'),
             html_code: str = None, helper: str = None,
             options: dict = None, profile: Union[bool, dict] = False):
     """  
 
     Usage::
 
-      page.ui.lists.
+      page.ui.pills.
 
-    :param data:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side)
-    :param helper: String. Optional. A tooltip helper.
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param data: Optional.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     container = self.page.ui.div(
       width=width, height=height, html_code=html_code, options=options, helper=helper, profile=profile)
-    for d in data:
-      pill = self.page.ui.div(d, width=("auto", ""))
-      pill.style.css.border = "1px solid %s" % self.page.theme.greys[4]
-      pill.style.css.border_radius = 10
-      pill.style.css.cursor = "pointer"
-      pill.style.css.padding = "2px 10px"
-      pill.style.css.margin_right = 5
-      pill.style.add_classes.div.color_hover()
-      container.add(pill)
+    if data is not None:
+      for d in data:
+        pill = self.page.ui.div(d, width=("auto", ""))
+        pill.style.css.border = "1px solid %s" % self.page.theme.greys[4]
+        pill.style.css.border_radius = 10
+        pill.style.css.cursor = "pointer"
+        pill.style.css.padding = "2px 10px"
+        pill.style.css.margin_right = 5
+        pill.style.add_classes.div.color_hover()
+        container.add(pill)
     container.style.css.overflow_x = "auto"
     container.style.css.white_space = "nowrap"
     container.style.css.display = "inline-block"
