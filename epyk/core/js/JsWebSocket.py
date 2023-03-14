@@ -270,9 +270,9 @@ class Worker:
                server: bool = False):
     """  
 
-    :param Optional[str] html_code: Optional. The Id of the script.
-    :param Optional[Union[str, primitives.PageModel]] src: Optional.
-    :param bool server: Optional. Specify if the page is running on a server.
+    :param html_code: Optional. The Id of the script
+    :param src: Optional.
+    :param server: Optional. Specify if the page is running on a server
     """
     self.page, self.__server = src, server
     self._selector = html_code or "worker_%s" % id(self)

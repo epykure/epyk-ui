@@ -52,13 +52,13 @@ class JsBreadCrumb:
     self._anchor = None
     self.page.properties.js.add_builders("%s = {pmts: %s}" % (self._selector, json.dumps(self.page.inputs)))
 
-  def add(self, key, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
+  def add(self, key: str, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
     """  
     Add an entry to the Javascript breadcrumb dictionary.
 
-    :param key: String. The key in the Breadcrumb dictionary.
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param key: The key in the Breadcrumb dictionary
+    :param data: A String corresponding to a JavaScript object
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     return JsFncs.JsFunction('%s["pmts"]["%s"] = %s' % (
       self._selector, key, JsUtils.jsConvertData(data, js_conv_func)))
@@ -67,7 +67,7 @@ class JsBreadCrumb:
     """  
     returns the object stored in the breadcrumb dictionary.
 
-    :param Optional[str] key: Optional. The key in the Breadcrumb dictionary.
+    :param key: Optional. The key in the Breadcrumb dictionary
 
     :return: A Python object.
     """
@@ -84,16 +84,14 @@ class JsBreadCrumb:
 
       https://www.w3schools.com/jsref/prop_loc_hash.asp
 
-    :param Union[str, primitives.JsDataModel] data: A String corresponding to a JavaScript object.
-    :param Optional[Union[str, list]] js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: A String corresponding to a JavaScript object
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     return JsObject.JsObject('{}["anchor"] = {}'.format(self._selector, JsUtils.jsConvertData(data, js_conv_func)))
 
   @property
   def url(self):
-    """  
-    Get the full URL.
-    """
+    """ Get the full URL. """
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
     pathname = js_location.pathname
@@ -104,6 +102,7 @@ class JsBreadCrumb:
 
 
 class JsBase:
+
   def __init__(self, page: Optional[primitives.PageModel] = None, component: Optional[primitives.HtmlModel] = None):
     # The underlying source object is not supposed to be touched in the underlying classes
     self.page = page
@@ -125,7 +124,7 @@ class JsBase:
 
   @property
   def accounting(self):
-    """ Shortcut to accounting properties
+    """ Shortcut to accounting properties.
 
     Related Pages:
 
@@ -139,13 +138,12 @@ class JsBase:
 
   @property
   def viewHeight(self):
-    """   Return the current View port height visible in the browser.
-    """
+    """ Return the current View port height visible in the browser. """
     return JsNumber.JsNumber("Math.max(%s, %s)" % (self.documentElement.clientHeight, self.window.innerHeight))
 
   @property
   def documentElement(self):
-    """   Document.documentElement returns the Element that is the root element of the document (for example,
+    """ Document.documentElement returns the Element that is the root element of the document (for example,
     the <html> element for HTML documents).
 
     Related Pages:
@@ -156,8 +154,7 @@ class JsBase:
 
   @property
   def screen(self):
-    """  
-    The screen object contains information about the visitor's screen.
+    """ The screen object contains information about the visitor's screen.
 
     Related Pages:
 
@@ -167,8 +164,7 @@ class JsBase:
 
   @property
   def navigator(self) -> JsNavigator.JsNavigator:
-    """  
-    The information from the navigator object can often be misleading, and should not be used to detect
+    """ The information from the navigator object can often be misleading, and should not be used to detect
     browser versions because:
 
       - Different browsers can use the same name.
@@ -180,14 +176,11 @@ class JsBase:
 
   @property
   def location(self) -> JsLocation.JsLocation:
-    """  
-    Property to the Javascript Location functions.
+    """ Property to the Javascript Location functions.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/obj_location.asp
-
-    :rtype: JsLocation.JsLocation
     """
     if self.__location is None:
       self.__location = JsLocation.JsLocation()
@@ -202,8 +195,6 @@ class JsBase:
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
-
-    :rtype: JsMediaRecorder.MediaRecorder
     """
     if self.__media_recorder is None:
       self.__media_recorder = JsMediaRecorder.MediaRecorder(self.page)
@@ -218,19 +209,13 @@ class JsBase:
 
       https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
 
-    :param js_code: The variable name for the speech recognition object.
-
-    :rtype: JsSpeechRecognition.SpeechRecognition
+    :param js_code: The variable name for the speech recognition object
     """
     return JsSpeechRecognition.SpeechRecognition(js_code, self.page)
 
   @property
   def objects(self) -> JsObjects.JsObjects:
-    """  
-    Interface to the main Javascript Classes and Primitives.
-
-    :rtype: JsObjects.JsObjects
-    """
+    """ Interface to the main Javascript Classes and Primitives. """
     return JsObjects.JsObjects(self.page)
 
   @property
@@ -285,8 +270,8 @@ class JsBase:
 
       https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
 
-    :param data: Data to be evaluated.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: Data to be evaluated
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
@@ -301,7 +286,7 @@ class JsBase:
 
       https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
 
-    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
+    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
     """
     from epyk.core.js.packages import JsSocketIO
 
@@ -317,8 +302,8 @@ class JsBase:
       https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
       https://javascript.info/websocket
 
-    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side.
-    :param secured: Optional. To define the right protocol for the WebSocket connection we or wss.
+    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
+    :param secured: Optional. To define the right protocol for the WebSocket connection we or wss
     """
     return JsWebSocket.WebSocket(html_code, self.page, secured)
 
@@ -330,12 +315,12 @@ class JsBase:
 
       https://www.w3schools.com/html/html5_webworkers.asp
 
-    :param html_code: The WebSocket id (variable name) on the JavaScript side.
-    :param server: Boolean.
+    :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
+    :param server: Optional. Specify if the page is running on a server
     """
     return JsWebSocket.Worker(html_code, self.page, server)
 
-  def serverSentEvent(self, html_code: Optional[str] = None):
+  def serverSentEvent(self, html_code: Optional[str] = None) -> JsWebSocket.ServerSentEvent:
     """  
     SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data
     changes to the client.
@@ -348,7 +333,7 @@ class JsBase:
       https://www.w3schools.com/html/html5_serversentevents.asp
       https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
 
-    :param html_code: The EventSource id (variable name) on the JavaScript side.
+    :param html_code: The EventSource id (variable name) on the JavaScript side
     """
     return JsWebSocket.ServerSentEvent(html_code, self.page)
 
@@ -368,7 +353,7 @@ class JsBase:
     from epyk.core.js.packages import JsD3
     return JsD3.JsD3(page=self.page, component=self.component)
 
-  def not_(self, data, js_conv_func: Optional[Union[str, list]] = None):
+  def not_(self, data, js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
     """  
     Add the Symbol (!) for the boolean negation.
     This feature is also available directly to any JsBoolean objects.
@@ -381,8 +366,8 @@ class JsBase:
 
       https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
 
-    :param data: A String corresponding to a JavaScript object.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: A String corresponding to a JavaScript object
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
 
     :return: The Javascript fragment string.
     """
@@ -403,9 +388,9 @@ class JsBase:
 
       https://www.w3schools.com/js/js_if_else.asp
 
-    :param condition: The Javascript condition. Can be a JsBoolean object.
-    :param js_funcs: Optional. The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param condition: The Javascript condition. Can be a JsBoolean object
+    :param js_funcs: Optional. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
@@ -413,7 +398,7 @@ class JsBase:
     return self.__if
 
   def while_(self, condition: Union[str, list], js_funcs: Union[list, str], options: Optional[dict] = None,
-             profile: Optional[Union[dict, bool]] = False):
+             profile: Optional[Union[dict, bool]] = False) -> JsWhile.JsWhile:
     """  
     The while loop loops through a block of code as long as a specified condition is true.
 
@@ -421,36 +406,44 @@ class JsBase:
 
       https://www.w3schools.com/js/js_loop_while.asp
 
-    :param condition: The JavaScript condition.
-    :param js_funcs: Javascript functions.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param condition: The JavaScript condition
+    :param js_funcs: Javascript functions
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if isinstance(condition, list):
       condition = "(%s)" % ")||(".join(JsUtils.jsConvertFncs(condition))
     self.__while = JsWhile.JsWhile(condition, options, self.page).fncs(js_funcs, profile=profile)
     return self.__while
 
-  def for_(self, js_funcs: Union[list, str], step: int = 1, start: int = 0, end: int = 10,
-           options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False):
+  def for_(self, js_funcs: Union[list, str] = None, step: int = 1, start: int = 0, end: int = 10,
+           options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False) -> JsFor.JsFor:
     """  
     Shortcut to a for loop.
+
+    Usage::
+
+      js_for = page.js.for_(end=30)
+      js_for.fncs([page.js.console.log(js_for.i)])
 
     Related Pages:
 
       https://www.w3schools.com/js/js_loop_for.asp
 
-    :param js_funcs: Javascript functions.
-    :param step: Optional. The value to increment. Default 1.
-    :param start: Optional. The first index in the for loop.
-    :param end: Optional. The last index in the for loop.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param step: Optional. The value to increment. Default 1
+    :param start: Optional. The first index in the for loop
+    :param end: Optional. The last index in the for loop
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     for_statment = JsFor.JsFor(end, options)
     for_statment.start = start
     for_statment.end = end
     for_statment.step = step
+    if js_funcs is None:
+      return for_statment
+
     return for_statment.fncs(js_funcs, profile=profile)
 
   def return_(self, data: str) -> JsFncs.JsFunction:
@@ -470,8 +463,8 @@ class JsBase:
 
       https://www.w3schools.com/js/js_switch.asp
 
-    :param variable: Variable on which we will apply the switch.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param variable: Variable on which we will apply the switch
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     if hasattr(variable, 'dom'):
       variable = variable.dom.content
@@ -487,8 +480,8 @@ class JsBase:
 
       https://isabelcastillo.com/hidden-input-javascript
 
-    :param data: The Javascript expression.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param data: The Javascript expression
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     return JsFncs.JsFunction('''
 var elInput = document.createElement('input'); elInput.setAttribute('type', 'text');
@@ -498,10 +491,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   def _addImport(self, import_alias: str):
     """  
-    Internal function to include an external JavaScript module.
-    This can only use pre-defined modules. This will fail during the resolution if it does not exist.
+    Internal function to include an external JavaScript module
+    This can only use pre-defined modules. This will fail during the resolution if it does not exist
 
-    :param import_alias: Alias reference of a JavaScript module.
+    :param import_alias: Alias reference of a JavaScript module
     """
     self.page._props.setdefault('js', {}).setdefault('imports', set([])).add(import_alias)
     return self
@@ -515,8 +508,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/js/js_datatypes.asp
 
-    :param data: A String corresponding to a JavaScript object.
-    :param var_type: Optional. The type of object.
+    :param data: A String corresponding to a JavaScript object
+    :param var_type: Optional. The type of object
     """
     if var_type is None:
       return JsObjects.JsBoolean.JsBoolean("typeof %s" % data)
@@ -528,10 +521,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     """  
     Allow the definition of bespoke javascript strings.
 
-    :param data: A String corresponding to a JavaScript object.
-    :param key: Optional. A key reference in the JavaScript object.
-    :param is_py_data: Optional. Specify if the data is in Python and should be jsonify first.
-    :param js_func: Optional. Javascript functions.
+    :param data: A String corresponding to a JavaScript object
+    :param key: Optional. A key reference in the JavaScript object
+    :param is_py_data: Optional. Specify if the data is in Python and should be jsonify first
+    :param js_func: Optional. Javascript functions
     """
     data = JsUtils.jsConvert(data, key, is_py_data, js_func)
     self.page._props.setdefault('js', {}).setdefault('bespoke', []).append(data)
@@ -541,7 +534,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     Javascript fragment added at the beginning of the page.
     This will be called before any function in the framework.
 
-    :param text: The Javascript fragment.
+    :param text: The Javascript fragment
 
     :return: self to allow the chaining.
     """
@@ -559,13 +552,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       page.js.customFile("test.js", r"C:\folder")
 
-    :param filename: The filename.
-    :param path: Optional. The file path.
-    :param module_type: Optional. The module type.
-    :param absolute_path: Optional. If path is None this flag will map to the current main path.
-    :param requirements: Optional. The list of required packages.
-    :param randomize: Optional. Add random suffix to the module to avoid browser caching.
-    :param authorize: Optional. Add to the restricted list of packages.
+    :param filename: The filename
+    :param path: Optional. The file path
+    :param module_type: Optional. The module type
+    :param absolute_path: Optional. If path is None this flag will map to the current main path
+    :param requirements: Optional. The list of required packages
+    :param randomize: Optional. Add random suffix to the module to avoid browser caching
+    :param authorize: Optional. Add to the restricted list of packages
 
     :return: The Js Object to allow the chaining.
     """
@@ -605,11 +598,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/js/js_object_prototypes.asp
 
-    :param py_class: PyJs class name.
-    :param func_name: The Javascript function name.
-    :param js_funcs: Javascript functions.
-    :param pmts: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param py_class: PyJs class name
+    :param func_name: The Javascript function name
+    :param js_funcs: Javascript functions
+    :param pmts: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
 
     :return: The Js Object to allow the chaining.
     """
@@ -632,11 +625,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       page.js.request_http("ajax", "POST", "https://api.cdnjs.com/libraries").setHeaders(header).onSuccess([
       page.js.alert(rptObj.js.objects.request.get("ajax").responseText)]).send(encodeURIData={"search": 'ractive'})
 
-    :param method_type: The method of the HTTP Request.
-    :param url: The url path of the HTTP request.
-    :param js_code: Optional. The variable name created in the Javascript.
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. A list of HTML objects values to be passed in the request.
+    :param method_type: The method of the HTTP Request
+    :param url: The url path of the HTTP request
+    :param js_code: Optional. The variable name created in the Javascript
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. A list of HTML objects values to be passed in the request
 
     :rtype: JsObjects.XMLHttpRequest
     """
@@ -658,13 +651,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         page.js.get("/test", {"fegeg": "efefe", "ok": inputs.dom.content}, components=[("input", inputs)])
       ])
 
-    :param url: The url path of the HTTP request.
-    :param data: Optional. A String corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
+    :param url: The url path of the HTTP request
+    :param data: Optional. A String corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param headers: Optional. The request headers
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
     """
     method_type = JsUtils.jsConvertData('GET', None)
     url = JsUtils.jsConvertData(url, None)
@@ -752,15 +745,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://pythonise.com/series/learning-flask/flask-http-methods
 
-    :param url: The url path of the HTTP request.
-    :param data: Optional. Corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
-    :param stringify: Optional. Stringify the request data for json exchange.
+    :param url: The url path of the HTTP request
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
+    :param stringify: Optional. Stringify the request data for json exchange
     """
     return self.rest("POST", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                      profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
@@ -777,15 +770,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://pythonise.com/series/learning-flask/flask-http-methods
 
-    :param url: The url path of the HTTP request.
-    :param data: Optional. Corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
-    :param stringify: Optional. Stringify the request data for json exchange.
+    :param url: The url path of the HTTP request
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
+    :param stringify: Optional. Stringify the request data for json exchange
     """
     return self.rest("PUT", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                      profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
@@ -802,15 +795,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://pythonise.com/series/learning-flask/flask-http-methods
 
-    :param url: The url path of the HTTP request.
-    :param data: Optional. Corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
-    :param stringify: Optional. Stringify the request data for json exchange.
+    :param url: The url path of the HTTP request
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
+    :param stringify: Optional. Stringify the request data for json exchange
     """
     return self.rest("PATH", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                      profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
@@ -827,15 +820,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://pythonise.com/series/learning-flask/flask-http-methods
 
-    :param url: The url path of the HTTP request.
-    :param data: Optional. Corresponding to a JavaScript object.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
-    :param is_json: Optional. Specify the type of object passed.
-    :param components: Optional. This will add the component value to the request object.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param headers: Optional. The request headers.
-    :param asynchronous: Async flag: true (asynchronous) or false (synchronous).
-    :param stringify: Optional. Stringify the request data for json exchange.
+    :param url: The url path of the HTTP request
+    :param data: Optional. Corresponding to a JavaScript object
+    :param js_code: Optional. The variable name created in the Javascript (default response)
+    :param is_json: Optional. Specify the type of object passed
+    :param components: Optional. This will add the component value to the request object
+    :param profile: Optional. A flag to set the component performance storage
+    :param headers: Optional. The request headers
+    :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
+    :param stringify: Optional. Stringify the request data for json exchange
     """
     return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                      profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
@@ -855,8 +848,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://developer.mozilla.org/fr/docs/Web/API/queueMicrotask
 
-    :param js_funcs: The Javascript function definition.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript function definition
+    :param profile: Optional. A flag to set the component performance storage
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     return JsObjects.JsVoid("queueMicrotask(() => {%s})" % js_data)
@@ -888,7 +881,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     else:
       mod_path = os.path.abspath(os.path.dirname(fnc.__module__))
     rpc_params = {"function": fnc.__name__, 'module': mod_name, 'path': mod_path, 'extra_params': extra_params}
-    return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, rpc_params)
+    return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, JsData.Datamap(attrs=rpc_params))
 
   def fetch(self, url: str, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False,
             async_await: bool = False):
@@ -908,9 +901,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
-    :param url: The target url.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param url: The target url
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     :param async_await: Optional.
     """
     fetch_name = "await fetch" if async_await else "fetch"
@@ -925,8 +918,6 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
   def fncs(self) -> JsFncs.JsRegisteredFunctions:
     """  
     Property to the predefined Javascript functions.
-
-    :rtype: JsFncs.JsRegisteredFunctions
 
     :return: The predefined functions.
     """
@@ -952,8 +943,6 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
-
-    :rtype: JsBreadCrumb
 
     :return: A Python breadcrumb object.
     """
@@ -1001,13 +990,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keydown(self) -> KeyCodes.KeyCode:
-    """   The onkeydown event occurs when the user is pressing a key (on the keyboard).
+    """ The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeydown.asp
-
-    :rtype: KeyCodes.KeyCode
     """
     keydown = KeyCodes.KeyCode(page=self.page, source_event='document')
     self.page.properties.js.add_event('keydown', keydown)
@@ -1015,13 +1002,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keypress(self) -> KeyCodes.KeyCode:
-    """   The onkeypress event occurs when the user presses a key (on the keyboard).
+    """ The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
-
-    :rtype: KeyCodes.KeyCode
     """
     keypress = KeyCodes.KeyCode(page=self.page, source_event='document')
     self.page.properties.js.add_event('keypress', keypress)
@@ -1029,13 +1014,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keyup(self) -> KeyCodes.KeyCode:
-    """   The onkeypress event occurs when the user presses a key (on the keyboard).
+    """ The onkeypress event occurs when the user presses a key (on the keyboard).
 
     Related Pages:
 
       https://www.w3schools.com/jsref/event_onkeypress.asp
-
-    :rtype: KeyCodes.KeyCode
     """
     keyup = KeyCodes.KeyCode(page=self.page, source_event='document')
     self.page.properties.js.add_event('keyup', keyup)
@@ -1049,8 +1032,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/jquery/event_ready.asp
 
-    :param Union[str, list] js_funcs: The Javascript functions to be added to this section.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions to be added to this section
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.page.properties.js.add_on_ready(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
@@ -1106,8 +1089,6 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     :return: A NodeList object, representing a collection of elements with the specified name.
              The elements in the returned collection are sorted as they appear in the source code.
-
-    :rtype: JsNodeDom.JsDomsList
     """
     return JsNodeDom.JsDomsList.get(
       js_code="document.getElementsByName(%s)" % JsUtils.jsConvertData(name, js_conv_func))
@@ -1126,15 +1107,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
 
-    :param tag_name: The tag name of the child elements you want to get.
-    :param i: Optional. The index of the element.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param tag_name: The tag name of the child elements you want to get
+    :param i: Optional. The index of the element
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
     """
     return JsNodeDom.JsDoms("document.getElementsByTagName(%s)[%s]" % (
       JsUtils.jsConvertData(tag_name, js_conv_func), i), js_code="%s_%s" % (tag_name, i), set_var=True)
 
   @staticmethod
-  def getElementsByClassName(cls_name: str):
+  def getElementsByClassName(cls_name: str) -> JsNodeDom.JsDoms:
     """  
     The getElementsByClassName() method returns a collection of all elements in the document with the specified
     class name, as a NodeList object.
@@ -1186,7 +1167,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsObject.JsObject(
       "document.createTextNode(%s)" % JsUtils.jsConvertData(text, js_conv_func), is_py_data=False)
 
-  def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
+  def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel],
+                         js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
     """  
     The encodeURIComponent() function encodes a URI component.
 
@@ -1194,14 +1176,15 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
 
-    :param uri: The URI to be encoded.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param uri: The URI to be encoded
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
 
     :return: A String, representing the encoded URI.
     """
     return JsObject.JsObject("encodeURIComponent(%s)" % JsUtils.jsConvertData(uri, js_conv_func))
 
-  def decodeURIComponent(self, url_enc: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
+  def decodeURIComponent(self, url_enc: Union[str, primitives.JsDataModel],
+                         js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
     """  
     The decodeURIComponent() function decodes a URI component.
 
@@ -1209,8 +1192,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
 
-    :param url_enc: The URI to be decoded.
-    :param js_conv_func: Optional. A specific JavaScript data conversion function.
+    :param url_enc: The URI to be decoded
+    :param js_conv_func: Optional. A specific JavaScript data conversion function
 
     :return: A String, representing the decoded URI.
     """
@@ -1227,15 +1210,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def data(self) -> JsData.JsData:
-    """  
-
-    :rtype: JsData.JsData
-    """
+    """ Get wrapped JavaScript data structures. """
     if self.__data is None:
       self.__data = JsData.JsData(self.page)
     return self.__data
 
-  def string(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
+  def string(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsString.JsString:
     """  
     Shortcut to the Javascript String primitives.
 
@@ -1246,7 +1226,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     """
     return JsString.JsString(data, js_code, set_var, is_py_data, page=self.page)
 
-  def number(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
+  def number(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsNumber.JsNumber:
     """  
     Shortcut to the Javascript Number primitives.
 
@@ -1257,7 +1237,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     """
     return JsNumber.JsNumber(data, js_code, set_var, is_py_data, page=self.page)
 
-  def object(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True):
+  def object(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsObject.JsObject:
     """  
     Shortcut to the Javascript Object primitives.
 
@@ -1269,7 +1249,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsObject.JsObject(data, js_code, set_var, is_py_data, page=self.page)
 
   def intersectionObserver(self, js_code: str, callback: types.JS_FUNCS_TYPES = None, options: dict = None,
-                           observe_once: bool = False, profile: types.PROFILE_TYPE = None):
+                           observe_once: bool = False, profile: types.PROFILE_TYPE = None
+                           ) -> JsIntersectionObserver.IntersectionObserver:
     """  
 
     :param js_code: The PyJs functions.
@@ -1284,7 +1265,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     return JsIntersectionObserver.IntersectionObserver(self.page, js_code)
 
-  def querySelectorAll(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
+  def querySelectorAll(
+          self,
+          selector: Union[str, primitives.JsDataModel],
+          js_conv_func: Union[str, list] = None) -> JsNodeDom.JsDomsList:
     """  
     The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
     as a static NodeList object.
@@ -1408,7 +1392,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsObjects.JsVoid("document.writeln(%s)" % value)
 
   @staticmethod
-  def parseFloat(value: str):
+  def parseFloat(value: str) -> JsNumber.JsNumber:
     """  
     The parseFloat() function parses a string and returns a floating point number.
 
@@ -1438,7 +1422,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsNumber.JsNumber("parseInt(%s)" % value, is_py_data=False)
 
   @staticmethod
-  def parseDate(value: str):
+  def parseDate(value: str) -> JsNumber.JsNumber:
     """  
     The parse() method parses a date string and returns the number of milliseconds between the date string and midnight
     of January 1, 1970.
@@ -1569,9 +1553,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def msg(self) -> JsMsgAlerts.Msg:
-    """  
-    Shortcut to predefined temporary messages displayed to the UI.
-    """
+    """ Shortcut to predefined temporary messages displayed to the UI. """
     return JsMsgAlerts.Msg(self.page)
 
   def import_js(self, script: str, js_funcs: Union[str, list], profile: Optional[Union[bool, dict]] = None,
@@ -1776,7 +1758,7 @@ class JsConsole:
     """
     return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
-  def table(self, data: Union[str, primitives.JsDataModel], js_header: Optional[list] = None):
+  def table(self, data: Union[str, primitives.JsDataModel], js_header: Optional[list] = None) -> JsFncs.JsFunction:
     """  
     The console.table() method writes a table in the console view.
 
@@ -1794,7 +1776,7 @@ class JsConsole:
 
     return JsFncs.JsFunction("console.table(%s)" % data)
 
-  def time(self, html_code: Union[str, primitives.JsDataModel]):
+  def time(self, html_code: Union[str, primitives.JsDataModel]) -> JsNumber.JsNumber:
     """  
     The console.time() method starts a timer in the console view.
 
@@ -1823,7 +1805,7 @@ class JsConsole:
     return JsFncs.JsFunction("console.timeEnd('%s')" % html_code)
 
   def _assert(self, data: Union[str, primitives.JsDataModel], info: str,
-              js_conv_func: Optional[Union[str, list]] = None):
+              js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
     """  
     The console.assert() method writes a message to the console, but only if an expression evaluates to false.
 
@@ -1945,7 +1927,7 @@ class JsJson:
 class JsScreen:
 
   @property
-  def availHeight(self):
+  def availHeight(self) -> JsNumber.JsNumber:
     """  
     The availHeight property returns the height of the user's screen, in pixels, minus interface features
     like the Windows Task bar.
@@ -1957,7 +1939,7 @@ class JsScreen:
     return JsNumber.JsNumber("screen.availHeight")
 
   @property
-  def availWidth(self):
+  def availWidth(self) -> JsNumber.JsNumber:
     """  
     The availWidth property returns the width of the user's screen, in pixels, minus interface features like the
     Windows Task bar.
@@ -1969,7 +1951,7 @@ class JsScreen:
     return JsNumber.JsNumber("screen.availWidth")
 
   @property
-  def colorDepth(self):
+  def colorDepth(self) -> JsNumber.JsNumber:
     """  
     The colorDepth property returns the bit depth of the color palette for displaying images (in bits per pixel).
 
@@ -1980,7 +1962,7 @@ class JsScreen:
     return JsNumber.JsNumber("screen.colorDepth")
 
   @property
-  def height(self):
+  def height(self) -> JsNumber.JsNumber:
     """  
     The height property returns the total height of the user's screen, in pixels.
 
@@ -1991,7 +1973,7 @@ class JsScreen:
     return JsNumber.JsNumber("screen.height")
 
   @property
-  def pixelDepth(self):
+  def pixelDepth(self) -> JsNumber.JsNumber:
     """  
     The pixelDepth property returns the color resolution (in bits per pixel) of the visitor's screen.
 
@@ -2002,7 +1984,7 @@ class JsScreen:
     return JsNumber.JsNumber("screen.pixelDepth")
 
   @property
-  def width(self):
+  def width(self) -> JsNumber.JsNumber:
     """  
     The width property returns the total width of the user's screen, in pixels.
 
@@ -2011,4 +1993,3 @@ class JsScreen:
       https://www.w3schools.com/jsref/prop_screen_width.asp
     """
     return JsNumber.JsNumber("screen.width")
-

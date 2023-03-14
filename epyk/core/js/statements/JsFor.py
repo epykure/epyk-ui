@@ -10,7 +10,7 @@ PARSE_FLOAT_EXPR = "parseFloat({})"
 class JsFor:
 
   def __init__(self, end, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = None):
-    """   The for statement creates a loop that is executed as long as a condition is true.
+    """ The for statement creates a loop that is executed as long as a condition is true.
 
     The loop will continue to run as long as the condition is true. It will only stop when the condition becomes false.
 
@@ -20,8 +20,8 @@ class JsFor:
       https://www.w3schools.com/js/js_performance.asp
 
     :param end:
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
     """
     self.options = {"var": 'i', 'start': 0, 'step': 1, 'end': end}
     if options is not None:
@@ -31,7 +31,7 @@ class JsFor:
 
   @property
   def var(self) -> str:
-    """   Get the for loop iterable variable name.
+    """ Get the for loop iterable variable name.
 
     :return: A string corresponding to the variable.
     """
@@ -39,14 +39,17 @@ class JsFor:
 
   @var.setter
   def var(self, value):
-    """   Set the for loop iterable variable name.
-    """
+    """ Set the for loop iterable variable name. """
     self.options['var'] = value
 
   @property
+  def i(self) -> JsUtils.jsConvertData:
+    """ Get the for loop iterable variable name as Js expression. """
+    return JsUtils.jsWrap(self.options['var'])
+
+  @property
   def start(self):
-    """   Set the start value for the for loop.
-    """
+    """ Set the start value for the for loop. """
     return self.options['start']
 
   @start.setter
