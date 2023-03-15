@@ -102,7 +102,7 @@ class Icons:
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    icon_details = self.page.icons.get(icon)
+    icon_details = self.page.icons.get(icon, options=options)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     html_edit = html.HtmlButton.IconEdit(
@@ -174,8 +174,10 @@ class Icons:
     html.Html.set_component_skin(component)
     return component
 
-  def clock(self, text=None, position=None, tooltip="Last Updated Time", width=(None, 'px'), height=(None, 'px'),
-            html_code=None, options=None, profile=None, align: str = "left", size=(None, 'px')):
+  def clock(self, text: str = None, position: str = None, tooltip: str = "Last Updated Time",
+            width: types.SIZE_TYPE = (None, 'px'), height: types.SIZE_TYPE = (None, 'px'),
+            html_code: str = None, options=None, profile: types.PROFILE_TYPE = None, align: str = "left",
+            size: types.SIZE_TYPE = (None, 'px')):
     """
 
     Usage::

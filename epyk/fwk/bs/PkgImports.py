@@ -26,7 +26,7 @@ BOOTSTRAP = {
       {'script': 'bootstrap-datetimepicker.min.css', 'path': 'bootstrap-datetimepicker/%(version)s/css/'},
     ]},
   'bootstrap-icons': {
-    'version': '1.5.0',
+    'version': '1.10.3',
     'website': 'https://icons.getbootstrap.com/',
     'modules': [
       {'script': 'bootstrap-icons.css', 'path': 'bootstrap-icons@%(version)s/font/',

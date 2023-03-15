@@ -2158,6 +2158,8 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
   details = dict(script_details)
   details["version"] = script_version(alias, script_details, with_prefix)
   details["path"] = details["path"] % details
+  if "cdnjs" not in details:
+    details["cdnjs"] = CDNJS_REPO
   return "%(cdnjs)s/%(path)s%(script)s" % details
 
 

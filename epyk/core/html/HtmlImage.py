@@ -59,15 +59,15 @@ class Image(Html.Html):
       self._dom = JsHtml.JsHtmlImg(self, page=self.page)
     return self._dom
 
-  def goto(self, url, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+  def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: str = None):
     """   Click event which redirect to another page.
  
     :param url: the url.
-    :param js_funcs: Optional. The Javascript Events triggered before the redirection.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param target: Optional. The target attribute specifies where to open the linked document.
-    :param source_event: Optional. The event source.
+    :param js_funcs: Optional. The Javascript Events triggered before the redirection
+    :param profile: Optional. A flag to set the component performance storage
+    :param target: Optional. The target attribute specifies where to open the linked document
+    :param source_event: Optional. The event source
     """
     js_funcs = js_funcs or []
     self.style.css.cursor = 'pointer'
@@ -77,7 +77,7 @@ class Image(Html.Html):
     return self.click(js_funcs, profile, source_event)
 
   def from_plot(self, plt):
-    """   Load a image from a plt object from matplotlib.
+    """ Load a image from a plt object from matplotlib.
 
     Usage::
 
@@ -279,8 +279,8 @@ class ImgCarousel(Html.Html):
   def add_plot(self, plot, title: str = "", width: types.SIZE_TYPE = "auto"):
     """
  
-    :param plot: matplotlib.pyplot. The ploting features in matplotlib.
-    :param title:
+    :param plot: matplotlib.pyplot. The ploting features in matplotlib
+    :param title: The chart title
     :param width: Optional.
 
     :return: self to allow the chaining.
@@ -309,7 +309,7 @@ class ImgCarousel(Html.Html):
       len(self.items), html_code="%s_points" % self.htmlCode, options={"managed": False})
     return self
 
-  def from_base64_list(self, values, width: Union[str, tuple] = "auto"):
+  def from_base64_list(self, values: List[str], width: Union[str, tuple] = "auto"):
     """
  
     :param values:
@@ -412,6 +412,7 @@ class Icon(Html.Html):
       self._vals = value
       value = ""
     elif options['icon_family'] == 'bootstrap-icons':
+      self.attr['class'].add("bi")
       from epyk.fwk.bs import PkgImports
       if self.page.ext_packages is None:
         self.page.ext_packages = {}

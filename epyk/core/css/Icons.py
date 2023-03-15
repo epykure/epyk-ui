@@ -92,27 +92,29 @@ class IconModel:
   def family(self, fam: str):
     self._family = fam
 
-  def get(self, alias: Optional[str], family: str = None) -> dict:
+  def get(self, alias: Optional[str], family: str = None, options: dict = None) -> dict:
     """ Return the icon properties based on the
 
     :param alias: The full icon definition or an alias from the internal mapping
     :param family: The icon family
+    :param options: The common component options
     :return: The icon properties
     """
+    if options is not None:
+      family = options.get("icon_family")
     family = family or self.family
-    icon = _ICON_MAPPINGS[family].get(alias, alias)
+    icon = _ICON_MAPPINGS.get(family, {}).get(alias, alias)
     if icon is None:
       return {"icon": _ICON_MAPPINGS[self.family].get(alias, alias), "icon_family": self.family}
 
     return {"icon": icon, "icon_family": family}
 
   def add(self, alias: str, imports: dict, set_default: bool = True):
-    """
+    """ Register another icons library to the framework.
 
-    :param alias:
+    :param alias: The full icon definition or an alias from the internal mapping
     :param imports:
     :param set_default:
-    :return:
     """
     self.page.ext_packages.update(imports)
     self.page.imports.reload()

@@ -324,7 +324,7 @@ class Report:
     """
     self._css = {}
     self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
-    self._tags, self._header_obj, self.__import_manage = None, None, None
+    self._tags, self._header_obj, self.__import_manage, self.__icons = None, None, None, None
     if script is None:
       frame = inspect.stack()[1]
       if inspect.getmodule(frame[0]) is not None:
@@ -771,6 +771,14 @@ class Report:
 
     Usage::
 
-
+      page = pk.Page()
+      page.icons.family = "bootstrap-icons"
+      icons = page.ui.menus.icons([
+          "bi-1-circle-fill",
+          "bi-search-heart-fill",
+          "bi-x-circle-fill",
+      ])
     """
-    return Icons.IconModel(self)
+    if self.__icons is None:
+      self.__icons = Icons.IconModel(self)
+    return self.__icons

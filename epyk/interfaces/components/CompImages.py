@@ -715,7 +715,7 @@ class Images:
       background_color = self.page.theme.greys[0]
     if color is None:
       color = self.page.theme.success.base
-    icon_details = self.page.icons.get(icon)
+    icon_details = self.page.icons.get(icon, options=options)
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     component = html.HtmlImage.Badge(
@@ -847,7 +847,7 @@ class Images:
     grid.style.css.color = self.page.theme.greys[6]
     return grid
 
-  def epyk(self, align="center", width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''),
+  def epyk(self, align: str = "center", width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = ('auto', ''),
            html_code: str = None, profile: types.PROFILE_TYPE = None, tooltip: str = None,
            options: types.OPTION_TYPE = None
            ):
