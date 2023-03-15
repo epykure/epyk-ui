@@ -479,6 +479,10 @@ class Chart(Html.Html):
     :param z_index: Optional. Specifies the stack order of an element
     """
     if status:
+      try:
+        loading_height = "%spx" % int(self.height / 2)
+      except:
+        loading_height = "30%"
       return ''' 
 if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
   var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
@@ -486,14 +490,14 @@ if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
   divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0;
   divLoading.style.zIndex = %(z_index)s; divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
   divLoading.style.display = 'block'; 
-  var divLoadingContainer = document.createElement("p"); divLoadingContainer.style.marginTop = '%(height)spx'; 
+  var divLoadingContainer = document.createElement("p"); divLoadingContainer.style.marginTop = '%(height)s'; 
   var divLoadingIcon = document.createElement("i"); divLoadingIcon.classList.add("fas", "fa-spinner", "fa-spin");
   divLoadingIcon.style.marginRight = "5px"; divLoadingContainer.appendChild(divLoadingIcon); 
   divLoadingContainer.appendChild(document.createTextNode("%(label)s"));
   divLoading.appendChild(divLoadingContainer); document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
 }''' % {"htmlId": self.htmlCode, 'size': self.page.body.style.globals.font.normal(-1),
         'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
-        'label': loading, "z_index": z_index, "height": int(self.height / 2)}
+        'label': loading, "z_index": z_index, "height": loading_height}
 
     return '''
       if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){

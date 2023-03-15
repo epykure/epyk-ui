@@ -533,7 +533,7 @@ class ChartJs:
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
-    :param r_values: Optional.
+    :param r_values: Optional. Set the r for the points on the chart
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -543,7 +543,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'z_columns': r_values, 'rDim': None,
+    options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'z_columns': None, 'rDim': r_values,
                     'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.xyz(record, y_columns, x_axis, r_values)
     line_chart = graph.GraphChartJs.ChartBubble(self.page, width, height, html_code, options, profile)
