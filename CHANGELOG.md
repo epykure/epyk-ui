@@ -1,6 +1,19 @@
 ## [Unreleased]
 
+## [1.9.31] - 2023-03-15
+
+### Added
+- More doc and type annotation
+- More examples in functions
+- Add new Js helpers to replace internal builders
+- Add css method to ease use of external classes
+
+### Fixed
+- Fixes for the icons modules.
+
+
 ## [1.9.30] - 2023-02-26
+
 
 ### Added
 - More doc and type annotation
