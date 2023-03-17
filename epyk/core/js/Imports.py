@@ -1494,7 +1494,7 @@ JS_IMPORTS = {
 
   # Code mirror
   'codemirror': {
-    'version': '5.59.2',
+    'version': '6.65.7',
     'website': 'https://codemirror.net/',
     'modules': [
       {'script': 'codemirror.js', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -3646,16 +3646,13 @@ class ImportPackages:
     Related Pages:
 
       https://codemirror.net
-
-    :rtype: ImportModule
     """
     return self.get("codemirror")
 
   @property
-  def codemirror_extensions(self):
-    """  
+  def codemirror_extensions(self) -> ImportPackagesCodeMirrorExts:
+    """  Code mirror extensions
 
-    :rtype: ImportPackagesCodeMirrorExts
     """
     return ImportPackagesCodeMirrorExts(self._js, self._css, self.__linked)
 

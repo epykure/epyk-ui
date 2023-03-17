@@ -1324,6 +1324,12 @@ class OptionScales(Options):
     """
     return self.y_axis()
 
+  def add_axis(self, value: str):
+    """
+
+    """
+    return self._config_sub_data(value, OptionAxes)
+
   def add_y_axis(self):
     """
 
