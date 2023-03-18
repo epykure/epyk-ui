@@ -91,8 +91,7 @@ class OptionLabelFont(Options):
 
   @property
   def size(self):
-    """ Change the font-size.
-    """
+    """ Change the font-size. """
     return self._config_get()
 
   @size.setter
@@ -1307,7 +1306,7 @@ class OptionScaleR(Options):
 class OptionScales(Options):
 
   @property
-  def xAxes(self):
+  def xAxes(self) -> OptionAxes:
     """
     Shortcut property to the last x_axes definition.
     Use the function x_axes to be more specific.
@@ -1315,7 +1314,7 @@ class OptionScales(Options):
     return self.x_axes()
 
   @property
-  def yAxes(self):
+  def yAxes(self) -> OptionAxes:
     """
     Shortcut property to the last y_axis definition.
     Use the function y_axis to be more specific.
@@ -1324,20 +1323,19 @@ class OptionScales(Options):
     """
     return self.y_axis()
 
-  def add_axis(self, value: str):
-    """
+  def add_axis(self, value: str) -> OptionAxes:
+    """ Add a bespoke series to the chart.
 
+    :param value: The series alias
     """
     return self._config_sub_data(value, OptionAxes)
 
-  def add_y_axis(self):
-    """
-
-    """
+  def add_y_axis(self) -> OptionAxes:
+    """ Add / Get y axis to the chart. """
     return self._config_sub_data("y", OptionAxes)
 
   def y_axis(self, i: int = None) -> OptionAxes:
-    """
+    """ Get a specific y axis.
 
     :param i: optional. Default take the latest one
     """
@@ -1354,15 +1352,13 @@ class OptionScales(Options):
     return self.js_tree["yAxes"][i]
 
   def add_x_axis(self) -> OptionAxes:
-    """  
-    Add a X axis to a chart component.
-    """
+    """ Add a X axis to a chart component. """
     return self._config_sub_data("x", OptionAxes)
 
   def x_axes(self, i: int = None) -> OptionAxes:
-    """  
+    """ Get a specific x axis.
 
-    :param i: optional. Default take the latest one.
+    :param i: optional. Default take the latest one
     """
     if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
       return self.add_x_axis()
@@ -1377,26 +1373,22 @@ class OptionScales(Options):
 
   @property
   def r(self) -> OptionScaleR:
-    """  
-    """
+    """ Add options to the r scale. """
     return self._config_sub_data("r", OptionScaleR)
 
   @property
   def x(self) -> OptionAxes:
-    """  
-    """
+    """ Add options to the x axis. """
     return self._config_sub_data("x", OptionAxes)
 
   @property
   def y(self) -> OptionAxes:
-    """  
-    """
+    """  Add options to the y axis. """
     return self._config_sub_data("y", OptionAxes)
 
   @property
   def y2(self) -> OptionAxes:
-    """  
-    """
+    """  Add options to a y2 axis. """
     return self._config_sub_data("y2", OptionAxes)
 
 

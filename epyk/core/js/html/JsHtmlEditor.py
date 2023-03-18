@@ -45,18 +45,14 @@ class Console(JsHtml.JsHtmlRich):
     return JsObjects.JsObjects.get("%s.innerHTML += ' > '+ %s +'<br/>'" % (self.component.dom.varId, js_data))
 
   def clear(self):
-    """
-
-    """
+    """ Clear the editor. """
     return JsObjects.JsObjects.get('%s.innerHTML = ""' % self.varName)
 
 
 class Editor(JsHtml.JsHtmlRich):
 
   def timestamp(self):
-    """
-    Update the editor timestamp.
-    """
+    """ Update the editor timestamp. """
     return self.querySelector("span").innerHTML(JsObjects.JsDate.JsDate().getStrTimeStamp())
 
 
@@ -72,13 +68,11 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """   
-
-    """
+    """ Get the editor content. """
     return JsHtml.ContentFormatters(self.page, "%s.getValue()" % self.component.editorId)
 
-  def select(self):
-    """   Select the whole content of the editor.
+  def select(self) -> JsObjects.JsObject:
+    """ Select the whole content of the editor.
 
     Related Pages:
 
@@ -86,8 +80,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self.component.editorId)
 
-  def singleSelection(self):
-    """   When multiple selections are present, this deselects all but the primary selection.
+  def singleSelection(self) -> JsObjects.JsObject:
+    """ When multiple selections are present, this deselects all but the primary selection.
 
     Related Pages:
 
@@ -95,8 +89,9 @@ class CodeMirror(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self.component.editorId)
 
-  def killLine(self):
-    """   Emacs-style line killing. Deletes the part of the line after the cursor.
+  def killLine(self) -> JsObjects.JsObject:
+    """ Emacs-style line killing. Deletes the part of the line after the cursor.
+
     If that consists only of whitespace, the newline at the end of the line is also deleted.
 
     Related Pages:
@@ -105,8 +100,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self.component.editorId)
 
-  def deleteLine(self):
-    """   Deletes the whole line under the cursor, including newline at the end.
+  def deleteLine(self) -> JsObjects.JsObject:
+    """ Deletes the whole line under the cursor, including newline at the end.
 
     Related Pages:
 
@@ -114,55 +109,46 @@ class CodeMirror(JsHtml.JsHtmlRich):
     """
     return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self.component.editorId)
 
-  def copy(self):
-    """   
-
-    """
+  def copy(self) -> JsObjects.JsObject:
+    """ Copy the editor content. """
     return JsObjects.JsObjects.get("%s.execCommand('copy')" % self.component.editorId)
 
-  def setValue(self, data: Union[str, primitives.JsDataModel, float, dict, list]):
-    """   
+  def setValue(self, data: Union[str, primitives.JsDataModel, float, dict, list]) -> JsObjects.JsObject:
+    """ Set the editor content.
 
-
-    :param data:
+    :param data: The value to put in the editor
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get("%s.setValue(%s)" % (self.component.editorId, data))
 
   def setOption(self, name: Union[str, primitives.JsDataModel, float, dict, list],
-                value: Union[str, primitives.JsDataModel, float, dict, list]):
-    """   
+                value: Union[str, primitives.JsDataModel, float, dict, list]) -> JsObjects.JsObject:
+    """ Set specific options to the editor.
 
-    :param name:
-    :param value:
+    :param name: The option's name
+    :param value: The option's value
     """
     name = JsUtils.jsConvertData(name, None)
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.component.editorId, name, value))
 
-  def refresh(self):
-    """   
+  def refresh(self) -> JsUtils.jsWrap:
+    """ Refresh the Editor's content """
+    return JsUtils.jsWrap("%s.refresh()" % self.component.editorId)
 
-    """
-    return JsObjects.JsObjects.get("%s.refresh()" % self.component.editorId)
+  def clear(self) -> JsUtils.jsWrap:
+    """ Clear the editor's content. """
+    return JsUtils.jsWrap('%s.setValue("")' % self.component.editorId)
 
-  def clear(self):
-    """   
+  def empty(self) -> JsUtils.jsWrap:
+    """ Empty the editor. """
+    return JsUtils.jsWrap('%s.setValue("")' % self.component.editorId)
 
-    """
-    return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
+  def appendText(self, text: Union[str, primitives.JsDataModel], from_selection: bool = True) -> JsObjects.JsVoid:
+    """ Append test to the editor's content.
 
-  def empty(self):
-    """   
-
-    """
-    return JsObjects.JsObjects.get('%s.setValue("")' % self.component.editorId)
-
-  def appendText(self, text: Union[str, primitives.JsDataModel], from_selection: bool = True):
-    """   
-
-    :param text: The text to append.
-    :param from_selection: Optional.
+    :param text: The text to append
+    :param from_selection: Optional
     """
     text = JsUtils.jsConvertData(text, None)
     from_selection = JsUtils.jsConvertData(from_selection, None)
