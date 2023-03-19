@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+## [1.9.32] - 2023-03-19
+
+### Added
+- More doc and type annotation
+- More examples in functions
+- Bootsrap icon library
+
+### Fixed
+- Use of different icon framework.
+
+### Changed
+- Jquery version
+
+
 ## [1.9.31] - 2023-03-15
 
 ### Added

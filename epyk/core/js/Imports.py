@@ -2154,7 +2154,7 @@ def script_version(alias: str, script_details: dict, with_prefix: bool = False):
       # use the version of the node folder
       JS_IMPORTS[alias]["version"] = JS_IMPORTS[JS_IMPORTS[alias]['node_folder']]['version']
     return JS_IMPORTS[alias]["version"]
-  
+
   if alias in CSS_IMPORTS:
     return CSS_IMPORTS[alias].get("version")
 
