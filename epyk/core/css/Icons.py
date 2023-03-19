@@ -84,6 +84,7 @@ class IconModel:
   @property
   def family(self) -> str:
     """ Set the icon family to be used in the page.
+
     This will have to be defined first before loading any components.
     """
     return self._family
@@ -91,6 +92,32 @@ class IconModel:
   @family.setter
   def family(self, fam: str):
     self._family = fam
+
+  def other(self, package: str = None, icons_map: dict = None):
+    """ Set the default icon to another bespoke package.
+
+    This will not rely anymore to fontawesome by default.
+    By using this it is important to align _ICON_MAPPINGS variables to point to the updated
+    icon classes
+
+    Usage::
+
+      page = pk.Page()
+      page.icons.other("bootstrap-icons", {"edit": 'bi bi-2-circle'})
+      page.ui.icons.edit("test")
+
+    :param package: Optional. The package alias
+    :param icons_map: Optional. The internal icon mapping
+    """
+    global _ICON_MAPPINGS
+
+    self._family = 'other'
+    if package is not None:
+      self.page.imports.add(package)
+      if package in _ICON_MAPPINGS:
+        self._family = package
+    if icons_map is not None:
+      _ICON_MAPPINGS[self._family] = icons_map
 
   def get(self, alias: Optional[str], family: str = None, options: dict = None) -> dict:
     """ Return the icon properties based on the
@@ -113,8 +140,8 @@ class IconModel:
     """ Register another icons library to the framework.
 
     :param alias: The full icon definition or an alias from the internal mapping
-    :param imports:
-    :param set_default:
+    :param imports: The different external modules to add to the Import (css and Js)
+    :param set_default: Change the default family
     """
     self.page.ext_packages.update(imports)
     self.page.imports.reload()

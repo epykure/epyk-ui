@@ -150,7 +150,7 @@ class Required:
           html_types.add('js')
       if "services" in self._page.ext_packages[package]:
         self._page.cssImport.add(package)
-    if not html_types and verbose:
+    if not html_types and verbose and package != "other-icons":
       logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
 
 
