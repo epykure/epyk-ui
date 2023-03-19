@@ -1953,6 +1953,14 @@ CSS_IMPORTS = {
     ]
   },
 
+  # bootstrap icons
+  'bootstrap-icons': {
+    'website': 'https://icons.getbootstrap.com/',
+    'version': '1.10.3',
+    'repository': 'https://github.com/twbs/icons?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+    'modules': [
+      {'script': 'bootstrap-icons.min.css', 'path': 'bootstrap-icons/%(version)s/font/', 'cdnjs': CDNJS_REPO}]},
+
   # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
   'bootstrap-select': {
     'modules': [
@@ -2146,6 +2154,9 @@ def script_version(alias: str, script_details: dict, with_prefix: bool = False):
       # use the version of the node folder
       JS_IMPORTS[alias]["version"] = JS_IMPORTS[JS_IMPORTS[alias]['node_folder']]['version']
     return JS_IMPORTS[alias]["version"]
+  
+  if alias in CSS_IMPORTS:
+    return CSS_IMPORTS[alias].get("version")
 
 
 def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False):
