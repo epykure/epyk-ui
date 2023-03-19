@@ -621,7 +621,7 @@ JS_IMPORTS = {
     'website': 'http://jquery.com/',
     'repository': "https://github.com/jquery/jquery",
     'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
-    'version': '3.6.3',
+    'version': '3.6.4',
     'modules': [
       {'script': 'jquery.min.js', 'node_path': 'dist/', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}
     ],
@@ -2437,7 +2437,7 @@ class ImportModule:
       self._css["main"] = new_css
     self.overriden = True
 
-  def set_enterprise(self, version: str = None):
+  def set_enterprise(self, version: str = None, license_key: str = None):
     """  
     Change the package to the enterprise version.
     This feature will only work for few modules like AGGrid.
@@ -2448,6 +2448,7 @@ class ImportModule:
       page.imports.pkgs.ag_grid.set_enterprise()
 
     :param version: Set the package version number
+    :param license_key: Optional. The license key
     """
     pgks = ("ag-grid-community",)
     if self._name not in pgks:
@@ -2478,6 +2479,8 @@ class ImportModule:
         "%s/ag-grid-enterprise@%s/styles/ag-grid.min.css" % (JSDELIVER, version): 'text/javascript'}
       self._css["dep"] = ["/static\\ag-grid/%s/styles/ag-theme-alpine.min.css" % version]
       self._css["versions"] = [version]
+      if license_key is not None:
+        self.page.properties.js.add_text("agGrid.LicenseManager.setLicenseKey('%s')" % license_key)
 
   def set_access_token(self, value: str = None, name: str = ""):
     """  
