@@ -24,6 +24,16 @@ class JsVoid(primitives.JsDataModel):
   def __init__(self, data: Any):
     self._data = data
 
+  def __add__(self, other):
+    """ Add two JavaScript expressions
+
+    :param other: A second expression
+    :return: A new JavaScript expression
+    """
+    if hasattr(other, "toStr"):
+      other = other.toStr()
+    return JsVoid("%s;%s" % (self._data, other))
+
   def toStr(self):
     return self._data
 

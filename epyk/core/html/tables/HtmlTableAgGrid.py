@@ -178,14 +178,14 @@ class Table(Html.Html):
     return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
       'tableId': self.tableId, 'config': self.options.config_js(options), 'htmlCode': component_id or self.dom.varName}
 
-  def loading(self, status: bool = True, color: str = None):
-    """   Add loading banner.
+  def loading(self, status: bool = True, label: types.JS_DATA_TYPES = "Loading..."):
+    """ Add loading banner.
 
     :param status: The visibility flag
-    :param color: Not used for the moment
+    :param label: The label to be displayed
     """
     if status:
-      return self.js.showLoadingOverlay()
+      return self.js.overlayLoadingTemplate(label) + self.js.showLoadingOverlay()
 
     return self.js.hideOverlay()
 

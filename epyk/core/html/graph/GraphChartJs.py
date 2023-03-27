@@ -465,7 +465,7 @@ class Chart(Html.Html):
     return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
       "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
 
-  def loading(self, status: bool = True, loading: str = "Loading....", z_index: int = 500):
+  def loading(self, status: bool = True, z_index: int = 500, label: str = "Loading...."):
     """ Loading component on a chart.
 
     Usage::
@@ -475,7 +475,7 @@ class Chart(Html.Html):
         chart_obj.loading(False)
 
     :param status: Optional. Specific the status of the display of the loading component
-    :param loading: Optional.
+    :param label: Optional.
     :param z_index: Optional. Specifies the stack order of an element
     """
     if status:
@@ -493,16 +493,11 @@ if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
   var divLoadingContainer = document.createElement("p"); divLoadingContainer.style.marginTop = '%(height)s'; 
   var divLoadingIcon = document.createElement("i"); divLoadingIcon.classList.add("fas", "fa-spinner", "fa-spin");
   divLoadingIcon.style.marginRight = "5px"; divLoadingContainer.appendChild(divLoadingIcon); 
-  divLoadingContainer.appendChild(document.createTextNode("%(label)s"));
+  var divLoadingContent = document.createElement("span"); divLoadingContent.innerHTML = %(label)s;
+  divLoadingContainer.appendChild(divLoadingContent);
   divLoading.appendChild(divLoadingContainer); document.getElementById('%(htmlId)s').parentNode.appendChild(divLoading)
-}''' % {"htmlId": self.htmlCode, 'size': self.page.body.style.globals.font.normal(-1),
-        'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
-        'label': loading, "z_index": z_index, "height": loading_height}
-
-    return '''
-      if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
-        document.getElementById('%(htmlId)s').parentNode.removeChild(window['popup_loading_%(htmlId)s']); 
-        window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
+}''' % {"htmlId": self.htmlCode, 'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
+        'label': JsUtils.jsConvertData(label, None), "z_index": z_index, "height": loading_height}
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())

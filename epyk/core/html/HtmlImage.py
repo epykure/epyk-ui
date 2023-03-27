@@ -135,6 +135,26 @@ class Image(Html.Html):
       self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s />%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
+  def loading(self, status: bool = True, label: str = "https://loading.io/mod/spinner/spinner/sample.gif"):
+      """ Loading feature for image.
+
+      Usage::
+
+          chart_obj.loading()
+          ....
+          chart_obj.loading(False)
+
+      :param status: Optional. Specific the status of the display of the loading component
+      :param label: Optional. Picture full path
+      """
+      if status:
+        return ''' 
+document.getElementById('%(htmlId)s').src = "error_link";
+document.getElementById('%(htmlId)s').onerror = function() this.onerror=null;this.src=%(label)s}
+  ''' % {"htmlId": self.htmlCode, 'label': JsUtils.jsConvertData(label, None)}
+
+      return ""
+
 
 class AnimatedImage(Html.Html):
   name = 'Animated Picture'

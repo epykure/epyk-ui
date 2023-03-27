@@ -923,7 +923,23 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.tabToPreviousCell()" % self.varId)
 
-  def showLoadingOverlay(self):
+  def overlayLoadingTemplate(self, js_data: types.JS_DATA_TYPES) -> JsObjects.JsVoid:
+    """ Set the template for loading overlay.
+
+    :param js_data: String or HTML string
+    """
+    js_data = JsUtils.jsConvertData(js_data, None)
+    return JsObjects.JsVoid("%s.overlayLoadingTemplate = %s" % (self.varId, js_data))
+
+  def overlayNoRowsTemplate(self, js_data: types.JS_DATA_TYPES) -> JsObjects.JsVoid:
+    """ Set the template for No Rows overlay
+
+    :param js_data: String or HTML string
+    """
+    js_data = JsUtils.jsConvertData(js_data, None)
+    return JsObjects.JsVoid("%s.overlayNoRowsTemplate = %s" % (self.varId, js_data))
+
+  def showLoadingOverlay(self) -> JsObjects.JsVoid:
     """   Show the 'loading' overlay.
 
     Related Pages:
@@ -941,7 +957,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.showNoRowsOverlay()" % self.varId)
 
-  def hideOverlay(self):
+  def hideOverlay(self) -> JsObjects.JsVoid:
     """   Hides the overlay if showing.
 
     Related Pages:

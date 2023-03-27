@@ -379,7 +379,44 @@ class Code(Html.Html):
     self.page.body.onReady(
       'window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()' % {
         "editor": self.editorId, "width": self.css("width"), "height": self.css("height")})
-    return '<textarea %s></textarea>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+    return '<div><textarea %s></textarea><div id="%s_loading"></div>%s</div>' % (
+      self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper)
+
+  def loading(self, status: bool = True, label: str = "Loading...."):
+      """ Loading component on a chart.
+
+      Usage::
+
+          cd = page.ui.codes.code("javascript", "", height="500px")
+          cd.loading(label='<span>Problem with service link. Please try again later <a href="#" onClick="alert()">click here</a></span>'),
+          cd.build('''
+            function testAlert(){
+                alert("ok")
+            }'''),
+          cd.loading(False)
+
+      :param status: Optional. Specific the status of the display of the loading component
+      :param label: Optional. Message to be displayed
+      """
+      if status:
+        return ''' 
+var divLoading = document.getElementById('%(htmlId)s_loading'); divLoading.innerHTML = '';
+divLoading.style.width = '100%%'; divLoading.style.textAlign = 'center'; divLoading.style.display = 'block'; 
+
+var divLoadingContainer = document.createElement("p"); 
+var divLoadingIcon = document.createElement("i"); divLoadingIcon.classList.add("fas", "fa-spinner", "fa-spin");
+divLoadingIcon.style.marginRight = "5px"; divLoadingContainer.appendChild(divLoadingIcon); 
+var divLoadingContent = document.createElement("span"); divLoadingContent.innerHTML = %(label)s;
+divLoadingContainer.appendChild(divLoadingContent); 
+window["editor_%(htmlId)s"].getWrapperElement().style.display = 'None';
+divLoading.appendChild(divLoadingContainer); 
+''' % {"htmlId": self.htmlCode, 'size': self.page.body.style.globals.font.normal(-1),
+       'label': JsUtils.jsConvertData(label, None)}
+
+      return '''
+var divLoading = document.getElementById('%(htmlId)s_loading'); divLoading.innerHTML = '';
+window['editor_%(htmlId)s'].getWrapperElement().style.display = '%(display)s';
+window['editor_%(htmlId)s'].refresh()''' % {"htmlId": self.htmlCode, "display": self.css("display")}
 
 
 class Tags(Html.Html):
