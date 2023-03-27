@@ -111,7 +111,7 @@ class IconModel:
     """
     global _ICON_MAPPINGS
 
-    self._family = 'other'
+    self._family = 'other-icons'
     if package is not None:
       self.page.imports.add(package)
       if package in _ICON_MAPPINGS:
