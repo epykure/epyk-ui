@@ -28,11 +28,10 @@ class Radio(Html.Html):
       self.add(v['value'], v.get('checked', False))
 
   def add(self, val: Union[Html.Html, str], checked: bool = False):
-    """
-    Add a value to the radio component.
+    """ Add a value to the radio component.
 
-    :param val: The item to be added.
-    :param checked:  Optional. Check the item.
+    :param val: The item to be added
+    :param checked: Optional. Check the item
     """
     if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
       val = self.page.ui.inputs.radio(checked, val, group_name="radio_%s" % self.group_name, width=("auto", ""))
@@ -44,7 +43,7 @@ class Radio(Html.Html):
   def set_disable(self, text: str):
     """
 
-    :param text: The item value to disable.
+    :param text: The item value to disable
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -54,7 +53,7 @@ class Radio(Html.Html):
   def set_checked(self, text: str):
     """
 
-    :param text: The item value to set as checked.
+    :param text: The item value to set as checked
     """
     for v in self.val:
       if v.val["text"] == text:
@@ -63,9 +62,7 @@ class Radio(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.Radio:
-    """
-    HTML Dom object.
-    """
+    """ HTML Dom object. """
     if self._dom is None:
       self._dom = JsHtmlSelect.Radio(self, page=self.page)
     return self._dom
@@ -107,9 +104,7 @@ class Tick(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.Tick:
-    """
-    HTML Dom object.
-    """
+    """ HTML Dom object. """
     if self._dom is None:
       self._dom = JsHtmlSelect.Tick(self, page=self.page)
       self._dom.options = self._options
@@ -139,16 +134,20 @@ class Switch(Html.Html):
       self.checkbox.attr["checked"] = is_on
 
     self.switch_label = page.ui.texts.label(page.entities.non_breaking_space)
-    self.switch_label.style.clear()
+    self.switch_label.style.clear_all(no_default=True)
+    self.switch_label.style.css.display = "inline-block"
+    #self.switch_label.style.css.top = 4
     self.switch_label.style.css.width = "%spx" % htmlDefaults.INPUTS_TOGGLE_WIDTH
     self.switch_label.style.add_classes.radio.switch_label()
     self.switch_label.options.managed = False
-    self.switch_label.style.css.line_height = "10px"
+    self.switch_label.style.css.line_height = int(self.page.body.style.globals.line_height / 2)
 
     self.switch_text = page.ui.tags.p(self.val['on'] if is_on else self.val['off'])
     self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold", "margin-top": 0})
     self.switch_text.tooltip(self.val.get('text', ''))
+    self.switch_text.style.css.font_size = int(self.page.body.style.globals.line_height / 2) + 2
     self.switch_text.options.managed = False
+    self.switch_text.style.css.line_height = int(self.page.body.style.globals.line_height / 2) + 2
 
     self.switch = self.dom.querySelector("label")
 
@@ -176,23 +175,18 @@ class Switch(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
       self._dom = JsHtmlSelect.JsHtmlSwitch(self, page=self.page)
     return self._dom
 
-  _js__builder__ = '''
-      if (data.off == data.checked){
-        htmlObj.querySelector("input").checked = false; htmlObj.querySelector("p").innerHTML = data.off}
-      else {htmlObj.querySelector("input").checked = true; htmlObj.querySelector("p").innerHTML = data.on};
-      window[htmlObj.getAttribute('id') +"_data"] = data '''
-
   @property
   def js(self) -> JsComponents.Switch:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object.
@@ -202,8 +196,8 @@ class Switch(Html.Html):
     return self._js
 
   def event_fnc(self, event: str):
-    """
-    Function to get the generated JavaScript method in order to then reuse it in other components.
+    """ Function to get the generated JavaScript method in order to then reuse it in other components.
+
     This will return the event function in a string already transpiled.
 
     :param event: The event function.
@@ -212,8 +206,7 @@ class Switch(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Add click event to the switch component.
+    """ Add click event to the switch component.
 
     Usage::
 
@@ -222,10 +215,10 @@ class Switch(Html.Html):
         page.js.console.log(mode_switch.input.dom.val)
       ])
 
-    :param js_funcs: A Javascript Python function.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("click")])
@@ -233,8 +226,8 @@ class Switch(Html.Html):
 
   def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """
-    Set the click property for the Switch.
+    """ Set the click property for the Switch.
+
     The toggle event allow specifying different Javascript functions for each states of the component.
 
     Usage::
@@ -244,10 +237,10 @@ class Switch(Html.Html):
         page.js.console.log(sw.content)
       ])
 
-    :param on_funcs: Optional. The Javascript functions.
-    :param off_funcs: Optional. The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param on_funcs: Optional. The Javascript functions
+    :param off_funcs: Optional. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self._clicks['profile'] = profile
     if on_funcs is not None:

@@ -25,7 +25,7 @@ class JsVoid(primitives.JsDataModel):
     self._data = data
 
   def __add__(self, other):
-    """ Add two JavaScript expressions
+    """ Add two JavaScript expressions.
 
     :param other: A second expression
     :return: A new JavaScript expression
@@ -46,8 +46,8 @@ class JsPromiseRecords(primitives.JsDataModel):
   def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -78,8 +78,8 @@ class JsPromiseRecords(primitives.JsDataModel):
   def row(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = []

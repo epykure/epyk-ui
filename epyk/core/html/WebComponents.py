@@ -14,7 +14,7 @@ class Component:
     self.folder = self.name.lower()
 
   def rename(self, name: str):
-    """   Change the name of the file in the destination framework.
+    """ Change the name of the file in the destination framework.
 
     :param name: The name of the file.
     """
@@ -24,12 +24,12 @@ class Component:
 
   @property
   def tag(self):
-    """   Create a tag for the HTML component. This will be used by some JavaScript framework like Angular.
-    """
+    """ Create a tag for the HTML component. This will be used by some JavaScript framework like Angular. """
     return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
   def ts(self, name: Optional[str] = None):
-    """   Component export for an Angular app.
+    """ Component export for an Angular app.
+
     This will allow building apps directly from reports using each underlying components available in the framework.
 
     :param name: Optional. The component name. Can be set to define test components.

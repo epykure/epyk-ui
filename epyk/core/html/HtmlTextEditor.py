@@ -32,13 +32,11 @@ class Console(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.Console:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlEditor.Console
     """
     if self._dom is None:
       self._dom = JsHtmlEditor.Console(self, page=self.page)
@@ -46,13 +44,11 @@ class Console(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsConsole:
-    """
-    Property to the component options.
+    """ Property to the component options.
+
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsConsole
     """
     return super().options
 
@@ -81,25 +77,22 @@ class Editor(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.Editor:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlEditor.Editor
     """
     if self._dom is None:
       self._dom = JsHtmlEditor.Editor(self, page=self.page)
     return self._dom
 
   def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
-    """
-    Add a bespoke action to the action panel.
+    """ Add a bespoke action to the action panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
@@ -107,12 +100,11 @@ class Editor(Html.Html):
     return self
 
   def toggle(self, js_funcs: Union[list, str], icons: tuple = ("show", "hide"), tooltip: Optional[str] = None):
-    """
-    Add an event action to the console object.
+    """ Add an event action to the console object.
 
-    :param tuple icons: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icons: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     icon_button = self.page.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
     js_funcs.append(self.textarea.dom.toggle())
@@ -123,46 +115,44 @@ class Editor(Html.Html):
     return self
 
   def copy(self, js_funcs: Union[list, str], icon: str = "capture", tooltip: Optional[str] = None):
-    """
-    Copy the content of the editor component to the clipboard.
+    """ Copy the content of the editor component to the clipboard.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     js_funcs.append(self.textarea.dom.select())
     js_funcs.append('document.execCommand("copy")')
     return self.action(icon, js_funcs, tooltip)
 
   def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
-    """
-    Emtpy run button.
+    """ Emtpy run button.
+
     This function will just add the icon on the actions panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     return self.action(icon, js_funcs, tooltip)
 
   def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
-    """
-    Emtpy save button.
+    """ Emtpy save button.
+
     This function will just add the icon on the actions panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     return self.action(icon, js_funcs, tooltip)
 
   def clear(self, js_funcs: Union[list, str], icon: str = "remove", tooltip: Optional[str] = None):
-    """
-    Add an event action to the console object.
+    """ Add an event action to the console object.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     js_funcs.append(self.textarea.dom.clear())
     return self.action(icon, js_funcs, tooltip)
@@ -189,43 +179,41 @@ class Cell(Html.Html):
     self.textarea = self.page.ui.texts.code(vals, language, height=height, options=options)
     self.textarea.options.managed = False
     self.textarea.style.add_classes.input.textarea()
-    self.textarea.style.add_classes.input.textarea()
     self._jsRun, self._jsSave = '', ''
     self.css({'padding': '10px', "min-height": "30px", 'box-sizing': 'border-box', 'display': 'inline-block'})
     self.actions = []
 
   def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
-    """
-    Add a bespoke action to the action panel.
+    """ Add a bespoke action to the action panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
     self.actions.append((icon, icon_button))
     icon_button.options.managed = False
 
   def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
-    """
-    Emtpy run button.
+    """ Emtpy run button.
+
     This function will just add the icon on the actions panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     js_funcs.append(self.dom.querySelector("span").innerHTML(1, append=True, val_type=int))
     return self.action(icon, js_funcs, tooltip)
 
   def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
-    """
-    Emtpy save button.
+    """ Emtpy save button.
+
     This function will just add the icon on the actions panel.
 
-    :param str icon: The font awesome icon.
-    :param Union[list, str] js_funcs: Optional. The Javascript functions.
-    :param Optional[str] tooltip: Optional. Text to be displayed when mouse is hover.
+    :param icon: The font awesome icon
+    :param js_funcs: Optional. The Javascript functions
+    :param tooltip: Optional. Text to be displayed when mouse is hover
     """
     return self.action(icon, js_funcs, tooltip)
 
@@ -233,7 +221,7 @@ class Cell(Html.Html):
     actions = "".join([b.html() for _, b in self.actions])
     return '''
       <div %(attrs)s>
-          <div style="padding:10px 5px;float:left;width:50px;height:100%%;vertical-align:middle">
+          <div style="font-size:12px;padding:10px 5px;float:left;width:50px;height:100%%;vertical-align:middle;white-space:nowrap">
             In [ <span data=count=0 style="display:inline-block;margin-bottom:5px">0</span> ]<br/>%(actions)s
           </div>
           %(textarea)s
@@ -255,34 +243,25 @@ class Code(Html.Html):
 
   @property
   def style(self) -> GrpClsCodeMirror.Code:
-    """
-    Property to the Style property of the component.
-
-    :rtype: GrpClsCodeMirror.Code
-    """
+    """ Property to the Style property of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsCodeMirror.Code(self)
     return self._styleObj
 
   @property
   def options(self) -> OptCodeMirror.OptionsCode:
-    """
-    Property to set all the possible object for a button.
-
-    :rtype: OptCodeMirror.OptionsCode
-    """
+    """ Property to set all the possible object for a button. """
     return super().options
 
   @property
   def js(self) -> JsCodeMirror.CM:
-    """   A lot of CodeMirror features are only available through its API.
+    """ A lot of CodeMirror features are only available through its API.
+
     Thus, you need to write code (or use add-ons) if you want to expose them to your users.
 
     Related Pages:
 
       https://codemirror.net/doc/manual.html#api
-
-    :rtype: JsCodeMirror.CM
     """
     if self._js is None:
       self._js = JsCodeMirror.CM(self, page=self.page)
@@ -290,13 +269,11 @@ class Code(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.CodeMirror:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtmlEditor.CodeMirror
     """
     if self._dom is None:
       self._dom = JsHtmlEditor.CodeMirror(self, page=self.page)
@@ -304,8 +281,7 @@ class Code(Html.Html):
 
   @property
   def addon(self):
-    """
-    The add-on directory in the distribution contains a number of reusable components that implement extra
+    """ The add-on directory in the distribution contains a number of reusable components that implement extra
     editor functionality.
 
     Related Pages:
@@ -315,25 +291,24 @@ class Code(Html.Html):
     return self.options.addons
 
   def placeholder(self, text: str):
-    """
-    Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
+    """ Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
 
-    :param str text: The text displayed if empty editor.
+    :param text: The text displayed if empty editor
     """
     self.options.addons.placeholder()
     self.attr["placeholder"] = text
     return self
 
-  def build(self, data=None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
+  def build(self, data: str  =None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
             component_id: Optional[str] = None):
     """
     This is a specific version of the common build as the function is not applied to the dom ID but
     the HTML code set as a proper global variable on the JavaScript side.
 
-    :param data: String. Optional. The component input data.
-    :param Optional[dict] options: Optional. Specific Python options available for this component.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] component_id:
+    :param data: Optional. The component input data
+    :param options: Optional. Specific Python options available for this component.
+    :param profile: Optional. A flag to set the component performance storage.
+    :param component_id: Optional.
     """
     return super().build(data, options, profile, component_id=self.htmlCode)
 
@@ -358,20 +333,9 @@ class Code(Html.Html):
     #   fnc_call = "(function(htmlObj, data, options){%s; return result})" % fnc_call
     # return fnc_call
 
-  _js__builder__ = ''' 
-       var editor_alias = "editor_"+ htmlObj.id;
-       if (typeof window[editor_alias] === 'undefined'){
-          window[editor_alias] = CodeMirror.fromTextArea(htmlObj, options)}
-       window[editor_alias].setValue(data); 
-       Object.keys(options).forEach(
-          function(key){ window[editor_alias].setOption(key, options[key])})
-       '''
-
   @property
   def editorId(self):
-    """
-    Return the Javascript variable of the bespoke.
-    """
+    """ Return the Javascript variable of the bespoke. """
     return "editor_%s" % self.htmlCode
 
   def __str__(self):
@@ -482,7 +446,8 @@ class MarkdownReader(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -491,8 +456,6 @@ class MarkdownReader(Html.Html):
       print(div.dom.content)
 
     :return: A Javascript Dom object.
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
@@ -500,22 +463,18 @@ class MarkdownReader(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Property to set all the input TimePicker component properties.
+    """ Property to set all the input TimePicker component properties.
 
     Related Pages:
 
       https://timepicker.co/options/
-
-    :rtype: OptText.OptionsText
     """
     return super().options
 
-  def tooltips(self, data):
-    """
-    Add automatically tooltips to the words.
+  def tooltips(self, data: dict):
+    """ Add automatically tooltips to the words.
 
-    :param data: Dictionary. The list of word to be automatically changed.
+    :param data: The list of word to be automatically changed
     """
     from epyk.core.data import components
 
@@ -537,12 +496,6 @@ class MarkdownReader(Html.Html):
         function hideTooltip(){ document.querySelector('#markdown_tooltip').style.display = 'none' }
       ''')
     self._vals = components.markdown(self._vals, data)
-
-  _js__builder__ = '''
-      if (data !== ''){ 
-        var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data); htmlObj.innerHTML = data;
-        document.querySelectorAll('pre code').forEach((block) => {hljs.highlightBlock(block)});
-      }'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())

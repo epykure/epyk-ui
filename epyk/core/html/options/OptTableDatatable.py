@@ -1,5 +1,5 @@
 
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import Enums
 from epyk.core.js.packages import packageImport
 
@@ -528,7 +528,7 @@ class Search(Options):
     self._config(val)
 
 
-class TableConfig(Options):
+class TableConfig(OptionsWithTemplates):
 
   @property
   @packageImport('datatables-autoFill', 'datatables-autoFill')

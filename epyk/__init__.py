@@ -8,6 +8,7 @@ from epyk.core.data import events
 from epyk.core.data import configs
 from epyk.core.data import datamap as js_datamap
 from epyk.core.data import components as inputs
+from epyk.core.data import DataPy as transforms
 from epyk.core.html import Defaults as settings
 from epyk.core.html.symboles import Symboles as symboles
 

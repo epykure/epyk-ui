@@ -767,7 +767,7 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def radio(self, value: bool = False, label: str = None, group_name: str = None, icon: str = None,
+  def radio(self, value: bool = False, label: str = "", group_name: str = None, icon: str = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:

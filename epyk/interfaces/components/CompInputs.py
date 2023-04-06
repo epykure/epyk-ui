@@ -458,7 +458,7 @@ class Inputs:
 
     Usage::
 
-      page.ui.inputs.input("Test")
+      page.ui.inputs.left("Test")
 
     Underlying HTML Objects:
 
@@ -521,7 +521,7 @@ class Inputs:
   def checkbox(self, flag: bool, label: str = "", group_name: str = None, width: types.SIZE_TYPE = (None, "%"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
                options: types.OPTION_TYPE = None, attrs: dict = None, tooltip: str = "",
-               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Checkbox:
+               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputCheckbox:
     """
 
     Usage::
@@ -551,7 +551,7 @@ class Inputs:
     height = Arguments.size(height, unit="px")
     options = options or {}
     attrs = attrs or {}
-    component = html.HtmlInput.Checkbox(
+    component = html.HtmlInput.InputCheckbox(
       self.page, flag, label, group_name, width, height, html_code, options, attrs, profile)
     html.Html.set_component_skin(component)
     if tooltip:
@@ -566,7 +566,7 @@ class Inputs:
 
     Usage::
 
-      page.ui.radio(['Single', 'Multiple'], html_code="type", checked="Multiple")
+      page.ui.radio(['Single', 'Multiple'], html_code="type")
 
     Underlying HTML Objects:
 
@@ -702,7 +702,7 @@ class Inputs:
       dflt_options.update(options)
     html_s = html.HtmlInput.Search(self.page, text, placeholder, color, width, height, html_code, tooltip,
                                    extensible, dflt_options, profile)
-    html_s.style.css.height = Defaults.LINE_HEIGHT + 5
+    html_s.style.css.height = self.page.body.style.globals.line_height + 5
     html_s.style.css.margin_bottom = 10
     if align == "center":
       html_s.style.css.margin = "auto"
@@ -744,7 +744,7 @@ class Inputs:
     """
     label = self.page.ui.texts.label(label).css({
       "display": 'block', 'text-align': 'left', 'margin-top': '10px', "position": "absolute", "z-index": '20px',
-      "font-size": '14px'})
+      "font-size": '%spx' % self.page.body.style.globals.font.header_size})
     html_input = html.HtmlInput.Input(self.page, text, placeholder, width, height, html_code,
                                       options or {}, attrs or {}, profile).css({"margin-top": '10px'})
     div = self.page.ui.div([label, html_input])

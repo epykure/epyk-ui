@@ -17,19 +17,19 @@ class Lists:
 
   def select(self, records=None, html_code: str = None, selected: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
-             options: dict = None):
+             options: dict = None) -> html.HtmlSelect.Select:
     """  
     HTML Select component.
 
     Usage::
 
-      record = [
+      records = [
         {"text": 'Text 1', "value": "text 1"},
         {"text": 'Text 2', "value": "text 2"},
         {"text": 'Text 3', "value": "text 3"},
       ]
 
-      select = page.ui.select(record)
+      select = page.ui.select(records)
 
 
     Underlying HTML Objects:

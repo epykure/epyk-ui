@@ -516,3 +516,30 @@ class Enums:
       self.__option.js_tree[key].append(JsUtils.jsConvertData(value, None))
     self.__option.value_enums[key] = self.delimiter
     return self
+
+
+class OptionsWithTemplates(Options):
+
+  @property
+  def template(self):
+    return self._config_get(None)
+
+  @template.setter
+  def template(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateLoading(self):
+    return self._config_get(None)
+
+  @templateLoading.setter
+  def templateLoading(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateError(self):
+    return self._config_get(None)
+
+  @templateError.setter
+  def templateError(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)

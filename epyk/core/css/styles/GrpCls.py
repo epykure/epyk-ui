@@ -28,11 +28,7 @@ class ClassPage:
 
   @property
   def css(self) -> Body:
-    """
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
-
-    :rtype: Body
-    """
+    """ Property to the underlying CSS definition to be added to the style HTML tag of a component. """
     if self._css_struct is None:
       self._css_struct = Body(self.component, page=self.page)
     return self._css_struct
@@ -41,9 +37,8 @@ class ClassPage:
   def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
     """
     The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object.
 
-    :rtype: Classes.CatalogDiv.CatalogDiv
+    Only 1 CSS class can be added to an HTML object.
     """
     if self._css_class is None:
       self._css_class = Classes.CatalogDiv.CatalogDiv(
@@ -52,7 +47,8 @@ class ClassPage:
 
   @property
   def globals(self) -> Defaults_css.GlobalStyle:
-    """ Reference for all the global setting in the page.
+    """
+    Reference for all the global setting in the page.
 
     This should be changed in order to be the proxy to the Default CSS settings in the framework.
     Changing this should only impact the report default settings.

@@ -39,8 +39,8 @@ class Comments(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsChat:
-    """
-    Property to the comments component options.
+    """ Property to the comments component options.
+
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -49,7 +49,8 @@ class Comments(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object
@@ -58,45 +59,23 @@ class Comments(Html.Html):
       self._js = JsComponents.Chat(self, page=self.page)
     return self._js
 
-  _js__builder__ = '''
-        if (data != null){
-          var comments;
-          if(!Array.isArray(data)){ var now = new Date();
-            comments = [{text: data, time: moment(now).format('YYYY-MM-DD HH:mm:ss')}]; 
-          } else {comments = data}
-          comments.forEach(function(comment){
-            var feed = document.createElement("p"); feed.style.margin = "0 0 5px 0";
-            if(options.showdown){var converter = new showdown.Converter(options.showdown); 
-            comment.text = converter.makeHtml(comment.text.trim())};
-            feed.innerHTML = comment.text; htmlObj.querySelector("div").prepend(feed);
-    
-            var dateNews = document.createElement("p");
-            dateNews.style.margin = 0;
-            dateNews.style.fontWeight = 'bold';
-            dateNews.innerHTML = comment.time;
-            htmlObj.querySelector("div").prepend(dateNews);
-          })
-        }'''
-
   def add(self, text: str, time: str):
-    """
-    Add a text message.
+    """ Add a text message.
  
-    :param text: The text message.
-    :param time: the timestamp.
+    :param text: The text message
+    :param time: the timestamp
     """
     self.val.append({"text": text, "time": time})
     return self
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Define the function when the user press enter.
+    """ Define the function when the user press enter.
  
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -115,8 +94,8 @@ class Comments(Html.Html):
  
     :param socket:
     :param channel:
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if self.options.readonly:
       self.options.readonly = False
@@ -131,8 +110,8 @@ class Comments(Html.Html):
     return self
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
-    """
-    Subscribe to a socket channel.
+    """ Subscribe to a socket channel.
+
     Data received from the socket are defined as a dictionary with a field data.
 
     The content of data will be used by this component.
@@ -187,9 +166,7 @@ class Bot(Html.Html):
 
   @property
   def style(self) -> GrpClsNetwork.ClassNetworkBot:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsNetwork.ClassNetworkBot(self)
     return self._styleObj
@@ -258,8 +235,8 @@ class Chat(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsChat:
-    """
-    Property to the comments component options.
+    """ Property to the comments component options.
+
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -268,27 +245,13 @@ class Chat(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
       self._js = JsComponents.Chat(self, page=self.page)
     return self._js
-
-  _js__builder__ = '''
-      var feed = document.createElement("p");
-      feed.style.margin = "0 0 5px 0";
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
-      feed.innerHTML = data; htmlObj.querySelector("div").prepend(feed);
-      
-      var now = new Date();
-      var dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm:ss');
-      var dateNews = document.createElement("p");
-      dateNews.style.margin = 0;
-      dateNews.style.fontWeight = 'bold';
-      dateNews.innerHTML = dateStringWithTime;
-      htmlObj.querySelector("div").prepend(dateNews);
-      '''
 
   def enter(self, js_funcs, profile=None, source_event=None, on_ready=False):
     """
@@ -321,8 +284,8 @@ class Chat(Html.Html):
     return self
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
-    """
-    Subscribe to a socket channel.
+    """ Subscribe to a socket channel.
+
     Data received from the socket are defined as a dictionary with a field data.
 
     The content of data will be used by this component.
@@ -368,8 +331,8 @@ class Alert(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsAlert:
-    """
-    Property to the component options.
+    """ Property to the component options.
+
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -380,24 +343,6 @@ class Alert(Html.Html):
       danger.options.time = None
     """
     return super().options
-
-  _js__builder__ = '''
-      var feed = document.createElement("p");
-      options.classes.forEach(function(cls){ feed.classList.add(cls) });
-      if(options.showdown){
-        var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
-      if (htmlObj.style.display != 'block'){htmlObj.innerHTML = ""};
-      if (options.close){
-        var icon = document.createElement("i");  
-        icon.className = "fas fa-times"; icon.style.float = "right"; icon.style.marginRight = "2px";
-        icon.style.cursor = "pointer"; icon.style.zIndex = 50; icon.style.position = "relative";
-        icon.addEventListener("click", function(){feed.remove(); this.remove()} )
-        htmlObj.appendChild(icon)};
-      feed.innerHTML = data; htmlObj.appendChild(feed);
-      var s = htmlObj.style; s.opacity = 1; htmlObj.style.display = 'block';
-      if(options.time != null){
-        (function fade(){(s.opacity-=.1)<0?s.display="none": setTimeout(fade, options.time)})()}
-      '''
 
   def __str__(self):
     return "<div %s></div>" % self.get_attrs(css_class_names=self.style.get_classes())
@@ -412,26 +357,10 @@ class News(Html.Html):
                                html_code=html_code, profile=profile, options=options)
     self.page.jsImports.add('moment')
 
-  _js__builder__ = '''
-    var feed = document.createElement("p");
-    feed.style.margin = "0 0 5px 0";
-    if(options.showdown){
-      var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data.trim())};
-    feed.innerHTML = data; htmlObj.prepend(feed);
-    
-    if (options.dated){
-      var now = new Date();
-      var dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm:ss');
-      var dateNews = document.createElement("p");
-      dateNews.style.margin = 0;
-      dateNews.style.fontWeight = 'bold';
-      dateNews.innerHTML = dateStringWithTime;
-      htmlObj.prepend(dateNews)}
-    '''
-
   @property
   def js(self) -> JsComponents.News:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -440,8 +369,8 @@ class News(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsNews:
-    """
-    Property to the component options.
+    """ Property to the component options.
+
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -485,7 +414,8 @@ class Room(Html.Html):
 
   @property
   def js(self) -> JsComponents.Room:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -561,17 +491,15 @@ class DropFile(Html.Html):
 
   @property
   def dom(self) -> JsHtmlNetwork.JsHtmlDropFiles:
-    """
-
-    """
+    """ The dom component property """
     if self._dom is None:
       self._dom = JsHtmlNetwork.JsHtmlDropFiles(self, page=self.page)
     return self._dom
 
   @property
   def options(self) -> OptNet.OptionFiles:
-    """
-    Property to the component options.
+    """ Property to the component options.
+
     Optional can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -579,7 +507,7 @@ class DropFile(Html.Html):
     return super().options
 
   def transfer(self, url: str):
-    """   Create a Ajax transfer to a distant server.
+    """ Create a Ajax transfer to a distant server.
  
     :param url: The transfer end point on the server.
     """
@@ -589,7 +517,7 @@ class DropFile(Html.Html):
     return post
 
   def drop(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """   Add a drag and drop property to the element.
+    """ Add a drag and drop property to the element.
 
     Usage::
 
@@ -597,11 +525,11 @@ class DropFile(Html.Html):
         drop_area.transfer("<URL>")
       ], components=[])
  
-    :param js_funcs: The Javascript series of functions.
-    :param js_data: Optional. A datamap objection of a dictionary.
-    :param components: The different HTML objects to be added to the component.
-    :param prevent_default: Optional. Prevent default on the JavaScript event.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript series of functions
+    :param js_data: Optional. A datamap objection of a dictionary
+    :param components: The different HTML objects to be added to the component
+    :param prevent_default: Optional. Prevent default on the JavaScript event
+    :param profile: Optional. A flag to set the component performance storage
 
     :return: Return self to allow the chaining
     """
@@ -628,7 +556,7 @@ class DropFile(Html.Html):
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
 
-  def loading(self, label="Processing data"):
+  def loading(self, label: str = "Processing data"):
     """   
 
  
@@ -637,7 +565,7 @@ class DropFile(Html.Html):
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
   def load(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """   Load the content of the file.
+    """ Load the content of the file.
 
     This function will first use as underlying the drop method to get the file dropped.
 
@@ -647,11 +575,11 @@ class DropFile(Html.Html):
         drop_area.transfer("<URL>")
       ], components=[])
  
-    :param js_funcs: The Javascript series of functions.
-    :param js_data: Optional. A datamap objection of a dictionary.
-    :param components: Optional. The different HTML objects to be added to the component.
-    :param prevent_default: Optional. Prevent default on the JavaScript event.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript series of functions
+    :param js_data: Optional. A datamap objection of a dictionary
+    :param components: Optional. The different HTML objects to be added to the component
+    :param prevent_default: Optional. Prevent default on the JavaScript event
+    :param profile: Optional. A flag to set the component performance storage
     """
     from epyk.core.data import events
 
@@ -675,10 +603,10 @@ class DropFile(Html.Html):
   def paste(self, js_funcs, components=None, profile=None, source_event=None):
     """   
  
-    :param js_funcs: Javascript functions.
-    :param components: The different HTML objects to be added to the component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
+    :param js_funcs: Javascript functions
+    :param components: The different HTML objects to be added to the component
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]

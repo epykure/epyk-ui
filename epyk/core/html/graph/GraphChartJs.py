@@ -1263,7 +1263,8 @@ if (item){
   if(item.l === 0){return Chart.helpers.color("%s").alpha(a).rgbString()}
   if(item.l === 1){return Chart.helpers.color("white").alpha(0.3).rgbString()}
   else{return Chart.helpers.color("%s").alpha(a).rgbString()}}
-}''' % (colors, self.options['commons']["colors"]["light"], self.options['commons']["colors"]["base"])
+}''' % (
+      colors, self.options['commons']["colors"]["light"], self.options['commons']["colors"]["base"])
     ))
 
   _js__builder__ = '''

@@ -314,6 +314,8 @@ class OptionsCode(Options):
 
   @mode.setter
   def mode(self, value):
+    MAP_MODES = {"html": "htmlmixed", "yaml": "yaml-frontmatter"}
+    value = MAP_MODES.get(value, value)
     Imports.extend('codemirror-%s' % value, [
       ('%s.js' % value, 'codemirror/%%(version)s/mode/%s/' % value)], version="codemirror", required=["codemirror"])
     self.component.jsImports.add('codemirror-%s' % value)
@@ -391,6 +393,22 @@ class OptionsCode(Options):
 
   @indentUnit.setter
   def indentUnit(self, value):
+    self._config(value)
+
+  @property
+  def foldGutter(self):
+    """
+    Whether to use the context-sensitive indentation that the mode provides (or just indent the same as the line
+    before). Defaults to true.
+
+    Related Pages:
+
+      https://codemirror.net/doc/manual.html#config
+    """
+    return self._config_get(True)
+
+  @foldGutter.setter
+  def foldGutter(self, value):
     self._config(value)
 
   @property

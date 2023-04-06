@@ -567,11 +567,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         path = os.getcwd()
       else:
         path = "%s/js" % Imports.STATIC_PATH.replace("\\", "/")
-    self.page.imports.addPackage('local_%s' % filename[:-3], {
+    file_alias = 'local_%s' % filename[:-3].lower()
+    self.page.imports.addPackage(file_alias, {
       'version': "", 'req': requirements or [],
       'register': {'alias': 'local_%s' % filename[:-3], 'module': filename[:-3], 'npm_path': 'dist/maps/continents/'},
       'modules': [{'script': filename, "path": '', 'type': module_type, 'cdnjs': path, "config": "version=1"}]})
-    self.page.jsImports.add('local_%s' % filename[:-3])
+    if file_alias not in self.page.jsImports:
+      self.page.jsImports.add(file_alias)
     if authorize:
       import inspect
 

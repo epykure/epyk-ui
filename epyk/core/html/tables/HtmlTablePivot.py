@@ -519,6 +519,39 @@ class PivotTable(Html.Html):
     return '<div %(strAttr)s></div>%(helper)s' % {
       'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), "helper": self.helper}
 
+  def loading(self, status: bool = True, z_index: int = 500, label: str = "Loading...."):
+    """ Loading component on a chart.
+
+    Usage::
+
+        chart_obj.loading()
+        ....
+        chart_obj.loading(False)
+
+    :param status: Optional. Specific the status of the display of the loading component
+    :param label: Optional.
+    :param z_index: Optional. Specifies the stack order of an element
+    """
+    if status:
+      return ''' 
+if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+  var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
+  divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
+  divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0;
+  divLoading.style.zIndex = %(z_index)s; divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
+  divLoading.style.display = 'table'; 
+  var divLoadingContainer = document.createElement("p");  
+  divLoadingContainer.style.display = 'table-cell'; divLoadingContainer.style.verticalAlign = 'middle';
+  var divLoadingIcon = document.createElement("i"); divLoadingIcon.classList.add("fas", "fa-spinner", "fa-spin");
+  divLoadingIcon.style.marginRight = "5px"; divLoadingContainer.appendChild(divLoadingIcon); 
+  var divLoadingContent = document.createElement("span"); divLoadingContent.innerHTML = %(label)s;
+  divLoadingContainer.appendChild(divLoadingContent);
+  divLoading.appendChild(divLoadingContainer); document.getElementById('%(htmlId)s').appendChild(divLoading)
+}''' % {"htmlId": self.htmlCode, 'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
+        'label': JsUtils.jsConvertData(label, None), "z_index": z_index}
+
+    return '''window['popup_loading_%(htmlId)s'].remove(); delete window['popup_loading_%(htmlId)s'];'''% {"htmlId": self.htmlCode}
+
 
 class PivotUITable(PivotTable):
   _option_cls = OptTable.OptionsPivotUI

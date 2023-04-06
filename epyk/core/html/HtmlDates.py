@@ -50,14 +50,12 @@ class DatePicker(Html.Html):
 
   @property
   def options(self) -> OptCalendars.OptionDatePicker:
-    """   Property to set all the DatePicker properties.
-    """
+    """ Property to set all the DatePicker properties. """
     return super().options
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-    """
-    The Javascript Dom proxy to the input object.
+    """ The Javascript Dom proxy to the input object.
 
     Usage::
 
@@ -71,7 +69,7 @@ class DatePicker(Html.Html):
     return self._dom
 
   def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Event trigger when the DatePicker component changes.
+    """ Event trigger when the DatePicker component changes.
 
     Usage::
 
@@ -80,8 +78,8 @@ class DatePicker(Html.Html):
         page.js.console.log(today.dom.content)
       ])
 
-    :param js_funcs: The Javascript events when the DatePicker selection changes.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param js_funcs: The Javascript events when the DatePicker selection changes
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -93,7 +91,8 @@ class DatePicker(Html.Html):
 
   def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                      profile: types.PROFILE_TYPE = False):
-    """   Exclude some dates from the date picker selection.
+    """ Exclude some dates from the date picker selection.
+
     Those dates will be visible but no available for selection.
 
     Usage::
@@ -101,15 +100,16 @@ class DatePicker(Html.Html):
       today = page.ui.fields.today()
       today.excluded_dates(["2021-01-01"])
 
-    :param dts: Optional. A list of dates format YYYY-MM-DD.
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param dts: Optional. A list of dates format YYYY-MM-DD
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     return self.input.excluded_dates(dts, js_funcs, profile)
 
   def included_dates(self, dts: List[str] = None, selected: str = None,
                      js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = False):
-    """   Include some date to be available for selection.
+    """  Include some date to be available for selection.
+
     All the other dates will be visible but not valid ones.
 
     Usage::
@@ -117,23 +117,23 @@ class DatePicker(Html.Html):
       today = page.ui.fields.today()
       today.included_dates(["2021-01-01"])
 
-    :param dts: Optional. A list of dates format YYYY-MM-DD.
-    :param selected: Optional. The selected date from the range. Default max.
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. Set to true to get the profile or a function on the console.
+    :param dts: Optional. A list of dates format YYYY-MM-DD
+    :param selected: Optional. The selected date from the range. Default max
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. Set to true to get the profile or a function on the console
     """
     return self.input.included_dates(dts, selected, js_funcs, profile)
 
   def add_options(self, options: dict = None, name: str = None, value: str = None):
-    """   Add DatePicker options.
+    """ Add DatePicker options.
 
     Related Pages:
 
       https://timepicker.co/options/
 
-    :param options: Optional. Specific Python options available for this component.
-    :param name: Optional. Python dictionary with the options to set.
-    :param value: Optional. The option value.
+    :param options: Optional. Specific Python options available for this component
+    :param name: Optional. Python dictionary with the options to set
+    :param value: Optional. The option value
     """
     if options is None and name is None:
       raise ValueError("Either the attrs or the name should be specified")
@@ -173,8 +173,7 @@ class TimePicker(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-    """
-    The Javascript Dom proxy to the input object.
+    """ The Javascript Dom proxy to the input object.
 
     Usage::
 
@@ -188,7 +187,8 @@ class TimePicker(Html.Html):
     return self._dom
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """   Event triggered when the value of the input field changes.
+    """ Event triggered when the value of the input field changes.
+
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
 
@@ -203,9 +203,9 @@ class TimePicker(Html.Html):
 
       https://timepicker.co/options/
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.input.change(js_funcs, profile, on_ready=on_ready)
     return self
@@ -233,28 +233,8 @@ class CountDownDate(Html.Html):
     self.add_helper(helper)
     self._jquery_ref = '#%s span' % self.htmlCode
 
-  _js__builder__ = '''
-      var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
-      var now = new Date().getTime(); var distance = endDate.getTime() - now;
-      if(distance < 0){distance = -distance}
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      var dtString = [];
-      if(days > 0){dtString.push(days +"d")}
-      if(hours > 0){dtString.push(hours +"h")}
-      if(minutes > 0){dtString.push(minutes +"m")}
-      if(seconds > 0){dtString.push(seconds +"s")}
-      htmlObj.querySelector("span[name=dt_time]").innerHTML = dtString.join(" "); 
-      if ((distance < 0) && (options.delete)){
-        if(typeof options.end !== 'undefined'){eval(options.end)}
-        htmlObj.remove(); if (options.reload){location.reload()}
-        clearInterval(window[htmlObj.id +"_interval"])
-      }'''
-
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Events triggered at the end of the timer.
+    """ Events triggered at the end of the timer.
 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -285,22 +265,15 @@ class LastUpdated(Html.Html):
       options=options, css_attrs={"width": width, "height": height, "color": color})
     self.attr["data-value"] = None
 
-  _js__builder__ = '''
-if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
-if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}
-else{if(options.icon){htmlObj.innerHTML = data + '&nbsp;&nbsp;<i class="'+ options.icon +'"></i>'} else {htmlObj.innerHTML = data}};
-htmlObj.setAttribute('data-value', data)
-'''
-
   @property
   def options(self) -> OptText.OptionsUpdate:
-    """   Property to set all the DatePicker properties.
-    """
+    """ Property to set all the DatePicker properties. """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -315,8 +288,7 @@ htmlObj.setAttribute('data-value', data)
     return self._dom
 
   def refresh(self):
-    """
-    Javascript shortcut to change the timestamp to this component.
+    """ Javascript shortcut to change the timestamp to this component.
 
     Usage::
 
@@ -356,13 +328,12 @@ class Calendar(Html.Html):
 
   @property
   def options(self) -> OptCalendars.OptionDays:
-    """   Property to set all the Calendar properties.
-    """
+    """ Property to set all the Calendar properties. """
     return super().options
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   Add a click event to the Calendar component.
+    """ Add a click event to the Calendar component.
 
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to profile or a function on the Js console.
@@ -378,13 +349,12 @@ class Calendar(Html.Html):
            weekend: bool = False, options: dict = None):
     """
 
-
-    :param name: The task name.
-    :param start: The task start date format YYYY-MM-DD.
-    :param capacity: A figure in percentage.
-    :param end: The task end date format YYYY-MM-DD.
-    :param weekend: Optional. Flag to specify if the weekends should be considered.
-    :param options: Optional. Specific Python options available for this component.
+    :param name: The task name
+    :param start: The task start date format YYYY-MM-DD
+    :param capacity: A figure in percentage
+    :param end: The task end date format YYYY-MM-DD
+    :param weekend: Optional. Flag to specify if the weekends should be considered
+    :param options: Optional. Specific Python options available for this component
     """
     if self.options.unit != 100 and options is None:
       options = {'unit': self.options.unit}
@@ -518,22 +488,11 @@ class Timer(Html.Html):
         self.style.css.margin_left = 'auto'
         self.style.css.margin_right = 'auto'
 
-  _js__builder__ = '''     
-      var time = data.minutes * 60, r = htmlObj, tmp=time;
-      window["time_" + htmlObj.id] = setInterval(function(){ 
-        if(tmp < 0){
-          if(typeof options.end !== 'undefined'){eval(options.end)}
-          clearInterval(window["time_" + htmlObj.id])}
-        if (tmp >= 0){
-          var c=tmp--, m = (c/60)>>0, s=(c-m*60)+'';
-          r.textContent = data.text + ' '+ m +':'+ (s.length>1?'': '0')+ s}
-        tmp != 0 || (tmp=0)}, 1000)'''
-
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Events triggered at the end of the timer.
+    """ Events triggered at the end of the timer.
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -558,14 +517,6 @@ class Elapsed(Html.Html):
     self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
-
-  _js__builder__ = '''
-      var startDate = new Date(data.year, data.month-1, data.day);
-      var now = new Date().getTime(); var distance = now - startDate.getTime();
-      var days = Math.floor(distance / (1000 * 60 * 60 * 24)); var years = 0;
-      if (days > 365){years = Math.floor(days / 365); days = days - years * 365}
-      if (years > 0){htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ years +"y, "+ days +"d </b>"}
-      else {htmlObj.querySelector("span[name=clock]").innerHTML = "<b>"+ days +"d </b>"}'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())

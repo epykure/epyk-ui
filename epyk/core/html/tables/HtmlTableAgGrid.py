@@ -97,7 +97,7 @@ class Table(Html.Html):
 
   @property
   def js(self) -> JsAgGrid.AgGrid:
-    """   Return the Javascript internal object.
+    """ Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -178,7 +178,7 @@ class Table(Html.Html):
     return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
       'tableId': self.tableId, 'config': self.options.config_js(options), 'htmlCode': component_id or self.dom.varName}
 
-  def loading(self, status: bool = True, label: types.JS_DATA_TYPES = "Loading..."):
+  def loading(self, status: bool = True, label: types.JS_DATA_TYPES = "Loading...", data: types.JS_DATA_TYPES = None):
     """ Add loading banner.
 
     :param status: The visibility flag

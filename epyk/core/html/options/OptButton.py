@@ -59,6 +59,22 @@ class OptionsButton(Options):
   def group(self, val: str):
     self.component.set_attrs(name='name', value=val)
 
+  @property
+  def templateLoading(self):
+    return self._config_get(None)
+
+  @templateLoading.setter
+  def templateLoading(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateError(self):
+    return self._config_get(None)
+
+  @templateError.setter
+  def templateError(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
 
 class OptionsBadge(Options):
 

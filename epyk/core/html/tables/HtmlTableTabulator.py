@@ -6,6 +6,7 @@ from typing import Generator, Any
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
 
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlTables
 from epyk.core.js.packages import JsTabulator
 from epyk.core.html.options import OptTableTabulator
@@ -63,9 +64,7 @@ class Table(Html.Html):
 
   @property
   def options(self) -> OptTableTabulator.TableConfig:
-    """
-    Tabulator table options.
-    """
+    """ Tabulator table options. """
     return super().options
 
   @property
@@ -73,6 +72,7 @@ class Table(Html.Html):
   def config(self) -> OptTableTabulator.TableConfig:
     """
     Tabulator configuration options.
+
     Deprecated and replaced by component options.
     """
     return self.options
@@ -112,20 +112,21 @@ class Table(Html.Html):
         c.headerSort = False
         c.cellClick(["cell.getRow().toggleSelect()"])
  
-    :param field: Optional. The key in the row.
-    :param title: Optional. The title for the column. Default to the field.
+    :param field: Optional. The key in the row
+    :param title: Optional. The title for the column. Default to the field
     """
     return self.options.add_column(field, title)
 
   def get_column(self, by_field: str = None, by_title: str = None) -> OptTableTabulator.Column:
     """
     Get the column from the underlying Tabulator object by field or by title.
+
     Pointing by field is recommended as the title might change quite easily.
 
     This function will only get columns defined from the Python side.
  
-    :param by_field: Optional. The field reference for the column.
-    :param by_title: Optional. The title reference for the column.
+    :param by_field: Optional. The field reference for the column
+    :param by_title: Optional. The title reference for the column
     """
     return self.options.get_column(by_field, by_title)
 
@@ -142,7 +143,7 @@ class Table(Html.Html):
     """
     Update the header definition thanks to a static configuration.
  
-    :param cols_def: The header definition.
+    :param cols_def: The header definition
     """
     for c in self.options.columns:
       if c.field is not None and c.field in cols_def:
@@ -227,46 +228,42 @@ class Table(Html.Html):
         category, type, func_name, func_def))
     return self
 
-  def loading(self, status: bool = True, color: str = None):
-      """  Display / hide the loading status for this component.
-
-      Usage::
-
-        tab = page.ui.tables.tabulators.table()
-        page.ui.button("Tabulator").click([
-          tab.loading(True),
-          ...
-          tab.loading(False),
-        ])
-
-      :param status: Optional. The loading status.
-      :param color: Optional. The loading text color.
-      """
-      self.require.add(self.page.icons.get(None)["icon_family"])
-      if status:
-        return ''' 
-          if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
-            var divLoading = document.createElement("div"); 
-            window['popup_loading_%(htmlId)s'] = divLoading; 
-            divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
-            divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0; 
-            divLoading.style.display = 'flex'; divLoading.style.flexDirectio = 'column'; divLoading.style.justifyContent = 'center';
-            divLoading.style.zIndex = 200; divLoading.style.alignItems = 'center';
-            divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
-            divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>Loading...</div>";
-            document.getElementById('%(htmlId)s').appendChild(divLoading)
-          } ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success.base,
-                   'background': self.page.theme.greys[0],
-                   "size": self.page.body.style.globals.font.size + 5}
-
-      return '''
-        if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
-          document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
-          window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
-
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+
+  def loading(self, status: bool = True, z_index: int = 500, label: str = "Loading...."):
+    """ Loading component on a chart.
+
+    Usage::
+
+        chart_obj.loading()
+        ....
+        chart_obj.loading(False)
+
+    :param status: Optional. Specific the status of the display of the loading component
+    :param label: Optional.
+    :param z_index: Optional. Specifies the stack order of an element
+    """
+    if status:
+      return ''' 
+if (typeof window['popup_loading_%(htmlId)s'] === 'undefined'){
+  var divLoading = document.createElement("div"); window['popup_loading_%(htmlId)s'] = divLoading; 
+  divLoading.style.width = '100%%'; divLoading.style.height = '100%%'; divLoading.style.background = '%(background)s';
+  divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0;
+  divLoading.style.zIndex = %(z_index)s; divLoading.style.color = '%(color)s'; divLoading.style.textAlign = 'center'; 
+  divLoading.style.display = 'table'; 
+  var divLoadingContainer = document.createElement("p");  
+  divLoadingContainer.style.display = 'table-cell'; divLoadingContainer.style.verticalAlign = 'middle';
+  var divLoadingIcon = document.createElement("i"); divLoadingIcon.classList.add("fas", "fa-spinner", "fa-spin");
+  divLoadingIcon.style.marginRight = "5px"; divLoadingContainer.appendChild(divLoadingIcon); 
+  var divLoadingContent = document.createElement("span"); divLoadingContent.innerHTML = %(label)s;
+  divLoadingContainer.appendChild(divLoadingContent);
+  divLoading.appendChild(divLoadingContainer); document.getElementById('%(htmlId)s').appendChild(divLoading)
+}''' % {"htmlId": self.htmlCode, 'color': self.page.theme.greys[-3], 'background': self.page.theme.greys[0],
+        'label': JsUtils.jsConvertData(label, None), "z_index": z_index}
+
+    return '''window['popup_loading_%(htmlId)s'].remove(); delete window['popup_loading_%(htmlId)s'];'''% {"htmlId": self.htmlCode}
 
 
 class TableTree(Table):

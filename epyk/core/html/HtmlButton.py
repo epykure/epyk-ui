@@ -8,10 +8,10 @@ from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptButton
+from epyk.core.html import Defaults as Default_html
 
 from epyk.core.js.html import JsHtml
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsQuery
 from epyk.core.js.statements import JsIf
 from epyk.core.js.objects import JsComponents
 
@@ -44,7 +44,7 @@ class Button(Html.Html):
 
   @property
   def options(self) -> OptButton.OptionsButton:
-    """   Property to set all the possible object for a button.
+    """ Property to set all the possible object for a button.
 
     Usage::
 
@@ -55,7 +55,8 @@ class Button(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlButton:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -67,43 +68,20 @@ class Button(Html.Html):
       self._dom = JsHtml.JsHtmlButton(component=self, page=self.page)
     return self._dom
 
-  _js__builder__ = "htmlObj.setAttribute('data-processing', false); htmlObj.innerHTML = data"
-
-  def loading(self, status: bool = True):
-    """   Show / Hide the loading event predefined for this component.
-
-    Usage::
-
-      but = page.ui.button("Loading")
-      page.body.onReady([but.loading()])
- 
-    :param status: Optional. A flag to specify the status of the loading event
-    """
-    if status:
-      self.dom.setAttribute("data-content", self.dom.content)
-      self.dom.innerHTML("<i class='fas fa-cog fa-spin' style='margin-right:5px'></i>Processing...")
-      self.dom.setAttribute("data-processing", True)
-      return self.dom.r
-
-    self.dom.innerHTML(self.dom.getAttribute("data-content"))
-    self.dom.setAttribute("data-processing", False)
-    return self.dom.r
-
   def no_background(self):
-    """   Remove the default button background and remove the padding.
+    """ Remove the default button background and remove the padding.
 
     Usage::
 
       but = page.ui.button("Click Me")
       but.no_background()
-
     """
     self.style.css.background_color = "#11ffee00"
     return self
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """   Click event which redirect to another page.
+    """ Click event which redirect to another page.
 
     Usage::
 
@@ -128,7 +106,7 @@ class Button(Html.Html):
 
   @property
   def style(self) -> GrpClsButton.ClassButton:
-    """   Property to the CSS Style of the component.
+    """ Property to the CSS Style of the component.
 
     Usage::
 
@@ -140,7 +118,7 @@ class Button(Html.Html):
     return self._styleObj
 
   def disable(self, background_color: Optional[str] = None, color: Optional[str] = None):
-    """   Add the HTML tag to disable the button.
+    """ Add the HTML tag to disable the button.
 
     Usage::
 
@@ -163,7 +141,7 @@ class Button(Html.Html):
 
   def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """   Special click event to keep in memory the state of the component.
+    """ Special click event to keep in memory the state of the component.
 
     Usage::
 
@@ -193,7 +171,7 @@ class Button(Html.Html):
     return self.on("click", str_fnc, profile, on_ready=on_ready)
 
   def color(self, color: str):
-    """   Change the color of the button background when the mouse is hover.
+    """ Change the color of the button background when the mouse is hover.
 
     Usage::
 
@@ -207,7 +185,8 @@ class Button(Html.Html):
     return self
 
   def properties(self) -> dict:
-    """   Return the full properties of the HTML component.
+    """ Return the full properties of the HTML component.
+
     This property should allow another JavaScript framework to build the component.
 
     Usage::
@@ -219,8 +198,81 @@ class Button(Html.Html):
 
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
+    self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
     return '<button {attrs}>{content}</button>'.format(
       attrs=self.get_attrs(css_class_names=self.style.get_classes()), content=str_div)
+
+  def loading(self, status: bool = True, label: str = None,
+              data: types.JS_DATA_TYPES = None, disable: bool = True):
+    """ Display a loading message in the component.
+
+    Usage::
+
+      btn.click([
+          t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    :param disable: Disable the button
+    """
+    if label is not None:
+      self.options.templateLoading = label
+    if self.options.templateLoading is None:
+      self.options.templateLoading = Default_html.TEMPLATE_LOADING_ONE_LINE
+    if status:
+      if disable:
+        return self.dom.disable() + self.build(data, options={"templateMode": 'loading'})
+
+      return self.build(data, options={"templateMode": 'loading'})
+
+    if data is None:
+      if disable:
+        return self.dom.disable(False) + self.dom.innerHTML(self.dom.getAttribute("data-content"))
+
+      return self.dom.innerHTML(self.dom.getAttribute("data-content"))
+
+    if disable:
+      return self.dom.disable(False) + self.build(data)
+
+    return self.build(data)
+
+  def error(self, status: bool = True, label: str = None,
+            data: types.JS_DATA_TYPES = None, disable: bool = True):
+    """ Display an error message in the component.
+
+    Usage::
+
+      btn.click([
+          t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    :param disable: Disable the button
+    """
+    if label is not None:
+      self.options.templateError = label
+    if self.options.templateError is None:
+      self.options.templateError = Default_html.TEMPLATE_ERROR_ONE_LINE
+    if status:
+      if disable:
+        return self.dom.disable(True) + self.build(data, options={"templateMode": 'error'})
+
+      return self.build(data, options={"templateMode": 'error'})
+
+    if data is None:
+      if disable:
+        return self.dom.disable(False) + self.dom.innerHTML(self.dom.getAttribute("data-content"))
+
+      return self.dom.innerHTML(self.dom.getAttribute("data-content"))
+
+    if disable:
+      return self.dom.disable(False) + self.build(data)
+
+    return self.build(data)
 
 
 class Checkbox(Html.Html):
@@ -244,13 +296,13 @@ class Checkbox(Html.Html):
 
   @property
   def options(self) -> OptButton.OptCheckboxes:
-    """   Property to set all the possible object for check boxes.
-    """
+    """ Property to set all the possible object for check boxes. """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsHtmlButtonChecks:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -269,7 +321,8 @@ class Checkbox(Html.Html):
     return self._dom
 
   def tooltip(self, value: str, location: str = 'top', options: Optional[dict] = None):
-    """   Add the Tooltip feature when the mouse is over the component.
+    """ Add the Tooltip feature when the mouse is over the component.
+
     This tooltip version is coming from Bootstrap.
 
     TODO: Use the options parameter.
@@ -287,25 +340,9 @@ class Checkbox(Html.Html):
     self.options.tooltip_options = options
     return self
 
-  _js__builder__ = '''htmlObj = %(jquery)s; htmlObj.empty(); data.forEach(function(rec){
-if (rec.color == undefined) {rec.color = 'inherit'};
-var style = {'margin': 0, 'color': rec.color, 'display': 'block', 'position': 'relative', 'cursor': 'pointer'};
-if (rec.style != undefined){for(key in rec.style){style[key] = rec.style[key]}};
-if (rec.dsc == undefined) {rec.dsc = ''};
-if (rec.name == undefined) {rec.name = rec.value};
-var strCss = []; for (key in style){strCss.push(key +":"+ style[key])};
-if (rec.checked){
-  var spanContent = '<span data-content="'+ rec.value +'" style="display:inline-block;float:left;margin:0"><i class="'+ options.icon + '" style="margin:2px"></i></span><p style="margin:0;padding:0" title="'+ rec.dsc +'">' + rec.name + '</p>'}
-else {var spanContent = '<span data-content="'+ rec.value +'" style="width:16px;display:inline-block;float:left;margin:0">&nbsp;</span><p style="margin:0" title="'+ rec.dsc +'">' + rec.name + '</p>'}     
-htmlObj.append($('<label style="'+ strCss.join(";") +'">'+ spanContent +'</label>'))}); htmlObj.tooltip(); 
-if (options.tooltip != ""){
-  var tip = $('<i class="fas fa-info-circle" style="right:0" title="'+ options.tooltip +'"></i>') ;
-  tip.tooltip(); htmlObj.append($("<div style='width:100%%;text-align:right'></div>").append(tip) )}
-''' % {"jquery": JsQuery.decorate_var("htmlObj", convert_var=False)}
-
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
             source_event: str = "$(document)", on_ready: bool = False):
-    """   Add a click event on the checkbox component.
+    """ Add a click event on the checkbox component.
 
     TODO: Find way to remove jquery
  
@@ -360,22 +397,20 @@ class CheckButton(Html.Html):
 
   @property
   def options(self) -> OptButton.OptCheck:
-    """   Property to set all the possible object for check button.
-    """
+    """ Property to set all the possible object for check button. """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsHtmlButtonMenu:
-    """
-    The Javascript Dom object.
-    """
+    """ The Javascript Dom object. """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlButtonMenu(self, page=self.page)
     return self._dom
 
   @property
   def js(self) -> JsComponents.CheckButton:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object
@@ -384,32 +419,16 @@ class CheckButton(Html.Html):
       self._js = JsComponents.CheckButton(self, page=self.page)
     return self._js
 
-  _js__builder__ = ''' htmlObj.innerHTML = '';
-      if (data === true || data == 'Y'){
-        var i = document.createElement("i");
-        i.classList.add(...options.icon_check.split(' '));
-        i.style.color = options.green; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
-        htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', true)}
-      else {
-        var i = document.createElement("i");
-        i.classList.add(...options.icon_not_check.split(' '));
-        i.style.color = options.red; i.style.marginBottom = '2px'; i.style.marginLeft = '2px';
-        htmlObj.appendChild(i); htmlObj.parentNode.setAttribute('data-isChecked', false)
-      }'''
-
   @property
   def style(self) -> GrpClsButton.ClassButtonCheckBox:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
     return self._styleObj
 
   def click(self, js_fnc_true: types.JS_FUNCS_TYPES, js_fnc_false: Optional[Union[list, str]] = None,
             with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """
-    Click even on the checkbox item.
+    """ Click even on the checkbox item.
 
     Usage::
 
@@ -468,8 +487,7 @@ class IconEdit(Html.Html):
     self.hover_color = True
 
   def spin(self):
-    """
-    Add a spin effect to the icon.
+    """ Add a spin effect to the icon.
 
     Usage::
 
@@ -484,8 +502,7 @@ class IconEdit(Html.Html):
     return self
 
   def pulse(self):
-    """
-    Add a pulse effect to the icon.
+    """ Add a pulse effect to the icon.
 
     Usage::
 
@@ -500,8 +517,7 @@ class IconEdit(Html.Html):
     return self
 
   def border(self):
-    """
-    Add a border to the icon.
+    """ Add a border to the icon.
 
     Usage::
 
@@ -516,8 +532,7 @@ class IconEdit(Html.Html):
     return self
 
   def rotate(self, angle: int):
-    """
-    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
     Usage::
 
@@ -534,8 +549,7 @@ class IconEdit(Html.Html):
     return self
 
   def pull(self, position: str = 'left'):
-    """
-    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+    """ Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
     Usage::
 
@@ -553,7 +567,7 @@ class IconEdit(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """   Add a JavaScript click event on this component.
+    """ Add a JavaScript click event on this component.
  
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -569,7 +583,7 @@ class IconEdit(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """   Create a link to a new page when component is clicked.
+    """ Create a link to a new page when component is clicked.
 
     Related Pages:
 
@@ -619,7 +633,7 @@ class ButtonMenuItem:
 
   @property
   def js(self) -> JsComponents.Menu:
-    """   Javascript module of the items in the menu.
+    """ Javascript module of the items in the menu.
 
     :return: A Javascript Dom object
     """
@@ -629,7 +643,7 @@ class ButtonMenuItem:
 
   def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
-    """   Javascript generic events of the items in the menu.
+    """ Javascript generic events of the items in the menu.
  
     :param event: The JavaScript event
     :param js_funcs: The Javascript functions
@@ -647,7 +661,7 @@ class ButtonMenuItem:
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """   Javascript click events of the items in the menu.
+    """ Javascript click events of the items in the menu.
  
     :param js_funcs: The Javascript functions
     :param profile: Boolean. Optional. A flag to set the component performance storage
@@ -680,16 +694,9 @@ class ButtonMenu(Html.Html):
         self.htmlCode, i), self)
     return self.components[i]
 
-  _js__builder__ = '''
-var panel = htmlObj.querySelector("div");
-data.forEach(function(rec){
-  var href = document.createElement("a"); href.innerHTML = rec;
-  Object.keys(options).forEach(function(key){href.style[key] = options[key]});
-  panel.appendChild(href)})'''
-
   @property
   def style(self) -> GrpClsButton.ClassButtonMenu:
-    """   Property to the CSS Style of the component.
+    """ Property to the CSS Style of the component.
 
     Usage::
 
@@ -728,7 +735,9 @@ class ButtonMore(Html.Html):
     self.button.style.css.border_radius = 5
     self.button.style.css.text_align = 'left'
     self.button.style.css.display = 'inline-block'
-    self.button.icon.style.add_classes.div.border_hover()
+    self.button.icon.style.css.border_radius = 20
+    self.button.icon.style.css.padding = 2
+    self.button.icon.style.add_classes.div.color_background_hover(self.page.theme.notch(-3))
     self.button.options.managed = False
     self.button.style.css.padding = "0 5px"
     self.menu = self.page.ui.lists.links(record, width=("auto", ""), profile=profile)
@@ -870,7 +879,7 @@ class ButtonFilter(Html.Html):
 
   @property
   def options(self) -> OptButton.OptionsButtonFilter:
-    """   Property to set all the possible object for a button.
+    """ Property to set all the possible object for a button.
 
     Usage::
 
@@ -881,7 +890,8 @@ class ButtonFilter(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlButtonFilter:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -913,12 +923,6 @@ class ButtonData(Button):
     super(ButtonData, self).__init__(page, text, icon, width, height, html_code, tooltip, profile, options)
     self.set_attrs(name="data-content", value="")
     self.filename = None
-
-  _js__builder__ = '''
-htmlObj.setAttribute("data-content", JSON.stringify(data));
-htmlObj.setAttribute("title", ""+ data.length + " row loaded: " + (new Date()).toISOString().slice(0, 19).replace("T", " "));
-if(data.length > 0){htmlObj.style.visibility = "visible"}
-'''
 
   def download(self):
     return self.click([self.page.js.location.download(self.page.js.location.getUrlFromArrays(

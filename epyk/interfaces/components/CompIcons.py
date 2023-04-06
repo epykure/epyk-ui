@@ -56,6 +56,10 @@ class Icons:
     width = Arguments.size(width, unit="px")
     size = Arguments.size(size, unit="px")
     height = Arguments.size(height, unit="px")
+    if width[0] == "auto":
+      width = (self.page.body.style.globals.font.size, width[1])
+    if height[0] == "auto":
+      height = (self.page.body.style.globals.font.size, height[1])
     options = options or {}
     if "icon_family" not in options:
       icon_details = self.page.icons.get(icon)

@@ -97,6 +97,7 @@ class Buttons:
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     if options is not None and options.get("colored", False):
       self.__set_color(component, options["colored"])
+    component.style.css.line_height = self.page.body.style.globals.line_height
     component.style.css.margin = "0"
     component.style.css.padding = 0
     component.style.css.padding_h = 5
@@ -148,10 +149,8 @@ class Buttons:
     if options is not None:
       dft_options.update(options)
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, dft_options)
-    component.style.css.margin_top = 5
-    component.style.css.margin_bottom = 5
-    component.style.css.padding_left = 10
-    component.style.css.padding_right = 10
+    component.style.css.margin_top = 2
+    component.style.css.margin_bottom = 2
     html.Html.set_component_skin(component)
     return component
 
@@ -196,6 +195,7 @@ class Buttons:
     :param options: Optional. Specific Python options available for this component
     """
     component = self.button(text, icon, width, height, align, html_code, tooltip, profile, options)
+
     component.style.css.background = color or self.page.theme.danger.base
     component.style.css.border = COLOR_EXPR.format(color or self.page.theme.danger.base)
     component.style.css.color = self.page.theme.colors[0]
@@ -535,7 +535,7 @@ class Buttons:
       component.style.css.margin = 0
       component.style.css.padding = "0 20px"
       component.style.css.display = "inline-block"
-      component.style.css.line_height = Defaults_html.LINE_HEIGHT
+      component.style.css.line_height = self.page.body.style.globals.line_height
     html.Html.set_component_skin(component)
     return component
 
@@ -667,6 +667,7 @@ class Buttons:
     height = Arguments.size(height, unit="px")
     component = html.HtmlButton.Button(self.page, text, 'fas fa-phone', width, height, html_code=html_code,
                                        tooltip=tooltip, profile=profile, options=options)
+    component.style.css.line_height = self.page.body.style.globals.line_height
     self.__align(component, align)
     html.Html.set_component_skin(component)
     return component
@@ -709,13 +710,14 @@ class Buttons:
     height = Arguments.size(height, unit="px")
     component = html.HtmlButton.Button(self.page, text, 'fas fa-envelope', width, height, html_code=html_code,
                                        tooltip=tooltip, profile=profile, options=options)
+    component.style.css.line_height = self.page.body.style.globals.line_height
     self.__align(component, align)
     html.Html.set_component_skin(component)
     return component
 
   def radio(self, record: List[dict] = None, html_code: Optional[str] = None, group_name: Optional[str] = None,
             width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), align: str = 'left',
-            options: Optional[dict] = None, profile: Union[dict, bool] = None):
+            options: Optional[dict] = None, profile: Union[dict, bool] = None) -> html.HtmlRadio.Radio:
     """ Creates a radio HTML component.
 
     Tips: record data should be in the format expected by the component. If needed a data helper can be used.
@@ -753,6 +755,7 @@ class Buttons:
     height = Arguments.size(height, unit="px")
     component = html.HtmlRadio.Radio(
       self.page, record or [], html_code, group_name, width, height, options or {}, profile)
+    component.style.css.line_height = self.page.body.style.globals.line_height
     for c in component:
       c.style.css.display = "inline-block"
       c.style.css.margin = "0 2px"
@@ -807,7 +810,7 @@ class Buttons:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     if height[0] is None:
-      height = (Defaults_html.LINE_HEIGHT, height[1])
+      height = (self.page.body.style.globals.line_height, height[1])
     html_toggle = html.HtmlRadio.Switch(self.page, record, color, width, height, html_code, options or {}, profile)
     if label is not None:
       label = self.page.ui.texts.label(label, align=align, options=options, html_code="%s_label" % html_toggle.htmlCode)
@@ -818,6 +821,7 @@ class Buttons:
     else:
       component = self.page.ui.div([html_toggle], width=width)
     component.input = html_toggle
+    component.style.css.line_height = self.page.body.style.globals.line_height
     html.Html.set_component_skin(component)
     return component
 
@@ -999,7 +1003,7 @@ class Buttons:
     return component
 
   def live(self, time: int, js_funcs: types.JS_FUNCS_TYPES, icon: Optional[Union[str, bool]] = "fas fa-circle",
-           width: types.SIZE_TYPE = (15, "px"), height: types.SIZE_TYPE = (15, "px"), align: str = "left",
+           width: types.SIZE_TYPE = ('auto', "px"), height: types.SIZE_TYPE = ('auto', "px"), align: str = "left",
            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
     """ Live component which will trigger event every x second.
     This will then allow other components to be refreshed in the page.
@@ -1032,12 +1036,16 @@ class Buttons:
     component = self.page.ui.icons.awesome(
       icon, width=width, height=height, html_code=html_code, options=options, profile=profile)
     component.style.css.border_radius = "50px"
+    component.style.css.vertical_align = "middle"
+    component.style.css.line_height = self.page.body.style.globals.line_height
     component.style.css.padding = 0
     component.style.css.margin = 0
-    component.icon.style.css.font_factor(2)
-    component.icon.style.css.margin_right = 0
-    component.icon.style.css.margin = "-2px 0 0 -2px"
-    component.icon.style.css.padding_bottom = 10
+    component.style.css.position = "relative"
+    component.icon.style.css.font_factor(1)
+    component.icon.style.css.margin = 0
+    component.icon.style.css.position = "absolute"
+    component.icon.style.css.vertical_align = "middle"
+    component.icon.style.css.text_align = "center"
     if dflt_options["started"]:
       component.attr["data-active"] = 1
       component.icon.style.css.color = self.page.theme.success.base
@@ -1094,6 +1102,7 @@ class Buttons:
     component = self.page.ui.text(
       text, tooltip=tooltip, width=width, html_code=html_code, height=height, profile=profile, options=options)
     component.add_icon(icon, html_code=component.htmlCode)
+    component.style.css.line_height = self.page.body.style.globals.line_height
     self.__align(component, align)
     html.Html.set_component_skin(component)
     return component
@@ -1123,10 +1132,13 @@ class Buttons:
     component = self.button(
       icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile,
       options=options, align=align)
+    component.options.templateError = Defaults_html.TEMPLATE_ERROR_ICON
+    component.options.templateLoading = Defaults_html.TEMPLATE_LOADING_ICON
     component.style.css.background = self.page.theme.success.base
     component.style.css.border_color = self.page.theme.success.base
     component.style.css.padding = "0 10px"
     component.icon.style.css.color = "white"
+    component.icon.style.add_classes.div.color_hover(self.page.theme.success.base)
     html.Html.set_component_skin(component)
     return component
 
@@ -1152,10 +1164,13 @@ class Buttons:
     """
     component = self.button(icon="far fa-thumbs-down", width=width, height=height, html_code=html_code, tooltip=tooltip,
                             profile=profile, options=options, align=align)
+    component.options.templateError = Defaults_html.TEMPLATE_ERROR_ICON
+    component.options.templateLoading = Defaults_html.TEMPLATE_LOADING_ICON
     component.style.css.background = self.page.theme.danger.base
     component.style.css.border_color = self.page.theme.danger.base
     component.style.css.padding = "0 10px"
     component.icon.style.css.color = "white"
+    component.icon.style.add_classes.div.color_hover(self.page.theme.danger.base)
     html.Html.set_component_skin(component)
     return component
 
@@ -1187,6 +1202,7 @@ class Buttons:
       text, width=width, height=height, align=align, html_code=html_code, tooltip=tooltip, profile=profile,
       options=options)
     component.style.css.background = self.page.theme.greys[3]
+    component.style.css.line_height = self.page.body.style.globals.line_height
     component.options.style_select = "pill_selected"
     component.style.css.border_radius = 20
     component.style.css.padding = "0 5px"
@@ -1237,6 +1253,7 @@ class Buttons:
     options = options or {}
     component = html.HtmlButton.ButtonMore(
       self.page, items, text, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
+    component.style.css.line_height = self.page.body.style.globals.line_height
     html.Html.set_component_skin(component)
     return component
 
@@ -1325,7 +1342,7 @@ class Buttons:
     component.style.css.padding = "5px 10px"
     component.style.css.margin_top = "5px !IMPORTANT"
     component.style.css.color = self.page.theme.greys[0]
-    component.style.css.line_height = 0
+    component.style.css.line_height = self.page.body.style.globals.line_height
     component.style.css.background = self.page.theme.colors[-1]
     component.style.css.border_color = self.page.theme.colors[-1]
     html.Html.set_component_skin(component)

@@ -49,8 +49,8 @@ class Image(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlImg:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -61,7 +61,7 @@ class Image(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: str = None):
-    """   Click event which redirect to another page.
+    """ Click event which redirect to another page.
  
     :param url: the url.
     :param js_funcs: Optional. The Javascript Events triggered before the redirection
@@ -100,7 +100,7 @@ class Image(Html.Html):
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text: str):
-    """   Load a image from a base64 string.
+    """ Load a image from a base64 string.
 
     Usage::
 
@@ -114,7 +114,7 @@ class Image(Html.Html):
 
       self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
  
-    :param text: The encoded picture.
+    :param text: The encoded picture
 
     :return: self to allow the chaining
     """
@@ -122,7 +122,7 @@ class Image(Html.Html):
     self.val["image"] = "png;base64,%s" % text
     return self
 
-  _js__builder__ = '''
+  _js__builder__ = ''' console.log(options);
       if ((typeof data !== 'string') && (typeof data !== 'undefined')){
         if(typeof data.path === 'undefined'){data.path = '%s'}
         htmlObj.src = data.path + "/" + data.image}
@@ -130,30 +130,31 @@ class Image(Html.Html):
       if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}    
       ''' % Defaults.SERVER_PATH
 
+  def loading(self, status: bool = True, label: str = "https://loading.io/mod/spinner/spinner/sample.gif",
+              *args, **kwargs):
+    """ Loading feature for image.
+
+    Usage::
+
+        chart_obj.loading()
+        ....
+        chart_obj.loading(False)
+
+    :param status: Optional. Specific the status of the display of the loading component
+    :param label: Optional. Picture full path
+    """
+    if status:
+      return ''' 
+document.getElementById('%(htmlId)s').src = "error_link";
+document.getElementById('%(htmlId)s').onerror = function(){ this.onerror=null;this.src=%(label)s;}
+  ''' % {"htmlId": self.htmlCode, 'label': JsUtils.jsConvertData(label, None)}
+
+    return ""
+
   def __str__(self):
     if self.val["image"] is not None:
       self.attr["src"] = "%(path)s/%(image)s" % self.val
     return '<img %s />%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
-
-  def loading(self, status: bool = True, label: str = "https://loading.io/mod/spinner/spinner/sample.gif"):
-      """ Loading feature for image.
-
-      Usage::
-
-          chart_obj.loading()
-          ....
-          chart_obj.loading(False)
-
-      :param status: Optional. Specific the status of the display of the loading component
-      :param label: Optional. Picture full path
-      """
-      if status:
-        return ''' 
-document.getElementById('%(htmlId)s').src = "error_link";
-document.getElementById('%(htmlId)s').onerror = function() this.onerror=null;this.src=%(label)s}
-  ''' % {"htmlId": self.htmlCode, 'label': JsUtils.jsConvertData(label, None)}
-
-      return ""
 
 
 class AnimatedImage(Html.Html):
@@ -186,7 +187,7 @@ class AnimatedImage(Html.Html):
     self.style.css.position = "relative"
 
   def from_plot(self, plt):
-    """   Load a image from a plt object from matplotlib.
+    """ Load an image from a plt object from matplotlib.
 
     Usage::
 
@@ -198,7 +199,7 @@ class AnimatedImage(Html.Html):
       img2.from_plot(plt)
       img2.style.css.display = "inline-block"
  
-    :param plt: matplotlib.pyplot. The ploting features in matplotlib.
+    :param plt: matplotlib.pyplot. The ploting features in matplotlib
 
     :return: self to allow the chaining.
     """
@@ -209,7 +210,7 @@ class AnimatedImage(Html.Html):
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text: str):
-    """   Load a image from a base64 string.
+    """ Load a image from a base64 string.
 
     Usage::
 
@@ -223,7 +224,7 @@ class AnimatedImage(Html.Html):
 
       self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
  
-    :param text: The encoded picture.
+    :param text: The encoded picture
 
     :return: self to allow the chaining
     """
@@ -350,30 +351,17 @@ class ImgCarousel(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Add click event on this component.
+    """ Add click event on this component.
  
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: optional. The reference of the component.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: optional. The reference of the component
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.__click_items.extend(js_funcs)
     return self
-
-  _js__builder__ = '''
-      data.forEach(function(rec, i){
-        var li = document.createElement('li');
-        if (i == 0) {li.style.display = 'block'} else{li.style.display = 'none'};
-        var img = document.createElement('img'); img.src = rec.path +'/'+ rec.image; li.appendChild(img);
-        var title = document.createElement('h3'); title.innerHTML = rec.title; li.appendChild(title); 
-        htmlObj.appendChild(li);
-        var label = document.createElement('label'); label.style.backgroundColor = options.color; 
-        label.style.borderRadius = '20px'; label.for = i; label.innerHTML = '&nbsp;'; 
-        document.getElementById(htmlObj.id +'_bullets').appendChild(label)
-      })'''
 
   def __str__(self):
     self.container._vals = self.items
@@ -446,13 +434,13 @@ class Icon(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: str = None):
-    """   Click event which redirect to another page.
+    """ Click event which redirect to another page.
  
-    :param url: The url text.
-    :param js_funcs: Optional. The Javascript Events triggered before the redirection.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param target: Optional. The name (type) of the href link.
-    :param source_event: Optional. The event source.
+    :param url: The url text
+    :param js_funcs: Optional. The Javascript Events triggered before the redirection
+    :param profile: Optional. A flag to set the component performance storage
+    :param target: Optional. The name (type) of the href link
+    :param source_event: Optional. The event source
     """
     js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
@@ -462,8 +450,8 @@ class Icon(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlIcon:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -474,16 +462,13 @@ class Icon(Html.Html):
 
   @property
   def style(self) -> GrpClsImage.ClassIcon:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassIcon(self)
     return self._styleObj
 
   def spin(self):
-    """
-    Add the spin class to the font awesome icon.
+    """ Add the spin class to the font awesome icon.
 
     Related Pages:
 
@@ -494,8 +479,7 @@ class Icon(Html.Html):
     return self
 
   def pulse(self):
-    """
-    Add the pulse class to the font awesome icon.
+    """ Add the pulse class to the font awesome icon.
 
     Related Pages:
 
@@ -506,8 +490,7 @@ class Icon(Html.Html):
     return self
 
   def border(self):
-    """
-    Add a border to the icon.
+    """ Add a border to the icon.
 
     Related Pages:
 
@@ -518,15 +501,15 @@ class Icon(Html.Html):
     return self
 
   def size(self, value: int):
-    """
-    Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
+    """Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
+
     With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons
  
-    :param value: The value of the size factor for the icon.
+    :param value: The value of the size factor for the icon
     """
     if 'font-awesome' in self.requirements:
       if isinstance(value, int):
@@ -536,8 +519,7 @@ class Icon(Html.Html):
     return self
 
   def fixed_width(self):
-    """
-    Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed width.
+    """ Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed width.
 
     Related Pages:
 
@@ -548,29 +530,28 @@ class Icon(Html.Html):
     return self
 
   def rotate(self, value: int):
-    """
-    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
  
-    :param value: The rotation angle.
+    :param value: The rotation angle
     """
     if 'font-awesome' in self.requirements:
       self.attr['class'].add("fa-rotate-%s" % value)
     return self
 
   def flip(self, direction: str = 'h'):
-    """
-    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+
     This will use the font-awesome flip classes.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
  
-    :param direction: Optional. The direction reference (h or v).
+    :param direction: Optional. The direction reference (h or v)
     """
     if 'font-awesome' in self.requirements:
       if direction.lower() == 'h':
@@ -582,31 +563,28 @@ class Icon(Html.Html):
     return self
 
   def pull(self, position: str = 'left'):
-    """
-    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+    """ Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
     Related Pages:
 
       https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
  
-    :param position: Optional.
+    :param position: Optional. The icon pull position
     """
     if 'font-awesome' in self.requirements:
         self.attr['class'].add("fa-pull-%s" % position)
     return self
 
   def set_icon(self, value: str):
-    """
-    Add the icon class reference to the CSS class attribute of the component.
+    """ Add the icon class reference to the CSS class attribute of the component.
  
-    :param value: An icon class reference.
+    :param value: An icon class reference
     """
     self.attr['class'].add(value)
     return self
 
   def hover_colors(self, color_hover: str, color_out: str = None):
-    """
-    Change the color of the button background when the mouse is hover.
+    """ Change the color of the button background when the mouse is hover.
 
     Usage::
 
@@ -625,21 +603,15 @@ class Icon(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
-    """
-    The onclick event occurs when the user clicks on an element.
+    """ The onclick event occurs when the user clicks on an element.
  
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
     return super(Icon, self).click(js_funcs, profile, source_event, on_ready=on_ready)
-
-  _js__builder__ = '''
-      if (typeof data !== 'undefined'){
-      htmlObj.classList = []; data.split(' ').forEach(function(cls){htmlObj.classList.add(cls)});
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}}'''
 
   def __str__(self):
     return '<i %s>%s</i>' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)
@@ -648,8 +620,7 @@ class Icon(Html.Html):
 class IconToggle(Icon):
 
   def add_components(self, components: List[Html.Html]):
-    """
-    Add a list of components.
+    """ Add a list of components.
  
     :param components: The HTML components.
     """
@@ -658,13 +629,12 @@ class IconToggle(Icon):
 
   def click(self, js_on_off_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    The onclick event occurs when the user clicks on an element.
+    """ The onclick event occurs when the user clicks on an element.
  
-    :param js_on_off_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_on_off_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.style.css.cursor = "pointer"
     if js_on_off_funcs is None:
@@ -694,14 +664,10 @@ class Emoji(Html.Html):
     super(Emoji, self).__init__(page, symbol, options=options, profile=profile)
     self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
-  _js__builder__ = '''
-      htmlObj.innerHTML = data; 
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
-
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -750,13 +716,10 @@ class Badge(Html.Html):
     if tooltip is not None:
       self.tooltip(tooltip)
 
-  _js__builder__ = '''
-      htmlObj.innerHTML = data; 
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
-
   @property
   def dom(self) -> JsHtml.JsHtml:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -773,14 +736,12 @@ class Badge(Html.Html):
 
   @property
   def options(self) -> OptButton.OptionsBadge:
-    """
-    Property to the options specific to the HTML component.
-    """
+    """ Property to the options specific to the HTML component. """
     return super().options
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   The onclick event occurs when the user clicks on an element.
+    """ The onclick event occurs when the user clicks on an element.
  
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -838,23 +799,19 @@ class SlideShow(Html.Html):
 
   @property
   def style(self) -> GrpClsImage.ClassTinySlider:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsImage.ClassTinySlider(self)
     return self._styleObj
 
   @property
   def jsonId(self):
-    """
-    Return the Javascript variable of the json object.
-    """
+    """ Return the Javascript variable of the json object. """
     return "%s_obj" % self.htmlCode
 
   @property
   def js(self) -> JsTinySlider.TinySlider:
-    """   The tiny slider javascript events.
+    """ The tiny slider javascript events.
 
     Return the Javascript internal object.
 
@@ -866,8 +823,8 @@ class SlideShow(Html.Html):
 
   @property
   def dom(self) -> JsHtmlTinySlider.JsHtmlTinySlider:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object.
@@ -879,11 +836,11 @@ class SlideShow(Html.Html):
   def _events(self, event, js_funcs: types.JS_FUNCS_TYPES, source_event: str, profile: types.PROFILE_TYPE = None,
               add: bool = True):
     """
- 
-    :param event: The event type.
-    :param js_funcs: The JavaScript fragments.
-    :param source_event: The source target for the event.
-    :param profile: Optional. A flag to set the component performance storage.
+
+    :param event: The event type
+    :param js_funcs: The JavaScript fragments
+    :param source_event: The source target for the event
+    :param profile: Optional. A flag to set the component performance storage
     :param add: Optional.
     """
     if add:
@@ -899,9 +856,9 @@ class SlideShow(Html.Html):
     """
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: The source target for the event
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
@@ -910,9 +867,9 @@ class SlideShow(Html.Html):
     """
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: The source target for the event
     """
     return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
@@ -920,9 +877,9 @@ class SlideShow(Html.Html):
                            source_event: str = None):
     """
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
@@ -931,9 +888,9 @@ class SlideShow(Html.Html):
     """
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
@@ -942,9 +899,9 @@ class SlideShow(Html.Html):
     """
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile)
 
@@ -952,9 +909,9 @@ class SlideShow(Html.Html):
                          source_event: str = None):
     """
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
 
@@ -962,9 +919,9 @@ class SlideShow(Html.Html):
                                source_event: str = None):
     """
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile)
 
@@ -973,9 +930,9 @@ class SlideShow(Html.Html):
     """
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -984,9 +941,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile)
 
@@ -994,9 +951,9 @@ class SlideShow(Html.Html):
                              source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1004,9 +961,9 @@ class SlideShow(Html.Html):
                       source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile)
 
@@ -1014,9 +971,9 @@ class SlideShow(Html.Html):
                       source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1024,9 +981,9 @@ class SlideShow(Html.Html):
                      source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile)
 
@@ -1034,9 +991,9 @@ class SlideShow(Html.Html):
                      source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1044,9 +1001,9 @@ class SlideShow(Html.Html):
                     source_event: str = None):
     """   
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile)
 
@@ -1055,9 +1012,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1066,9 +1023,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile)
 
@@ -1077,9 +1034,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragStart", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1088,9 +1045,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile)
 
@@ -1099,9 +1056,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragMove", js_funcs, source_event or self.jsonId, profile, add=False)
 
@@ -1110,9 +1067,9 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile)
 
@@ -1121,21 +1078,19 @@ class SlideShow(Html.Html):
     """   
 
  
-    :param js_funcs: The JavaScript fragments.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: The source target for the event.
+    :param js_funcs: The JavaScript fragments
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
     """
     return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile, add=False)
 
   def refresh(self):
-    """   Component refresh function. Javascript function which can be called in any Javascript event.
-    """
+    """ Component refresh function. Javascript function which can be called in any Javascript event. """
     return self.build([], self._jsStyles)
 
   @property
   def options(self) -> OptImg.OptionsTinySlider:
-    """
-    The tiny slider options.
+    """ The tiny slider options.
 
     Related Pages:
 
@@ -1144,8 +1099,8 @@ class SlideShow(Html.Html):
     return super().options
 
   def empty(self):
-    """
-    Empty all the values already defined on the Python side.
+    """ Empty all the values already defined on the Python side.
+
     This will be called before the JavaScript Transpilation.
     """
     self._vals = []
@@ -1153,8 +1108,7 @@ class SlideShow(Html.Html):
     return self
 
   def add(self, component: Html.Html):
-    """
-    Add a component to the slider container.
+    """ Add a component to the slider container.
  
     :param component: A component to be added to the slider container
     """
@@ -1167,10 +1121,6 @@ class SlideShow(Html.Html):
 
   def __len__(self):
     return len(self.val)
-
-  _js__builder__ = '''
-      if(typeof window[ htmlObj.id + '_obj'] !== 'undefined') {window[ htmlObj.id + '_obj'].destroy();} 
-      window[ htmlObj.id + '_obj'] = tns(options)'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
@@ -1185,9 +1135,9 @@ class Background(HtmlContainer.Div):
     """
  
     :param value:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param component_id: Optional. A DOM component reference in the page.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. A DOM component reference in the page
     """
     if isinstance(value, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in value.items()])

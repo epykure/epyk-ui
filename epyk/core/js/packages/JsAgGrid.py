@@ -966,7 +966,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.hideOverlay()" % self.varId)
 
-  def destroy(self):
+  def destroy(self) -> JsObjects.JsVoid:
     """   Will destroy the grid and release resources.
 
     Related Pages:
@@ -975,7 +975,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.destroy()" % self.varId)
 
-  def resetRowHeights(self):
+  def resetRowHeights(self) -> JsObjects.JsVoid:
     """   Tells the grid to recalculate the row heights.
 
     Related Pages:
@@ -984,7 +984,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.resetRowHeights()" % self.varId)
 
-  def paginationIsLastPageFound(self):
+  def paginationIsLastPageFound(self) -> JsObjects.JsVoid:
     """   Returns true when the last page is known; this will always be the case if you are using the Client-Side
     Row Model for pagination.
     Returns false when the last page is not known; this only happens when using Infinite Scrolling Row Model.
@@ -995,7 +995,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationIsLastPageFound()" % self.varId)
 
-  def copySelectedRangeToClipboard(self, include_headers):
+  def copySelectedRangeToClipboard(self, include_headers) -> JsObjects.JsVoid:
     """   Copies the selected ranges to the clipboard.
 
     Related Pages:
@@ -1005,7 +1005,7 @@ class AgGrid(JsPackage):
     include_headers = JsUtils.jsConvertData(include_headers, None)
     return JsObjects.JsVoid("%s.api.copySelectedRangeToClipboard(%s)" % (self.varId, include_headers))
 
-  def copySelectedRangeDown(self):
+  def copySelectedRangeDown(self) -> JsObjects.JsVoid:
     """   Copies the selected range down, similar to Ctrl + D in Excel.
 
     Related Pages:
@@ -1014,7 +1014,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.copySelectedRangeDown()" % self.varId)
 
-  def paginationGetPageSize(self):
+  def paginationGetPageSize(self) -> JsObjects.JsVoid:
     """   Returns how many rows are being shown per page.
 
     Related Pages:
@@ -1023,7 +1023,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGetPageSize()" % self.varId)
 
-  def paginationSetPageSize(self, new_page_size):
+  def paginationSetPageSize(self, new_page_size) -> JsObjects.JsVoid:
     """   Sets the paginationPageSize to newPageSize, then re-paginates the grid so the changes are applied immediately.
 
     Related Pages:
@@ -1033,7 +1033,7 @@ class AgGrid(JsPackage):
     new_page_size = JsUtils.jsConvertData(new_page_size, None)
     return JsObjects.JsVoid("%s.api.paginationSetPageSize(%s)" % (self.varId, new_page_size))
 
-  def paginationGetCurrentPage(self):
+  def paginationGetCurrentPage(self) -> JsObjects.JsVoid:
     """   Returns the 0-based index of the page which is showing.
 
     Related Pages:
@@ -1042,7 +1042,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGetCurrentPage()" % self.varId)
 
-  def paginationGetTotalPages(self):
+  def paginationGetTotalPages(self) -> JsObjects.JsVoid:
     """   Returns the total number of pages. Returns null if paginationIsLastPageFound() == false.
 
     Related Pages:
@@ -1051,7 +1051,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGetTotalPages()" % self.varId)
 
-  def paginationGetRowCount(self):
+  def paginationGetRowCount(self) -> JsObjects.JsVoid:
     """   The total number of rows. Returns null if paginationIsLastPageFound() == false.
 
     Related Pages:
@@ -1060,7 +1060,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGetRowCount()" % self.varId)
 
-  def paginationGoToPage(self, page_number: types.JS_DATA_TYPES):
+  def paginationGoToPage(self, page_number: types.JS_DATA_TYPES) -> JsObjects.JsVoid:
     """   Goes to the specified page. If the page requested doesn't exist, it will go to the last page.
 
     Related Pages:
@@ -1072,7 +1072,7 @@ class AgGrid(JsPackage):
     page_number = JsUtils.jsConvertData(page_number, None)
     return JsObjects.JsVoid("%s.api.paginationGoToPage(%s)" % (self.varId, page_number))
 
-  def paginationGoToNextPage(self):
+  def paginationGoToNextPage(self) -> JsObjects.JsVoid:
     """   Shorthands for goToPage(relevantPageNumber).
 
     Related Pages:
@@ -1081,7 +1081,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGoToNextPage()" % self.varId)
 
-  def paginationGoToPreviousPage(self):
+  def paginationGoToPreviousPage(self) -> JsObjects.JsVoid:
     """   Shorthands for goToPage(relevantPageNumber).
 
     Related Pages:
@@ -1090,7 +1090,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGoToPreviousPage()" % self.varId)
 
-  def paginationGoToFirstPage(self):
+  def paginationGoToFirstPage(self) -> JsObjects.JsVoid:
     """   Shorthands for goToPage(relevantPageNumber).
 
     Related Pages:
@@ -1099,7 +1099,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGoToFirstPage()" % self.varId)
 
-  def paginationGoToLastPage(self):
+  def paginationGoToLastPage(self) -> JsObjects.JsVoid:
     """   Shorthands for goToPage(relevantPageNumber).
 
     Related Pages:
@@ -1108,7 +1108,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.paginationGoToLastPage()" % self.varId)
 
-  def setSideBarVisible(self, show):
+  def setSideBarVisible(self, show) -> JsObjects.JsVoid:
     """   Tells the grid to recalculate the row heights.
 
     Related Pages:
@@ -1118,7 +1118,7 @@ class AgGrid(JsPackage):
     show = JsUtils.jsConvertData(show, None)
     return JsObjects.JsVoid("%s.api.setSideBarVisible(%s)" % (self.varId, show))
 
-  def getSortModel(self):
+  def getSortModel(self) -> JsObjects.JsVoid:
     """   Returns the sort state.
 
     Related Pages:
@@ -1128,7 +1128,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.getSortModel()" % self.varId)
 
-  def setPinnedBottomRowData(self, rowData):
+  def setPinnedBottomRowData(self, rowData) -> JsObjects.JsVoid:
     """
 
     Related Pages:
@@ -1139,7 +1139,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.setPinnedBottomRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
 
-  def setPinnedTopRowData(self, rowData):
+  def setPinnedTopRowData(self, rowData) -> JsObjects.JsVoid:
     """
 
     Related Pages:
@@ -1150,20 +1150,23 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.setPinnedTopRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
 
-  def setTotalRow(self, rowData, cols = None):
-      return JsObjects.JsVoid('''
+  def setTotalRow(self, rowData, cols: types.JS_DATA_TYPES = None) -> JsObjects.JsVoid:
+    """
+    
+    :param rowData: 
+    :param cols: 
+    :return: 
+    """
+    return JsObjects.JsVoid('''
 const calcTotalCols = %s;
 const totalRow = function(api) {
       let result = [{}];
       calcTotalCols.forEach(function (params){result[0][params] = 0});
       calcTotalCols.forEach(function (params){%s.forEach(function (line) {result[0][params] += line[params];})});
       api.setPinnedBottomRowData(result);
-  }; totalRow(%s.api)''' % (
-        JsUtils.jsConvertData(cols, None),
-        JsUtils.jsConvertData(rowData, None),
-        self.varId))
+  }; totalRow(%s.api)''' % (JsUtils.jsConvertData(cols, None), JsUtils.jsConvertData(rowData, None), self.varId))
 
-  def setServerSideDatasource(self, data):
+  def setServerSideDatasource(self, data) -> JsObjects.JsVoid:
     """ Set new datasource for Server-Side Row Model.
 
     Related Pages:

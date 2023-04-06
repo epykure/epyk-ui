@@ -37,8 +37,7 @@ class Hr(Html.Html):
       self.style.css.margin = "auto"
 
   def margin(self, left: int = 0, right: int = 0, unit: str = '%'):
-    """  
-    Shortcut to set the margin let and right for this HTML component.
+    """ Shortcut to set the margin let and right for this HTML component.
 
     :param left: Optional. The margin left.
     :param right: Optional. The margin right.
@@ -53,9 +52,7 @@ class Hr(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassStandard:
-    """  
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassStandard(self)
     return self._styleObj
@@ -100,9 +97,7 @@ class Stars(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Stars:
-    """  
-    The JavaScript dom object to be used in any events.
-    """
+    """ The JavaScript dom object to be used in any events. """
     if self._dom is None:
       self._dom = JsHtmlStars.Stars(self, page=self.page)
     return self._dom
@@ -110,8 +105,8 @@ class Stars(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """  
-    Add the event click and double click to the starts item.
+    """ Add the event click and double click to the starts item.
+
     The Javascript function will be triggered after the change of content of the component.
 
     Usage::
@@ -139,12 +134,6 @@ class Stars(Html.Html):
       span.click(str_fncs, profile, source_event=source_event, on_ready=on_ready)
     return self
 
-  _js__builder__ = '''
-      htmlObj.dataset.level = data;
-      htmlObj.querySelectorAll("span").forEach(function(span, i){
-        if (i < data){span.style.color = options.color}
-        else {span.style.color = ''}})'''
-
   def __str__(self):
     return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
@@ -164,16 +153,10 @@ class Help(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassHelp:
-    """  
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassHelp(self)
     return self._styleObj
-
-  _js__builder__ = '''
-      htmlObj.setAttribute("title", data);
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
     return '<i %s></i>' % self.get_attrs(css_class_names=self.style.get_classes())
@@ -201,12 +184,12 @@ class Loading(Html.Html):
       self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
 
   def fixed(self, css: Optional[dict] = None, icon_css: Optional[dict] = None):
-    """  
-    Set css attributes of the loading div to be fixed.
+    """ Set css attributes of the loading div to be fixed.
+
     This can be done directly in options in the component constructor options={"fixed": True}.
 
-    :param css: Optional. The css attributes.
-    :param icon_css: Optional. The CSS attributes.
+    :param css: Optional. The css attributes
+    :param icon_css: Optional. The CSS attributes
 
     :return: self to allow the chains.
     """
@@ -235,8 +218,8 @@ class HtmlJson(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJson.JsonFormatter:
-    """  
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
@@ -245,19 +228,13 @@ class HtmlJson(Html.Html):
 
   @property
   def jsonId(self):
-    """  
-    Return the Javascript variable of the json object.
-    """
+    """ Return the Javascript variable of the json object. """
     return "%s_obj" % self.htmlCode
-
-  _js__builder__ = '''
-      window[ htmlObj.id + '_obj'] = new JSONFormatter(data, options.open, options.opts); htmlObj.innerHTML = '';
-      htmlObj.appendChild(window[ htmlObj.id + '_obj'].render())'''
 
   @property
   def options(self) -> OptJsonFormatter.OptionsJsonFmt:
-    """  
-    Property to the component options.
+    """ Property to the component options.
+
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -266,7 +243,7 @@ class HtmlJson(Html.Html):
 
   @property
   def js(self) -> JsJsonFormatter.Json:
-    """   Return the Javascript internal object.
+    """ Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -306,37 +283,8 @@ class Breadcrumb(Html.Html):
 
   @property
   def options(self) -> OptText.OptBreadCrumb:
-    """  
-    Property to set all the possible object for a breadcrumb definition.
-    """
+    """ Property to set all the possible object for a breadcrumb definition. """
     return super().options
-
-  _js__builder__ = '''
-      htmlObj.innerHTML = "";
-      if(typeof data === "undefined"){htmlObj.style["height"] = 0;}
-      else{
-        if(data.length == 0){htmlObj.style["height"] = 0}
-        else{ 
-          htmlObj.style["height"] = options.height + "px";
-          var text = document.createTextNode(options.delimiter); htmlObj.appendChild(text)
-          data.forEach(function(rec, i){
-            if(typeof rec.type !== 'undefined'){
-              if(rec.type == "dots"){var text = document.createTextNode("... "); htmlObj.appendChild(text)}}
-            else{
-              if (rec.selected){
-                var aHref = document.createElement("span"); aHref.innerHTML = rec.text}
-              else{
-                var aHref = document.createElement("a"); aHref.setAttribute('href', rec.url); 
-                aHref.innerHTML = rec.text}
-              Object.keys(options.style).forEach(function(key){aHref.style[key] = options.style[key]});
-              if (rec.selected){
-                Object.keys(options.style_selected).forEach(
-                  function(key){aHref.style[key] = options.style_selected[key]});
-              }
-              htmlObj.appendChild(aHref)}
-            var text = document.createTextNode(options.delimiter);
-            if (i < data.length-1){htmlObj.appendChild(text)}
-      })}}'''
 
   def __add__(self, component: Union[primitives.HtmlModel, str]):
     """ Add items to a container """
@@ -362,7 +310,8 @@ class Legend(Html.Html):
 
   @property
   def options(self) -> OptJsonFormatter.OptionsLegend:
-    """   Property to the component options.
+    """ Property to the component options.
+
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -462,8 +411,8 @@ class Slides(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """  
-    Property to the component options.
+    """ Property to the component options.
+
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -472,8 +421,8 @@ class Slides(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Slides:
-    """  
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
@@ -481,10 +430,9 @@ class Slides(Html.Html):
     return self._dom
 
   def add(self, component: Union[Html.Html, str]):
-    """  
-    Add a component to the slide.
+    """ Add a component to the slide.
 
-    :param component: The HTML component to be added to this component.
+    :param component: The HTML component to be added to this component
     """
     if isinstance(component, list):
       for c in component:
@@ -506,12 +454,11 @@ class Slides(Html.Html):
     return self
 
   def add_slide(self, title: str, component: Union[Html.Html, str], options: Optional[dict] = None):
-    """  
-    Add a slide.
+    """ Add a slide.
 
-    :param title: The title value in the slide.
-    :param component: The HTML component.
-    :param options: Optional. The various component options.
+    :param title: The title value in the slide
+    :param component: The HTML component
+    :param options: Optional. The various component options
     """
     self.add(component)
     self.val[-1].attr["data-slide_title"] = title
@@ -526,12 +473,6 @@ class Slides(Html.Html):
         self._content_table.anchor(title)
       self._content_table[-1].click([self.dom.goTo(len(self.val))])
     return self
-
-  _js__builder__ = '''
-      let index = htmlObj.getAttribute("data-current_slide");
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)} 
-      document.getElementsByName(htmlObj.id)[index].innerHTML = data;
-      '''
 
   def __str__(self):
     self.page.body.style.css.height = '100%'
@@ -564,8 +505,8 @@ class HtmlQRCode(Html.Html):
 
   @property
   def options(self) -> OptQrCode.OptionsQrCode:
-    """  
-    Property to the component options.
+    """ Property to the component options.
+
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -574,18 +515,12 @@ class HtmlQRCode(Html.Html):
 
   @property
   def jsonId(self):
-    """  
-    Return the Javascript variable of the json object.
-    """
+    """ Return the Javascript variable of the json object. """
     return "%s_obj" % self.htmlCode
-
-  _js__builder__ = ''' htmlObj.innerHTML = ""; 
-       window[ htmlObj.id + '_obj'] = new QRCode(htmlObj, Object.assign({'text': data}, options) );
-       window[ htmlObj.id + '_obj']._el.querySelector("img").style["margin"] = 0'''
 
   @property
   def js(self) -> JsQrCode.QrCode:
-    """   Return the Javascript internal object.
+    """ Return the Javascript internal object.
 
     :return: A Javascript object
     """

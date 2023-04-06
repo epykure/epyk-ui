@@ -427,6 +427,16 @@ class JsFunctions(list):
     """
     self.__str_funcs.extend(funcs)
 
+  def __add__(self, other):
+    """ Add two JavaScript expressions.
+
+    :param other: A second expression
+    :return: A new JavaScript expression
+    """
+    if hasattr(other, "toStr"):
+      other = other.toStr()
+    return JsFunctions("%s;%s" % (self.toStr(), other))
+
   def toStr(self):
     return "; ".join([s.toStr() if hasattr(s, 'toStr') else str(s) for s in self.__str_funcs])
 

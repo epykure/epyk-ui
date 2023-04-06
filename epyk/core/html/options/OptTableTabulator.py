@@ -3,7 +3,7 @@ import hashlib
 import json
 
 from typing import Union, List, Optional
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import Enums
 from epyk.core.js import JsUtils
 from epyk.core.py import types
@@ -2342,13 +2342,15 @@ class RowContextMenu(Options):
     return ", ".join(items)
 
 
-class TableConfig(Options):
+class TableConfig(OptionsWithTemplates):
   _struct__schema = {"keybindings": {}, "layouts": {}, "persistence": {}, "rowContextMenu": {}}
 
   @property
   def index(self):
-    """   A unique index value should be present for each row of data if you want to be able to programmatically alter that
+    """
+    A unique index value should be present for each row of data if you want to be able to programmatically alter that
     data at a later point, this should be either numeric or a string.
+
     By default Tabulator will look for this value in the id field for the data.
     If you wish to use a different field as the index, set this using the index option parameter.
 

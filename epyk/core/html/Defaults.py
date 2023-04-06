@@ -37,3 +37,12 @@ TEXTS_SPAN_HEIGHT = 100
 SVGNS = 'http://www.w3.org/2000/svg'
 
 CHARTS_HEIGHT_PX = 330
+
+
+# templates for the different states of a component
+TEMPLATE_LOADING_ONE_LINE = "`<i class='fas fa-cog fa-spin' style='margin-right:5px'></i>Loading....`"
+TEMPLATE_LOADING_ICON = "`<i class='fas fa-cog fa-spin' style='margin-right:5px'></i>`"
+TEMPLATE_ERROR_ONE_LINE = "`<i class='fas fa-exclamation-triangle' style='margin-right:5px;color:red'></i>Error during the processing`"
+TEMPLATE_ERROR_ICON = "`<i class='fas fa-exclamation-triangle' style='margin-right:5px;color:red'></i>`"
+TEMPLATE_LOADING_LINE = ""
+TEMPLATE_ERROR_LINE = ""

@@ -1903,6 +1903,14 @@ CSS_IMPORTS = {
     ]
   },
 
+  # bootstrap icons
+  'bootstrap-icons': {
+    'website': 'https://icons.getbootstrap.com/',
+    'version': '1.10.3',
+    'repository': 'https://github.com/twbs/icons?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+    'modules': [
+      {'script': 'bootstrap-icons.min.css', 'path': 'bootstrap-icons/%(version)s/font/', 'cdnjs': CDNJS_REPO}]},
+
   # Font awesome style width CDN links
   'font-awesome': {
     'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',

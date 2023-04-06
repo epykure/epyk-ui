@@ -104,7 +104,8 @@ class Calendar:
 
     Usage::
 
-    Templates:
+      page = pk.Page()
+      dt = page.ui.calendars.timer(5)
 
     :param minutes:
     :param text: Optional. The value to be displayed to the timer

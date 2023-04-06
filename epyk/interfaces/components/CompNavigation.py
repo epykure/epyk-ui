@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 from epyk.core import html
 from epyk.core.css import Defaults_css
@@ -29,7 +29,7 @@ class Navigation:
 
     return text
 
-  def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom=None, tooltip: str = None,
+  def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom: int = None, tooltip: str = None,
          width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
          options: dict = None, profile: Union[bool, dict] = False):
     """ Navigation button to go to the top of the page directly.
@@ -41,15 +41,15 @@ class Navigation:
 
       page.ui.navigation.up()
 
-    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
-    :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
-    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Optional. The top property affects the vertical position of a positioned element
+    :param right: Optional. The right property affects the horizontal position of a positioned element
+    :param bottom: Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
@@ -73,8 +73,9 @@ class Navigation:
     html.Html.set_component_skin(du)
     return du
 
-  def down(self, icon="fas fa-arrow-down", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
-           height=(25, 'px'), options=None, profile=False):
+  def down(self, icon: str = "fas fa-arrow-down", top: int = 20, right: int = 20, bottom: int = None,
+           tooltip: str = None, width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
+           options: dict = None, profile: Union[bool, dict] = False):
     """
     Navigation button to go to the bottom of the page directly.
 
@@ -85,15 +86,15 @@ class Navigation:
 
       page.ui.navigation.down()
 
-    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
-    :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
-    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Optional. The top property affects the vertical position of a positioned element
+    :param right: Optional. The right property affects the horizontal position of a positioned element
+    :param bottom: Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     dd = self.page.ui.icon(icon, width=width, height=height, options=options, profile=profile).css(
@@ -117,8 +118,9 @@ class Navigation:
     html.Html.set_component_skin(dd)
     return dd
 
-  def to(self, y, x=None, icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None, width=(25, 'px'),
-         height=(25, 'px'), options=None, profile=False):
+  def to(self, y, x: int = None, icon: str = "fas fa-map-pin", top: int = 20, right: int = 20,
+         bottom: Optional[int] = None, tooltip: str = None, width: Union[tuple, int] = (25, 'px'),
+         height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = False):
     """
     Navigation button to go to a specific point in the page directly.
 
@@ -129,17 +131,17 @@ class Navigation:
 
       page.ui.navigation.to(100, tooltip="test")
 
-    :param y: Integer. The y position on the page.
-    :param x: Integer. Optional. The x position on the page.
-    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
-    :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
-    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param y: The y position on the page
+    :param x: Optional. The x position on the page
+    :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Optional. The top property affects the vertical position of a positioned element
+    :param right: Optional. The right property affects the horizontal position of a positioned element
+    :param bottom: Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     dd = self.page.ui.icon(icon, width=width, height=height, options=options, profile=profile).css(
@@ -162,8 +164,9 @@ class Navigation:
     html.Html.set_component_skin(dd)
     return dd
 
-  def pin(self, text, url="#", icon="fas fa-map-pin", top=20, right=20, bottom=None, tooltip=None,
-          width=(25, 'px'), height=(25, 'px'), options=None, profile=False):
+  def pin(self, text: str, url: str = "#", icon: str = "fas fa-map-pin", top: int = 20, right: int = 20,
+          bottom: int = None, tooltip: str = None, width: Union[tuple, int] = (25, 'px'),
+          height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = False):
     """
     Shortcut to a specific position in the page.
 
@@ -174,17 +177,17 @@ class Navigation:
 
       page.ui.navigation.pin("anchor", tooltip="test", bottom=20)
 
-    :param text: String. The shortcut name.
-    :param url: String. Optional. The anchor name.
-    :param icon: String. Optional. The component icon content from font-awesome references. Default fas fa-arrow-up.
-    :param top: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param right: Integer. Optional. The right property affects the horizontal position of a positioned element.
-    :param bottom: Integer. Optional. The top property affects the vertical position of a positioned element.
-    :param tooltip: String. Optional. A string with the value of the tooltip.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: The shortcut name
+    :param url: Optional. The anchor name
+    :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
+    :param top: Optional. The top property affects the vertical position of a positioned element
+    :param right: Optional. The right property affects the horizontal position of a positioned element
+    :param bottom: Optional. The top property affects the vertical position of a positioned element
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     dd = self.page.ui.icon(icon, width=width, height=height, options=options, profile=profile)
@@ -205,7 +208,8 @@ class Navigation:
     html.Html.set_component_skin(div)
     return div
 
-  def scroll(self, progress=0, height=(3, 'px'), options=None, profile=False):
+  def scroll(self, progress: int = 0, height: Union[tuple, int] = (3, 'px'), options: dict = None,
+             profile: Union[bool, dict] = False):
     """
     Add a horizontal progressbar to display the status of the page scrollbar.
 
@@ -216,10 +220,10 @@ class Navigation:
 
       page.ui.navigation.scroll()
 
-    :param progress: Integer. Optional. The progression on the page.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param progress: Optional. The progression on the page
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     height = Arguments.size(height, unit="px")
     p = self.page.ui.sliders.progressbar(progress, height=height, options=options, profile=profile)
@@ -229,8 +233,9 @@ class Navigation:
     html.Html.set_component_skin(p)
     return p
 
-  def indices(self, count, selected=1, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
-              profile=False):
+  def indices(self, count: int, selected: int = 1, width: Union[tuple, int] = (100, '%'),
+              height: Union[tuple, int] = (None, 'px'), html_code: str = None, options: dict = None,
+              profile: Union[bool, dict] = False):
     """
 
     :tags:
@@ -240,13 +245,13 @@ class Navigation:
 
       page.ui.navigation.indices(10)
 
-    :param count: Integer. Optional. The number of pages.
-    :param selected: Integer. Optional. The selected index.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of pages
+    :param selected: Optional. The selected index
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -256,7 +261,8 @@ class Navigation:
     html.Html.set_component_skin(html_indices)
     return html_indices
 
-  def more(self, text: str = "See more", icon: Optional[Union[str, bool]] = None, width: Union[tuple, int] = ('auto', ""),
+  def more(self, text: str = "See more", icon: Optional[Union[str, bool]] = None,
+           width: Union[tuple, int] = ('auto', ""),
            tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
            align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
@@ -269,15 +275,15 @@ class Navigation:
       btn.click([page.js.console.log(btn.dom.next())])
       t.click([btn.dom.rewind()])
 
-    :param text: Optional. The value to be displayed to the button.
-    :param icon: Optional. A string with the value of the icon to display from font-awesome.
-    :param tooltip: Optional. A string with the value of the tooltip.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Specific Python options available for this component.
+    :param text: Optional. The value to be displayed to the button
+    :param icon: Optional. A string with the value of the icon to display from font-awesome
+    :param tooltip: Optional. A string with the value of the tooltip
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
     """
     btn = self.page.ui.buttons.text(text=text, icon=icon, width=width, tooltip=tooltip, height=height, align=align,
                                     html_code=html_code, profile=profile, options=options)
@@ -305,8 +311,9 @@ class Navigation:
     btn.click = click
     return btn
 
-  def points(self, count, selected=0, width=(100, '%'), height=(None, 'px'), html_code=None, options=None,
-             profile=False):
+  def points(self, count: int, selected: int = 0, width: Union[tuple, int] = (100, '%'),
+             height: Union[tuple, int] = (None, 'px'), html_code: str = None, options: dict = None,
+             profile: Union[dict, bool] = False) -> html.HtmlContainer.Points:
     """
 
     :tags:
@@ -318,13 +325,13 @@ class Navigation:
       for i, _ in enumerate(p):
         p.click_item(i, [])
 
-    :param count: Integer. The number of pages.
-    :param selected: Integer. Optional. The selected index.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: The number of pages
+    :param selected: Optional. The selected index
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -334,8 +341,9 @@ class Navigation:
     html.Html.set_component_skin(html_points)
     return html_points
 
-  def dots(self, count, selected=1, position="right", width=(100, '%'), height=(None, 'px'), html_code=None,
-           options=None, profile=False):
+  def dots(self, count: int, selected: int = 1, position: str = "right", width: Union[tuple, int] = (100, '%'),
+           height: Union[tuple, int] = (None, 'px'), html_code: str = None, options: dict = None,
+           profile: Union[dict, bool] = False):
     """
 
     :tags:
@@ -345,14 +353,14 @@ class Navigation:
 
       d = page.ui.navigation.dots(10)
 
-    :param count: Integer. Optional. The number of pages.
-    :param selected: Integer. Optional. The selected index.
-    :param position: String. Optional. A string with the vertical position of the component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of pages
+    :param selected: Optional. The selected index
+    :param position: Optional. A string with the vertical position of the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -362,7 +370,8 @@ class Navigation:
     html.Html.set_component_skin(html_points)
     return html_points
 
-  def path(self, record, divider=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def path(self, record: List[dict], divider: str = None, width: Union[tuple, int] = (100, '%'),
+           height: Union[tuple, int] = (None, 'px'), options: dict = None, profile: Union[dict, bool] = False):
     """
 
     :tags:
@@ -373,12 +382,12 @@ class Navigation:
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
       page.ui.navigation.path(record)
 
-    :param record: Dictionary. Component input data.
-    :param divider: String. Optional. A path delimiter.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param record: Component input data
+    :param divider: Optional. A path delimiter
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if divider is None:
       divider = self.page.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
@@ -392,8 +401,9 @@ class Navigation:
     html.Html.set_component_skin(div)
     return div
 
-  def nav(self, logo=None, title=None, components=None, width=(100, '%'), height=(40, 'px'), options=None,
-          avatar: bool = False, profile=False) -> html.HtmlMenu.HtmlNavBar:
+  def nav(self, logo=None, title: str = None, components=None, width: Union[tuple, int] = (100, '%'),
+          height: Union[tuple, int] = (40, 'px'), options: dict = None,
+          avatar: bool = False, profile: Union[dict, bool] = False) -> html.HtmlMenu.HtmlNavBar:
     """
 
     :tags:
@@ -424,8 +434,9 @@ class Navigation:
     html.Html.set_component_skin(nav_bar)
     return nav_bar
 
-  def bar(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, html_code=None,
-          avatar: Union[bool, str] = False, profile=False) -> html.HtmlMenu.HtmlNavBar:
+  def bar(self, logo=None, title=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (40, 'px'),
+          options=None, html_code=None, avatar: Union[bool, str] = False,
+          profile: Union[dict, bool] = False) -> html.HtmlMenu.HtmlNavBar:
     """
 
     :tags:
@@ -442,12 +453,13 @@ class Navigation:
       - :class:`epyk.core.html.HtmlMenu.HtmlNavBar`
 
     :param logo:
-    :param title: String. Optional. A panel title. This will be attached to the title property.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param title: String. Optional. A panel title. This will be attached to the title property
+    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param avatar: Optional.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -516,7 +528,8 @@ window.prevScrollpos = currentScrollPos;
       html_nav.avatar.style.css.margin_left = 20
     return html_nav
 
-  def banner(self, image, text, link, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def banner(self, image: str = "", text: str = "", link: str = "", width: Union[tuple, int] = (100, '%'),
+             height: Union[tuple, int] = (None, 'px'), options: dict = None, profile: Union[dict, bool] = False):
     """
 
     :tags:
@@ -531,13 +544,13 @@ window.prevScrollpos = currentScrollPos;
       - :class:`epyk.core.html.HtmlText.Text`
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    :param image: String. Optional. The image full path.
-    :param text: String. Optional. The value to be displayed to the component.
-    :param link: String. Optional. The url link.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param image: Optional. The image full path
+    :param text: Optional. The value to be displayed to the component
+    :param link: Optional. The url link
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     div = self.page.ui.div(width=width, height=height, options=options, profile=profile)
     h_image = self.page.ui.img(image)
@@ -554,7 +567,8 @@ window.prevScrollpos = currentScrollPos;
     html.Html.set_component_skin(div)
     return div
 
-  def footer(self, components=None, width=(100, '%'), height=(80, 'px'), fixed=False, options=None, profile=False):
+  def footer(self, components=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (80, 'px'),
+             fixed=False, options=None, profile=False) -> html.HtmlMenu.HtmlFooter:
     """
 
     Will create a footer object in the body of the report.
@@ -606,6 +620,8 @@ window.prevScrollpos = currentScrollPos;
     :param position: Optional. A string with the vertical position of the component.
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. A flag to set the component performance storage.
+    :param z_index: Optional.
+    :param overlay: Optional.
     """
     position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
@@ -674,7 +690,7 @@ window.prevScrollpos = currentScrollPos;
         overlay.click([anchor.dom.events.trigger("click")])
     return d
 
-  def pilcrow(self, text="", html_code=None, options=None, profile=None):
+  def pilcrow(self, text: str = "", html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
     """
     Add an anchor on the page and move to this when it is clicked.
 
@@ -683,10 +699,10 @@ window.prevScrollpos = currentScrollPos;
 
     Usage::
 
-    :param text: String. Optional. The value to be displayed to the component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     p = self.page.ui.div("%s&#182" % text, html_code=html_code, options=options, profile=profile)
     p.style.css.font_size = self.page.body.style.globals.font.normal(5)
@@ -695,7 +711,8 @@ window.prevScrollpos = currentScrollPos;
     html.Html.set_component_skin(p)
     return p
 
-  def panel(self, width=(100, '%'), height=(100, '%'), options=None, profile=None, helper=None):
+  def panel(self, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, '%'), options: dict = None,
+            profile: Union[dict, bool] = None, helper: str = None) -> html.HtmlMenu.PanelsBar:
     """
 
     :tags:
@@ -707,11 +724,11 @@ window.prevScrollpos = currentScrollPos;
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
 
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param helper: String. Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -722,7 +739,8 @@ window.prevScrollpos = currentScrollPos;
     html.Html.set_component_skin(h_drawer)
     return h_drawer
 
-  def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None, profile=None, html_code=None):
+  def shortcut(self, components=None, logo=None, size=(40, 'px'), options=None,
+               profile=None, html_code=None) -> html.HtmlMenu.Shortcut:
     """
 
     :tags:
@@ -799,8 +817,8 @@ class Banners:
     html.Html.set_component_skin(div)
     return div
 
-  def bottom(self, data: Union[str, list] = "", background=None, align="center", width=(100, '%'), height=(None, 'px'), options=None,
-             profile=False):
+  def bottom(self, data: Union[str, list] = "", background=None, align="center", width=(100, '%'), height=(None, 'px'),
+             options=None, profile=False):
     """
 
     :tags:
