@@ -44,7 +44,8 @@ class Button(Html.Html):
 
   @property
   def options(self) -> OptButton.OptionsButton:
-    """ Property to set all the possible object for a button.
+    """
+    Property to set all the possible object for a button.
 
     Usage::
 
@@ -55,7 +56,8 @@ class Button(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlButton:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -69,7 +71,8 @@ class Button(Html.Html):
     return self._dom
 
   def no_background(self):
-    """ Remove the default button background and remove the padding.
+    """
+    Remove the default button background and remove the padding.
 
     Usage::
 
@@ -81,7 +84,8 @@ class Button(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """ Click event which redirect to another page.
+    """
+    Click event which redirect to another page.
 
     Usage::
 
@@ -106,7 +110,8 @@ class Button(Html.Html):
 
   @property
   def style(self) -> GrpClsButton.ClassButton:
-    """ Property to the CSS Style of the component.
+    """
+    Property to the CSS Style of the component.
 
     Usage::
 
@@ -118,7 +123,8 @@ class Button(Html.Html):
     return self._styleObj
 
   def disable(self, background_color: Optional[str] = None, color: Optional[str] = None):
-    """ Add the HTML tag to disable the button.
+    """
+    Add the HTML tag to disable the button.
 
     Usage::
 
@@ -141,7 +147,8 @@ class Button(Html.Html):
 
   def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """ Special click event to keep in memory the state of the component.
+    """
+    Special click event to keep in memory the state of the component.
 
     Usage::
 
@@ -171,7 +178,8 @@ class Button(Html.Html):
     return self.on("click", str_fnc, profile, on_ready=on_ready)
 
   def color(self, color: str):
-    """ Change the color of the button background when the mouse is hover.
+    """
+    Change the color of the button background when the mouse is hover.
 
     Usage::
 
@@ -185,7 +193,8 @@ class Button(Html.Html):
     return self
 
   def properties(self) -> dict:
-    """ Return the full properties of the HTML component.
+    """
+    Return the full properties of the HTML component.
 
     This property should allow another JavaScript framework to build the component.
 
@@ -204,7 +213,8 @@ class Button(Html.Html):
 
   def loading(self, status: bool = True, label: str = None,
               data: types.JS_DATA_TYPES = None, disable: bool = True):
-    """ Display a loading message in the component.
+    """
+    Display a loading message in the component.
 
     Usage::
 
@@ -240,7 +250,8 @@ class Button(Html.Html):
 
   def error(self, status: bool = True, label: str = None,
             data: types.JS_DATA_TYPES = None, disable: bool = True):
-    """ Display an error message in the component.
+    """
+    Display an error message in the component.
 
     Usage::
 
@@ -301,7 +312,8 @@ class Checkbox(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlButtonChecks:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -321,7 +333,8 @@ class Checkbox(Html.Html):
     return self._dom
 
   def tooltip(self, value: str, location: str = 'top', options: Optional[dict] = None):
-    """ Add the Tooltip feature when the mouse is over the component.
+    """
+    Add the Tooltip feature when the mouse is over the component.
 
     This tooltip version is coming from Bootstrap.
 
@@ -342,7 +355,8 @@ class Checkbox(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
             source_event: str = "$(document)", on_ready: bool = False):
-    """ Add a click event on the checkbox component.
+    """
+    Add a click event on the checkbox component.
 
     TODO: Find way to remove jquery
  
@@ -409,7 +423,8 @@ class CheckButton(Html.Html):
 
   @property
   def js(self) -> JsComponents.CheckButton:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
 
@@ -428,7 +443,8 @@ class CheckButton(Html.Html):
 
   def click(self, js_fnc_true: types.JS_FUNCS_TYPES, js_fnc_false: Optional[Union[list, str]] = None,
             with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """ Click even on the checkbox item.
+    """
+    Click even on the checkbox item.
 
     Usage::
 
@@ -487,7 +503,8 @@ class IconEdit(Html.Html):
     self.hover_color = True
 
   def spin(self):
-    """ Add a spin effect to the icon.
+    """
+    Add a spin effect to the icon.
 
     Usage::
 
@@ -502,7 +519,8 @@ class IconEdit(Html.Html):
     return self
 
   def pulse(self):
-    """ Add a pulse effect to the icon.
+    """
+    Add a pulse effect to the icon.
 
     Usage::
 
@@ -517,7 +535,8 @@ class IconEdit(Html.Html):
     return self
 
   def border(self):
-    """ Add a border to the icon.
+    """
+    Add a border to the icon.
 
     Usage::
 
@@ -532,7 +551,8 @@ class IconEdit(Html.Html):
     return self
 
   def rotate(self, angle: int):
-    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
     Usage::
 
@@ -549,7 +569,8 @@ class IconEdit(Html.Html):
     return self
 
   def pull(self, position: str = 'left'):
-    """ Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+    """
+    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
     Usage::
 
@@ -567,7 +588,8 @@ class IconEdit(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Add a JavaScript click event on this component.
+    """
+    Add a JavaScript click event on this component.
  
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -583,7 +605,8 @@ class IconEdit(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """ Create a link to a new page when component is clicked.
+    """
+    Create a link to a new page when component is clicked.
 
     Related Pages:
 
@@ -633,7 +656,8 @@ class ButtonMenuItem:
 
   @property
   def js(self) -> JsComponents.Menu:
-    """ Javascript module of the items in the menu.
+    """
+    Javascript module of the items in the menu.
 
     :return: A Javascript Dom object
     """
@@ -643,7 +667,8 @@ class ButtonMenuItem:
 
   def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
          source_event: Optional[str] = None, on_ready: bool = False):
-    """ Javascript generic events of the items in the menu.
+    """
+    Javascript generic events of the items in the menu.
  
     :param event: The JavaScript event
     :param js_funcs: The Javascript functions
@@ -661,7 +686,8 @@ class ButtonMenuItem:
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Javascript click events of the items in the menu.
+    """
+    Javascript click events of the items in the menu.
  
     :param js_funcs: The Javascript functions
     :param profile: Boolean. Optional. A flag to set the component performance storage
@@ -696,7 +722,8 @@ class ButtonMenu(Html.Html):
 
   @property
   def style(self) -> GrpClsButton.ClassButtonMenu:
-    """ Property to the CSS Style of the component.
+    """
+    Property to the CSS Style of the component.
 
     Usage::
 
@@ -764,7 +791,8 @@ class ButtonMore(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Add an event click to the component.
+    """
+    Add an event click to the component.
 
     Usage::
 
@@ -879,7 +907,8 @@ class ButtonFilter(Html.Html):
 
   @property
   def options(self) -> OptButton.OptionsButtonFilter:
-    """ Property to set all the possible object for a button.
+    """
+    Property to set all the possible object for a button.
 
     Usage::
 
@@ -890,7 +919,8 @@ class ButtonFilter(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlButtonFilter:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 

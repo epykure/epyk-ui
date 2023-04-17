@@ -94,6 +94,49 @@ def inprogress(func):
   return new_func
 
 
+def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False):
+  """ """
+  def decorator(func):
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+      component = args[0]
+      if name is not None:
+        component.builder_name = name
+      if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
+        native_path = os.environ.get("NATIVE_JS_PATH")
+        if group is not None:
+          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
+        else:
+          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
+        if native_path is None:
+          native_path = internal_native_path
+        native_builder = Path(native_path, "%s.js" % component.builder_name)
+        internal_native_builder = Path(internal_native_path, "%s.js" % component.builder_name)
+        if native_builder.exists():
+          component.page.js.customFile("%s.js" % component.builder_name, path=native_path)
+          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
+          component.page.properties.js.add_constructor(component.builder_name, None)
+        elif internal_native_builder.exists():
+          component.page.js.customFile("%s.js" % component.builder_name, path=internal_native_builder)
+          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
+          component.page.properties.js.add_constructor(component.builder_name, None)
+        else:
+          if not component.builder_name or component._js__builder__ is None:
+            raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
+
+          if component.async_builder or asynchronous:
+            component.page.properties.js.add_constructor(
+              component.builder_name, "async function %s(htmlObj, data, options){%s}" % (
+              component.builder_name, component._js__builder__))
+          else:
+            component.page.properties.js.add_constructor(
+              component.builder_name, "function %s(htmlObj, data, options){%s}" % (
+              component.builder_name, component._js__builder__))
+      return func(*args, **kwargs)
+    return new_func
+  return decorator
+
+
 def set_component_skin(component: primitives.HtmlModel):
     """
 
@@ -358,12 +401,13 @@ class Html(primitives.HtmlModel):
 
     self.page.components[self.htmlCode] = self
     self._vals = vals
-    self.builder_name = self.builder_name if self.builder_name is not None else self.__class__.__name__
+    if self.builder_name is None:
+      self.builder_name = self.__class__.__name__
     self._internal_components = [self.htmlCode]
 
   def with_profile(self, profile: types.PROFILE_TYPE, event: Optional[str] = None,
                    element_id: Optional[str] = None):
-    """
+    """ Return the profile options.
 
     :param profile: Optional. A flag to set the component performance storage.
     :param event: Optional. The event name.
@@ -1573,44 +1617,22 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     """
     return EventTouch(self)
 
+  @jbuider()
   def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
     """
+    Return the JavaScript fragment to refresh the component content.
 
     Usage::
 
       dt = page.ui.rich.update()
       page.ui.button("Update").click([dt.refresh()])
 
-    :param data: Optional.
+    :param data: Optional. Component data
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. The object reference ID
     """
-    native_path = os.environ.get("NATIVE_JS_PATH")
-    internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
-    if native_path is None:
-      native_path = internal_native_path
-    native_builder = Path(native_path, "%s.js" % self.builder_name)
-    internal_native_builder = Path(internal_native_path, "%s.js" % self.builder_name)
-    if native_builder.exists():
-      self.page.js.customFile("%s.js" % self.builder_name, path=native_path)
-      self.builder_name = "%s%s" % (self.builder_name[0].lower(), self.builder_name[1:])
-      self.page.properties.js.add_constructor(self.builder_name, None)
-    elif internal_native_builder.exists():
-      self.page.js.customFile("%s.js" % self.builder_name, path=internal_native_builder)
-      self.builder_name = "%s%s" % (self.builder_name[0].lower(), self.builder_name[1:])
-      self.page.properties.js.add_constructor(self.builder_name, None)
-    else:
-      if not self.builder_name or self._js__builder__ is None:
-        raise ValueError("No builder defined for this HTML component %s" % self.__class__.__name__)
-
-      if self.async_builder:
-        self.page.properties.js.add_constructor(self.builder_name, "async function %s(htmlObj, data, options){%s}" % (
-          self.builder_name, self._js__builder__))
-      else:
-        self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
-          self.builder_name, self._js__builder__))
     self.options.builder = self.builder_name
     # check if there is no nested HTML components in the data
     if isinstance(data, dict):

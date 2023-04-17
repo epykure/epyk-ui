@@ -1,516 +1,502 @@
-
 from typing import Optional, Union
 from epyk.core.html.options import Options, Enums
 
 
 class EnumDisplays(Enums):
 
-  def withoutZeros(self):
-    """
-    Do not display the label for series with zero values.
+    def withoutZeros(self):
+        """ Do not display the label for series with zero values. """
+        return self._set_value("function(context){return context.dataset.data[context.dataIndex] !== 0}", js_type=True)
 
-    Usage::
+    def aboveThreshold(self, value: float, included: bool = True, absolute: bool = False):
+        """
+        Display only the labels above a specific threshold.
 
-    """
-    return self._set_value("function(context){return context.dataset.data[context.dataIndex] !== 0}", js_type=True)
+        :param value: The threshold value
+        :param included: Optional. Specify if the value should be included
+        :param absolute: Optional. Specify if the compare is using absolute values
+        """
+        if absolute:
+            expr = "Math.abs(context.dataset.data[context.dataIndex])"
+        else:
+            expr = "context.dataset.data[context.dataIndex]"
+        if included:
+            return self._set_value("function(context) {return %s >= %s}" % (expr, value), js_type=True)
 
-  def aboveThreshold(self, value, included=True, absolute=False):
-    """
-    Display only the labels above a specific threshold.
+        return self._set_value("function(context) {return %s > %s}" % (expr, value), js_type=True)
 
-    Usage::
+    def belowThreshold(self, value: float, included: bool = True, absolute: bool = False):
+        """
+        Display only the labels below a specific threshold.
 
-    :param value: Float. The threshold value.
-    :param included: Boolean. Optional. Specify if the value should be included.
-    :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
-    """
-    if absolute:
-      expr = "Math.abs(context.dataset.data[context.dataIndex])"
-    else:
-      expr = "context.dataset.data[context.dataIndex]"
-    if included:
-      return self._set_value("function(context) {return %s >= %s}" % (expr, value), js_type=True)
+        :param value: The threshold value
+        :param included: Optional. Specify if the value should be included
+        :param absolute: Optional. Specify if the compare is using absolute values
+        """
+        if absolute:
+            expr = "Math.abs(context.dataset.data[context.dataIndex])"
+        else:
+            expr = "context.dataset.data[context.dataIndex]"
+        if included:
+            return self._set_value("function(context){return %s <= %s}" % (expr, value), js_type=True)
 
-    return self._set_value("function(context) {return %s > %s}" % (expr, value), js_type=True)
-
-  def belowThreshold(self, value, included=True, absolute=False):
-    """
-    Display only the labels below a specific threshold.
-
-    Usage::
-
-    :param value: Float. The threshold value.
-    :param included: Boolean. Optional. Specify if the value should be included.
-    :param absolute: Boolean. Optional. Specify if the compare is using absolute values.
-    """
-    if absolute:
-      expr = "Math.abs(context.dataset.data[context.dataIndex])"
-    else:
-      expr = "context.dataset.data[context.dataIndex]"
-    if included:
-      return self._set_value("function(context){return %s <= %s}" % (expr, value), js_type=True)
-
-    return self._set_value("function(context){return %s < %s}" % (expr, value), js_type=True)
+        return self._set_value("function(context){return %s < %s}" % (expr, value), js_type=True)
 
 
 class EnumFormatters(Enums):
 
-  def details(self, digit=0, thousand_sep="."):
-    """   Display the label and its corresponding value.
+    def details(self, digit: int = 0, thousand_sep: str = "."):
+        """
+        Display the label and its corresponding value.
 
-    Usage::
+        :param digit: Optional. The number of digits
+        :param thousand_sep: Optional. The separator for the thousand
+        """
+        return self._set_value(
+            "function(value, context){return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (
+                digit, thousand_sep), js_type=True)
 
-    :param digit: Integer. Optional. The number of digits.
-    :param thousand_sep: String. Optional. The separator for the thousand.
-    """
-    return self._set_value(
-      "function(value, context){return context.dataset.label + '\\n' + accounting.formatNumber(value, %s, '%s') ;}" % (
-        digit, thousand_sep), js_type=True)
-
-  def label(self):
-    """   
-
-    Usage::
-
-    """
-    return self._set_value("function(value, context) {return context.dataset.label}", js_type=True)
+    def label(self):
+        """ """
+        return self._set_value("function(value, context) {return context.dataset.label}", js_type=True)
 
 
 class Padding(Options):
 
-  @property
-  def top(self):
-    """
+    @property
+    def top(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-  @top.setter
-  def top(self, value: float):
-    self._config(value)
+    @top.setter
+    def top(self, value: float):
+        self._config(value)
 
-  @property
-  def right(self):
-    """
+    @property
+    def right(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-  @right.setter
-  def right(self, value: float):
-    self._config(value)
+    @right.setter
+    def right(self, value: float):
+        self._config(value)
 
-  @property
-  def bottom(self):
-    """
+    @property
+    def bottom(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-  @bottom.setter
-  def bottom(self, value: float):
-    self._config(value)
+    @bottom.setter
+    def bottom(self, value: float):
+        self._config(value)
 
-  @property
-  def left(self):
-    """
+    @property
+    def left(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-  @left.setter
-  def left(self, value: float):
-    self._config(value)
+    @left.setter
+    def left(self, value: float):
+        self._config(value)
 
 
 class Font(Options):
 
-  @property
-  def family(self):
-    """
+    @property
+    def family(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self._config_get(None)
 
-  @family.setter
-  def family(self, value: str):
-    self._config(value)
+    @family.setter
+    def family(self, value: str):
+        self._config(value)
 
-  @property
-  def size(self):
-    """
+    @property
+    def size(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self._config_get(None)
 
-  @size.setter
-  def size(self, value: str):
-    self._config(value)
+    @size.setter
+    def size(self, value: str):
+        self._config(value)
 
-  @property
-  def style(self):
-    """
+    @property
+    def style(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self._config_get(None)
 
-  @style.setter
-  def style(self, value: str):
-    self._config(value)
+    @style.setter
+    def style(self, value: str):
+        self._config(value)
 
-  @property
-  def weight(self):
-    """
+    @property
+    def weight(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self._config_get(None)
 
-  @weight.setter
-  def weight(self, value: str):
-    self._config(value)
+    @weight.setter
+    def weight(self, value: str):
+        self._config(value)
 
-  @property
-  def lineHeight(self):
-    """
+    @property
+    def lineHeight(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#multiline-labels
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#multiline-labels
+        """
+        return self._config_get(None)
 
-  @lineHeight.setter
-  def lineHeight(self, value: Union[str, float]):
-    self._config(value)
+    @lineHeight.setter
+    def lineHeight(self, value: Union[str, float]):
+        self._config(value)
 
 
 class Datalabels(Options):
-  component_properties = ("color", )
+    component_properties = ("color",)
 
-  @property
-  def align(self):
-    """ The align option defines the position of the label relative to the anchor point position and orientation.
+    @property
+    def align(self):
+        """
+        The align option defines the position of the label relative to the anchor point position and orientation.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self._config_get("center")
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self._config_get("center")
 
-  @align.setter
-  def align(self, value: str):
-    self._config(value)
+    @align.setter
+    def align(self, value: str):
+        self._config(value)
 
-  @property
-  def anchor(self):
-    """ An anchor point is defined by an orientation vector and a position on the data element.
+    @property
+    def anchor(self):
+        """
+        An anchor point is defined by an orientation vector and a position on the data element.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
-    """
-    return self._config_get("center")
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#anchoring
+        """
+        return self._config_get("center")
 
-  @anchor.setter
-  def anchor(self, value: str):
-    self._config(value)
+    @anchor.setter
+    def anchor(self, value: str):
+        self._config(value)
 
-  @property
-  def backgroundColor(self):
-    """ The text color for the label.
+    @property
+    def backgroundColor(self):
+        """
+        The text color for the label.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
+        """
+        return self._config_get(None)
 
-  @backgroundColor.setter
-  def backgroundColor(self, color: Optional[str]):
-    self._config(color)
+    @backgroundColor.setter
+    def backgroundColor(self, color: Optional[str]):
+        self._config(color)
 
-  @property
-  def borderColor(self):
-    """   The text color for the label.
+    @property
+    def borderColor(self):
+        """
+        The text color for the label.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
+        """
+        return self._config_get(None)
 
-  @borderColor.setter
-  def borderColor(self, color: Optional[str]):
-    self._config(color)
+    @borderColor.setter
+    def borderColor(self, color: Optional[str]):
+        self._config(color)
 
-  @property
-  def borderRadius(self):
-    """ The text color for the label.
+    @property
+    def borderRadius(self):
+        """
+        The text color for the label.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
+        """
+        return self._config_get(None)
 
-  @borderRadius.setter
-  def borderRadius(self, num: float):
-    self._config(num)
+    @borderRadius.setter
+    def borderRadius(self, num: float):
+        self._config(num)
 
-  @property
-  def borderWidth(self):
-    """ The text color for the label.
+    @property
+    def borderWidth(self):
+        """
+        The text color for the label.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
-    """
-    return self._config_get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
+        """
+        return self._config_get(None)
 
-  @borderWidth.setter
-  def borderWidth(self, num: float):
-    self._config(num)
+    @borderWidth.setter
+    def borderWidth(self, num: float):
+        self._config(num)
 
-  @property
-  def clamp(self):
-    """ The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the
-    associated element.
+    @property
+    def clamp(self):
+        """
+        The clamp option, when true, enforces the anchor position to be calculated based on the visible geometry of the
+        associated element.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#clamping
-    """
-    return self._config_get(False)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#clamping
+        """
+        return self._config_get(False)
 
-  @clamp.setter
-  def clamp(self, flag: bool):
-    self._config(flag)
+    @clamp.setter
+    def clamp(self, flag: bool):
+        self._config(flag)
 
-  @property
-  def clip(self):
-    """ When the clip option is true, the part of the label which is outside the chart area will be masked.
+    @property
+    def clip(self):
+        """
+        When the clip option is true, the part of the label which is outside the chart area will be masked.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#overlap
-    """
-    return self._config_get(False)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#overlap
+        """
+        return self._config_get(False)
 
-  @clip.setter
-  def clip(self, flag: bool):
-    self._config(flag)
+    @clip.setter
+    def clip(self, flag: bool):
+        self._config(flag)
 
-  @property
-  def color(self):
-    """ The text color for the label.
+    @property
+    def color(self):
+        """
+        The text color for the label.
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
-    """
-    return self._config_get('#F66')
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#scriptable-options
+        """
+        return self._config_get('#F66')
 
-  @color.setter
-  def color(self, c: str):
-    self._config(c)
+    @color.setter
+    def color(self, c: str):
+        self._config(c)
 
-  @property
-  def display(self):
-    """   
+    @property
+    def display(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#rotation
-    """
-    return self._config_get(True)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#rotation
+        """
+        return self._config_get(True)
 
-  @display.setter
-  def display(self, value: Union[str, bool]):
-    self._config(value)
+    @display.setter
+    def display(self, value: Union[str, bool]):
+        self._config(value)
 
-  @property
-  def displays(self) -> EnumDisplays:
-    """
+    @property
+    def displays(self) -> EnumDisplays:
+        """ """
+        return EnumDisplays(self, "display")
 
-    """
-    return EnumDisplays(self, "display")
+    @property
+    def font(self):
+        """
 
-  @property
-  def font(self):
-    """
+        Related Pages:
 
-    Related Pages:
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+    @font.setter
+    def font(self, values: dict):
+        self._config(values)
 
-  @font.setter
-  def font(self, values: dict):
-    self._config(values)
+    def fonts(self) -> Font:
+        """ """
+        return self._config_sub_data("font", Font)
 
-  def fonts(self) -> Font:
-    """
+    @property
+    def formatters(self) -> EnumFormatters:
+        """
+        Pre-defined formatters to show label on the chart.
 
-    Related Pages:
+        Related Pages:
 
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#data-transformation
+        """
+        return EnumFormatters(self, "formatter")
 
-    """
-    return self._config_sub_data("font", Font)
+    @property
+    def formatter(self):
+        """
+        Format the labels displayed on the chart.
 
-  @property
-  def formatters(self) -> EnumFormatters:
-    """ Pre-defined formatters to show label on the chart.
+        Related Pages:
 
-    Related Pages:
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#data-transformation
+        """
+        return self.get(None)
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#data-transformation
-    """
-    return EnumFormatters(self, "formatter")
+    @formatter.setter
+    def formatter(self, value):
+        self.set(value)
 
-  @property
-  def formatter(self):
-    """ Format the labels displayed on the chart.
+    @property
+    def padding(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#data-transformation
-    """
-    return self.get(None)
+          https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
+        """
+        return self._config_get(None)
 
-  @formatter.setter
-  def formatter(self, value):
-    self.set(value)
+    @padding.setter
+    def padding(self, values: dict):
+        self._config(values)
 
-  @property
-  def padding(self):
-    """
+    def paddings(self) -> Padding:
+        """ """
+        return self._config_sub_data("padding", Padding)
 
-    Related Pages:
+    @property
+    def rotation(self):
+        """
+        This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the
+        label center.
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/options.html#indexable-options
-    """
-    return self._config_get(None)
+        Related Pages:
 
-  @padding.setter
-  def padding(self, values: dict):
-    self._config(values)
+          https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
+        """
+        return self.get(0)
 
-  def paddings(self) -> Padding:
-    """
+    @rotation.setter
+    def rotation(self, num: float):
+        self.set(num)
 
-    Related Pages:
+    @property
+    def textAlign(self):
+        """
+        The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing
+        the label text.
 
+        Related Pages:
 
-    """
-    return self._config_sub_data("padding", Padding)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
+        """
+        return self.get("start")
 
-  @property
-  def rotation(self):
-    """ This option controls the clockwise rotation angle (in degrees) of the label, the rotation center point being the
-    label center.
+    @textAlign.setter
+    def textAlign(self, value: str):
+        self.set(value)
 
-    Related Pages:
+    @property
+    def textStrokeColor(self):
+        """
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/positioning.html#alignment-and-offset
-    """
-    return self.get(0)
+        Related Pages:
 
-  @rotation.setter
-  def rotation(self, num: float):
-    self.set(num)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
+        """
+        return self.get(None)
 
-  @property
-  def textAlign(self):
-    """ The textAlign option only applies to multiline labels and specifies the text alignment being used when drawing
-    the label text.
+    @textStrokeColor.setter
+    def textStrokeColor(self, value: str):
+        self.set(value)
 
-    Related Pages:
+    @property
+    def textStrokeWidth(self):
+        """
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
-    """
-    return self.get("start")
+        Related Pages:
 
-  @textAlign.setter
-  def textAlign(self, value: str):
-    self.set(value)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
+        """
+        return self.get(0)
 
-  @property
-  def textStrokeColor(self):
-    """
+    @textStrokeWidth.setter
+    def textStrokeWidth(self, num: float):
+        self.set(num)
 
-    Related Pages:
+    @property
+    def textShadowBlur(self):
+        """
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
-    """
-    return self.get(None)
+        Related Pages:
 
-  @textStrokeColor.setter
-  def textStrokeColor(self, value: str):
-    self.set(value)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
+        """
+        return self.get(0)
 
-  @property
-  def textStrokeWidth(self):
-    """
+    @textShadowBlur.setter
+    def textShadowBlur(self, num: float):
+        self.set(num)
 
-    Related Pages:
+    @property
+    def textShadowColor(self):
+        """
 
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
-    """
-    return self.get(0)
+        Related Pages:
 
-  @textStrokeWidth.setter
-  def textStrokeWidth(self, num: float):
-    self.set(num)
+          https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
+        """
+        return self.get(None)
 
-  @property
-  def textShadowBlur(self):
-    """
-
-    Related Pages:
-
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
-    """
-    return self.get(0)
-
-  @textShadowBlur.setter
-  def textShadowBlur(self, num: float):
-    self.set(num)
-
-  @property
-  def textShadowColor(self):
-    """
-
-    Related Pages:
-
-      https://chartjs-plugin-datalabels.netlify.app/guide/formatting.html#text-alignment
-    """
-    return self.get(None)
-
-  @textShadowColor.setter
-  def textShadowColor(self, color: str):
-    self.set(color)
+    @textShadowColor.setter
+    def textShadowColor(self, color: str):
+        self.set(color)

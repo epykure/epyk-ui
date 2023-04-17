@@ -278,22 +278,31 @@ class JsHtml(JsNodeDom.JsDoms):
     self.htmlCode = js_code if js_code is not None else component.htmlCode
     self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
     self.component, self.page = component, page
-    self._js = []
+    self._js, self._container = [], self.element
     self._jquery, self._jquery_ui, self._d3 = None, None, None
 
   @property
+  def container(self):
+    """ Return the container level for the HTML component """
+    if self.component is not None:
+      return self._container
+
+  @property
+  def element(self):
+    """ Return always the real DOM element. """
+    if self.component is not None:
+      return "document.getElementById('%s')" % self.component.html_code
+
+  @property
   def val(self):
-    """   Return a Javascript val object.
-    """
+    """ Return a Javascript val object. """
     return JsObjects.JsObjects.get(
       "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
         self.htmlCode, self.content.toStr()))
 
   @property
   def by_name(self) -> JsNodeDom.JsDomsList:
-    """   
-
-    """
+    """  """
     if self.component.attr.get('name') is not None:
       return JsNodeDom.JsDomsList(
         None, "document.getElementsByName('%s')" % self.component.attr.get('name'), page=self.page)
@@ -302,10 +311,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def isInViewPort(self) -> JsBoolean.JsBoolean:
-    """   Check if the component is in the visible part of the page (the viewport).
-
-    :return: A Javascript boolean
-    """
+    """ Check if the component is in the visible part of the page (the viewport). """
     flag = JsBoolean.JsBoolean(
       "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", js_code="visibleFlag", set_var=True, is_py_data=False)
     flag._js.insert(0, self.page.js.viewHeight.setVar('viewHeight'))
@@ -313,16 +319,18 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
   def onViewPort(self, js_funcs:  types.JS_FUNCS_TYPES):
-    """   Trigger some code when the component is visible on the visible part of the page (the viewpport).
+    """
+    Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
-    :param js_funcs: The Javascript events.
+    :param js_funcs: The Javascript events
     """
     return self.page.js.if_(self.isInViewPort, js_funcs)
 
   def copyToClipboard(self, include_html: bool = False):
-    """   Copy the component content to the clipboard.
+    """
+    Copy the component content to the clipboard.
 
-    :param include_html: Optional. Store the full HTML (Default False).
+    :param include_html: Optional. Store the full HTML (Default False)
     """
     if include_html:
       return self.page.js.clipboard(self.innerHTML())
@@ -331,28 +339,24 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def content(self) -> ContentFormatters:
-    """ Get the component content.
-    """
+    """ Get the component content. """
     if self.component.attr.get('type') == "number":
       return ContentFormatters(self.page, "parseFloat(%s.value)" % self.varName)
 
     return ContentFormatters(self.page, "%s.value" % self.varName)
 
   def empty(self):
-    """   Empty the component.
-    """
+    """ Empty the component. """
     return '%s.value = ""' % self.varName
 
   @property
   def events(self) -> JsNodeDom.JsDomEvents:
-    """   Link to the events attached to a Javascript DOM object.
-    """
+    """ Link to the events attached to a Javascript DOM object. """
     return JsNodeDom.JsDomEvents(self.component)
 
   @property
   def jquery(self) -> JsQuery.JQuery:
-    """   Link to the JQuery functions.
-    """
+    """ Link to the JQuery functions. """
     if self._jquery is None:
       self._jquery = JsQuery.JQuery(
         component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
@@ -360,8 +364,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """   Wrapper to the D3 library.
-    """
+    """ Wrapper to the D3 library. """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(
         component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.htmlCode)
@@ -369,8 +372,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def jquery_ui(self) -> JsQueryUi.JQueryUI:
-    """   Wrapper to the JqueryUI component.
-    """
+    """ Wrapper to the JqueryUI component. """
     if self._jquery_ui is None:
       self._jquery_ui = JsQueryUi.JQueryUI(
         component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False,
@@ -379,13 +381,13 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def objects(self) -> JsObjects.JsObjects:
-    """   Interface to the main Javascript Classes and Primitives.
-    """
+    """ Interface to the main Javascript Classes and Primitives. """
     return JsObjects.JsObjects(page=self.page, component=self.component)
 
   @property
   def crossfilter(self):
-    """   Interface to CrossFilter package.
+    """
+    Interface to CrossFilter package.
 
     Related Pages:
 
@@ -395,13 +397,12 @@ class JsHtml(JsNodeDom.JsDoms):
 
   @property
   def format(self) -> Formatters:
-    """
-    Specific formatters for the HTML components.
-    """
+    """ Specific formatters for the HTML components. """
     return Formatters(self.page, self.content.toStr())
 
   def style(self, attrs: dict):
-    """   Style property to change from the javascript the CSS attributes of an HTML object.
+    """
+    Style property to change from the javascript the CSS attributes of an HTML object.
 
     Usage::
 
@@ -412,7 +413,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
       https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
 
-    :param attrs: The CSS attributes.
+    :param attrs: The CSS attributes
     """
     styles = []
     for k, v in attrs.items():
@@ -424,15 +425,16 @@ class JsHtml(JsNodeDom.JsDoms):
 
   def registerFunction(self, fnc_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[list] = None,
                        profile: types.PROFILE_TYPE = None):
-    """   Javascript Framework extension.
+    """
+    Javascript Framework extension.
 
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
 
-    :param fnc_name: The function name.
-    :param js_funcs: The Javascript function definition.
-    :param pmts: Optional. The parameters for the function.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param fnc_name: The function name
+    :param js_funcs: The Javascript function definition
+    :param pmts: Optional. The parameters for the function
+    :param profile: Optional. A flag to set the component performance storage
 
     :return: The JsObject
     """
@@ -440,7 +442,8 @@ class JsHtml(JsNodeDom.JsDoms):
     return self
 
   def hide(self):
-    """   Hide the component.
+    """
+    Hide the component.
 
     Usage::
 
@@ -453,7 +456,8 @@ class JsHtml(JsNodeDom.JsDoms):
     return self.css("display", "none")
 
   def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-    """   Show the component.
+    """
+    Show the component.
 
     This will use the display attribute of the component.
 
@@ -476,7 +480,8 @@ class JsHtml(JsNodeDom.JsDoms):
     return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
   def display(self, flag: bool, inline: Optional[str] = None, display_value: Optional[str] = None):
-    """   Change the CSS display attribute.
+    """
+    Change the CSS display attribute.
 
     Related Pages:
 
@@ -491,7 +496,8 @@ class JsHtml(JsNodeDom.JsDoms):
       flag, self.show(inline, display_value=display_value).r, self.hide().r))
 
   def visible(self, flag: bool = True, inverse: bool = False):
-    """   The visibility property specifies whether or not an element is visible.
+    """
+    The visibility property specifies whether or not an element is visible.
 
     Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
     the document layout!

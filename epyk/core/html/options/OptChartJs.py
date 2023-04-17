@@ -1421,13 +1421,97 @@ class OptionScaleGeo(Options):
       name="projection", js_type=True)
 
 
+class OptionScaleProjection(Options):
+
+  @property
+  def axis(self):
+    return self._config_get()
+
+  @axis.setter
+  def axis(self, val: str):
+    self._config(val)
+
+  @property
+  def center(self):
+    return self._config_get()
+
+  @center.setter
+  def center(self, values: List[float]):
+    self._config(values)
+
+  @property
+  def padding(self):
+    return self._config_get()
+
+  @padding.setter
+  def padding(self, val: int):
+    self._config(val)
+
+  @property
+  def projection(self):
+    return self._config_get()
+
+  @projection.setter
+  def projection(self, val: str):
+    self._config(val)
+
+  @property
+  def projectionScale(self):
+    return self._config_get()
+
+  @projectionScale.setter
+  def projectionScale(self, val: int):
+    self._config(val)
+
+  @property
+  def projectionOffset(self):
+    return self._config_get()
+
+  @projectionOffset.setter
+  def projectionOffset(self, values: List[float]):
+    self._config(values)
+
+
+class OptionScaleColor(Options):
+
+  @property
+  def axis(self):
+    return self._config_get()
+
+  @axis.setter
+  def axis(self, val: str):
+    self._config(val)
+
+  @property
+  def quantize(self):
+    return self._config_get()
+
+  @quantize.setter
+  def quantize(self, num: int):
+    self._config(num)
+
+  @property
+  def legend(self) -> OptionScaleGeo:
+    """ """
+    return self._config_sub_data("legend", OptionLegend)
+
+
 class OptionScalesGeo(Options):
 
   @property
   def xy(self) -> OptionScaleGeo:
-    """  
-    """
+    """ """
     return self._config_sub_data("xy", OptionScaleGeo)
+
+  @property
+  def projection(self) -> OptionScaleProjection:
+    """ """
+    return self._config_sub_data("projection", OptionScaleProjection)
+
+  @property
+  def color(self) -> OptionScaleColor:
+    """ """
+    return self._config_sub_data("color", OptionScaleColor)
 
 
 class OptionPadding(Options):
@@ -1882,7 +1966,8 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-hierarchical')
   def hierarchical(self) -> ChartJsHierarchical.Hierarchical:
-    """ Adds hierarchical scales that can be collapsed, expanded, and focused
+    """
+    Adds hierarchical scales that can be collapsed, expanded, and focused
 
     Related Pages:
 
@@ -3120,7 +3205,7 @@ class OptionsGeo(ChartJsOptions):
     return self._config_get()
 
   @showOutline.setter
-  def showOutline(self, val):
+  def showOutline(self, val: bool):
     self._config(val)
 
   @property
@@ -3128,23 +3213,17 @@ class OptionsGeo(ChartJsOptions):
     return self._config_get()
 
   @showGraticule.setter
-  def showGraticule(self, val):
+  def showGraticule(self, val: bool):
     self._config(val)
 
   @property
   def scale(self):
-    """  
-
-    :rtype: OptionScaleGeo
-    """
+    """ """
     return self._config_sub_data("scale", OptionScaleGeo)
 
   @property
   def scales(self):
-    """  
-
-    :rtype: OptionScalesGeo
-    """
+    """ """
     return self._config_sub_data("scales", OptionScalesGeo)
 
   @property

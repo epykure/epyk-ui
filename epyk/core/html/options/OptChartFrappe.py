@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import packageImport
 from epyk.core.html.options import OptChart
@@ -441,7 +441,7 @@ class AxisOptions(Options):
     self._config(flag)
 
 
-class FrappeLine(Options):
+class FrappeLine(OptionsWithTemplates):
 
   @property
   def animate(self):

@@ -122,7 +122,7 @@ class JsPackage(primitives.JsDataModel):
       self.page = component.page
     self._selector = selector if selector is not None else self.lib_selector
     self.varName, self.setVar = js_code, self.lib_set_var if set_var is None else set_var
-    self._data = data
+    self._data, self._container = data, self.element
     self._js, self._u, self._js_enums = [[]], {}, {}    # a list of lists of objects definition
     self.__js_uniq_fncs = {}
     if self.lib_alias is not None:
@@ -138,19 +138,32 @@ class JsPackage(primitives.JsDataModel):
           self.page.jsImports.add(self.lib_alias['js'])
 
   def add_to_imports(self):
-    """ Base function to force the package to be added to the imports.
+    """
+    Base function to force the package to be added to the imports.
     This can be used when module is required in some plain JavaScript text and not wrapped within an internal function.
     """
     ...
 
   @property
+  def container(self):
+    """ Return the container level for the HTML component """
+    if self.component is not None:
+      return self._container
+
+  @property
+  def element(self):
+    """ Return always the real DOM element. """
+    if self.component is not None:
+      return "document.getElementById('%s')" % self.component.html_code
+
+  @property
   def varId(self):
-    """ The Javascript and Python reference ID.
-    """
+    """ The Javascript and Python reference ID. """
     return self._selector if self.varName is None else self.varName
 
   def version(self, tag: str, js: dict = None, css: dict = None):
-    """ Change the package version number.
+    """
+    Change the package version number.
 
     Usage::
 
@@ -164,7 +177,9 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def fnc(self, data: Any, unique: bool = False):
-    """ Base function to allow the object chain.
+    """
+    Base function to allow the object chain.
+
     This will add the elements to the current section in the object structure.
     All the items at the same level wil be chained.
 
@@ -183,7 +198,8 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def fnc_enum(self, name: str, data_class):
-    """ Base function to allow the creation of function with parameters which are list of dataclasses.
+    """
+    Base function to allow the creation of function with parameters which are list of dataclasses.
     Basically this will be then transpiled to a list of dictionary.
 
     :param name: The function Name
@@ -200,7 +216,8 @@ class JsPackage(primitives.JsDataModel):
     return self._js_enums[index][name][-1]
 
   def fnc_closure(self, data: str, check_undefined: bool = False, unique: bool = False):
-    """ Add the function string to the existing object definition but create a new entry point for the next ones.
+    """
+    Add the function string to the existing object definition but create a new entry point for the next ones.
     This structure will allow the chain on the Javascript side but also on the Python side.
 
     Thanks to this Python can always keep the same structure and produce the correct Javascript definition.
@@ -226,7 +243,8 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def fnc_closure_in_promise(self, data: str, check_undefined: bool = False):
-    """ Base function to allow the creation of a promise.
+    """
+    Base function to allow the creation of a promise.
 
     A Js promise is an event attached toa function which will be only executed after the function.
     In case of success the then will be triggered otherwise the exception will be caught.
@@ -244,12 +262,12 @@ class JsPackage(primitives.JsDataModel):
 
   @property
   def var(self) -> JsString.JsString:
-    """ Property to return the variable name as a valid pyJs object.
-    """
+    """ Property to return the variable name as a valid pyJs object. """
     return JsString.JsString(self.varId, is_py_data=False)
 
   def set_var(self, flag: bool):
-    """ Change the flag to define if the variable should be defined on the Javascript side.
+    """
+    Change the flag to define if the variable should be defined on the Javascript side.
     Default this is set to True.
 
     :param flag: A python boolean
@@ -260,7 +278,8 @@ class JsPackage(primitives.JsDataModel):
     return self
 
   def getStr(self, empty_stack: bool = True) -> str:
-    """ Get the current string representation for the object and remove the stack.
+    """
+    Get the current string representation for the object and remove the stack.
 
     :param empty_stack: Emtpy the various JavaScript fragments stored for this object
     """
@@ -276,7 +295,8 @@ class JsPackage(primitives.JsDataModel):
     return content
 
   def _mapVarId(self, func: types.JS_FUNCS_TYPES, js_code: str):
-    """ Special function used for some external packages used to fix the problem of function override.
+    """
+    Special function used for some external packages used to fix the problem of function override.
     Indeed in Datatable row.add is used as a class method compare to the other functions used at object level.
 
     :param func: The function string
@@ -287,7 +307,8 @@ class JsPackage(primitives.JsDataModel):
     return js_code
 
   def custom(self, func_nam: str, *argv):
-    """ Generic function to call any missing function form a package.
+    """
+    Generic function to call any missing function form a package.
     This will automatically convert the object to JavaScript and also put the right object reference.
 
     :param func_nam: The function name
@@ -299,10 +320,7 @@ class JsPackage(primitives.JsDataModel):
     return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varId, func_nam, ", ".join(js_args)))
 
   def toStr(self) -> str:
-    """ Javascript representation
-
-    :return: Return the Javascript String
-    """
+    """ Javascript representation """
     if self._selector is None:
       raise ValueError("Selector not defined, use this() or new() first")
 
@@ -354,7 +372,8 @@ class DataAttrs(primitives.JsDataModel):
     self.page, self.options, self._attrs = page, options, attrs or {}
 
   def custom(self, name: str, value: types.JS_DATA_TYPES):
-    """ Custom function to add a bespoke attribute to a class.
+    """
+    Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
@@ -368,7 +387,8 @@ class DataAttrs(primitives.JsDataModel):
     return self
 
   def attr(self, name: str, value: Any):
-    """ Add an attribute to the Javascript underlying dictionary.
+    """
+    Add an attribute to the Javascript underlying dictionary.
 
     :param name: The attribute name.
     :param value: The attribute value.
@@ -379,7 +399,8 @@ class DataAttrs(primitives.JsDataModel):
     return self
 
   def attrs(self, values: dict):
-    """ Set multiple attributes to the underlying data directly from a dictionary.
+    """
+    Set multiple attributes to the underlying data directly from a dictionary.
 
     :param values: The data to set
 
@@ -389,7 +410,9 @@ class DataAttrs(primitives.JsDataModel):
     return self
 
   def set_val(self, value: str, name: str = None, js_type: bool = False):
-    """ Default way to set values for properties.
+    """
+    Default way to set values for properties.
+
     This will manage functions in the case of callback within strings.
 
     :param value: The property value
@@ -401,11 +424,9 @@ class DataAttrs(primitives.JsDataModel):
     self.attr(name or sys._getframe().f_back.f_code.co_name, value)
 
   def __str__(self):
-    """ Produce the resulting string to be added to the Javascript section of the web page.
-    """
+    """ Produce the resulting string to be added to the Javascript section of the web page. """
     return "{%s}" % ", ".join(["%s: %s" % (k, v) for k, v in self._attrs.items()])
 
   def toStr(self) -> str:
-    """ Serialise the object.
-    """
+    """ Serialise the object. """
     return "{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items()])

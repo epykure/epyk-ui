@@ -313,7 +313,7 @@ class ApexChart:
     responsive.breakpoint = 480
     return chart
 
-  def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+  def pie(self, records=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
           options: dict = None, html_code: str = None):
     """ Display a pie chart from ApexCharts.
@@ -327,7 +327,7 @@ class ApexChart:
 
       https://naver.github.io/billboard.js/demo/#Chart.LineChart
 
-    :param record: The Python list of dictionaries
+    :param records: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
@@ -342,7 +342,7 @@ class ApexChart:
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
-    data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
+    data = self.page.data.chartJs.y(records or [], y_columns, x_axis)
     chart = graph.GraphApexCharts.Pie(self.page, width, height, html_code, dfl_options, profile)
     chart.colors(self.page.theme.charts)
     chart.options.chart.type = "pie"

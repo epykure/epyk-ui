@@ -10,7 +10,8 @@ class SVG:
     self.page = ui.page
 
   def new(self, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px")):
-    """ SVG stands for Scalable Vector Graphics.
+    """
+    SVG stands for Scalable Vector Graphics.
 
     SVG defines vector-based graphics in XML format.
 
@@ -27,8 +28,8 @@ class SVG:
       https://developer.mozilla.org/en-US/docs/Web/SVG
       https://www.w3schools.com/graphics/svg_intro.asp
 
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     """
     if not isinstance(width, tuple):
       width = (width, "px")
@@ -38,7 +39,8 @@ class SVG:
   def line(self, x1: float = 0, y1: float = None, x2: float = None, y2: float = None,
            width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px"), options: dict = None,
            profile: types.PROFILE_TYPE = None):
-    """ Entry point to the basic line definition in a SVG HTML Tag.
+    """
+    Entry point to the basic line definition in a SVG HTML Tag.
 
     :tags:
     :categories:
@@ -51,14 +53,14 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_line.asp
 
-    :param x1: The x1 attribute defines the start of the line on the x-axis.
-    :param y1: Optional. The y1 attribute defines the start of the line on the y-axis.
-    :param x2: Optional. The x2 attribute defines the end of the line on the x-axis.
-    :param y2: Optional. The y2 attribute defines the end of the line on the y-axis.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param x1: The x1 attribute defines the start of the line on the x-axis
+    :param y1: Optional. The y1 attribute defines the start of the line on the y-axis
+    :param x2: Optional. The x2 attribute defines the end of the line on the x-axis
+    :param y2: Optional. The y2 attribute defines the end of the line on the y-axis
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     x2 = x2 or width[0]
     if y2 is None:
@@ -71,7 +73,8 @@ class SVG:
 
   def circle(self, x: float, y: float, r: float, width: types.SIZE_TYPE = (500, "px"),
              height: types.SIZE_TYPE = (300, "px"), options: dict = None, profile: types.PROFILE_TYPE = None):
-    """ Entry point to the basic line definition in a SVG HTML Tag.
+    """
+    Entry point to the basic line definition in a SVG HTML Tag.
 
     :tags:
     :categories:
@@ -84,13 +87,13 @@ class SVG:
 
       https://www.w3schools.com/graphics/svg_line.asp
 
-    :param x: The x attribute defines the start of the line on the x-axis.
-    :param y: The y attribute defines the start of the line on the y-axis.
-    :param r: The r attribute defines the radius.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param x: The x attribute defines the start of the line on the x-axis
+    :param y: The y attribute defines the start of the line on the y-axis
+    :param r: The r attribute defines the radius
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.circle(x, y, r)
@@ -113,11 +116,11 @@ class SVG:
     :param x2:
     :param y2:
     :param size: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     line = self.line(x1, y1, x2 or width[0]-size, y2, width, height, options, profile)
     defs = line.defs()
@@ -143,11 +146,11 @@ class SVG:
     :param x2:
     :param y2:
     :param size: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     line = self.line(x1+size, y1, x2, y2, width, height, options, profile)
     defs = line.defs()
@@ -175,10 +178,10 @@ class SVG:
     :param cy: The cy attribute defines the y coordinate of the center of the ellipse
     :param rx: The rx attribute defines the horizontal radius
     :param ry: The ry attribute defines the vertical radius
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.ellipse(cx, cy, rx, ry)
@@ -200,11 +203,11 @@ class SVG:
       https://www.w3schools.com/graphics/svg_polyline.asp
 
     :param points: The points attribute defines the list of points (pairs of coordinates)
-      required to draw the polyline.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+      required to draw the polyline
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.polyline(points)
@@ -225,11 +228,11 @@ class SVG:
 
       https://www.w3schools.com/graphics/tryit.asp?filename=trysvg_polygon
 
-    :param points: The points attribute defines the list of points (pairs of coordinates) required to draw the polyline.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param points: The points attribute defines the list of points (pairs of coordinates) required to draw the polyline
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     html_svg.polygon(points)
@@ -255,10 +258,10 @@ class SVG:
     :param point2: Optional.
     :param point3: Optional.
     :param fill: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if point2 is None:
       point2 = (point1[1]/2, point1[0])
@@ -285,11 +288,11 @@ class SVG:
       p.markers(m.url)
 
     :param size: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     svg = graph.GraphSvg.SVG(self.page, width, height, options=options, profile=profile)
     svg.origine = (size, height[0]-size)

@@ -6,91 +6,81 @@ from epyk.core.html.options import Options
 
 class OptionDays(Options):
 
-  @property
-  def style(self):
-    """
+    @property
+    def style(self):
+        """ CSS attributes """
+        return self.get({})
 
-    Usage::
+    @style.setter
+    def style(self, css: dict):
+        self.set(css)
 
-    :prop css: CSS attributes
-    """
-    return self.get({})
+    @property
+    def unit(self):
+        """
+        Change the unit to the calendar.
+        Default is in percentage.
 
-  @style.setter
-  def style(self, css: dict):
-    self.set(css)
+        :prop num: Change the scale
+        """
+        return self.get(100)
 
-  @property
-  def unit(self):
-    """ Change the unit to the calendar.
-    Default is in percentage.
+    @unit.setter
+    def unit(self, num: float):
+        self.set(num)
 
-    Usage::
+    @property
+    def overload(self):
+        """
+        Overload style of the day number when workload is above 100%.
 
-    :prop num: Change the scale
-    """
-    return self.get(100)
+        :prop css_attrs: Dictionary. CSS attributes.
+        """
+        return self.get({})
 
-  @unit.setter
-  def unit(self, num: float):
-    self.set(num)
+    @overload.setter
+    def overload(self, css_attrs: dict):
+        self.set(css_attrs)
 
-  @property
-  def overload(self):
-    """ Overload style of the day number when workload is above 100%.
+    @property
+    def number(self):
+        """
+        CSS Style for the day number.
 
-    Usage::
+        :prop css: CSS attributes.
+        """
+        return self.get({})
 
-    :prop css_attrs: Dictionary. CSS attributes.
-    """
-    return self.get({})
+    @number.setter
+    def number(self, css: dict):
+        self.set(css)
 
-  @overload.setter
-  def overload(self, css_attrs: dict):
-    self.set(css_attrs)
+    @property
+    def today(self):
+        """
+        CSS Style for the today cell.
 
-  @property
-  def number(self):
-    """ CSS Style for the day number.
+        :prop css: CSS attributes
+        """
+        return self.get({})
 
-    Usage::
+    @today.setter
+    def today(self, css: dict):
+        self.set(css)
 
-    :prop css: CSS attributes.
-    """
-    return self.get({})
+    @property
+    def header(self):
+        """
+        CSS Style for the table header.
 
-  @number.setter
-  def number(self, css: dict):
-    self.set(css)
+        :prop css: Dictionary. CSS attributes.
+        """
+        return self.get({})
 
-  @property
-  def today(self):
-    """ CSS Style for the today cell.
-
-    Usage::
-
-    :prop css: CSS attributes
-    """
-    return self.get({})
-
-  @today.setter
-  def today(self, css: dict):
-    self.set(css)
-
-  @property
-  def header(self):
-    """ CSS Style for the table header.
-
-    Usage::
-
-    :prop css: Dictionary. CSS attributes.
-    """
-    return self.get({})
-
-  @header.setter
-  def header(self, css: dict):
-    self.set(css)
+    @header.setter
+    def header(self, css: dict):
+        self.set(css)
 
 
 class OptionDatePicker(Options):
-  pass
+    pass

@@ -169,7 +169,7 @@ class Line(DC):
 class Bar(DC):
   chartFnc = "BarChart"
 
-  def controlsUseVisibility(self, flag):
+  def controlsUseVisibility(self, flag: bool):
     """   
 
     Related Pages:

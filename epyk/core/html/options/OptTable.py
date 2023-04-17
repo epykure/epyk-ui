@@ -83,7 +83,7 @@ class OptionsTableCell(OptionsWithTemplates):
     self.component.attr["class"].add("m%s-%s" % (position, value))
 
 
-class OptionsBasic(Options):
+class OptionsBasic(OptionsWithTemplates):
   @property
   def bordered(self):
     """

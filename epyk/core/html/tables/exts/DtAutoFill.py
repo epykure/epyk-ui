@@ -1,107 +1,113 @@
-
 from epyk.core.html.options import Options
 
 
 class AutoFill(Options):
 
-  def activate(self):
-    self.columns = ":not(:first-child)"
-    return self
+    def activate(self):
+        self.columns = ":not(:first-child)"
+        return self
 
-  @property
-  def alwaysAsk(self):
-    """   Always ask the end user if an action should be taken or not.
+    @property
+    def alwaysAsk(self):
+        """
+        Always ask the end user if an action should be taken or not.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.alwaysAsk
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.alwaysAsk
+        """
+        return self._config_get()
 
-  @alwaysAsk.setter
-  def alwaysAsk(self, val):
-    self._config(val)
+    @alwaysAsk.setter
+    def alwaysAsk(self, val):
+        self._config(val)
 
-  @property
-  def columns(self):
-    """   Select the columns that can be auto filled.
+    @property
+    def columns(self):
+        """
+        Select the columns that can be auto filled.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.columns
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.columns
+        """
+        return self._config_get()
 
-  @columns.setter
-  def columns(self, val):
-    self._config(val)
+    @columns.setter
+    def columns(self, val):
+        self._config(val)
 
-  @property
-  def enable(self):
-    """   Initial enablement state of AutoFill.
+    @property
+    def enable(self):
+        """
+        Initial enablement state of AutoFill.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.enable
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.enable
+        """
+        return self._config_get()
 
-  @enable.setter
-  def enable(self, val):
-    self._config(val)
+    @enable.setter
+    def enable(self, val):
+        self._config(val)
 
-  @property
-  def focus(self):
-    """   Action that will cause the auto fill drag handle to appear in a cell.
+    @property
+    def focus(self):
+        """
+        Action that will cause the auto fill drag handle to appear in a cell.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.focus
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.focus
+        """
+        return self._config_get()
 
-  @focus.setter
-  def focus(self, val):
-    self._config(val)
+    @focus.setter
+    def focus(self, val):
+        self._config(val)
 
-  @property
-  def horizontal(self):
-    """   Enable / disable user ability to horizontally drag and fill.
+    @property
+    def horizontal(self):
+        """
+        Enable / disable user ability to horizontally drag and fill.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.horizontal
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.horizontal
+        """
+        return self._config_get()
 
-  @horizontal.setter
-  def horizontal(self, val):
-    self._config(val)
+    @horizontal.setter
+    def horizontal(self, val):
+        self._config(val)
 
-  @property
-  def update(self):
-    """   Control automatic update of data when a fill drag is completed.
+    @property
+    def update(self):
+        """
+        Control automatic update of data when a fill drag is completed.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.update
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.update
+        """
+        return self._config_get()
 
-  @update.setter
-  def update(self, val):
-    self._config(val)
+    @update.setter
+    def update(self, val):
+        self._config(val)
 
-  @property
-  def vertical(self):
-    """   Enable / disable user ability to vertically drag and fill.
+    @property
+    def vertical(self):
+        """
+        Enable / disable user ability to vertically drag and fill.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/autoFill.vertical
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/autoFill.vertical
+        """
+        return self._config_get()
 
-  @vertical.setter
-  def vertical(self, val):
-    self._config(val)
+    @vertical.setter
+    def vertical(self, val):
+        self._config(val)

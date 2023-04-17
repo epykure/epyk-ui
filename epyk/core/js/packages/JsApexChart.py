@@ -88,7 +88,8 @@ class ApexChart(JsPackage):
     return JsObjects.JsVoid('new ApexCharts(%s, %s)' % (html_code, options))
 
   def render(self):
-    """   The render() method is responsible for drawing the chart on the page.
+    """
+    The render() method is responsible for drawing the chart on the page.
     It is the primary method that has to be called after configuring the options.
 
     Related Pages:

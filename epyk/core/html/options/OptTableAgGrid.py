@@ -2,7 +2,7 @@ import logging
 
 from typing import Union
 from epyk.core.js import JsUtils
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import Enums
 from epyk.core.py import types as etypes
 
@@ -1300,12 +1300,13 @@ class TableStatusBar(Options):
     return self._config_sub_data_enum('statusPanels', EnumStatusPanelsPanels)
 
 
-class TableConfig(Options):
+class TableConfig(OptionsWithTemplates):
   _struct__schema = {"autoGroupColumnDef": {}, "defaultColDef": {}, "TableStatusBar": {}, "columns": []}
 
   @property
   def alignedGrids(self):
-    """   To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
+    """
+    To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
     alignedGrids property of the second grids.
 
     Related Pages:

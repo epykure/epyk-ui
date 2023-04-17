@@ -1,86 +1,98 @@
-
 from epyk.core.html import Html
+from epyk.core.html.mixins import MixHtmlState
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsVega
 from epyk.core.html.options import OptChartVega
+from epyk.core.py import types as etypes
+
+from typing import List
 
 
-class VegaEmdedCharts(Html.Html):
-  name = 'Vega-Lite charts'
-  requirements = ('vega-embed', )
-  _option_cls = OptChartVega.OptionsChart
-  _chart__type = "VegaChart"
+class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
+    name = 'Vega-Lite charts'
+    requirements = ('vega-embed',)
+    _option_cls = OptChartVega.OptionsChart
+    _chart__type = "VegaChart"
+    builder_name = "VCharts"
 
-  def __init__(self, report, data, width, height, html_code, options, profile):
-    super(VegaEmdedCharts, self).__init__(
-      report, data, html_code=html_code, profile=profile, options=options, css_attrs={"width": width, "height": height})
-    self.style.css.padding = "5px 50px"
-    self.options.schema = "https://vega.github.io/schema/vega-lite/v5.json"
+    def __init__(self, report, data, width, height, html_code, options, profile):
+        super(VegaEmdedCharts, self).__init__(
+            report, data, html_code=html_code, profile=profile, options=options,
+            css_attrs={"width": width, "height": height})
+        self.style.css.padding = "5px 50px"
+        self.options.schema = "https://vega.github.io/schema/vega-lite/v5.json"
 
-  @property
-  def chartId(self):
-    """   Return the Javascript variable of the chart.
-    """
-    return "window['%s_obj']" % self.htmlCode
+    @property
+    def chartId(self):
+        """ Return the Javascript variable of the chart. """
+        return "window['%s_obj']" % self.htmlCode
 
-  @property
-  def vega(self) -> JsVega.Vega:
-    """   JavaScript Vega Chart reference API.
+    @property
+    def vega(self) -> JsVega.Vega:
+        """
+        JavaScript Vega Chart reference API.
 
-    Related Pages:
+        Related Pages:
 
-      https://c3js.org/reference.html#api-show
+          https://c3js.org/reference.html#api-show
 
-    :return: A Javascript object
-    """
-    if self._js is None:
-      self._js = JsVega.Vega(self, js_code=self.chartId, page=self.page)
-    return self._js
+        :return: A Javascript object
+        """
+        if self._js is None:
+            self._js = JsVega.Vega(self, js_code=self.chartId, page=self.page)
+        return self._js
 
-  @property
-  def js(self) -> JsVega.VegaChart:
-    """   JavaScript Vega Chart reference API.
+    @property
+    def js(self) -> JsVega.VegaChart:
+        """
+        JavaScript Vega Chart reference API.
 
-    Related Pages:
+        Related Pages:
 
-      https://c3js.org/reference.html#api-show
+          https://c3js.org/reference.html#api-show
 
-    :return: A Javascript object
-    """
-    if self._js is None:
-      self._js = JsVega.VegaChart(self, js_code=self.chartId, page=self.page)
-    return self._js
+        :return: A Javascript object
+        """
+        if self._js is None:
+            self._js = JsVega.VegaChart(self, js_code=self.chartId, page=self.page)
+        return self._js
 
-  _js__builder__ = '''
-    return data
-  '''
+    @Html.jbuider("vega")
+    def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
+        """
+        Update the chart with context and / or data changes.
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
-    """
-    Update the chart with context and / or data changes.
+        :param data: List. Optional. The full datasets object expected by ChartJs.
+        :param options: Dictionary. Optional. Specific Python options available for this component.
+        :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
+        :param component_id: String. Not used.
+        :param stop_state: Remove the top panel for the component state (error, loading...)
+        """
+        if data is not None:
+            builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
+                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.options.config_js(options).toStr()), profile).toStr()
+            state_expr = ""
+            if stop_state:
+                state_expr = ";%s" % self.hide_state(component_id)
+            return """var changeSet = vega.changeset().remove(vega.truthy).insert(%(builder)s);
+        %(chartId)s.then(function (res) {res.view.change('table', changeSet).run();%(state)s})""" % {
+                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
 
-    :param data: List. Optional. The full datasets object expected by ChartJs.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param component_id: String. Not used.
-    """
-    if data is not None:
-      js_convertor = self._chart__type
-      self.page.properties.js.add_constructor(
-        js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
-      profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
-      if profile:
-        js_func_builder = JsUtils.jsConvertFncs([
-          "var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
-        js_convertor = "(function(data, options){%s; return result})" % js_func_builder
-      return """var changeSet = vega.changeset().remove(vega.truthy).insert(%(chartFnc)s(%(data)s, %(options)s));
-        %(chartId)s.then(function (res) { res.view.change('table', changeSet).run()})""" % {
-        'chartId': self.chartId, 'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
-        "options": self.options.config_js(options)}
+        return '%(chartId)s = vegaEmbed("#%(htmlCode)s", %(options)s)' % {
+            "chartId": self.chartId, "htmlCode": self.htmlCode, "options": self.options.config_js(options)}
 
-    return '%(chartId)s = vegaEmbed("#%(htmlCode)s", %(options)s)' % {
-      "chartId": self.chartId, "htmlCode": self.htmlCode, "options": self.options.config_js(options)}
+    def colors(self, hex_values: List[str]):
+        ...
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+    def labels(self, labels: list, series_id: str = None):
+        ...
+
+    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+        """ Not yet defined for this chart """
+        return ""
+
+    def __str__(self):
+        self.page.properties.js.add_builders(self.build())
+        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

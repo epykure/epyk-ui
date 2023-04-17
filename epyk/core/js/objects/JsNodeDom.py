@@ -888,6 +888,21 @@ class JsDoms(JsObject.JsObject):
       page=page)
 
   @property
+  def container(self):
+    """ Return always the real DOM element. """
+    if hasattr(self, "_container"):
+      return self._container
+
+    if self.varId is not None:
+      return self.varId
+
+  @property
+  def element(self):
+    """ Return always the real DOM element. """
+    if self.varId is not None:
+      return self.varId
+
+  @property
   def parentNode(self):
     """
     The parentNode property returns the parent node of the specified node, as a Node object.
