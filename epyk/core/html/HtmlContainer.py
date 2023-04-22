@@ -504,6 +504,23 @@ class Div(Html.Html):
         js_options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
     return "%s.innerHTML = %s" % (component_id or self.dom.varId, js_data)
 
+  def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
+            options: dict = None, source_event: str = None, on_ready: bool = False):
+    """ Action on focus.
+
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+    """
+    self.attr["tabindex"] = "0"
+    if js_funcs is None:
+      js_funcs = []
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    return self.on("focus", js_funcs, profile, source_event, on_ready)
+
   def __str__(self):
     rows = []
     for component in self.val:

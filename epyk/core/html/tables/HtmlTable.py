@@ -17,6 +17,12 @@ class Row(Html.Html):
         super(Row, self).__init__(page, cells, options=options)
         self.attr["class"].clear()
 
+    def __len__(self):
+      if not self.val:
+        return 0
+
+      return len(self.val)
+
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
         """

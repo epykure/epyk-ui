@@ -428,6 +428,7 @@ class ChartHistoBar(ChartBar):
 
 
 class ChartParallelCoord(Chart):
+    builder_name = "ChartSunbrust"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ParallelCoordinates:
@@ -490,6 +491,7 @@ class ChartSunbrust(Chart):
 
 
 class ChartBoxPlot(Chart):
+    builder_name = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3BoxPlot:
@@ -541,6 +543,7 @@ class ChartBoxPlot(Chart):
 
 
 class ChartCandlestick(Chart):
+    builder_name = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3CandlestickBar:
@@ -551,6 +554,7 @@ class ChartCandlestick(Chart):
 
 
 class ChartOhlcBar(Chart):
+    builder_name = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3OhlcBar:
@@ -561,6 +565,7 @@ class ChartOhlcBar(Chart):
 
 
 class ChartForceDirected(Chart):
+    builder_name = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ForceDirectedGraph:

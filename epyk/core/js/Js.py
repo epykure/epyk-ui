@@ -886,7 +886,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, JsData.Datamap(attrs=rpc_params))
 
   def fetch(self, url: str, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False,
-            async_await: bool = False):
+            async_await: bool = False) -> JsObjects.JsPromise:
     """  
     The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
     such as requests and responses.
