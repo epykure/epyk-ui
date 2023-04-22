@@ -16,7 +16,9 @@ class Attrs(Properties.CssMixin):
   def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
     self.attrs = {}
     self.component = component
-    self.page = page or component.page
+    self.page = page
+    if component is not None and page is None:
+      self.page = component.page
 
   def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
     """
