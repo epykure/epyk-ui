@@ -95,7 +95,7 @@ class JsBreadCrumb:
     js_location = JsLocation.JsLocation()
     origin = js_location.origin
     pathname = js_location.pathname
-    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr()))
+    return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr(), page=self.page), js_code="window")
 
   def toStr(self):
     return '%s(%s)' % (JsFncs.FncOnRecords(None, self.page.properties.js).url(), self._selector)
