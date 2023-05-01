@@ -2022,6 +2022,9 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
       page = pk.Page()
       page.body.template.margins(5)
       page.body.template.style.css.background = "white"
+
+      # Add a predefined template
+      page.body.template.style.configs.doc(max_width=900, background="white")
     """
     if self._template is None:
       self.header = self.page.ui.div()

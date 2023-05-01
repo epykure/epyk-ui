@@ -3,7 +3,6 @@ packaging module to install: python.exe -m pip install --upgrade setuptools whee
 to create the tar.gz: python.exe setup.py sdist
 to create the wheels: python.exe setup.py sdist bdist_wheel --universal
 """
-
 import setuptools
 import os
 
@@ -18,6 +17,24 @@ with open("epyk/_version.py", "w") as fp:
 
 def install_required():
   return [line for line in open('requirements.txt')]
+
+
+def get_pkg_data() -> dict:
+  """
+
+  :return:
+  """
+  pkg_data = {
+    'epyk': [
+      os.path.join('static', 'images', '*'),
+      os.path.join('static', 'images', 'logo', '*')
+  ]}
+  folders = set()
+  for fd in os.walk(r"epyk\core\js\native"):
+    if fd[2]:
+      folders.add(os.path.join(fd[0].replace("epyk\\", ""), "*.js"))
+  pkg_data['epyk'].extend(list(folders))
+  return pkg_data
 
 
 setuptools.setup(
@@ -36,11 +53,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
     install_requires=install_required(),
-    package_data={
-      'epyk': [
-        os.path.join('static', 'images', '*'),
-        os.path.join('static', 'images', 'logo', '*')
-      ]},
+    package_data=get_pkg_data(),
     entry_points={"console_scripts": [
       "epyk = epyk.core.cli.cli_export:main",   # For common quick page transformation
       "epyk_project = epyk.core.cli.cli_project:main",   # For project structure

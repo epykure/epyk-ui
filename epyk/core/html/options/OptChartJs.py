@@ -916,6 +916,13 @@ class OptionTitle(Options):
   @property
   def text(self):
     """
+    Set the Chart title.
+
+    Usage::
+
+      bar = page.ui.charts.chartJs.bar()
+      bar.options.plugins.title.text = pk.js_callback("function(){return Math.random()}")
+      bar.options.plugins.title.display = True
 
     Related Pages:
 
@@ -1894,7 +1901,8 @@ class OptionChartJsPlugins(Options):
   @property
   @packageImport('chartjs-plugin-labels')
   def labels(self) -> ChartJsLabels.Labels:
-    """   Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
+    """
+    Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
 
     Related Pages:
 

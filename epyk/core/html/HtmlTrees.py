@@ -33,7 +33,8 @@ class Tree(Html.Html):
 
   @property
   def dom(self) -> JsHtmlTree.JsHtmlTree:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -45,7 +46,8 @@ class Tree(Html.Html):
 
   @property
   def options(self) -> OptTrees.OptionsTree:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 
@@ -63,7 +65,8 @@ class Tree(Html.Html):
     js_func_name: str = None,
     always: bool = False
   ):
-    """ Get data from a remote service and update the tree.
+    """
+    Get data from a remote service and update the tree.
 
     :param url: The url path of the HTTP request
     :param method: The REST method used

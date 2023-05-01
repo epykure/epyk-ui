@@ -1,8 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import logging
 from typing import Union, Optional, Any
+from pathlib import Path
+
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -287,27 +290,57 @@ class Slider(Html.Html):
       self.__output.attr["name"] = "out_%s" % self.html_code
       self.__output.onReady(["%(jqId)s.find('.ui-slider-handle').append(%(outComp)s)" % {
         "jqId": self.js.varId,
-        "outComp": self.__output.js.jquery.varId
-      }])
-      self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
+        "outComp": self.__output.js.jquery.varId}])
       self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
-      self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
-        self.__output.builder_name, self.__output._js__builder__))
+      native_path = os.environ.get("NATIVE_JS_PATH")
+      internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
+      if native_path is None:
+        native_path = internal_native_path
+      native_builder = Path(native_path, "%s.js" % self.__output.builder_name)
+      internal_native_builder = Path(internal_native_path, "%s.js" % self.__output.builder_name)
+      if native_builder.exists():
+        self.page.js.customFile("%s.js" % self.__output.builder_name, path=native_path)
+        self.options.js_tree['out_builder_fnc'] = "%s%s" % (self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
+        self.page.properties.js.add_constructor(self.__output.builder_name, None)
+      elif internal_native_builder.exists():
+        self.page.js.customFile("%s.js" % self.__output.builder_name, path=internal_native_builder)
+        self.options.js_tree['out_builder_fnc'] = "%s%s" % (
+          self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
+        self.__output.page.properties.js.add_constructor(self.__output.builder_name, None)
+      else:
+        self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
+          self.__output.builder_name, self.__output._js__builder__))
     return self.__output
 
   @output.setter
   def output(self, component: Html.Html):
     self.__output = component
     self.options.force_show_current = True
-    self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
-    self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
-    self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
-      self.__output.builder_name, self.__output._js__builder__))
+    native_path = os.environ.get("NATIVE_JS_PATH")
+    internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
+    if native_path is None:
+      native_path = internal_native_path
+    native_builder = Path(native_path, "%s.js" % self.__output.builder_name)
+    internal_native_builder = Path(internal_native_path, "%s.js" % self.__output.builder_name)
+    if native_builder.exists():
+      self.page.js.customFile("%s.js" % self.__output.builder_name, path=native_path)
+      self.options.js_tree['out_builder_fnc'] = "%s%s" % (self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
+      self.page.properties.js.add_constructor(self.__output.builder_name, None)
+    elif internal_native_builder.exists():
+      self.page.js.customFile("%s.js" % self.__output.builder_name, path=internal_native_builder)
+      self.options.js_tree['out_builder_fnc'] = "%s%s" % (self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
+      self.page.properties.js.add_constructor(self.__output.builder_name, None)
+    else:
+      self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
+      self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
+      self.page.properties.js.add_constructor(self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
+        self.__output.builder_name, self.__output._js__builder__))
     component.attr["name"] = "out_%s" % self.html_code
 
   @property
   def options(self) -> OptSliders.OptionsSlider:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -324,7 +357,8 @@ class Slider(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Slider:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -339,7 +373,8 @@ class Slider(Html.Html):
     return self._js
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """ Triggered after the user slides a handle, if the value has changed
+    """
+    Triggered after the user slides a handle, if the value has changed
     or if the value is changed programmatically via the value method.
 
     Related Pages:
@@ -356,7 +391,8 @@ class Slider(Html.Html):
     return self
 
   def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Triggered when the user starts sliding.
+    """
+    Triggered when the user starts sliding.
 
     Related Pages:
 
@@ -371,7 +407,8 @@ class Slider(Html.Html):
     return self
 
   def slide(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Triggered when the user starts sliding.
+    """
+    Triggered when the user starts sliding.
 
     Related Pages:
 
@@ -386,7 +423,8 @@ class Slider(Html.Html):
     return self
 
   def stop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Triggered after the user slides a handle.
+    """
+    Triggered after the user slides a handle.
 
     Related Pages:
 
@@ -523,7 +561,8 @@ class SkillBar(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionsSkillbars:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -533,7 +572,8 @@ class SkillBar(Html.Html):
 
   @property
   def js(self) -> JsComponents.SkillBar:
-    """ The JavaScript predefined functions for this component.
+    """
+    The JavaScript predefined functions for this component.
 
     :return: A Javascript object
     """
@@ -579,7 +619,8 @@ class OptionsBar(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionBar:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -654,7 +695,8 @@ class Filters(Html.Html):
 
   @property
   def options(self) -> OptList.OptionsTagItems:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -663,7 +705,8 @@ class Filters(Html.Html):
     return super().options
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Javascript event triggered by the enter key.
+    """
+    Javascript event triggered by the enter key.
 
     :param js_funcs: The JavaScript events.
     :param profile: Optional. A flag to set the component performance storage.
@@ -722,7 +765,8 @@ class Filters(Html.Html):
 
   def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: dict = None,
                 profile: types.PROFILE_TYPE = None, source_event: str = None):
-    """ Set the Filters component draggable.
+    """
+    Set the Filters component draggable.
 
     :param js_funcs: Javascript functions
     :param options: Optional. Specific Python options available for this component

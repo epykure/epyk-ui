@@ -74,6 +74,26 @@ class HtmlStates:
 
 class HtmlOverlayStates:
 
+    def _add_resource(self) -> str:
+      native_path = os.environ.get("NATIVE_JS_PATH")
+      js_state_file = "StateTemplate.js"
+      js_state_name = "stateTemplate"
+      internal_native_path = Path(Path(__file__).resolve().parent, "..", "..", "js", "native", "utils")
+      if native_path is None:
+        native_path = internal_native_path
+      native_builder = Path(native_path, js_state_file)
+      internal_native_builder = Path(internal_native_path, js_state_file)
+      if native_builder.exists():
+        self.page.js.customFile(js_state_file, path=native_path)
+        self.page.properties.js.add_constructor(js_state_name, None)
+      elif internal_native_builder.exists():
+        self.page.js.customFile(js_state_file, path=internal_native_builder)
+        self.page.properties.js.add_constructor(js_state_name, None)
+      else:
+        raise ValueError("%s does not exist" % js_state_file)
+
+      return js_state_name
+
     def hide_state(
             self,
             component_id: Optional[str] = None
@@ -83,6 +103,7 @@ class HtmlOverlayStates:
         :param component_id:
         :return:
         """
+        self._add_resource()
         return "hideState(%s)" % (component_id or self.dom.container)
 
     def state(
@@ -106,23 +127,7 @@ class HtmlOverlayStates:
         :param status: Optional. Specific the status of the display of the loading component
         :param label: Optional.
         """
-        native_path = os.environ.get("NATIVE_JS_PATH")
-        js_state_file = "StateTemplate.js"
-        js_state_name = "stateTemplate"
-        internal_native_path = Path(Path(__file__).resolve().parent, "..", "..", "js", "native", "utils")
-        if native_path is None:
-            native_path = internal_native_path
-        native_builder = Path(native_path, js_state_file)
-        internal_native_builder = Path(internal_native_path, js_state_file)
-        if native_builder.exists():
-            self.page.js.customFile(js_state_file, path=native_path)
-            self.page.properties.js.add_constructor(js_state_name, None)
-        elif internal_native_builder.exists():
-            self.page.js.customFile(js_state_file, path=internal_native_builder)
-            self.page.properties.js.add_constructor(js_state_name, None)
-        else:
-            raise ValueError("%s does not exist" % js_state_file)
-
+        js_state_name = self._add_resource()
         if label is not None:
             self.options.templateLoading = label
         if self.options.templateLoading is None:

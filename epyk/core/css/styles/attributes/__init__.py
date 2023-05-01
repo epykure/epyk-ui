@@ -24,9 +24,9 @@ class Attrs(Properties.CssMixin):
     """
     Set multiple CSS attributes to the HTML component.
 
-    :param Union[dict, str] attrs: optional. The attributes to be added.
-    :param str value: Optional. The value for a given item.
-    :param bool important: Optional. Flag the attribute to be important.
+    :param attrs: optional. The attributes to be added
+    :param value: Optional. The value for a given item
+    :param important: Optional. Flag the attribute to be important
     """
     if not isinstance(attrs, dict):
       if value is None:

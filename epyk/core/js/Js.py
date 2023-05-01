@@ -124,7 +124,12 @@ class JsBase:
 
   @property
   def accounting(self):
-    """ Shortcut to accounting properties.
+    """
+    Shortcut to accounting properties.
+
+    Usages::
+
+      page.js.accounting.add_to_imports()
 
     Related Pages:
 
@@ -143,7 +148,8 @@ class JsBase:
 
   @property
   def documentElement(self):
-    """ Document.documentElement returns the Element that is the root element of the document (for example,
+    """
+    Document.documentElement returns the Element that is the root element of the document (for example,
     the <html> element for HTML documents).
 
     Related Pages:
@@ -154,7 +160,8 @@ class JsBase:
 
   @property
   def screen(self):
-    """ The screen object contains information about the visitor's screen.
+    """
+    The screen object contains information about the visitor's screen.
 
     Related Pages:
 
@@ -164,7 +171,8 @@ class JsBase:
 
   @property
   def navigator(self) -> JsNavigator.JsNavigator:
-    """ The information from the navigator object can often be misleading, and should not be used to detect
+    """
+    The information from the navigator object can often be misleading, and should not be used to detect
     browser versions because:
 
       - Different browsers can use the same name.
@@ -176,7 +184,14 @@ class JsBase:
 
   @property
   def location(self) -> JsLocation.JsLocation:
-    """ Property to the Javascript Location functions.
+    """
+    Property to the Javascript Location functions.
+
+    Usage::
+
+      page.ui.text("Test").click([
+        page.js.location.open_new_tab(page.js.location.getUrlFromArrays([
+          ["AAA", "BBB"], ["111", "222"]], end_line="\r\n"))])
 
     Related Pages:
 
@@ -209,6 +224,28 @@ class JsBase:
 
       https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
 
+    Usage::
+
+      page = pk.Page()
+      rec = page.js.speechRecognition("reco")
+
+      test = page.ui.button("Start recording")
+      test.click([rec.start()])
+
+      page.ui.input(html_code="test")
+
+      rec.speechend([rec.stop()])
+      rec.onresult([pk.js_callback("UpdateComponent(transcript, confidence)"), page.js.console.log("Done")])
+      page.body.onReady([page.js.import_js("test_fnc.js", [], self_contained=True), rec])
+
+      # in the module test_fnc.js
+      function ProcessData(transcript, confidence){
+          console.log(transcript); return (transcript == 'hello')}
+
+      function UpdateComponent(transcript, confidence){
+          var expr = transcript.split(" ");
+          if (expr[0] === "put"){document.getElementById(expr[3]).value = expr[1]}}
+
     :param js_code: The variable name for the speech recognition object
     """
     return JsSpeechRecognition.SpeechRecognition(js_code, self.page)
@@ -228,6 +265,14 @@ class JsBase:
     With a combination of versatility and extensibility, jQuery has changed the way that millions of
     people write JavaScript.
 
+    Usage::
+
+      btn = page.ui.button("Click")
+      btn.js.jquery.on("click", [
+        page.js.alert("It works"),
+        btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
+      ])
+
     Related Pages:
 
       https://jquery.com/
@@ -241,7 +286,8 @@ class JsBase:
 
   @property
   def moment(self):
-    """ Parse, validate, manipulate, and display dates and times in JavaScript.
+    """
+    Parse, validate, manipulate, and display dates and times in JavaScript.
 
     Usage::
 

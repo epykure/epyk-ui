@@ -1,6 +1,6 @@
 
 
-function geoChoroplethUs(htmlObj, data, options, mapFile){
+function geoChoroplethUs(htmlObj, data, options, mapFile, callbacks){
     fetch(mapFile).then(
           function(r){r.json().then(function(geoData){
               const nation = ChartGeo.topojson.feature(geoData, geoData.objects.nation).features[0];

@@ -12,7 +12,7 @@ from epyk.core.js.html import JsHtml
 
 
 class HtmlGeneric(Html.Html):
-  name = 'tag'
+  name = 'GenericTag'
   _option_cls = OptText.OptionsText
 
   def __init__(self, page: primitives.PageModel, tag: Union[str], text: Union[str, list, primitives.HtmlModel],
@@ -124,8 +124,9 @@ class HtmlGeneric(Html.Html):
     return ""
 
 
-class HtmlGenericLInk(HtmlGeneric):
-  name = 'tag'
+class HtmlGenericLink(HtmlGeneric):
+  name = 'tagLink'
+  builder_name = "HtmlGeneric"
 
   def preview(self, url: str, profile: Optional[Union[bool, dict]] = None):
     """  

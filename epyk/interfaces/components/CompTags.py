@@ -419,7 +419,7 @@ class Tags:
     html.Html.set_component_skin(html_bdo)
     return html_bdo
 
-  def ol(self, text=None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+  def ol(self, text="", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <ol> tag defines an ordered list. An ordered list can be numerical or alphabetical.
@@ -1035,7 +1035,7 @@ class Tags:
     html.Html.set_component_skin(html_comm)
     return html_comm
 
-  def span(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+  def span(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <span> tag is an inline container used to mark up a part of a text, or a part of a document.
@@ -1074,7 +1074,7 @@ class Tags:
     html.Html.set_component_skin(html_span)
     return html_span
 
-  def label(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+  def label(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <label> tag defines a label for several elements.
@@ -1102,7 +1102,7 @@ class Tags:
     html.Html.set_component_skin(html_span)
     return html_span
 
-  def no_tag(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
+  def no_tag(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     Dummy HTML without any tag to add this to the list of a container objects.

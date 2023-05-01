@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.html import Html
 from epyk.core.html.graph import GraphChartJs
 from epyk.core.html.options import OptChartJs
@@ -45,7 +47,7 @@ class Choropleth(GraphChartJs.Chart):
         if stop_state:
             callbacks = "(function(){%s})" % self.hide_state(component_id)
         return "%(builder)s(%(htmlObj)s, %(data)s, %(options)s, %(map)s, %(callbacks)s)" % {
-            "data": data, "options": self.getCtx(),
+            "data": data or [], "options": self.getCtx(),
             "builder": self.builder_name,
             "callbacks": callbacks,
             "htmlObj": component_id or self.dom.varId,
@@ -72,31 +74,6 @@ class ChoroplethUs(Choropleth):
         Python can pass some options to the JavaScript layer.
         """
         return super().options
-
-    def add_dataset(self, data, label, kind=None, colors=None, opacity=None, alias=None):
-        """
-        Add a new Dataset to the chart list of Datasets.
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
-
-        :param data: List. The list of points (float).
-        :param label: String. The series label (visible in the legend).
-        :param colors: List. Optional. The color for this series. Default the global definition.
-        :param opacity: Float. Optional. The opacity level for the content.
-        :param kind: String. Optional. THe series type. Default to the chart type if not supplied.
-        :param alias: String. The chart alias name visible in the legend. Default the label.
-        """
-        data = JsChartJs.DataSetBar(self.page, attrs={})
-        self._datasets.append(data)
-        alias = alias or label
-        # if alias not in self.options.y_columns:
-        #  self.options.y_columns.append(alias)
-        #  self.options.props[alias] = {"type": kind or self.options.type, 'fill': False}
-        if kind == "line":
-            data.fill = None
-        return data
 
 
 class ChoroplethCountry(Choropleth):

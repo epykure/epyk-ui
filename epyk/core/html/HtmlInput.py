@@ -1191,7 +1191,8 @@ class TextArea(Html.Html):
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
                         with_cache: bool = True):
-    """ Add autocomplete features on textarea from remote service.
+    """
+    Add autocomplete features on textarea from remote service.
 
     This will use jquery UI.
 

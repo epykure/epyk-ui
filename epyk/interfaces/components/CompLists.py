@@ -205,7 +205,10 @@ class Lists:
 
     Usage::
 
-      page.ui.lists
+      cols_keys = page.ui.lists.drop(html_code="cols_agg_keys")
+      cols_keys.style.css.min_height = 20
+      cols_keys.items_style(style_type="bullets")
+      cols_keys.drop()
 
     :param data:
     :param color:
@@ -228,8 +231,10 @@ class Lists:
     return component
 
   def items(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
-            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None):
+            options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None
+            ) -> html.HtmlList.Items:
     """  
+    Add a JavaScript based list component.
 
     Usage::
 
@@ -573,7 +578,8 @@ class Lists:
     return html_obj
 
   def tree(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
-           html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
+           html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+           ) -> html.HtmlTrees.Tree:
     """  
 
     Usage::

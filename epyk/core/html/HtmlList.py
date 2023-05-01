@@ -371,7 +371,8 @@ class Items(Html.Html):
     return self._styleObj
 
   def record(self, values: types.JS_FUNCS_TYPES):
-    """ A function helper to set values from Python in this object.
+    """
+    A function helper to set values from Python in this object.
 
     :param values: The items to be added to the list
     """
@@ -419,7 +420,8 @@ class Items(Html.Html):
         htmlObj.appendChild(li)})''' % JsQuery.decorate_var("info", convert_var=False)
 
   def items_style(self, style_type: str = None, css_attrs: dict = None):
-    """ Function to load a predefined style for the items of the components.
+    """
+    Function to load a predefined style for the items of the components.
 
     :param style_type. The alias of the style to apply
     :param css_attrs. Optional. Items CSS attributes
@@ -436,7 +438,8 @@ class Items(Html.Html):
 
   @property
   def options(self) -> OptList.OptionsItems:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 
@@ -446,7 +449,8 @@ class Items(Html.Html):
 
   @property
   def dom(self) -> JsHtmlList.JsItem:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
     """
@@ -456,7 +460,8 @@ class Items(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ The onclick event occurs when the user clicks on an element of the list.
+    """
+    The onclick event occurs when the user clicks on an element of the list.
 
     Tips: Use the pk.events.value to get the item value.
 
@@ -497,9 +502,31 @@ class Items(Html.Html):
 
   def add_type(self, name: str, item_def: Optional[str] = None, func_name: Optional[str] = None,
                dependencies: list = None):
-    """ Add a bespoke item type with it is specific style and components.
+    """
+    Add a bespoke item type with it is specific style and components.
 
     TODO: Create a tutorial to explain how to extend list types.
+
+    Usage::
+
+      items = page.ui.lists.items(records.to_dict(orient="records"))
+        items.add_type("demo", '''
+        var item = document.createElement("DIV");
+        var sub = document.createElement("DIV");
+        var nameBox = document.createElement("DIV"); nameBox.innerHTML = 'Toto';
+        nameBox.style.display = "inline-block";
+        nameBox.style.fontWeight = 900;
+        nameBox.style.marginRight = "5px";
+        sub.setAttribute('name', 'value'); sub.setAttribute('data-valid', true); sub.innerHTML = data.Year;
+        sub.style.display = "inline-block";
+        var country = document.createElement("DIV"); country.innerHTML = data['Country Name'];
+        country.style.textAlign = "right";
+        country.style.fontSize = "9px";
+        country.style.fontStyle = "italic";
+        item.appendChild(nameBox);
+        item.appendChild(sub);
+        item.appendChild(country)
+      ''')
 
     :param name: The reference of this type name in the framework
     :param item_def: Optional. The definition of the items (examples in JsHtmlList.py)

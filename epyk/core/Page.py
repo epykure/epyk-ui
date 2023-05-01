@@ -53,7 +53,8 @@ class JsProperties:
     return self._context['functions'].keys()
 
   def add_text(self, text: str):
-    """ Add JavaScript fragments from String.
+    """
+    Add JavaScript fragments from String.
 
     Usage::
 
@@ -66,7 +67,8 @@ class JsProperties:
     self._context["text"].append(text)
 
   def add_event(self, event: str, value):
-    """ Add JavaScript fragments from String.
+    """
+    Add JavaScript fragments from String.
 
     :param event: JavaScript fragments to be directly included to the page
     :param value:
@@ -74,7 +76,8 @@ class JsProperties:
     self._context["events"][event] = value
 
   def add_builders(self, builder_def: str, func_dsc: str = None):
-    """ This will use add or extend according to the builder_def type.
+    """
+    This will use add or extend according to the builder_def type.
 
     #TODO implement func_dsc
 
@@ -91,7 +94,8 @@ class JsProperties:
         self._context['builders'].append(builder_def)
 
   def add_on_ready(self, builder_def: str):
-    """ Add JavaScript expression in the onReady selection of the HTML page.
+    """
+    Add JavaScript expression in the onReady selection of the HTML page.
 
     Usage::
 
@@ -104,7 +108,8 @@ class JsProperties:
     self._context['onReady'].add(builder_def)
 
   def add_constructor(self, name: str, content: str, override: bool = False, verbose: bool = False) -> str:
-    """ Register the constructor function and return its reference.
+    """
+    Register the constructor function and return its reference.
 
     :param name: The constructor name
     :param content: The entire definition
@@ -120,7 +125,8 @@ class JsProperties:
     return name
 
   def has_constructor(self, name: str):
-    """ Check if a constructor is already defined.
+    """
+    Check if a constructor is already defined.
 
     :param name: The constructor name
     """
@@ -131,7 +137,8 @@ class JsProperties:
     return self._context['constructors'].get(name)
 
   def set_constructor(self, name: str, content: str = None, func_ref: bool = False):
-    """ Set a constructor.
+    """
+    Set a constructor.
 
     Usage::
 
@@ -152,7 +159,8 @@ class JsProperties:
       self._context['constructors'][name] = content
 
   def add_function(self, name: str, js_funcs: Union[list, str], pmts: list) -> dict:
-    """ Add JavaScript function to the page.
+    """
+    Add a JavaScript function to the page.
 
     This method will build the JavaScript method and it will be in charge during the conversion to JavaScript to
     write function [name] ( [pmts] ){ [js_funcs] }
@@ -253,7 +261,8 @@ class Properties:
 
   @property
   def js(self) -> JsProperties:
-    """ The JavaScript page properties.
+    """
+    The JavaScript page properties.
 
     This will keep track of all the global functions used by the components.
     """
@@ -464,7 +473,8 @@ class Report:
     Usage::
 
       page = Report()
-      page.imports
+      page.imports.setVersion(page.imports.pkgs.popper_js.alias, "1.00.0")
+
     """
     if self.__import_manage is None:
       self.__import_manage = Imports.ImportManager(page=self)
@@ -566,6 +576,9 @@ class Report:
 
       page = Report()
       page.js.console.log("test")
+
+      page.js.accounting.add_to_imports()
+      page.js.moment.add_to_imports()
 
     Related Pages:
 

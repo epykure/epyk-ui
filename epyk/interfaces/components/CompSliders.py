@@ -7,7 +7,8 @@ from epyk.core.py import types
 
 
 class Sliders:
-  """  This module is relying on some Jquery IU components
+  """
+  This module is relying on some Jquery IU components
 
   The slider and progress bar components can be fully described on the corresponding website
 
@@ -21,7 +22,8 @@ class Sliders:
 
   def slider(self, number: float = 0, minimum: float = 0, maximum: float = 100, width: types.SIZE_TYPE = (100, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-             helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
+             helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None
+             ) -> html.HtmlEvent.Slider:
     """
     Add a Jquery UI slider object to the page
 
@@ -29,6 +31,13 @@ class Sliders:
 
       page.ui.slider(40)
       page.ui.slider([1, 2, 3, 4, 5, 6, 7])
+
+      # With even and circle progress
+      text = page.ui.pyk.progress.circle()
+      s = page.ui.slider(54)
+      page.ui.row([text, s])
+      s.output = text
+      s.options.slide()
 
     Underlying HTML Objects:
 

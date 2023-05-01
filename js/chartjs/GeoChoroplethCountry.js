@@ -7,7 +7,6 @@ function geoChoroplethCountry(htmlObj, data, options, mapFile, callbacks){
           chartContext.data = {labels: [], datasets: [{label: 'Countries', data: [] }]};
           geoData.features.forEach(function(g){
               chartContext.data.labels.push(g.properties.name);
-              console.log(g.properties.name);
               if (g.properties.name in data){
                 chartContext.data.datasets[0].data.push({value: data[g.properties.name], feature: g})}
               else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}

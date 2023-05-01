@@ -149,6 +149,14 @@ class ChartJs:
 
     Usage::
 
+      page = pk.Page()
+      df = pd.DataFrame({'Sales': [5000, 1222, 2000], 'Other': [500, 122, 200]}, index=['TV', 'Smartphones', 'DVD'])
+      chart1 = page.ui.charts.chartJs.pie(df.to_dict("records"), y_columns=['Sales'], x_axis="Other")
+      chart1.click([
+        page.js.console.log(chart1.dom.active()),
+        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])
+      ])
+
     Related Pages:
 
       https://www.chartjs.org/samples/latest/charts/pie.html
@@ -183,6 +191,14 @@ class ChartJs:
     :categories:
 
     Usage::
+
+      page = pk.Page()
+      df = pd.DataFrame({'Sales': [5000, 1222, 2000], 'Other': [500, 122, 200]}, index=['TV', 'Smartphones', 'DVD'])
+      chart1 = page.ui.charts.chartJs.donut(df.to_dict("records"), y_columns=['Sales'], x_axis="Other")
+      chart1.click([
+        page.js.console.log(chart1.dom.active()),
+        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])
+      ])
 
     Related Pages:
 
@@ -649,8 +665,9 @@ class ChartJs:
     component = graph.GraphChartJs.Fabric(self.page, width, height, html_code, options, profile)
     return component
 
-  def treemap(self, record: list = None, y_columns: list = None, groups: list = None, profile: types.PROFILE_TYPE = None,
-              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+  def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, groups: list = None,
+              profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None) -> graph.GraphChartJs.ChartTreeMap:
     """ Display a treemap chart from ChartJs.
 
@@ -665,6 +682,7 @@ class ChartJs:
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param groups: Optional. The columns corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
@@ -683,6 +701,7 @@ class ChartJs:
       "groups": groups,
       'commons': {
         "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
+    groups = groups or x_axis
     if len(groups) == 1:
       options["x_axis"] = groups[0]
     else:
@@ -776,6 +795,12 @@ if (item){
 
     Usage::
 
+      fake = Faker()
+      rec = [{"Sales": random.randint(1, 100), "Other": fake.name()} for _ in range(40)]
+      chart1 = page.ui.charts.chartJs.wordcloud(rec, y_columns=['Sales'], x_axis="Other")
+      page.ui.button("click").click([
+        chart1.build([{"Sales": 40, "Other": 30}, {"Sales": 1, "Other": 1}, {"Sales": 15, "Other": 5}])])
+
     Related Pages:
 
       https://github.com/sgratzl/chartjs-chart-wordcloud
@@ -827,7 +852,7 @@ if (item){
     hyr_chart._attrs["type"] = kind
     hyr_chart.colors(self.page.theme.charts)
     hyr_chart._data_attrs['labels'] = labels
-    hyr_chart._datasets = record
+    hyr_chart._datasets = record or []
     if horizontal:
       hyr_chart.options.scales.y.type = "hierarchical"
       hyr_chart.options.scales.y.padding = 0

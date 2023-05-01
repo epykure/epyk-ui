@@ -100,6 +100,12 @@ class Choropleth:
          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
 
+    Usage::
+
+      records = [{"name": "Nevada", "value": 23}, {"name": "Texas", "value": 60}]
+      us = page.ui.geo.chartJs.choropleths.us(records, y_columns=["value"], x_axis="name")
+      page.ui.button("Click").click([us.build({"Louisiana": 40})])
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.geo.GeoChartJs.Choropleth`
@@ -125,6 +131,11 @@ class Choropleth:
     geo_chart.options.legend.display = False
     geo_chart.options.showGraticule = True
 
+    if record is not None:
+      geo_chart._vals = {rec[x_axis]: rec[y_columns[0]] for rec in record}
+    else:
+      geo_chart._vals = {}
+
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("3."):
       geo_chart.options.scale.projection = "albersUsa"
     else:
@@ -138,6 +149,16 @@ class Choropleth:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
+
+    Usage::
+
+      records = [{"name": "Italy", "value": 23}]
+      wl = page.ui.geo.chartJs.choropleths.world(records, y_columns=["value"], x_axis="name")
+      page.ui.button("Click").click([
+        wl.build({"Germany": 23, "Spain": 40, "Italy": 23}),
+        us.build({"Louisiana": 40}),
+        uk.build({"Birmingham": 40}),
+      ])
 
     Underlying HTML Objects:
 
@@ -155,6 +176,10 @@ class Choropleth:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.Choropleth(self.page, width, height, html_code, options or {}, profile)
+    if record is not None:
+      geo_chart._vals = {rec[x_axis]: rec[y_columns[0]] for rec in record}
+    else:
+      geo_chart._vals = {}
 
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("3."):
       geo_chart.options.scales.xy.projection = "equalEarth"
@@ -172,6 +197,14 @@ class Choropleth:
               options: dict = None, width: Union[int, tuple] = (100, "%"),
               height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     """
+
+    Usage::
+
+      records = [{"name": "Liverpool", "value": 23}, {"name": "Leeds", "value": 60}]
+      uk = page.ui.geo.chartJs.choropleths.uk(records, y_columns=["value"], x_axis="name")
+      page.ui.button("Click").click([
+        uk.build({"Birmingham": 40}),
+      ])
 
     Underlying HTML Objects:
 
@@ -197,6 +230,11 @@ class Choropleth:
       geo_chart.options.maintainAspectRatio = True
       geo_chart.options.scales.projection.projection = "mercator"
 
+    if record is not None:
+      geo_chart._vals = {rec[x_axis]: rec[y_columns[0]] for rec in record}
+    else:
+      geo_chart._vals = {}
+
     geo_chart.options.geo.colorScale.display = True
     geo_chart.options.showOutline = True
     geo_chart.options.legend.display = False
@@ -216,6 +254,26 @@ class Choropleth:
   def uk(self, record=None, y_columns: list = None, x_axis: str = None, profile: Union[dict, bool] = None,
          options: dict = None, width: Union[int, tuple] = (100, "%"),
          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
+    """
+
+    Usage::
+
+      records = [{"name": "Liverpool", "value": 23}, {"name": "Leeds", "value": 60}]
+      uk = page.ui.geo.chartJs.choropleths.uk(records, y_columns=["value"], x_axis="name")
+      page.ui.button("Click").click([
+        uk.build({"Birmingham": 40}),
+      ])
+
+    :param record:
+    :param y_columns:
+    :param x_axis:
+    :param profile:
+    :param options:
+    :param width:
+    :param height:
+    :param html_code:
+    :return:
+    """
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
     chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/gbr.json"
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("4."):
