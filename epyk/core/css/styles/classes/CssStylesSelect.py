@@ -78,9 +78,9 @@ class CssSelectOptionItems(CssStyle.Style):
       'color': self.page.theme.white if self.page.theme.dark else self.page.theme.black}, important=True)
     self.hover.css({
       'color': self.page.theme.colors[0],
-      "background-color": self.page.theme.notch(2)}, important=True)
+      "background-color": self.page.theme.colors[-1]}, important=True)
     self.active.css({
-      "background-color": self.page.theme.colors[-1],
+      "background-color": self.page.theme.colors[-2],
       "color": self.page.theme.greys[0]}, important=True)
 
 

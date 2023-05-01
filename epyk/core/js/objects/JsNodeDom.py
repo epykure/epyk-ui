@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, List
+from typing import Union, Any, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -888,6 +888,21 @@ class JsDoms(JsObject.JsObject):
       page=page)
 
   @property
+  def container(self):
+    """ Return always the real DOM element. """
+    if hasattr(self, "_container"):
+      return self._container
+
+    if self.varId is not None:
+      return self.varId
+
+  @property
+  def element(self):
+    """ Return always the real DOM element. """
+    if self.varId is not None:
+      return self.varId
+
+  @property
   def parentNode(self):
     """
     The parentNode property returns the parent node of the specified node, as a Node object.
@@ -1230,7 +1245,7 @@ class JsDoms(JsObject.JsObject):
       self._js.append("%s.setAttribute(%s, %s)" % (self.varId, value, JsUtils.jsConvertData(data, None)))
     return self
 
-  def setAttribute(self, attribute_name: types.JS_DATA_TYPES, attribute_value: types.JS_DATA_TYPES):
+  def setAttribute(self, attribute_name: types.JS_DATA_TYPES, attribute_value: Any):
     """   The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
 
     Usage::

@@ -2234,6 +2234,18 @@ class OptionsTransition(Options):
 class C3(OptChart.OptionsChart):
 
   @property
+  def container(self):
+    """ Return always the container DOM element. """
+    if self.component is not None:
+      return self.element
+
+  @property
+  def element(self):
+    """ Return always the real DOM element. """
+    if self.component is not None:
+      return "document.getElementById('%s')" % self.component.html_code
+
+  @property
   def bindto(self):
     """
     The CSS selector or the element which the chart will be set to. D3 selection object can be specified.
@@ -2258,7 +2270,8 @@ class C3(OptChart.OptionsChart):
 
   @property
   def legend(self) -> OptionsLegend:
-    """ Set visibility of legend.
+    """
+    Set visibility of legend.
 
     Related Pages:
 
@@ -2312,7 +2325,8 @@ class C3(OptChart.OptionsChart):
     return self._config_sub_data("data", OptionsData)
 
   def add_region(self, axis, start=None, end=None, class_css=None) -> OptionsRegion:
-    """ Show rectangles inside the chart.
+    """
+    Show rectangles inside the chart.
 
     Related Pages:
 
@@ -2347,7 +2361,8 @@ class C3(OptChart.OptionsChart):
     """
 
   def size(self) -> OptionsSize:
-    """ Set chart size in px.
+    """
+    Set chart size in px.
 
     Related Pages:
 
@@ -2356,7 +2371,8 @@ class C3(OptChart.OptionsChart):
     return self._config_sub_data("size", OptionsSize)
 
   def padding(self) -> OptionsPadding:
-    """ Change padding for the chart.
+    """
+    Change padding for the chart.
 
     Related Pages:
 
@@ -2366,7 +2382,8 @@ class C3(OptChart.OptionsChart):
 
   @property
   def title(self) -> OptionsTitle:
-    """ Add a title to the chart.
+    """
+    Add a title to the chart.
 
     Related Pages:
 
@@ -2376,7 +2393,8 @@ class C3(OptChart.OptionsChart):
 
   @property
   def color(self) -> OptionsColor:
-    """ Add a title to the chart.
+    """
+    Add a title to the chart.
 
     Related Pages:
 
@@ -2404,7 +2422,8 @@ class C3(OptChart.OptionsChart):
 
   @property
   def interaction(self) -> OptionsInteraction:
-    """ Configure the interaction on the chart.
+    """
+    Configure the interaction on the chart.
 
     Related Pages:
 
@@ -2414,7 +2433,8 @@ class C3(OptChart.OptionsChart):
 
   @property
   def transition(self) -> OptionsTransition:
-    """ Set duration of transition (in milliseconds) for chart animation.
+    """
+    Set duration of transition (in milliseconds) for chart animation.
 
     Related Pages:
 
@@ -2423,7 +2443,8 @@ class C3(OptChart.OptionsChart):
     return self._config_sub_data("transition", OptionsTransition)
 
   def oninit(self, js_funcs, profile=None):
-    """ Set a callback to execute when the chart is initialized.
+    """
+    Set a callback to execute when the chart is initialized.
 
     https://c3js.org/reference.html#oninit
 
@@ -2433,7 +2454,8 @@ class C3(OptChart.OptionsChart):
     pass
 
   def onrendered(self, js_funcs, profile=None):
-    """ Set a callback which is executed when the chart is rendered.
+    """
+    Set a callback which is executed when the chart is rendered.
     Basically, this callback will be called in each time when the chart is redrawed.
 
     Related Pages:
@@ -2459,7 +2481,8 @@ class C3(OptChart.OptionsChart):
     pass
 
   def onmouseover(self, js_funcs, profile=None):
-    """ Set a callback to execute when mouse leaves the chart.
+    """
+    Set a callback to execute when mouse leaves the chart.
 
     Related Pages:
 
@@ -2471,7 +2494,8 @@ class C3(OptChart.OptionsChart):
     pass
 
   def onmouseover(self, js_funcs, profile=None):
-    """ Set a callback to execute when user resizes the screen.
+    """
+    Set a callback to execute when user resizes the screen.
 
     Related Pages:
 
@@ -2483,7 +2507,8 @@ class C3(OptChart.OptionsChart):
     pass
 
   def onresized(self, js_funcs, profile=None):
-    """ Set a callback to execute when screen resize finished.
+    """
+    Set a callback to execute when screen resize finished.
 
     Related Pages:
 

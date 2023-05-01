@@ -663,7 +663,7 @@ class JsWindow:
   def __init__(self, page: primitives.PageModel = None):
     """
  
-    :param primitives.PageModel page:
+    :param page:
     """
     self.page = page
     self._context = page._context if hasattr(page, '_context') else {}
@@ -678,9 +678,17 @@ class JsWindow:
     return JsNodeDom.JsDoms(self.page)
 
   @property
-  def history(self):
+  def history(self) -> JsHistory:
     """
     Interface to the History object.
+
+    Usage::
+
+      dt = page.ui.date(html_code="date")
+      input = page.ui.input(html_code="input")
+      dt.select([
+        page.js.window.history.updateStateFromComponent(dt),
+        page.js.window.history.updateStateFromComponent(input)
 
     :return: A Python Js History object.
     """

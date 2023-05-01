@@ -2,16 +2,17 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional, List
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 
 from epyk.core.html.options import OptText
 
 from epyk.core.html import Html
+from epyk.core.html import Defaults as Default_html
 from epyk.core.js.html import JsHtml
 
 
 class HtmlGeneric(Html.Html):
-  name = 'tag'
+  name = 'GenericTag'
   _option_cls = OptText.OptionsText
 
   def __init__(self, page: primitives.PageModel, tag: Union[str], text: Union[str, list, primitives.HtmlModel],
@@ -32,9 +33,7 @@ class HtmlGeneric(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """  
-    Property to set all the possible object for a button.
-    """
+    """ Property to set all the possible object for a button. """
     return super().options
 
   def __getitem__(self, i: int) -> Html.Html:
@@ -59,8 +58,8 @@ class HtmlGeneric(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """  
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -68,8 +67,6 @@ class HtmlGeneric(Html.Html):
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self, page=self.page)
     return self._dom
-
-  _js__builder__ = 'htmlObj.innerHTML = data'
 
   def __str__(self):
     if self.tag is None:
@@ -87,13 +84,52 @@ class HtmlGeneric(Html.Html):
     return '<%s %s>%s</%s>%s' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val,
                                  self.tag, self.helper)
 
+  def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
+              data: types.JS_DATA_TYPES = None):
+    """ Display a loading message in the component.
 
-class HtmlGenericLInk(HtmlGeneric):
-  name = 'tag'
+    Usage::
+
+      btn.click([
+          t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateLoading = label
+    if status:
+      return self.build(data, options={"templateMode": 'loading'})
+
+    return ""
+
+  def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE, data: types.JS_DATA_TYPES = None):
+    """ Display an error message in the component.
+
+    Usage::
+
+      btn.click([
+          t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateError = label
+    if status:
+      return self.build(data, options={"templateMode": 'error'})
+
+    return ""
+
+
+class HtmlGenericLink(HtmlGeneric):
+  name = 'tagLink'
+  builder_name = "HtmlGeneric"
 
   def preview(self, url: str, profile: Optional[Union[bool, dict]] = None):
     """  
-
 
     :param url: The url path.
     :param profile: Optional. A flag to set the component performance storage.

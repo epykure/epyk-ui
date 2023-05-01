@@ -7,49 +7,51 @@ from epyk.core.js import JsUtils
 
 
 class Table(Html.Html):
-  name = 'Google Table'
-  requirements = ('google-tables', )
+    name = 'Google Table'
+    requirements = ('google-tables',)
 
-  def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
-    data, columns, self.__config = [], [], None
-    super(Table, self).__init__(page, records, html_code=html_code, profile=profile,
-                                css_attrs={"width": width, "height": height})
-    self.__options = options
+    def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
+        data, columns, self.__config = [], [], None
+        super(Table, self).__init__(page, records, html_code=html_code, profile=profile,
+                                    css_attrs={"width": width, "height": height})
+        self.__options = options
 
-  @property
-  def tableId(self) -> str:
-    """   Return the Javascript variable of the chart.
+    @property
+    def tableId(self) -> str:
+        """
+        Return the Javascript variable of the chart.
 
-    Usage::
+        Usage::
 
-      table.tableId
-    """
-    return "%s_obj" % self.htmlCode
+          table.tableId
+        """
+        return "%s_obj" % self.htmlCode
 
-  def add_column(self, c):
-    raise NotImplementedError("Not yet available")
+    def add_column(self, c):
+        raise NotImplementedError("Not yet available")
 
-  def define(self, options: dict):
-    raise NotImplementedError("Not yet available")
+    def define(self, options: dict):
+        raise NotImplementedError("Not yet available")
 
-  def build(self, data=None, options=None, profile=None, component_id=None):
-    return '''
-      %(chartId)s = google.charts.setOnLoadCallback( (function(){
-        var data = new google.visualization.DataTable();
-        var tableData = %(data)s;
-        tableData.rows.forEach(function(c){
-          data.addColumn('string', c)});
-        tableData.cols.forEach(function(c){
-          data.addColumn('number', c)});
-        data.addRows(tableData.datasets);
+    def build(self, data=None, options=None, profile=None, component_id=None):
+        return '''
+%(chartId)s = google.charts.setOnLoadCallback( (function(){
+var data = new google.visualization.DataTable();
+var tableData = %(data)s;
+tableData.rows.forEach(function(c){
+  data.addColumn('string', c)});
+tableData.cols.forEach(function(c){
+  data.addColumn('number', c)});
+data.addRows(tableData.datasets);
 
-        var chart = new google.visualization.%(type)s(%(varId)s);
-        chart.draw(data, {});
-        return chart
-      }));
-      ''' % {'chartId': self.tableId, 'varId': component_id or self.dom.varId,
-             'data': JsUtils.jsConvertData(data, None), 'type': self.__options["type"]}
+var chart = new google.visualization.%(type)s(%(varId)s);
+chart.draw(data, {});
+return chart
+}));
+''' % {
+            'chartId': self.tableId, 'varId': component_id or self.dom.varId,
+            'data': JsUtils.jsConvertData(data, None), 'type': self.__options["type"]}
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())

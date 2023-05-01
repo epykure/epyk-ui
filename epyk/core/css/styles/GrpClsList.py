@@ -89,8 +89,6 @@ class ClassSelect(GrpCls.ClassHtml):
     Usage::
 
       self.css.border = "1px solid black"
-
-    :rtype: AttrSelect
     """
     if self._css_struct is None:
       self._css_struct = AttrSelect(self.component)
@@ -111,7 +109,6 @@ class ClassSelect(GrpCls.ClassHtml):
   def cls_select(self) -> Classes.CatalogSelect.CatalogSelect:
     """  
 
-    :rtype: Classes.CatalogSelect.CatalogSelect
     """
     if self._css_select is None:
       self._css_select = Classes.CatalogSelect.CatalogSelect(

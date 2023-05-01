@@ -1541,7 +1541,6 @@ class OptionsLine(OptChart.OptionsChart):
   def chart(self) -> OptionChart:
     """   
 
-    :rtype: OptionChart
     """
     return self._config_sub_data("chart", OptionChart)
 
@@ -1549,7 +1548,6 @@ class OptionsLine(OptChart.OptionsChart):
   def grid(self) -> OptionGrid:
     """   
 
-    :rtype: OptionGrid
     """
     return self._config_sub_data("grid", OptionGrid)
 

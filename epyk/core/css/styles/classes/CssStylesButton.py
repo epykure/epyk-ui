@@ -16,13 +16,16 @@ class CssButtonBasic(CssStyle.Style):
   _disabled = {'cursor': 'none'}
 
   def customize(self):
-    self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit',
-              'line-height': '%spx' % Defaults.LINE_HEIGHT})
+    self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit'})
     self.hover.css(
-      {'background-color': self.page.theme.greys[0], 'line-height': '%spx' % Defaults.LINE_HEIGHT,
+      {'background-color': self.page.theme.greys[0],
        'color': "inherit",  'border': '1px solid %s' % self.page.theme.notch()}, important=True)
     self.disabled.css({
-      'background-color': self.page.theme.colors[-1], 'color': self.page.theme.notch(2), 'font-style': 'italic'})
+        'background-color': self.page.theme.greys[0],
+        'border-color': self.page.theme.greys[0],
+        'color': self.page.theme.greys[self.page.theme.index],
+        "cursor": "not-allowed",
+        'font-style': 'italic'}, important=True)
 
 
 class CssButtonImportant(CssStyle.Style):

@@ -1,5 +1,5 @@
 
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 
 
 class OptionsTableRow(Options):
@@ -14,7 +14,8 @@ class OptionsTableRow(Options):
     self._config(values)
 
 
-class OptionsTableCell(Options):
+class OptionsTableCell(OptionsWithTemplates):
+
   @property
   def cssClasses(self):
     """
@@ -82,7 +83,7 @@ class OptionsTableCell(Options):
     self.component.attr["class"].add("m%s-%s" % (position, value))
 
 
-class OptionsBasic(Options):
+class OptionsBasic(OptionsWithTemplates):
   @property
   def bordered(self):
     """
@@ -200,7 +201,7 @@ class OptionsBasic(Options):
     self._config(flag)
 
 
-class OptionsPivot(Options):
+class OptionsPivot(OptionsWithTemplates):
   component_properties = ('aggregator', 'aggregatorName', 'showUI', 'dataClass')
 
   @property

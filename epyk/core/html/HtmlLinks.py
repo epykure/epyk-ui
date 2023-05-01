@@ -6,6 +6,7 @@ from epyk.core.py import primitives
 from epyk.core.py import types
 
 from epyk.core.html import Html
+from epyk.core.html import Defaults as Default_html
 from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptText
 
@@ -29,8 +30,8 @@ class ExternalLink(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlLink:
-    """
-    Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -41,39 +42,22 @@ class ExternalLink(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsLink:
-    """
-    Property to set all the possible object for a button.
-    """
+    """ Property to set all the possible object for a button. """
     return super().options
 
-  _js__builder__ = '''
-      if(typeof data === 'undefined'){data = {text: ''}}
-      var text = "";
-      if((typeof data.text !== 'undefined') && (data.text)){text = data.text} 
-      else if (data.text) {text = data.text}
-      else {text = data}
-      if (options.type_number == 'money'){
-        text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep, 
-        options.decimal_sep, options.format)}
-      else if (options.type_number == 'number'){
-        text = accounting.formatNumber(text, options.digits, options.thousand_sep, options.decimal_sep)}
-      if(typeof data.icon !== 'undefined'){
-        htmlObj.innerHTML = '<i class="'+ data.icon +'" style="margin-right:5px"></i>'+ text;}
-      else {htmlObj.innerHTML = text}; if(typeof data.url !== 'undefined'){htmlObj.href = data.url}'''
-
   def anchor(self, component: Html.Html):
-    """
-    Create a link to an HTML component defined in the page.
+    """ Create a link to an HTML component defined in the page.
+
     This will create a shortcut to directly scroll to this component.
 
-    :param component: A link to this HTML component.
+    :param component: A link to this HTML component
     """
     self.val["url"] = "#%s" % component.htmlCode
     self.options.url = "#%s" % component.htmlCode
     return self
 
   def no_decoration(self, color: Optional[str] = None):
-    """   Property to remove the list default style.
+    """ Property to remove the list default style.
 
     :param color: Optional. The color code.
     """
@@ -86,12 +70,12 @@ class ExternalLink(Html.Html):
 
   def build(self, data: types.JS_FUNCS_TYPES = None, options: dict = None,
             profile: types.PROFILE_TYPE = False, component_id: str = None):
-    """   Return the JavaScript fragment to refresh the component content.
+    """ Return the JavaScript fragment to refresh the component content.
 
-    :param data: The component expected content.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param component_id: Optional. The component reference (the htmlCode).
+    :param data: The component expected content
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. The component reference (the htmlCode)
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):
@@ -103,10 +87,50 @@ class ExternalLink(Html.Html):
   def __str__(self):
     return '<a %s>%s</a>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val['text'], self.helper)
 
+  def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
+              data: types.JS_DATA_TYPES = None):
+    """ Display a loading message in the component.
+
+    Usage::
+
+      btn.click([
+          t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateLoading = label
+    if status:
+      return self.build(data, options={"templateMode": 'loading'})
+
+    return ""
+
+  def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE, data: types.JS_DATA_TYPES = None):
+    """ Display an error message in the component.
+
+    Usage::
+
+      btn.click([
+          t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateError = label
+    if status:
+      return self.build(data, options={"templateMode": 'error'})
+
+    return ""
+
 
 class DataLink(Html.Html):
   name = 'Data link'
   filename = "Download"
+  _option_cls = OptText.OptionsLink
 
   def __init__(self, page: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,
                options: Optional[str], profile: Optional[Union[bool, dict]]):
@@ -115,18 +139,59 @@ class DataLink(Html.Html):
     self.format = fmt
 
   @property
+  def options(self) -> OptText.OptionsLink:
+    """ Property to set all the possible object for a button. """
+    return super().options
+
+  @property
   def no_decoration(self):
-    """   Property to remove the list default style.
-    """
+    """ Property to remove the list default style. """
     self.style.css.text_decoration = None
     self.style.css.list_style_type = None
     return self
-
-  _js__builder__ = '''var b = new Blob([data.value]); htmlObj.href = URL.createObjectURL(b); 
-    htmlObj.innerHTML = data.text'''
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
     return '<a %(attr)s href="#" download="%(filename)s.%(format)s" type="text/%(format)s">%(val)s</a>' % {
       "filename": self.filename, 'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val['text'],
       'format': self.format}
+
+  def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
+              data: types.JS_DATA_TYPES = None):
+    """ Display a loading message in the component.
+
+    Usage::
+
+      btn.click([
+          t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateLoading = label
+    if status:
+      return self.build(data, options={"templateMode": 'loading'})
+
+    return ""
+
+  def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE,
+            data: types.JS_DATA_TYPES = None):
+    """ Display an error message in the component.
+
+    Usage::
+
+      btn.click([
+          t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
+      ])
+
+    :param status: The message status (true is active)
+    :param label: The message template
+    :param data: The message parameter to feed the template
+    """
+    self.options.templateError = label
+    if status:
+      return self.build(data, options={"templateMode": 'error'})
+
+    return ""

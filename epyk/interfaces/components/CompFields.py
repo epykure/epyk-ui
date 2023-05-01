@@ -108,7 +108,8 @@ class Fields:
 
     Usage::
 
-      page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      dt = page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      dt.select([page.js.alert(dt.dom.content)])
 
     Underlying HTML Objects:
 
@@ -767,7 +768,7 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def radio(self, value: bool = False, label: str = None, group_name: str = None, icon: str = None,
+  def radio(self, value: bool = False, label: str = "", group_name: str = None, icon: str = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:

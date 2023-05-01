@@ -1,4 +1,3 @@
-
 from epyk.interfaces.geo import CompGeoPlotly
 from epyk.interfaces.geo import CompGeoDc
 from epyk.interfaces.geo import CompGeoJqV
@@ -11,107 +10,141 @@ from epyk.interfaces.geo import CompGeoMapboxGl
 
 class Geo:
 
-  def __init__(self, ui):
-    self.page = ui.page
+    def __init__(self, ui):
+        self.page = ui.page
 
-  @property
-  def plotly_map(self) -> CompGeoPlotly.Plotly:
-    """ Interface for the Plotly library.
+    @property
+    def plotly_map(self) -> CompGeoPlotly.Plotly:
+        """
+        Interface for the Plotly library.
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://plotly.com/javascript/choropleth-maps/
-    """
-    return CompGeoPlotly.Plotly(self)
+          https://plotly.com/javascript/choropleth-maps/
+        """
+        return CompGeoPlotly.Plotly(self)
 
-  @property
-  def dc_choropleth(self) -> CompGeoDc.Dc:
-    """
-    """
-    return CompGeoDc.Dc(self)
+    @property
+    def dc_choropleth(self) -> CompGeoDc.Dc:
+        """ """
+        return CompGeoDc.Dc(self)
 
-  @property
-  def chartJs(self) -> CompGeoChartJs.ChartJs:
-    """ Property to the ChartJs Geo API.
+    @property
+    def chartJs(self) -> CompGeoChartJs.ChartJs:
+        """
+        Property to the ChartJs Geo API.
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/sgratzl/chartjs-chart-geo
-    """
-    return CompGeoChartJs.ChartJs(self)
+          https://github.com/sgratzl/chartjs-chart-geo
+        """
+        return CompGeoChartJs.ChartJs(self)
 
-  @property
-  def plotly(self) -> CompGeoPlotly.Plotly:
-    """
+    @property
+    def plotly(self) -> CompGeoPlotly.Plotly:
+        """
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://plotly.com/javascript/choropleth-maps/
-    """
-    return CompGeoPlotly.Plotly(self)
+          https://plotly.com/javascript/choropleth-maps/
+        """
+        return CompGeoPlotly.Plotly(self)
 
-  @property
-  def google(self) -> CompGeoGoogle.GeoGoogle:
-    """ Property to the google charts API.
+    @property
+    def google(self) -> CompGeoGoogle.GeoGoogle:
+        """
+        Property to the Google charts API.
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://developers.google.com/chart
-    """
-    if not getattr(self.page, '_with_google_imports', False):
-      raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
+          https://developers.google.com/chart
+        """
+        if not getattr(self.page, '_with_google_imports', False):
+            raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
 
-    return CompGeoGoogle.GeoGoogle(self)
+        return CompGeoGoogle.GeoGoogle(self)
 
-  @property
-  def jqv(self) -> CompGeoJqV.JqueryVertorMap:
-    """ Property to the Jquery vector Map API.
+    @property
+    def jqv(self) -> CompGeoJqV.JqueryVertorMap:
+        """
+        Property to the Jquery vector Map API.
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://www.10bestdesign.com/jqvmap/
-    """
-    return CompGeoJqV.JqueryVertorMap(self)
+          https://www.10bestdesign.com/jqvmap/
+        """
+        return CompGeoJqV.JqueryVertorMap(self)
 
-  @property
-  def leaflet(self) -> CompGeoLeaflet.GeoLeaflet:
-    """ Property to the Jquery vector Map API.
+    @property
+    def leaflet(self) -> CompGeoLeaflet.GeoLeaflet:
+        """
+        Property to the Jquery vector Map API.
 
-    Usage::
+        Usage::
 
-    Related Pages:
+        Related Pages:
 
-      https://www.10bestdesign.com/jqvmap/
-    """
-    return CompGeoLeaflet.GeoLeaflet(self)
+          https://www.10bestdesign.com/jqvmap/
+        """
+        return CompGeoLeaflet.GeoLeaflet(self)
 
-  @property
-  def d3(self) -> CompGeoD3.D3:
-    """ Interactive maps for data visualizations. Bundled into a single Javascript file.
+    @property
+    def d3(self) -> CompGeoD3.D3:
+        """
+        Interactive maps for data visualizations. Bundled into a single Javascript file.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/markmarkoh/datamaps
+          https://github.com/markmarkoh/datamaps
 
-    """
-    return CompGeoD3.D3(self)
+        """
+        return CompGeoD3.D3(self)
 
-  @property
-  def mapbox(self) -> CompGeoMapboxGl.MapboxMaps:
-    """ A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
+    @property
+    def mapbox(self) -> CompGeoMapboxGl.MapboxMaps:
+        """
+        A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
 
-    Related Pages:
+        Usage::
 
-      https://docs.mapbox.com/
-    """
-    return CompGeoMapboxGl.MapboxMaps(self)
+          page.imports.pkgs.mapbox.set_access_token(
+            "XXXXXX",
+            "mapboxgl.accessToken"
+          )
+
+          l = page.ui.geo.mapbox.globe() # page.ui.geo.leaflet.europe()
+          l.load([
+            l.js.addControl([l.js._.FullscreenControl()]),
+            l.js.addControl([l.js._.GeolocateControl()]),
+            l.js.addControl([l.js._.NavigationControl()]),
+            l.js.addControl([l.js._.ScaleControl()]),
+            l.js.addSource('portland', {'type': 'raster', 'url': 'mapbox://examples.32xkp0wd'}),
+            l.js.addLayer({'id': 'portland', 'source': 'portland', 'type': 'raster'}),
+            l.js.addSource('route', {'type': 'geojson', 'data': {'type': 'Feature', 'properties': {}, 'geometry': {
+              'type': 'LineString', 'coordinates': [
+                [-122.483696, 37.833818], [-122.483482, 37.833174], [-122.483396, 37.8327], [-122.483568, 37.832056]
+                [-122.48404, 37.831141], [-122.48404, 37.830497], [-122.483482, 37.82992], [-122.483568, 37.829548],
+                [-122.48507, 37.829446], [-122.4861, 37.828802], [-122.486958, 37.82931], [-122.487001, 37.830802],
+                [-122.487516, 37.831683], [-122.488031, 37.832158], [-122.488889, 37.832971], [-122.489876, 37.832632],
+                [-122.490434, 37.832937], [-122.49125, 37.832429], [-122.491636, 37.832564], [-122.492237, 37.833378],
+                [-122.493782, 37.833683]]}}}),
+            l.js.addLayer({'id': 'route', 'type': 'line', 'source': 'route', 'layout': {
+              'line-join': 'round', 'line-cap': 'round'}, 'paint': {'line-color': '#888', 'line-width': 8}})
+          ])
+          l.options.style = 'mapbox://styles/mapbox/streets-v11'
+
+        Related Pages:
+
+          https://docs.mapbox.com/
+        """
+        return CompGeoMapboxGl.MapboxMaps(self)

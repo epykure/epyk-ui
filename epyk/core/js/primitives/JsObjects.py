@@ -25,7 +25,7 @@ class JsVoid(primitives.JsDataModel):
     self._data = data
 
   def __add__(self, other):
-    """ Add two JavaScript expressions
+    """ Add two JavaScript expressions.
 
     :param other: A second expression
     :return: A new JavaScript expression
@@ -46,8 +46,8 @@ class JsPromiseRecords(primitives.JsDataModel):
   def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -78,8 +78,8 @@ class JsPromiseRecords(primitives.JsDataModel):
   def row(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = []
@@ -132,36 +132,39 @@ class JsPromise:
     self.__thens.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
     return self
 
-  def csvRows(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
+  def csvRows(
+    self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param js_funcs: Optional. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param js_code: Optional. The variable name created in the Javascript (default response)
     """
+    js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
-    self.then(["function(%s){ return %s.text()}" % (js_code, js_code)], profile)
+    self.then(["function(%s){return %s.text()}" % (js_code, js_code)], profile)
     return self.then(["function(data){let result = []; data.split('\\n').forEach(function(line){let row = line.split(','); %s; result.push(row)}); return result}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)], profile)
 
-  def csvtoRecords(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
+  def csvtoRecords(
+    self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None, js_code: str = "response"):
     """
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param js_code: Optional. The variable name created in the Javascript (default response).
+    :param js_funcs: Optional. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param js_code: Optional. The variable name created in the Javascript (default response)
     """
+    js_funcs = js_funcs or []
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
     self.then(["function(%s){ return %s.text()}" % (js_code, js_code)], profile)
     return JsPromiseRecords(self.then(['''function(%s){
-    let fileContent = %s.split(/\\r?\\n/); let data = [];
-    let fileHeader = fileContent[0].split(',');
-    for (var i=1; i < fileContent.length; i++){
-      let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
-      %s; data.push(row)}; 
-    return data}
-    ''' % (js_code, js_code, JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))], profile))
+let fileContent = %s.split(/\\r?\\n/); let data = []; let fileHeader = fileContent[0].split(',');
+for (var i=1; i < fileContent.length; i++){
+  let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
+  %s; data.push(row)}; 
+return data}
+''' % (js_code, js_code, JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))], profile))
 
   def catch(self, js_funcs: types.JS_FUNCS_TYPES):
     """

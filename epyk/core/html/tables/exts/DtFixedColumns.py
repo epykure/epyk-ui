@@ -1,47 +1,46 @@
-
 from epyk.core.html.options import Options
 
 
 class FixedColumns(Options):
 
-  def activate(self):
-    """   
+    def activate(self):
+        """
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/fixedColumns
-    """
-    self.leftColumns = 2
-    return self
+          https://datatables.net/reference/option/fixedColumns
+        """
+        self.leftColumns = 2
+        return self
 
-  @property
-  def heightMatch(self):
-    """   FixedColumns operates by cloning the cells from the original table and then inserting them into the document,
-    positioned visually above the DataTable - thus allowing them to appear fixed.
+    @property
+    def heightMatch(self):
+        """
+        FixedColumns operates by cloning the cells from the original table and then inserting them into the document,
+        positioned visually above the DataTable - thus allowing them to appear fixed.
 
-    Related Pages:
+        Related Pages:
 
-      https://datatables.net/reference/option/fixedColumns.heightMatch
-    """
-    return self._config_get()
+          https://datatables.net/reference/option/fixedColumns.heightMatch
+        """
+        return self._config_get()
 
-  @heightMatch.setter
-  def heightMatch(self, val):
-    self._config(val)
+    @heightMatch.setter
+    def heightMatch(self, val):
+        self._config(val)
 
-  @property
-  def leftColumns(self):
-    return self._config_get()
+    @property
+    def leftColumns(self):
+        return self._config_get()
 
+    @leftColumns.setter
+    def leftColumns(self, val):
+        self._config(val)
 
-  @leftColumns.setter
-  def leftColumns(self, val):
-    self._config(val)
+    @property
+    def rightColumns(self):
+        return self._config_get()
 
-  @property
-  def rightColumns(self):
-    return self._config_get()
-
-  @rightColumns.setter
-  def rightColumns(self, val):
-    self._config(val)
+    @rightColumns.setter
+    def rightColumns(self, val):
+        self._config(val)

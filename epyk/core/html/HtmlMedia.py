@@ -63,17 +63,8 @@ class Media(Html.Html):
 
   @property
   def options(self) -> OptButton.OptMedia:
-    """   Property to set all the possible object for a Media (video and audio).
-    """
+    """ Property to set all the possible object for a Media (video and audio). """
     return super().options
-
-  _js__builder__ = '''
-    var source = document.createElement("source"); htmlObj.innerHTML = "";
-    source.setAttribute('src', data.path +"/"+ data.video);
-    for(var key in options){
-      if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
-      else{source.setAttribute(key, options[key])}};
-    htmlObj.appendChild(source)'''
 
   def __str__(self):
     if self.options.autoplay:
@@ -98,14 +89,6 @@ class Audio(Media):
     ".3gp": "audio/3gpp",
     ".3g2": "audio/3gpp2",
   }
-
-  _js__builder__ = '''
-    var source = document.createElement("source"); htmlObj.innerHTML = "";
-    source.setAttribute('src', data.path +"/"+ data.audio);
-    for(var key in options){
-      if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
-      else{source.setAttribute(key, options[key])}}; 
-    htmlObj.appendChild(source)'''
 
   def __str__(self):
     if self.options.autoplay:
@@ -132,8 +115,7 @@ class Youtube(Html.Html):
 
   @staticmethod
   def get_embed_link(youtube_link: str):
-    """  -
-    simple function to convert a youtube link to the embedded version.
+    """ Simple function to convert a youtube link to the embedded version.
 
     Usage::
 
@@ -157,14 +139,12 @@ class Camera(Html.Html):
 
   @property
   def options(self) -> OptButton.OptMedia:
-    """   Property to set all the possible object for a Media (video and audio).
-    """
+    """ Property to set all the possible object for a Media (video and audio). """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsMedia:
-    """   The Javascript Dom object.
-    """
+    """ The Javascript Dom object. """
     if self._dom is None:
       self._dom = JsHtml.JsMedia(self, page=self.page)
     return self._dom

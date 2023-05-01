@@ -16,15 +16,17 @@ class Attrs(Properties.CssMixin):
   def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
     self.attrs = {}
     self.component = component
-    self.page = page or component.page
+    self.page = page
+    if component is not None and page is None:
+      self.page = component.page
 
   def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
     """
     Set multiple CSS attributes to the HTML component.
 
-    :param Union[dict, str] attrs: optional. The attributes to be added.
-    :param str value: Optional. The value for a given item.
-    :param bool important: Optional. Flag the attribute to be important.
+    :param attrs: optional. The attributes to be added
+    :param value: Optional. The value for a given item
+    :param important: Optional. Flag the attribute to be important
     """
     if not isinstance(attrs, dict):
       if value is None:

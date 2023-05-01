@@ -27,13 +27,15 @@ class CssRadioSwitch(CssStyle.Style):
 
 class CssRadioSwitchLabel(CssStyle.Style):
   _attrs = {'cursor': 'pointer', 'margin': '2px', 'text-indent': '-9999px', 'display': 'block', 'border-radius': '50px',
-            'position': 'relative', 'top': '5px'}
-  _after = {'content': "''", 'position': 'absolute', 'left': '5px', 'width': '15px', 'height': '15px',
-            'border-radius': '20px', 'transition': '0.3s', 'margin': 'auto', 'top': '-2.5px'}
+            'position': 'relative'}
+  _after = {'content': "''", 'position': 'absolute', 'left': '5px',
+            'border-radius': '20px', 'transition': '0.3s', 'margin': 'auto', 'top': '-2px'}
 
   def customize(self):
+    size = int(self.page.body.style.globals.line_height / 2) + 4
     self.css({'background': self.page.theme.greys[3]})
-    self.after.css({'background-color': self.page.theme.colors[-1]})
+    self.after.css({'background-color': self.page.theme.colors[-1],
+                    "width": "%spx" % size, "height": "%spx" % size})
 
 
 class CssRadioSwitchChecked(CssStyle.Style):

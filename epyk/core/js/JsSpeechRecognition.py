@@ -45,7 +45,9 @@ class SpeechGrammarList:
     """
     webkitSpeechGrammarList
 
-    https://developer.mozilla.org/en-US/docs/Web/API/SpeechGrammarList
+    Related Pages:
+
+            https://developer.mozilla.org/en-US/docs/Web/API/SpeechGrammarList
     """
 
     @property
@@ -92,34 +94,34 @@ class SpeechRecognition:
 
     def abort(self):
         """
-        Description:
-        -----------
         Stops the speech recognition service from listening to incoming audio, and doesn't attempt to return a
         SpeechRecognitionResult.
 
-        https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/abort
+        Related Pages:
+
+            https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/abort
         """
         return JsObjects.JsVoid("%s.abort()" % self.js_code)
 
     def start(self):
         """
-        Description:
-        -----------
         Starts the speech recognition service listening to incoming audio with intent to recognize grammars associated
         with the current SpeechRecognition.
 
-        https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/start
+        Related Pages:
+
+            https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/start
         """
         return JsObjects.JsVoid("%s.start()" % self.js_code)
 
     def stop(self):
         """
-        Description:
-        -----------
         Stops the speech recognition service from listening to incoming audio, and attempts to return a
         SpeechRecognitionResult using the audio captured so far.
 
-        https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/stop
+        Related Pages:
+
+            https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition/stop
         """
         return JsObjects.JsVoid("%s.stop()" % self.js_code)
 
@@ -131,18 +133,14 @@ class SpeechRecognition:
 
     def audiostart(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
         """
-        Description:
-        ------------
         Fired when the user agent has started to capture audio. Also available via the onaudiostart property.
 
         Related Pages:
 
           https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
 
-        Attributes:
-        ----------
-        :param Union[list, str] js_funcs: A Javascript Python function.
-        :param bool profile: Optional. Set to true to get the profile for the function on the Javascript console.
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
         """
         return self.addEventListener("audiostart", js_funcs, profile)
 
@@ -177,6 +175,26 @@ class SpeechRecognition:
         return self.addEventListener("start", js_funcs, profile)
 
     def onresult(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
+        """
+
+        Usage::
+
+          page = pk.Page()
+          rec = page.js.speechRecognition("reco")
+
+          test = page.ui.button("test")
+          test.click([rec.start()])
+
+          rec.speechend([rec.stop()])
+          rec.onresult([page.js.console.log(pk.js_callback("ProcessData(transcript, confidence)"))])
+
+          page.body.onReady([
+            page.js.import_js(
+              'function ProcessData(transcript, confidence){console.log(transcript); return "Test"}', [], self_contained=True), rec])
+
+        :param js_funcs:
+        :param profile:
+        """
         return self.addEventListener("onresult", js_funcs, profile)
 
     def toStr(self):

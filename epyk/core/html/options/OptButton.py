@@ -6,344 +6,328 @@ from epyk.core.html.options import Options
 
 
 class OptionsButton(Options):
-  component_properties = ("category", )
+    component_properties = ("category",)
 
-  @property
-  def category(self):
-    """
-    Button category to specify the style.
+    @property
+    def category(self):
+        """ Button category to specify the style. """
+        return self.get("validate")
 
-    Usage::
+    @category.setter
+    def category(self, value: str):
+        self.set(value)
 
-    """
-    return self.get("validate")
+    @property
+    def multiple(self):
+        """
+        Property to define if multiple buttons can be selected at the same time.
+        Default value is false.
 
-  @category.setter
-  def category(self, value: str):
-    self.set(value)
+        Usage::
 
-  @property
-  def multiple(self):
-    """
-    Property to define if multiple buttons can be selected at the same time.
-    Default value is false.
+          but = page.ui.button("Click Me")
+          but.options.multiple = False
 
-    Usage::
+        :prop bool: Boolean. To be used if multiple buttons are grouped.
+        """
+        return self.get(False)
 
-      but = page.ui.button("Click Me")
-      but.options.multiple = False
+    @multiple.setter
+    def multiple(self, flag: bool):
+        self.set(flag)
 
-    :prop bool: Boolean. To be used if multiple buttons are grouped.
-    """
-    return self.get(False)
+    @property
+    def group(self):
+        """
+        Property to set the group name of a button.
 
-  @multiple.setter
-  def multiple(self, flag: bool):
-    self.set(flag)
+        Usage::
 
-  @property
-  def group(self):
-    """
-    Property to set the group name of a button.
+          but = page.ui.button("Click Me")
+          but.options.group = "buttons"
 
-    Usage::
+        :prop val: String. The group name for several buttons.
+        """
+        return self.component.attr.get('name')
 
-      but = page.ui.button("Click Me")
-      but.options.group = "buttons"
+    @group.setter
+    def group(self, val: str):
+        self.component.set_attrs(name='name', value=val)
 
-    :prop val: String. The group name for several buttons.
-    """
-    return self.component.attr.get('name')
+    @property
+    def templateLoading(self):
+        return self._config_get(None)
 
-  @group.setter
-  def group(self, val: str):
-    self.component.set_attrs(name='name', value=val)
+    @templateLoading.setter
+    def templateLoading(self, value: str):
+        self._config("function(data){return %s}" % value, js_type=True)
+
+    @property
+    def templateError(self):
+        return self._config_get(None)
+
+    @templateError.setter
+    def templateError(self, value: str):
+        self._config("function(data){return %s}" % value, js_type=True)
 
 
 class OptionsBadge(Options):
 
-  @property
-  def badge_css(self):
-    """
+    @property
+    def badge_css(self):
+        """ """
+        return self.get()
 
-    Usage::
+    @badge_css.setter
+    def badge_css(self, css: dict):
+        if hasattr(self, 'page') and hasattr(self.page, 'link'):
+            self.page.link.css(css)
+        css_opts = self.get({})
+        css_opts.update(css)
+        self.set(css_opts)
 
-    :prop css:
-    """
-    return self.get()
+    @property
+    def badge_position(self):
+        """ """
+        return self.get()
 
-  @badge_css.setter
-  def badge_css(self, css: dict):
-    if hasattr(self, 'page') and hasattr(self.page, 'link'):
-      self.page.link.css(css)
-    css_opts = self.get({})
-    css_opts.update(css)
-    self.set(css_opts)
-
-  @property
-  def badge_position(self):
-    """
-
-    Usage::
-
-    :prop position:
-    """
-    return self.get()
-
-  @badge_position.setter
-  def badge_position(self, position: str):
-    if position == 'left':
-      self.set({"position": 'relative'}, name='badge_css')
-    else:
-      self.set({"position": 'relative', "top": "-4px", "right": "11px"}, name='badge_css')
-    self.set(position)
+    @badge_position.setter
+    def badge_position(self, position: str):
+        if position == 'left':
+            self.set({"position": 'relative'}, name='badge_css')
+        else:
+            self.set({"position": 'relative', "top": "-4px", "right": "11px"}, name='badge_css')
+        self.set(position)
 
 
 class OptMedia(Options):
 
-  @property
-  def controls(self):
-    """ Specifies that video controls should be displayed (such as a play/pause button etc).
+    @property
+    def controls(self):
+        """
+        Specifies that video controls should be displayed (such as a play/pause button etc).
 
-    Usage::
+        Related Pages:
 
-    Related Pages:
+          https://www.w3schools.com/tags/tag_video.asp
+          https://www.w3schools.com/tags/att_video_controls.asp
 
-      https://www.w3schools.com/tags/tag_video.asp
-      https://www.w3schools.com/tags/att_video_controls.asp
+        :prop bool: Optional. Default value is false.
+        """
+        return self.get(True)
 
-    :prop bool: Optional. Default value is false.
-    """
-    return self.get(True)
+    @controls.setter
+    def controls(self, flag: bool):
+        self.set(flag)
 
-  @controls.setter
-  def controls(self, flag: bool):
-    self.set(flag)
+    @property
+    def loop(self):
+        """
+        Specifies that the video will start over again, every time it is finished.
 
-  @property
-  def loop(self):
-    """ Specifies that the video will start over again, every time it is finished.
+        Related Pages:
 
-    Usage::
+          https://www.w3schools.com/tags/tag_video.asp
+          https://www.w3schools.com/tags/att_video_loop.asp
 
-    Related Pages:
+        :prop bool: Optional. Default value is false.
+        """
+        return self.get(False)
 
-      https://www.w3schools.com/tags/tag_video.asp
-      https://www.w3schools.com/tags/att_video_loop.asp
+    @loop.setter
+    def loop(self, flag: bool):
+        self.set(flag)
 
-    :prop bool: Optional. Default value is false.
-    """
-    return self.get(False)
+    @property
+    def preload(self):
+        """
+        Specifies if and how the author thinks the video should be loaded when the page loads.
 
-  @loop.setter
-  def loop(self, flag: bool):
-    self.set(flag)
+        Related Pages:
 
-  @property
-  def preload(self):
-    """ Specifies if and how the author thinks the video should be loaded when the page loads.
+          https://www.w3schools.com/tags/tag_video.asp
+          https://www.w3schools.com/tags/att_video_preload.asp
 
-    Usage::
+        :prop value: Optional. The preload attribute specifies if and how the author thinks that the video
+        should be loaded when the page loads.
+        """
+        return self.get('none')
 
-    Related Pages:
+    @preload.setter
+    def preload(self, value: str = "auto"):
+        value = value or "none"
+        if self.options.verbose and value not in ("none", "auto", "metadata"):
+            logging.warning("Not defined preload value %s" % value)
+        self.set(value)
 
-      https://www.w3schools.com/tags/tag_video.asp
-      https://www.w3schools.com/tags/att_video_preload.asp
+    @property
+    def muted(self):
+        """
+        Specifies that the audio output of the video should be muted.
 
-    :prop value: Optional. The preload attribute specifies if and how the author thinks that the video
-    should be loaded when the page loads.
-    """
-    return self.get('none')
+        The muted attribute is a boolean attribute.
 
-  @preload.setter
-  def preload(self, value: str = "auto"):
-    value = value or "none"
-    if self.options.verbose and value not in ("none", "auto", "metadata"):
-      logging.warning("Not defined preload value %s" % value)
-    self.set(value)
+        When present, it specifies that the audio output should be muted.
 
-  @property
-  def muted(self):
-    """ Specifies that the audio output of the video should be muted.
+        Related Pages:
 
-    The muted attribute is a boolean attribute.
+          https://www.w3schools.com/tags/tag_video.asp
+          https://www.w3schools.com/tags/att_audio_muted.asp
 
-    When present, it specifies that the audio output should be muted.
+        :prop flag: Optional. Default value is false.
+        """
+        return self.get(False)
 
-    Usage::
+    @muted.setter
+    def muted(self, flag: bool):
+        self.set(flag)
 
-    Related Pages:
+    @property
+    def poster(self):
+        """
+        Specifies an image to be shown while the video is downloading, or until the user hits the play button.
 
-      https://www.w3schools.com/tags/tag_video.asp
-      https://www.w3schools.com/tags/att_audio_muted.asp
+        The poster attribute specifies an image to be shown while the video is downloading,
+        or until the user hits the play button.
 
-    :prop flag: Optional. Default value is false.
-    """
-    return self.get(False)
+        Related Pages:
 
-  @muted.setter
-  def muted(self, flag: bool):
-    self.set(flag)
+          https://www.w3schools.com/tags/tag_video.asp
+          https://www.w3schools.com/tags/att_video_poster.asp
 
-  @property
-  def poster(self):
-    """
-    Specifies an image to be shown while the video is downloading, or until the user hits the play button.
+        :prop url: Url path for the image. Specifies the URL of the image file.
+        """
+        return self.get()
 
-    The poster attribute specifies an image to be shown while the video is downloading,
-    or until the user hits the play button.
+    @poster.setter
+    def poster(self, url: str):
+        self.set(url)
 
-    Related Pages:
+    @property
+    def autoplay(self):
+        """
+        Set the autoplay flag.
 
-      https://www.w3schools.com/tags/tag_video.asp
-      https://www.w3schools.com/tags/att_video_poster.asp
+        Specifies that the video will start playing as soon as it is ready.
 
-    :prop url: Url path for the image. Specifies the URL of the image file.
-    """
-    return self.get()
+        Usage::
 
-  @poster.setter
-  def poster(self, url: str):
-    self.set(url)
+        :prop flag: Optional. Default value is true.
+        """
+        return self.get(True)
 
-  @property
-  def autoplay(self):
-    """
-    Set the autoplay flag.
-
-    Specifies that the video will start playing as soon as it is ready.
-
-    Usage::
-
-    :prop flag: Optional. Default value is true.
-    """
-    return self.get(True)
-
-  @autoplay.setter
-  def autoplay(self, flag: bool):
-    self.set(flag)
+    @autoplay.setter
+    def autoplay(self, flag: bool):
+        self.set(flag)
 
 
 class OptCheckboxes(Options):
-  component_properties = ("icon", "all_selected", "tooltip")
+    component_properties = ("icon", "all_selected", "tooltip")
 
-  @property
-  def icon(self):
-    """
+    @property
+    def icon(self):
+        """ The font-awesome icon reference. """
+        return self._config_get("fas fa-check")
 
-    Usage::
+    @icon.setter
+    def icon(self, value: str):
+        self._config(value)
 
-    :prop icon: The font-awesome icon reference.
-    """
-    return self._config_get("fas fa-check")
+    @property
+    def all_selected(self):
+        return self._config_get(False)
 
-  @icon.setter
-  def icon(self, value: str):
-    self._config(value)
+    @all_selected.setter
+    def all_selected(self, flag: bool):
+        self._config(flag)
 
-  @property
-  def all_selected(self):
-    return self._config_get(False)
+    @property
+    def tooltip(self):
+        return self._config_get("")
 
-  @all_selected.setter
-  def all_selected(self, flag: bool):
-    self._config(flag)
+    @tooltip.setter
+    def tooltip(self, value: str):
+        self._config(value)
 
-  @property
-  def tooltip(self):
-    return self._config_get("")
+    @property
+    def tooltip_options(self):
+        return self._config_get({})
 
-  @tooltip.setter
-  def tooltip(self, value: str):
-    self._config(value)
-
-  @property
-  def tooltip_options(self):
-    return self._config_get({})
-
-  @tooltip_options.setter
-  def tooltip_options(self, values):
-    self._config(values)
+    @tooltip_options.setter
+    def tooltip_options(self, values):
+        self._config(values)
 
 
 class OptCheck(Options):
 
-  @property
-  def icon_check(self):
-    return self._config_get("fas fa-check")
+    @property
+    def icon_check(self):
+        return self._config_get("fas fa-check")
 
-  @icon_check.setter
-  def icon_check(self, icon: str):
-    self._config(icon)
+    @icon_check.setter
+    def icon_check(self, icon: str):
+        self._config(icon)
 
-  @property
-  def icon_not_check(self):
-    """
+    @property
+    def icon_not_check(self):
+        """ """
+        return self._config_get("fas fa-times")
 
-    """
-    return self._config_get("fas fa-times")
+    @icon_not_check.setter
+    def icon_not_check(self, icon: str):
+        self._config(icon)
 
-  @icon_not_check.setter
-  def icon_not_check(self, icon: str):
-    self._config(icon)
+    @property
+    def disable(self):
+        """ """
+        return self._config_get(False)
 
-  @property
-  def disable(self):
-    """
+    @disable.setter
+    def disable(self, flag: bool):
+        self._config(flag)
 
-    """
-    return self._config_get(False)
+    @property
+    def green(self):
+        """ """
+        return self._config_get(self.page.theme.success[1])
 
-  @disable.setter
-  def disable(self, flag: bool):
-    self._config(flag)
+    @green.setter
+    def green(self, values):
+        self._config(values)
 
-  @property
-  def green(self):
-    """
+    @property
+    def red(self):
+        """ """
+        return self._config_get(self.page.theme.danger.base)
 
-    """
-    return self._config_get(self.page.theme.success[1])
-
-  @green.setter
-  def green(self, values):
-    self._config(values)
-
-  @property
-  def red(self):
-    """
-
-    """
-    return self._config_get(self.page.theme.danger.base)
-
-  @red.setter
-  def red(self, values):
-    self._config(values)
+    @red.setter
+    def red(self, values):
+        self._config(values)
 
 
 class OptionsButtonFilter(Options):
-  component_properties = ("icon", "icon_filer")
+    component_properties = ("icon", "icon_filer")
 
-  @property
-  def is_number(self):
-    return self.get(False)
+    @property
+    def is_number(self):
+        return self.get(False)
 
-  @is_number.setter
-  def is_number(self, flag: bool):
-    self.set(flag)
+    @is_number.setter
+    def is_number(self, flag: bool):
+        self.set(flag)
 
-  @property
-  def icon(self):
-    return self.get("fas fa-align-center")
+    @property
+    def icon(self):
+        return self.get("fas fa-align-center")
 
-  @icon.setter
-  def icon(self, value: str):
-    self.set(value)
+    @icon.setter
+    def icon(self, value: str):
+        self.set(value)
 
-  @property
-  def icon_filer(self):
-    return self.get("fas fa-filter")
+    @property
+    def icon_filer(self):
+        return self.get("fas fa-filter")
 
-  @icon_filer.setter
-  def icon_filer(self, value: str):
-    self.set(value)
+    @icon_filer.setter
+    def icon_filer(self, value: str):
+        self.set(value)

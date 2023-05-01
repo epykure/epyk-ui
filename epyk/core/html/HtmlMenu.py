@@ -35,15 +35,13 @@ class HtmlNavBar(Html.Html):
 
   @property
   def style(self) -> GrpClsMenu.ClassNav:
-    """   Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassNav(self)
     return self._styleObj
 
   def move(self):
-    """   Move the object to this position in the final page.
-    """
+    """ Move the object to this position in the final page. """
     super(HtmlNavBar, self).move()
     self.style.css.position = None
     self.page.body.style.css.padding_top = 0
@@ -71,7 +69,7 @@ class HtmlNavBar(Html.Html):
     return self
 
   def no_background(self, to_top: bool = True):
-    """   remove the default navigation bar background and remove the padding.
+    """ remove the default navigation bar background and remove the padding.
 
     :param to_top: Optional. To define if the padding must be removed.
     """
@@ -92,7 +90,7 @@ class HtmlNavBar(Html.Html):
 
   def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False,
                 with_css_cls: bool = True) -> Html.Html:
-    """   Add component to the right.
+    """ Add component to the right.
 
     :param component: Internal component to the framework
     :param css: Optional. The CSS attributes
@@ -130,7 +128,7 @@ class HtmlNavBar(Html.Html):
     return component
 
   def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
-    """   Add an item to the nav bar.
+    """ Add an item to the nav bar.
 
     :param text: The link to be added to the navbar.
     """
@@ -192,8 +190,7 @@ class HtmlFooter(Html.Html):
 
   @property
   def style(self) -> GrpClsMenu.ClassFooter:
-    """   Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassFooter(self)
     return self._styleObj
@@ -208,7 +205,7 @@ class HtmlFooter(Html.Html):
     return self
 
   def __getitem__(self, i: int) -> Html.Html:
-    """   Return the internal column in the row for the given index.
+    """ Return the internal column in the row for the given index.
 
     :param i: the column index.
     """
@@ -245,24 +242,14 @@ class ContextMenu(Html.Html):
 
   @property
   def options(self) -> OptList.OptionsLi:
-    """   Component options.
-    """
+    """ Component options. """
     return super().options
 
-  _js__builder__ = '''
-      var contextMenu = htmlObj.querySelector('ul'); contextMenu.innerHTML = '';
-      data.forEach(function(rec){
-        var li = document.createElement("li"); var item = document.createElement("DIV");  
-        item.innerHTML = rec; li.appendChild(item)})
-      contextMenu.appendChild(li)
-      '''
-
   def add_item(self, value: str, icon: Optional[str] = None):
-    """
-    Add Item to the context menu.
+    """ Add Item to the context menu.
 
     :param value:
-    :param icon: Optional. The Font awesome icon.
+    :param icon: Optional. The Font awesome icon
     """
     self += {"value": value, 'icon': icon}
     return self
@@ -358,8 +345,7 @@ class PanelsBar(Html.Html):
     self.menus.style.css.padding = '5px 0'
 
   def add_panel(self, text: str, content: Html.Html):
-    """
-    Add a panel to the panel bar.
+    """ Add a panel to the panel bar.
 
     :param text: The anchor visible linked to a panel.
     :param content: The panel.
@@ -425,8 +411,7 @@ class Shortcut(Html.Html):
 
   @property
   def style(self) -> GrpClsMenu.ClassShortcut:
-    """   Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsMenu.ClassShortcut(self)
     return self._styleObj

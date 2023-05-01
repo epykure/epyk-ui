@@ -57,21 +57,20 @@ class Input(Html.Html):
 
   @property
   def options(self) -> OptInputs.OptionsInput:
-    """   Property to set all the input component properties.
-    """
+    """ Property to set all the input component properties. """
     return super().options
 
   @property
   def js(self) -> JsHtmlField.InputText:
-    """   Specific Javascript function for the input object.
-    """
+    """ Specific Javascript function for the input object. """
     if self._js is None:
       self._js = JsHtmlField.InputText(self, page=self.page)
     return self._js
 
   @property
   def dom(self) -> JsHtmlInput.Inputs:
-    """   Return all the Javascript functions defined for an HTML Input Component.
+    """ Return all the Javascript functions defined for an HTML Input Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -87,9 +86,7 @@ class Input(Html.Html):
 
   @property
   def style(self) -> GrpClsInput.ClassInput:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInput(self)
     return self._styleObj
@@ -98,26 +95,15 @@ class Input(Html.Html):
     self.attr["value"] = value
     return self
 
-  _js__builder__ = '''
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}
-      if(typeof options.formatMoney !== 'undefined'){ htmlObj.value = accounting.formatMoney(data, 
-        options.formatMoney.symbol, options.formatMoney.digit, 
-        options.formatMoney.thousand, options.formatMoney.decimal)}
-      else if(typeof options.formatNumber !== 'undefined'){ htmlObj.value = accounting.formatNumber(data,
-        options.formatNumber.digit, options.formatNumber.thousand)}
-      else if(typeof options.toFixed !== 'undefined'){ htmlObj.value = accounting.toFixed(data, options.toFixed) }
-      else { htmlObj.value = data; }
-      '''
-
   def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             options: dict = None, source_event: str = None, on_ready: bool = False):
-    """   Action on focus.
+    """ Action on focus.
 
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.__focus = True
     if js_funcs is None:
@@ -136,7 +122,7 @@ class Input(Html.Html):
     return self.on("focus", js_funcs, profile, source_event, on_ready)
 
   def validation(self, pattern: str, required: bool = True):
-    """   Add validation rules on the input component.
+    """ Add validation rules on the input component.
 
     Usage::
 
@@ -168,7 +154,7 @@ class Input(Html.Html):
     :param css_cls: The CSS class for the input when validation error
     :param disclaimer: The disclaimer text
     :param css_disclaimer: CSS attributes for the disclaimer
-    :param on_enter: If trye, trigger the value when enter is pressed
+    :param on_enter: If true, trigger the value when enter is pressed
     """
     dflt_css_disclaimer = {
       "display": "None",
@@ -207,7 +193,7 @@ class Input(Html.Html):
     elif hasattr(values, "onSuccess"):
       if on_enter:
         self.enter([self.dom.events.trigger("blur")])
-      return  self.on("blur", [
+      return self.on("blur", [
         values.onSuccess([
           self.page.js.if_(self.page.js.objects["result"], [
             self.dom.setCustomValidity(""),
@@ -228,17 +214,16 @@ class Input(Html.Html):
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
-    """
-    Add an javascript action when the key enter is pressed on the keyboard.
+    """ Add an javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
       component.input(placeholder="Put your tag").enter("alert()")
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself.
     """
@@ -250,17 +235,16 @@ class Input(Html.Html):
 
   def leave(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Add a javascript action when the key enter is pressed on the keyboard.
+    """ Add a javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
       component.input(placeholder="Put your tag").enter("alert()")
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself.
     """
@@ -272,31 +256,29 @@ class Input(Html.Html):
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
              source_event: str = None, on_ready: bool = False):
-    """
-    The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
+    """ The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("input")])
     return self.on("input", js_funcs, profile, source_event)
 
   def readonly(self, flag: bool = True):
-    """
-    Set the input component to be readonly.
+    """ Set the input component to be readonly.
 
     Related Pages:
 
       https://www.w3schools.com/tags/att_input_readonly.asp
 
-    :param flag: Optional. Add the HTML readonly tag to the component.
+    :param flag: Optional. Add the HTML readonly tag to the component
     """
     if flag:
       self.attr["readonly"] = "readonly"
@@ -335,8 +317,8 @@ class Input(Html.Html):
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
                         with_cache: bool = True):
-    """
-    Add autocomplete features on textarea from remote service.
+    """ Add autocomplete features on textarea from remote service.
+
     This will use jquery UI.
 
     Usage::
@@ -405,13 +387,13 @@ class InputFile(Input):
 
   @property
   def options(self) -> OptInputs.OptionsInputFile:
-    """   Property to set all the input component properties.
-    """
+    """ Property to set all the input component properties. """
     return super().options
 
   @property
   def dom(self) -> JsHtmlInput.InputFiles:
-    """   Return all the Javascript functions defined for an HTML Input Component.
+    """ Return all the Javascript functions defined for an HTML Input Component.
+
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -465,8 +447,7 @@ class AutoComplete(Input):
 
   @property
   def options(self) -> OptInputs.OptionAutoComplete:
-    """
-    Property to set all the input TimePicker component properties.
+    """ Property to set all the input TimePicker component properties.
 
     Related Pages:
 
@@ -476,13 +457,13 @@ class AutoComplete(Input):
 
   def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None, options: dict = None,
             source_event: str = None, on_ready: bool = False):
-    """   Action on focus.
+    """ Action on focus.
 
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param options: Optional. Specific Python options available for this component.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.__focus = True
     if js_funcs is None:
@@ -502,16 +483,15 @@ class AutoComplete(Input):
 
   @property
   def style(self) -> GrpClsInput.ClassInputAutocomplete:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputAutocomplete(self)
     return self._styleObj
 
   @property
   def js(self) -> JsQueryUi.Autocomplete:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -541,8 +521,7 @@ class InputTime(Input):
 
   @property
   def options(self) -> OptInputs.OptionsTimePicker:
-    """
-    Property to set all the input TimePicker component properties.
+    """ Property to set all the input TimePicker component properties.
 
     Related Pages:
 
@@ -552,25 +531,22 @@ class InputTime(Input):
 
   @property
   def style(self) -> GrpClsInput.ClassInputTime:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputTime(self)
     return self._styleObj
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlTimePicker:
-    """
-    The Javascript Dom object.
-    """
+    """ The Javascript Dom object. """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlTimePicker(self, page=self.page)
     return self._dom
 
   @property
   def js(self) -> JsTimepicker.Timepicker:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -583,7 +559,7 @@ class InputTime(Input):
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
              on_ready: bool = False):
-    """   Event triggered when the value of the input field changes.
+    """ Event triggered when the value of the input field changes.
 
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
@@ -592,10 +568,10 @@ class InputTime(Input):
 
       https://timepicker.co/options/
 
-    :param js_funcs: A Javascript Python function.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: A Javascript Python function
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     self.on("change", js_funcs, profile, self.dom.jquery.varId, on_ready)
     self._browser_data['mouse']['change'][self.dom.jquery.varId]["fncType"] = "on"
@@ -614,13 +590,12 @@ class InputDate(Input):
   def __init__(self, page: primitives.PageModel, records, placeholder, width, height,
                html_code, options, attrs, profile):
     super(InputDate, self).__init__(page, records, placeholder, width, height, html_code, options, attrs, profile)
-    if options.get("date_from_js", None) is not None:
+    if options is not None and options.get("date_from_js", None) is not None:
       self.options.dateJsOvr(options["date_from_js"])
 
   @property
   def options(self) -> OptInputs.OptionsDatePicker:
-    """
-    Property to set all the input DatePicker component properties.
+    """ Property to set all the input DatePicker component properties.
 
     Related Pages:
 
@@ -630,7 +605,8 @@ class InputDate(Input):
 
   @property
   def js(self) -> JsQueryUi.Datepicker:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
@@ -639,30 +615,25 @@ class InputDate(Input):
 
   @property
   def style(self) -> GrpClsInput.ClassInputDate:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputDate(self)
     return self._styleObj
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDatePicker:
-    """
-    The Javascript Dom object.
-    """
+    """ The Javascript Dom object. """
     if self._dom is None:
       self._dom = JsHtmlJqueryUI.JsHtmlDatePicker(self, page=self.page)
     return self._dom
 
   def excluded_dates(self, dts: List[str] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                      profile: types.PROFILE_TYPE = None):
-    """
-    List of dates to be excluded from the available dates in the DatePicker component.
+    """ List of dates to be excluded from the available dates in the DatePicker component.
 
-    :param dts: Optional. Dates excluded format YYYY-MM-DD.
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param dts: Optional. Dates excluded format YYYY-MM-DD
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     self.options.beforeShowDay([''' var utc = value.getTime() - value.getTimezoneOffset()*60000; 
       var newDate = new Date(utc); const dts = %(dts)s; %(jsFnc)s; 
@@ -673,13 +644,12 @@ class InputDate(Input):
 
   def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: types.JS_FUNCS_TYPES = None,
                      profile: types.PROFILE_TYPE = None):
-    """
-    Define some specific date to be the only ones available from the DatePicker component.
+    """ Define some specific date to be the only ones available from the DatePicker component.
 
-    :param dts: Optional. Dates included format YYYY-MM-DD.
-    :param selected: Optional. The selected date from the range. Default max.
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param dts: Optional. Dates included format YYYY-MM-DD
+    :param selected: Optional. The selected date from the range. Default max
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     self._vals = selected or sorted(dts)[-1]
     self.options.beforeShowDay(['''
@@ -691,15 +661,15 @@ class InputDate(Input):
 
   def format_dates(self, class_name: str, dts: List[str] = None, css: Optional[dict] = None, tooltip: str = "",
                    profile: types.PROFILE_TYPE = None):
-    """
-    Change the CSS style for some selected dates in the DateIicker.
+    """ Change the CSS style for some selected dates in the DateIicker.
+
     This function can be also used on the Javascript side from the js property.
 
-    :param class_name: The name of the CSS added to the page with the CSS attributes.
-    :param dts: Optional. A list of dates format YYYY-MM-DD.
-    :param css: Optional. The CSS Attributes for the CSS class.
-    :param tooltip: Optional. The tooltip when the mouse is hover.
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console.
+    :param class_name: The name of the CSS added to the page with the CSS attributes
+    :param dts: Optional. A list of dates format YYYY-MM-DD
+    :param css: Optional. The CSS Attributes for the CSS class
+    :param tooltip: Optional. The tooltip when the mouse is hover
+    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     dts = dts or []
     if css is not None:
@@ -733,12 +703,12 @@ class InputInteger(Input):
 
   @property
   def options(self) -> OptInputs.OptionsInputInteger:
-    """   Property to set all the input component properties.
-    """
+    """ Property to set all the input component properties. """
     return super().options
 
   def quantity(self):
-    """   Add quantity shortcuts to the component.
+    """ Add quantity shortcuts to the component.
+
     This will then check the input and remap if they are K, M and B to the corresponding value.
     """
     factors, units_lookup = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
@@ -770,16 +740,12 @@ class InputRange(Input):
 
   @property
   def options(self) -> OptInputs.OptionsInputRange:
-    """
-    Property to set input range properties.
-    """
+    """ Property to set input range properties. """
     return super().options
 
   @property
   def style(self) -> GrpClsInput.ClassInputRange:
-    """
-    Property to the CSS Style of the component.
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInputRange(self)
     return self._styleObj
@@ -795,8 +761,8 @@ class Field(Html.Html):
 
   def __init__(self, page: primitives.PageModel, html_input, label, icon, width, height, html_code,
                helper, options, profile):
-    super(Field, self).__init__(page, "", html_code=html_code, profile=profile,
-                                css_attrs={"width": width, "height": height})
+    super(Field, self).__init__(
+      page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
     self._vals = ""
     # Add the component predefined elements
     self.add_label(label, html_code=self.htmlCode, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
@@ -820,7 +786,7 @@ class Field(Html.Html):
 
   @property
   def dom(self) -> JsHtmlField.JsHtmlFields:
-    """   The HTML Dom object linked to this component.
+    """ The HTML Dom object linked to this component.
 
     :return: A Javascript Dom object
     """
@@ -855,7 +821,7 @@ class FieldAutocomplete(Field):
                                             profile)
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Event triggered when the value of the input field changes.
+    """ Event triggered when the value of the input field changes.
 
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
@@ -864,8 +830,8 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-change
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -873,15 +839,16 @@ class FieldAutocomplete(Field):
     return self
 
   def search(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Triggered before a search is performed, after minLength and delay are met.
+    """ Triggered before a search is performed, after minLength and delay are met.
+
     If canceled, then no request will be started and no items suggested.
 
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-search
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -889,7 +856,8 @@ class FieldAutocomplete(Field):
     return self
 
   def focus(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Triggered when focus is moved to an item (not selecting).
+    """ Triggered when focus is moved to an item (not selecting).
+
     The default action is to replace the text field's value with the value of the focused item, though only
     if the event was triggered by a keyboard interaction.
     Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
@@ -898,8 +866,8 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-focus
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -907,14 +875,14 @@ class FieldAutocomplete(Field):
     return self
 
   def close(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
+    """ Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
 
     Related Pages:
 
       https://api.jqueryui.com/autocomplete/#event-close
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -922,7 +890,8 @@ class FieldAutocomplete(Field):
     return self
 
   def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Triggered when an item is selected from the menu.
+    """ Triggered when an item is selected from the menu.
+
     The default action is to replace the text field's value with the value of the selected item.
     Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
 
@@ -930,8 +899,8 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-select
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -939,7 +908,7 @@ class FieldAutocomplete(Field):
     return self
 
   def response(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Triggered after a search completes, before the menu is shown.
+    """ Triggered after a search completes, before the menu is shown.
 
     Useful for local manipulation of suggestion data, where a custom source option callback is not required.
     This event is always triggered when a search completes, even if the menu will not be shown because there are no
@@ -949,8 +918,8 @@ class FieldAutocomplete(Field):
 
       https://api.jqueryui.com/autocomplete/#event-response
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -1056,13 +1025,14 @@ class FieldSelect(Field):
       self.label.style.css.line_height = None
 
 
-class Checkbox(Html.Html):
+class InputCheckbox(Html.Html):
   name = 'Checkbox'
 
   def __init__(self, page: primitives.PageModel, flag, label, group_name, width, height, html_code, options,
                attrs, profile):
-    super(Checkbox, self).__init__(page, {"value": flag}, html_code=html_code, profile=profile, options=options,
-                                   css_attrs={"width": width, "height": height})
+    super(InputCheckbox, self).__init__(
+      page, {"value": flag}, html_code=html_code, profile=profile, options=options,
+      css_attrs={"width": width, "height": height})
     self.set_attrs(attrs={"type": "checkbox"})
     if group_name is not None:
       self.attr["name"] = group_name
@@ -1074,7 +1044,8 @@ class Checkbox(Html.Html):
 
   @property
   def dom(self) -> JsHtmlField.Check:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
     """
     if self._dom is None:
@@ -1083,17 +1054,13 @@ class Checkbox(Html.Html):
 
   @property
   def js(self) -> JsComponents.Radio:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
       self._js = JsComponents.Radio(self, page=self.page)
     return self._js
-
-  _js__builder__ = '''htmlObj.checked = data.value; 
-      if((typeof data.text !== 'undefined') || (data.text !== null)){
-        htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
     return '<input %(strAttr)s>%(label)s' % {
@@ -1130,7 +1097,8 @@ class Radio(Html.Html):
 
   @property
   def dom(self) -> JsHtmlField.Radio:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
     """
     if self._dom is None:
@@ -1139,17 +1107,13 @@ class Radio(Html.Html):
 
   @property
   def js(self) -> JsComponents.Radio:
-    """   The Javascript functions defined for this component.
+    """ The Javascript functions defined for this component.
+
     Those can be specific ones for the module or generic ones from the language.
     """
     if self._js is None:
       self._js = JsComponents.Radio(self, page=self.page)
     return self._js
-
-  _js__builder__ = '''htmlObj.checked = data.value; 
-      if(data.text !== null){
-        htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};
-      if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
   def __str__(self):
     return '<div %(strAttr)s>%(helper)s</div>' % {
@@ -1170,16 +1134,15 @@ class TextArea(Html.Html):
 
   @property
   def options(self) -> OptInputs.OptionsTextarea:
-    """   Property to set all the input component properties.
-    """
+    """ Property to set all the input component properties. """
     return self.__options
 
   def selectable(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
     """
 
 
-    :param js_funcs: Optional. Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Optional. Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
 
     :return: self. to allow the function chaining
     """
@@ -1190,8 +1153,8 @@ class TextArea(Html.Html):
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete(self, values: List[str], min_length: int = 0, prefix: str = None, options: dict = None):
-    """
-    Add autocomplete features on textarea.
+    """ Add autocomplete features on textarea.
+
     This will use jquery UI.
 
     Usage::
@@ -1230,6 +1193,7 @@ class TextArea(Html.Html):
                         with_cache: bool = True):
     """
     Add autocomplete features on textarea from remote service.
+
     This will use jquery UI.
 
     Usage::
@@ -1274,7 +1238,7 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
          "prefixVal": prefix_val, "request": xml_http_request.toStr(), "options": options})
 
   def validation(self, pattern: str, required: bool = True):
-    """   Add validation rules on the input component.
+    """ Add validation rules on the input component.
 
     Usage::
 
@@ -1302,10 +1266,10 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
       inp.validation_from(request)
 
     :param values: Can be a list of items or a XMLHttp request
-    :param css_cls: The CSS class for the input when validation error
-    :param disclaimer: The disclaimer text
-    :param css_disclaimer: CSS attributes for the disclaimer
-    :param on_enter: If trye, trigger the value when enter is pressed
+    :param css_cls: Optional. The CSS class for the input when validation error
+    :param disclaimer: Optional. The disclaimer text
+    :param css_disclaimer: Optional. CSS attributes for the disclaimer
+    :param on_enter: Optional. If trye, trigger the value when enter is pressed
     """
     dflt_css_disclaimer = {
       "display": "None",
@@ -1365,7 +1329,8 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
 
   @property
   def dom(self) -> JsHtmlField.Textarea:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     Related Pages:
@@ -1378,17 +1343,16 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
              source_event: str = None, on_ready: bool = False):
-    """
-    The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
+    """ The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
 
-    :param js_funcs: Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The source target for the event.
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The source target for the event
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if on_ready:
       self.page.body.onReady([self.dom.events.trigger("input")])
@@ -1396,24 +1360,22 @@ resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop()))
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   Add a javascript action when the key enter is pressed on the keyboard.
+    """ Add a javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
       component.enter(" alert() ")
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself
     """
     return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
         "jsFnc": JsUtils.jsConvertFncs(
           js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
-
-  _js__builder__ = 'htmlObj.value = data'
 
   def __str__(self):
     return '<textarea %(strAttr)s>%(val)s</textarea>' % {
@@ -1440,6 +1402,7 @@ class Search(Html.Html):
       self.add_icon(options["icon"], css={"color": page.theme.colors[4]}, html_code=self.htmlCode,
                     family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
       self.icon.style.css.z_index = 10
+      self.icon.style.css.font_factor(-3)
       self.dom.trigger = self.icon.dom.trigger
     else:
       self.icon = False
@@ -1448,13 +1411,13 @@ class Search(Html.Html):
     if options.get("position", 'left') == 'left':
       self.input.css({"text-align": 'left', 'padding-left': '2px', 'padding-right': '2px'})
       if self.icon:
-        self.input.css({'padding-left': '%spx' % Defaults.LINE_HEIGHT})
+        self.input.css({'padding-left': '%spx' % self.page.body.style.globals.line_height})
         self.icon.css({"margin": '5px 5px 5px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
                        'vertical-align': 'top'})
     else:
       self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '2px'})
       if self.icon:
-        self.input.css({'padding-right': '%spx' % Defaults.LINE_HEIGHT})
+        self.input.css({'padding-right': '%spx' % self.page.body.style.globals.line_height})
         self.icon.css({"margin": '5px 5px 5px 5px', 'cursor': 'pointer', "right": 0,
                        'position': 'absolute', 'vertical-align': 'top'})
     if options.get("groups") is not None:
@@ -1473,43 +1436,42 @@ class Search(Html.Html):
         self.icon.css({"margin": '-35px 5px 5px 205px'})
     self.tooltip(tooltip)
     self.input.style.css.background = "inherit"
-    self.input.style.css.padding_left = 25
+    self.input.style.css.padding_left = self.page.body.style.globals.line_height
     self.input.attr["type"] = "search"
 
   @property
   def dom(self) -> JsHtmlField.JsHtmlFields:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
     """
     if self._dom is None:
       self._dom = JsHtmlField.JsHtmlFields(self, page=self.page)
     return self._dom
 
-  _js__builder__ = '''htmlObj.find('input').val(data)'''
-
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
     """   
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     return self.icon.click(js_funcs, profile, source_event, on_ready=on_ready)
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   Add an javascript action when the key enter is pressed on the keyboard.
+    """ Add an javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
       component.enter(" alert() ")
 
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
     :return: The python object itself
     """

@@ -20,7 +20,8 @@ class DataClass:
     return self._attrs[i]
 
   def update(self, vals: dict):
-    """ Update the object internal attributes.
+    """
+    Update the object internal attributes.
 
     :param vals: All the attributes to be added to the component
     """
@@ -33,13 +34,14 @@ class DataClass:
     return self._attrs.items()
 
   def custom(self, name: str, value: Any):
-    """ Custom function to add a bespoke attribute to a class.
+    """
+    Custom function to add a bespoke attribute to a class.
 
     This entry point will not be able to display any documentation but it is a shortcut to test new features.
     If the value is a Javascript object, the PyJs object must be used.
 
-    :param name: The key to be added to the attributes.
-    :param value: The value of the defined attributes.
+    :param name: The key to be added to the attributes
+    :param value: The value of the defined attributes
 
     :return: The DataAttrs to allow the chains
     """
@@ -47,10 +49,11 @@ class DataClass:
     return self
 
   def attr(self, name: str, value: Any):
-    """ Add an attribute to the Javascript underlying dictionary.
+    """
+    Add an attribute to the Javascript underlying dictionary.
 
-    :param name: The attribute name.
-    :param value: The attribute value.
+    :param name: The attribute name
+    :param value: The attribute value
 
     :return: "Self" to allow the chains on the Python side
     """
@@ -58,7 +61,9 @@ class DataClass:
     return self
 
   def has_attribute(self, cls_obj):
-    """ Add an extra sub layer to the data structure.
+    """
+    Add an extra sub layer to the data structure.
+
     The key in the object representation will be the function name.
 
     :param cls_obj: Class. The sub data class used in the structure definition
@@ -66,31 +71,34 @@ class DataClass:
     return self.sub_data(sys._getframe().f_back.f_code.co_name, cls_obj)
 
   def get(self, dfl: Union[str, bool, int, dict, list, float] = None, name: str = None):
-    """ Get the attribute to the underlying attributes dictionary.
+    """
+    Get the attribute to the underlying attributes dictionary.
 
-    :param dfl: Optional. The default value of this attribute.
-    :param name: Optional. The attribute name. default the name of the function.
+    :param dfl: Optional. The default value of this attribute
+    :param name: Optional. The attribute name. default the name of the function
     """
     return self._attrs.get(name or sys._getframe().f_back.f_code.co_name, dfl)
 
   def set(self, value: Any, name: str = None):
-    """ Add an attribute to the Javascript underlying dictionary.
+    """
+    Add an attribute to the Javascript underlying dictionary.
 
-    :param value: The attribute value.
-    :param name: Optional. The attribute name. default the name of the function.
+    :param value: The attribute value
+    :param name: Optional. The attribute name. default the name of the functin.
 
     :return: "Self" to allow the chains on the Python side
     """
     return self.attr(name or sys._getframe().f_back.f_code.co_name, value)
 
   def sub_data(self, name: str, cls_obj):
-    """ Add an extra sub layer to the data structure.
+    """
+    Add an extra sub layer to the data structure.
     The key in the object representation will be the function name.
 
     Should use has_attribute is the name can be deduced from the parent function.
 
-    :param name: The key to be added to the internal data dictionary.
-    :param cls_obj: Class. Object. The object which will be added to the nested data structure.
+    :param name: The key to be added to the internal data dictionary
+    :param cls_obj: Class. Object. The object which will be added to the nested data structure
     """
     if name in self._attrs:
       return self._attrs[name]
@@ -100,7 +108,8 @@ class DataClass:
     return self._attrs[name]
 
   def add(self, name: str, value: Any):
-    """ Add the key and value to the final result object.
+    """
+    Add the key and value to the final result object.
 
     :param name: The key in the final data dictionary.
     :param value: The value in the final data dictionary.
@@ -110,16 +119,22 @@ class DataClass:
     return self
 
   def sub_data_enum(self, name: str, cls_obj):
-    """ Add key to a sub dictionary.
+    """
+    Add key to a sub dictionary.
     This will create an attribute object with a nested structure.
 
-    :param name: The key to be added to the internal data dictionary.
-    :param cls_obj: Class. Object. The object which will be added to the nested data structure.
+    :param name: The key to be added to the internal data dictionary
+    :param cls_obj: Class. Object. The object which will be added to the nested data structure
     """
     self.__sub__enum_levels.add(name)
     enum_data = cls_obj(self.component)
     self._attrs.setdefault(name, []).append(enum_data)
     return enum_data
+
+  def config_js(self, options: dict = None):
+    if options is not None:
+      self._attrs.update(options)
+    return self.__str__()
 
   def __str__(self):
     result = ["%s: %s" % (s, str(self._attrs[s])) for s in self.__sub_levels]

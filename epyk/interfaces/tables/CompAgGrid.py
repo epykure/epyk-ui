@@ -16,8 +16,9 @@ class AgGrid:
 
   def table(self, records: list = None, cols: list = None, rows: list = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (300, 'px'), html_code: str = None,
-            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """ Create a generic Angular Grid table.
+            options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html_tables.HtmlTableAgGrid.Table:
+    """
+    Create a generic Angular Grid table.
 
     :tags:
     :categories:

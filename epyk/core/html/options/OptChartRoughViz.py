@@ -1,5 +1,5 @@
 
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import OptChart
 
 
@@ -156,7 +156,7 @@ class OptionDataXY(Options):
     self.js_tree[name] = values
 
 
-class RoughVizBar(Options):
+class RoughVizBar(OptionsWithTemplates):
   component_properties = ("width", )
 
   @property

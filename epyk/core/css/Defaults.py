@@ -3,14 +3,24 @@
 
 from typing import Optional
 from epyk.core.py import primitives
+from epyk.core.html import Defaults as defaultHtml
 
 
 class Font:
   _size, header_size, unit = 12, 14, "px"
-  family = "Roboto"
+  _family = "Arial"
 
   def __init__(self, page: primitives.PageModel):
     self.page = page
+
+  @property
+  def family(self):
+    return self._family
+
+  @family.setter
+  def family(self, value: int):
+    self.page.body.style.css.font_family = value
+    self._family = value
 
   @property
   def size(self):
@@ -240,6 +250,15 @@ class GlobalStyle:
     self._font = None
     self._icon = None
     self._table = None
+    self._line_height = max(defaultHtml.LINE_HEIGHT, self.font.size)
+
+  @property
+  def line_height(self):
+    return self._line_height
+
+  @line_height.setter
+  def line_height(self, value: int):
+    self._line_height = value
 
   @property
   def font(self) -> Font:

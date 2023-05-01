@@ -591,6 +591,18 @@ class Nvd3:
       sc = page.ui.charts.nvd3.candlestick(data, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"],
           opens=["AAPL.Open"], x_axis='Date')
 
+      # Example using pandas_datareader
+      import pandas_datareader.data as pdr
+
+      btc = pdr.get_data_yahoo("BTC-USD", datetime.strptime(start, '%Y-%m-%d'), datetime.strptime(end, '%Y-%m-%d'))
+      btc.reset_index(inplace=True)
+      btc["Date"] = btc["Date"].dt.strftime("%Y-%m-%d")
+
+      c1 = page.ui.charts.nvd3.candlestick(
+        btc.to_dict("records"), closes=["Adj Close"], highs=["High"], lows=["Low"], opens=["Open"], x_axis="Date")
+      c1.shared.y_format_number(factor=1000)
+      c1.shared.y_label("$")
+
     Related Pages:
 
 

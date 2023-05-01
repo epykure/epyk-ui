@@ -8,6 +8,7 @@ from epyk.core.data import events
 from epyk.core.data import configs
 from epyk.core.data import datamap as js_datamap
 from epyk.core.data import components as inputs
+from epyk.core.data import DataPy as transforms
 from epyk.core.html import Defaults as settings
 from epyk.core.html.symboles import Symboles as symboles
 
@@ -33,8 +34,31 @@ Page = Rpt.Report
 LOG_SERVICE = None
 
 
+def css_inline(attrs: dict = None) -> CssInline:
+  """
+  Create a CSS Inline style.
+
+  Usage::
+
+    # Create the inline style
+    css = pk.css_inline()
+    css.color = "red"
+
+    page = pk.Page()
+    # Attach the class to your page
+    css.define_class("textColor", page)
+
+  :param attrs: Init CSS attributes
+  """
+  css_obj = CssInline()
+  if attrs is not None:
+    css_obj.css(attrs)
+  return css_obj
+
+
 def rename_css_cls(mappings: dict):
-  """  Change the name of the CSS classes in the framework.
+  """
+  Change the name of the CSS classes in the framework.
   This function need to be used before the creation of any component in the page.
 
   This will not change the content. it will only rename them.
@@ -52,8 +76,8 @@ def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
   All packages in this list will be considered as forbidden.
   The other packages will be authorised.
 
-  :param List[str] pkgs_alias: A list of packages reference
-  :param bool raise_exception: Optional. The kind of error triggered
+  :param pkgs_alias: A list of packages reference
+  :param raise_exception: Optional. The kind of error triggered
   """
   global PACKAGE_STATUS
 
@@ -66,12 +90,10 @@ def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
 
 def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
   """
-  Description:
-  -----------
   All packages not in those lists will be considered as forbidden.
 
-  :param List[str] pkgs_alias: A list of packages reference
-  :param bool raise_exception: Optional. The kind of error triggered
+  :param pkgs_alias: A list of packages reference
+  :param raise_exception: Optional. The kind of error triggered
   """
   global PACKAGE_STATUS
 
@@ -94,7 +116,8 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
 
 
 class Interface:
-  """ Quick interface for building dashboards.
+  """
+  Quick interface for building dashboards.
 
   Usages::
 
@@ -238,7 +261,8 @@ class Interface:
     return comp
 
   def launch(self, force_jupyter: bool = False, lab: bool = False):
-    """ Render either the HTML content or the Jupyter results.
+    """
+    Render either the HTML content or the Jupyter results.
 
     :param force_jupyter:
     :param lab:

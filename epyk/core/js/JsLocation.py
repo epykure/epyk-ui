@@ -123,8 +123,8 @@ class URLSearchParams:
 
 
 class JsLocation:
-  """ JavaScript Location module.
-
+  """
+  JavaScript Location module.
   """
 
   @property

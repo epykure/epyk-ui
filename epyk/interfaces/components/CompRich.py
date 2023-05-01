@@ -567,7 +567,7 @@ class Rich:
     html.Html.set_component_skin(d)
     return d
 
-  def elapsed(self, day=None, month=None, year=None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
+  def elapsed(self, day: int = None, month: int = None, year: int = None, label=None, icon=None, width=(None, "px"), height=(None, "px"),
               html_code=None, helper=None, options=None, profile=None):
     """  
 
@@ -575,10 +575,13 @@ class Rich:
     :categories:
 
     Usage::
- 
-    :param day:
-    :param month:
-    :param year:
+
+      dt = page.ui.rich.elapsed(day=1, month=1, year=2021)
+      page.ui.button("Click").click([dt.build({"year": 2022, "month": 1, "day": 1})])
+
+    :param day: The day number
+    :param month: The month number [1, 12]
+    :param year: The year number
     :param label:
     :param icon:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.

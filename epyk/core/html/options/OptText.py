@@ -206,6 +206,30 @@ class OptionsText(Options):
   def multiline(self, flag: bool):
     self._config(flag)
 
+  @property
+  def template(self):
+    return self._config_get(None)
+
+  @template.setter
+  def template(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateLoading(self):
+    return self._config_get(None)
+
+  @templateLoading.setter
+  def templateLoading(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateError(self):
+    return self._config_get(None)
+
+  @templateError.setter
+  def templateError(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
 
 class OptionsTitle(OptionsText):
 
@@ -724,6 +748,30 @@ class OptionsHighlights(Options):
   def showdown(self, values):
     self._config(True, 'markdown')
     self._config(values)
+
+  @property
+  def template(self):
+    return self._config_get(None)
+
+  @template.setter
+  def template(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateLoading(self):
+    return self._config_get(None)
+
+  @templateLoading.setter
+  def templateLoading(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
+
+  @property
+  def templateError(self):
+    return self._config_get(None)
+
+  @templateError.setter
+  def templateError(self, value: str):
+    self._config("function(data){return %s}" % value, js_type=True)
 
 
 class OptSearchResult(Options):

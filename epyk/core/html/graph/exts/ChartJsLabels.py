@@ -1,4 +1,3 @@
-
 from epyk.core.html.options import Enums
 from epyk.core.html.options import Options
 from epyk.core.js import JsUtils
@@ -8,364 +7,370 @@ from epyk.core.py import types as etypes
 
 class EnumRender(Enums):
 
-  def label(self):
-    """   
+    def label(self):
+        """  """
+        return self._set_value()
 
-    """
-    return self._set_value()
+    def value(self):
+        """  """
+        return self._set_value()
 
-  def value(self):
-    """   
+    def percentage(self):
+        """  """
+        return self._set_value()
 
-    """
-    return self._set_value()
+    def image(self):
+        """  """
+        return self._set_value()
 
-  def percentage(self):
-    """   
+    def custom(self, js_funcs):
+        """  """
+        return self._set_value()
 
-    """
-    return self._set_value()
+    @packageImport("accounting")
+    def details(self, digit: int = 0, thousand_sep: str = "."):
+        """
+        Display both the label and its value.
 
-  def image(self):
-    """   
+        :param digit: Optional. Decimal point separator
+        :param thousand_sep: Optional. thousands separator
+        """
+        return self._set_value(
+            value="function (args) {return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s')}" % (
+                digit, thousand_sep), js_type=True)
 
-    """
-    return self._set_value()
+    @packageImport("accounting")
+    def labelNumber(self, digit: int = 0, thousand_sep: str = "."):
+        """
 
-  def custom(self, js_funcs):
-    """   
+        :param digit: Optional. Decimal point separator
+        :param thousand_sep: Optional. thousands separator
+        """
+        return self._set_value(
+            value="function (args) {return accounting.formatNumber(args.value, %s, '%s')}" % (digit, thousand_sep),
+            js_type=True)
 
-    """
-    return self._set_value()
+    @packageImport("accounting")
+    def labelCurrency(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
+        """
 
-  @packageImport("accounting")
-  def details(self, digit: int = 0, thousand_sep: str = "."):
-    """ Display both the label and its value.
-
-    :param digit: Optional. Decimal point separator
-    :param thousand_sep: Optional. thousands separator
-    """
-    return self._set_value(
-      value="function (args) {return args.dataset.label + ': ' + accounting.formatNumber(args.value, %s, '%s')}" % (
-        digit, thousand_sep), js_type=True)
-
-  @packageImport("accounting")
-  def labelNumber(self, digit: int = 0, thousand_sep: str = "."):
-    """  
-
-    :param digit: Optional. Decimal point separator
-    :param thousand_sep: Optional. thousands separator
-    """
-    return self._set_value(
-      value="function (args) {return accounting.formatNumber(args.value, %s, '%s')}" % (digit, thousand_sep),
-      js_type=True)
-
-  @packageImport("accounting")
-  def labelCurrency(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
-    """  
-
-    :param symbol: Optional. Default currency symbol is ''
-    :param digit: Optional. Decimal point separator
-    :param thousand_sep: Optional. thousands separator
-    :param decimal_sep: Optional. Decimal point separator
-    """
-    symbol = JsUtils.jsConvertData(symbol, None)
-    thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
-    decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
-    return self._set_value(
-      value="function(args) { return accounting.formatMoney(args.value, %s, %s, %s, %s) }" % (
-      symbol, digit, thousand_sep, decimal_sep), js_type=True)
+        :param symbol: Optional. Default currency symbol is ''
+        :param digit: Optional. Decimal point separator
+        :param thousand_sep: Optional. thousands separator
+        :param decimal_sep: Optional. Decimal point separator
+        """
+        symbol = JsUtils.jsConvertData(symbol, None)
+        thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
+        decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
+        return self._set_value(
+            value="function(args) { return accounting.formatMoney(args.value, %s, %s, %s, %s) }" % (
+                symbol, digit, thousand_sep, decimal_sep), js_type=True)
 
 
 class LabelsImages(Options):
 
-  @property
-  def src(self):
-    """   Define the image path.
+    @property
+    def src(self):
+        """
+        Define the image path.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(None)
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(None)
 
-  @src.setter
-  def src(self, image):
-    self._config(image)
+    @src.setter
+    def src(self, image):
+        self._config(image)
 
-  @property
-  def width(self):
-    """   Set the image height in pixel.
+    @property
+    def width(self):
+        """
+        Set the image height in pixel.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(16)
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(16)
 
-  @width.setter
-  def width(self, num):
-    self._config(num)
+    @width.setter
+    def width(self, num):
+        self._config(num)
 
-  @property
-  def height(self):
-    """   Set the image height in pixel.
+    @property
+    def height(self):
+        """
+        Set the image height in pixel.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(16)
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(16)
 
-  @height.setter
-  def height(self, num):
-    self._config(num)
+    @height.setter
+    def height(self, num):
+        self._config(num)
 
 
 class Labels(Options):
 
-  @property
-  def render(self):
-    """   render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'.
+    @property
+    def render(self) -> EnumRender:
+        """
+        render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/emn178/chartjs-plugin-labels
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return EnumRender(self, "render")
 
-    :rtype: EnumRender
-    """
-    return EnumRender(self, "render")
+    @property
+    def precision(self):
+        """
+        precision for percentage, default is 0
 
-  @property
-  def precision(self):
-    """   precision for percentage, default is 0
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(0)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(0)
+    @precision.setter
+    def precision(self, num):
+        self._config(num)
 
-  @precision.setter
-  def precision(self, num):
-    self._config(num)
+    @property
+    def showZero(self):
+        """
+        Identifies whether or not labels of value 0 are displayed, default is false
 
-  @property
-  def showZero(self):
-    """   Identifies whether or not labels of value 0 are displayed, default is false
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(True)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(True)
+    @showZero.setter
+    def showZero(self, flag):
+        self._config(flag)
 
-  @showZero.setter
-  def showZero(self, flag):
-    self._config(flag)
+    @property
+    def fontSize(self):
+        """
+        Font size, default is defaultFontSize
 
-  @property
-  def fontSize(self):
-    """   Font size, default is defaultFontSize
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(12)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(12)
+    @fontSize.setter
+    def fontSize(self, num):
+        self._config(num)
 
-  @fontSize.setter
-  def fontSize(self, num):
-    self._config(num)
+    @property
+    def fontColor(self):
+        """
+        Font color, can be color array for each data or function for dynamic color, default is defaultFontColor.
 
-  @property
-  def fontColor(self):
-    """   Font color, can be color array for each data or function for dynamic color, default is defaultFontColor.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get("#fff")
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get("#fff")
+    @fontColor.setter
+    def fontColor(self, value):
+        self._config(value)
 
-  @fontColor.setter
-  def fontColor(self, value):
-    self._config(value)
+    @property
+    def fontStyle(self):
+        """
+        Font style, default is defaultFontStyle.
 
-  @property
-  def fontStyle(self):
-    """   Font style, default is defaultFontStyle.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get('normal')
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get('normal')
+    @fontStyle.setter
+    def fontStyle(self, value):
+        self._config(value)
 
-  @fontStyle.setter
-  def fontStyle(self, value):
-    self._config(value)
+    @property
+    def fontFamily(self):
+        """
+        Font family, default is defaultFontFamily.
 
-  @property
-  def fontFamily(self):
-    """   Font family, default is defaultFontFamily.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get("'Helvetica Neue', 'Helvetica', 'Arial', sans-serif")
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get("'Helvetica Neue', 'Helvetica', 'Arial', sans-serif")
+    @fontFamily.setter
+    def fontFamily(self, value):
+        self._config(value)
 
-  @fontFamily.setter
-  def fontFamily(self, value):
-    self._config(value)
+    @property
+    def textShadow(self):
+        """
+        Draw text shadows under labels, default is false.
 
-  @property
-  def textShadow(self):
-    """   Draw text shadows under labels, default is false.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(True)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(True)
+    @textShadow.setter
+    def textShadow(self, flag):
+        self._config(flag)
 
-  @textShadow.setter
-  def textShadow(self, flag):
-    self._config(flag)
+    @property
+    def shadowBlur(self):
+        """
+        Text shadow intensity, default is 6.
 
-  @property
-  def shadowBlur(self):
-    """   Text shadow intensity, default is 6.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(10)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(10)
+    @shadowBlur.setter
+    def shadowBlur(self, num):
+        self._config(num)
 
-  @shadowBlur.setter
-  def shadowBlur(self, num):
-    self._config(num)
+    @property
+    def shadowOffsetX(self):
+        """
+        Text shadow X offset, default is 3.
 
-  @property
-  def shadowOffsetX(self):
-    """   Text shadow X offset, default is 3.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(-5)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(-5)
+    @shadowOffsetX.setter
+    def shadowOffsetX(self, num):
+        self._config(num)
 
-  @shadowOffsetX.setter
-  def shadowOffsetX(self, num):
-    self._config(num)
+    @property
+    def shadowOffsetY(self):
+        """
+        Text shadow Y offset, default is 3.
 
-  @property
-  def shadowOffsetY(self):
-    """   Text shadow Y offset, default is 3.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(5)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(5)
+    @shadowOffsetY.setter
+    def shadowOffsetY(self, num):
+        self._config(num)
 
-  @shadowOffsetY.setter
-  def shadowOffsetY(self, num):
-    self._config(num)
+    @property
+    def shadowColor(self):
+        """
+        Text shadow color, default is 'rgba(0,0,0,0.3)'.
 
-  @property
-  def shadowColor(self):
-    """   Text shadow color, default is 'rgba(0,0,0,0.3)'.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get('rgba(255,0,0,0.75)')
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get('rgba(255,0,0,0.75)')
+    @shadowColor.setter
+    def shadowColor(self, value):
+        self._config(value)
 
-  @shadowColor.setter
-  def shadowColor(self, value):
-    self._config(value)
+    @property
+    def arc(self):
+        """
+        Draw label in arc, default is false, bar chart ignores this.
 
-  @property
-  def arc(self):
-    """   Draw label in arc, default is false, bar chart ignores this.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(True)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(True)
+    @arc.setter
+    def arc(self, flag):
+        self._config(flag)
 
-  @arc.setter
-  def arc(self, flag):
-    self._config(flag)
+    @property
+    def position(self):
+        """
+        Position to draw label, available value is 'default', 'border' and 'outside'
+        default is 'default'.
 
-  @property
-  def position(self):
-    """   Position to draw label, available value is 'default', 'border' and 'outside'
-    default is 'default'.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get("default")
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get("default")
+    @position.setter
+    def position(self, value):
+        self._config(value)
 
-  @position.setter
-  def position(self, value):
-    self._config(value)
+    @property
+    def overlap(self):
+        """
+        Draw label even it's overlap, default is true.
 
-  @property
-  def overlap(self):
-    """   Draw label even it's overlap, default is true.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(True)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(True)
+    @overlap.setter
+    def overlap(self, flag):
+        self._config(flag)
 
-  @overlap.setter
-  def overlap(self, flag):
-    self._config(flag)
+    @property
+    def outsidePadding(self):
+        """
+        Add padding when position is `outside`.
 
-  @property
-  def outsidePadding(self):
-    """   add padding when position is `outside`.
+        Related Pages:
 
-    Related Pages:
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(4)
 
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(4)
+    @outsidePadding.setter
+    def outsidePadding(self, num):
+        self._config(num)
 
-  @outsidePadding.setter
-  def outsidePadding(self, num):
-    self._config(num)
+    @property
+    def images(self) -> LabelsImages:
+        """ set images when `render` is 'image'. """
+        self.render.image()
+        return self._config_sub_data("images", LabelsImages)
 
-  @property
-  def images(self):
-    """   set images when `render` is 'image'.
+    @property
+    def textMargin(self):
+        """
+        Add margin of text when position is `outside` or `border`.
 
-    :rtype: LabelsImages
-    """
-    self.render.image()
-    return self._config_sub_data("images", LabelsImages)
+        Related Pages:
 
-  @property
-  def textMargin(self):
-    """   Add margin of text when position is `outside` or `border`.
+          https://github.com/emn178/chartjs-plugin-labels
+        """
+        return self._config_get(4)
 
-    Related Pages:
-
-      https://github.com/emn178/chartjs-plugin-labels
-    """
-    return self._config_get(4)
-
-  @textMargin.setter
-  def textMargin(self, num):
-    self._config(num)
+    @textMargin.setter
+    def textMargin(self, num):
+        self._config(num)

@@ -2,7 +2,7 @@ import logging
 
 from typing import Union
 from epyk.core.js import JsUtils
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import Enums
 from epyk.core.py import types as etypes
 
@@ -1300,12 +1300,13 @@ class TableStatusBar(Options):
     return self._config_sub_data_enum('statusPanels', EnumStatusPanelsPanels)
 
 
-class TableConfig(Options):
+class TableConfig(OptionsWithTemplates):
   _struct__schema = {"autoGroupColumnDef": {}, "defaultColDef": {}, "TableStatusBar": {}, "columns": []}
 
   @property
   def alignedGrids(self):
-    """   To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
+    """
+    To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
     alignedGrids property of the second grids.
 
     Related Pages:
@@ -1320,7 +1321,8 @@ class TableConfig(Options):
 
   @property
   def allowContextMenuWithControlKey(self):
-    """  If you always want the grid's context menu, even when Ctrl is pressed, then set
+    """
+    If you always want the grid's context menu, even when Ctrl is pressed, then set
     allowContextMenuWithControlKey=true.
 
     Related Pages:
@@ -1335,7 +1337,8 @@ class TableConfig(Options):
 
   @property
   def animateRows(self):
-    """   Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
+    """
+    Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
     Each of these animations is turned OFF by default. They are all turned on using the property animateRows=true.
 
     Related Pages:
@@ -1368,7 +1371,8 @@ class TableConfig(Options):
 
   @property
   def colResizeDefault(self):
-    """ If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
+    """
+    If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
     to it. This means the total width for all columns will be constant.
 
     You can also change the default behaviour for resizing.
@@ -1387,7 +1391,8 @@ class TableConfig(Options):
 
   @property
   def columns(self) -> Column:
-    """   Set the columnDefs with all the column properties.
+    """
+    Set the columnDefs with all the column properties.
 
     Related Pages:
 
@@ -1397,7 +1402,8 @@ class TableConfig(Options):
 
   @property
   def columnTypes(self):
-    """   Define a column type (you can define as many as you like.
+    """
+    Define a column type (you can define as many as you like.
     Expect a valid Json object.
 
     Related Pages:
@@ -1412,7 +1418,8 @@ class TableConfig(Options):
 
   @property
   def defaultColDef(self) -> DefaultColDef:
-    """   contains properties that all columns will inherit.
+    """
+    Contains properties that all columns will inherit.
 
     Related Pages:
 
@@ -1422,7 +1429,8 @@ class TableConfig(Options):
 
   @property
   def data(self):
-    """   Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API
+    """
+    Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API
     setRowData().
 
     Related Pages:
@@ -1487,7 +1495,8 @@ class TableConfig(Options):
 
   @property
   def enablePivot(self):
-    """   Allow every column to be pivoted
+    """
+    Allow every column to be pivoted
 
     Related Pages:
 
@@ -1515,7 +1524,8 @@ class TableConfig(Options):
 
   @property
   def enableValue(self):
-    """   This means you can drag the columns to the values section, but you cannot drag them to the group or pivot
+    """
+    This means you can drag the columns to the values section, but you cannot drag them to the group or pivot
     sections.
 
     Related Pages:
@@ -1530,7 +1540,8 @@ class TableConfig(Options):
 
   @property
   def ensureDomOrder(self):
-    """   ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
+    """
+    Ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
 
     Related Pages:
 
@@ -1544,7 +1555,8 @@ class TableConfig(Options):
 
   @property
   def enterMovesDown(self):
-    """   Set to true to have Enter key move focus to the cell below if not editing.
+    """
+    Set to true to have Enter key move focus to the cell below if not editing.
     The default is Enter key starts editing the currently focused cell.
 
     Related Pages:
@@ -1559,7 +1571,8 @@ class TableConfig(Options):
 
   @property
   def enterMovesDownAfterEdit(self):
-    """   Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
+    """
+    Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
     The default is editing will stop and focus will remain on the editing cell.
 
     Related Pages:
@@ -1574,7 +1587,8 @@ class TableConfig(Options):
 
   @property
   def functionsReadOnly(self):
-    """   By setting the property functionsReadOnly=true, the grid will prevent changes to group, pivot or values
+    """
+    By setting the property functionsReadOnly=true, the grid will prevent changes to group, pivot or values
     through the GUI. This is useful if you want to show the user the group, pivot and values panel,
     so they can see which columns are used, but prevent them from making changes to the selection.
 
@@ -1609,7 +1623,8 @@ class TableConfig(Options):
     pass
 
   def getRowClass(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
-    """ Callback version of property rowClass to set class(es) for each row individually.
+    """
+    Callback version of property rowClass to set class(es) for each row individually.
     Function should return either a string (class name), array of strings (array of class names) or undefined
     for no class.
 
@@ -1644,7 +1659,8 @@ class TableConfig(Options):
 
   @property
   def groupIncludeFooter(self):
-    """  If you want to include a footer with each group, set the property groupIncludeFooter to true.
+    """
+    If you want to include a footer with each group, set the property groupIncludeFooter to true.
     It is also possible to include a 'grand' total footer for all groups using the property groupIncludeTotalFooter.
 
     Related Pages:

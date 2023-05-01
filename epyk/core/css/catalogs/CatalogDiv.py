@@ -107,8 +107,14 @@ class CatalogDiv(Catalog.CatalogGroup):
     """ Change the background color when the mouse is on the component """
     return self._set_class(CssStylesDivEvents.CssDivOnHoverBackgroundLight)
 
-  def color_background_hover(self) -> CssStylesDivEvents.CssDivOnHoverColor:
+  def color_background_hover(self, color: str = None) -> CssStylesDivEvents.CssDivOnHoverColor:
     """ Change the background color when the mouse is on the component """
+    if color is not None:
+      cssObj = CssStylesDivEvents.CssDivOnHoverColor(self.page, html_id=self._html_id)
+      cssObj.classname = "%s_%s" % (cssObj.classname, color.replace("#", ""))
+      cssObj.hover.css({"background-color": color}, important=True)
+      return self._add_class(cssObj)
+
     return self._set_class(CssStylesDivEvents.CssDivOnHoverColor)
 
   def color_light_background_hover(self) -> CssStylesDivEvents.CssDivOnHoverLightColor:

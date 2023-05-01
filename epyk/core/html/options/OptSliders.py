@@ -252,7 +252,7 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
         self.force_show_current = True
         value = ''' 
 %(builder)s(document.getElementsByName('out_%(htmlCode)s')[0], %(fmt_html)s, %(builderOptions)s)''' % {
-          "builder": self.component.output.builder_name,
+          "builder": "%s%s" % (self.component.output.builder_name[0].lower(), self.component.output.builder_name[1:]),
           "builderOptions": self.component.output.options.config_js(),
           "fmt_html": fmt_html, "htmlCode": self.component.html_code}
       if js_funcs is None:

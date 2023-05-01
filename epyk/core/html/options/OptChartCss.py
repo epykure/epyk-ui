@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 
-from epyk.core.html.options import Options
+from epyk.core.html.options import OptionsWithTemplates
 
 
-class ChartCssOptions(Options):
+class ChartCssOptions(OptionsWithTemplates):
 
   @property
   def title(self):

@@ -165,7 +165,7 @@ class JsNvd3(JsPackage):
     self.component.jsImports.add(self.lib_alias['js'])
     self.component.cssImport.add(self.lib_alias['css'])
     self._js, self._xaxis, self._yaxis, self._u = [[]], None, None, {}
-    self._js_enums = {}
+    self._js_enums, self._container = {}, "%s.parentNode" % self.element
 
   def set_var(self, flag: bool):
     self.setVar = flag

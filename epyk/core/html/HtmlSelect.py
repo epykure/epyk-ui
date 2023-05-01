@@ -77,13 +77,13 @@ class Select(Html.Html):
 
   @property
   def options(self) -> OptSelect.OptionsSelectJs:
-    """   Property to set all the possible object for a button.
-    """
+    """ Property to set all the possible object for a button. """
     return super().options
 
   @property
   def style(self) -> GrpClsList.ClassSelect:
-    """   A property to the CSS style of the DOM component.
+    """ A property to the CSS style of the DOM component.
+
     Each component will have default CSS style but they can be overridden.
     """
     if self._styleObj is None:
@@ -92,7 +92,8 @@ class Select(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.DomSelect:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -103,7 +104,8 @@ class Select(Html.Html):
 
   @property
   def js(self) -> JsSelect.JSelect:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """ Return all the Javascript functions defined for an HTML Component.
+
     Those functions will use plain javascript by default.
 
     Related Pages:
@@ -118,16 +120,12 @@ class Select(Html.Html):
 
   @property
   def parsers(self):
-    """  
-    Set of functions to parse the data.
-    """
+    """ Set of functions to parse the data. """
     return SelectionBox
 
   @property
   def data(self):
-    """  
-    Property to the underlying data from the select.
-    """
+    """ Property to the underlying data from the select. """
     return self._vals
 
   @data.setter
@@ -159,7 +157,7 @@ class Select(Html.Html):
   def change(self, js_funcs: types.JS_FUNCS_TYPES, empty_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None,
              on_ready: bool = False):
-    """   Javascript event triggered when the value has changed.
+    """ Javascript event triggered when the value has changed.
 
     :param js_funcs: Set of Javascript function to trigger on this event.
     :param empty_funcs: Optional. Set of Js function to trigger if the value is empty.
@@ -177,17 +175,17 @@ class Select(Html.Html):
 
   def ajax(self, url: str, js_data="function (){return {q: '{{{q}}}'}}", is_json: bool = True,
            method: str = "POST", options: Optional[dict] = None):
-    """   Create a AJAX request.
+    """ Create a AJAX request.
 
     Related Pages:
 
       https://github.com/truckingsim/Ajax-Bootstrap-Select
 
-    :param url: The request URL for the ajax call.
-    :param js_data: The value of the item to be removed from the list.
-    :param is_json: Optional. A flag to specific if the data are json (default True).
+    :param url: The request URL for the ajax call
+    :param js_data: Optional. The value of the item to be removed from the list
+    :param is_json: Optional. A flag to specific if the data are json (default True)
     :param method: Optional. The HTTP request method. Default Post
-    :param options: Optional. The specific properties for the ajax request.
+    :param options: Optional. The specific properties for the ajax request
     """
     self.options.liveSearch = True
     options = options or {}
