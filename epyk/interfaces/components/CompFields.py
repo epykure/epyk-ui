@@ -108,7 +108,8 @@ class Fields:
 
     Usage::
 
-      page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      dt = page.ui.fields.date('2020-04-08', label="Date").included_dates(["2020-04-08", "2019-09-06"])
+      dt.select([page.js.alert(dt.dom.content)])
 
     Underlying HTML Objects:
 
