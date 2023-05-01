@@ -22,7 +22,7 @@ class Tags:
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLink`
 
     Related Pages:
 
@@ -45,7 +45,7 @@ class Tags:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_a = html.HtmlTags.HtmlGenericLInk(
+    html_a = html.HtmlTags.HtmlGenericLink(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html_a.set_attrs(name="href", value=url)
     html_a.style.clear()
@@ -61,7 +61,7 @@ class Tags:
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLink`
 
     Related Pages:
 
@@ -77,7 +77,7 @@ class Tags:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_a = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
+    html_a = html.HtmlTags.HtmlGenericLink(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_a.style.clear()
     html.Html.set_component_skin(html_a)
@@ -269,7 +269,7 @@ class Tags:
 
     Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlTags.HtmlGenericLInk`
+      - :class:`epyk.core.html.HtmlTags.HtmlGenericLink`
 
     Related Pages:
 
@@ -285,7 +285,7 @@ class Tags:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_f = html.HtmlTags.HtmlGenericLInk(self.page, sys._getframe().f_code.co_name, text, width,
+    html_f = html.HtmlTags.HtmlGenericLink(self.page, sys._getframe().f_code.co_name, text, width,
                                            height, html_code, tooltip, options, profile)
     html_f.style.clear()
     html.Html.set_component_skin(html_f)
