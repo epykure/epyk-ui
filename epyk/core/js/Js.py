@@ -624,7 +624,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       import inspect
 
       mod_path = inspect.getmodule(inspect.stack()[1][0]).__file__
-      Imports.PACKAGE_STATUS['local_%s' % filename[:-3]] = {"allowed": True, "info": "from {}".format(mod_path)}
+      Imports.PACKAGE_STATUS[file_alias] = {"allowed": True, "info": "from {}".format(mod_path)}
       randomize = False # No point to change the url in this case.
 
     if randomize:

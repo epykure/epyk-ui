@@ -3714,17 +3714,17 @@ class ImportManager:
     def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False):
         """ Remove the underlying imports to avoid duplicated entries.
 
-    Usage::
+        Usage::
 
-      >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
-    ['jquery', 'd3', 'c3']
+          >>> ImportManager().cleanImports(['c3'], JS_IMPORTS)
+        ['jquery', 'd3', 'c3']
 
-    :param imports: An array with the list of aliases for the external packages
-    :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list
-    :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False
+        :param imports: An array with the list of aliases for the external packages
+        :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list
+        :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False
 
-    :return: Return the list with the full list of aliases (including dependencies)
-    """
+        :return: Return the list with the full list of aliases (including dependencies)
+        """
         import_resolved, polyfills = [], []
         for mod in imports:
             self.getReq(mod, import_resolved, import_hierarchy or JS_IMPORTS, use_require_js=use_require_js)
