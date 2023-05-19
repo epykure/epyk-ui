@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+from typing import Dict, List
 
 from epyk.core.py import types
 from epyk.core.html import graph
@@ -19,7 +20,8 @@ class ChartJs:
     self.opacity = 0.6
 
   def set_version(self, v: str):
-    """ Change the version of the chartJs package.
+    """
+    Change the version of the chartJs package.
     Use **self.page.imports.pkgs.chart_js.version** to get the current version.
 
     Usage::
@@ -45,8 +47,10 @@ class ChartJs:
   def plot(self, record: list = None, y: list = None, x: str = None, kind: str = "line",
            profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-           html_code: str = None) -> graph.GraphChartJs.Chart:
-    """ Generic way to define ChartJs charts.
+           html_code: str = None, **kwargs
+           ) -> graph.GraphChartJs.Chart:
+    """
+    Generic way to define ChartJs charts.
 
     :tags:
     :categories:
@@ -74,8 +78,10 @@ class ChartJs:
 
   def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-           html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """ Display a line chart from ChartJs.
+           html_code: str = None, **kwargs
+           ) -> graph.GraphChartJs.ChartLine:
+    """
+    Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -112,8 +118,10 @@ class ChartJs:
   def timeseries(self, record: list = None, y_columns: list = None, x_axis: str = None,
                  profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
                  height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-                 html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """ Display a line chart from ChartJs.
+                 html_code: str = None, **kwargs
+                 ) -> graph.GraphChartJs.ChartLine:
+    """
+    Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -142,7 +150,8 @@ class ChartJs:
   def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartPie:
-    """ Display a pie chart from ChartJs.
+    """
+    Display a pie chart from ChartJs.
 
     :tags:
     :categories:
@@ -184,8 +193,10 @@ class ChartJs:
 
   def donut(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-            html_code: str = None) -> graph.GraphChartJs.ChartPie:
-    """ Display a donut chart from ChartJs.
+            html_code: str = None, **kwargs
+            ) -> graph.GraphChartJs.ChartPie:
+    """
+    Display a donut chart from ChartJs.
 
     :tags:
     :categories:
@@ -232,8 +243,10 @@ class ChartJs:
 
   def area(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-           html_code: str = None) -> graph.GraphChartJs.ChartLine:
-    """ Display a area chart from ChartJs.
+           html_code: str = None, **kwargs
+           ) -> graph.GraphChartJs.ChartLine:
+    """
+    Display a area chart from ChartJs.
 
     :tags:
     :categories:
@@ -268,8 +281,10 @@ class ChartJs:
 
   def step(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-           html_code: str = None):
-    """ Display a step chart from ChartJs.
+           html_code: str = None, **kwargs
+           ):
+    """
+    Display a step chart from ChartJs.
 
     :tags:
     :categories:
@@ -305,7 +320,8 @@ class ChartJs:
   def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartBar:
-    """ Display a bar chart from ChartJs.
+    """
+    Display a bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -343,13 +359,22 @@ class ChartJs:
 
   def custom(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-             html_code: str = None) -> graph.GraphChartJs.ChartExts:
-    """ Display a bar chart from ChartJs.
+             html_code: str = None, **kwargs
+             ) -> graph.GraphChartJs.ChartExts:
+    """
+    Display a bespoke chart from ChartJs.
+
+    It is important to get a NodeJs with the extra packages installed to use this interface.
+    This will not download the external required resources and it will rely on the setup of the Node server.
 
     :tags:
     :categories:
 
     Usage::
+
+      c = page.ui.charts.chartJs.custom(randoms.languages, y_columns=["rating", 'change'], x_axis='name',
+                options={"type": 'sankey', 'npm': 'chartjs-chart-sankey',
+                         'npm_path': '../NodeJs/node_modules'})
 
     Related Pages:
 
@@ -419,8 +444,10 @@ class ChartJs:
 
   def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-           html_code: str = None) -> graph.GraphChartJs.ChartHBar:
-    """ Display a horizontal bar chart from ChartJs.
+           html_code: str = None, **kwargs
+           ) -> graph.GraphChartJs.ChartHBar:
+    """
+    Display a horizontal bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -459,7 +486,8 @@ class ChartJs:
 
   def multi(self, kind: str, record: list = None, y_columns: list = None, x_axis: str = None,
             profile: types.PROFILE_TYPE = None, options: dict = None, width: types.SIZE_TYPE = (100, "%"),
-            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphChartJs.ChartBar:
+            height: types.SIZE_TYPE = (330, "px"), html_code: str = None, **kwargs
+            ) -> graph.GraphChartJs.ChartBar:
     """
     Display a multi chart from ChartJs.
 
@@ -498,8 +526,10 @@ class ChartJs:
 
   def scatter(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-              html_code: str = None) -> graph.GraphChartJs.ChartScatter:
-    """ Display a scatter chart from ChartJs.
+              html_code: str = None, **kwargs
+              ) -> graph.GraphChartJs.ChartScatter:
+    """
+    Display a scatter chart from ChartJs.
 
     :tags:
     :categories:
@@ -534,8 +564,10 @@ class ChartJs:
   def bubble(self, record: list = None, y_columns: list = None, x_axis: str = None, r_values: list = None,
              profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-             html_code: str = None) -> graph.GraphChartJs.ChartBubble:
-    """ Display a bubble chart from ChartJs.
+             html_code: str = None
+             ) -> graph.GraphChartJs.ChartBubble:
+    """
+    Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -571,8 +603,10 @@ class ChartJs:
 
   def polar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-            options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartPolar:
-    """ Display a bubble chart from ChartJs.
+            options: dict = None, html_code: str = None, **kwargs
+            ) -> graph.GraphChartJs.ChartPolar:
+    """
+    Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -607,8 +641,10 @@ class ChartJs:
 
   def radar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-            html_code: str = None) -> graph.GraphChartJs.ChartRadar:
-    """ Display a bubble chart from ChartJs.
+            html_code: str = None, **kwargs
+            ) -> graph.GraphChartJs.ChartRadar:
+    """
+    Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
@@ -643,7 +679,8 @@ class ChartJs:
 
   def fabric(self, profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-             html_code: str = None) -> graph.GraphChartJs.Fabric:
+             html_code: str = None, **kwargs
+             ) -> graph.GraphChartJs.Fabric:
     """
 
     :tags:
@@ -668,8 +705,10 @@ class ChartJs:
   def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, groups: list = None,
               profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (330, "px"), options: dict = None,
-              html_code: str = None) -> graph.GraphChartJs.ChartTreeMap:
-    """ Display a treemap chart from ChartJs.
+              html_code: str = None, **kwargs
+              ) -> graph.GraphChartJs.ChartTreeMap:
+    """
+    Display a treemap chart from ChartJs.
 
     :tags:
     :categories:
@@ -731,18 +770,25 @@ if (item){
         treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
     return treemap_chart
 
-  def sankey(self, record: list = None, from_axis: str = None, to_axis: str = None, profile: types.PROFILE_TYPE = None,
+  def sankey(self, record: List[dict] = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-             options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartSankey:
-    raise NotImplementedError()
+             options: dict = None, html_code: str = None, **kwargs
+  ) -> graph.GraphChartJs.ChartSankey:
+    sankey_chart = graph.GraphChartJs.ChartSankey(self.page, width, height, html_code, options, profile)
+    sankey_chart.colors(self.page.theme.charts)
+    sankey_chart.add_dataset(record, "test")
+    sankey_chart.options.responsive = True
+    return sankey_chart
 
   def venn(self):
     raise NotImplementedError()
 
   def matrix(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-             options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartMatrix:
-    """ Display a matrix chart from ChartJs.
+             options: dict = None, html_code: str = None, **kwargs
+             ) -> graph.GraphChartJs.ChartMatrix:
+    """
+    Display a matrix chart from ChartJs.
 
     :tags:
     :categories:
@@ -787,8 +833,10 @@ if (item){
   def wordcloud(self, record: list = None, y_columns: list = None, x_axis: str = None,
                 profile: types.PROFILE_TYPE = None,
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-                options: dict = None, html_code: str = None) -> graph.GraphChartJs.ChartWordCloud:
-    """ Chart.js module for charting word or tag clouds. Adding new chart type: wordCloud.
+                options: dict = None, html_code: str = None, **kwargs
+                ) -> graph.GraphChartJs.ChartWordCloud:
+    """
+    Chart.js module for charting word or tag clouds. Adding new chart type: wordCloud.
 
     :tags:
     :categories:
@@ -830,8 +878,10 @@ if (item){
   def hierarchical(self, record: list = None, labels: list = None, profile: types.PROFILE_TYPE = None,
                    width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                    options: dict = None, horizontal: bool = False, kind: str = "bar",
-                   html_code: str = None) -> graph.GraphChartJs.ChartHyr:
-    """ Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
+                   html_code: str = None, **kwargs
+                   ) -> graph.GraphChartJs.ChartHyr:
+    """
+    Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
 
     Related Pages:
 

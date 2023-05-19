@@ -2,12 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html.graph import GraphPlotly
+from epyk.core.html.options import OptPlotly
 
 from epyk.core.js.packages import JsPlotly
 from epyk.core.data.DataClass import DataClass
 
 
-class DataMarkersChoroMapBar(GraphPlotly.DataMarkers):
+class DataMarkersChoroMapBar(OptPlotly.DataMarkers):
 
     @property
     def title(self):
@@ -34,7 +35,7 @@ class DataMarkersChoroMapBar(GraphPlotly.DataMarkers):
         self._attrs["showticksuffix"] = val
 
 
-class DataMarkersChoroMap(GraphPlotly.DataMarkers):
+class DataMarkersChoroMap(OptPlotly.DataMarkers):
 
     @property
     def cmax(self):
@@ -65,7 +66,7 @@ class DataMarkersChoroMap(GraphPlotly.DataMarkers):
         return self.sub_data("colorbar", DataMarkersChoroMapBar)
 
 
-class LayoutCenter(GraphPlotly.Layout):
+class LayoutCenter(OptPlotly.Layout):
 
     @property
     def lat(self):
@@ -84,7 +85,7 @@ class LayoutCenter(GraphPlotly.Layout):
         self._attrs["lon"] = val
 
 
-class LayoutMapBoxLayer(GraphPlotly.Layout):
+class LayoutMapBoxLayer(OptPlotly.Layout):
 
     @property
     def sourcetype(self):
@@ -111,7 +112,7 @@ class LayoutMapBoxLayer(GraphPlotly.Layout):
         self._attrs["below"] = val
 
 
-class LayoutMapBox(GraphPlotly.Layout):
+class LayoutMapBox(OptPlotly.Layout):
 
     @property
     def style(self):
@@ -148,7 +149,7 @@ class LayoutMapBox(GraphPlotly.Layout):
         return layer
 
 
-class LayoutGeo(GraphPlotly.Layout):
+class LayoutGeo(OptPlotly.Layout):
 
     @property
     def dragmode(self):
@@ -303,7 +304,7 @@ class LayoutGeoMap(LayoutGeo):
         return self
 
 
-class DataScatterMapBox(GraphPlotly.DataChart):
+class DataScatterMapBox(OptPlotly.DataChart):
 
     @property
     def lon(self):
@@ -330,7 +331,7 @@ class DataScatterMapBox(GraphPlotly.DataChart):
         self._attrs["text"] = val
 
 
-class DataChoropleth(GraphPlotly.DataChart):
+class DataChoropleth(OptPlotly.DataChart):
     @property
     def locationmode(self):
         return self._attrs["locationmode"]

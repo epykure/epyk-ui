@@ -3,11 +3,12 @@
 
 from epyk.core.html.graph import GraphPlotly
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.options import OptPlotly
 
 from epyk.core.js.packages import JsPlotly
 
 
-class DataHeader(GraphPlotly.DataChart):
+class DataHeader(OptPlotly.DataChart):
 
     @property
     def align(self):
@@ -26,37 +27,37 @@ class DataHeader(GraphPlotly.DataChart):
         self._attrs["values"] = val
 
     @property
-    def line(self) -> GraphPlotly.DataMarkersLine:
+    def line(self) -> OptPlotly.DataMarkersLine:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("line", GraphPlotly.DataMarkersLine)
+        return self.sub_data("line", OptPlotly.DataMarkersLine)
 
     @property
-    def font(self) -> GraphPlotly.DataFont:
+    def font(self) -> OptPlotly.DataFont:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("font", GraphPlotly.DataFont)
+        return self.sub_data("font", OptPlotly.DataFont)
 
     @property
-    def fill(self) -> GraphPlotly.DataFill:
+    def fill(self) -> OptPlotly.DataFill:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("fill", GraphPlotly.DataFill)
+        return self.sub_data("fill", OptPlotly.DataFill)
 
 
-class DataCells(GraphPlotly.DataChart):
+class DataCells(OptPlotly.DataChart):
 
     @property
     def align(self):
@@ -75,37 +76,37 @@ class DataCells(GraphPlotly.DataChart):
         self._attrs["values"] = val
 
     @property
-    def line(self) -> GraphPlotly.DataMarkersLine:
+    def line(self) -> OptPlotly.DataMarkersLine:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("line", GraphPlotly.DataMarkersLine)
+        return self.sub_data("line", OptPlotly.DataMarkersLine)
 
     @property
-    def font(self) -> GraphPlotly.DataFont:
+    def font(self) -> OptPlotly.DataFont:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("font", GraphPlotly.DataFont)
+        return self.sub_data("font", OptPlotly.DataFont)
 
     @property
-    def fill(self) -> GraphPlotly.DataFill:
+    def fill(self) -> OptPlotly.DataFill:
         """
 
         Related Pages:
 
           https://plot.ly/javascript/bubble-maps/
         """
-        return self.sub_data("fill", GraphPlotly.DataFill)
+        return self.sub_data("fill", OptPlotly.DataFill)
 
 
-class DataDomain(GraphPlotly.DataChart):
+class DataDomain(OptPlotly.DataChart):
 
     @property
     def x(self):
@@ -124,7 +125,7 @@ class DataDomain(GraphPlotly.DataChart):
         self._attrs["y"] = val
 
 
-class DataTable(GraphPlotly.DataChart):
+class DataTable(OptPlotly.DataChart):
 
     @property
     def domain(self) -> DataDomain:
@@ -186,10 +187,10 @@ class Table(MixHtmlState.HtmlOverlayStates, GraphPlotly.Chart):
         return self._chart
 
     @property
-    def layout(self) -> GraphPlotly.Layout:
+    def layout(self) -> OptPlotly.Layout:
         """ """
         if self._layout is None:
-            self._layout = GraphPlotly.Layout(self, page=self.page)
+            self._layout = OptPlotly.Layout(self, page=self.page)
         return self._layout
 
     @property
@@ -242,7 +243,7 @@ class Table(MixHtmlState.HtmlOverlayStates, GraphPlotly.Chart):
                 c_data['type'] = type
             if mode is not None:
                 c_data['mode'] = mode
-            trace = GraphPlotly.DataChart(self, page=self.page, attrs=c_data)
+            trace = OptPlotly.DataChart(self, page=self.page, attrs=c_data)
         else:
             c_data = {}
             if type is not None:

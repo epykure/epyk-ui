@@ -74,7 +74,7 @@ class RoughViz(MixHtmlState.HtmlOverlayStates, Html.Html):
         dataset = self.options.data.add(label, data)
         return dataset
 
-    @Html.jbuider("roughviz")
+    @Html.jformatter("roughviz")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True):
         """

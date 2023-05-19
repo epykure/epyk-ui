@@ -409,7 +409,7 @@ class DataAttrs(primitives.JsDataModel):
     self._attrs.update(values)
     return self
 
-  def set_val(self, value: str, name: str = None, js_type: bool = False):
+  def set_val(self, value: Any, name: str = None, js_type: bool = False):
     """
     Default way to set values for properties.
 

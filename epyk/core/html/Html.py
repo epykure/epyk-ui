@@ -141,6 +141,53 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
     return decorator
 
 
+def jformatter(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False):
+  """ """
+
+  def decorator(func):
+    @functools.wraps(func)
+    def new_func(*args, **kwargs):
+      component = args[0]
+      if name is not None:
+        component.builder_name = name
+      if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
+        native_path = os.environ.get("NATIVE_JS_PATH")
+        if group is not None:
+          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
+        else:
+          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
+        if native_path is None:
+          native_path = internal_native_path
+        native_builder = Path(native_path, "%s.js" % component.builder_name)
+        internal_native_builder = Path(internal_native_path, "%s.js" % component.builder_name)
+        if native_builder.exists():
+          component.page.js.customFile("%s.js" % component.builder_name, path=native_path, authorize=True)
+          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
+          component.page.properties.js.add_constructor(component.builder_name, None)
+        elif internal_native_builder.exists():
+          component.page.js.customFile(
+            "%s.js" % component.builder_name, path=internal_native_builder, authorize=True)
+          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
+          component.page.properties.js.add_constructor(component.builder_name, None)
+        else:
+          if not component.builder_name or component._js__builder__ is None:
+            raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
+
+          if component.async_builder or asynchronous:
+            component.page.properties.js.add_constructor(
+              component.builder_name, "async function %s(data, options){%s}" % (
+                component.builder_name, component._js__builder__))
+          else:
+            component.page.properties.js.add_constructor(
+              component.builder_name, "function %s(data, options){%s}" % (
+                component.builder_name, component._js__builder__))
+      return func(*args, **kwargs)
+
+    return new_func
+
+  return decorator
+
+
 def set_component_skin(component: primitives.HtmlModel):
     """
 

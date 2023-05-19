@@ -3251,3 +3251,40 @@ class OptionsGeo(ChartJsOptions):
 
 class OptionsTreeMap(ChartJsOptions):
   ...
+
+
+class OptionChartJsSankeyParsing(Options):
+
+  @property
+  def from_(self):
+    return self._config_get()
+
+  @from_.setter
+  def from_(self, val: str):
+    self._config(val, name="from")
+
+  @property
+  def to(self):
+    return self._config_get()
+
+  @to.setter
+  def to(self, val: str):
+    self._config(val)
+
+  @property
+  def flow(self):
+    return self._config_get()
+
+  @flow.setter
+  def flow(self, val: str):
+    self._config(val)
+
+
+class OptionsSankey(ChartJsOptions):
+
+  @property
+  def parsing(self) -> OptionChartJsSankeyParsing:
+    """
+    https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._config_sub_data("parsing", OptionChartJsSankeyParsing)

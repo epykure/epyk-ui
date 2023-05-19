@@ -61,7 +61,7 @@ class JsPlotly(JsPackage):
     layout = JsUtils.jsConvertData(layout or {}, None)
     config = JsUtils.jsConvertData(config or {}, None)
     return JsObject.JsObject.get(
-      "Plotly.newPlot(%s, %s, %s, %s)" % (html_code or self.component.dom.varName, data, layout, config))
+      "Plotly.newPlot('%s', %s, %s, %s)" % (html_code or self.component.dom.varName, data, layout, config))
 
   def react(self, data=None, layout=None, config=None, html_code=None):
     """

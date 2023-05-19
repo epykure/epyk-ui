@@ -142,7 +142,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                                      component=self)
         return self._d3
 
-    @Html.jbuider("c3")
+    @Html.jformatter("c3")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
         """

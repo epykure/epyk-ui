@@ -309,7 +309,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         series.data = data
         return series
 
-    @Html.jbuider("apex")
+    @Html.jformatter("apex")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
         """

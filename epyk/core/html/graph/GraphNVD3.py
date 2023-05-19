@@ -154,7 +154,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             rec['color'] = self.options.colors[i]
         return self
 
-    @Html.jbuider("nvd3")
+    @Html.jformatter("nvd3")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None, stop_state: bool = True):
         """

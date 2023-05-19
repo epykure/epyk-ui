@@ -261,7 +261,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
           https://github.com/chrispahm/chartjs-plugin-dragdata
         """
-        self.options._attrs['dragData'] = True
+        self.options.plugins.dragdata.dragX = True
         return self.options
 
     def labels(self, labels: list):
@@ -448,7 +448,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.__defined_options = defined_options
         return js_expr
 
-    @Html.jbuider("chartjs")
+    @Html.jformatter("chartjs")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
         """
@@ -877,6 +877,11 @@ class ChartRadar(Chart):
     _option_cls = OptChartJs.OptionsRadar
     builder_name = "ChartRadar"
 
+    @property
+    def options(self) -> OptChartJs.OptionsRadar:
+        """ Property to the Radar Chart options. """
+        return super().options
+
     def new_dataset(self, index: int, data, label: str, colors: List[str] = None, opacity: float = None,
                     kind: str = None, **kwargs) -> JsChartJs.DataSetRadar:
         """
@@ -960,6 +965,11 @@ class ChartTreeMap(Chart):
     _chart__type = 'treemap'
     _option_cls = OptChartJs.OptionsTreeMap
     builder_name = "ChartTreeMap"
+
+    @property
+    def options(self) -> OptChartJs.OptionsTreeMap:
+        """ Property to the TreeMap Chart options. """
+        return super().options
 
     def add_dataset(self, tree: List[dict], label: str, colors: List[str] = None, **kwargs) -> JsChartJs.DataSetTreeMap:
         """
@@ -1066,6 +1076,35 @@ class ChartMatrix(Chart):
 class ChartSankey(Chart):
     requirements = ('chart.js', 'chartjs-chart-sankey')
     _chart__type = 'sankey'
+    builder_name = "ChartSankey"
+    _option_cls = OptChartJs.OptionsSankey
+
+    @property
+    def options(self) -> OptChartJs.OptionsSankey:
+        """ Property to the Sankey Chart options. """
+        return super().options
+
+    def new_dataset(self, data: List[dict], label: str, **kwargs) -> JsChartJs.DataSetSankey:
+        """
+
+        """
+        dataset = JsChartJs.DataSetSankey(self.page, attrs={"label": label, "data": data})
+        for k, v in kwargs.items():
+          if hasattr(dataset, k):
+            setattr(dataset, k, v)
+          else:
+            dataset.set_val(v, name=k)
+        return dataset
+
+    def add_dataset(self, data: List[dict], label: str, **kwargs) -> JsChartJs.DataSetSankey:
+        """
+
+        :param data: The list of points (float)
+        :param label: Optional. The series label (visible in the legend)
+        """
+        data = self.new_dataset(data, label, **kwargs)
+        self._datasets.append(data)
+        return data
 
 
 class ChartWordCloud(ChartPolar):
@@ -1081,8 +1120,7 @@ class ChartVenn(Chart):
 class ChartHyr(Chart):
     requirements = ('chart.js', 'chartjs-plugin-hierarchical')
     _chart__type = 'bar'
-
-    _js__builder__ = '''return data'''
+    builder_name = "ChartHyr"
 
 
 class ChartExts(ChartPie):

@@ -1,6 +1,6 @@
 
 
-function cChartBubble(data, options){
+function chartBubble(data, options){
     if(data.python){
         result = {datasets: [], labels: data.series};
         data.datasets.forEach(function(dataset, i){

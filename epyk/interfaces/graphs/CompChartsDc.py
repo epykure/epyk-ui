@@ -1,3 +1,4 @@
+from typing import List, Any
 
 from epyk.core.html.graph import GraphDC
 from epyk.core.py import types
@@ -35,8 +36,9 @@ class DC:
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def set_crossfilter(self, record, y_columns, x_axis, varName, extra_cols=None):
-    """ Set a crossfilter object and add the dimensions which will be added to a chart.
+  def set_crossfilter(self, record, y_columns, x_axis: List[str], var_name: str, extra_cols: List[Any] = None):
+    """
+    Set a crossfilter object and add the dimensions which will be added to a chart.
 
     :tags:
     :categories:
@@ -46,7 +48,7 @@ class DC:
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
     :param x_axis: The column corresponding to a key in the dictionaries in the record
-    :param varName:
+    :param var_name:
     :param extra_cols: Optional.
     """
     if not isinstance(y_columns, list):
@@ -54,17 +56,17 @@ class DC:
 
     if not isinstance(x_axis, tuple):
       x_axis = (x_axis, str)
-    crossfilter = self.page.js.data.crossfilter(record, "%s_xf" % varName)
+    crossfilter = self.page.js.data.crossfilter(record, "%s_xf" % var_name)
     if len(y_columns) == 1:
-      dimension = crossfilter.dimension([x_axis] + (extra_cols or []), '%s_xf_dim' % varName)
-      group = dimension.group('%s_xf_group' % varName).reduceSum(y_columns[0])
+      dimension = crossfilter.dimension([x_axis] + (extra_cols or []), '%s_xf_dim' % var_name)
+      group = dimension.group('%s_xf_group' % var_name).reduceSum(y_columns[0])
     else:
       dimension = crossfilter.dimension(
-        [x_axis] + (extra_cols or []) + [(y, int) for y in y_columns], '%s_xf_dim' % varName)
-      group = dimension.group('%s_xf_group' % varName)
-    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf" % varName] = crossfilter.toStr()
-    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_dim" % varName] = dimension.toStr()
-    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_group" % varName] = group.toStr()
+        [x_axis] + (extra_cols or []) + [(y, int) for y in y_columns], '%s_xf_dim' % var_name)
+      group = dimension.group('%s_xf_group' % var_name)
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf" % var_name] = crossfilter.toStr()
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_dim" % var_name] = dimension.toStr()
+    self.page._props.setdefault('js', {}).setdefault('datasets', {})["%s_xf_group" % var_name] = group.toStr()
     return {"crossfilter": crossfilter, 'dimension': dimension, 'group': group}
 
   def line(self, record=None, y_columns=None, x_axis: str = None, title: str = None,
@@ -76,6 +78,11 @@ class DC:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      line = page.ui.charts.dc.line(data, y_columns=[1, 2], x_axis='x')
 
     Related Pages:
 
@@ -164,20 +171,25 @@ class DC:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      scatter = page.ui.charts.dc.scatter(data, y_columns=[2, 4], x_axis='x')
+
     Related Pages:
 
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if isinstance(y_columns, list):
       line_chart = self.series(record, y_columns, x_axis, 'scatter', title, profile, options, width, height, html_code)
@@ -200,15 +212,15 @@ class DC:
 
     Related Pages:
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
 
     if isinstance(y_columns, list):
@@ -230,17 +242,22 @@ class DC:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      bar = page.ui.charts.dc.hbar(data[:10], y_columns=4, x_axis='x')
+
     Related Pages:
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     if isinstance(y_columns, list):
       bar_chart = self.series(record, y_columns, x_axis, 'bar', title, profile, options, width, height, html_code)
@@ -261,17 +278,22 @@ class DC:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      hbar = page.ui.charts.dc.hbar(data[:10], y_columns=4, x_axis='x')
+
     Related Pages:
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     bar_chart = GraphDC.ChartRow(self.page, width, height, title, options or {}, html_code, profile)
     line_id = bar_chart.htmlCode
@@ -290,20 +312,25 @@ class DC:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      pie = page.ui.charts.dc.pie(data[:5], y_columns=3, x_axis='x')
+
     Related Pages:
 
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     pie_chart = GraphDC.ChartPie(self.page, width, height, title, options or {}, html_code, profile)
     pie_chart.dom.height(height[0])
@@ -327,14 +354,14 @@ class DC:
       https://dc-js.github.io/dc.js/
 
     :param record:
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     pie_chart = GraphDC.ChartSunburst(self.page, width, height, title, options or {}, html_code, profile)
     line_id = pie_chart.htmlCode
@@ -351,22 +378,27 @@ class DC:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      bubble = page.ui.charts.dc.bubble(data, y_columns=3, x_axis='x', r_axis=4, options={'statc_factor': '/10'})
+
     Related Pages:
 
       https://square.github.io/crossfilter/
       https://dc-js.github.io/dc.js/
       https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
 
-    :param record: List of dict. Optional. The Python list of dictionaries.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param r_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param title: String. Optional. The chart title.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param r_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param title: Optional. The chart title
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     if isinstance(y_columns, list):

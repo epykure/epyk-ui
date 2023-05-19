@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Dict
 from epyk.core.py import primitives, types
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -2886,8 +2886,96 @@ class DataSetTreeMap(DataSet):
     self._attrs["sumKeys"] = values
 
 
+class DataSetSankey(DataSet):
 
+  @property
+  def colorMode(self):
+    """
 
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["colorMode"]
+
+  @colorMode.setter
+  def colorMode(self, value: str):
+    if value not in ["gradient", "from", "to"]:
+      raise ValueError("ColorMode not defined")
+
+    self.set_val(value)
+
+  @property
+  def column(self):
+    """
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["priority"]
+
+  @column.setter
+  def column(self, values: Dict[str, int]):
+    self.set_val(values)
+
+  @property
+  def label(self):
+    """
+    The labels options can control if and how a label, to represent the data, can be shown in the rectangle,
+    with the following properties:
+
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["label"]
+
+  @label.setter
+  def label(self, val: str):
+    self.set_val(val)
+
+  @property
+  def labels(self):
+    """
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["label"]
+
+  @labels.setter
+  def labels(self, values: Dict[str, str]):
+    self.set_val(values)
+
+  @property
+  def priority(self):
+    """
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["priority"]
+
+  @priority.setter
+  def priority(self, values: Dict[str, int]):
+    self.set_val(values)
+
+  @property
+  def size(self):
+    """
+
+    Related Pages:
+
+      https://github.com/kurkle/chartjs-chart-sankey
+    """
+    return self._attrs["size"]
+
+  @size.setter
+  def size(self, value: str):
+    if value not in ["max", "min"]:
+      raise ValueError("'max', // or 'min' if flow overlap is preferred")
+
+    self.set_val(value)
 
 
 # class ChartJsType(object):

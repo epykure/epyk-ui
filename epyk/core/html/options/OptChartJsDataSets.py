@@ -530,3 +530,4 @@ class Polar(CommConfigs):
   @hoverBorderJoinStyle.setter
   def hoverBorderJoinStyle(self, value: str):
     self._set_commons(value)
+

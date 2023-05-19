@@ -138,7 +138,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                 page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False, component=self)
         return self._d3
 
-    @Html.jbuider("bb")
+    @Html.jformatter("bb")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True) -> str:
         """

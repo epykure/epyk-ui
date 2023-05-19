@@ -49,3 +49,9 @@ doc/_build/*
 dist/*
 build/*
 *egg-info*
+
+# Entire documentation ignored for the moment
+doc/*
+
+#
+epyk/core/js/native/*

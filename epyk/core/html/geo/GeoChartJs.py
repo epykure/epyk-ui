@@ -1,13 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import List
-
 from epyk.core.html import Html
 from epyk.core.html.graph import GraphChartJs
 from epyk.core.html.options import OptChartJs
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsChartJs
 
 from epyk.core.py import types
 

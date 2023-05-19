@@ -97,7 +97,7 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
     def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
         return self.options.data.add_data(data, label, kind or "line")
 
-    @Html.jbuider("frappe")
+    @Html.jformatter("frappe")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
         """

@@ -262,7 +262,7 @@ JS_IMPORTS = {
     'ag-grid-community': {
         'website': 'https://www.ag-grid.com/javascript-grid/',
         'repository': 'https://github.com/ag-grid/ag-grid',
-        'version': '25.1.0',
+        'version': '25.2.0',
         "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
         'modules': [
             {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/',
@@ -367,7 +367,7 @@ JS_IMPORTS = {
 
     # module for the awesome icons
     'font-awesome': {
-        'version': '5.13.1',
+        'version': '5.15.4',
         'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
                      'npm_path': 'js'},
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
@@ -525,7 +525,7 @@ JS_IMPORTS = {
     #
     'jszip': {
         'website': 'https://datatables.net/extensions/buttons/',
-        'version': '3.5.0',
+        'version': '3.10.1',
         'modules': [
             {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'node_path': 'dist/', 'path': 'jszip/%(version)s/',
              'cdnjs': CDNJS_REPO},
@@ -639,7 +639,7 @@ JS_IMPORTS = {
         'website': 'http://jquery.com/',
         'repository': "https://github.com/jquery/jquery",
         'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
-        'version': '3.6.4',
+        'version': '3.7.0',
         'modules': [
             {'script': 'jquery.min.js', 'node_path': 'dist/', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}
         ],
@@ -670,7 +670,7 @@ JS_IMPORTS = {
     # Used to produce sparkline charts in a document and in Tabulator
     'jquery-sparkline': {
         'req': [{'alias': 'jquery'}],
-        'version': '2.1.2',
+        'version': '2.19.4',
         'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
         'register': {'alias': 'sparkline', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
         'modules': [
@@ -777,7 +777,7 @@ JS_IMPORTS = {
         ],
         'website': 'https://github.com/mrrio/jspdf',
         'repository': 'https://github.com/mrrio/jspdf',
-        'version': '2.3.0',
+        'version': '2.5.1',
         'modules': [
             {'reqAlias': 'jspdf', 'node_path': 'dist/', 'script': 'jspdf.umd.min.js', 'path': 'jspdf/%(version)s/',
              'cdnjs': CDNJS_REPO},
@@ -787,7 +787,7 @@ JS_IMPORTS = {
     # Clipboard features width CDN links
     'clipboard': {
         'website': 'https://clipboardjs.com/',
-        'version': '2.0.6',
+        'version': '2.0.11',
         'modules': [
             {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'node_path': 'dist/',
              'path': 'clipboard.js/%(version)s/',
@@ -1038,7 +1038,7 @@ JS_IMPORTS = {
         'repository': 'https://github.com/plotly/plotly.js',
         'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
         # 'version': '1.58.4',
-        'version': '2.4.2',
+        'version': '2.23.1',
         'modules': [
             {'script': 'plotly.min.js', 'node_path': 'dist/', 'path': 'plotly.js/%(version)s/', 'cdnjs': CDNJS_REPO}
         ],
@@ -1099,7 +1099,7 @@ JS_IMPORTS = {
         ],
         'website': 'https://apexcharts.com/',
         'repository': 'https://github.com/apexcharts/apexcharts.js',
-        'version': '3.27.1',
+        'version': '3.40.0',
         'register': {'alias': 'ApexCharts', 'module': 'apexcharts.min', 'npm': 'apexcharts'},
         'modules': [
             {'script': 'apexcharts.min.js', 'path': 'apexcharts@%(version)s/dist/', 'cdnjs': JSDELIVER}
@@ -1129,7 +1129,7 @@ JS_IMPORTS = {
         'website': 'https://vega.github.io/vega-lite/',
         'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
         'register': {'alias': 'vega', 'module': 'vega.min'},
-        'version': '5.20.2',
+        'version': '5.25.0',
         'modules': [
             {'script': 'vega.min.js', 'path': 'vega@%(version)s/build/', 'cdnjs': JSDELIVER},
         ]
@@ -1142,7 +1142,7 @@ JS_IMPORTS = {
         ],
         'website': 'https://github.com/vega/vega-util/',
         'register': {'variable': 'vegaTooltip', 'module': 'vega-tooltip.min'},
-        'version': '0.25.1',
+        'version': '0.32.0',
         'modules': [
             {'script': 'vega-tooltip.min.js', 'path': 'vega-tooltip@%(version)s/build/', 'cdnjs': JSDELIVER},
         ]
@@ -1169,7 +1169,7 @@ JS_IMPORTS = {
         'website': 'https://vega.github.io/vega-lite/',
         'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
         'register': {'variable': 'vegaLite', 'module': 'vega-lite.min'},
-        'version': '5.1.0',
+        'version': '5.9.2',
         'modules': [
             {'script': 'vega-lite.min.js', 'path': 'vega-lite@%(version)s/build/', 'cdnjs': JSDELIVER},
         ]
@@ -1183,7 +1183,7 @@ JS_IMPORTS = {
         'website': 'https://vega.github.io/vega-embed/',
         'repository': 'https://github.com/vega/vega-embed?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
         'register': {'variable': 'vegaEmbed', 'module': 'vega-embed.min'},
-        'version': '6.18.2',
+        'version': '6.22.1',
         'modules': [
             {'script': 'vega-embed.min.js', 'path': 'vega-embed@%(version)s/build/', 'cdnjs': JSDELIVER},
         ]
@@ -1207,7 +1207,7 @@ JS_IMPORTS = {
             {'alias': 'd3-interpolate'},
             {'alias': 'd3-zoom'},
         ],
-        'version': '3.1.1',
+        'version': '3.8.1',
         'register': {'variable': 'bb', 'module': 'billboard.min', 'npm': 'billboard.js'},
         'modules': [
             {'script': 'billboard.min.js', 'node_path': 'dist/', 'path': 'billboard.js/%(version)s/',
@@ -1233,7 +1233,7 @@ JS_IMPORTS = {
     # Frappe-Charts module
     'frappe-charts': {
         'website': 'https://frappe.io/charts/docs',
-        'version': '1.5.1',
+        'version': '1.6.2',
         'register': {'alias': 'Frappe', 'module': 'frappe-charts.min.iife'},
         'modules': [
             {'script': 'frappe-charts.min.iife.js', 'path': 'frappe-charts@%(version)s/dist/',
@@ -1487,7 +1487,7 @@ JS_IMPORTS = {
     'mapbox-gl': {
         'register': {'alias': 'mapbox-gl'},
         'website': 'https://github.com/mapbox/mapbox-gl-js?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
-        'version': '2.9.2',
+        'version': '2.14.1',
         'modules': [
             {'script': 'mapbox-gl.js', 'path': 'mapbox-gl/%(version)s/', 'cdnjs': CDNJS_REPO}]
     },
@@ -1497,7 +1497,7 @@ JS_IMPORTS = {
     # https://github.com/mathjax/mathjax
     'mathjax': {
         'website': 'https://www.mathjax.org/',
-        'version': '3.1.2',
+        'version': '3.2.2',
         'repository': 'https://github.com/mathjax/MathJax',
         'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s',
                     'folder': 'mathjax'},
@@ -1664,7 +1664,7 @@ JS_IMPORTS = {
 
     # highlight
     'highlight.js': {
-        'version': '10.4.1',
+        'version': '11.8.0',
         'website': 'https://highlightjs.org/',
         'repository': 'https://github.com/highlightjs/highlight.js',
         # 'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},
@@ -1675,7 +1675,7 @@ JS_IMPORTS = {
 
     # Leaflet
     'leaflet': {
-        'version': '1.7.1',
+        'version': '1.9.3',
         'website': 'https://leafletjs.com/',
         'repository': 'https://github.com/Leaflet/Leaflet',
         'register': {'alias': 'L', 'module': 'leaflet', 'npm': 'leaflet'},
@@ -1689,7 +1689,7 @@ JS_IMPORTS = {
 
     # showdown
     'showdown': {
-        'version': '1.9.1',
+        'version': '2.1.0',
         'website': 'https://github.com/showdownjs/showdown',
         'repository': 'https://github.com/showdownjs/showdown',
         'register': {'alias': 'showdown', 'module': 'showdown.min', 'npm': 'showdown', 'npm_path': 'dist'},
@@ -1702,7 +1702,7 @@ JS_IMPORTS = {
     'sortablejs': {
         'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
         'repository': 'https://github.com/SortableJS/Sortable',
-        'version': '1.10.2',
+        'version': '1.15.0',
         'modules': [
             {'script': 'Sortable.min.js', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
@@ -2447,14 +2447,15 @@ class ImportModule:
 
     @property
     def scripts(self):
-        """ Get the list of external files used for this package.
+        """
+        Get the list of external files used for this package.
 
-    Usage::
+        Usage::
 
-      pkgs = page.imports().pkgs
-      pkgs.tabulator.version = "4.8.7"
-      print(pkgs.tabulator.scripts)
-    """
+          pkgs = page.imports().pkgs
+          pkgs.tabulator.version = "4.8.7"
+          print(pkgs.tabulator.scripts)
+        """
         return self._js["main"].keys() | self._css["main"].keys()
 
     @property
@@ -2473,18 +2474,20 @@ class ImportModule:
             self.page.cssImport.add(self._name)
 
     def from_cdnjs(self):
-        """ Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
-      Indeed this method will not impact any modules with this flag set to True.
-    """
+        """
+        Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
+        Indeed this method will not impact any modules with this flag set to True.
+        """
         self.overriden = True
 
     def set_local(self, static_url: str = "/static"):
-        """ Route the package to the local path.
+        """
+        Route the package to the local path.
 
-    Check first of the modules exist and raise an error otherwise.
+        Check first of the modules exist and raise an error otherwise.
 
-    :param static_url: Optional. The static root on the server. (default value /static/)
-    """
+        :param static_url: Optional. The static root on the server. (default value /static/)
+        """
         if self.overriden:
             return
 
@@ -2507,18 +2510,19 @@ class ImportModule:
         self.overriden = True
 
     def set_enterprise(self, version: str = None, license_key: str = None):
-        """ Change the package to the enterprise version.
+        """
+        Change the package to the enterprise version.
 
-    This feature will only work for few modules like AGGrid.
+        This feature will only work for few modules like AGGrid.
 
-    Usage::
+        Usage::
 
-      page = pk.Page()
-      page.imports.pkgs.ag_grid.set_enterprise()
+          page = pk.Page()
+          page.imports.pkgs.ag_grid.set_enterprise()
 
-    :param version: Set the package version number
-    :param license_key: Optional. The license key
-    """
+        :param version: Set the package version number
+        :param license_key: Optional. The license key
+        """
         pgks = ("ag-grid-community",)
         if self._name not in pgks:
             raise NotImplementedError("Noting implemented for this package %s, please contact epyk team" % self._name)
@@ -2554,23 +2558,24 @@ class ImportModule:
                 self.page.properties.js.add_text("agGrid.LicenseManager.setLicenseKey('%s')" % license_key)
 
     def set_access_token(self, value: str = None, name: str = ""):
-        """ Set an access token to use this package
+        """
+        Set an access token to use this package
 
-    Related Pages:
+        Related Pages:
 
-      https://docs.mapbox.com/mapbox-gl-js/example/globe/
+          https://docs.mapbox.com/mapbox-gl-js/example/globe/
 
-    Usage::
+        Usage::
 
-      page = pk.Page()
-      page.imports.pkgs.mapbox.set_access_token(
-        "XXXXXX",
-        "mapboxgl.accessToken"
-      )
+          page = pk.Page()
+          page.imports.pkgs.mapbox.set_access_token(
+            "XXXXXX",
+            "mapboxgl.accessToken"
+          )
 
-    :param value: The access token to set to use the library
-    :param name: The access token variable name
-    """
+        :param value: The access token to set to use the library
+        :param name: The access token variable name
+        """
         self.page.imports.add(self._name)
         self.page.properties.js.add_text("%s = '%s'" % (name, value))
 
@@ -2807,142 +2812,156 @@ class ImportPackagesChartJsExts:
 
     @property
     def treemap(self) -> ImportModule:
-        """ Adds treemap chart type.
+        """
+        Adds treemap chart type.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-treemap")
 
     @property
     def annotation(self) -> ImportModule:
-        """ Draws lines and boxes on the chart area.
+        """
+        Draws lines and boxes on the chart area.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-annotation")
 
     @property
     def datalabels(self) -> ImportModule:
-        """ Displays labels on data for any type of charts.
+        """
+        Displays labels on data for any type of charts.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-datalabels")
 
     @property
     def deferred(self) -> ImportModule:
-        """ Defers initial chart update until chart scrolls into viewport.
+        """
+        Defers initial chart update until chart scrolls into viewport.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-deferred")
 
     @property
     def hierarchical(self) -> ImportModule:
-        """ Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
+        """
+        Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/sgratzl/chartjs-plugin-hierarchical
-    """
+          https://github.com/sgratzl/chartjs-plugin-hierarchical
+        """
         return self.get("chartjs-plugin-hierarchical")
 
     @property
     def zoom(self) -> ImportModule:
-        """ Enables zooming and panning on charts.
+        """
+        Enables zooming and panning on charts.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-zoom")
 
     @property
     def crosshair(self) -> ImportModule:
-        """ Adds a data crosshair to line and scatter charts.
+        """
+        Adds a data crosshair to line and scatter charts.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-crosshair")
 
     @property
     def stacked100(self) -> ImportModule:
-        """ This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+        """
+        This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-stacked100")
 
     @property
     def matrix(self) -> ImportModule:
-        """ Adds matrix chart type.
+        """
+        Adds matrix chart type.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-matrix")
 
     @property
     def sankey(self) -> ImportModule:
-        """ Adds sankey diagram chart type.
+        """
+        Adds sankey diagram chart type.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-sankey")
 
     @property
     def wordcloud(self) -> ImportModule:
-        """ Adds word-cloud chart type.
+        """
+        Adds word-cloud chart type.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-wordcloud")
 
     @property
     def venn(self) -> ImportModule:
-        """ Adds venn and euler chart type.
+        """
+        Adds venn and euler chart type.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-venn")
 
     @property
     def dragdata(self) -> ImportModule:
-        """ Lets users drag data points on the chart.
+        """
+        Lets users drag data points on the chart.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-plugin-dragdata")
 
     @property
     def geo(self) -> ImportModule:
-        """ Adds geographic map chart types such as choropleth and bubble map.
+        """
+        Adds geographic map chart types such as choropleth and bubble map.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/chartjs/awesome#charts
-    """
+          https://github.com/chartjs/awesome#charts
+        """
         return self.get("chartjs-chart-geo")
 
     @property
@@ -2959,12 +2978,13 @@ class ImportPackagesTabulatorExts:
         self.__linked = links
 
     def get(self, name: str) -> ImportModule:
-        """ Generic way to retrieve packages from the framework.
+        """
+        Generic way to retrieve packages from the framework.
 
-    This is a shortcut to change any properties for the package (version, path...).
+        This is a shortcut to change any properties for the package (version, path...).
 
-    :param name: The package alias to be loaded
-    """
+        :param name: The package alias to be loaded
+        """
         if name in self.__linked:
             return self.__linked[name]
 
@@ -3020,12 +3040,13 @@ class ImportPackages:
         self.__linked = {}
 
     def get(self, name: str) -> ImportModule:
-        """ Generic way to retrieve packages from the framework.
+        """ 
+        Generic way to retrieve packages from the framework.
 
-    This is a shortcut to change any properties for the package (version, path...).
-
-    :param name: The package alias to be loaded
-    """
+        This is a shortcut to change any properties for the package (version, path...).
+    
+        :param name: The package alias to be loaded
+        """
         if name in self.__linked:
             return self.__linked[name]
 
@@ -3033,253 +3054,267 @@ class ImportPackages:
 
     @property
     def vis(self) -> ImportModule:
-        """ A dynamic, browser based visualization library..
+        """
+        A dynamic, browser based visualization library..
 
-    TODO: Add the split of packages
+        TODO: Add the split of packages
 
-    Related Pages:
+        Related Pages:
 
-      http://visjs.org
-    """
+          http://visjs.org
+        """
         return self.get("vis")
 
     @property
     def d3(self) -> ImportModule:
-        """ D3.js is a JavaScript library for manipulating documents based on data.
+        """
+        D3.js is a JavaScript library for manipulating documents based on data.
 
-    TODO: Add the split of packages
+        TODO: Add the split of packages
 
-    Related Pages:
+        Related Pages:
 
-      https://d3js.org/
-    """
+          https://d3js.org/
+        """
         return self.get("d3")
 
     @property
     def dc(self) -> ImportModule:
-        """ dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
-      large multi-dimensional datasets.
+        """
+        dc.js is a javascript charting library with native crossfilter support, allowing highly efficient exploration on
+        large multi-dimensional datasets.
 
-    Related Pages:
+        Related Pages:
 
-      https://dc-js.github.io/dc.js
-    """
+          https://dc-js.github.io/dc.js
+        """
         return self.get("dc")
 
     @property
     def nvd3(self) -> ImportModule:
-        """ This project is an attempt to build re-usable charts and chart components for d3.js without taking away
-      the power that d3.js gives you.
+        """
+        This project is an attempt to build re-usable charts and chart components for d3.js without taking away
+        the power that d3.js gives you.
 
-    Related Pages:
+        Related Pages:
 
-      http://nvd3.org/
-    """
+          http://nvd3.org/
+        """
         return self.get("nvd3")
 
     @property
     def c3(self) -> ImportModule:
-        """ C3.js D3-based reusable chart library.
+        """ 
+        C3.js D3-based reusable chart library.
 
-    Related Pages:
-
-      https://c3js.org/
-    """
+        Related Pages:
+    
+          https://c3js.org/
+        """
         return self.get("c3")
 
     @property
     def billboard(self) -> ImportModule:
-        """ Re-usable, easy interface JavaScript chart library, based on D3 v4+.
+        """ 
+        Re-usable, easy interface JavaScript chart library, based on D3 v4+.
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/
-    """
+        Related Pages:
+    
+          https://naver.github.io/billboard.js/
+        """
         return self.get("billboard.js")
 
     @property
     def chart_js(self) -> ImportModule:
-        """ Simple yet flexible JavaScript charting for designers & developers.
+        """ 
+        Simple yet flexible JavaScript charting for designers & developers.
 
-    Related Pages:
-
-      https://www.chartjs.org/
-    """
+        Related Pages:
+    
+          https://www.chartjs.org/
+        """
         return self.get("chart.js")
 
     @property
     def chart_js_extensions(self) -> ImportPackagesChartJsExts:
-        """ Simple yet flexible JavaScript charting for designers & developers.
+        """ 
+        Simple yet flexible JavaScript charting for designers & developers.
 
-    Related Pages:
-
-      https://www.chartjs.org/
-    """
+        Related Pages:
+    
+          https://www.chartjs.org/
+        """
         return ImportPackagesChartJsExts(self._js, self._css, self.__linked)
 
     @property
     def crossfilter(self) -> ImportModule:
-        """ Fast Multidimensional Filtering for Coordinated Views.
+        """
+        Fast Multidimensional Filtering for Coordinated Views.
 
-    Related Pages:
+        Related Pages:
 
-      http://square.github.io/crossfilter
-    """
+          http://square.github.io/crossfilter
+        """
         return self.get("crossfilter")
 
     @property
     def apexcharts(self) -> ImportModule:
-        """ Modern & Interactive Open-source Charts.
+        """
+        Modern & Interactive Open-source Charts.
 
-    Related Pages:
+        Related Pages:
 
-      https://apexcharts.com
-    """
+          https://apexcharts.com
+        """
         return self.get("apexcharts")
 
     @property
     def plotly(self) -> ImportModule:
-        """ Plotly JavaScript Open Source Graphing Library.
+        """
+        Plotly JavaScript Open Source Graphing Library.
 
-    Related Pages:
+        Related Pages:
 
-      https://plot.ly/javascript/
-    """
+          https://plot.ly/javascript/
+        """
         return self.get("plotly.js")
 
     @property
     def ag_grid(self) -> ImportModule:
-        """ The Best JavaScript Grid in the World.
+        """
+        The Best JavaScript Grid in the World.
 
-    Related Pages:
+        Related Pages:
 
-      https://www.ag-grid.com/javascript-grid/
-    """
+          https://www.ag-grid.com/javascript-grid/
+        """
         return self.get("ag-grid-community")
 
     @property
     def bootstrap(self) -> ImportModule:
-        """ The most popular front-end framework for developing responsive, mobile first projects on the web.
+        """
+        The most popular front-end framework for developing responsive, mobile first projects on the web.
 
-    Related Pages:
+        Related Pages:
 
-      https://getbootstrap.com/
-    """
+          https://getbootstrap.com/
+        """
         return self.get("bootstrap")
 
     @property
     def jquery(self) -> ImportModule:
         """
-    JavaScript library for DOM operations.
+        JavaScript library for DOM operations.
 
-    Related Pages:
+        Related Pages:
 
-      https://jquery.com
-    """
+          https://jquery.com
+        """
         return self.get("jquery")
 
     @property
     def jqueryui(self) -> ImportModule:
         """
-    jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the
-    jQuery JavaScript Library.
+        jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the
+        jQuery JavaScript Library.
 
-    Related Pages:
+        Related Pages:
 
-      https://jqueryui.com/
-    """
+          https://jqueryui.com/
+        """
         return self.get("jqueryui")
 
     @property
     def jquery_bracket(self) -> ImportModule:
         """
-    jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for
-    tournament play.
+        jQuery bracket is a jQuery plugin that lets users create and display single and double elimination brackets for
+        tournament play.
 
-    Related Pages:
+        Related Pages:
 
-      http://www.aropupu.fi/bracket/
-    """
+          http://www.aropupu.fi/bracket/
+        """
         return self.get("jquery-bracket")
 
     @property
     def jquery_sparkline(self) -> ImportModule:
         """
-    This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied
-    either inline in the HTML, or via javascript.
+        This jQuery plugin generates sparklines (small inline charts) directly in the browser using data supplied
+        either inline in the HTML, or via javascript.
 
-    Related Pages:
+        Related Pages:
 
-      https://omnipotent.net/jquery.sparkline
-    """
+          https://omnipotent.net/jquery.sparkline
+        """
         return self.get("jquery-sparkline")
 
     @property
     def jqvmap(self) -> ImportModule:
         """
-    JQVMap is a jQuery plugin that renders Interactive, Clickable Vector Maps.
+        JQVMap is a jQuery plugin that renders Interactive, Clickable Vector Maps.
 
-    Related Pages:
+        Related Pages:
 
-      https://www.10bestdesign.com/jqvmap/
-    """
+          https://www.10bestdesign.com/jqvmap/
+        """
         return self.get("jqvmap")
 
     @property
     def qunit(self) -> ImportModule:
         """
-    The powerful, easy-to-use JavaScript testing framework.
+        The powerful, easy-to-use JavaScript testing framework.
 
-    Related Pages:
+        Related Pages:
 
-      https://qunitjs.com/
-    """
+          https://qunitjs.com/
+        """
         return self.get("qunit")
 
     @property
     def accounting(self) -> ImportModule:
         """
-    Number, money and currency formatting library.
+        Number, money and currency formatting library.
 
-    Related Pages:
+        Related Pages:
 
-      http://openexchangerates.github.io/accounting.js
-    """
+          http://openexchangerates.github.io/accounting.js
+        """
         return self.get("accounting")
 
     @property
     def qrcodejs(self) -> ImportModule:
         """
-    QRCode.js is javascript library for making QRCode.
+        QRCode.js is javascript library for making QRCode.
 
-    QRCode.js supports Cross-browser with HTML5 Canvas and table tag in DOM. QRCode.js has no dependencies.
+        QRCode.js supports Cross-browser with HTML5 Canvas and table tag in DOM. QRCode.js has no dependencies.
 
-    Related Pages:
+        Related Pages:
 
-      https://davidshimjs.github.io/qrcodejs
-    """
+          https://davidshimjs.github.io/qrcodejs
+        """
         return self.get("qrcodejs")
 
     @property
     def underscore(self) -> ImportModule:
         """
-    accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number,
-    money and currency formatting.
+        accounting.js is a tiny JavaScript library by Open Exchange Rates, providing simple and advanced number,
+        money and currency formatting.
 
-    Related Pages:
+        Related Pages:
 
-      https://openexchangerates.github.io/accounting.js/
-    """
+          https://openexchangerates.github.io/accounting.js/
+        """
         return self.get("underscore")
 
     @property
     def tabulator(self) -> ImportModule:
-        """ Interactive table generation JavaScript library.
+        """
+        Interactive table generation JavaScript library.
 
-    Related Pages:
+        Related Pages:
 
-      http://tabulator.info/
-    """
+          http://tabulator.info/
+        """
         return self.get("tabulator-tables")
 
     @property
@@ -3289,12 +3324,13 @@ class ImportPackages:
 
     @property
     def datatables(self) -> ImportModule:
-        """ Add advanced interaction controls to your HTML tables the free & easy way.
+        """ 
+        Add advanced interaction controls to your HTML tables the free & easy way.
 
-    Related Pages:
-
-      https://datatables.net/
-    """
+        Related Pages:
+    
+          https://datatables.net/
+        """
         return self.get("datatables")
 
     @property
@@ -3304,42 +3340,46 @@ class ImportPackages:
 
     @property
     def mathjax(self) -> ImportModule:
-        """ Beautiful and accessible math in all browsers.
+        """
+        Beautiful and accessible math in all browsers.
 
-    Related Pages:
+        Related Pages:
 
-      https://www.mathjax.org/
-    """
+          https://www.mathjax.org/
+        """
         return self.get("mathjax")
 
     @property
     def mapbox(self) -> ImportModule:
-        """ Maps and location for developers.
+        """
+        Maps and location for developers.
 
-    Related Pages:
+        Related Pages:
 
-      https://docs.mapbox.com/mapbox.js/api/v3.3.1/
-    """
+          https://docs.mapbox.com/mapbox.js/api/v3.3.1/
+        """
         return self.get("mapbox-gl")
 
     @property
     def moment(self) -> ImportModule:
-        """ Parse, validate, manipulate, and display dates and times in JavaScript.
+        """
+        Parse, validate, manipulate, and display dates and times in JavaScript.
 
-    Related Pages:
+        Related Pages:
 
-      https://momentjs.com/
-    """
+          https://momentjs.com/
+        """
         return self.get("moment")
 
     @property
     def hammer(self) -> ImportModule:
-        """ Add touch gestures to your webapp.
+        """
+        Add touch gestures to your webapp.
 
-    Related Pages:
+        Related Pages:
 
-      https://hammerjs.github.io/
-    """
+          https://hammerjs.github.io/
+        """
         return self.get("hammer")
 
     @property
@@ -3354,33 +3394,36 @@ class ImportPackages:
 
     @property
     def font_awesome(self) -> ImportModule:
-        """ The next generation of our icon library + toolkit is coming with more icons, more styles, more services,
-      and more awesome.
+        """
+        The next generation of our icon library + toolkit is coming with more icons, more styles, more services,
+        and more awesome.
 
-    Related Pages:
+        Related Pages:
 
-      https://fontawesome.com
-    """
+          https://fontawesome.com
+        """
         return self.get("font-awesome")
 
     @property
     def json_formatter(self) -> ImportModule:
-        """ Render JSON objects in HTML with a collapsible navigation.
+        """
+        Render JSON objects in HTML with a collapsible navigation.
 
-    Related Pages:
+        Related Pages:
 
-      https://azimi.me/json-formatter-js/
-    """
+          https://azimi.me/json-formatter-js/
+        """
         return self.get("json-formatter-js")
 
     @property
     def pivottable(self) -> ImportModule:
-        """ Open-source Javascript Pivot Table (aka Pivot Grid, Pivot Chart, Cross-Tab) implementation with drag'n'drop.
+        """
+        Open-source Javascript Pivot Table (aka Pivot Grid, Pivot Chart, Cross-Tab) implementation with drag'n'drop.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/nicolaskruchten/pivottable
-    """
+          https://github.com/nicolaskruchten/pivottable
+        """
         return self.get("pivottable")
 
     @property
@@ -3434,70 +3477,73 @@ class ImportPackages:
 
     @property
     def highlight(self) -> ImportModule:
-        """ Syntax highlighting for the Web.
+        """
+        Syntax highlighting for the Web.
 
-    Related Pages:
+        Related Pages:
 
-      https://highlightjs.org/
-    """
+          https://highlightjs.org/
+        """
         return self.get("highlight.js")
 
     @property
     def leaflet(self) -> ImportModule:
-        """ An open-source JavaScript library for mobile-friendly interactive maps.
+        """
+        An open-source JavaScript library for mobile-friendly interactive maps.
 
-    Related Pages:
+        Related Pages:
 
-      https://leafletjs.com/
-    """
+          https://leafletjs.com/
+        """
         return self.get("leaflet")
 
     @property
     def showdown(self) -> ImportModule:
         """
-    Showdown is a Javascript Markdown to HTML converter.
+        Showdown is a Javascript Markdown to HTML converter.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/showdownjs/showdown
-    """
+          https://github.com/showdownjs/showdown
+        """
         return self.get("showdown")
 
     @property
     def sortablejs(self) -> ImportModule:
         """
-    Create and reorder lists with drag-and-drop. For use with modern browsers and touch devices.
+        Create and reorder lists with drag-and-drop. For use with modern browsers and touch devices.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/SortableJS/Sortable
-    """
+          https://github.com/SortableJS/Sortable
+        """
         return self.get("sortablejs")
 
 
 class ImportManager:
     """
-  The main class in charge of defining the order of the imports in the header.
+    The main class in charge of defining the order of the imports in the header.
 
-  There is no check on the presence of the modules on the server. The only purpose of this module is to produce the
-  string with the module names and the correct paths to your final HTML report.
-  """
+    There is no check on the presence of the modules on the server. The only purpose of this module is to produce the
+    string with the module names and the correct paths to your final HTML report.
+    """
 
     online: bool = True
     self_contained: bool = False
     _static_path: Optional[str] = None
 
     def __init__(self, page=None):
-        """ Load the hierarchy of modules.
+        """
+        Load the hierarchy of modules.
 
-    This module will define the import section in the header of the final HTML page.
+        This module will define the import section in the header of the final HTML page.
 
-    It will create links to the official online websites or link to an internal copy if no internet connection is
-    available. To run a report using the online mode to False it is requires to get all the packages locally
-    saved with the expected structured (basically the one of the CDNJS repository)
+        It will create links to the official online websites or link to an internal copy if no internet connection is
+        available. To run a report using the online mode to False it is requires to get all the packages locally
+        saved with the expected structured (basically the one of the CDNJS repository)
 
-    :param page: Optional. The internal report object with all the required external modules
-    """
+        :param page: Optional. The internal report object with all the required external modules
+        """
         self.page, ovr_version, self.__pkgs = page, {}, None
         self.force_position = {}
         self.reload()
@@ -3589,31 +3635,34 @@ class ImportManager:
         self._static_path = path
 
     def add(self, alias: str):
-        """ Add package to the page external required modules.
+        """
+        Add package to the page external required modules.
 
-    :param alias: The external module alias
-    """
+        :param alias: The external module alias
+        """
         if alias in JS_IMPORTS:
             self.page.jsImports.add(alias)
         if alias in CSS_IMPORTS:
             self.page.cssImport.add(alias)
 
     def extend(self, aliases: List[str]):
-        """ Add multiple aliases to the external requirements.
+        """
+        Add multiple aliases to the external requirements.
 
-    :param aliases: The list of package aliases to be added
-    """
+        :param aliases: The list of package aliases to be added
+        """
         for alias in aliases:
             self.add(alias)
 
     @property
     def requirements(self) -> set:
-        """ Retrieve all the mandatory requirements required to display the final HTML page.
+        """
+        Retrieve all the mandatory requirements required to display the final HTML page.
 
-    Usage::
+        Usage::
 
-      print(page.imports().requirements)
-    """
+          print(page.imports().requirements)
+        """
         module_alias = set(self.cleanImports(self.page.jsImports, JS_IMPORTS))
         for css in self.cleanImports(self.page.cssImport, CSS_IMPORTS):
             module_alias.add(css)
@@ -3621,22 +3670,23 @@ class ImportManager:
 
     def getModules(self, modules: dict, alias: Union[str, dict], folder: Optional[str] = None,
                    module_details: Optional[dict] = None):
-        """ Return the list of modules for a given entry.
+        """
+        Return the list of modules for a given entry.
 
-    This will be used recursively to resolve all the dependencies.
+        This will be used recursively to resolve all the dependencies.
 
-    Usage::
+        Usage::
 
-      modules = collections.OrderedDict()
-      ImportManager().getModules(modules, 'c3')
+          modules = collections.OrderedDict()
+          ImportManager().getModules(modules, 'c3')
 
-    :param modules: The ordered definition of modules
-    :param alias: The module reference in the above JS and CSS dictionaries
-    :param folder: Optional. The folder name
-    :param module_details: The module definition. Default check in the Javascript modules
+        :param modules: The ordered definition of modules
+        :param alias: The module reference in the above JS and CSS dictionaries
+        :param folder: Optional. The folder name
+        :param module_details: The module definition. Default check in the Javascript modules
 
-    :return: The list of modules
-    """
+        :return: The list of modules
+        """
         if isinstance(alias, dict):
             alias = alias['alias']
 
@@ -3661,19 +3711,20 @@ class ImportManager:
 
     def getReq(self, mod: str, modules: List[dict], import_hierarchy: Optional[dict] = None,
                use_require_js: bool = False):
-        """ Set the list pf required modules for a given alias to the modules list.
+        """
+        Set the list pf required modules for a given alias to the modules list.
 
-    Usage::
+        Usage::
 
-      deps = []
-      page.imports.getReq("c3", deps)
-      print(deps)
+          deps = []
+          page.imports.getReq("c3", deps)
+          print(deps)
 
-    :param mod: The alias of the external package
-    :param modules: The list of packages aliases in the inverse dependency order
-    :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list
-    :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False
-    """
+        :param mod: The alias of the external package
+        :param modules: The list of packages aliases in the inverse dependency order
+        :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list
+        :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False
+        """
         import_hierarchy = import_hierarchy or JS_IMPORTS
         if isinstance(mod, dict):
             # This will allow different versions of packages according to the modules
@@ -3712,7 +3763,8 @@ class ImportManager:
             self.getReq(req, modules, import_hierarchy, use_require_js=use_require_js)
 
     def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False):
-        """ Remove the underlying imports to avoid duplicated entries.
+        """
+        Remove the underlying imports to avoid duplicated entries.
 
         Usage::
 
@@ -3745,20 +3797,21 @@ class ImportManager:
         return polyfills + import_resolved[::-1]
 
     def cssResolve(self, css_aliases: List[str], local_css: Optional[dict] = None, excluded: List[str] = None):
-        """ Return the list of CSS modules to add to the header.
+        """
+        Return the list of CSS modules to add to the header.
 
-    Usage::
+        Usage::
 
-      >>> ImportManager().cssResolve(['c3'])
-    '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
+          >>> ImportManager().cssResolve(['c3'])
+        '<link rel="stylesheet" href="/static/c3/0.6.12/c3.min.css" type="text/css">'
 
-    :param css_aliases: An array with the list of aliases for the external packages
-    :param local_css: Optional. The external file overrides with the full path
-    :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks
-      already onboarding modules).
+        :param css_aliases: An array with the list of aliases for the external packages
+        :param local_css: Optional. The external file overrides with the full path
+        :param excluded: Optional. Packages excluded from the result object (mandatory for some frameworks
+          already onboarding modules).
 
-    :return: The string to be added to the header.
-    """
+        :return: The string to be added to the header.
+        """
         css = []
         self.__add_imports([(None, None, self.page.ext_packages)])
         # Import hierarchy will rely on the JS_IMPORT definition.
@@ -3825,20 +3878,21 @@ class ImportManager:
         return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
     def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None):
-        """ Return the list of Javascript modules to add to the header.
+        """
+        Return the list of Javascript modules to add to the header.
 
-    Usage::
+        Usage::
 
-      >>> ImportManager().jsResolve(['c3'])
-    '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
+          >>> ImportManager().jsResolve(['c3'])
+        '<script language="javascript" type="text/javascript" src="/static/jquery/3.4.1/jquery.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/d3/5.9.7/d3.min.js"></script>\n<script language="javascript" type="text/javascript" src="/static/c3/0.6.12/c3.min.js"></script>'
 
-    :param js_aliases: An array with the list of aliases for the external packages
-    :param local_js: Optional. The external file overrides with the full path
-    :param excluded: Optional. Packages excluded from the result object
-       (mandatory for some frameworks already onboarding modules)
+        :param js_aliases: An array with the list of aliases for the external packages
+        :param local_js: Optional. The external file overrides with the full path
+        :param excluded: Optional. Packages excluded from the result object
+           (mandatory for some frameworks already onboarding modules)
 
-    :return: The string to be added to the header
-    """
+        :return: The string to be added to the header
+        """
         js = []
         # self.__add_imports([(None, None, self._report.ext_packages)])
         js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
@@ -3904,27 +3958,29 @@ class ImportManager:
         return "\n".join(js)
 
     def jsURLs(self, expr: str):
-        """ Retrieve the list of Javascript dependencies URL from a header.
+        """
+        Retrieve the list of Javascript dependencies URL from a header.
 
-    :param expr: The Javascript String in the page
+        :param expr: The Javascript String in the page
 
-    :return: A Python list with all the Javascript external URL to be imported.
-    """
+        :return: A Python list with all the Javascript external URL to be imported.
+        """
         return re.findall('<script language="javascript" type="text/javascript" src="(.*?)"></script>', expr)
 
     def getFiles(self, css_alias: List[str], js_alias: List[str]):
-        """ Retrieve the package definition from the list of module aliases
+        """
+        Retrieve the package definition from the list of module aliases
 
-    Usage::
+        Usage::
 
-      >>> ImportManager().getFiles(['c3'], ['c3'])
-    f['css'][0]['file']['script']
+          >>> ImportManager().getFiles(['c3'], ['c3'])
+        f['css'][0]['file']['script']
 
-    :param css_alias: An array with the list of aliases for the CSS external packages
-    :param js_alias: An array with the list of aliases for the Js external packages
+        :param css_alias: An array with the list of aliases for the CSS external packages
+        :param js_alias: An array with the list of aliases for the Js external packages
 
-    :return: A dictionary with the CSS and JS files definition.
-    """
+        :return: A dictionary with the CSS and JS files definition.
+        """
         files = {'css': [], 'js': []}
         mod_css, mod_js = {}, {}
         for alias, details in CSS_IMPORTS.items():
@@ -3948,48 +4004,51 @@ class ImportManager:
         return files
 
     def cssGetAll(self):
-        """ To retrieve the full list of available modules on the server.
+        """
+        To retrieve the full list of available modules on the server.
 
-    This will return the dependencies as they should be included in the HTML page.
-    The order and the path resolution is already performed.
+        This will return the dependencies as they should be included in the HTML page.
+        The order and the path resolution is already performed.
 
-    If split is True the generated css file will be not included.
+        If split is True the generated css file will be not included.
 
-    Usage::
+        Usage::
 
-      print(page.imports.cssGetAll())
-    """
+          print(page.imports.cssGetAll())
+        """
         return self.cssResolve(set(CSS_IMPORTS.keys()))
 
     def jsGetAll(self):
-        """ To retrieve the full list of available modules on the server.
+        """
+        To retrieve the full list of available modules on the server.
 
-    This will return the dependencies as they should be included in the HTML page.
-    The order and the path resolution is already performed.
+        This will return the dependencies as they should be included in the HTML page.
+        The order and the path resolution is already performed.
 
-    If split is True the generated JS file will be not included.
+        If split is True the generated JS file will be not included.
 
-    Usage::
+        Usage::
 
-      print(page.imports.jsGetAll())
-    """
+          print(page.imports.jsGetAll())
+        """
         return self.jsResolve(set(JS_IMPORTS.keys()))
 
     def getFullPackage(self, alias: str, version: Optional[str] = None, static_path: Optional[str] = None,
                        reload: bool = False):
-        """ Download a full package (CSS and JS) locally for a server or full offline mode.
+        """
+        Download a full package (CSS and JS) locally for a server or full offline mode.
 
-    Usage::
+        Usage::
 
-      Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
+          Imports.ImportManager(report=Report()).getFullPackage('font-awesome')
 
-    :param alias: The package reference in the above list
-    :param version: Optional. The package version to retrieve
-    :param static_path: Optional. The path in which the files should be copied to
-    :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
+        :param alias: The package reference in the above list
+        :param version: Optional. The package version to retrieve
+        :param static_path: Optional. The path in which the files should be copied to
+        :param reload: Optional. Flag to force the package reloading if the folder already exists. Default False
 
-    :return: The Python Import manager.
-    """
+        :return: The Python Import manager.
+        """
 
         import zipfile
         import shutil
@@ -4040,19 +4099,20 @@ class ImportManager:
         return self
 
     def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None):
-        """ Allow the use of different version of a package.
+        """
+        Allow the use of different version of a package.
 
-    This will change the Import important to the Python env.
+        This will change the Import important to the Python env.
 
-    Usage::
+        Usage::
 
-      page.imports.setVersion(page.imports.pkgs.popper_js.alias, "1.00.0")
+          page.imports.setVersion(page.imports.pkgs.popper_js.alias, "1.00.0")
 
-    :param alias: The package reference in the above list
-    :param version: The new version to be used globally
-    :param js: Optional. The JavaScript packages to be added
-    :param css: Optional. The CSS packages to be added
-    """
+        :param alias: The package reference in the above list
+        :param version: The new version to be used globally
+        :param js: Optional. The JavaScript packages to be added
+        :param css: Optional. The CSS packages to be added
+        """
         self.reqVersion[alias] = version
         for mod_type in [CSS_IMPORTS, JS_IMPORTS]:
             if alias in mod_type:
@@ -4085,26 +4145,27 @@ class ImportManager:
                         "%(cdnjs)s/%(path)s%(script)s" % module] = version
 
     def addPackage(self, alias: str, config: dict):
-        """ Add a new package or update an existing one with new parameters.
+        """
+        Add a new package or update an existing one with new parameters.
 
-    Only few parameters are available here in order to limit the changes.
+        Only few parameters are available here in order to limit the changes.
 
-    Usage::
+        Usage::
 
-      i.addPackage('test',
-      {
-        'req': [{'alias': 'd3'}],
-        'modules': [
-          {'script': 'dc.min.css', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-          {'script': 'dc.min.js', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
-        ]},
-      )
+          i.addPackage('test',
+          {
+            'req': [{'alias': 'd3'}],
+            'modules': [
+              {'script': 'dc.min.css', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+              {'script': 'dc.min.js', 'version': '3.0.9', 'path': 'dc/%(version)s/', 'cdnjs': 'https://cdnjs.cloudflare.com/ajax/libs'},
+            ]},
+          )
 
-    :param alias: The package alias
-    :param config: The Python dictionary with the package details
+        :param alias: The package alias
+        :param config: The Python dictionary with the package details
 
-    :return: The import Manager.
-    """
+        :return: The import Manager.
+        """
 
         global CSS_IMPORTS
         global JS_IMPORTS
@@ -4148,9 +4209,9 @@ class ImportManager:
     def to_requireJs(self, data: dict, excluded_packages: Optional[list] = None):
         """
 
-    :param data: The Report modules to resolve
-    :param excluded_packages: Optional. The packages to exclude
-    """
+        :param data: The Report modules to resolve
+        :param excluded_packages: Optional. The packages to exclude
+        """
         deps_level, alias_to_name, alias_to_var, name_to_alias, results = {}, {}, {}, {}, {'jsFrgs': data['jsFrgs'],
                                                                                            'paths': {}}
         m_versions = {}
@@ -4225,10 +4286,11 @@ class ImportManager:
         return results
 
     def show(self, all: bool = False):
-        """ Show all the underlying packages used in a report or available in the framework.
+        """
+        Show all the underlying packages used in a report or available in the framework.
 
-    :param all: Optional. A flag to specify if only the one requested in the report should be displayed
-    """
+        :param all: Optional. A flag to specify if only the one requested in the report should be displayed
+        """
         packages = {}
         if not all:
             for imp, repo in [(self.page.cssImport, CSS_IMPORTS), (self.page.jsImports, JS_IMPORTS)]:
@@ -4253,24 +4315,25 @@ class ImportManager:
 
     def google_products(self, products: List[str], api_key: Optional[str] = None,
                         site_key: str = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
-        """ Enable the google predefined products.
+        """
+        Enable the google predefined products.
 
-    Those are by default disabled as they are sharing data with Google.
+        Those are by default disabled as they are sharing data with Google.
 
-    TODO: Add the use of the API Key.
+        TODO: Add the use of the API Key.
 
-    Usage::
+        Usage::
 
-      page.imports.google_products(['charts'])
-      page.imports.google_products(['maps'])
-      page.imports.google_products(['tables'])
+          page.imports.google_products(['charts'])
+          page.imports.google_products(['maps'])
+          page.imports.google_products(['tables'])
 
-      https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
+          https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
 
-    :param products: The various Google products to enable in the report
-    :param api_key: Optional. The Google developer API key
-    :param site_key: Optional. The Google site key: https://developers.google.com/recaptcha/docs/v3
-    """
+        :param products: The various Google products to enable in the report
+        :param api_key: Optional. The Google developer API key
+        :param site_key: Optional. The Google site key: https://developers.google.com/recaptcha/docs/v3
+        """
         global JS_IMPORTS
 
         for p in products:
@@ -4283,13 +4346,14 @@ class ImportManager:
         self.page._with_google_imports = True
 
     def locals(self, aliases: List[str], end_points: Optional[str] = None):
-        """ Short circuit the import mechanism and retrieve the selected ones from a local static path.
+        """
+        Short circuit the import mechanism and retrieve the selected ones from a local static path.
 
-    This could help on the debugging and the improvement of the packages before submitting them for review.
+        This could help on the debugging and the improvement of the packages before submitting them for review.
 
-    :param aliases: The list of aliases
-    :param end_points: Optional. The end point on the server (The module static_path as default)
-    """
+        :param aliases: The list of aliases
+        :param end_points: Optional. The end point on the server (The module static_path as default)
+        """
         global JS_IMPORTS
         global CSS_IMPORTS
 
@@ -4305,19 +4369,21 @@ class ImportManager:
 
     @property
     def pkgs(self) -> ImportPackages:
-        """ Shortcut properties to the various package definitions.
+        """
+        Shortcut properties to the various package definitions.
 
-    This can be used in the script in order to change the path of the version of any external modules used.
-    """
+        This can be used in the script in order to change the path of the version of any external modules used.
+        """
         if self.__pkgs is None:
             self.__pkgs = ImportPackages(self.jsImports, self.cssImports, page=self.page)
         return self.__pkgs
 
     def website(self, alias: str):
-        """ Get the official website for a JavaScript library.
+        """
+        Get the official website for a JavaScript library.
 
-    :param alias: The JavaScript module alias (usually the one used by npm)
-    """
+        :param alias: The JavaScript module alias (usually the one used by npm)
+        """
         if alias not in JS_IMPORTS:
             return ""
 
@@ -4328,25 +4394,27 @@ class Package:
 
     @property
     def all(self):
-        """ Get the definition of the package defined in this version of the package.
+        """
+        Get the definition of the package defined in this version of the package.
 
-    This will simplify the compatibility with the interface.
-    """
+        This will simplify the compatibility with the interface.
+        """
         return ImportManager().pkgs
 
     @classmethod
-    def avoid_cache(cls, name: str):
-        """ This will allow the creation and the change of external packages usually cached by the browser.
+    def avoid_cache(cls, name: str) -> str:
+        """
+        This will allow the creation and the change of external packages usually cached by the browser.
 
-    It will add a unique ID to make sure the browser will always try to reload it.
+        It will add a unique ID to make sure the browser will always try to reload it.
 
-    Usage::
+        Usage::
 
-      return jsonify({
-        "import_pkg": pk.package.avoid_cache(r"/static/formatters-numbers-new.js")})
+          return jsonify({
+            "import_pkg": pk.package.avoid_cache(r"/static/formatters-numbers-new.js")})
 
-    :param name: The package name
-    """
+        :param name: The package name
+        """
         import random
 
         return "%s?version=%s" % (name, random.random())
