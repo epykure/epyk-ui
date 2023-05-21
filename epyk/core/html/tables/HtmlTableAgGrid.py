@@ -30,7 +30,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         if records is not None:
             self.options.data = records
 
-    def theme(self, name: str, custom_cls_name: bool = False):
+    def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None):
         """
         Define the theme to be used for the Aggrid table.
 
@@ -48,8 +48,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
         :param name: Aggrid theme name or Custom CSS class name
         :param custom_cls_name: Flag to specify if the theme is coming from the prdefined ones in Ag Grid
+        :param row_height: To change the row height value to match the new theme definition (35px)
         """
-        if custom_cls_name is None:
+        if not custom_cls_name:
+            if row_height is not None:
+                self.options.rowHeight = row_height
             if self.page.imports.pkgs.ag_grid.community_version:
                 Imports.CSS_IMPORTS['ag-grid-community']["modules"].append(
                     {'script': 'ag-theme-%s.min.css' % name, 'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
