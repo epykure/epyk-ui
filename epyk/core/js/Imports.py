@@ -2333,6 +2333,10 @@ class ImportModule:
             links[self._name] = self
 
     @property
+    def name(self):
+        return self._name
+
+    @property
     def alias(self) -> str:
         """ Get the NPM alias name. """
         return self._name
@@ -4194,7 +4198,7 @@ class ImportManager:
         if len(mod_entry['css']) > 0:
             CSS_IMPORTS.setdefault(alias, {}).update(mod_entry['css'])
             self.cssImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
-            for pkg in mod_entry['js']["modules"]:
+            for pkg in mod_entry.get('js', {}).get("modules", []):
                 self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
         if len(mod_entry['js']) > 0:
             JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])

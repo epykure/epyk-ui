@@ -12,6 +12,7 @@ from epyk.core.html.options import OptTableAgGrid
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsAgGrid
 from epyk.core.js.html import JsHtmlTables
+from epyk.core.js import Imports
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -28,6 +29,42 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
                                     css_attrs={"width": width, "height": height})
         if records is not None:
             self.options.data = records
+
+    def theme(self, name: str, custom_cls_name: bool = False):
+        """
+        Define the theme to be used for the Aggrid table.
+
+        Related Pages:
+
+            https://www.ag-grid.com/javascript-data-grid/themes/
+
+        Usage::
+
+            table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport", 'year'])
+            table.theme("balham")
+
+            table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport", 'year'])
+            table.theme("ag-theme-mycustomtheme", custom_cls_name=True)
+
+        :param name: Aggrid theme name or Custom CSS class name
+        :param custom_cls_name: Flag to specify if the theme is coming from the prdefined ones in Ag Grid
+        """
+        if custom_cls_name is None:
+            if self.page.imports.pkgs.ag_grid.community_version:
+                Imports.CSS_IMPORTS['ag-grid-community']["modules"].append(
+                    {'script': 'ag-theme-%s.min.css' % name, 'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                     'cdnjs': Imports.CSS_IMPORTS['ag-grid-community']["modules"][0]['cdnjs']}
+                )
+            else:
+                Imports.CSS_IMPORTS['ag-grid-community']["modules"].append(
+                    {'script': 'ag-theme-%s.min.css' % name,
+                     'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                     'cdnjs': Imports.CSS_IMPORTS['ag-grid-community']["modules"][0]['cdnjs']}
+                )
+            self.page.imports.reload()
+            self.attr["class"].add("ag-theme-%s" % name)
+        else:
+            self.attr["class"].add(name)
 
     def headers(self, cols_def: Dict[str, dict]):
         """
