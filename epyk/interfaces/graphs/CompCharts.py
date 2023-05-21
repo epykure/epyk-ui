@@ -74,9 +74,7 @@ class Graphs:
     Usage::
 
       records = [
-        {"label": 'python', 'value': 12},
-        {"label": 'Java', 'value': 5},
-        {"label": 'Javascript', 'value': 80}]
+        {"label": 'python', 'value': 12}, {"label": 'Java', 'value': 5}, {"label": 'Javascript', 'value': 80}]
       page.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
 
     Related Pages:
@@ -116,6 +114,12 @@ class Graphs:
 
       page.ui.charts.sparkline("box", [1, 2, 3, 4, 5, 4, 3, 2, 1])
       page.ui.charts.sparkline("bar", [1, 2, 3, 4, 5, 4, 3, 2, 10])
+      chart = page.ui.charts.sparkline("line", [1, 2, 3, 4, 5, 4, 3, 2, 10])
+      chart.click([
+        page.js.console.log(chart.dom.val),
+        page.js.console.log(chart.dom.content),
+        page.js.console.log(chart.dom.offset)
+      ])
 
     Related Pages:
 

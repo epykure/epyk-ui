@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.html import Html
 
 from epyk.core.py import types
-from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsGoogleAPI
 
 from epyk.core.html.options import OptGoogle
@@ -50,7 +51,8 @@ class ChartGeoGoogle(Html.Html):
         return super().options
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -59,6 +61,7 @@ class ChartGeoGoogle(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         return '%s = new google.maps.Map(%s, {%s})' % (
             self.chartId, component_id or self.dom.varId, self.options.config_js(options))

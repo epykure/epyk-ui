@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.html import graph
-from epyk.core.html import Defaults_html
 
 
 class Billboard:
@@ -12,7 +11,7 @@ class Billboard:
     self.chartFamily = "BB"
 
   def plot(self, record=None, y=None, x=None, kind="line", profile=None, width=(100, "%"), height=(330, "px"),
-           options=None, html_code=None):
+           options=None, html_code=None, **kwargs):
     """
 
     :tags:
@@ -39,12 +38,19 @@ class Billboard:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """ Display a line chart from Billboard.
+    """
+    Display a line chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      dataPoints = [
+        {'x': 0, 'y': 10, 'y1': 10},
+        {'x': 1, 'y': 35, 'y1': 20}]
+      chart = page.ui.charts.billboard.line(dataPoints, y_columns=["y", 'y1'], x_axis='x')
+      page.ui.button("reset").click([chart.build(dataPoints2)])
 
     Related Pages:
 
@@ -75,10 +81,21 @@ class Billboard:
 
   def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
                  height=(330, "px"), options=None, html_code=None):
-    """ Display a line range chart from Billboard.
+    """
+    Display a line range chart from Billboard.
 
     :tags:
     :categories:
+
+    Usage::
+
+      dataPoints = [
+        {'x': 0, 'y': 10, 'y1': 10},
+        {'x': 1, 'y': 35, 'y1': 20},
+        {'x': 2, 'y': 25, 'y1': 10},
+        {'x': 3, 'y': 30, 'y1': 5},
+        {'x': 4, 'y': 28, 'y1': 10}]
+      c = page.ui.charts.billboard.line_range(dataPoints, y_columns=["y", 'y1'], x_axis='x')
 
     Related Pages:
 
@@ -107,7 +124,8 @@ class Billboard:
 
   def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """ Display a bubble chart from Billboard.
+    """
+    Display a bubble chart from Billboard.
 
     :tags:
     :categories:
@@ -143,7 +161,8 @@ class Billboard:
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """ Display a radar chart from Billboard.
+    """
+    Display a radar chart from Billboard.
 
     :tags:
     :categories:
@@ -176,7 +195,8 @@ class Billboard:
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """ Display a spline chart from Billboard.
+    """
+    Display a spline chart from Billboard.
 
     :tags:
     :categories:
@@ -213,7 +233,8 @@ class Billboard:
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """ Display a step chart from Billboard.
+    """
+    Display a step chart from Billboard.
 
     :tags:
     :categories:
@@ -251,7 +272,8 @@ class Billboard:
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """ Display a area chart from Billboard.
+    """
+    Display a area chart from Billboard.
 
     :tags:
     :categories:
@@ -288,12 +310,18 @@ class Billboard:
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
                 options=None, html_code=None):
-    """ Display a area step chart from Billboard.
+    """
+    Display a area step chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      area_step = page.ui.charts.billboard.area_step(data, y_columns=list(range(4)), x_axis='x')
 
     Related Pages:
 
@@ -322,12 +350,18 @@ class Billboard:
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                  height=(330, "px"), html_code=None):
-    """ Display a timeseries chart from Billboard.
+    """
+    Display a timeseries chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import urls as data_urls
+
+      data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+      ts = page.ui.charts.billboard.timeseries(data_rest, y_columns=['AAPL.Open'], x_axis="Date")
 
     Related Pages:
 
@@ -349,12 +383,18 @@ class Billboard:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """ Display a bar chart from Billboard.
+    """
+    Display a bar chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      b = page.ui.charts.billboard.bar(data, y_columns=list(range(4)), x_axis='x')
 
     Related Pages:
 
@@ -385,7 +425,8 @@ class Billboard:
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """ Display a stacked bar chart from Billboard.
+    """
+    Display a stacked bar chart from Billboard.
 
     :tags:
     :categories:
@@ -424,7 +465,8 @@ class Billboard:
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """ Display a horizontal bar chart from Billboard.
+    """
+    Display a horizontal bar chart from Billboard.
 
     :tags:
     :categories:
@@ -455,7 +497,8 @@ class Billboard:
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """ Display a scatter chart from Billboard.
+    """
+    Display a scatter chart from Billboard.
 
     :tags:
     :categories:
@@ -493,12 +536,18 @@ class Billboard:
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """ Display a pie chart from Billboard.
+    """
+    Display a pie chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import urls as data_urls
+
+      data = randoms.getSeries(5, 40)
+      p = page.ui.charts.billboard.pie(data, y_columns=[1], x_axis='g')
 
     Related Pages:
 
@@ -526,12 +575,18 @@ class Billboard:
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """ Display a donut chart from Billboard.
+    """
+    Display a donut chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import urls as data_urls
+
+      data = randoms.getSeries(5, 40)
+      p = page.ui.charts.billboard.donut(data, y_columns=[1], x_axis='g')
 
     Related Pages:
 
@@ -557,13 +612,16 @@ class Billboard:
       pie_chart.add_dataset(d, data['series'][i])
     return pie_chart
 
-  def gauge(self, value=0, text="", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
-    """ Display a gauge chart from Billboard.
+  def gauge(self, value: int = 0, text: str = "", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
+    """
+    Display a gauge chart from Billboard.
 
     :tags:
     :categories:
 
     Usage::
+
+      g = page.ui.charts.billboard.gauge(60)
 
     Related Pages:
 

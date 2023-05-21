@@ -69,7 +69,8 @@ class HtmlNavBar(Html.Html):
     return self
 
   def no_background(self, to_top: bool = True):
-    """ remove the default navigation bar background and remove the padding.
+    """
+    Remove the default navigation bar background and remove the padding.
 
     :param to_top: Optional. To define if the padding must be removed.
     """
@@ -90,7 +91,8 @@ class HtmlNavBar(Html.Html):
 
   def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False,
                 with_css_cls: bool = True) -> Html.Html:
-    """ Add component to the right.
+    """
+    Add component to the right.
 
     :param component: Internal component to the framework
     :param css: Optional. The CSS attributes
@@ -128,7 +130,8 @@ class HtmlNavBar(Html.Html):
     return component
 
   def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
-    """ Add an item to the nav bar.
+    """
+    Add an item to the nav bar.
 
     :param text: The link to be added to the navbar.
     """
@@ -205,7 +208,8 @@ class HtmlFooter(Html.Html):
     return self
 
   def __getitem__(self, i: int) -> Html.Html:
-    """ Return the internal column in the row for the given index.
+    """
+    Return the internal column in the row for the given index.
 
     :param i: the column index.
     """
@@ -246,7 +250,8 @@ class ContextMenu(Html.Html):
     return super().options
 
   def add_item(self, value: str, icon: Optional[str] = None):
-    """ Add Item to the context menu.
+    """
+    Add Item to the context menu.
 
     :param value:
     :param icon: Optional. The Font awesome icon
@@ -345,7 +350,8 @@ class PanelsBar(Html.Html):
     self.menus.style.css.padding = '5px 0'
 
   def add_panel(self, text: str, content: Html.Html):
-    """ Add a panel to the panel bar.
+    """
+    Add a panel to the panel bar.
 
     :param text: The anchor visible linked to a panel.
     :param content: The panel.

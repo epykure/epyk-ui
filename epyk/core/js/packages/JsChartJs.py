@@ -89,7 +89,8 @@ class ChartJs(JsPackage):
     self._js = []
 
   def getElementsAtEvent(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
-    """   Calling getElementsAtEvent(event) on your Chart instance passing an argument of an event,
+    """
+    Calling getElementsAtEvent(event) on your Chart instance passing an argument of an event,
     or jQuery event, will return the point elements that are at that the same position of that event.
 
     :param js_funcs: The Javascript functions.
@@ -107,7 +108,8 @@ class ChartJs(JsPackage):
   def getElementsAtEventForMode(self, js_funcs: types.JS_FUNCS_TYPES, mode: str = "nearest",
                                 options: types.OPTION_TYPE = None, use_final_position: bool = True,
                                 profile: types.PROFILE_TYPE = False):
-    """   Calling getElementsAtEventForMode(e, mode, options, useFinalPosition) on your Chart instance passing an event and a
+    """
+    Calling getElementsAtEventForMode(e, mode, options, useFinalPosition) on your Chart instance passing an event and a
     mode will return the elements that are found. The options and useFinalPosition arguments are passed through to the
     handlers.
 
@@ -132,7 +134,8 @@ class ChartJs(JsPackage):
         js_funcs, toStr=True, profile=profile), mode, options, use_final_position), is_py_data=False)
 
   def add(self, point: Union[str, primitives.JsDataModel], values: Union[dict, primitives.JsDataModel]):
-    """   Add point to an exiting chart on existing series.
+    """
+    Add point to an exiting chart on existing series.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -157,7 +160,8 @@ class ChartJs(JsPackage):
       'varName': self.varName, 'point': point, 'values': values})
 
   def remove(self, point=None, series_names: Union[list, primitives.JsDataModel] = None):
-    """   Remove point to existing series.
+    """
+    Remove point to existing series.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -192,14 +196,16 @@ class ChartJs(JsPackage):
       'varName': self.varName, 'point': point, 'seriesNames': series_names})
 
   def empty(self):
-    """   Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
+    """
+    Empty a chartJs component. Namely it will set empty lists for the dataSets and the labels.
     This will also update the chart to trigger the animation.
     """
     return JsObjects.JsVoid(
       "%(varName)s.data.datasets = []; %(varName)s.data.labels = []; %(varName)s.update()" % {"varName": self.varName})
 
   def data(self, datasets: dict, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """   Update all the data in the chart.
+    """
+    Update all the data in the chart.
 
     Related Pages:
 
@@ -213,7 +219,8 @@ class ChartJs(JsPackage):
       JsUtils.jsWrap("Object.assign(%s, {python: true})" % JsUtils.jsConvertData(datasets, None)), options, profile)
 
   def load(self, name: str, points: Union[List[dict], primitives.JsDataModel], options: dict = None, color: str = ""):
-    """   Loads new series on an existing chart.
+    """
+    Loads new series on an existing chart.
     existing x axis will not be changed and they will be used to add the points.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
@@ -249,7 +256,8 @@ class ChartJs(JsPackage):
               "htmlCode": self.component.htmlCode, "color": color})
 
   def unload(self, names: list = None):
-    """   Remove series from the chart.
+    """
+    Remove series from the chart.
 
     Note: Do not forget to trigger an update on the chart once all your transformations are done.
 
@@ -272,23 +280,18 @@ class ChartJs(JsPackage):
 
   @property
   def label(self):
-    """   Return the series label.
-    """
+    """ Return the series label. """
     return JsObjects.JsString.JsString("%s.data.labels[activePoints[0]['_index']]" % self.varName, is_py_data=False)
 
   @property
   def content(self):
-    """   
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject(
       "%s.data.datasets[0].data[activePoints[0]['_index']]" % self.varName, is_py_data=False)
 
   @property
   def value(self):
-    """   
-
-    """
+    """ """
     return JsObjects.JsString.JsString("{%(htmlCode)s: {point: %(chart)s.data.datasets[0].data[activePoints[0]['_index']], label: %(chart)s.data.labels[activePoints[0]['_index']]}}" % {
       'htmlCode': self.component.htmlCode, "chart": self.varName}, is_py_data=False)
 
@@ -314,7 +317,8 @@ class ChartJs(JsPackage):
     return JsObjects.JsObject.JsObject("%s.update(%s)" % (self.toStr(), config))
 
   def hide(self, dataset_index: int, data_index: int = None):
-    """ If dataIndex is not specified, sets the visibility for the given dataset to false.
+    """
+    If dataIndex is not specified, sets the visibility for the given dataset to false.
     Updates the chart and animates the dataset with 'hide' mode.
 
     Related Pages:
@@ -330,7 +334,8 @@ class ChartJs(JsPackage):
     return JsObjects.JsObject.JsObject("%s.hide(%s)" % (self.toStr(), dataset_index))
 
   def show(self, dataset_index: int, data_index: int = None):
-    """ If dataIndex is not specified, sets the visibility for the given dataset to true.
+    """
+    If dataIndex is not specified, sets the visibility for the given dataset to true.
     Updates the chart and animates the dataset with 'show' mode.
 
     Related Pages:
@@ -536,7 +541,8 @@ class ChartJs(JsPackage):
     return self.clear()
 
   def setDatasetVisibility(self, dataset_index: int, visibility: bool):
-    """ Sets the visibility for a given dataset. This can be used to build a chart legend in HTML.
+    """
+    Sets the visibility for a given dataset. This can be used to build a chart legend in HTML.
     During click on one of the HTML items, you can call setDatasetVisibility to change the appropriate dataset.
 
     Related Pages:
@@ -550,7 +556,8 @@ class ChartJs(JsPackage):
       self.toStr(), JsUtils.jsConvertData(dataset_index, None), JsUtils.jsConvertData(visibility, None)))
 
   def toggleDataVisibility(self, dataset_index: int):
-    """ Toggles the visibility of an item in all datasets. A dataset needs to explicitly support this feature
+    """
+    Toggles the visibility of an item in all datasets. A dataset needs to explicitly support this feature
     for it to have an effect. From internal chart types, doughnut / pie, polar area, and bar use this.
 
     Related Pages:
@@ -1090,7 +1097,8 @@ class OptionsLabels(DataAttrs):
 
   @property
   def display(self):
-    """ Display the labels.
+    """
+    Display the labels.
 
     Related Pages:
 
@@ -1104,7 +1112,8 @@ class OptionsLabels(DataAttrs):
 
   @property
   def align(self):
-    """ Align property specifies the text horizontal alignment used when drawing the label.
+    """
+    Align property specifies the text horizontal alignment used when drawing the label.
 
     Related Pages:
 
@@ -1118,7 +1127,8 @@ class OptionsLabels(DataAttrs):
 
   @property
   def color(self):
-    """ The label align position.
+    """
+    The label align position.
 
     Related Pages:
 
@@ -1160,7 +1170,8 @@ class OptionsLabels(DataAttrs):
 
   @property
   def position(self):
-    """ The position property specifies the text vertical alignment used when drawing the label.
+    """
+    The position property specifies the text vertical alignment used when drawing the label.
 
     Related Pages:
 
@@ -1180,7 +1191,8 @@ class OptionsLabels(DataAttrs):
 
   @property
   def formatter(self):
-    """ Data values are converted to string.
+    """
+    Data values are converted to string.
     If values are grouped, the value of the group and the value (as string) are shown.
 
     Related Pages:
@@ -1414,6 +1426,7 @@ class DataSetPie(DataSet):
   def weight(self):
     """
     The relative thickness of the dataset.
+
     Providing a value for weight will cause the pie or doughnut dataset to be drawn with a thickness relative to the
     sum of all the dataset weight values.
 

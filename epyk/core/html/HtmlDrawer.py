@@ -57,7 +57,8 @@ class Drawer(Html.Html):
     return super().options
 
   def add_panel(self, link: Union[Html.Html, str], container: Html.Html, display: bool = False):
-    """ Add panel to the drawer object.
+    """
+    Add panel to the drawer object.
 
     :param link: The value in the drawer
     :param container: The component to be displayed
@@ -82,7 +83,8 @@ class Drawer(Html.Html):
     return self._styleObj
 
   def set_handle(self, component: Html.Html):
-    """ Set the handle used to trigger the open / close events.
+    """
+    Set the handle used to trigger the open / close events.
 
     :param component: An HTML component.
     """
@@ -160,7 +162,8 @@ class DrawerMulti(Html.Html):
     return super().options
 
   def add_drawer(self, link: Union[str, Html.Html], container: Html.Html):
-    """ Add panel to the drawer object.
+    """
+    Add panel to the drawer object.
 
     :param link: The value in the drawer
     :param container: The component to be displayed

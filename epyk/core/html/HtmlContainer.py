@@ -480,7 +480,8 @@ class Div(Html.Html):
     return self._styleObj
 
   def build(self, data: types.JS_DATA_TYPES = None, options: Optional[dict] = None,
-            profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
+            profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+            dataflows: List[dict] = None, **kwargs):
     """  
     Build / Update the component.
     This is a function triggered on the JavaScript side.
@@ -489,12 +490,13 @@ class Div(Html.Html):
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. A DOM component reference in the page
+    :param dataflows: Chain of data transformations
     """
     # check if there is no nested HTML components in the data
     if isinstance(data, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in data.items()])
     else:
-      js_data = JsUtils.jsConvertData(data, None)
+      js_data = JsUtils.dataFlows(data, dataflows, self.page)
     options, js_options = options or {}, []
     for k, v in options.items():
       if isinstance(v, dict):
@@ -894,15 +896,16 @@ class Col(Html.Html):
     return self
 
   def build(self, data=None, options: Optional[dict] = None, profile: types.PROFILE_TYPE = None,
-            component_id: Optional[str] = None):
+            component_id: Optional[str] = None, dataflows: List[dict] = None, **kwargs):
     """  
 
     :param data:
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param component_id: Optional. A DOM component reference in the page.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    :param component_id: Optional. A DOM component reference in the page
+    :param dataflows: Chain of data transformations
     """
-    return self.val[0].build(data, options, profile)
+    return self.val[0].build(data, options, profile, component_id=component_id, dataflows=dataflows)
 
   def set_size(self, n: int, break_point: str = "lg"):
     """  

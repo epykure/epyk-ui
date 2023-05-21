@@ -15,13 +15,20 @@ class ApexChart:
 
   def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
-           options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a line chart from ApexCharts.
+           options: types.OPTION_TYPE = None, html_code: str = None, **kwargs):
+    """
+    Display a line chart from ApexCharts.
 
     :tags:
     :categories:
 
     Usage::
+
+      chart = page.ui.charts.apex.line()
+      chart.options.chart.sparkline.enabled = True
+      chart.options.title.text = "$235,312"
+      chart.options.subtitle.text = "Expenses"
+      chart.options.dataLabels.enabled = False
 
     Related Pages:
 
@@ -55,7 +62,7 @@ class ApexChart:
 
   def plot(self, record=None, y: list = None, x: str = None, kind: str = "line", profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
-           options: dict = None, html_code: str = None):
+           options: dict = None, html_code: str = None, **kwargs):
     """
 
     :tags:
@@ -81,7 +88,8 @@ class ApexChart:
   def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
               options: dict = None, html_code: str = None):
-    """ Display a scatter chart from Apexchart.
+    """
+    Display a scatter chart from Apexchart.
 
     :tags:
     :categories:
@@ -123,12 +131,19 @@ class ApexChart:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
           options: dict = None, html_code: str = None):
-    """ Display a bar chart from Apexcharts.
+    """
+    Display a bar chart from Apexcharts.
 
     :tags:
     :categories:
 
     Usage::
+
+      chart = page.ui.charts.apex.bar()
+      chart.options.dataLabels.enabled = False
+      series = chart.options.add_series()
+      series.name = "Test Series"
+      series.data = [45, 23, 87, 5]
 
     Related Pages:
 
@@ -163,7 +178,8 @@ class ApexChart:
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: dict = None, html_code: str = None):
-    """ Display a horizontal bars chart from ApexCharts.
+    """
+    Display a horizontal bars chart from ApexCharts.
 
     :tags:
     :categories:
@@ -204,12 +220,19 @@ class ApexChart:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: dict = None, html_code: str = None):
-    """ Display an area chart from Apexcharts.
+    """
+    Display an area chart from Apexcharts.
 
     :tags:
     :categories:
 
     Usage::
+
+      chart_texas = page.ui.charts.apex.area(state_data, ["cases", "deaths"], 'date')
+      chart_texas.options.dataLabels.enabled = False
+      chart_texas.options.title.text = state
+      chart_texas.options.subtitle.text = "Cases"
+      chart_texas.options.chart.events.custom_config("beforeResetZoom", "function(chartContext, config) { console.log('ok')}", True)
 
     Related Pages:
 

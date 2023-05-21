@@ -94,8 +94,8 @@ class Audio(Media):
     if self.options.autoplay:
       self.set_attrs(name="autoplay", value=JsUtils.jsConvertData(self.options.autoplay, None))
     self.set_attrs(name="src", value=os.path.join(self.val.path, self.val.video))
-    return '<audio %(attrs)s>%(source)s</audio>' % {'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
-                                                    "source": self.val}
+    return '<audio %(attrs)s>%(source)s</audio>' % {
+      'attrs': self.get_attrs(css_class_names=self.style.get_classes()), "source": self.val}
 
 
 class Youtube(Html.Html):
@@ -103,8 +103,8 @@ class Youtube(Html.Html):
 
   def __init__(self, page: primitives.PageModel, link: str, width: tuple, height: tuple, html_code: str,
                profile: Union[bool, dict], options: Optional[dict]):
-    super(Youtube, self).__init__(page, link, css_attrs={"width": width, 'height': height}, html_code=html_code,
-                                  profile=profile, options=options)
+    super(Youtube, self).__init__(
+      page, link, css_attrs={"width": width, 'height': height}, html_code=html_code, profile=profile, options=options)
     self.video = page.ui.layouts.iframe(link)
     self.video.options.managed = False
 
@@ -115,7 +115,8 @@ class Youtube(Html.Html):
 
   @staticmethod
   def get_embed_link(youtube_link: str):
-    """ Simple function to convert a youtube link to the embedded version.
+    """
+    Simple function to convert a youtube link to the embedded version.
 
     Usage::
 
@@ -132,8 +133,8 @@ class Camera(Html.Html):
 
   def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, html_code: str,
                profile: Union[bool, dict], options: Optional[dict]):
-    super(Camera, self).__init__(page, "", html_code=html_code, css_attrs={"width": width, 'height': height},
-                                 profile=profile, options=options)
+    super(Camera, self).__init__(
+      page, "", html_code=html_code, css_attrs={"width": width, 'height': height}, profile=profile, options=options)
     self.options.controls = True
     self.options.autoplay = True
 

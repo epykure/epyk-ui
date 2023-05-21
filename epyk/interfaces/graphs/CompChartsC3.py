@@ -13,7 +13,7 @@ class C3:
 
   def plot(self, record=None, y=None, x=None, kind: str = "line", profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-           options: types.OPTION_TYPE = None, html_code: str = None):
+           options: types.OPTION_TYPE = None, html_code: str = None, **kwargs):
     """
 
     :tags:
@@ -49,6 +49,14 @@ class C3:
 
     Usage::
 
+      dataPoints = [
+        {'x': 0, 'y': 10, 'y1': 10},
+        {'x': 1, 'y': 35, 'y1': 20},
+        {'x': 2, 'y': 25, 'y1': 10},
+        {'x': 3, 'y': 30, 'y1': 5},
+        {'x': 4, 'y': 28, 'y1': 10}]
+      c = page.ui.charts.c3.line(dataPoints2, y_columns=["y", 'y1'], x_axis='x') #dataPoints, y_columns=["y", 'y1'], x_axis='x')
+
     Related Pages:
 
       https://c3js.org/reference.html#line-connectNull
@@ -78,7 +86,8 @@ class C3:
   def spline(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a spline line chart from C3.
+    """
+    Display a spline line chart from C3.
 
     :tags:
     :categories:
@@ -146,7 +155,8 @@ class C3:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display an area line chart from C3.
+    """
+    Display an area line chart from C3.
 
     :tags:
     :categories:
@@ -179,7 +189,8 @@ class C3:
   def area_step(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                 options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a area step line chart from C3.
+    """
+    Display a area step line chart from C3.
 
     :tags:
     :categories:
@@ -213,7 +224,8 @@ class C3:
   def timeseries(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                  options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
                  height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
-    """ Display a timeseries chart from C3.
+    """
+    Display a timeseries chart from C3.
 
     :tags:
     :categories:
@@ -241,7 +253,8 @@ class C3:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a bar chart from C3.
+    """
+    Display a bar chart from C3.
 
     :tags:
     :categories:
@@ -276,7 +289,8 @@ class C3:
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a horizontal bar chart from C3.
+    """
+    Display a horizontal bar chart from C3.
 
     :tags:
     :categories:
@@ -303,7 +317,8 @@ class C3:
   def scatter(self, record=None, y_columns=None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
               options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a Scatter chart from C3.
+    """
+    Display a Scatter chart from C3.
 
     :tags:
     :categories:
@@ -336,7 +351,8 @@ class C3:
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
           options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a pie chart from C3.
+    """
+    Display a pie chart from C3.
 
     :tags:
     :categories:
@@ -370,7 +386,8 @@ class C3:
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Display a donut chart from C3.
+    """
+    Display a donut chart from C3.
 
     :tags:
     :categories:
@@ -403,24 +420,28 @@ class C3:
   def gauge(self, value: float = 0, text: str = "", profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
-    """ Display a gauge chart from C3.
+    """
+    Display a gauge chart from C3.
 
     :tags:
     :categories:
 
     Usage::
 
+      c = page.ui.charts.c3.gauge(45)
+      page.ui.button("Update").click([c.build(10)])
+
     Related Pages:
 
       https://c3js.org/samples/chart_gauge.html
 
-    :param value: Optional. The value.
-    :param text: Optional. The gauge text.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param value: Optional. The value
+    :param text: Optional. The gauge text
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     g_chart = graph.GraphC3.ChartGauge(self.page, width, height, html_code, options or {}, profile)
     g_chart.colors(self.page.theme.charts)
@@ -443,15 +464,15 @@ class C3:
     Usage::
 
 
-    :param record: Optional. The Python list of dictionaries.
+    :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
-    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record.
-    :param epoch_col: Optional. The column corresponding to a key.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param epoch_col: Optional. The column corresponding to a key
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     options.update({'y_columns': y_columns or [], 'x_column': x_axis})

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import primitives, types
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsPackage
@@ -15,7 +15,8 @@ class LTooltip:
     self.varId = "L.marker(%s)" % latlng
 
   def openTooltip(self, latlng=None, options=None):
-    """   Opens the specified tooltip.
+    """
+    Opens the specified tooltip.
 
     Related Pages:
 
@@ -27,7 +28,8 @@ class LTooltip:
     return self
 
   def unbindTooltip(self):
-    """   Removes the tooltip previously bound with bindTooltip.
+    """
+    Removes the tooltip previously bound with bindTooltip.
 
     Related Pages:
 
@@ -37,7 +39,8 @@ class LTooltip:
     return self
 
   def closeTooltip(self):
-    """   Closes the tooltip given as parameter.
+    """
+    Closes the tooltip given as parameter.
 
     Related Pages:
 
@@ -64,7 +67,8 @@ class LMarker:
     self.varId = "L.marker"
 
   def addTo(self, selector: str = None):
-    """   Add the marker to the defined map.
+    """
+    Add the marker to the defined map.
 
     :param selector: Optional. The map reference variable.
     """
@@ -73,7 +77,8 @@ class LMarker:
     return self
 
   def bindPopup(self, content: str):
-    """   Binds a popup to all of the layers at once.
+    """
+    Binds a popup to all of the layers at once.
 
     Related Pages:
 
@@ -87,7 +92,8 @@ class LMarker:
     return popup
 
   def bindTooltip(self, content: str):
-    """   Binds a tooltip to the layer with the passed content and sets up the necessary event listeners.
+    """
+    Binds a tooltip to the layer with the passed content and sets up the necessary event listeners.
 
     Related Pages:
 
@@ -101,7 +107,8 @@ class LMarker:
     return tooltip
 
   def setLatLng(self, latlng):
-    """   Changes the marker position to the given point.
+    """
+    Changes the marker position to the given point.
 
     Related Pages:
 
@@ -117,7 +124,8 @@ class LMarker:
     return self
 
   def setIcon(self, icon: str):
-    """   Changes the marker icon.
+    """
+    Changes the marker icon.
 
     Related Pages:
 
@@ -129,7 +137,8 @@ class LMarker:
     return self
 
   def setOpacity(self, opacity: float):
-    """   Changes the opacity of the marker.
+    """
+    Changes the opacity of the marker.
     Set the opacity of an element (including old IE support). opacity must be a number from 0 to 1.
 
     Related Pages:
@@ -142,7 +151,8 @@ class LMarker:
     return self
 
   def setZIndexOffset(self, offset: float):
-    """   Changes the zIndex offset of the marker.
+    """
+    Changes the zIndex offset of the marker.
 
     Related Pages:
 
@@ -171,7 +181,8 @@ class LCircle(LMarker):
     self.varId = "L.%s" % shape
 
   def radius(self, num: float):
-    """   Radius of the circle, in meters.
+    """
+    Radius of the circle, in meters.
 
     Related Pages:
 
@@ -183,7 +194,8 @@ class LCircle(LMarker):
     return self
 
   def color(self, hexcode: str):
-    """   Color of the circle.
+    """
+    Color of the circle.
 
     Related Pages:
 
@@ -215,7 +227,8 @@ class LPopup:
     self.varId = "L.marker(%s)" % latlng
 
   def openPopup(self, latlng=None):
-    """   Opens the bound popup at the specified latlng or at the default popup anchor if no latlng is passed.
+    """
+    Opens the bound popup at the specified latlng or at the default popup anchor if no latlng is passed.
 
     Related Pages:
 
@@ -227,7 +240,8 @@ class LPopup:
     return self
 
   def setLatLng(self, latlng):
-    """   Changes the marker position to the given point.
+    """
+    Changes the marker position to the given point.
 
     Related Pages:
 
@@ -239,7 +253,8 @@ class LPopup:
     return self
 
   def setZIndexOffset(self, offset: float):
-    """   Changes the zIndex offset of the marker.
+    """
+    Changes the zIndex offset of the marker.
 
     Related Pages:
 
@@ -250,12 +265,12 @@ class LPopup:
     self._js.append("setZIndexOffset(%s)" % offset)
     return self
 
-  def setContent(self, content: str):
+  def setContent(self, content: str, dataflows: List[dict] = None):
     """   
 
     :param content: The popup content.
     """
-    self._js.append("setContent(%s)" % JsUtils.jsConvertData(content, None))
+    self._js.append("setContent(%s)" % JsUtils.dataFlows(content, dataflows, self.page))
     return self
 
   def openOn(self):
@@ -278,7 +293,8 @@ class LtileLayer:
     self.options, self.__is_attached, self._js = options or {}, False, []
 
   def attribution(self, text: str):
-    """   The attribution control allows you to display attribution data in a small text box on a map.
+    """
+    The attribution control allows you to display attribution data in a small text box on a map.
 
     :param text:
     """
@@ -286,7 +302,8 @@ class LtileLayer:
     return self
 
   def maxBounds(self, latLngBounds):
-    """   When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the
+    """
+    When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the
     user tries to pan outside the view.
     To set the restriction dynamically, use setMaxBounds method.
 
@@ -300,7 +317,8 @@ class LtileLayer:
     return self
 
   def maxZoom(self, num: float):
-    """   Maximum zoom level of the map.
+    """
+    Maximum zoom level of the map.
     If not specified and at least one GridLayer or TileLayer is in the map, the highest of their maxZoom options will
     be used instead.
 
@@ -314,7 +332,8 @@ class LtileLayer:
     return self
 
   def minZoom(self, num: float):
-    """   Minimum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map,
+    """
+    Minimum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map,
     the lowest of their minZoom options will be used instead.
 
     Related Pages:
@@ -331,7 +350,8 @@ class LtileLayer:
     return self
 
   def tileSize(self, num: int):
-    """   Width and height of tiles in the grid. Use a number if width and height are equal,
+    """
+    Width and height of tiles in the grid. Use a number if width and height are equal,
     or L.point(width, height) otherwise.
 
     Related Pages:
@@ -344,7 +364,8 @@ class LtileLayer:
     return self
 
   def zoomOffset(self, num: float):
-    """   The zoom number used in tile URLs will be offset with this value.
+    """
+    The zoom number used in tile URLs will be offset with this value.
 
     Related Pages:
 
@@ -356,7 +377,8 @@ class LtileLayer:
     return self
 
   def accessToken(self, token: str):
-    """   Set the API access token
+    """
+    Set the API access token
 
     :param token: The token value
     """
@@ -384,7 +406,8 @@ class LMapAttributionControl:
     self.varId = varId
 
   def addAttribution(self, text):
-    """   The attribution control allows you to display attribution data in a small text box on a map.
+    """
+    The attribution control allows you to display attribution data in a small text box on a map.
 
     :param text:
     """
@@ -403,7 +426,8 @@ class LMap:
     return self.varId or self.set_var or "window['%s']" % self.component.chartId
 
   def setView(self, LatLng, zoom: float = None):
-    """   Sets the view of the map (geographical center and zoom) with the given animation options.
+    """
+    Sets the view of the map (geographical center and zoom) with the given animation options.
 
     Related Pages:
 
@@ -419,7 +443,8 @@ class LMap:
     return self
 
   def on(self, type_event: types.JS_DATA_TYPES, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Add event / interactivity to the map.
+    """
+    Add event / interactivity to the map.
 
     :param type_event: Type of events (load, click...)
     :param js_funcs:
@@ -430,7 +455,8 @@ class LMap:
       self.toStr(), self.varName, type_event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
   def locationfound(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Fired when geolocation (using the locate method) went successfully.
+    """
+    Fired when geolocation (using the locate method) went successfully.
 
     Related Pages:
 
@@ -443,7 +469,8 @@ class LMap:
     return self.on("locationfound", js_funcs, profile)
 
   def locationerror(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """   Fired when geolocation (using the locate method) failed.
+    """
+    Fired when geolocation (using the locate method) failed.
 
     Related Pages:
 
@@ -456,7 +483,8 @@ class LMap:
     return self.on("locationerror", js_funcs, profile)
 
   def createPane(self, text: str):
-    """   Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
+    """
+    Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
     if map.locate was called with {setView: true}.
 
     Related Pages:
@@ -468,7 +496,8 @@ class LMap:
     return JsUtils.jsWrap("%s; %s.createPane(%s)" % (self.toStr(), self.varName, JsUtils.jsConvertData(text, None)))
 
   def remove(self):
-    """   Destroys the map and clears all related event listeners.
+    """
+    Destroys the map and clears all related event listeners.
 
     Related Pages:
 
@@ -491,7 +520,8 @@ class LMap:
     return self
 
   def locate(self, options: dict = None):
-    """   Tries to locate the user using the Geolocation API, firing a locationfound event with location data on success or a
+    """
+    Tries to locate the user using the Geolocation API, firing a locationfound event with location data on success or a
     locationerror event on failure, and optionally sets the map view to the user's location with respect to detection accuracy
 
     Related Pages:
@@ -505,7 +535,8 @@ class LMap:
     return self
 
   def stopLocate(self):
-    """   Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
+    """
+    Stops watching location previously initiated by map.locate({watch: true}) and aborts resetting the map view
     if map.locate was called with {setView: true}.
 
     Related Pages:
@@ -572,14 +603,12 @@ class LEventlLatlng:
 
   @property
   def lat(self) -> str:
-    """   Return the latitude.
-    """
+    """ Return the latitude. """
     return "event.latlng.lat"
 
   @property
   def lng(self) -> str:
-    """   Return the longitude.
-    """
+    """ Return the longitude. """
     return "event.latlng.lng"
 
   def toStr(self):
@@ -591,8 +620,7 @@ class LEvent(JsPackage):
 
   @property
   def latlng(self):
-    """   Get coordinate from an event on a map.
-    """
+    """ Get coordinate from an event on a map. """
     return LEventlLatlng()
 
 
@@ -628,7 +656,8 @@ class LeafLet(JsPackage):
     return self._control[alias]
 
   def setZoom(self, zoom: float):
-    """   Sets the zoom of the map.
+    """
+    Sets the zoom of the map.
 
     Related Pages:
 
@@ -639,7 +668,8 @@ class LeafLet(JsPackage):
     return JsUtils.jsWrap("%s.setZoom(%s)" % (self._selector, zoom))
 
   def setView(self, LatLng, zoom: float = None):
-    """   Sets the view of the map (geographical center and zoom) with the given animation options.
+    """
+    Sets the view of the map (geographical center and zoom) with the given animation options.
 
     Related Pages:
 
@@ -654,7 +684,8 @@ class LeafLet(JsPackage):
     return JsUtils.jsWrap("%s.setView(%s)" % (self._selector, LatLng))
 
   def zoomIn(self, delta: float):
-    """   Increases the zoom of the map by delta (zoomDelta by default).
+    """
+    Increases the zoom of the map by delta (zoomDelta by default).
 
     :param delta:
     """

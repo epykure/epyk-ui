@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.html import Html
 from epyk.core.html.options import OptionsLeaflet
 from epyk.core.js.packages import JsLeaflet
@@ -75,7 +77,8 @@ class GeoLeaflet(Html.Html):
         return self
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -84,11 +87,12 @@ class GeoLeaflet(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         str_frg = JsUtils.jsConvertFncs(self.__loader_funcs, toStr=True, profile=profile)
         self.builder_name = "LeafletBuilder%s" % self.page.py.hash(str_frg)
         self._js__builder__ = str_frg
-        return super().build(data, options, profile)
+        return super().build(data, options, profile, component_id=component_id, dataflows=dataflows)
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

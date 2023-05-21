@@ -49,7 +49,8 @@ class Image(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlImg:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -61,7 +62,8 @@ class Image(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: str = None):
-    """ Click event which redirect to another page.
+    """
+    Click event which redirect to another page.
  
     :param url: the url.
     :param js_funcs: Optional. The Javascript Events triggered before the redirection
@@ -77,7 +79,8 @@ class Image(Html.Html):
     return self.click(js_funcs, profile, source_event)
 
   def from_plot(self, plt):
-    """ Load a image from a plt object from matplotlib.
+    """
+    Load a image from a plt object from matplotlib.
 
     Usage::
 
@@ -100,7 +103,8 @@ class Image(Html.Html):
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text: str):
-    """ Load a image from a base64 string.
+    """
+    Load a image from a base64 string.
 
     Usage::
 
@@ -122,7 +126,7 @@ class Image(Html.Html):
     self.val["image"] = "png;base64,%s" % text
     return self
 
-  _js__builder__ = ''' console.log(options);
+  _js__builder__ = '''
       if ((typeof data !== 'string') && (typeof data !== 'undefined')){
         if(typeof data.path === 'undefined'){data.path = '%s'}
         htmlObj.src = data.path + "/" + data.image}
@@ -132,7 +136,8 @@ class Image(Html.Html):
 
   def loading(self, status: bool = True, label: str = "https://loading.io/mod/spinner/spinner/sample.gif",
               *args, **kwargs):
-    """ Loading feature for image.
+    """
+    Loading feature for image.
 
     Usage::
 
@@ -187,7 +192,8 @@ class AnimatedImage(Html.Html):
     self.style.css.position = "relative"
 
   def from_plot(self, plt):
-    """ Load an image from a plt object from matplotlib.
+    """
+    Load an image from a plt object from matplotlib.
 
     Usage::
 
@@ -210,7 +216,8 @@ class AnimatedImage(Html.Html):
     return self.from_base64(base64.b64encode(str_io.read()).decode("utf-8"))
 
   def from_base64(self, text: str):
-    """ Load a image from a base64 string.
+    """
+    Load a image from a base64 string.
 
     Usage::
 
@@ -351,7 +358,8 @@ class ImgCarousel(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """ Add click event on this component.
+    """
+    Add click event on this component.
  
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -434,7 +442,8 @@ class Icon(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: str = None):
-    """ Click event which redirect to another page.
+    """
+    Click event which redirect to another page.
  
     :param url: The url text
     :param js_funcs: Optional. The Javascript Events triggered before the redirection
@@ -450,7 +459,8 @@ class Icon(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlIcon:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -468,7 +478,8 @@ class Icon(Html.Html):
     return self._styleObj
 
   def spin(self):
-    """ Add the spin class to the font awesome icon.
+    """
+    Add the spin class to the font awesome icon.
 
     Related Pages:
 
@@ -490,7 +501,8 @@ class Icon(Html.Html):
     return self
 
   def border(self):
-    """ Add a border to the icon.
+    """
+    Add a border to the icon.
 
     Related Pages:
 
@@ -501,7 +513,8 @@ class Icon(Html.Html):
     return self
 
   def size(self, value: int):
-    """Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
+    """
+    Icons inherit the font-size of their parent container which allow them to match any text you might use with them.
 
     With the following classes, we can increase or decrease the size of icons relative to that inherited font-size.
 
@@ -519,7 +532,8 @@ class Icon(Html.Html):
     return self
 
   def fixed_width(self):
-    """ Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed width.
+    """
+    Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed width.
 
     Related Pages:
 
@@ -530,7 +544,8 @@ class Icon(Html.Html):
     return self
 
   def rotate(self, value: int):
-    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
     Related Pages:
 
@@ -543,7 +558,8 @@ class Icon(Html.Html):
     return self
 
   def flip(self, direction: str = 'h'):
-    """ To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+    """
+    To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
     This will use the font-awesome flip classes.
 
@@ -563,7 +579,8 @@ class Icon(Html.Html):
     return self
 
   def pull(self, position: str = 'left'):
-    """ Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+    """
+    Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
     Related Pages:
 
@@ -576,7 +593,8 @@ class Icon(Html.Html):
     return self
 
   def set_icon(self, value: str):
-    """ Add the icon class reference to the CSS class attribute of the component.
+    """
+    Add the icon class reference to the CSS class attribute of the component.
  
     :param value: An icon class reference
     """
@@ -584,7 +602,8 @@ class Icon(Html.Html):
     return self
 
   def hover_colors(self, color_hover: str, color_out: str = None):
-    """ Change the color of the button background when the mouse is hover.
+    """
+    Change the color of the button background when the mouse is hover.
 
     Usage::
 
@@ -603,7 +622,8 @@ class Icon(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
-    """ The onclick event occurs when the user clicks on an element.
+    """
+    The onclick event occurs when the user clicks on an element.
  
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -620,7 +640,8 @@ class Icon(Html.Html):
 class IconToggle(Icon):
 
   def add_components(self, components: List[Html.Html]):
-    """ Add a list of components.
+    """
+    Add a list of components.
  
     :param components: The HTML components.
     """
@@ -629,7 +650,8 @@ class IconToggle(Icon):
 
   def click(self, js_on_off_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """ The onclick event occurs when the user clicks on an element.
+    """
+    The onclick event occurs when the user clicks on an element.
  
     :param js_on_off_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -666,7 +688,8 @@ class Emoji(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -718,7 +741,8 @@ class Badge(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtml:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -741,7 +765,8 @@ class Badge(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """ The onclick event occurs when the user clicks on an element.
+    """
+    The onclick event occurs when the user clicks on an element.
  
     :param js_funcs: The Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -811,7 +836,8 @@ class SlideShow(Html.Html):
 
   @property
   def js(self) -> JsTinySlider.TinySlider:
-    """ The tiny slider javascript events.
+    """
+    The tiny slider javascript events.
 
     Return the Javascript internal object.
 
@@ -823,7 +849,8 @@ class SlideShow(Html.Html):
 
   @property
   def dom(self) -> JsHtmlTinySlider.JsHtmlTinySlider:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -1090,7 +1117,8 @@ class SlideShow(Html.Html):
 
   @property
   def options(self) -> OptImg.OptionsTinySlider:
-    """ The tiny slider options.
+    """
+    The tiny slider options.
 
     Related Pages:
 
@@ -1099,7 +1127,8 @@ class SlideShow(Html.Html):
     return super().options
 
   def empty(self):
-    """ Empty all the values already defined on the Python side.
+    """
+    Empty all the values already defined on the Python side.
 
     This will be called before the JavaScript Transpilation.
     """
@@ -1108,7 +1137,8 @@ class SlideShow(Html.Html):
     return self
 
   def add(self, component: Html.Html):
-    """ Add a component to the slider container.
+    """
+    Add a component to the slider container.
  
     :param component: A component to be added to the slider container
     """
@@ -1131,18 +1161,20 @@ class SlideShow(Html.Html):
 class Background(HtmlContainer.Div):
 
   def build(self, value: Union[str, list, primitives.JsDataModel] = None, options: dict = None,
-            profile: types.PROFILE_TYPE = None, component_id: str = None):
+            profile: types.PROFILE_TYPE = None, component_id: str = None,
+            dataflows: List[dict] = None, **kwargs):
     """
  
-    :param value:
+    :param value: Optional. Component data
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. A DOM component reference in the page
+    :param dataflows: Chain of data transformations
     """
     if isinstance(value, dict):
       js_data = "{%s}" % ",".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in value.items()])
     else:
-      js_data = JsUtils.jsConvertData(value, None)
+      js_data = JsUtils.dataFlows(data, dataflows, self.page)
     options, js_options = options or {}, []
     for k, v in options.items():
       if isinstance(v, dict):

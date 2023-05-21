@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 from typing import List
 
 from epyk.core.py import types as etypes
@@ -122,6 +123,10 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         Set a callback for click event on each data point.
 
+        Usage::
+
+            chart.click([page.js.console.log(chart.js.content)])
+
         Related Pages:
 
           https://c3js.org/reference.html#data-onclick
@@ -144,7 +149,8 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("c3")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None) -> str:
         """
         Update the chart with context and / or data changes.
 
@@ -153,10 +159,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The component reference (the htmlCode)
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
@@ -174,15 +181,17 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return js_expr
 
     @Html.jbuider("c3")
-    def generate(self, data: etypes.JS_DATA_TYPES, options=None, profile: etypes.PROFILE_TYPE = False) -> str:
+    def generate(self, data: etypes.JS_DATA_TYPES, options=None,
+                 profile: etypes.PROFILE_TYPE = False, dataflows: List[dict] = None) -> str:
         """
 
         :param data: The dataset to be added to the chart
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
+        :param dataflows: Chain of data transformations
         """
         builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-            self.builder_name, JsUtils.jsConvertData(data, None),
+            self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
             self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
 
         return '%(chartId)s = c3.generate(Object.assign(%(options)s, {data: %(builder)s}))' % {

@@ -15,7 +15,7 @@ class Nvd3:
 
   def plot(self, record=None, y=None, x=None, kind: str = "line", profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-           options: types.OPTION_TYPE = None, html_code: str = None):
+           options: types.OPTION_TYPE = None, html_code: str = None, **kwargs):
     """
 
     :tags:
@@ -43,12 +43,19 @@ class Nvd3:
   def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartScatter:
-    """ Display a scatter chart from NVD3.
+    """
+    Display a scatter chart from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      scatter = page.ui.charts.nvd3.scatter(data, y_columns=[1, 2, 3, 4], x_axis='x')
+      scatter.dom.showYAxis(False).showXAxis(False)
 
     Related Pages:
 
@@ -76,7 +83,8 @@ class Nvd3:
   def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartLine:
-    """ Display a line chart from NVD3.
+    """
+    Display a line chart from NVD3.
 
     :tags:
     :categories:
@@ -123,12 +131,18 @@ class Nvd3:
                       options: types.OPTION_TYPE = None,
                       width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                       html_code: str = None) -> graph.GraphNVD3.ChartCumulativeLine:
-    """ Display a Cumulative line chart from NVD3.
+    """
+    Display a Cumulative line chart from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      page.ui.charts.nvd3.line_cumulative(data, y_columns=[1, 2, 3, 4], x_axis='x')
 
     Related Pages:
 
@@ -158,12 +172,18 @@ class Nvd3:
                  options: types.OPTION_TYPE = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                  html_code: str = None) -> graph.GraphNVD3.ChartFocusLine:
-    """ Display a line chart with focus from NVD3.
+    """
+    Display a line chart with focus from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      page.ui.charts.nvd3.line_focus(data, y_columns=[1, 2, 3, 4], x_axis='x')
 
     Related Pages:
 
@@ -192,7 +212,8 @@ class Nvd3:
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
           height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartBar:
-    """ Display a bars chart from NVD3.
+    """
+    Display a bars chart from NVD3.
 
     :tags:
     :categories:
@@ -284,12 +305,18 @@ class Nvd3:
   def multi(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartMultiBar:
-    """ Display a multi types chart from NVD3.
+    """
+    Display a multi types chart from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      page.ui.charts.nvd3.multi(data, y_columns=[1, 2], x_axis='x')
 
     Related Pages:
 
@@ -320,12 +347,18 @@ class Nvd3:
             options: types.OPTION_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
-    """ Display a histo chart from NVD3.
+    """
+    Display a histo chart from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 40)
+      page.ui.charts.nvd3.histo(data, y_columns=[1, 2], x_axis='x')
 
     Related Pages:
 
@@ -354,7 +387,8 @@ class Nvd3:
                  options: types.OPTION_TYPE = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                  html_code: str = None) -> graph.GraphNVD3.ChartHistoBar:
-    """ Display a Timseries chart from NVD3.
+    """
+    Display a Timseries chart from NVD3.
 
     :tags:
     :categories:
@@ -387,7 +421,8 @@ class Nvd3:
   def area(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
            html_code: str = None) -> graph.GraphNVD3.ChartArea:
-    """ Display an area chart from NVD3.
+    """
+    Display an area chart from NVD3.
 
     :tags:
     :categories:
@@ -420,12 +455,26 @@ class Nvd3:
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
           height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
-    """ Display a pie chart from NVD3.
+    """
+    Display a pie chart from NVD3.
 
     :tags:
     :categories:
 
     Usage::
+
+      dataPoints = [
+        {'x': "Series A", 'y': 10, 'y1': 10},
+        {'x': "Series B", 'y': 35, 'y1': 20},
+      ]
+
+      dataPoints2 = [
+        {'label': "mango", 'x': "Series A", 'y': 30, 'y1': 0},
+        {'label': "grape", 'x': "Series B", 'y': 28, 'y1': 0}
+      ]
+
+      chart = page.ui.charts.nvd3.pie(dataPoints, y_columns=["y"], x_axis='x')
+      page.ui.button("Load").click([c.build(nvd3.xy(dataPoints2, ["y"], "x"))])
 
     Related Pages:
 
@@ -453,7 +502,8 @@ class Nvd3:
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None) -> graph.GraphNVD3.ChartPie:
-    """ Display a donut chart from NVD3.
+    """
+    Display a donut chart from NVD3.
 
     :tags:
     :categories:
@@ -461,6 +511,8 @@ class Nvd3:
     Usage::
 
       c = page.ui.charts.nvd3.donut(y_columns=["Value"], x_axis="Year", height=(500, "px"))
+      donut_s = page.ui.charts.nvd3.donut(data, y_columns=[1], x_axis='g')
+      donut_s.dom.padAngle(.08).cornerRadius(5)
 
     Related Pages:
 
@@ -494,6 +546,8 @@ class Nvd3:
 
     Usage::
 
+      page.ui.charts.nvd3.gauge(value=8, text="", total=10)
+
     Related Pages:
 
       http://nvd3.org/examples/pie.html
@@ -510,7 +564,9 @@ class Nvd3:
     if total != 100:
       value = value / total * 100
       total = 100
-    pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options or {}, html_code, profile)
+    options = options or {}
+    options.update({'y_columns': []})
+    pie_chart = graph.GraphNVD3.ChartPie(self.page, width, height, options, html_code, profile)
     pie_chart.colors(self.page.theme.charts)
     pie_chart.dom.x(column="x").y(column="y").donut(True).title(text or "%s%%" % value)
     pie_chart.dom.arcsRadius([
@@ -561,6 +617,23 @@ class Nvd3:
     :categories:
 
     Usage::
+
+      records = [
+        {'name': 'scripts',
+         'children': [
+            {"name": "javascript", "size": 10},
+            {"name": "python", "size": 5},
+            {"name": "ruby", "size": 5},
+            {"name": "r", "size": 5}]},
+         {"name": "code",
+          "children": [
+            {"name": "C#", "size": 10},
+            {"name": "Java", "size": 5},
+          ]
+          }
+      ]
+
+      page.ui.charts.nvd3.sunburst(records, name='languages')
 
     Related Pages:
 
@@ -646,6 +719,11 @@ class Nvd3:
 
     Usage::
 
+      from epyk.mocks import urls as data_urls
+
+      data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+      chart = page.ui.charts.nvd3.ohlc(data_rest, closes=["AAPL.Close"], highs=["AAPL.High"], lows=["AAPL.Low"], opens=["AAPL.Open"], x_axis='Date')
+
     Related Pages:
 
     :param record: List of dict. Optional. The Python list of dictionaries.
@@ -687,6 +765,10 @@ class Nvd3:
 
     Usage::
 
+      plot_box = page.ui.charts.nvd3.group_box()
+      plot_box.add_box(q1=1.05, q3=2.7, mean=3.365, median=1.3, minRegularValue=0.4, maxRegularValue=4.4, minOutlier=0.4, maxOutlier=6)
+      plot_box.add_box(q1=1.05, q3=2.849999996, mean=3.4949999, median=1.5, minRegularValue=0.3, maxRegularValue=4.9, minOutlier=0.3, maxOutlier=4.9)
+
     Related Pages:
 
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
@@ -709,6 +791,17 @@ class Nvd3:
     :categories:
 
     Usage::
+
+      force = page.ui.charts.nvd3.forceDirected()
+      force.add_trace({
+          "nodes": [
+            {"name": "Myriel", "group":1},
+            {"name": "Napoleon", "group":1},
+            {"name": "Mlle.Baptistine", "group": 5}],
+          "links": [
+            {"source": 1, "target": 2, "value": 1}
+          ]
+      })
 
     Related Pages:
 

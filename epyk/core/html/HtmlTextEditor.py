@@ -3,7 +3,7 @@
 
 import datetime
 
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
@@ -32,7 +32,8 @@ class Console(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.Console:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -44,7 +45,8 @@ class Console(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsConsole:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 
@@ -77,7 +79,8 @@ class Editor(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.Editor:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -88,7 +91,8 @@ class Editor(Html.Html):
     return self._dom
 
   def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
-    """ Add a bespoke action to the action panel.
+    """
+    Add a bespoke action to the action panel.
 
     :param icon: The font awesome icon
     :param js_funcs: The Javascript functions
@@ -100,7 +104,8 @@ class Editor(Html.Html):
     return self
 
   def toggle(self, js_funcs: Union[list, str], icons: tuple = ("show", "hide"), tooltip: Optional[str] = None):
-    """ Add an event action to the console object.
+    """
+    Add an event action to the console object.
 
     :param icons: The font awesome icon
     :param js_funcs: Optional. The Javascript functions
@@ -115,7 +120,8 @@ class Editor(Html.Html):
     return self
 
   def copy(self, js_funcs: Union[list, str], icon: str = "capture", tooltip: Optional[str] = None):
-    """ Copy the content of the editor component to the clipboard.
+    """
+    Copy the content of the editor component to the clipboard.
 
     :param icon: The font awesome icon
     :param js_funcs: Optional. The Javascript functions
@@ -126,7 +132,8 @@ class Editor(Html.Html):
     return self.action(icon, js_funcs, tooltip)
 
   def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
-    """ Emtpy run button.
+    """
+    Emtpy run button.
 
     This function will just add the icon on the actions panel.
 
@@ -137,7 +144,8 @@ class Editor(Html.Html):
     return self.action(icon, js_funcs, tooltip)
 
   def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
-    """ Emtpy save button.
+    """
+    Emtpy save button.
 
     This function will just add the icon on the actions panel.
 
@@ -148,7 +156,8 @@ class Editor(Html.Html):
     return self.action(icon, js_funcs, tooltip)
 
   def clear(self, js_funcs: Union[list, str], icon: str = "remove", tooltip: Optional[str] = None):
-    """ Add an event action to the console object.
+    """
+    Add an event action to the console object.
 
     :param icon: The font awesome icon
     :param js_funcs: Optional. The Javascript functions
@@ -184,7 +193,8 @@ class Cell(Html.Html):
     self.actions = []
 
   def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
-    """ Add a bespoke action to the action panel.
+    """
+    Add a bespoke action to the action panel.
 
     :param icon: The font awesome icon
     :param js_funcs: The Javascript functions
@@ -195,7 +205,8 @@ class Cell(Html.Html):
     icon_button.options.managed = False
 
   def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
-    """ Emtpy run button.
+    """
+    Emtpy run button.
 
     This function will just add the icon on the actions panel.
 
@@ -207,7 +218,8 @@ class Cell(Html.Html):
     return self.action(icon, js_funcs, tooltip)
 
   def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
-    """ Emtpy save button.
+    """
+    Emtpy save button.
 
     This function will just add the icon on the actions panel.
 
@@ -255,7 +267,8 @@ class Code(Html.Html):
 
   @property
   def js(self) -> JsCodeMirror.CM:
-    """ A lot of CodeMirror features are only available through its API.
+    """
+    A lot of CodeMirror features are only available through its API.
 
     Thus, you need to write code (or use add-ons) if you want to expose them to your users.
 
@@ -269,7 +282,8 @@ class Code(Html.Html):
 
   @property
   def dom(self) -> JsHtmlEditor.CodeMirror:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -281,7 +295,8 @@ class Code(Html.Html):
 
   @property
   def addon(self):
-    """ The add-on directory in the distribution contains a number of reusable components that implement extra
+    """
+    The add-on directory in the distribution contains a number of reusable components that implement extra
     editor functionality.
 
     Related Pages:
@@ -291,7 +306,8 @@ class Code(Html.Html):
     return self.options.addons
 
   def placeholder(self, text: str):
-    """ Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
+    """
+    Adds a placeholder option that can be used to make content appear in the editor when it is empty and not focused.
 
     :param text: The text displayed if empty editor
     """
@@ -300,17 +316,18 @@ class Code(Html.Html):
     return self
 
   def build(self, data: str  =None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
-            component_id: Optional[str] = None):
+            component_id: Optional[str] = None, dataflows: List[dict] = None, **kwargs):
     """
     This is a specific version of the common build as the function is not applied to the dom ID but
     the HTML code set as a proper global variable on the JavaScript side.
 
     :param data: Optional. The component input data
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional.
+    :param dataflows: Chain of data transformations
     """
-    return super().build(data, options, profile, component_id=self.htmlCode)
+    return super().build(data, options, profile, component_id=self.htmlCode, dataflows=dataflows)
 
     # if not self.builder_name or self._js__builder__ is None:
     #   raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
@@ -347,7 +364,8 @@ class Code(Html.Html):
       self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper)
 
   def loading(self, status: bool = True, label: str = "Loading...."):
-      """ Loading component on a chart.
+      """
+      Loading component on a chart.
 
       Usage::
 
@@ -446,7 +464,8 @@ class MarkdownReader(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -463,7 +482,8 @@ class MarkdownReader(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """ Property to set all the input TimePicker component properties.
+    """
+    Property to set all the input TimePicker component properties.
 
     Related Pages:
 
@@ -472,7 +492,8 @@ class MarkdownReader(Html.Html):
     return super().options
 
   def tooltips(self, data: dict):
-    """ Add automatically tooltips to the words.
+    """
+    Add automatically tooltips to the words.
 
     :param data: The list of word to be automatically changed
     """

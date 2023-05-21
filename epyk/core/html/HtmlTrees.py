@@ -209,7 +209,8 @@ class DropDown(Html.Html):
 
   @property
   def style(self) -> GrpClsList.ClassDropDown:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
     """
@@ -224,7 +225,8 @@ class DropDown(Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ The onclick event occurs when the user clicks on an element.
+    """
+    The onclick event occurs when the user clicks on an element.
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console.

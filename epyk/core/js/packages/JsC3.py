@@ -14,7 +14,8 @@ class C3Legend:
     self.varName = js_code
 
   def show(self, target_ids=None):
-    """   Show legend for each target.
+    """
+    Show legend for each target.
 
     Related Pages:
 
@@ -29,7 +30,8 @@ class C3Legend:
     return "%s.show(%s)" % (self.varName, target_ids)
 
   def hide(self, target_ids=None):
-    """   Show legend for each target.
+    """
+    Show legend for each target.
 
     Related Pages:
 
@@ -49,7 +51,8 @@ class C3Data:
     self.varName = js_code
 
   def axes(self, target_ids=None):
-    """   Get and set axes of the data loaded in the chart.
+    """
+    Get and set axes of the data loaded in the chart.
 
     Related Pages:
 
@@ -64,7 +67,8 @@ class C3Data:
     return "%s.axes(%s)" % (self.varName, target_ids)
 
   def values(self, target_ids=None):
-    """   Get values of the data loaded in the chart.
+    """
+    Get values of the data loaded in the chart.
 
     Related Pages:
 
@@ -79,7 +83,8 @@ class C3Data:
     return "%s.values(%s)" % (self.varName, target_ids)
 
   def colors(self, target_ids=None):
-    """   Get and set colors of the data loaded in the chart.
+    """
+    Get and set colors of the data loaded in the chart.
 
     Related Pages:
 
@@ -94,7 +99,8 @@ class C3Data:
     return "%s.colors(%s)" % (self.varName, target_ids)
 
   def names(self, target_ids=None):
-    """   Get and set names of the data loaded in the chart.
+    """
+    Get and set names of the data loaded in the chart.
 
     Related Pages:
 
@@ -109,7 +115,8 @@ class C3Data:
     return "%s.names(%s)" % (self.varName, target_ids)
 
   def show(self, target_ids=None):
-    """   Show legend for each target.
+    """
+    Show legend for each target.
 
     Related Pages:
 
@@ -124,7 +131,8 @@ class C3Data:
     return "%s.show(%s)" % (self.varName, target_ids)
 
   def hide(self, target_ids=None):
-    """   Show legend for each target.
+    """
+    Show legend for each target.
 
     Related Pages:
 
@@ -170,7 +178,8 @@ class C3(JsPackage):
     """
 
   def show(self, target_ids=None, options=None):
-    """   This API shows specified targets.
+    """
+    This API shows specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be shown.
@@ -190,7 +199,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
   def toggle(self, target_ids=None, options=None):
-    """   This API shows specified targets.
+    """
+    This API shows specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be shown.
@@ -211,7 +221,8 @@ class C3(JsPackage):
 
   @property
   def data(self):
-    """   Get data loaded in the chart.
+    """
+    Get data loaded in the chart.
 
     Related Pages:
 
@@ -220,7 +231,8 @@ class C3(JsPackage):
     raise NotImplementedError()
 
   def hide(self, target_ids=None, options=None):
-    """   This API hides specified targets.
+    """
+    This API hides specified targets.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be hidden.
@@ -240,7 +252,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.show(%s, %s)" % (self._selector, target_ids, options))
 
   def flow(self, args):
-    """   Flow data to the chart.
+    """
+    Flow data to the chart.
 
     By this API, you can append new data points to the chart.
 
@@ -254,7 +267,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.flow(%s)" % (self._selector, args))
 
   def transform(self, chart_type, target_ids=None):
-    """   Change the type of the chart.
+    """
+    Change the type of the chart.
 
     Related Pages:
 
@@ -271,7 +285,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.transform(%s, %s)" % (self._selector, chart_type, target_ids))
 
   def load(self, args):
-    """   Load data to the chart.
+    """
+    Load data to the chart.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be toggles.
@@ -291,7 +306,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.load(%s)" % (self._selector, args))
 
   def unload(self, args):
-    """   Unload data to the chart.
+    """
+    Unload data to the chart.
 
     You can specify multiple targets by giving an array that includes id as String.
     If no argument is given, all of targets will be toggles.
@@ -308,7 +324,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.unload(%s)" % (self._selector, args))
 
   def resise(self, size):
-    """   Resize the chart.
+    """
+    Resize the chart.
 
     Related Pages:
 
@@ -320,7 +337,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.resise(%s)" % (self._selector, size))
 
   def flush(self):
-    """   Force to redraw.
+    """
+    Force to redraw.
 
     Related Pages:
 
@@ -329,7 +347,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.flush()" % self._selector)
 
   def destroy(self):
-    """   Reset the chart object and remove element and events completely.
+    """
+    Reset the chart object and remove element and events completely.
 
     Related Pages:
 
@@ -338,7 +357,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.destroy()" % self._selector)
 
   def xgrids(self, grids):
-    """   Update x grid lines.
+    """
+    Update x grid lines.
 
     :param grids:
     """
@@ -346,7 +366,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.xgrids(%s)" % (self._selector, grids))
 
   def select(self, ids, indices, reset_others):
-    """   Change data point state to selected.
+    """
+    Change data point state to selected.
 
     By this API, you can select data points. To use this API, data.selection.enabled needs to be set true.
 
@@ -364,7 +385,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.select(%s, %s, %s)" % (self._selector, ids, indices, reset_others))
 
   def unselected(self, ids, indices):
-    """   Change data point state to unselected.
+    """
+    Change data point state to unselected.
 
     By this API, you can unselect data points. To use this API, data.selection.enabled needs to be set true.
 
@@ -380,7 +402,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.select(%s, %s)" % (self._selector, ids, indices))
 
   def selected(self, ids):
-    """   Get selected data points.
+    """
+    Get selected data points.
 
     By this API, you can get selected data points information.
     To use this API, data.selection.enabled needs to be set true.
@@ -395,7 +418,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.selected(%s)" % (self._selector, ids))
 
   def zoom(self, domain):
-    """   Zoom by giving x domain.
+    """
+    Zoom by giving x domain.
 
     Related Pages:
 
@@ -407,7 +431,8 @@ class C3(JsPackage):
     return JsObjects.JsVoid("%s.zoom(%s)" % (self._selector, domain))
 
   def unzoom(self):
-    """   Unzoom to the original domain.
+    """
+    Unzoom to the original domain.
 
     Related Pages:
 

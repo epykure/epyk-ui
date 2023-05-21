@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.py import primitives
+from typing import List
+from epyk.core.py import types as etypes
+
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsPackage
@@ -66,18 +68,23 @@ class FrappeCharts(JsPackage):
     """
     return JsObjects.JsVoid("%s.removeDataPoint(%s)" % (self.varName, n))
 
-  def update(self, data):
-    """   Update the entire data, including annotations, by passing the entire new data object to update.
+  def update(self, data: etypes.JS_DATA_TYPES, dataflows: List[dict] = None):
+    """
+    Update the entire data, including annotations, by passing the entire new data object to update.
 
     Related Pages:
 
       https://frappe.io/charts/docs/reference/api
+
+    :param data: Optional. The full datasets object expected by Frappe Chart
+    :param dataflows: Chain of data transformations
     """
-    data = JsUtils.jsConvertData(data, None)
+    data = JsUtils.dataFlows(data, dataflows, self.page)
     return JsObjects.JsVoid("%s.update(%s)" % (self.varName, data))
 
   def export(self):
-    """   Frappe charts are exportable to an SVG format, in which they are natively rendered.
+    """
+    Frappe charts are exportable to an SVG format, in which they are natively rendered.
 
     Related Pages:
 

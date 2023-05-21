@@ -1,5 +1,5 @@
 
-from typing import Any, Union
+from typing import Any, Union, List
 from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 
@@ -1252,12 +1252,12 @@ class JsNvd3Pie(JsNvd3):
 class JsNvd3ForceDirectedGraph(JsNvd3Bar):
   chartFnc = "forceDirectedGraph"
 
-  def color(self, column: str):
+  def color(self, colors: List[str]):
     """   
 
-    :param column:
+    :param colors:
     """
-    self.fnc("color(function(d) { return d.%s })" % column)
+    self.fnc("color(function(d) {return %(colors)s[d.index]})" % {"colors": colors})
     return self
 
   def nodeExtras(self, text: str):

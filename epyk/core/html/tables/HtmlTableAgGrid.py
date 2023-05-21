@@ -1,12 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from typing import Generator, Dict
 from epyk.core.html.options import OptTableAgGrid
 
+from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsAgGrid
 from epyk.core.js.html import JsHtmlTables
 
@@ -165,7 +168,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self.js.setColumnDefs(options)
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Common JavaScript function to add rows to the table.
 
@@ -182,12 +186,13 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return "%s%s" % (self.js.setRowData(data).toStr(), state_expr)
+            return "%s%s" % (self.js.setRowData(JsUtils.dataFlows(data, dataflows, self.page)).toStr(), state_expr)
 
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
             'tableId': self.tableId, 'config': self.options.config_js(options),
@@ -195,6 +200,26 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False, data_ref: str = "data"):
+        """
+        The onclick event occurs when the user clicks on an element.
+
+        Usage::
+
+          div = page.ui.div()
+          div.click([
+            page.js.alert("This is a test")
+          ])
+
+        Related Pages:
+
+          https://www.w3schools.com/jsref/event_onclick.asp
+
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param source_event: Optional. The source target for the event
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        :param data_ref: Optional. Data reference on the Js side
+        """
         if self.options.rowSelection is None:
             self.options.rowSelection = 'single'
         row_style = self.options.rowStyle

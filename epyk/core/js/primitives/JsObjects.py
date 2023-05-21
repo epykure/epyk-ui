@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Any, Type
+from typing import Optional, Any, Type, Callable
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -175,6 +175,14 @@ return data}
       js_funcs = [js_funcs]
     self.__catch.extend(js_funcs)
     return self
+
+  def json(self):
+    """ Get the json response once received """
+    return self.then("(response) => response.json()")
+
+  def process(self, callback: Callable):
+    """ """
+    return self.then("(data) => %s" % JsUtils.jsConvertData(callback(JsObject.JsObject.get("data")), None))
 
   @property
   def r(self):

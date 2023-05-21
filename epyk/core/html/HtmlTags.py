@@ -58,7 +58,8 @@ class HtmlGeneric(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -86,7 +87,8 @@ class HtmlGeneric(Html.Html):
 
   def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
               data: types.JS_DATA_TYPES = None):
-    """ Display a loading message in the component.
+    """
+    Display a loading message in the component.
 
     Usage::
 
@@ -105,7 +107,8 @@ class HtmlGeneric(Html.Html):
     return ""
 
   def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE, data: types.JS_DATA_TYPES = None):
-    """ Display an error message in the component.
+    """
+    Display an error message in the component.
 
     Usage::
 

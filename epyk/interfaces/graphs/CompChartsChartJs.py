@@ -88,6 +88,11 @@ class ChartJs:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      chart = page.ui.charts.chartJs.line(data, y_columns=[3, 4], x_axis='x')
+
     Related Pages:
 
       https://www.chartjs.org/
@@ -127,6 +132,11 @@ class ChartJs:
     :categories:
 
     Usage::
+
+      from epyk.mocks import urls as data_urls
+
+      data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+      ts = page.ui.charts.chartJs.timeseries(data_rest, y_columns=['AAPL.Open'], x_axis="Date")
 
     Related Pages:
 
@@ -291,6 +301,12 @@ class ChartJs:
 
     Usage::
 
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      chart = page.ui.charts.chartJs.step(data, y_columns=list(range(4)), x_axis='x')
+      chart.options.showLines = True
+
     Related Pages:
 
       https://www.chartjs.org/samples/latest/scales/linear/step-size.html
@@ -327,6 +343,11 @@ class ChartJs:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      page.ui.charts.chartJs.bar(data, y_columns=[1, 2, 3], x_axis='x')
 
     Related Pages:
 
@@ -453,6 +474,12 @@ class ChartJs:
     :categories:
 
     Usage::
+
+      from epyk.mocks import randoms
+
+      data = randoms.getSeries(5, 30)
+      chart = page.ui.charts.chartJs.hbar(data[:5], y_columns=list(range(4)), x_axis='x')
+      chart.click([page.js.console.log(chart.js.value)])
 
     Related Pages:
 
@@ -770,13 +797,30 @@ if (item){
         treemap_chart.datasets[-1].backgrounds(Colors.color_from_raw(self.page.theme.notch(), d["data"]))
     return treemap_chart
 
-  def sankey(self, record: List[dict] = None, profile: types.PROFILE_TYPE = None,
+  def sankey(self, record: List[dict] = None, label: str = "", profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: dict = None, html_code: str = None, **kwargs
   ) -> graph.GraphChartJs.ChartSankey:
+    """
+    To create a sankey chart, include chartjs-chart-sankey.js after chart.js and then create the chart by setting the
+    type attribute to 'sankey'
+
+    Usage::
+
+      data = [
+              {"from": 'a', "to": 'b', "flow": 10},
+              {"from": 'a', "to": 'c', "flow": 5},]
+      chart = page.ui.charts.chartJs.sankey(data, label="series")
+      chart.click(
+          chart.build([{"from": 'a', "to": 'b', "flow": 10}]))
+
+    Related Pages:
+
+      https://npm.io/package/chartjs-chart-sankey
+    """
     sankey_chart = graph.GraphChartJs.ChartSankey(self.page, width, height, html_code, options, profile)
     sankey_chart.colors(self.page.theme.charts)
-    sankey_chart.add_dataset(record, "test")
+    sankey_chart.add_dataset(record, label)
     sankey_chart.options.responsive = True
     return sankey_chart
 

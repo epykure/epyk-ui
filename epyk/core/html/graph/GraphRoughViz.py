@@ -76,7 +76,8 @@ class RoughViz(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("roughviz")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True):
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -85,10 +86,11 @@ class RoughViz(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile:Optional. A flag to set the component performance storage
         :param component_id: Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:

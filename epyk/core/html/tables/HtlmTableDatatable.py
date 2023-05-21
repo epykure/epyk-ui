@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+from typing import Optional, List
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
@@ -98,7 +98,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
+              profile: types.PROFILE_TYPE = False, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None) -> str:
         """
 
         :param data: A String corresponding to a JavaScript object
@@ -106,13 +107,16 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The component reference (the htmlCode)
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data:
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
             return JsUtils.jsConvertFncs(
-                [self.js.clear(), self.js.rows.add(data, update=True), state_expr], toStr=True, profile=profile)
+                [self.js.clear(),
+                 self.js.rows.add(JsUtils.dataFlows(data, dataflows, self.page), update=True),
+                 state_expr], toStr=True, profile=profile)
 
         return '%s = %s.DataTable(%s)' % (
             self.tableId, component_id or self.dom.jquery.varId, self.options.config_js(options))

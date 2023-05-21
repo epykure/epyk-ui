@@ -3,7 +3,7 @@ import sys
 import time
 import json
 
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Union
 from epyk.core.py import primitives
 
 from epyk.core.js import Imports
@@ -447,7 +447,7 @@ if (typeof icon === "undefined"){
     return path
 
   def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None,
-                print_paths: bool = False):
+                print_paths: bool = False, run_id: Union[bool, str] = True):
     """ Function used to generate a static HTML page for the report.
 
     Usage::
@@ -464,6 +464,7 @@ if (typeof icon === "undefined"){
     :param name: Optional. The filename without the extension
     :param print_paths: Optional. Print the page for the created file
     :param options: Optional.
+    :param run_id: Optional.
 
     :return: The file full path.
     """
@@ -479,7 +480,13 @@ if (typeof icon === "undefined"){
       if configs.keys:
         name = self.page.json_config_file
       else:
-        name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], int(time.time()))
+        if run_id is True:
+          name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], int(time.time()))
+        elif run_id is False:
+          name = os.path.basename(sys.argv[0])[:-3]
+        else:
+          name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], run_id)
+
 
     name = name if not name.endswith(".html") else name[:-5]
     html_file_path = os.path.join(path, "%s.html" % name)

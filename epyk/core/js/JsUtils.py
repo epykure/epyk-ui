@@ -5,6 +5,7 @@ import os
 import re
 import json
 import functools
+from pathlib import Path
 from typing import Union, Optional, List, Any
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -333,6 +334,31 @@ def isNotDefined(varName: str):
     :return: A string in Python and a Boolean in Javascript.
     """
     return "typeof %s === 'undefined'" % varName
+
+
+def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None) -> str:
+    """
+    All the chaining of data flow transformation to feed the various widgets.
+
+    :param data:
+    :param flow:
+    :param page:
+    """
+    if flow is None:
+        return jsConvertData(data, None)
+
+    data_expr = jsConvertData(data, None)
+    for dataflow in flow:
+        if "file" in dataflow:
+            ext_js_file = Path(dataflow["file"])
+            if page is not None:
+                page.js.customFile(ext_js_file.name, path=ext_js_file.parent)
+        if "parameters" in dataflow:
+            data_expr = "%s(%s, %s)" % (dataflow["name"], data_expr, ", ".join(
+                ["%s=%s" % (k, v) for k, v in dataflow["parameters"].items()]))
+        else:
+            data_expr = "%s(%s)" % (dataflow["name"], data_expr)
+    return data_expr
 
 
 class JsFile:

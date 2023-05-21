@@ -10,6 +10,7 @@
 *.bat
 *.xml
 *.iml
+.pypirc
 
 # Packages #
 ############

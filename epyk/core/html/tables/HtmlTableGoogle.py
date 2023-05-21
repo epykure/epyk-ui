@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.js import JsUtils
@@ -33,7 +35,7 @@ class Table(Html.Html):
     def define(self, options: dict):
         raise NotImplementedError("Not yet available")
 
-    def build(self, data=None, options=None, profile=None, component_id=None):
+    def build(self, data=None, options=None, profile=None, component_id=None, dataflows: List[dict] = None):
         return '''
 %(chartId)s = google.charts.setOnLoadCallback( (function(){
 var data = new google.visualization.DataTable();
@@ -50,7 +52,7 @@ return chart
 }));
 ''' % {
             'chartId': self.tableId, 'varId': component_id or self.dom.varId,
-            'data': JsUtils.jsConvertData(data, None), 'type': self.__options["type"]}
+            'data': JsUtils.dataFlows(data, dataflows, self.page), 'type': self.__options["type"]}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

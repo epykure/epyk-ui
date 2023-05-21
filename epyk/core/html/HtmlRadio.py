@@ -28,7 +28,8 @@ class Radio(Html.Html):
       self.add(v['value'], v.get('checked', False))
 
   def add(self, val: Union[Html.Html, str], checked: bool = False):
-    """ Add a value to the radio component.
+    """
+    Add a value to the radio component.
 
     :param val: The item to be added
     :param checked: Optional. Check the item
@@ -175,7 +176,8 @@ class Switch(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
     """
@@ -185,7 +187,8 @@ class Switch(Html.Html):
 
   @property
   def js(self) -> JsComponents.Switch:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
 
@@ -196,7 +199,8 @@ class Switch(Html.Html):
     return self._js
 
   def event_fnc(self, event: str):
-    """ Function to get the generated JavaScript method in order to then reuse it in other components.
+    """
+    Function to get the generated JavaScript method in order to then reuse it in other components.
 
     This will return the event function in a string already transpiled.
 
@@ -206,7 +210,8 @@ class Switch(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """ Add click event to the switch component.
+    """
+    Add click event to the switch component.
 
     Usage::
 
@@ -226,7 +231,8 @@ class Switch(Html.Html):
 
   def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """ Set the click property for the Switch.
+    """
+    Set the click property for the Switch.
 
     The toggle event allow specifying different Javascript functions for each states of the component.
 

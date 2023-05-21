@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.py import primitives, types as etypes
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
@@ -45,13 +47,14 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.dom.dimension(dimension.varId).group(group.varId)
         return self
 
-    def build(self, data=None, options=None, profile=False, component_id=None):
+    def build(self, data=None, options=None, profile=False, component_id=None, dataflows: List[dict] = None):
         """
 
         :param data:
         :param options:
         :param profile:
         :param component_id:
+        :param dataflows:
         """
         return self.dom.render().toStr()
 

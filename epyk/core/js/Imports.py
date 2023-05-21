@@ -262,7 +262,7 @@ JS_IMPORTS = {
     'ag-grid-community': {
         'website': 'https://www.ag-grid.com/javascript-grid/',
         'repository': 'https://github.com/ag-grid/ag-grid',
-        'version': '25.2.0',
+        'version': '25.1.0',
         "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
         'modules': [
             {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/',
@@ -670,7 +670,7 @@ JS_IMPORTS = {
     # Used to produce sparkline charts in a document and in Tabulator
     'jquery-sparkline': {
         'req': [{'alias': 'jquery'}],
-        'version': '2.19.4',
+        'version': '2.1.2',
         'website': 'https://omnipotent.net/jquery.sparkline/#s-about',
         'register': {'alias': 'sparkline', 'module': 'jquery.sparkline.min', 'npm': 'jquery-sparkline', 'npm_path': ''},
         'modules': [
@@ -2530,7 +2530,7 @@ class ImportModule:
         self.community_version = False
         self.page.imports.add(self._name)
         if self._name == 'ag-grid-community':
-            version = version or "29.1.0"
+            version = version or "29.2.0"
             JS_IMPORTS['ag-grid-community']["version"] = version
             JS_IMPORTS['ag-grid-community']["register"]["module"] = "ag-grid-enterprise.min"
             JS_IMPORTS['ag-grid-community']["register"]["npm"] = "ag-grid-enterprise"
@@ -2546,7 +2546,7 @@ class ImportModule:
             self._js["versions"] = [version]
 
             CSS_IMPORTS['ag-grid-community']['modules'] = [
-                {'script': 'ag-grid.min.css', 'path': 'ag-grid-enterprise@%(version)s/styles/', 'cdnjs': JSDELIVER}
+                {'script': 'ag-grid.min.css', 'path': 'ag-grid-enterprise@%(version)s/styles/', 'cdnjs': JSDELIVER},
             ]
             self._css["main"] = {
                 "%s/ag-grid-enterprise@%s/styles/ag-grid.min.css" % (JSDELIVER, version): version}
@@ -3786,7 +3786,8 @@ class ImportManager:
                     raise ValueError("Package %s not allowed" % a)
 
                 if self.page is not None and "info" in PACKAGE_STATUS[a]:
-                    logging.warning("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
+                    # Change this to be info logs instead of warnings
+                    logging.info("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
             occurrences = [j for j, x in enumerate(import_resolved) if x == a]
             if len(occurrences) > 1:
                 for j in occurrences[::-1][1:]:

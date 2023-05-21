@@ -266,8 +266,9 @@ class Number(Html.Html):
     return self.span.click(js_funcs, profile, source_event, on_ready)
 
   def build(self, data=None, options: Optional[dict] = None,
-            profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None):
-    return self.span.build(data, options, profile, self.span.htmlCode)
+            profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None,
+            dataflows: List[dict] = None, **kwargs):
+    return self.span.build(data, options, profile, self.span.htmlCode, dataflows=dataflows)
 
   def __add__(self, component: Html.Html):
     """ Add items to a container """
@@ -380,18 +381,15 @@ class Formula(Html.Html):
 
   @property
   def style(self) -> GrpClsText.ClsFormula:
-    """  
-    Property to the CSS Style of the component.
-
-    :rtype: GrpClsText.ClsFormula
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsText.ClsFormula(self)
     return self._styleObj
 
   @property
   def js(self) -> JsMathjax.Mathjax:
-    """   Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     Related Pages:
@@ -439,8 +437,6 @@ class TrafficLight(Html.Html):
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlBackground
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlBackground(self, page=self.page)
@@ -450,9 +446,9 @@ class TrafficLight(Html.Html):
     """  
     Set the 3 colors of the traffic light.
  
-    :param Optional[str] green: Optional. The color used in case of result true.
-    :param Optional[str] red: Optional. The color used in case of result false.
-    :param Optional[str] neutral: Optional. The color used in case of null.
+    :param green: Optional. The color used in case of result true
+    :param red: Optional. The color used in case of result false
+    :param neutral: Optional. The color used in case of null
 
     :return: self to allow the chains.
     """
@@ -468,8 +464,8 @@ class TrafficLight(Html.Html):
     """  
     Turn a error warning to a green one.
  
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.action = self.page.ui.icon("wrench")
     self.action.options.managed = False
@@ -486,10 +482,10 @@ class TrafficLight(Html.Html):
     """  
     Add a click event to the HTML component.
  
-    :param Union[list, str] js_funcs: Javascript functions.
-    :param Optional[Union[bool, dict]] profile: Optional. A flag to set the component performance storage.
-    :param Optional[str] source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param bool on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     success = Colors.getHexToRgb(self.page.theme.success.base)
     self.style.css.cursor = "pointer"
@@ -538,20 +534,12 @@ class ContentsTable(Html.Html):
     """  
     Property to set all the possible object for the content menu on the page.
     This object can be defined only once on the page.
-
-    :rtype: OptText.OptContents
     """
     return super().options
 
   @property
   def style(self) -> GrpClsText.ContentTable:
-    """  
-    Property to the CSS Style of the component.
-
-    Usage::
-
-    :rtype: GrpClsText.ContentTable
-    """
+    """ Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsText.ContentTable(self)
     return self._styleObj
@@ -577,10 +565,10 @@ class ContentsTable(Html.Html):
 
       https://www.w3schools.com/tags/tag_a.asp
  
-    :param str text: The link label.
-    :param int level: Optional. The depth of the link in the document tree.
-    :param str anchor: Optional. The internal reference to another component in the page.
-    :param Optional[dict] options: Optional. The component options for the link.
+    :param text: The link label
+    :param level: Optional. The depth of the link in the document tree
+    :param anchor: Optional. The internal reference to another component in the page
+    :param options: Optional. The component options for the link
     """
     if anchor is not None:
       href = self.page.ui.link(text, url=anchor, options=options)
@@ -638,10 +626,10 @@ class ContentsTable(Html.Html):
     """  
     Add a bespoke title to the page without click event.
  
-    :param str text: The text visible on the page.
-    :param Optional[int] level: Optional. The depth for the title in the document.
-    :param Optional[dict] options: Optional. The options for the title component.
-    :param str html_code_content: Optional. The Html code of the component Content table.
+    :param text: The text visible on the page
+    :param level: Optional. The depth for the title in the document
+    :param options: Optional. The options for the title component
+    :param html_code_content: Optional. The Html code of the component Content table
     """
     return self.page.components[html_code_content].anchor(text, level or 4, None, options=options)
 
@@ -650,12 +638,12 @@ class ContentsTable(Html.Html):
     """  
     Add a bespoke title to the page.
  
-    :param Html.Html component: An HTML component.
-    :param Optional[int] level: Optional. The depth for the title in the document.
-    :param Optional[dict] css: Optional. The CSS style for the link.
-    :param str position: Optional. The position in the content table (append or prepend).
-    :param Optional[dict] options: Optional. The options for the title component.
-    :param str html_code_content: Optional. The Html code of the component Content table.
+    :param component: An HTML component
+    :param level: Optional. The depth for the title in the document
+    :param css: Optional. The CSS style for the link
+    :param position: Optional. The position in the content table (append or prepend)
+    :param options: Optional. The options for the title component
+    :param html_code_content: Optional. The Html code of the component Content table
     """
     # Special attribute set in the base component interface
     div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -677,11 +665,11 @@ class ContentsTable(Html.Html):
     Add a bespoke link to the content table.
     Those links can redirect to external pages.
  
-    :param Html.Html component: An HTML component.
-    :param str url: The url link with component clicked.
-    :param Optional[int] level: Optional. The depth for the title in the document.
-    :param Optional[dict] options: Optional. The options for the title component.
-    :param str html_code_content: Optional. The Html code of the component Content table.
+    :param component: An HTML component
+    :param url: The url link with component clicked
+    :param level: Optional. The depth for the title in the document
+    :param options: Optional. The options for the title component
+    :param html_code_content: Optional. The Html code of the component Content table
     """
     component.options.managed = False
     div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
@@ -793,8 +781,6 @@ class Composite(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsComposite
     """
     return super().options
 
@@ -807,8 +793,6 @@ class Composite(Html.Html):
     This is the only flexible component in which this DOM object can be changed.
 
     :return: A Javascript Dom object
-
-    :rtype: JsHtml.JsHtmlRich
     """
     if self._dom is None:
       self._dom = JsHtml.JsHtmlRich(self.val, page=self.page)
@@ -820,11 +804,7 @@ class Composite(Html.Html):
 
   @property
   def style(self) -> GrpCls.ClassHtmlEmpty:
-    """  
-    Property to the CSS Style of the component.
-
-    :rtype: GrpCls.ClassHtmlEmpty
-    """
+    """  Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpCls.ClassHtmlEmpty(self)
     return self._styleObj
@@ -957,8 +937,6 @@ class Status(Html.Html):
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
-
-    :rtype: OptText.OptionsStatus
     """
     return super().options
 

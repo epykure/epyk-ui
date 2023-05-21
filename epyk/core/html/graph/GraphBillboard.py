@@ -140,7 +140,8 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("bb")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True) -> str:
+              profile: etypes.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None) -> str:
         """
         Build / Update the chart.
 
@@ -149,16 +150,17 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The component reference (the htmlCode)
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
-            builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
-                self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
+            builder_func = JsUtils.jsWrap("%s(%s, %s)" % (
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
+                self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
             return '%(chartId)s.unload({done: function(){%(chartId)s.load(%(builder)s)}});%(state)s' % {
-                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
+                'chartId': self.chartId, 'builder': builder_func, "state": state_expr}
 
         return '%s = bb.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
 

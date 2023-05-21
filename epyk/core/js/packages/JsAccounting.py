@@ -68,7 +68,8 @@ class Accounting(JsPackage):
     sep_decimal: str = None,
     format_expr: Union[str, dict] = None
   ) -> JsObject.JsObject:
-    """ The most basic library function for formatting numbers as money values, with customisable currency symbol,
+    """
+    The most basic library function for formatting numbers as money values, with customisable currency symbol,
     precision (decimal places), and thousand / decimal separators
 
     Related Pages:
@@ -93,7 +94,8 @@ class Accounting(JsPackage):
       value, symbol, digits, sep_thousand, sep_decimal, format_expr))
 
   def formatColumn(self, value, digits: int = None, sep_thousand: str = None) -> JsObject.JsObject:
-    """ The base function of the library, which takes any number or array of numbers, runs accounting.unformat() to
+    """
+    The base function of the library, which takes any number or array of numbers, runs accounting.unformat() to
     remove any formatting, and returns the number(s) formatted with separated thousands and custom precision
 
     Related Pages:
@@ -111,7 +113,8 @@ class Accounting(JsPackage):
     return JsObject.JsObject.get("accounting.formatColumn(%s, %s, %s)" % (value, digits, sep_thousand))
 
   def formatNumber(self, value, digits: int = None, sep_thousand: str = None) -> JsObject.JsObject:
-    """ The base function of the library, which takes any number or array of numbers, runs accounting.unformat()
+    """
+    The base function of the library, which takes any number or array of numbers, runs accounting.unformat()
     to remove any formatting, and returns the number(s) formatted with separated thousands and custom precision:
 
     Related Pages:
@@ -129,7 +132,8 @@ class Accounting(JsPackage):
     return JsObject.JsObject.get("accounting.formatNumber(%s, %s, %s)" % (value, digits, sep_thousand))
 
   def toFixed(self, value, digits: int = None) -> JsObject.JsObject:
-    """ Implementation of toFixed() that treats floats more like decimal values than binary,
+    """
+    Implementation of toFixed() that treats floats more like decimal values than binary,
     fixing inconsistent precision rounding in JavaScript (where some .05 values round up, while others round down)
 
     Related Pages:
@@ -144,7 +148,8 @@ class Accounting(JsPackage):
     return JsObject.JsObject.get("accounting.toFixed(%s, %s)" % (value, digits))
 
   def unformat(self, value) -> JsObject.JsObject:
-    """ Takes any number and removes all currency formatting. Aliased as accounting.parse()
+    """
+    Takes any number and removes all currency formatting. Aliased as accounting.parse()
 
     Related Pages:
 
@@ -157,7 +162,8 @@ class Accounting(JsPackage):
 
   @property
   def settings(self):
-    """ Settings object that controls default parameters for library methods:
+    """
+    Settings object that controls default parameters for library methods:
 
     Related Pages:
 

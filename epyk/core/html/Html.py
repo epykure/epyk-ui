@@ -1505,24 +1505,24 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
         """
-    The onclick event occurs when the user clicks on an element.
+        The onclick event occurs when the user clicks on an element.
 
-    Usage::
+        Usage::
 
-      div = page.ui.div()
-      div.click([
-        page.js.alert("This is a test")
-      ])
+          div = page.ui.div()
+          div.click([
+            page.js.alert("This is a test")
+          ])
 
-    Related Pages:
+        Related Pages:
 
-      https://www.w3schools.com/jsref/event_onclick.asp
+          https://www.w3schools.com/jsref/event_onclick.asp
 
-    :param js_funcs: A Javascript Python function
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
-    :param source_event: Optional. The source target for the event
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
-    """
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param source_event: Optional. The source target for the event
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
         if on_ready:
             self.page.body.onReady([self.dom.events.trigger("click")])
         return self.on("click", js_funcs, profile, source_event)
@@ -1677,7 +1677,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     @jbuider()
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None):
+              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+              dataflows: List[dict] = None):
         """
     Return the JavaScript fragment to refresh the component content.
 
@@ -1690,6 +1691,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. The object reference ID
+    :param dataflows: Chain of data transformations
     """
         self.options.builder = self.builder_name
         # check if there is no nested HTML components in the data
@@ -1698,7 +1700,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                         data.items()]
             js_data = "{%s}" % ",".join(tmp_data)
         else:
-            js_data = JsUtils.jsConvertData(data, None)
+            js_data = JsUtils.dataFlows(data, dataflows, self.page)
         fnc_call = "%s(%s, %s, %s)" % (
             self.builder_name, component_id or self.dom.varId, js_data, self.options.config_js(options))
         profile = self.with_profile(profile, event="Builder")

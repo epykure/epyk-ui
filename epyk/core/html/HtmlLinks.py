@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, Optional, Any
+from typing import Union, Optional, Any, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -30,7 +30,8 @@ class ExternalLink(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlLink:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -46,7 +47,8 @@ class ExternalLink(Html.Html):
     return super().options
 
   def anchor(self, component: Html.Html):
-    """ Create a link to an HTML component defined in the page.
+    """
+    Create a link to an HTML component defined in the page.
 
     This will create a shortcut to directly scroll to this component.
 
@@ -57,7 +59,8 @@ class ExternalLink(Html.Html):
     return self
 
   def no_decoration(self, color: Optional[str] = None):
-    """ Property to remove the list default style.
+    """
+    Property to remove the list default style.
 
     :param color: Optional. The color code.
     """
@@ -69,27 +72,31 @@ class ExternalLink(Html.Html):
     return self
 
   def build(self, data: types.JS_FUNCS_TYPES = None, options: dict = None,
-            profile: types.PROFILE_TYPE = False, component_id: str = None):
-    """ Return the JavaScript fragment to refresh the component content.
+            profile: types.PROFILE_TYPE = False, component_id: str = None,
+            dataflows: List[dict] = None, **kwargs):
+    """
+    Return the JavaScript fragment to refresh the component content.
 
     :param data: The component expected content
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param component_id: Optional. The component reference (the htmlCode)
+    :param dataflows: Chain of data transformations
     """
     if not hasattr(data, 'toStr'):
       if not isinstance(data, dict):
         data = {"text": data}
       if "url" not in data:
         data["url"] = self.val["url"]
-    return super(ExternalLink, self).build(data, options, profile, component_id)
+    return super(ExternalLink, self).build(data, options, profile, component_id, dataflows=dataflows)
 
   def __str__(self):
     return '<a %s>%s</a>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.val['text'], self.helper)
 
   def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
               data: types.JS_DATA_TYPES = None):
-    """ Display a loading message in the component.
+    """
+    Display a loading message in the component.
 
     Usage::
 
@@ -108,7 +115,8 @@ class ExternalLink(Html.Html):
     return ""
 
   def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE, data: types.JS_DATA_TYPES = None):
-    """ Display an error message in the component.
+    """
+    Display an error message in the component.
 
     Usage::
 
@@ -158,7 +166,8 @@ class DataLink(Html.Html):
 
   def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
               data: types.JS_DATA_TYPES = None):
-    """ Display a loading message in the component.
+    """
+    Display a loading message in the component.
 
     Usage::
 
@@ -178,7 +187,8 @@ class DataLink(Html.Html):
 
   def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE,
             data: types.JS_DATA_TYPES = None):
-    """ Display an error message in the component.
+    """
+    Display an error message in the component.
 
     Usage::
 

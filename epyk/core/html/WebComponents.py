@@ -29,7 +29,8 @@ class Component:
         return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
     def ts(self, name: Optional[str] = None):
-        """ Component export for an Angular app.
+        """
+        Component export for an Angular app.
 
         This will allow building apps directly from reports using each underlying components available in the framework.
 

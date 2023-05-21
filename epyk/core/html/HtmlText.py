@@ -45,7 +45,8 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -62,7 +63,8 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def id_html(self) -> JsNodeDom.JsDoms:
-    """ Get the element by id.
+    """
+    Get the element by id.
 
     This will return a DOM object and use document.getElementById to select the component.
 
@@ -79,7 +81,8 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Add a click event for a component.
+    """
+    Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component.
     has been build.
@@ -105,7 +108,8 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
     return self
 
   def selectable(self, flag: bool = False):
-    """ Make the label component not selectable.
+    """
+    Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
@@ -133,10 +137,6 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
 
 class Span(MixHtmlState.HtmlStates, Html.Html):
-  """
-  Span (text) component.
-
-  """
   name = 'Span'
   _option_cls = OptText.OptionsText
 
@@ -164,7 +164,8 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def id_html(self):
-    """ Get the element by id.
+    """
+    Get the element by id.
 
     This will return a DOM object and use document.getElementById to select the component.
 
@@ -176,7 +177,8 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -188,7 +190,8 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Add a click event for a component.
+    """
+    Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component
     has been build.
@@ -233,7 +236,8 @@ class Position(Span):
     return self
 
   def position(self, index: int, style: dict):
-    """ Set the CSS format for a specific character at a given position.
+    """
+    Set the CSS format for a specific character at a given position.
 
     :param index: A number
     :param style: The CSS Style to be used
@@ -265,7 +269,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Add a click event on the text component.
+    """
+    Add a click event on the text component.
 
     The style of the mouse on the component will be changed to make the event more visible.
 
@@ -285,7 +290,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
 
   def goto(self, url: str, js_funcs: Union[list, str] = None, profile: Optional[Union[bool, dict]] = None,
            target: str = "_blank", source_event: Optional[str] = None, on_ready: bool = False):
-    """ Click event which redirect to another page.
+    """
+    Click event which redirect to another page.
 
     :param url: The url link
     :param js_funcs: The Javascript Events triggered before the redirection
@@ -302,7 +308,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def val(self):
-    """ Property to get the jquery value of the HTML object in a python HTML object.
+    """
+    Property to get the jquery value of the HTML object in a python HTML object.
 
     This method can be used in any jsFunction to get the value of a component in the browser.
     This method will only be used on the javascript side, so please do not consider it in your algorithm in Python
@@ -317,7 +324,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -333,7 +341,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
     return super().options
 
   def editable(self):
-    """ Change the component properties to be editable if double clicked.
+    """
+    Change the component properties to be editable if double clicked.
 
     Usage::
 
@@ -347,7 +356,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
     return self
 
   def write(self, timer: int = 50):
-    """ Add a typing effect on this text.
+    """
+    Add a typing effect on this text.
 
     Related Pages:
 
@@ -402,7 +412,8 @@ class Pre(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -413,7 +424,8 @@ class Pre(MixHtmlState.HtmlStates, Html.Html):
     return self._dom
 
   def selectable(self, flag: bool = False):
-    """ Make the label component not selectable.
+    """
+    Make the label component not selectable.
 
     This will be done by adding the class CssTextNotSelectable to the component.
 
@@ -478,13 +490,13 @@ class Paragraph(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """   Property to set all the possible object for a button.
-    """
+    """  Property to set all the possible object for a button. """
     return super().options
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -501,9 +513,6 @@ class Paragraph(MixHtmlState.HtmlStates, Html.Html):
 
 
 class BlockQuote(Html.Html):
-  """
-
-  """
   name = 'Block quotation'
 
   def __init__(self, page: primitives.PageModel, text, author, color, width, height, html_code, helper, options, profile):
@@ -523,9 +532,6 @@ class BlockQuote(Html.Html):
 
 
 class Title(MixHtmlState.HtmlStates, Html.Html):
-  """
-  Title component.
-  """
   name = 'Title'
   _option_cls = OptText.OptionsTitle
 
@@ -571,7 +577,8 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -583,7 +590,8 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def options(self) -> OptText.OptionsTitle:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 
@@ -593,7 +601,8 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """  Add a click event for a component.
+    """
+    Add a click event for a component.
 
     The event will be automatically added to the onload section to be activated once the component
     has been build.
@@ -655,7 +664,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
 
   def money(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
             fmt: str = "%s%v"):
-    """   Format any number into currency.
+    """
+    Format any number into currency.
 
     Related Pages:
 
@@ -675,7 +685,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
     return self
 
   def number(self, digits: int = 0, thousand_sep: str = ',', decimal_sep: str = ","):
-    """   Format a number with custom precision and localisation.
+    """
+    Format a number with custom precision and localisation.
 
     Related Pages:
 
@@ -693,7 +704,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlNumeric:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -732,7 +744,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
 
   def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """  Add a click event to the HTML component.
+    """
+    Add a click event to the HTML component.
 
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -744,7 +757,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def options(self) -> OptText.OptionsNumber:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 
@@ -815,7 +829,8 @@ class Fieldset(MixHtmlState.HtmlStates, Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Options can either impact the Python side or the Javascript builder.
 

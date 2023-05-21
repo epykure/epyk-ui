@@ -49,13 +49,16 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self._js
 
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None) -> str:
         """
 
         :param data: String. A String corresponding to a JavaScript object.
         :param options: Dictionary. Optional. Specific Python options available for this component.
         :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
         :param component_id: String. Optional.
+        :param stop_state:
+        :param dataflows:
         """
         profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
         if data:
@@ -215,16 +218,20 @@ class Chart3D(Chart):
         self.items.append({"x": x, "y": y, "z": z, 'group': group})
         return self
 
-    def build(self, data=None, options=None, profile=False, component_id=None):
+    def build(self, data=None, options=None, profile=False, component_id=None, stop_state: bool = True,
+              dataflows: List[dict] = None):
         """
 
         :param data:
         :param options:
         :param profile:
         :param component_id: String. Optional.
+        :param stop_state:
+        :param dataflows:
         """
         if data:
-            return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {'chartId': self.chartId, 'data': data[0]}
+            return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {
+                'chartId': self.chartId, 'data': data[0]}
 
         return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
 

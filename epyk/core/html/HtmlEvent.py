@@ -45,7 +45,8 @@ class ProgressBar(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionsProgBar:
-    """ The progress bar is designed to display the current percent complete for a process.
+    """
+    The progress bar is designed to display the current percent complete for a process.
 
     The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
@@ -56,7 +57,8 @@ class ProgressBar(Html.Html):
     return super().options
 
   def to(self, number: float, timer: int = 10):
-    """ Move the progress bar to a defined level in a specific amount of time in millisecond.
+    """
+    Move the progress bar to a defined level in a specific amount of time in millisecond.
 
     :param number: The final state for the progress bar.
     :param timer: Optional. the appended of the increase in millisecond.
@@ -84,7 +86,8 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
   @property
   def js(self) -> JsQueryUi.ProgressBar:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -100,7 +103,8 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -140,7 +144,8 @@ class Menu(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionsMenu:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -154,7 +159,8 @@ class Menu(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Menu:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
 
@@ -170,7 +176,8 @@ class Menu(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 
@@ -204,7 +211,8 @@ class Dialog(Html.Html):
 
   @property
   def options(self) -> OptSliders.OptionDialog:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -223,7 +231,8 @@ class Dialog(Html.Html):
 
   @property
   def js(self) -> JsQueryUi.Dialog:
-    """ Open content in an interactive overlay.
+    """
+    Open content in an interactive overlay.
 
     Related Pages:
 
@@ -237,7 +246,8 @@ class Dialog(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript by default.
 

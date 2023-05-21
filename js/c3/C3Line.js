@@ -22,6 +22,7 @@ function c3Line(data, options){
           labels.forEach(function(x){
             if(temp[series][x] == undefined){dataSet.push(null)}
             else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
-        var result = {columns: columns, type: options.type, axes: options.axis}
-      }; return result
+        var result = {columns: columns, type: options.type}
+        if (typeof(options.axis) !== "undefined"){result.axis = options.axis}
+      }; console.log(result); return result
 }

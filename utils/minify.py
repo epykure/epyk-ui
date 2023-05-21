@@ -8,7 +8,8 @@ from typing import List, Union
 
 
 def get_files(path: Union[str, Path] = None) -> List[Path]:
-  """ Get the list of JavaScript files to minify
+  """
+  Get the list of JavaScript files to minify
 
   :param path: Path with JavaScript modules
   :return: List of files to be minified
@@ -30,7 +31,8 @@ def clear_dst(path: Union[str, Path] = None):
 
 
 def copy_files(js_files: List[Path]):
-  """ Copy the minified files to the code / native folder.
+  """
+  Copy the minified files to the code / native folder.
 
   This is only working using ES5 rules so in case of error the files will not be converted.
   This will be addressed when migration to NodeJs.

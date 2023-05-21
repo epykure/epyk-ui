@@ -277,13 +277,15 @@ class Chart(Html.Html):
     self._traces.append(OptPlotly.DataChart(component=self, page=self.page, attrs=c_data))
     return self
 
-  def build(self, data=None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, component_id: str = None):
+  def build(self, data=None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
+            component_id: str = None, dataflows: List[dict] = None):
     """   
 
     :param data:
     :param options:
     :param profile:
     :param component_id:
+    :param dataflows: Chain of data transformations
     """
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.name)
@@ -297,7 +299,7 @@ class Chart(Html.Html):
         js_convertor = "(function(data, options){%s; return result})" % js_func_builder
       return JsUtils.jsConvertFncs([
         self.js.react(JsUtils.jsWrap("%(chartFnc)s(%(data)s, %(options)s)" % {
-          'chartFnc': js_convertor, "data": JsUtils.jsConvertData(data, None),
+          'chartFnc': js_convertor, "data": JsUtils.dataFlows(data, dataflows, self.page),
           "options":  self.options.config_js(options)}), self.layout, self.options.config_js(options))], toStr=True)
 
     str_traces = []

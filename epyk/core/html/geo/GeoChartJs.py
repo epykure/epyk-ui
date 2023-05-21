@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.html import Html
 from epyk.core.html.graph import GraphChartJs
 from epyk.core.html.options import OptChartJs
@@ -30,7 +32,8 @@ class Choropleth(GraphChartJs.Chart):
 
     @Html.jbuider("chartjs")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -39,6 +42,7 @@ class Choropleth(GraphChartJs.Chart):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         callbacks = "(function(){})"
         if stop_state:
@@ -48,7 +52,7 @@ class Choropleth(GraphChartJs.Chart):
             "builder": self.builder_name,
             "callbacks": callbacks,
             "htmlObj": component_id or self.dom.varId,
-            'map': JsUtils.jsConvertData(self.geo_map, None)
+            'map': JsUtils.dataFlows(data, dataflows, self.page)
         }
 
     def __str__(self):

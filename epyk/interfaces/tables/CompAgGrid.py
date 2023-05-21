@@ -7,9 +7,6 @@ from epyk.core.html import tables as html_tables
 
 
 class AgGrid:
-  """ AG Grid components module.
-
-  """
 
   def __init__(self, ui):
     self.page = ui.page
@@ -33,6 +30,19 @@ class AgGrid:
       table = page.ui.tables.aggrids.table(data)
       table.options.paginationPageSize = 10
       table.options.rowSelection = "single"
+
+      table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport", 'year'])
+      table.attr["class"].add("ag-theme-alpine")
+      c = table.get_column("athlete")
+      c.headerCheckboxSelection = True
+      c.headerCheckboxSelectionCurrentPageOnly = True
+      c.checkboxSelection = True
+      c.showDisabledCheckboxes = True
+      table.options.rowSelection = 'multiple'
+      table.options.suppressRowClickSelection = True
+      table.onReady([
+        page.js.fetch("https://www.ag-grid.com/example-assets/olympic-winners.json").json().process(table.js.setRowData)
+      ])
 
     :param records: Optional. The list of dictionaries with the input data.
     :param cols: Optional. The list of key from the record to be used as columns in the table.

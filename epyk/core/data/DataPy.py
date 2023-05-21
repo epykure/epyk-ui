@@ -5,7 +5,7 @@ import re
 import os
 import logging
 
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Any, Callable
 from epyk.core.py import OrderedSet
 from epyk.core.data.recs import RecItems
 

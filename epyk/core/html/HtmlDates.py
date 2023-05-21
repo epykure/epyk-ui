@@ -55,7 +55,8 @@ class DatePicker(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-    """ The Javascript Dom proxy to the input object.
+    """
+    The Javascript Dom proxy to the input object.
 
     Usage::
 
@@ -69,7 +70,8 @@ class DatePicker(Html.Html):
     return self._dom
 
   def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Event trigger when the DatePicker component changes.
+    """
+    Event trigger when the DatePicker component changes.
 
     Usage::
 
@@ -91,7 +93,8 @@ class DatePicker(Html.Html):
 
   def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                      profile: types.PROFILE_TYPE = False):
-    """ Exclude some dates from the date picker selection.
+    """
+    Exclude some dates from the date picker selection.
 
     Those dates will be visible but no available for selection.
 
@@ -108,7 +111,8 @@ class DatePicker(Html.Html):
 
   def included_dates(self, dts: List[str] = None, selected: str = None,
                      js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = False):
-    """  Include some date to be available for selection.
+    """
+    Include some date to be available for selection.
 
     All the other dates will be visible but not valid ones.
 
@@ -125,7 +129,8 @@ class DatePicker(Html.Html):
     return self.input.included_dates(dts, selected, js_funcs, profile)
 
   def add_options(self, options: dict = None, name: str = None, value: str = None):
-    """ Add DatePicker options.
+    """
+    Add DatePicker options.
 
     Related Pages:
 
@@ -173,7 +178,8 @@ class TimePicker(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-    """ The Javascript Dom proxy to the input object.
+    """
+    The Javascript Dom proxy to the input object.
 
     Usage::
 
@@ -187,7 +193,8 @@ class TimePicker(Html.Html):
     return self._dom
 
   def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """ Event triggered when the value of the input field changes.
+    """
+    Event triggered when the value of the input field changes.
 
     A Date object containing the selected time is passed as the first argument of the callback.
     Note: the variable time is a function parameter received in the Javascript side.
@@ -234,7 +241,8 @@ class CountDownDate(Html.Html):
     self._jquery_ref = '#%s span' % self.htmlCode
 
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Events triggered at the end of the timer.
+    """
+    Events triggered at the end of the timer.
 
     :param js_funcs: Javascript functions.
     :param profile: Optional. A flag to set the component performance storage.
@@ -272,7 +280,8 @@ class LastUpdated(Html.Html):
 
   @property
   def dom(self) -> JsHtml.JsHtmlRich:
-    """ Return all the Javascript functions defined for an HTML Component.
+    """
+    Return all the Javascript functions defined for an HTML Component.
 
     Those functions will use plain javascript available for a DOM element by default.
 
@@ -288,7 +297,8 @@ class LastUpdated(Html.Html):
     return self._dom
 
   def refresh(self):
-    """ Javascript shortcut to change the timestamp to this component.
+    """
+    Javascript shortcut to change the timestamp to this component.
 
     Usage::
 
@@ -333,7 +343,8 @@ class Calendar(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """ Add a click event to the Calendar component.
+    """
+    Add a click event to the Calendar component.
 
     :param js_funcs: A Javascript Python function.
     :param profile: Optional. Set to true to profile or a function on the Js console.
@@ -489,7 +500,8 @@ class Timer(Html.Html):
         self.style.css.margin_right = 'auto'
 
   def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """ Events triggered at the end of the timer.
+    """
+    Events triggered at the end of the timer.
 
     :param js_funcs: Javascript functions
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console

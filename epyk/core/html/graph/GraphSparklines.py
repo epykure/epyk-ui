@@ -102,6 +102,11 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
+        Usage::
+
+            chart = page.ui.charts.sparkline("line", [1, 2, 3, 4, 5, 4, 3, 2, 1])
+            chart.color("#FFFF00")
+
         :param hex_value: hexadecimal color code
         :param background:
         """

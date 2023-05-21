@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import List
 
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -99,7 +100,8 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("frappe")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -108,10 +110,11 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:

@@ -257,6 +257,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
         Makes data points draggable. Supports touch events.
 
+        Usage::
+
+            chart = page.ui.charts.chartJs.line(randoms.languages, y_columns=["rating", 'change'], x_axis='name')
+            chart.dragData()
+
         Related Pages:
 
           https://github.com/chrispahm/chartjs-plugin-dragdata
@@ -308,6 +313,13 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
+
+        Usage::
+
+            from epyk.mocks import randoms
+
+            chart = page.ui.charts.chartJs.line(randoms.languages, y_columns=["rating", 'change'], x_axis='name')
+            chart.colors(["#FFFF00", "#FFA500"])
 
         :param hex_values: An array of hexadecimal color codes
         """
@@ -450,7 +462,8 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("chartjs")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Update the chart with context and / or data changes.
 
@@ -459,10 +472,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Not used
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
@@ -504,7 +518,8 @@ class Fabric(MixHtmlState.HtmlOverlayStates, Html.Html):
       htmlObj.setAttribute("data-next", parseInt(htmlObj.getAttribute("data-next")) + 1);
       return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
-    def build(self, data=None, options: dict = None, profile=False, component_id=None):
+    def build(self, data=None, options: dict = None, profile=False, component_id=None,
+              dataflows: List[dict] = None, **kwargs):
         """
 
 
@@ -512,6 +527,7 @@ class Fabric(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional.
+        :param dataflows: Chain of data transformations
         """
         return '''%(chartId)s = new Chart(%(dom)s.getContext('2d'), {type: 'bar'}); 
       Object.assign(%(chartId)s.data, %(data)s); %(chartId)s.update()''' % {

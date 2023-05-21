@@ -225,7 +225,7 @@ class Column(Options):
 
       https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
     """
-    return self._config_sub_data("cellRenderer", CellRenderer)
+    return CellRenderer(self, "cellRenderer")
 
   @property
   def cellRenderer(self):
@@ -497,6 +497,19 @@ class Column(Options):
 
   @headerCheckboxSelection.setter
   def headerCheckboxSelection(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def headerCheckboxSelectionCurrentPageOnly(self):
+    """
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-selection/
+    """
+    return self._config_get()
+
+  @headerCheckboxSelectionCurrentPageOnly.setter
+  def headerCheckboxSelectionCurrentPageOnly(self, flag: bool):
     self._config(flag)
 
   @property
@@ -1027,6 +1040,36 @@ class CellRendererParams(Options):
 class DefaultColDef(Options):
 
   @property
+  def cellRenderers(self) -> CellRenderer:
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+    """
+    return CellRenderer(self, "cellRenderer")
+
+  @property
+  def cellRenderer(self):
+    """   Change the cell rendering.
+
+    Usage::
+
+      c = table.get_column("city")
+      c.cellRenderer = ''' function(param){
+      return '<span><i class="far fa-comments"></i>Test '+ param.value +'</span>'} '''
+
+    Related Pages:
+
+      https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+    """
+    return self._config_get()
+
+  @cellRenderer.setter
+  def cellRenderer(self, value: str):
+    self._config(value, js_type=True)
+
+  @property
   def cellRendererParams(self) -> CellRendererParams:
     """
     """
@@ -1054,6 +1097,20 @@ class DefaultColDef(Options):
     return ColumnFilter(self, 'filter')
 
   @property
+  def field(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @field.setter
+  def field(self, name: str):
+    self._config(name)
+
+  @property
   def flex(self):
     """   It's often required that one or more columns fill the entire available space in the grid. For this scenario,
     it is possible to use the flex config.
@@ -1071,7 +1128,8 @@ class DefaultColDef(Options):
 
   @property
   def floatingFilter(self):
-    """   Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
+    """
+    Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
     Floating Filter Component to work alongside one of the grid's Provided Filters, or alongside a Custom Filter.
 
     Related Pages:
@@ -1099,6 +1157,20 @@ class DefaultColDef(Options):
     if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
       logging.warning("groupDefaultExpanded not available in the community version")
     self._config(val)
+
+  @property
+  def headerName(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+    """
+    return self._config_get()
+
+  @headerName.setter
+  def headerName(self, name: str):
+    self._config(name)
 
   @property
   def minWidth(self):
@@ -2019,6 +2091,22 @@ class TableConfig(OptionsWithTemplates):
     self._config(val)
 
   @property
+  def groupDefaultExpanded(self):
+    """   To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+    """
+    return self._config_get()
+
+  @groupDefaultExpanded.setter
+  def groupDefaultExpanded(self, val: int):
+    if self.component.options.verbose and self.page.imports.pkgs.ag_grid.community_version:
+      logging.warning("groupDefaultExpanded not available in the community version")
+    self._config(val)
+
+  @property
   def groupSelectsChildren(self):
     """   Filler groups do not keep their selection state should the filler group be moved.
 
@@ -2332,6 +2420,20 @@ class TableConfig(OptionsWithTemplates):
 
   @suppressRowClickSelection.setter
   def suppressRowClickSelection(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def suppressAggFuncInHeader(self):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-selection/
+    """
+    return self._config_get()
+
+  @suppressAggFuncInHeader.setter
+  def suppressAggFuncInHeader(self, flag: bool):
     self._config(flag)
 
   @property

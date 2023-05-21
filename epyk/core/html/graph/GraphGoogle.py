@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from typing import List
+
 from epyk.core.py import primitives
 from epyk.core.py import types
 from epyk.core.html import Html
@@ -44,7 +46,8 @@ class Chart(Html.Html):
         return "%s_obj" % self.htmlCode
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
 
         :param data:
@@ -69,7 +72,7 @@ return chart
 }));
 ''' % {
             'chartId': self.chartId, 'varId': component_id or self.dom.varId,
-            'options': self.options.config_js(options), 'data': JsUtils.jsConvertData(data, None),
+            'options': self.options.config_js(options), 'data': JsUtils.dataFlows(data, dataflows, self.page),
             'type': self.options.type}
 
     def define(self, options: types.JS_DATA_TYPES = None) -> str:

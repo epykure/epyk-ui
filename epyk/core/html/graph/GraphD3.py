@@ -74,8 +74,8 @@ class Script(Html.Html):
         self._js__builder__ = 'if (!htmlObj.select("svg").empty()){htmlObj.select("svg").remove()}; %s' % str_frg
 
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = False, component_id: str = None) -> str:
-        return super().build(data, options, profile, component_id=self.dom.d3.varId)
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None, dataflows: List[dict] = None) -> str:
+        return super().build(data, options, profile, component_id=self.dom.d3.varId, dataflows=dataflows)
 
     def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
         """ Not yet defined for this chart """

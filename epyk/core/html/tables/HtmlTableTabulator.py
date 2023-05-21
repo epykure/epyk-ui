@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Generator, Any
+from typing import Generator, List
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
@@ -176,7 +176,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Common JavaScript function to add data to the table.
 
@@ -192,12 +193,13 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Change the component id if specific
         :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return "%s%s" % (self.js.setData(data).toStr(), state_expr)
+            return "%s%s" % (self.js.setData(JsUtils.dataFlows(data, dataflows, self.page)).toStr(), state_expr)
 
         return self._js__builder__ % {
             "tableId": self.tableId, "htmlCode": self.htmlCode, "config": self._json_config,

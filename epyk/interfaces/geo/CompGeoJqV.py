@@ -266,6 +266,14 @@ class JqueryVertorMap:
 
     Usage::
 
+      fr = page.ui.geo.jqv.france()
+      fr.options.multiSelectRegion = True
+      fr.click([
+        page.js.console.log(libs.jqvmap.region),
+        page.js.console.log(libs.jqvmap.code),
+        page.js.console.log(libs.jqvmap.element),
+        page.js.console.log("data", skip_data_convert=True),
+      ])
 
     :param record: List. Optional. The records
     :param y_column: String. Optional. The column in the record for the keys.

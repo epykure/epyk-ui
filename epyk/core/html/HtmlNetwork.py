@@ -39,7 +39,8 @@ class Comments(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsChat:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -49,7 +50,8 @@ class Comments(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
 
@@ -59,8 +61,9 @@ class Comments(Html.Html):
       self._js = JsComponents.Chat(self, page=self.page)
     return self._js
 
-  def add(self, text: str, time: str):
-    """ Add a text message.
+  def add(self, text: str, time: str, **kwargs):
+    """
+    Add a text message.
  
     :param text: The text message
     :param time: the timestamp
@@ -70,7 +73,8 @@ class Comments(Html.Html):
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """ Define the function when the user press enter.
+    """
+    Define the function when the user press enter.
  
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -110,7 +114,8 @@ class Comments(Html.Html):
     return self
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
-    """ Subscribe to a socket channel.
+    """
+    Subscribe to a socket channel.
 
     Data received from the socket are defined as a dictionary with a field data.
 
@@ -235,7 +240,8 @@ class Chat(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsChat:
-    """ Property to the comments component options.
+    """
+    Property to the comments component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -245,7 +251,8 @@ class Chat(Html.Html):
 
   @property
   def js(self) -> JsComponents.Chat:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
     """
@@ -284,7 +291,8 @@ class Chat(Html.Html):
     return self
 
   def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
-    """ Subscribe to a socket channel.
+    """
+    Subscribe to a socket channel.
 
     Data received from the socket are defined as a dictionary with a field data.
 
@@ -331,7 +339,8 @@ class Alert(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsAlert:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -359,7 +368,8 @@ class News(Html.Html):
 
   @property
   def js(self) -> JsComponents.News:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
     """
@@ -369,7 +379,8 @@ class News(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionsNews:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -414,7 +425,8 @@ class Room(Html.Html):
 
   @property
   def js(self) -> JsComponents.Room:
-    """ The Javascript functions defined for this component.
+    """
+    The Javascript functions defined for this component.
 
     Those can be specific ones for the module or generic ones from the language.
     """
@@ -498,7 +510,8 @@ class DropFile(Html.Html):
 
   @property
   def options(self) -> OptNet.OptionFiles:
-    """ Property to the component options.
+    """
+    Property to the component options.
 
     Optional can either impact the Python side or the Javascript builder.
 
@@ -507,7 +520,8 @@ class DropFile(Html.Html):
     return super().options
 
   def transfer(self, url: str):
-    """ Create a Ajax transfer to a distant server.
+    """
+    Create a Ajax transfer to a distant server.
  
     :param url: The transfer end point on the server.
     """
@@ -517,7 +531,8 @@ class DropFile(Html.Html):
     return post
 
   def drop(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """ Add a drag and drop property to the element.
+    """
+    Add a drag and drop property to the element.
 
     Usage::
 
@@ -556,16 +571,15 @@ class DropFile(Html.Html):
     self.on("drop", ["%s; %s; return false" % (dft_fnc, str_fncs)])
     return self
 
-  def loading(self, label: str = "Processing data"):
-    """   
-
- 
+  def loading(self, label: str = "Processing data", **kwargs):
+    """
     :param label: Optional.
     """
     return self.text.build('<i style="margin-right:5px" class="fas fa-spinner fa-spin"></i>%s' % label)
 
   def load(self, js_funcs, js_data=None, components=None, prevent_default=True, profile=None):
-    """ Load the content of the file.
+    """
+    Load the content of the file.
 
     This function will first use as underlying the drop method to get the file dropped.
 

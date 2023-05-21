@@ -73,7 +73,7 @@ class GeoMapbox(Html.Html):
         self.page.body.onReady("%s.on('load', () => {%s})" % (
             self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
-    def loading(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    def loading(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, **kwargs):
         """
         Fired when any map data loads or changes. See MapDataEvent for more information.
 
@@ -185,11 +185,8 @@ class GeoMapbox(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         """
         event_type = JsUtils.jsConvertData(event_type, None)
-        self.page.body.onReady("%s.on(%s, function(e) {%s})" % (event_type,
-                                                                self.chartId,
-                                                                JsUtils.jsConvertFncs(js_funcs, toStr=True,
-                                                                                      profile=profile)),
-                               profile=profile)
+        self.page.body.onReady("%s.on(%s, function(e) {%s})" % (
+            event_type, self.chartId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)), profile=profile)
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

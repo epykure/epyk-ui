@@ -32,13 +32,20 @@ class Tables:
 
   @property
   def aggrids(self) -> CompAgGrid.AgGrid:
-    """ AG-Grid is the industry standard for JavaScript Enterprise Applications.
+    """
+    AG-Grid is the industry standard for JavaScript Enterprise Applications.
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
     :tags:
     :categories:
 
     Usage::
+
+      table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport"])
+      table.onReady([
+        page.js.fetch("https://www.ag-grid.com/example-assets/olympic-winners.json").json().process(table.js.setRowData)
+      ])
+      table.attr["class"].add("ag-theme-alpine")
 
     Related Pages:
 
@@ -48,7 +55,8 @@ class Tables:
 
   @property
   def tabulators(self) -> CompTabulator.Tabulators:
-    """ Interface to the different Tabulator configurations.
+    """
+    Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -63,7 +71,8 @@ class Tables:
 
   @property
   def google(self) -> CompTableGoogle.Google:
-    """ Interface to the Google Table interface.
+    """
+    Interface to the Google Table interface.
 
     In order to use it, the Google products need to be specially enabled.
     """
@@ -74,7 +83,8 @@ class Tables:
 
   @property
   def pivots(self) -> CompPivot.Pivottable:
-    """ Interface to the different Pivot Table configurations.
+    """
+    Interface to the different Pivot Table configurations.
 
     :tags:
     :categories:
@@ -87,7 +97,8 @@ class Tables:
 
   @property
   def d3(self) -> CompTableD3.D3:
-    """ Interface to the different Tabulator configurations.
+    """
+    Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -100,7 +111,8 @@ class Tables:
 
   @property
   def plotlys(self) -> CompTablesPlotly.Plotly:
-    """ Interface to the different Tabulator configurations.
+    """
+    Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -113,7 +125,8 @@ class Tables:
 
   @property
   def datatables(self) -> CompDatatable.Datatables:
-    """ Interface to the different Datatable configurations.
+    """
+    Interface to the different Datatable configurations.
 
     :tags:
     :categories:
@@ -128,6 +141,7 @@ class Tables:
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None):
     """
+
     :tags:
     :categories:
 
@@ -196,7 +210,8 @@ class Tables:
   def menu(self, table: Html.Html = None, height: types.SIZE_TYPE = (18, 'px'), options: types.OPTION_TYPE = None,
            update_funcs: list = None, post: Union[list, str] = None, profile: types.PROFILE_TYPE = None,
            columns: dict = None, title: Union[str, dict] = None,):
-    """ Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+    """
+    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
     :tags:
     :categories:

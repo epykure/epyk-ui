@@ -48,7 +48,8 @@ class Popup(Html.Html):
 
   @property
   def js(self) -> JsHtmlPopup.JsHtmlPopup:
-    """ Specific JavaScript features for the popup component.
+    """
+    Specific JavaScript features for the popup component.
 
     :return: A Javascript object
     """
@@ -57,7 +58,8 @@ class Popup(Html.Html):
     return self._js
 
   def add(self, component: Html.Html):
-    """ Add a component to the popup.
+    """
+    Add a component to the popup.
 
     If this is a list then they will be added in a row.
 
@@ -66,14 +68,16 @@ class Popup(Html.Html):
     return self.container.add(component)
 
   def extend(self, components: List[Html.Html]):
-    """ Append list of component to the popup.
+    """
+    Append list of component to the popup.
 
     :param components: The component to be added to the underlying list
     """
     return self.container.extend(components)
 
   def insert(self, n: int, component: Html.Html):
-    """ Insert a component to the popup at a specific place.
+    """
+    Insert a component to the popup at a specific place.
 
     :param n: The position in the popup
     :param component: The component to be added to the underlying list
@@ -87,7 +91,8 @@ class Popup(Html.Html):
 
   def add_title(self, text: str, align: str = 'center', level: Optional[int] = 5, css: Optional[dict] = None,
                 position: str = "before", options: Optional[dict] = None):
-    """ Add a title to the popup.
+    """
+    Add a title to the popup.
 
     :param text: The value to be displayed to the component
     :param align: Optional. The text-align property within this component

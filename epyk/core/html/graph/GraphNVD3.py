@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from typing import Optional
+from typing import Optional, List
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
@@ -156,7 +156,8 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @Html.jformatter("nvd3")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None, stop_state: bool = True):
+              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         """
         Return the JavaScript fragment to refresh the component content.
 
@@ -164,10 +165,12 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
+        :Param stop_state:
+        :param dataflows: Chain of data transformations
         """
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-                self.builder_name, JsUtils.jsConvertData(data, None),
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
