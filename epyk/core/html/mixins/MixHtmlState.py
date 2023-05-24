@@ -113,7 +113,8 @@ class HtmlOverlayStates:
             data: types.JS_DATA_TYPES = None,
             options: types.OPTION_TYPE = None,
             css_attrs: types.JS_DATA_TYPES = None,
-            component_id: Optional[str] = None
+            component_id: Optional[str] = None,
+            mode: str = "loading"
     ):
         """
         Loading component on a chart.
@@ -126,12 +127,18 @@ class HtmlOverlayStates:
 
         :param status: Optional. Specific the status of the display of the loading component
         :param label: Optional.
+        :param data: Optional.
+        :param options: Optional.
+        :param css_attrs: Optional.
+        :param component_id: Optional.
+        :param mode: Optional. The modal mode error / loading for the message and style
         """
         js_state_name = self._add_resource()
         if label is not None:
-            self.options.templateLoading = label
-        if self.options.templateLoading is None:
-            self.options.templateLoading = Default_html.TEMPLATE_LOADING_ONE_LINE
+            if mode == "loading":
+                self.options.templateLoading = label
+            elif mode == "error":
+                self.options.templateError = label
         if isinstance(data, dict):
             tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in
                         data.items()]
@@ -144,7 +151,7 @@ class HtmlOverlayStates:
             if k not in css_attrs:
                 css_attrs[k] = v
         options = options or {}
-        options["templateMode"] = 'loading'
+        options["templateMode"] = mode
         return "%s(%s, %s, %s, %s, %s)" % (
             js_state_name,
             JsUtils.jsConvertData(status, None),
@@ -185,12 +192,9 @@ class HtmlOverlayStates:
         :param css_attrs:
         :param component_id:
         """
-        if label is None:
-            if self.options.templateLoading is not None:
-                label = self.options.templateLoading
-            else:
-                label = Default_html.TEMPLATE_LOADING_ONE_LINE
-        return self.state(status, label, data, options, css_attrs, component_id)
+        if label is None and self.options.templateLoading is None:
+            label = Default_html.TEMPLATE_LOADING_ONE_LINE
+        return self.state(status, label, data, options, css_attrs, component_id, mode="loading")
 
     def error(
             self,
@@ -228,4 +232,4 @@ class HtmlOverlayStates:
                 label = self.options.templateError
             else:
                 label = Default_html.TEMPLATE_ERROR_ONE_LINE
-        return self.state(status, label, data, options, css_attrs, component_id)
+        return self.state(status, label, data, options, css_attrs, component_id, mode="error")
