@@ -99,9 +99,9 @@ class HtmlOverlayStates:
             component_id: Optional[str] = None
     ):
         """
+        Hide the state component.
 
-        :param component_id:
-        :return:
+        :param component_id: The component id if different
         """
         self._add_resource()
         return "hideState(%s)" % (component_id or self.dom.container)
@@ -126,11 +126,11 @@ class HtmlOverlayStates:
             chart_obj.loading(False)
 
         :param status: Optional. Specific the status of the display of the loading component
-        :param label: Optional.
+        :param label: Optional. The label to be displayed
         :param data: Optional.
         :param options: Optional.
-        :param css_attrs: Optional.
-        :param component_id: Optional.
+        :param css_attrs: Optional. Special CSS attributes for the state component
+        :param component_id: Optional. The component id if different
         :param mode: Optional. The modal mode error / loading for the message and style
         """
         js_state_name = self._add_resource()
@@ -227,9 +227,6 @@ class HtmlOverlayStates:
         :param css_attrs:
         :param component_id:
         """
-        if label is None:
-            if self.options.templateError is not None:
-                label = self.options.templateError
-            else:
-                label = Default_html.TEMPLATE_ERROR_ONE_LINE
+        if label is None and self.options.templateError is None:
+            label = Default_html.TEMPLATE_ERROR_ONE_LINE
         return self.state(status, label, data, options, css_attrs, component_id, mode="error")
