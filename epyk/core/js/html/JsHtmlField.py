@@ -261,3 +261,10 @@ class Textarea(JsHtml.JsHtmlRich):
     """ Empty the content of the HTML component using the innerHTML JavaScript property.
     """
     return JsUtils.jsWrap('%s.value = ""' % self.varName)
+
+
+class Href(JsHtml.JsHtmlRich):
+
+  def sync(self):
+    return "let currentHref = %(comp)s.href.split('?'); %(comp)s.href = currentHref[0] + window.location.search" % {
+      "comp": self.component.dom.varName}

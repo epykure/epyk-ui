@@ -8,6 +8,7 @@ from epyk.core.py import types
 from epyk.core.html import Html
 from epyk.core.html import Defaults as Default_html
 from epyk.core.js.html import JsHtml
+from epyk.core.js.html import JsHtmlField
 from epyk.core.html.options import OptText
 
 
@@ -45,6 +46,13 @@ class ExternalLink(Html.Html):
   def options(self) -> OptText.OptionsLink:
     """ Property to set all the possible object for a button. """
     return super().options
+
+  @property
+  def js(self) -> JsHtmlField.Href:
+    """ Specific Javascript function for the input object. """
+    if self._js is None:
+      self._js = JsHtmlField.Href(self, page=self.page)
+    return self._js
 
   def anchor(self, component: Html.Html):
     """
