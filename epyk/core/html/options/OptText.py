@@ -912,3 +912,12 @@ class OptionsUpdate(Options):
   @local_time.setter
   def local_time(self, flag: bool):
     self._config(flag)
+
+  @property
+  def template(self):
+    return self._config_get(None)
+
+  @template.setter
+  def template(self, value: str):
+    self.component._label = ""
+    self._config("function(date){return %s}" % value, js_type=True)

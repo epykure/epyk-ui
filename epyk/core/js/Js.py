@@ -688,7 +688,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
           js_code: str = "response", is_json: bool = True,
           components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
           headers: Optional[dict] = None,
-          asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+          asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  
     Create a GET HTTP request.
 
@@ -706,6 +706,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param components: Optional. This will add the component value to the request object
     :param headers: Optional. The request headers
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
+    :param dataflows: Chain of data transformations
     """
     method_type = JsUtils.jsConvertData('GET', None)
     url = JsUtils.jsConvertData(url, None)
@@ -725,7 +726,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     if url_params:
       url = '%s + "?" + %s' % (url, ' +"&"+ '.join(url_params))
     request = JsObjects.XMLHttpRequest(self.page, js_code, method_type, url, asynchronous=asynchronous)
-    request.send({}, stringify=is_json)
+    request.URL = JsUtils.jsWrap(url)
+    request.send({}, stringify=is_json, dataflows=dataflows)
     if is_json:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     if headers is not None:
@@ -737,7 +739,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
            js_code: str = "response", is_json: bool = True,
            components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
-           asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+           asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  Create a POST HTTP request.
 
     :param method: The REST method used
@@ -750,6 +752,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param headers: Optional. The request headers
     :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous)
     :param stringify: Optional. Stringify the request data for json exchange
+    :param dataflows: Chain of data transformations
     """
     if method.upper() == "GET":
       # Redirect to the specific get method
@@ -773,7 +776,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             request.data.add(c[0], c[1], is_json=is_json)
           else:
             request.data.add(c, is_json=is_json)
-    request.send(data, stringify=stringify, is_json=is_json)
+    request.send(data, stringify=stringify, is_json=is_json, dataflows=dataflows)
     if stringify:
       request.setRequestHeader("Content-Type", "application/json;charset=UTF-8")
     if headers is not None:
@@ -785,7 +788,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
            is_json: bool = True,
            components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
            profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
-           asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+           asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  
     Create a POST HTTP request.
 
@@ -802,15 +805,17 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param headers: Optional. The request headers
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
     :param stringify: Optional. Stringify the request data for json exchange
+    :param dataflows: Chain of data transformations
     """
     return self.rest("POST", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
-                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
+                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
+                     dataflows=dataflows)
 
   def put(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
           is_json: bool = True,
           components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
           profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
-          asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+          asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  
     Create a PUT HTTP request.
 
@@ -827,15 +832,17 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param headers: Optional. The request headers
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
     :param stringify: Optional. Stringify the request data for json exchange
+    :param dataflows: Chain of data transformations
     """
     return self.rest("PUT", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
-                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
+                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
+                     dataflows=dataflows)
 
   def patch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
             is_json: bool = True,
             components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
             profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
-            asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+            asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  
     Create a PATH HTTP request.
 
@@ -852,15 +859,17 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param headers: Optional. The request headers
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
     :param stringify: Optional. Stringify the request data for json exchange
+    :param dataflows: Chain of data transformations
     """
     return self.rest("PATH", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
-                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
+                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
+                     dataflows=dataflows)
 
   def delete(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
              is_json: bool = True,
              components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
-             asynchronous: bool = False, stringify: bool = True) -> JsObjects.XMLHttpRequest:
+             asynchronous: bool = False, stringify: bool = True, dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
     """  
     Create a DELETE HTTP request.
 
@@ -877,9 +886,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     :param headers: Optional. The request headers
     :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
     :param stringify: Optional. Stringify the request data for json exchange
+    :param dataflows: Chain of data transformations
     """
     return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
-                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify)
+                     profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
+                     dataflows=dataflows)
 
   def queueMicrotask(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """  

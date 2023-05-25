@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Any, Type, Callable
+from typing import Optional, Any, Type, Callable, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -291,12 +291,21 @@ class XMLHttpRequest:
     self.page, self.__headers, self.url = page, {}, url
     self.__mod_name, self.__mod_path, self.method, self.__data_ref = None, None, method_type, "data"
     self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
-    self.__on = {}
+    self.__on, self.__url = {}, url
     self.__stringify = True
     self.__url_prefix, self.__responseType = "", 'json'
     self.varId, self.profile, self.timeout, self.asynchronous = js_code, False, None, asynchronous
     if url is not None:
       self.open(method_type, url)
+
+  @property
+  def URL(self):
+    """ Get the url requested """
+    return self.__url
+
+  @URL.setter
+  def URL(self, value: Any):
+    self.__url = value
 
   @classmethod
   def get(cls, js_code: str):
@@ -575,7 +584,7 @@ class XMLHttpRequest:
     """
 
   def send(self, json_data: types.JS_DATA_TYPES = None, encode_uri_data: dict = None,
-           stringify: bool = None, is_json: bool = True):
+           stringify: bool = None, is_json: bool = True, dataflows: List[dict] = None):
     """
     The XMLHttpRequest method send() sends the request to the server.
     If the request is asynchronous (which is the default), this method returns as soon as the request is sent and the
@@ -590,6 +599,7 @@ class XMLHttpRequest:
     :param encode_uri_data: Optional. Encode data for url
     :param stringify: Optional. Force the JavaScript data to be changed to String. Default True
     :param is_json: Optional. Specify the type of data. Default True
+    :param dataflows: Chain of data transformations
     """
     if stringify is not None:
       self.__stringify = stringify
@@ -614,7 +624,7 @@ class XMLHttpRequest:
         self.data = json_data
     if json_data:
       if self.__stringify:
-        self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.jsConvertData(self.data, None))
+        self.__req_send = "%s.send(JSON.stringify(%s))" % (self.varId, JsUtils.dataFlows(self.data, dataflows, self.page))
       else:
         # For data form when dealing with files
         self.__req_send = "%s.send(%s)" % (self.varId, self.data.toStrFormData())

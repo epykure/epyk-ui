@@ -586,7 +586,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/documentation/javascript/column-updating-definitions/
     """
-    return JsObjects.JsVoid("%s.api.getColumnDefs()" % self.varId)
+    return JsObjects.JsObject.JsObject("%s.api.getColumnDefs()" % self.varId)
 
   def setRowData(self, rows: types.JS_DATA_TYPES, dataflows: List[dict] = None):
     """
@@ -867,7 +867,7 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.api.getModel()" % self.varId)
 
-  def getRowsData(self):
+  def getRowsData(self) -> JsObjects.JsArray.JsArray:
     """
     Get all the data in the table.
 
@@ -875,7 +875,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-data-grid/accessing-data/
     """
-    return JsObjects.JsVoid('''
+    return JsObjects.JsArray.JsArray.get('''
 (function(table) {let rowData = []; table.api.forEachNode(node => rowData.push(node.data)); return rowData})(%s)''' % self.varId)
 
   def getSelectedRows(self):
