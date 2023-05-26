@@ -431,27 +431,6 @@ class InputRadio(Input):
     if group_name is not None:
       self.set_attrs({"name": group_name})
 
-  def dom(self) -> JsHtmlField.Radio:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
-    Those functions will use plain javascript by default.
-    """
-    if self._dom is None:
-      self._dom = JsHtmlField.Radio(self, page=self.page)
-    return self._dom
-
-  @property
-  def js(self) -> JsComponents.Radio:
-    """
-    The Javascript functions defined for this component.
-
-    Those can be specific ones for the module or generic ones from the language.
-    """
-    if self._js is None:
-      self._js = JsComponents.Radio(self, page=self.page)
-    return self._js
-
 
 class AutoComplete(Input):
   name = 'Input Autocomplete'
