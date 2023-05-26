@@ -24,13 +24,13 @@ class Radio(JsPackage):
     return JsUtils.jsWrap("%s.checked = true" % self.component.dom.varName)
 
   def uncheck(self):
-    """   Set the status of the Check / Radio component to unchecked.
-    """
+    """ Set the status of the Check / Radio component to unchecked. """
     return JsUtils.jsWrap("%s.checked = false" % self.component.dom.varName)
 
   def is_checked(self, js_funcs: Union[list, str], else_funcs: Union[list, str] = None,
                  profile: Optional[Union[bool, dict]] = None):
-    """   Condition on the status of the checkbox / Radio.
+    """
+    Condition on the status of the checkbox / Radio.
     This will trigger the underlying JavaScript functions only if the box is checked.
  
     :param js_funcs: The Javascript functions.

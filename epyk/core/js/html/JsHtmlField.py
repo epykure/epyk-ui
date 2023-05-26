@@ -16,25 +16,47 @@ class Radio(JsHtml.JsHtmlRich):
 
   @property
   def val(self) -> JsObjects.JsObjects:
-    """   Get the user defined values for the component in a dictionary.
-    """
+    """  Get the user defined values for the component in a dictionary. """
     return JsObjects.JsObjects.get(
       '''{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), name: %s, selected: %s}}
         ''' % (self.htmlCode, self.content.toStr(), self.getAttribute('name'), self.selected.toStr()))
 
   @property
   def content(self) -> JsHtml.ContentFormatters:
-    """   Get the user defined value for the component.
-    """
+    """ Get the user defined value for the group. """
+    return JsHtml.ContentFormatters(
+      self.page, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute('name'))
+
+  @property
+  def data(self) -> JsObjects.JsObjects:
+    """  Get the user defined values for the group. """
+    return JsObjects.JsObjects.get('''
+(function(){ let results = [];document.body.querySelectorAll('input[name='+%s+']').forEach(function(r){
+  results.push({"value": r.getAttribute('data-content'), "checked": r.checked})}); return results})()
+  ''' % self.component.input.dom.getAttribute('name'))
+
+  @property
+  def checked(self) -> JsHtml.ContentFormatters:
+    """ Get the user defined value for the component. """
+    return JsHtml.ContentFormatters(
+      self.page,
+      "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute(
+        'name'))
+
+  @property
+  def isChecked(self) -> JsHtml.ContentFormatters:
+    """ Get the user defined value for the component. """
     return JsHtml.ContentFormatters(self.page, "%s.checked" % self.component.input.dom.varName)
 
   @property
   def selected(self) -> JsHtml.ContentFormatters:
-    """   
+    """ Get the value of the selected item """
+    return JsHtml.ContentFormatters(self.page, "%s.checked" % self.component.input.dom.varName)
 
-    """
-    return JsHtml.ContentFormatters(
-      self.page, "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute('name'))
+  @property
+  def label(self) -> JsHtml.ContentFormatters:
+    """ Get the label for the selected item """
+    return JsHtml.ContentFormatters(self.page, "%s.getAttribute('data-content')" % self.component.input.dom.varName)
 
 
 class Check(JsHtml.JsHtmlRich):
