@@ -112,7 +112,7 @@ class Tags:
     html.Html.set_component_skin(html_b)
     return html_b
 
-  def h1(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+  def h1(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <h1> to <h6> tags are used to define HTML headings.
@@ -143,7 +143,7 @@ class Tags:
     html.Html.set_component_skin(html_h1)
     return html_h1
 
-  def h2(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+  def h2(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <h1> to <h6> tags are used to define HTML headings.
@@ -174,7 +174,7 @@ class Tags:
     html.Html.set_component_skin(html_h2)
     return html_h2
 
-  def h3(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+  def h3(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     The <h1> to <h6> tags are used to define HTML headings.
@@ -321,7 +321,7 @@ class Tags:
     html.Html.set_component_skin(html_u)
     return html_u
 
-  def p(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
+  def p(self, text = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
     """  
     A paragraph is marked up as follows with the <p> tag:
