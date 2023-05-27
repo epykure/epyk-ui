@@ -914,6 +914,7 @@ class OptionsSkillbars(Options):
   @height.setter
   def height(self, num: float):
     for row in self.component.innerPyHTML:
+        row[1][0].style.css.line_height = num
         row[1][0].style.css.height = num
     self._config(num)
 

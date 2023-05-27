@@ -603,8 +603,8 @@ class SkillBar(Html.Html):
         row[1][0].style.css.background = self.options.warning
       else:
         row[1][0].style.css.background = self.options.danger
-      row[1][0].style.css.line_height = 20
-      row[1][0].style.css.font_factor(-4)
+      row[1][0].style.css.line_height = row[1][0].style.css.line_height or 20
+      row[1][0].style.css.font_factor(-2)
       if self.options.percentage:
         row[1][0]._vals = [row[1][0].css("width")]
         row[1][0].style.css.padding_left = 5
