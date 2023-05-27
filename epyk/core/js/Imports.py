@@ -367,7 +367,7 @@ JS_IMPORTS = {
 
     # module for the awesome icons
     'font-awesome': {
-        'version': '5.15.4',
+        'version': '6.4.0',
         'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
                      'npm_path': 'js'},
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
