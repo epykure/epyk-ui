@@ -30,6 +30,7 @@ function skillBar(htmlObj, data, options){
         else {div.style.backgroundColor = options.danger}
         div.style.fontSize = "10px"; div.style.lineHeight = options.height ?? "20px"; div.style.verticalAlign = "middle%";
         div.style.display = "block"; div.style.paddingLeft = "5px";
+        if(options && typeof options.css !== 'undefined'){for(var k in options.css){div.style[k] = options.css[k]}};
         if (options.percentage){div.appendChild(content)}
         else { div.innerHTML = "&nbsp;"; div.title = rec[options.value].toFixed(options.digits) + "%" }
         row.appendChild(div); tr.appendChild(row);

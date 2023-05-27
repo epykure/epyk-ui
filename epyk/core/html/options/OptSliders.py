@@ -935,3 +935,9 @@ class OptionsSkillbars(Options):
   @label.setter
   def label(self, name: str):
     self._config(name)
+
+  def css(self, values: dict):
+    """ Set CSS for bars """
+    for row in self.component.innerPyHTML:
+        row[1][0].css(values)
+    self._config(values)
