@@ -191,7 +191,7 @@ JS_IMPORTS = {
 
     # data transformation
     'underscore': {
-        'version': '1.12.0',
+        'version': '1.13.6',
         'repository': 'https://github.com/jashkenas/underscore',
         'modules': [
             {'script': 'underscore-min.js', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},

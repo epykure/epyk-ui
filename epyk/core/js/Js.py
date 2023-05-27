@@ -1620,24 +1620,29 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     """  
     Add a Javascript module and then run function once it is loaded.
 
+    Usage::
+
+      icon = page.ui.icons.clock().css({"color": 'blue'})
+      icon.click([ page.js.import_js("utils.js", ["testImport()"])])
+
     Related Pages:
 
       https://cleverbeagle.com/blog/articles/tutorial-how-to-load-third-party-scripts-dynamically-in-javascript
+      https://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file
 
-    :param script: A script name. A Js extension.
-    :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param self_contained: Optional. A flag to specify where the import will be done.
+    :param script: A script name. A Js extension
+    :param js_funcs: Callback function when module loaded. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param self_contained: Optional. A flag to specify where the import will be done
     """
-    if self_contained or script:
-      if os.path.exists(script):
+    if script.endswith(".js"):
+      if os.path.exists(script) and self_contained:
         with open(script, 'rb') as fp:
           base64_bytes = base64.b64encode(fp.read())
           base64_message = base64_bytes.decode('ascii')
+          url_module = "data:text/javascript;base64,%s" % base64_message
       else:
-        base64_bytes = base64.b64encode(script.encode('ascii'))
-        base64_message = base64_bytes.decode('ascii')
-      url_module = "data:text/css;base64,%s" % base64_message
+        url_module = script
       js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
       return JsUtils.jsWrap('''
 let scriptElementId = "pkg_%(script)s";    
@@ -1658,7 +1663,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
     document.body.appendChild(script); script.onload = function(){%(fncs)s; };}
   else {%(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
 
-  def import_css(self, script: str):
+  def import_css(self, css_file: str, self_contained: bool = False, js_code: str = "css_dyn"):
     """  
     Add a CSS file on the fly from a JavaScript event.
 
@@ -1666,18 +1671,30 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
 
       https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page
 
-    :param script: A script name with a CSS extension.
+    :param css_file: A script name with a CSS extension
+    :param self_contained: Optional. A flag to specify where the import will be done
     """
-    css_script = JsUtils.jsConvertData(script, None)
+    if css_file.endswith(".css"):
+      if os.path.exists(css_file) and self_contained:
+        with open(css_file, 'rb') as fp:
+          base64_bytes = base64.b64encode(fp.read())
+          base64_message = base64_bytes.decode('ascii')
+          url_module = "data:text/css;base64,%s" % base64_message
+      else:
+        url_module = css_file
+    else:
+      base64_bytes = base64.b64encode(css_file.encode('ascii'))
+      base64_message = base64_bytes.decode('ascii')
+      url_module = "data:text/css;base64,%s" % base64_message
     return JsUtils.jsWrap('''
-let styleElementId = "css_"+ %(file)s;    
+let styleElementId = "css_"+ %(js_code)s;    
 let existingStyle = document.getElementById(styleElementId);
 if (!existingStyle && (styleElementId !== 'css_')) {
   var fileref = document.createElement("link"); fileref.id = styleElementId;
   fileref.setAttribute("rel", "stylesheet"); fileref.setAttribute("type", "text/css");
-  fileref.setAttribute("href", %(file)s); console.log("loaded");
+  fileref.setAttribute("href", "%(file)s"); 
   document.getElementsByTagName("head")[0].appendChild(fileref)
-}''' % {"file": css_script})
+}''' % {"file": url_module, "js_code": JsUtils.jsConvertData(js_code, None)})
 
   def delay(self, js_funcs: Union[list, str], seconds: int = 0, window_id: str = "window",
             profile: Optional[Union[dict, bool]] = False):
