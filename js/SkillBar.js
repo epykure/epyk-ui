@@ -28,7 +28,7 @@ function skillBar(htmlObj, data, options){
         if( rec[options.value].toFixed(options.digits) > options.thresholds[1]){ div.style.backgroundColor = options.success}
         else if(rec[options.value].toFixed(options.digits) > options.thresholds[0]) {div.style.backgroundColor = options.warning}
         else {div.style.backgroundColor = options.danger}
-        div.style.fontSize = "10px"; div.style.lineHeight = "20px"; div.style.verticalAlign = "middle%";
+        div.style.fontSize = "10px"; div.style.lineHeight = options.height ?? "20px"; div.style.verticalAlign = "middle%";
         div.style.display = "block"; div.style.paddingLeft = "5px";
         if (options.percentage){div.appendChild(content)}
         else { div.innerHTML = "&nbsp;"; div.title = rec[options.value].toFixed(options.digits) + "%" }

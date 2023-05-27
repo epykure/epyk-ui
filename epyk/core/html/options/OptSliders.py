@@ -848,8 +848,7 @@ class OptionsSkillbars(Options):
 
   @property
   def digits(self):
-    """ Number of digit for the percentage value..
-    """
+    """ Number of digit for the percentage value.. """
     return self._config_get(2)
 
   @digits.setter
@@ -908,9 +907,19 @@ class OptionsSkillbars(Options):
     self._config(num)
 
   @property
+  def height(self):
+    """ Set height for the bars default 20px """
+    return self._config_get(None)
+
+  @height.setter
+  def height(self, num: float):
+    for row in self.component.innerPyHTML:
+        row[1][0].style.css.height = num
+    self._config(num)
+
+  @property
   def value(self):
-    """ Key used in the record to get the value
-    """
+    """ Key used in the record to get the value """
     return self._config_get("value")
 
   @value.setter
@@ -919,8 +928,7 @@ class OptionsSkillbars(Options):
 
   @property
   def label(self):
-    """ Key used in the record to get the label
-    """
+    """ Key used in the record to get the label """
     return self._config_get("label")
 
   @label.setter

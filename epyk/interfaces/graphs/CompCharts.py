@@ -77,6 +77,9 @@ class Graphs:
         {"label": 'python', 'value': 12}, {"label": 'Java', 'value': 5}, {"label": 'Javascript', 'value': 80}]
       page.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
 
+      s3 = page.ui.charts.skillbars(records, y_column='value', x_axis='label')
+      s3.options.height = "10px"
+
     Related Pages:
 
       https://www.w3schools.com/howto/howto_css_skill_bar.asp
