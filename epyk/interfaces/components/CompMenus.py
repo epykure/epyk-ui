@@ -331,7 +331,7 @@ class Menus:
     html.Html.set_component_skin(row)
     return row
 
-  def icons(self, data: list = None, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
+  def icons(self, data: List[Union[str, dict]] = None, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
             options: dict = None, profile: Union[bool, dict] = False):
     """
     Add a menu bar with font awesome icons.
@@ -359,9 +359,18 @@ class Menus:
     icons = []
     if data:
       for d in data:
-        icons.append(self.page.ui.icons.fluent(
-          icon=d, text="", width=(15, 'px'), options={
-            "icon_family": dfl_options.get("icon_family", self.page.icons.family)}))
+        if isinstance(d, dict):
+          if "width" not in d:
+            d["width"] = (15, 'px')
+          if "options" not in d:
+            d["options"] = {}
+          if "icon_family" not in d["options"]:
+            d["options"]["icon_family"] = dfl_options.get("icon_family", self.page.icons.family)
+          icons.append(self.page.ui.icons.fluent(**d))
+        else:
+          icons.append(self.page.ui.icons.fluent(
+            icon=d, text="", width=(15, 'px'), options={
+              "icon_family": dfl_options.get("icon_family", self.page.icons.family)}))
         icons[-1].style.css.margin = "0 %spx 0 0" % dfl_options["margin-right"]
         div.add(icons[-1])
     html.Html.set_component_skin(div)

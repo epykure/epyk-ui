@@ -843,6 +843,7 @@ class Lists:
     Usage::
 
       chips = page.ui.chips([])
+      chips2 = page.ui.chips(["example", {"value": 'test', 'name': 'group 2'}], options={"visible": True})
 
     Underlying HTML Objects:
 

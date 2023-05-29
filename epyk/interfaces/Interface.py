@@ -1033,7 +1033,21 @@ class Components:
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
 
+    TODO: add click event to keep the display.
+
     Usage::
+
+      example = page.ui.title("Example")
+      text = page.ui.text("This is a text")
+      example.style.css.color = 'red'
+      data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
+      ts = page.ui.charts.chartJs.timeseries(data_rest, y_columns=['AAPL.Open'], x_axis="Date", height=200)
+
+      # Create a postit anchor to display the popup when the mouse is on it.
+      p = page.ui.postit([example, text, ts])
+      p.anchor.style.css.margin_left = '50px'
+      p.popup.style.css.height = "250px"
+      p.popup.style.css.width = "300px"
 
     Templates:
 
@@ -1051,15 +1065,15 @@ class Components:
       postit += anchor
     postit.anchor = anchor
     popup = self.page.ui.div(components, width=(None, 'px'), options=options, profile=profile)
-    popup.css({"display": 'none', 'position': 'absolute', 'border': '1px solid black', 'border-radius': '5px',
+    popup.css({"display": 'none', 'position': 'absolute',
+               'border': "1px solid %s" % self.page.theme.greys[self.page.theme.index - 2], 'border-radius': '5px',
                'padding': '5px', 'background': self.page.theme.greys[0]})
     postit += popup
     postit.popup = popup
     anchor.mouse([
       popup.dom.position(dx=10, dy=10), popup.dom.css({"display": 'block'}).r
     ],
-      [
-        popup.dom.css({"display": 'none'}).r]
+      [popup.dom.css({"display": 'none'}).r]
     )
     html.Html.set_component_skin(postit)
     return postit

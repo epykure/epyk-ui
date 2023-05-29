@@ -446,7 +446,7 @@ class Rich:
 
   def markdown(self, text: str = "", width: types.SIZE_TYPE = ("calc(100% - 10px)", ''),
                height: types.SIZE_TYPE = ("auto", ''), html_code: str = None, options: types.OPTION_TYPE = None,
-               profile: types.PROFILE_TYPE = None):
+               profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.MarkdownReader:
     """  
 
     :tags:
@@ -454,7 +454,15 @@ class Rich:
 
     Usage::
 
-      page.ui.inputs.editor()
+      md = page.ui.rich.markdown('''
+        # H1
+        ## H2
+        ### value
+        #### rrr
+        ##### H5
+        ###### H6
+        value
+        ''')
 
     Underlying HTML Objects:
 

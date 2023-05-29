@@ -152,7 +152,8 @@ class DataFilters:
     return JsObjects.JsVoid("const %s = %s" % (name, self.filter_map[name]))
 
   def match(self, data: Union[dict, primitives.JsDataModel], case_sensitive: bool = True):
-    """ Filtering rule based on a Dictionary of lists.
+    """
+    Filtering rule based on a Dictionary of lists.
 
     :param data: The keys, values to be filtered
     :param case_sensitive: Optional. To make sure algorithm case-sensitive
@@ -167,7 +168,8 @@ for(var a in v){if(!v[a].includes(e[a])){isValid = false; break}}; if(isValid){n
     return self
 
   def any(self, value: Any, keys: list = None):
-    """ Check if any value in the record match the value. This is not case sensitive.
+    """
+    Check if any value in the record match the value. This is not case sensitive.
 
     TODO: improve the performances by filtering on a list of keys if passed
 
@@ -185,7 +187,8 @@ v = v.toUpperCase(); var n=[];r.forEach(function(e){for(const k in e){
     return self
 
   def equal(self, key: str, value: Any, case_sensitive: bool = True):
-    """ Filtering rule based on a key, value.
+    """
+    Filtering rule based on a key, value.
 
     :param key: The key in the various records
     :param value: Object. The value to keep
@@ -205,7 +208,8 @@ r.forEach(function(e){if(e[k]==v){n.push(e)}});return n}''' % name)
     return self
 
   def includes(self, key: str, values: list, case_sensitive: bool = True, empty_all: bool = True):
-    """ Filtering rule based on a key, list of values.
+    """
+    Filtering rule based on a key, list of values.
 
     :param key: The key in the various records
     :param values: The list of values to keep
@@ -228,7 +232,8 @@ r.forEach(function(e){if(v.includes(e[k])){n.push(e)}});return n}''' % (name, js
     return self
 
   def startswith(self, key: str, value: str):
-    """ Filtering rule based on a key, and a value starting with a specific format.
+    """
+    Filtering rule based on a key, and a value starting with a specific format.
 
     :param key: The key in the various records
     :param value: The list of values to keep
@@ -243,7 +248,8 @@ r.forEach(function(e){if(e[k].startsWith(v)){n.push(e)}});return n}''' % name)
 
   def sup(self, key: Union[str, primitives.JsDataModel], value: Union[float, primitives.JsDataModel],
           strict: bool = True):
-    """ Filter values below a certain value.
+    """
+    Filter values below a certain value.
 
     :param key: The key in the various records
     :param value: The threshold
@@ -264,7 +270,8 @@ r.forEach(function(e){if(e[k] >= v){n.push(e)}});return n}''' % name)
 
   def inf(self, key: Union[str, primitives.JsDataModel], value: Union[float, primitives.JsDataModel],
           strict: bool = True):
-    """ Filter values above a certain value.
+    """
+    Filter values above a certain value.
 
     :param key: The key in the various records
     :param value: The threshold
@@ -284,8 +291,19 @@ r.forEach(function(e){if(e[k] <= v){n.push(e)}});return n}''' % name)
     return self
 
   def group(self) -> DataAggregators:
-    """ Group a group for the data transformation.
+    """
+    Group a group for the data transformation.
     This will be defined in the Python but processed on the JavaScript side.
+
+    Usage::
+
+      js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
+      filter1 = js_data.filterGroup("filter1") # Add a filter object
+
+      select.change([
+          bar.build(filter1.group().sumBy(['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
+          ...
+      ])
     """
     return DataAggregators(self.toStr(), self.page)
 
@@ -389,6 +407,12 @@ class DataGlobal:
 
   def filterGroup(self, group_name: str) -> DataFilters:
     """
+    Create a JavaScript filtering group.
+
+    Usage::
+
+      js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
+      filter1 = js_data.filterGroup("filter1") # Add a filter object
 
     :param group_name: The filter name.
     """
@@ -408,8 +432,7 @@ class DataGlobal:
     return self
 
   def clearFilters(self):
-    """ Remove all the filters.
-    """
+    """ Remove all the filters. """
     self.__filters_groups = {}
     return self
 

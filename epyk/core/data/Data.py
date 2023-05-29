@@ -28,6 +28,7 @@ from epyk.core.data import DataGrpc
 
 from epyk.core.js.Imports import requires
 from epyk.core.js.packages import JsQuery
+from epyk.core.js.packages import JsUnderscore
 from epyk.core.js import JsUtils
 
 from epyk.core.js.primitives import JsObjects
@@ -37,11 +38,28 @@ class DataJs:
   def __init__(self, page: primitives.PageModel):
     self.page = page
 
-  def record(self, js_code: str = None, data=None):
-    """ Interface to transform Python records to Javascript objects.
+  def record(self, js_code: str = None, data=None) -> DataCore.DataGlobal:
+    """
+    Interface to transform Python records to Javascript objects.
     This will allow interactivity of the various HTML components.
 
     Usage::
+
+        js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
+        filter1 = js_data.filterGroup("filter1") # Add a filter object
+
+        # Add a dropdown box to drive the data changes in the charts
+        select = page.ui.select([
+          {"value": 'name', 'name': 'name'}, {"value": 'type', 'name': 'code'}], options={"empty_selected": False})
+
+        # Create HTML charts
+        bar = page.ui.charts.chartJs.bar(randoms.languages, y_columns=["rating", 'change'], x_axis='name')
+        pie = page.ui.charts.chartJs.pie(randoms.languages, y_columns=['change'], x_axis='name')
+
+        select.change([
+          bar.build(filter1.group().sumBy(['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
+          pie.build(filter1.group().sumBy(['change'], select.dom.content), options={"x_axis": select.dom.content}),
+        ])
 
     :param js_code: Optional. The Javascript variable name.
     :param data: Object passed to the Javascript layer.
@@ -87,6 +105,10 @@ class DataJs:
     :rtype: DataCore.ServerConfig
     """
     return DataCore.ServerConfig(hostname, port, self.page)
+
+  @property
+  def _(self):
+    return JsUnderscore.Underscore(page=self.page)
 
 
 class DataSrc:

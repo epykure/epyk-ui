@@ -876,8 +876,10 @@ class Buttons:
 
   def check(self, flag: bool = False, tooltip: str = None, width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (20, "px"), label: str = None, icon: str = None,
-            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
-    """ Wrapper to the checkbox button object.
+            html_code: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None
+            ) -> html.HtmlButton.CheckButton:
+    """
+    Wrapper to the checkbox button object.
 
     :tags:
     :categories:

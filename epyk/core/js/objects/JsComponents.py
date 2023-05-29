@@ -19,8 +19,7 @@ class Radio(JsPackage):
     self._js, self._jquery = [], None
 
   def check(self):
-    """   Set the status of the Check / Radio component to checked.
-    """
+    """  Set the status of the Check / Radio component to checked. """
     return JsUtils.jsWrap("%s.checked = true" % self.component.dom.varName)
 
   def uncheck(self):
@@ -31,11 +30,12 @@ class Radio(JsPackage):
                  profile: Optional[Union[bool, dict]] = None):
     """
     Condition on the status of the checkbox / Radio.
+
     This will trigger the underlying JavaScript functions only if the box is checked.
  
-    :param js_funcs: The Javascript functions.
-    :param else_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param else_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if else_funcs is not None:
@@ -46,12 +46,14 @@ class Radio(JsPackage):
 
   def is_not_checked(self, js_funcs: Union[list, str], else_funcs: Union[list, str] = None,
                      profile: Optional[Union[bool, dict]] = None):
-    """   Condition on the status of the checkbox / Radio.
+    """
+    Condition on the status of the checkbox / Radio.
+
     This will trigger the underlying JavaScript functions only if the box is not checked.
  
-    :param js_funcs: The Javascript functions.
-    :param else_funcs: Optional. The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param js_funcs: The Javascript functions
+    :param else_funcs: Optional. The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
     """
     js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     if else_funcs is not None:
@@ -70,23 +72,35 @@ class CheckButton(JsPackage):
     self._js, self._jquery = [], None
 
   def checked(self, color: Union[str, primitives.JsDataModel] = None):
-    """   Set the status of the button component to checked.
- 
-    :param color: Optional. The font color in the component. Default inherit.
     """
-    times = self.component.options.icon_not_check
-    check = self.component.options.icon_check
+    Set the status of the button component to checked.
+
+    Usage::
+
+      c3 = page.ui.buttons.check(False, label="C3", icon="fas fa-align-center")
+      page.ui.button("click").click([c3.js.checked()])
+
+    :param color: Optional. The font color in the component. Default inherit
+    """
+    times = self.component.options.icon_not_check.split(" ")[-1]
+    check = self.component.options.icon_check.split(" ")[-1]
     return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
       self.component.dom.varName, times, check, self.component.dom.varName,
       JsUtils.jsConvertData(color, None) or self.page.theme.success.base))
 
   def unchecked(self, color: Union[str, primitives.JsDataModel] = None):
-    """   Set the status of the button component to unchecked.
- 
-    :param color: Optional. The font color in the component. Default inherit.
     """
-    times = self.component.options.icon_not_check
-    check = self.component.options.icon_check
+    Set the status of the button component to unchecked.
+
+    Usage::
+
+      c3 = page.ui.buttons.check(False, label="C3", icon="fas fa-align-center")
+      page.ui.button("click").click([c3.js.unchecked()])
+
+    :param color: Optional. The font color in the component. Default inherit
+    """
+    times = self.component.options.icon_not_check.split(" ")[-1]
+    check = self.component.options.icon_check.split(" ")[-1]
     return JsObjects.JsObjects.get("%s.querySelector('i').classList.replace('%s', '%s'); %s.querySelector('i').style.color = %s" % (
       self.component.dom.varName, check, times, self.component.dom.varName,
       JsUtils.jsConvertData(color, None) or self.page.theme.danger.base))
@@ -102,20 +116,21 @@ class Menu(JsPackage):
 
   @property
   def content(self):
-    """   Return the content of the component.
-    """
+    """ Return the content of the component. """
     return JsHtml.ContentFormatters(self.page, "%s.innerHTML" % self.varName)
 
   def set_text(self, value: Union[str, primitives.JsDataModel]):
-    """   Set the text of the component.
+    """
+    Set the text of the component.
  
-    :param value: The text to be set.
+    :param value: The text to be set
     """
     value = JsUtils.jsConvertData(value, None)
     return JsObjects.JsObjects.get("%s.innerHTML = %s" % (self.varName, value))
 
   def set_url(self, value: str, target: str = '_blank'):
-    """   Set the URL information of the item component.
+    """
+    Set the URL information of the item component.
 
     Usage::
 
@@ -125,8 +140,8 @@ class Menu(JsPackage):
 
       https://www.w3schools.com/tags/att_a_href.asp
  
-    :param value: The url link.
-    :param target: Optional. The target mode of the link component.
+    :param value: The url link
+    :param target: Optional. The target mode of the link component
     """
     value = JsUtils.jsConvertData(value, None)
     target = JsUtils.jsConvertData(target, None)
@@ -144,14 +159,14 @@ class Switch(JsPackage):
     self._js, self._jquery = [], None
 
   def toggle(self):
-    """   Simulate a click event on the component.
-    """
+    """   Simulate a click event on the component. """
     return JsObjects.JsObjects.get(self.component.switch.click())
 
   def val(self, data: Union[bool, primitives.JsDataModel]):
-    """   Set the value for the switch.
+    """
+    Set the value for the switch.
  
-    :param data: Flag to specify the state for the switch.
+    :param data: Flag to specify the state for the switch
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
@@ -160,15 +175,13 @@ class Switch(JsPackage):
       "varName": self.varName, "flag": data, "htmlCode": self.htmlCode})
 
   def false(self):
-    """   Set the switch component to False.
-    """
+    """ Set the switch component to False. """
     return JsObjects.JsObjects.get(
       "%s.querySelector('input').checked = false; %s.querySelector('p').innerHTML = %s_data.off" % (
         self.varName, self.varName, self.htmlCode))
 
   def true(self):
-    """   Set the switch component to True.
-    """
+    """ Set the switch component to True. """
     return JsObjects.JsObjects.get(
       "%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (
         self.varName, self.varName, self.htmlCode))
@@ -237,8 +250,7 @@ class Room(JsPackage):
     self._js, self._jquery = [], None
 
   def typing(self):
-    """   Display dots in the status to inform user is typing.
-    """
+    """  Display dots in the status to inform user is typing. """
     return self.component.dom.querySelector("div[name=dots]").show(duration=3000)
 
 
