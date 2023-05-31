@@ -190,6 +190,14 @@ v = v.toUpperCase(); var n=[];r.forEach(function(e){for(const k in e){
     """
     Filtering rule based on a key, value.
 
+    Usage::
+
+      select = page.ui.select(components.select.from_records(languages, column=filter_column))
+      table = page.ui.tables.aggrid(languages)
+      filter_data = DataJs(page).record(js_code="myData", data=languages)
+      filt_grp = filter_data.filterGroup("test")
+      select.change([table.js.setRowData(filt_grp.equal(filter_column, select.dom.content))])
+
     :param key: The key in the various records
     :param value: Object. The value to keep
     :param case_sensitive: Optional. To make sure algorithm case-sensitive
@@ -452,7 +460,8 @@ class ServerConfig:
     return self.__namespaces[alias]
 
   def addNamespace(self, name: str, alias: str = None, end_points: list = None):
-    """ Add a JavaScript name space and its full end points and assigned it to a dedicated alias on the Python side.
+    """
+    Add a JavaScript name space and its full end points and assigned it to a dedicated alias on the Python side.
     This will allow the Python to get the name space from its alias.
 
     :param name: The url name space.
@@ -465,7 +474,8 @@ class ServerConfig:
     return self
 
   def endPoint(self, name: str):
-    """ Set the end point.
+    """
+    Set the end point.
 
     :param name: The endpoint name.
     """
@@ -473,7 +483,8 @@ class ServerConfig:
     return self
 
   def endPoints(self, names: List[str]):
-    """ Set multiple end points.
+    """
+    Set multiple end points.
 
     :param names: The end points names
     """

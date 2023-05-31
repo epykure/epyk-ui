@@ -1021,8 +1021,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
       https://redfin.github.io/react-server/annotated-src/navigateTo.html
 
-    :param url: The target url.
-    :param options: Optional. The property of the location object.
+    :param url: The target url
+    :param options: Optional. The property of the location object
     """
     options = options or {}
     if options.get("target", '') != "_blank":
@@ -1038,10 +1038,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     Register a predefined Javascript function.
     This is only dedicated to specific Javascript transformation functions.
   
-    :param func_name: The function name.
-    :param js_funcs: The Javascript function definition.
-    :param args: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param func_name: The function name
+    :param js_funcs: The Javascript function definition
+    :param args: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     js_data = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
     self.page.properties.js.add_function(func_name, js_data, args)
@@ -1049,7 +1049,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keydown(self) -> KeyCodes.KeyCode:
-    """ The onkeydown event occurs when the user is pressing a key (on the keyboard).
+    """
+    The onkeydown event occurs when the user is pressing a key (on the keyboard).
+
+    Usage::
+
+      page.js.keydown.enter(pk.js_std.alert('Hello World'), profile=True)
 
     Related Pages:
 
@@ -1061,7 +1066,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keypress(self) -> KeyCodes.KeyCode:
-    """ The onkeypress event occurs when the user presses a key (on the keyboard).
+    """
+    The onkeypress event occurs when the user presses a key (on the keyboard).
+
+    Usage::
+
+      page.js.keypress.enter(pk.js_std.alert('Hello World'), profile=True)
 
     Related Pages:
 
@@ -1073,7 +1083,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
   @property
   def keyup(self) -> KeyCodes.KeyCode:
-    """ The onkeypress event occurs when the user presses a key (on the keyboard).
+    """
+    The onkeypress event occurs when the user presses a key (on the keyboard).
+
+    Usage::
+
+      page.js.keyup.enter(pk.js_std.alert('Hello World'), profile=True)
 
     Related Pages:
 

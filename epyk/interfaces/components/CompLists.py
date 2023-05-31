@@ -83,7 +83,7 @@ class Lists:
 
   def lookup(self, lookup=None, html_code: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
-             options: dict = None):
+             options: dict = None) -> html.HtmlSelect.Lookup:
     """  
     HTML Select component.
 

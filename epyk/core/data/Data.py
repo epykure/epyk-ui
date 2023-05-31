@@ -62,10 +62,8 @@ class DataJs:
           pie.build(filter1.group().sumBy(['change'], select.dom.content), options={"x_axis": select.dom.content}),
         ])
 
-    :param js_code: Optional. The Javascript variable name.
-    :param data: Object passed to the Javascript layer.
-
-    :rtype: DataCore.DataGlobal
+    :param js_code: Optional. The Javascript variable name
+    :param data: Object passed to the Javascript layer
     """
     return DataCore.DataGlobal(js_code, data, self.page)
 
