@@ -699,6 +699,7 @@ class ButtonMenuItem:
 
 class ButtonMenu(Html.Html):
   name = 'Button Menu'
+  _option_cls = OptButton.OptionsButtonMenu
 
   def __init__(self, page: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
                height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
@@ -711,14 +712,26 @@ class ButtonMenu(Html.Html):
     self.style.css.position = "relative"
     self.style.css.display = "inline-block"
     self.container = page.ui.div()
+    self.container.attr["class"].add("dropdown-content")
     self.container.options.managed = False
-    self._jsStyles = {"padding": '5px', 'cursor': 'pointer', 'display': 'block'}
 
   def __getitem__(self, i: int):
     if i not in self.components:
       self.components[i] = ButtonMenuItem(self.page, "document.getElementById('%s').querySelectorAll('a')[%s]" % (
         self.htmlCode, i), self)
     return self.components[i]
+
+  @property
+  def options(self) -> OptButton.OptionsButtonMenu:
+    """
+    Property to set all the possible object for a button.
+
+    Usage::
+
+      but = page.ui.button("Click Me")
+      but.options.multiple = False
+    """
+    return super().options
 
   @property
   def style(self) -> GrpClsButton.ClassButtonMenu:

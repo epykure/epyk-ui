@@ -10,7 +10,8 @@ class ClassButton(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrButton:
-    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -22,7 +23,8 @@ class ClassButton(GrpCls.ClassHtml):
 
   @property
   def css_class(self) -> Classes.CatalogButton.CatalogButton:
-    """   The internal class used to put a custom Style to this object.
+    """
+    The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     Usage::
@@ -43,7 +45,8 @@ class ClassBadge(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrBadge:
-    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -58,7 +61,8 @@ class ClassButtonCheckBox(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsButtons.AttrButton:
-    """   Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """
+    Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
 
@@ -79,7 +83,8 @@ class ClassButtonMenu(GrpCls.ClassHtml):
 
   @property
   def css_btn_content(self) -> Classes.CatalogButton.CatalogButton:
-    """   The CSS property of the underlying items panel.
+    """
+    The CSS property of the underlying items panel.
     This component will have a dedicated CSS class for the hover event.
     """
     if self._css_btn_content_hover is None:
@@ -90,7 +95,8 @@ class ClassButtonMenu(GrpCls.ClassHtml):
 
   @property
   def css_btn_link_hover(self) -> Classes.CatalogButton.CatalogButton:
-    """   The CSS property of the underlying item.
+    """
+    The CSS property of the underlying item.
     This component will have a dedicated CSS class for the hover event.
     """
     if self._css_btn_link_hover is None:

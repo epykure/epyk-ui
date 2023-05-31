@@ -331,3 +331,15 @@ class OptionsButtonFilter(Options):
     @icon_filer.setter
     def icon_filer(self, value: str):
         self.set(value)
+
+
+class OptionsButtonMenu(Options):
+    component_properties = ("css_child", )
+
+    @property
+    def css_child(self):
+        return self.get({"padding": "5px", "cursor": "pointer"})
+
+    @css_child.setter
+    def css_child(self, values: dict):
+        self._config(values)
