@@ -16,7 +16,8 @@ class Trees:
   def tree(self, data: List[dict] = None, width: etypes.SIZE_TYPE = (100, "%"), height: etypes.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: etypes.OPTION_TYPE = None,
            profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.Tree:
-    """ Addd a tree / hierarchy component to the page.
+    """
+    Addd a tree / hierarchy component to the page.
 
     Usage::
 
@@ -193,7 +194,8 @@ class Trees:
   def folder(self, folder: str = None, width: etypes.SIZE_TYPE = (100, "%"), height: etypes.SIZE_TYPE = (None, 'px'),
              html_code: str = None, helper: str = None, options: etypes.OPTION_TYPE = None,
              profile: etypes.PROFILE_TYPE = None) -> html.HtmlTrees.Tree:
-    """ Add a tree component from a folder structure.
+    """
+    Add a tree component from a folder structure.
 
     :param folder: The path to be displayed
     :param width: Optional. A tuple with the integer for the component width and its unit

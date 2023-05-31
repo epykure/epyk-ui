@@ -1,6 +1,6 @@
 
 
-function Stars(htmlObj, data, options){
+function stars(htmlObj, data, options){
   if (options.templateMode == 'loading'){
     data = options.templateLoading(data)}
   else if (options.templateMode == 'error'){

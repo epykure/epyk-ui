@@ -413,6 +413,7 @@ class ImgCarousel(Html.Html):
 
 class Icon(Html.Html):
   name = 'Icon'
+  builder_name = "HtmlIcon"
 
   def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile):
     if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':

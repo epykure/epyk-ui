@@ -1,6 +1,6 @@
 
 
-function Position(htmlObj, data, options){
+function position(htmlObj, data, options){
     htmlObj.innerHTML = "";
     var prevCursor = 0; var content = ""+ data; var shift = 0;
     if (options.digits === true){ shift = content.indexOf(".") + 1; }

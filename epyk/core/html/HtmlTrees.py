@@ -17,6 +17,7 @@ from epyk.core.css.styles import GrpClsList
 class Tree(Html.Html):
   name = 'List Expandable'
   _option_cls = OptTrees.OptionsTree
+  builder_name = "HtmlTree"
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
@@ -108,7 +109,7 @@ class Tree(Html.Html):
     """   
 
     :param js_funcs: The Javascript functions.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param profile: Optional. A flag to set the component performance storage
     """
     self.options.click_node(js_funcs, profile)
     return self

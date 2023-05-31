@@ -41,6 +41,7 @@ class DataJs:
   def record(self, js_code: str = None, data=None) -> DataCore.DataGlobal:
     """
     Interface to transform Python records to Javascript objects.
+
     This will allow interactivity of the various HTML components.
 
     Usage::
@@ -69,45 +70,51 @@ class DataJs:
     return DataCore.DataGlobal(js_code, data, self.page)
 
   def list(self, js_code: str, data):
-    """ Transform a Python object to a JavaScript list.
+    """
+    Transform a Python object to a JavaScript list.
 
-    :param str js_code: The Javascript variable name.
-    :param data: Object passed to the Javascript layer.W
+    :param js_code: The Javascript variable name
+    :param data: Object passed to the Javascript layer
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().array(data, js_code=js_code, set_var=True, page=self.page)
 
   def number(self, js_code: str, value):
-    """ Transform a Python number to a JavaScript one.
+    """
+    Transform a Python number to a JavaScript one.
 
-    :param js_code: The Javascript variable name.
-    :param value: Object passed to the Javascript layer.
+    :param js_code: The Javascript variable name
+    :param value: Object passed to the Javascript layer
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().number(value, js_code=js_code, set_var=True, page=self.page)
 
   def object(self, js_code: str, value: float):
-    """ Transform a Python object to a JavaScript object.
+    """
+    Transform a Python object to a JavaScript object.
 
-    :param js_code: The Javascript variable name.
-    :param value: Object passed to the Javascript layer.
+    :param js_code: The Javascript variable name
+    :param value: Object passed to the Javascript layer
     """
     JsUtils.getJsValid(js_code, fail=True)
     return JsObjects.JsObjects().new(value, js_code=js_code, page=self.page)
 
-  def server(self, hostname: str, port: int = 8080):
-    """ Configuration data for server interaction.
+  def server(self, hostname: str, port: int = 8080) -> DataCore.ServerConfig:
+    """
+    Configuration data for server interaction.
+
     This will only help on centralising the configuration in the final page.
 
-    :param hostname: The server hostname.
-    :param port: Optional. The server port.
-
-    :rtype: DataCore.ServerConfig
+    :param hostname: The server hostname
+    :param port: Optional. The server port
     """
     return DataCore.ServerConfig(hostname, port, self.page)
 
   @property
   def _(self):
+    """
+
+    """
     return JsUnderscore.Underscore(page=self.page)
 
 
@@ -117,86 +124,77 @@ class DataSrc:
     self.page = page
 
   @property
-  def vis(self):
-    """ Interface to Vis data transformation.
+  def vis(self) -> DataPy.Vis:
+    """
+    Interface to Vis data transformation.
 
     This will convert Python object to input data for Vis charts.
-
-    :rtype: DataPy.Vis
     """
     return DataPy.Vis()
 
   @property
-  def chartJs(self):
-    """ Interface to chartJs data transformation.
+  def chartJs(self) -> DataPy.ChartJs:
+    """
+    Interface to chartJs data transformation.
 
     This will convert Python object to input data for chartJs charts.
-
-    :rtype: DataPy.ChartJs
     """
     return DataPy.ChartJs()
 
   @property
-  def plotly(self):
-    """ Interface to Plotly data transformation.
+  def plotly(self) -> DataPy.Plotly:
+    """
+    Interface to Plotly data transformation.
 
     This will convert Python object to input data for Plotly charts.
-
-    :rtype: DataPy.Plotly
     """
     return DataPy.Plotly()
 
   @property
-  def c3(self):
-    """ Interface to C3 data transformation.
+  def c3(self) -> DataPy.C3:
+    """
+    Interface to C3 data transformation.
 
     This will convert Python object to input data for C3 charts.
-
-    :rtype: DataPy.C3
     """
     return DataPy.C3()
 
   @property
-  def bb(self):
-    """ Interface to Billboard data transformation.
+  def bb(self) -> DataPy.C3:
+    """
+    Interface to Billboard data transformation.
 
     This will convert Python object to input data for Billboard charts.
-
-    :rtype: DataPy.C3
     """
     return DataPy.C3()
 
   @property
-  def nvd3(self):
-    """ Interface to NVD3 data transformation.
+  def nvd3(self) -> DataPy.NVD3:
+    """
+    Interface to NVD3 data transformation.
 
     This will convert Python object to input data for NVD3 charts.
-
-    :rtype: DataPy.NVD3
     """
     return DataPy.NVD3()
 
   @property
-  def google(self):
-    """ Interface to Google data transformation.
+  def google(self) -> DataPy.Google:
+    """
+    Interface to Google data transformation.
 
     This will convert Python object to input data for Google charts.
-
-    :rtype: DataPy.Google
     """
     return DataPy.Google()
 
   @property
-  def js(self):
-    """ Interface to standard JavaScript transformation.
-
-    :rtype: DataJs
-    """
+  def js(self) -> DataJs:
+    """ Interface to standard JavaScript transformation. """
     return DataJs(self.page)
 
   @property
   def db(self):
-    """ Interface to the internal database wrapper.
+    """
+    Interface to the internal database wrapper.
 
     :rtype: DataDb.DataDb
     """
@@ -205,11 +203,12 @@ class DataSrc:
     return DataDb.DataDb(self.page)
 
   def from_cache(self, code: str, is_secured: bool = False, report_name: str = None):
-    """ Loads data from a cached files.
+    """
+    Loads data from a cached files.
 
-    :param code: The code for the data.
-    :param is_secured: Optional, boolean to set if the file should be secured. Default False.
-    :param report_name: Optional. the environment in which cache are stored. Default current one.
+    :param code: The code for the data
+    :param is_secured: Optional, boolean to set if the file should be secured. Default False
+    :param report_name: Optional. the environment in which cache are stored. Default current one
 
     :return: Return the data
     """
@@ -294,7 +293,8 @@ class DataSrc:
     return JsQuery.JQuery(self.page).get(url, data)
 
   def pdf(self, filename, path=None):
-    """ Read a pdf file
+    """
+    Read a pdf file
 
     This will require an external module PyPDF2.
 
@@ -317,7 +317,8 @@ class DataSrc:
     return pdf_data
 
   def soap(self, wsdl):
-    """ Interface to a SOAP server.
+    """
+    Interface to a SOAP server.
 
     This function will require an external python package zeep to use SOAP
 
@@ -340,7 +341,8 @@ class DataSrc:
     return soap.Client(wsdl).service
 
   def rest(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
-    """ Interface to a REST server.
+    """
+    Interface to a REST server.
 
     Test with a online server can be done here https://jsonplaceholder.typicode.com/
 
@@ -378,7 +380,8 @@ class DataSrc:
     pass
 
   def rss(self, url, proxy=None, method="GET"):
-    """ Entry point to retrieve RSS feeds.
+    """
+    Entry point to retrieve RSS feeds.
 
     This module will require beautifulsoup4 as external package
 
@@ -404,7 +407,8 @@ class DataSrc:
     return xml_soup
 
   def webscrapping(self, url, parser="html.parser", proxy=None, method=None):
-    """ Entry point to retrieve data from any website.
+    """
+    Entry point to retrieve data from any website.
 
     This module will require beautifulsoup4 as external package
 
@@ -437,7 +441,8 @@ class DataSrc:
     return xml_soup
 
   def rpc(self, url, data=None, headers=None, is_secured=False):
-    """ Interface to a RPC server.
+    """
+    Interface to a RPC server.
 
     This is using the external python package jsonrpcclient (https://jsonrpcclient.readthedocs.io/en/latest/)
 
@@ -463,7 +468,8 @@ class DataSrc:
     return client.send(json.dumps(data))
 
   def grpc(self, service_name, path, module, host="localhost", port=50051):
-    """ Interface to a GRPC server.
+    """
+    Interface to a GRPC server.
 
     Usage::
 

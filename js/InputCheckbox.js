@@ -1,6 +1,6 @@
 
 
-function InputCheckbox(htmlObj, data, options){
+function inputCheckbox(htmlObj, data, options){
     htmlObj.checked = data.value;
       if((typeof data.text !== 'undefined') || (data.text !== null)){
         htmlObj.parentNode.insertBefore(document.createTextNode(data.text), htmlObj.nextSibling)};

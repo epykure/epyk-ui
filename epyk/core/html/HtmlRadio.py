@@ -118,6 +118,7 @@ class Tick(Html.Html):
 class Switch(Html.Html):
   requirements = ('bootstrap', 'jquery')
   name = 'Switch Buttons'
+  builder_name = "HtmlSwitch"
 
   def __init__(self, page: primitives.PageModel, records: dict, color: str, width: types.SIZE_TYPE,
                height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE):

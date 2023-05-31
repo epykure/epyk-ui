@@ -1,6 +1,6 @@
 
 
-function Tree(htmlObj, data, options){
+function htmlTree(htmlObj, data, options){
     if(options){htmlObj.innerHTML = '';
   if(options.is_root){window[htmlObj.id + "_data"] = data};
 	if(options.is_root && options.filter_on){
