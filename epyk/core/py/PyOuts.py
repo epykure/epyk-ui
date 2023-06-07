@@ -19,7 +19,8 @@ class OutBrowsers:
     self._context = context
 
   def codepen(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
-    """ Update the Html launcher and send the data to Codepen.
+    """
+    Update the Html launcher and send the data to Codepen.
     URL used: https://codepen.io/pen/define/
 
     Usage::

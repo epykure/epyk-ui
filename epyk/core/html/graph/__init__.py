@@ -15,3 +15,4 @@ from . import GraphRoughViz
 from . import GraphChartCss
 from . import GraphFrappe
 from . import GraphVega
+from . import GraphChartist

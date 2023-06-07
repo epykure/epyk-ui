@@ -1642,6 +1642,24 @@ class JsDoms(JsObject.JsObject):
     """
     return JsDoms('', js_code="%s.firstChild" % self.varId)
 
+  @property
+  def lastChild(self):
+    """
+    The lastChild property returns the first child node of the specified node, as a Node object.
+
+    Usage::
+
+      select.dom.lastChild
+      select.dom.lastChild.css({"color": "yellow"})
+
+    Related Pages:
+
+      https://www.w3schools.com/jsref/prop_node_firstchild.asp
+
+    :return: A new JsDom python object
+    """
+    return JsDoms('', js_code="%s.lastChild" % self.varId)
+
   def child(self, i: int):
     """
     Returns the requested child DOM object on the JavaScript side.

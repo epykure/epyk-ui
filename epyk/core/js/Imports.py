@@ -179,6 +179,16 @@ JS_IMPORTS = {
         ],
         'website': 'https://openexchangerates.github.io/accounting.js/'},
 
+    # Chartist
+    'chartist': {
+        'version': '0.11.4',
+        'modules': [
+            {'script': 'chartist.min.js', 'path': 'chartist/%(version)s/', 'cdnjs': CDNJS_REPO},
+        ],
+        'repository': 'https://github.com/gionkunz/chartist-js',
+        'register': {'alias': 'chartist', 'module': 'chartist.min', 'npm': 'chartist'},
+        'website': 'https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library'},
+
     # QR Code
     'qrcodejs': {
         'version': '1.0.0',
@@ -1737,6 +1747,12 @@ CSS_IMPORTS = {
     'jqueryui': {
         'modules': [
             {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/themes/base/', 'cdnjs': CDNJS_REPO},
+        ]
+    },
+
+    'chartist': {
+        'modules': [
+            {'script': 'chartist.min.css', 'path': 'chartist/%(version)s/', 'cdnjs': CDNJS_REPO},
         ]
     },
 

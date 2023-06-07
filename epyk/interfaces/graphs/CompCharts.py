@@ -8,6 +8,7 @@ from epyk.core.html import Defaults_html
 from epyk.core.css import Defaults_css
 
 from epyk.interfaces.graphs import CompChartsApex
+from epyk.interfaces.graphs import CompChartist
 from epyk.interfaces.graphs import CompChartsBillboard
 from epyk.interfaces.graphs import CompChartsDc
 from epyk.interfaces.graphs import CompChartsRoughViz
@@ -146,6 +147,25 @@ class Graphs:
     html_chart.color(self.page.theme.charts[0])
     html.Html.set_component_skin(html_chart)
     return html_chart
+
+  @property
+  def chartist(self) -> CompChartist.Chartist:
+    """
+    You may think that this is just yet an other charting library.
+    But Chartist.js is the product of a community that was disappointed about the abilities provided by other
+    charting libraries.
+    Of course there are hundreds of other great charting libraries but after using them there were always tweaks you
+    would have wished for that were not included.
+
+    Usage::
+
+      chart = page.ui.charts.chartist.line()
+
+    Related Pages:
+
+      https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library
+    """
+    return CompChartist.Chartist(self)
 
   @property
   def sparklines(self) -> CompChartsSparkline.Sparkline:

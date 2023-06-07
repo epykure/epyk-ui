@@ -43,3 +43,4 @@ class Component:
         return {'folder': self.folder, 'class': "Epyk%sComponent" % self.name, 'externalVars': '',
                 'css': self._html.attr['css'], 'htmlTag': self.tag, 'build': self._html._js__builder__.strip(),
                 'html': html, 'options': self._html._jsStyles}
+

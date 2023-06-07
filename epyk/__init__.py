@@ -1,7 +1,6 @@
-import json
 import inspect
 
-from typing import List, Union, Callable
+from typing import List, Union
 from epyk.core import Page as Rpt
 from epyk._version import __version__
 from epyk.core.data import events
@@ -9,8 +8,10 @@ from epyk.core.data import configs
 from epyk.core.data import datamap as js_datamap
 from epyk.core.data import components as inputs
 from epyk.core.data import DataPy as transforms
+
 from epyk.core.html import Defaults as settings
 from epyk.core.html.symboles import Symboles as symboles
+from epyk.core.html.Standalone import Component as standalone
 
 from epyk.core.css import themes
 from epyk.core.css import Defaults as settings_css

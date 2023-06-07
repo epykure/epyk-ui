@@ -1680,18 +1680,18 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
               dataflows: List[dict] = None):
         """
-    Return the JavaScript fragment to refresh the component content.
+        Return the JavaScript fragment to refresh the component content.
 
-    Usage::
+        Usage::
 
-      dt = page.ui.rich.update()
-      page.ui.button("Update").click([dt.refresh()])
+          dt = page.ui.rich.update()
+          page.ui.button("Update").click([dt.refresh()])
 
-    :param data: Optional. Component data
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
-    :param component_id: Optional. The object reference ID
-    :param dataflows: Chain of data transformations
+        :param data: Optional. Component data
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        :param component_id: Optional. The object reference ID
+        :param dataflows: Chain of data transformations
     """
         self.options.builder = self.builder_name
         # check if there is no nested HTML components in the data
@@ -1713,32 +1713,32 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     def refresh(self):
         """
-    Component refresh function. Javascript function which can be called in any Javascript event.
+        Component refresh function. Javascript function which can be called in any Javascript event.
 
-    Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
-    """
+        Tip: This function cannot be used in a plan Python section but in a JavaScript one defined in an event for example.
+        """
         return self.build(self.val, None)
 
     def subscribe(self, socket, channel: str, data=None, options: Optional[dict] = None,
                   js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
         """
-    Subscribe to a socket channel.
+        Subscribe to a socket channel.
 
-    Data received from the socket are defined as a dictionary with a field data.
+        Data received from the socket are defined as a dictionary with a field data.
 
-    The content of data will be used by this component.
+        The content of data will be used by this component.
 
-    Related Pages:
+        Related Pages:
 
-      https://timepicker.co/options/
+          https://timepicker.co/options/
 
-    :param socket: Socket. A python socket object
-    :param channel: The channel on which events will be received
-    :param data:
-    :param options: Optional. Specific Python options available for this component
-    :param js_funcs: Optional. Javascript functions
-    :param profile: Optional. A flag to set the component performance storage
-    """
+        :param socket: Socket. A python socket object
+        :param channel: The channel on which events will be received
+        :param data:
+        :param options: Optional. Specific Python options available for this component
+        :param js_funcs: Optional. Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
         if data is None:
             data = socket.message
         js_funcs = js_funcs if js_funcs is not None else []
@@ -1748,18 +1748,18 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     @packageImport('sortablejs')
     def sortable(self, options: types.OPTION_TYPE = None, propagate: bool = True, propagate_only: bool = False):
         """
-    Sortable is a JavaScript library for reorderable drag-and-drop lists.
+        Sortable is a JavaScript library for reorderable drag-and-drop lists.
 
-    Related Pages:
+        Related Pages:
 
-      https://github.com/SortableJS/Sortable
+          https://github.com/SortableJS/Sortable
 
-    :param options: Optional. The sortable options
-    :param propagate: Optional. Specify if the sub children should get the draggable property
-    :param propagate_only: Optional. Specify if the first level of child is draggable
+        :param options: Optional. The sortable options
+        :param propagate: Optional. Specify if the sub children should get the draggable property
+        :param propagate_only: Optional. Specify if the first level of child is draggable
 
-    :rtype: JsSortable.Sortable
-    """
+        :rtype: JsSortable.Sortable
+        """
         from epyk.core.js.packages import JsSortable
 
         self._sort_propagate = propagate
@@ -1775,28 +1775,28 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
     def __str__(self):
         """
-    Apply the corresponding function to build the HTML result.
+        Apply the corresponding function to build the HTML result.
 
-    This function is very specific and it has to be defined in each class.
-    """
+        This function is very specific and it has to be defined in each class.
+        """
         raise NotImplementedError('subclasses must override __str__()!')
 
     @property
     def component(self) -> WebComponents.Component:
         """
-    The static component definition on the Javascript Side.
+        The static component definition on the Javascript Side.
 
-    This will be then used by the different framework to define the elementary bricks on which the complex component
-    will be based on.
-    """
+        This will be then used by the different framework to define the elementary bricks on which the complex component
+        will be based on.
+        """
         return WebComponents.Component(self)
 
     def html(self):
         """
-    Render the HTML component to the JavaScript.
+        Render the HTML component to the JavaScript.
 
-    This will be the main function called by the page to render all the component.s
-    """
+        This will be the main function called by the page to render all the component.s
+        """
         str_result = []
         if self._on_ready_js:
             self.onReady(list(self._on_ready_js.values()))
@@ -2193,17 +2193,17 @@ class Component(Html):
 
 class StructComponent(Html):
     """
-  Component interface.
+    Component interface.
 
-  This is the main interface to create bridges to external Web frameworks.
+    This is the main interface to create bridges to external Web frameworks.
 
-  The default self.style, self.options and self.js properties can be overridden in order to respectively set the
-  styles, the options and the event API of the component.
+    The default self.style, self.options and self.js properties can be overridden in order to respectively set the
+    styles, the options and the event API of the component.
 
-  With:
-    - css_classes: List. Optional. The component classes.
-    - str_repr String. Mandatory. The component HTML definition.
-  """
+    With:
+      - css_classes: List. Optional. The component classes.
+      - str_repr String. Mandatory. The component HTML definition.
+    """
 
     css_classes: Optional[List] = None
     str_repr = None
@@ -2218,11 +2218,11 @@ class StructComponent(Html):
 
     def add_to(self, group: str, content: Union[Html, str]):
         """
-    Add subcomponent to the main component.
+        Add subcomponent to the main component.
 
-    :param group: The category for the component
-    :param content: The HTML component to be added
-    """
+        :param group: The category for the component
+        :param content: The HTML component to be added
+        """
         if not hasattr(content, "options"):
             content = self.page.web.std.div(content)
             content.style.clear_all(no_default=True)
@@ -2232,12 +2232,12 @@ class StructComponent(Html):
 
     def write_values(self):
         """
-    Prepare the data to be written to the self.str_repr module variable.
+        Prepare the data to be written to the self.str_repr module variable.
 
-    The keys {attrs} and {htmlCode} will be automatically added by the core framework.
+        The keys {attrs} and {htmlCode} will be automatically added by the core framework.
 
-    By default this function will add the values defined for the component to the {text} key.
-    """
+        By default this function will add the values defined for the component to the {text} key.
+        """
         raise ValueError("Method write_values must be defined")
 
     def __str__(self):
