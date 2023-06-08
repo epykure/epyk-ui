@@ -1269,7 +1269,7 @@ JS_IMPORTS = {
         'version': '3.9.1',  # 2.9.4
         'v_prefix': 'v',
         'repository': 'https://github.com/chartjs/Chart.js',
-        'register': {'alias': 'Chart', 'module': 'chart.min', 'npm': 'chart.js', 'npm_path': 'dist'},
+        'register': {'alias': 'Chart', 'module': 'chart.umd', 'npm': 'chart.js', 'npm_path': 'dist'},
         'modules': [
             {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
@@ -1495,7 +1495,7 @@ JS_IMPORTS = {
 
     # Mapbox GL
     'mapbox-gl': {
-        'register': {'alias': 'mapbox-gl'},
+        'register': {'alias': 'mapbox-gl', 'npm_path': 'dist'},
         'website': 'https://github.com/mapbox/mapbox-gl-js?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
         'version': '2.14.1',
         'modules': [
@@ -1512,7 +1512,7 @@ JS_IMPORTS = {
         'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s',
                     'folder': 'mathjax'},
         'modules': [
-            {'script': 'tex-mml-chtml.js', 'path': 'mathjax/%(version)s/es5/', 'cdnjs': CDNJS_REPO}],
+            {'script': 'tex-mml-chtml.js', "node_path": "es5/", 'path': 'mathjax/%(version)s/es5/', 'cdnjs': CDNJS_REPO}],
     },
 
     # Socket IO
@@ -3566,6 +3566,36 @@ class ImportManager:
         """
         self.page, ovr_version, self.__pkgs = page, {}, None
         self.force_position = {}
+        self.reload()
+
+    def packages_from_json(self, dependency_file: str):
+        """
+        reduce the list of packages to the ones defined in the packages.json.
+        This will also add the requirements for those packages.
+
+        Usage::
+
+            page = ek.Page()
+            page.imports.packages_from_json(r"./assets/package.json")
+
+        :param dependency_file: Path for the file packages.json
+        """
+        global JS_IMPORTS
+        global CSS_IMPORTS
+        temp_js, temp_css = {}, {}
+        with open(dependency_file) as fp:
+            package_json = json.load(fp)
+            for dependency, version in package_json["dependencies"].items():
+                if dependency in JS_IMPORTS:
+                    temp_js[dependency] = JS_IMPORTS[dependency]
+                    for req in JS_IMPORTS[dependency].get("req", []):
+                        temp_js[req["alias"]] = JS_IMPORTS[req["alias"]]
+                if dependency in CSS_IMPORTS:
+                    temp_css[dependency] = CSS_IMPORTS[dependency]
+                    for req in CSS_IMPORTS[dependency].get("req", []):
+                        temp_css[req["alias"]] = CSS_IMPORTS[req["alias"]]
+        JS_IMPORTS = temp_js
+        CSS_IMPORTS = temp_css
         self.reload()
 
     def reload(self):
