@@ -995,12 +995,17 @@ class Row(Html.Html):
       self._dom = JsHtmlPanels.JsHtmlRow(self, page=self.page)
     return self._dom
 
-  def set_size_cols(self, *args):
+  def set_size_cols(self, *args, break_point: str = "lg"):
     """  
     Set the dimension of the columns in the row container.
     The sum of the various columns should not exceed 12, the max layout in Bootstrap.
 
     :param args: Integer the size of the different columns.
+    :param break_point: Optional. Grid system category, with
+      - xs (for phones - screens less than 768px wide)
+      - sm (for tablets - screens equal to or greater than 768px wide)
+      - md (for small laptops - screens equal to or greater than 992px wide)
+      - lg (for laptops and desktops - screens equal to or greater than 1200px wide)
     """
     vals = list(args)
     if len(vals) != len(self.val):
@@ -1009,7 +1014,7 @@ class Row(Html.Html):
       for i in range(cols):
         vals.append(space_left // cols)
     for i, col in enumerate(self):
-      col.set_size(vals[i])
+      col.set_size(vals[i], break_point=break_point)
     return self
 
   def set_width_cols(self, *args):

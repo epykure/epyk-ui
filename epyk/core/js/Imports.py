@@ -3603,20 +3603,19 @@ class ImportManager:
                         else:
                             JS_IMPORTS[dependency]["version"] = version
                             for module in JS_IMPORTS[dependency]["modules"]:
-                                module["version"] = version[1:]
+                                module["version"] = version
                     temp_js[dependency] = JS_IMPORTS[dependency]
                     for req in JS_IMPORTS[dependency].get("req", []):
                         temp_js[req["alias"]] = JS_IMPORTS[req["alias"]]
                 if dependency in CSS_IMPORTS:
-                    if version and "version" in CSS_IMPORTS[dependency]:
-                        if version.startswith("^"):
-                            CSS_IMPORTS[dependency]["version"] = version[1:]
-                            for module in CSS_IMPORTS[dependency]["modules"]:
-                                module["version"] = version[1:]
-                        else:
-                            CSS_IMPORTS[dependency]["version"] = version
-                            for module in CSS_IMPORTS[dependency]["modules"]:
-                                module["version"] = version[1:]
+                    if version.startswith("^"):
+                        CSS_IMPORTS[dependency]["version"] = version[1:]
+                        for module in CSS_IMPORTS[dependency]["modules"]:
+                            module["version"] = version[1:]
+                    else:
+                        CSS_IMPORTS[dependency]["version"] = version
+                        for module in CSS_IMPORTS[dependency]["modules"]:
+                            module["version"] = version
                     temp_css[dependency] = CSS_IMPORTS[dependency]
                     for req in CSS_IMPORTS[dependency].get("req", []):
                         temp_css[req["alias"]] = CSS_IMPORTS[req["alias"]]

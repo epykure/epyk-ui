@@ -111,6 +111,17 @@ class JsComponents(JsPackage):
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varName, func_name, ", ".join(_args)))
 
 
+class SdOptions(OptionsWithTemplates):
+
+    @property
+    def container(self):
+        """ Button category to specify the style. """
+        return self.get({"display": "inline-block"})
+
+    @container.setter
+    def container(self, values: dict):
+        self.set(values)
+
 class Component(MixHtmlState.HtmlOverlayStates, Html):
     standalone: bool = True
 
@@ -123,7 +134,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     template_url: str = None
     template: str = None
 
-    _option_cls = OptionsWithTemplates
+    _option_cls = SdOptions
 
     def __init__(self, page: primitives.PageModel, vals: Any = None, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
@@ -243,6 +254,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             comp.prepare(text="Test")
         """
         self.__metadata = dict(kwargs)
+        return self
 
     def __str__(self):
         if self.component_url is not None:
@@ -294,4 +306,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         regex_tplm = re.compile(r"{{(.*)}}")
         for m in regex_tplm.findall(template):
             template = template.replace("{{%s}}" % m, str(values[m.strip()]))
-        return "<div name='%s'>%s</div>" % (self.selector, template)
+        return "<div name='%s' style='%s'>%s</div>" % (
+            self.selector,
+            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]),
+            template)
