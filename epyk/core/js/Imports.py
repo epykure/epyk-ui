@@ -256,7 +256,7 @@ JS_IMPORTS = {
         'website': 'https://getbootstrap.com/'},
 
     'moment': {
-        "version": "2.29.1",
+        "version": "2.29.4",
         'repository': 'https://github.com/moment/moment',
         'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
         'modules': [
@@ -1426,7 +1426,7 @@ JS_IMPORTS = {
     '@popperjs/core': {
         'req': [{'alias': 'jquery'}],
         'v_prefix': 'v',
-        'version': '2.10.1',
+        'version': '2.11.8',
         'repository': 'https://github.com/popperjs/popper-core',
         'website': 'https://github.com/popperjs/popper-core',
         'modules': [
@@ -2513,20 +2513,28 @@ class ImportModule:
 
         new_js = collections.OrderedDict()
         for v in JS_IMPORTS[self._name]["modules"]:
+            if os.path.exists(v['cdnjs']):
+                continue
+
             node_path = v.get("node_path", "")
             if not node_path.endswith("/"):
                 node_path += "/"
             new_js["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
-        self._js["main"] = new_js
+        if new_js:
+            self._js["main"] = new_js
 
         if self._css:
             new_css = collections.OrderedDict()
             for v in CSS_IMPORTS[self._name]["modules"]:
+                if os.path.exists(v['cdnjs']):
+                    continue
+
                 node_path = v.get("node_path", "")
                 if not node_path.endswith("/"):
                     node_path += "/"
                 new_css["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
-            self._css["main"] = new_css
+            if new_css:
+                self._css["main"] = new_css
         self.overriden = True
 
     def set_enterprise(self, version: str = None, license_key: str = None):
@@ -3587,10 +3595,28 @@ class ImportManager:
             package_json = json.load(fp)
             for dependency, version in package_json["dependencies"].items():
                 if dependency in JS_IMPORTS:
+                    if version and "version" in JS_IMPORTS[dependency]:
+                        if version.startswith("^"):
+                            JS_IMPORTS[dependency]["version"] = version[1:]
+                            for module in JS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version[1:]
+                        else:
+                            JS_IMPORTS[dependency]["version"] = version
+                            for module in JS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version[1:]
                     temp_js[dependency] = JS_IMPORTS[dependency]
                     for req in JS_IMPORTS[dependency].get("req", []):
                         temp_js[req["alias"]] = JS_IMPORTS[req["alias"]]
                 if dependency in CSS_IMPORTS:
+                    if version and "version" in CSS_IMPORTS[dependency]:
+                        if version.startswith("^"):
+                            CSS_IMPORTS[dependency]["version"] = version[1:]
+                            for module in CSS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version[1:]
+                        else:
+                            CSS_IMPORTS[dependency]["version"] = version
+                            for module in CSS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version[1:]
                     temp_css[dependency] = CSS_IMPORTS[dependency]
                     for req in CSS_IMPORTS[dependency].get("req", []):
                         temp_css[req["alias"]] = CSS_IMPORTS[req["alias"]]
@@ -3671,8 +3697,8 @@ class ImportManager:
                     for k, v in main.items():
                         main_keys.append(k)
                         versions.append(v)
-                    import_dict[alias] = {'main': main, 'dep': list(modules.keys()), 'versions': versions,
-                                          "type": main_types}
+                    import_dict[alias] = {
+                        'main': main, 'dep': list(modules.keys()), 'versions': versions, "type": main_types}
 
     @property
     def static_url(self) -> str:

@@ -210,12 +210,19 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             self, event: str, tag: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             on_ready: bool = False):
         """
+        Add an event on a specific child for a given component.
 
-        :param event:
-        :param tag:
-        :param js_funcs:
-        :param profile:
-        :param on_ready:
+        Usage::
+
+            comp = page.ui.component("test-color")
+            comp.prepare(text="Test")
+            comp.child_event("click", "div[name=label]", [comp.build("test")])
+
+        :param event: The event types
+        :param tag: The source component tag name within the component
+        :param js_funcs: Javascript function to be added once the object is built
+        :param profile: Optional. A flag to set the component performance storage
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         """
         return self.on(
             event, js_funcs=js_funcs, profile=profile,
@@ -261,6 +268,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                             self.page.properties.css.add_text(" ".join(css_formatted))
                     else:
                         raise ValueError("CSS file format not supported only (.css and .scss)" % css_file)
+
                 else:
                     for k, v in self.page.theme.all().items():
                         css_file = css_file.replace("$%s" % k, v)
