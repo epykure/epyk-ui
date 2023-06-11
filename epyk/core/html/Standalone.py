@@ -122,6 +122,34 @@ class SdOptions(OptionsWithTemplates):
     def container(self, values: dict):
         self.set(values)
 
+    def for_construct(self, values: dict):
+        """
+        Set of options used to build the components (on the HTML side).
+        Those options will mainly remain on the Python side to decide the component structure.
+
+        :param values: A dictionary of options
+        :return: The underlying component for chaining
+        """
+        for k, v in values.items():
+            self.attr(v, k)
+        return self.component
+
+    def for_build(self, values: dict, js_keys: List[str] = None):
+        """
+        Set of options passed to the JavaScript layer to build / update the component.
+
+        :param values: The dictionary to be passed to the JavaScript layer within the builder
+        :param js_keys: The list of keys coming from JavaScript
+        :return: The underlying component for chaining
+        """
+        for k, v in values.items():
+            if js_keys is not None:
+                self._config(v, k, js_type=k in js_keys)
+            else:
+                self._config(v, k, js_type=False)
+        return self.component
+
+
 class Component(MixHtmlState.HtmlOverlayStates, Html):
     standalone: bool = True
 
@@ -146,6 +174,11 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
         self.style.no_class()  # Clear all default CSS Classes.
         self.items, self.__metadata = [], {}
+
+    @property
+    def options(self) -> SdOptions:
+        """ Property to set all the possible object for a standalone component. """
+        return super().options
 
     @property
     def dom(self) -> DomComponent:

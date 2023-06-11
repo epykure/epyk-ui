@@ -15,7 +15,7 @@ import collections
 import logging
 import base64
 import traceback
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Dict
 
 try:
     from urllib.parse import urlparse, urlencode
@@ -3576,7 +3576,7 @@ class ImportManager:
         self.force_position = {}
         self.reload()
 
-    def packages_from_json(self, dependency_file: str):
+    def packages_from_json(self, dependency_file: str, ext_packages: Dict[str, dict]):
         """
         reduce the list of packages to the ones defined in the packages.json.
         This will also add the requirements for those packages.
@@ -3586,11 +3586,26 @@ class ImportManager:
             page = ek.Page()
             page.imports.packages_from_json(r"./assets/package.json")
 
+            # Loading external packages
+            ext_pkgs = {
+                "@eonasdan/tempus-dominus": {
+                    'version': "6.7.7",
+                    'req': [{'alias': '@popperjs/core'}, {'alias': 'bootstrap'}],
+                    'modules': [
+                      {'script': 'tempus-dominus.min.css', 'node_path': 'dist/css/', 'path': 'tempus-dominus/%(version)s/'},
+                      {'script': 'tempus-dominus.min.js', 'node_path': 'dist/js/', 'path': 'tempus-dominus/%(version)s/'},
+                    ]}}
+
+            page.imports.packages_from_json(r"./assets/package.json", ext_pkgs)
+
         :param dependency_file: Path for the file packages.json
+        :param ext_packages: A dictionary with all the external packages to add added to the internal imports
         """
         global JS_IMPORTS
         global CSS_IMPORTS
         temp_js, temp_css = {}, {}
+        for k, v in ext_packages.items():
+            self.addPackage(k, v)
         with open(dependency_file) as fp:
             package_json = json.load(fp)
             for dependency, version in package_json["dependencies"].items():
