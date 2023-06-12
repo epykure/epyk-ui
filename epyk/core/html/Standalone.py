@@ -151,6 +151,17 @@ class SdOptions(OptionsWithTemplates):
 
 
 class Component(MixHtmlState.HtmlOverlayStates, Html):
+    """
+    A Standalone component class must be an interface which will link Python functions to
+        - A JavaScript class
+        - A set of CSS specific styles
+        - An HTML structure
+
+    JavaScript script must of the name of the Python class which will inherit from Component.
+    The HtML structure should container the variable {{ attrs }} to set the CSS and the html_id of the main dom object.
+
+    It is also possible to use {{ htmlCode }} or to create specific variables using the prepare method.
+    """
     standalone: bool = True
 
     selector: str
@@ -294,7 +305,9 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             if Path(self.component_url).exists():
                 self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
                 self.page.properties.js.add_builders([
-                    "var %s = new Component(%s)" % (self.html_code, self.dom.varId)])
+                    "var %s = new %s(%s, initValue=%s, options=%s)" % (
+                        self.html_code, self.__class__.__name__, self.dom.varId,
+                        JsUtils.jsConvertData(self._vals, None), self.options.config_js())])
             else:
                 raise ValueError("Component file was not loaded correctly")
 
