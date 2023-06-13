@@ -30,7 +30,8 @@ class DomComponent(JsHtml.JsHtml):
     @property
     def content(self) -> JsHtml.ContentFormatters:
         """ Get the component content. """
-        return JsHtml.ContentFormatters(self.page, "%s.innerHTML" % self.varName)
+        return JsHtml.ContentFormatters(self.page, "(function(){if(%(object)s.value != undefined){return %(object)s.value()} else {return %(code)s.innerHTML}})()" % {
+            "object": self.component.js.objectId, "code": self.varName})
 
     @property
     def lastChild(self):
@@ -71,6 +72,11 @@ class JsComponents(JsPackage):
         self.varName, self.varData, self.__var_def = js_code, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
+
+    @property
+    def objectId(self) -> str:
+        """ JavaScript underlying object reference (Proxy Js class) """
+        return "window['%s']" % self.component.html_code
 
     def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None):
         """
@@ -239,6 +245,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
+        :param stop_state:
         :param dataflows: Chain of data transformations
         """
         # check if there is no nested HTML components in the data
@@ -305,8 +312,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             if Path(self.component_url).exists():
                 self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
                 self.page.properties.js.add_builders([
-                    "var %s = new %s(%s, initValue=%s, options=%s)" % (
-                        self.html_code, self.__class__.__name__, self.dom.varId,
+                    "%s = new %s(%s, initValue=%s, options=%s)" % (
+                        self.js.objectId, self.__class__.__name__, self.dom.varId,
                         JsUtils.jsConvertData(self._vals, None), self.options.config_js())])
             else:
                 raise ValueError("Component file was not loaded correctly")
@@ -335,6 +342,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                         css_formatted.append("div[name=%s] > %s { %s }" % (self.selector, m[0], m[1]))
                     self.page.properties.css.add_text(" ".join(css_formatted))
         values = dict(self.__metadata)
+        values["attrsOnly"] = self.get_attrs(css_class_names=self.style.get_classes(), with_id=False)
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
         values["htmlCode"] = self.htmlCode
         if self.template_url and self.template is None:
@@ -349,7 +357,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             raise ValueError("Missing template definition")
 
         template = self.template
-        regex_tplm = re.compile(r"{{(.*)}}")
+        regex_tplm = re.compile(r"{{([a-zA-Z_\.\ 0-9]*)}}")
         for m in regex_tplm.findall(template):
             template = template.replace("{{%s}}" % m, str(values[m.strip()]))
         return "<div name='%s' style='%s'>%s</div>" % (
