@@ -435,6 +435,7 @@ class Icon(Html.Html):
         self.page.ext_packages = {}
       self.page.ext_packages.update(PkgImports.BOOTSTRAP)
       self.page.cssImport.add("bootstrap-icons")
+
     if value is not None:
       self.attr['class'].add(value)
     self.attr['aria-hidden'] = 'true'

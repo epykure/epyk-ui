@@ -196,6 +196,6 @@ class IconModel:
             content = fp.read()
             for m in regex.findall(content):
                 tag, value = m
-                self.__icons[tag] = value
+                self.__icons[tag.strip()] = value.strip()
         self._family = "SCSS"
         _ICON_MAPPINGS[self._family] = self.__icons

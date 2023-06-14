@@ -30,6 +30,7 @@ from epyk.core.js.Imports import Package as package
 from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
 from epyk.web import jupyter
+from epyk import helpers
 
 Page = Rpt.Report
 

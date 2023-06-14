@@ -239,7 +239,7 @@ class Theme:
         elif palette is not None and palette.startswith("tableau."):
             self.__colors["charts"] = getattr(palettes.tableau, palette.split(".")[1])
 
-    def from_sass(self, file_path: str):
+    def from_sass(self, file_path: str = "COLORS.SCSS"):
         """
         Load the SASS file to set the colors codes.
 
@@ -260,7 +260,10 @@ class Theme:
                     _, category, level = tag.split("-")
                     self.__colors["all"].setdefault(category, {})[tag] = color.strip()
                 if tag.startswith("charts"):
-                    self.chart_categories = [s.strip() for s in color.strip()[1:-1].split(",")]
+                    if color.strip().startswith("("):
+                        self.chart_categories = [s.strip() for s in color.strip()[1:-1].split(",")]
+                    else:
+                        self.chart_categories = ["default"]
         if self.chart_categories:
             chart_colors = []
             tmp_chart_map = {self.chart_categories[0]: self.category(self.chart_categories[0])[::-1]}
@@ -286,31 +289,38 @@ class Theme:
             colors = colors[::-1]
         self.charts = colors
 
+    @property
+    def groups(self):
+        """ Get all the technical colors categories """
+        return ["theme", "grey", "warning", "danger", "success"]
+
     def update(self):
         """ Sync the colors with the ones stored from the static file. """
         for category, colors in self.__colors["all"].items():
             if category == "theme":
-                #self._colors = self.category("theme")
                 self.colors = self.category("theme")
             elif category == "greys":
-                #self._greys = self.category("grey")
                 self.greys = self.category("grey")
             elif category == "warning":
-                #self._warning = self.category("warning")
                 self.warning =self.category("warning")
             elif category == "danger":
-                #self._danger = self.category("danger")
                 self.danger = self.category("danger")
             elif category == "success":
-                #self._success = self.category("success")
                 self.success = self.category("success")
             elif category == "info":
-                #self._info = self.category("info")
                 self.info = self.category("info")
 
     def category(self, name: str, reverse: bool = None) -> List[str]:
         """
         Get the colors for a given category.
+
+        Usages::
+
+            import epyk as ek
+
+            ek.helpers.scss_colors()
+            page.theme.from_sass()
+            print(page.theme.category("default"))
 
         :param name: The color category
         :param reverse: Set the color order (default from light to dark)
