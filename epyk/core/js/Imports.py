@@ -4011,7 +4011,11 @@ class ImportManager:
                 mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
                 if os.path.isabs(url_module) and not url_module.startswith("/static"):
                     with open(url_module, "rb") as fp:
-                        base64_bytes = base64.b64encode(fp.read())
+                        js_content = fp.read()
+                        if js_content.startswith(b"export "):
+                            # export cannot be used in javascript scripts not set as modules
+                            js_content = js_content.replace(b"export ", b"")
+                        base64_bytes = base64.b64encode(js_content)
                         base64_message = base64_bytes.decode('ascii')
                         url_module = "data:text/js;base64,%s" % base64_message
                 elif self.self_contained:

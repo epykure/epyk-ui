@@ -1368,7 +1368,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             css_class = 'class="%s"' % " ".join(py_cls_names) if len(py_cls_names) > 0 else ""
 
         if with_id:
-            self.attr['id'] = self.htmlCode
+            self.attr['id'] = self.html_code
         html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in
                      self.attr.items() if key not in ('css', 'class')]
         for tag in [css_style, css_class]:

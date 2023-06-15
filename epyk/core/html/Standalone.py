@@ -163,7 +163,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         - A set of CSS specific styles
         - An HTML structure
 
-    JavaScript script must of the name of the Python class which will inherit from Component.
+    JavaScript script must have the name of the Python class which will inherit from Component.
     The HtML structure should container the variable {{ attrs }} to set the CSS and the html_id of the main dom object.
 
     It is also possible to use {{ htmlCode }} or to create specific variables using the prepare method.
@@ -295,7 +295,14 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         """
         Prepare the data to be written to the html template.
 
-        The keys {attrs} and {htmlCode} will be automatically added by the core framework.
+        The below keys will be automatically added by the core framework:
+            {{ style }} - The CSS styles properties
+            {{ class }} - The CSS classes to be added to a DOM object
+            {{ selector }} - The JavaScript / Python classname
+            {{ attrs }} - The entire tags style, class and id + others
+            {{ attrsOnly }} - The entire tags style, class + others (without ID)
+            {{ id }} - The DOM id of the component
+            {{ htmlCode }} - Same value than the id
 
         By default this function will add the values defined for the component to the {text} key.
 
@@ -342,9 +349,14 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                         css_formatted.append("div[name=%s] > %s { %s }" % (self.selector, m[0], m[1]))
                     self.page.properties.css.add_text(" ".join(css_formatted))
         values = dict(self.__metadata)
+        # Set all the templates attributes
+        values["style"] = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+        values["class"] = " ".join(self.attr["class"])
+        values["selector"] = self.__class__.__name__.lower()
         values["attrsOnly"] = self.get_attrs(css_class_names=self.style.get_classes(), with_id=False)
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
         values["htmlCode"] = self.htmlCode
+        values["id"] = self.htmlCode
         if self.template_url and self.template is None:
             template_path = Path(self.template_url)
             if Path(template_path).exists():
@@ -362,5 +374,4 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             template = template.replace("{{%s}}" % m, str(values[m.strip()]))
         return "<div name='%s' style='%s'>%s</div>" % (
             self.selector,
-            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]),
-            template)
+            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]), template)
