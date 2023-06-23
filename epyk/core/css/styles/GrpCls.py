@@ -226,9 +226,7 @@ class ClassHtml:
 
   @property
   def css(self) -> Commons:
-    """
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
-    """
+    """ Property to the underlying CSS definition to be added to the style HTML tag of a component. """
     if self._css_struct is None:
       self._css_struct = Commons(self.component)
     return self._css_struct
@@ -282,16 +280,12 @@ class ClassHtml:
 
   @property
   def configs(self) -> GrpConfigs.ClsConfigs:
-    """
-    All predefined CSS configurations.
-    """
+    """ All predefined CSS configurations. """
     return GrpConfigs.ClsConfigs(self.component)
 
   @property
   def defaults(self):
-    """
-    The Default CSS Attributes in the framework.
-    """
+    """ The Default CSS Attributes in the framework. """
     return Defaults_css
 
   @property

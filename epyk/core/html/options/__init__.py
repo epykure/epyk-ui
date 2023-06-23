@@ -41,14 +41,16 @@ class Options(DataClass):
           self.js_tree[k] = v
 
   def set_attrs(self, vals: dict):
-    """ Set the object internal attributes.
+    """
+    Set the object internal attributes.
  
     :param vals: All the attributes to be added to the component
     """
     self.js_tree.update(vals)
 
   def from_json(self, vals: dict, schema: dict = None):
-    """ Load the option schema for a component from a json string.
+    """
+    Load the option schema for a component from a json string.
 
     TODO: add more feature to handle functions and enumeration
  
@@ -68,7 +70,8 @@ class Options(DataClass):
         self._config(v, k, hasattr(v, "toStr"))
 
   def _config_get(self, dflt: Any = None, name: str = None):
-    """ Get the option attribute to be added on the Javascript side during the component build.
+    """
+    Get the option attribute to be added on the Javascript side during the component build.
 
     Unlike the usual get from dict this method will take the default value as first parameter as
     the name is by default the property name using it.
@@ -79,7 +82,8 @@ class Options(DataClass):
     return self.js_tree.get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
   def _config(self, value: Any, name: str = None, js_type: bool = False):
-    """ Set the option attribute to be added on the Javascript side during the component build.
+    """
+    Set the option attribute to be added on the Javascript side during the component build.
 
     This method take the value as first parameter because the name is by default the property name if
     not defined. Very often the only information to supply if the value.
@@ -93,7 +97,8 @@ class Options(DataClass):
       self.js_type[name or sys._getframe().f_back.f_code.co_name] = True
 
   def _config_group_get(self, group: str, dflt: Any = None, name: str = None):
-    """ Get second level configuration options.
+    """
+    Get second level configuration options.
  
     :param group: The group attribute name
     :param dflt: Optional. The group default value
@@ -102,7 +107,8 @@ class Options(DataClass):
     return self.js_tree.get(group, {}).get(name or sys._getframe().f_back.f_code.co_name, dflt)
 
   def _config_group(self, group: str, value: Any, name: str = None):
-    """ Set second level configuration options.
+    """
+    Set second level configuration options.
  
     :param group: The group name
     :param value: The value for the name
@@ -113,7 +119,8 @@ class Options(DataClass):
     self.js_tree[group][name or sys._getframe().f_back.f_code.co_name] = value
 
   def _config_sub_data(self, name: str, clsObj=None):
-    """ Create a nested structure for the JavaScript configuration layer.
+    """
+    Create a nested structure for the JavaScript configuration layer.
 
     This is required for Charts and Tables configurations.
  
@@ -130,7 +137,8 @@ class Options(DataClass):
     return self.js_tree[name]
 
   def _config_sub_data_enum(self, name: str, cls_obj=None):
-    """ Add sub group with enumeration.
+    """
+    Add sub group with enumeration.
  
     :param name: The key to be added to the internal data dictionary
     :param cls_obj: Class. Object. The object which will be added to the nested data structure
@@ -146,7 +154,8 @@ class Options(DataClass):
     return enum_data
 
   def update_config(self, attrs: dict):
-    """ Update the option configuration.
+    """
+    Update the option configuration.
 
     :param attrs: The attributes to set
     """
@@ -155,7 +164,8 @@ class Options(DataClass):
     return self
 
   def custom_config(self, name: str, value: Any, js_type: bool = False):
-    """ Add a custom JavaScript configuration.
+    """
+    Add a custom JavaScript configuration.
 
     Usage::
 
@@ -172,7 +182,8 @@ class Options(DataClass):
     return self
 
   def isJsContent(self, property_name: str):
-    """ Check if the content of a property is defined to always be a JavaScript fragment.
+    """
+    Check if the content of a property is defined to always be a JavaScript fragment.
 
     Thus the framework will not convert it to a Json content.
 
@@ -186,7 +197,8 @@ class Options(DataClass):
     return self.js_type.get(property_name, False)
 
   def has_attribute(self, cls_obj, name: str = None):
-    """ Add an extra sub layer to the data structure.
+    """
+    Add an extra sub layer to the data structure.
 
     The key in the object representation will be the function name.
  
@@ -202,7 +214,8 @@ class Options(DataClass):
 
   @property
   def managed(self):
-    """ Boolean flag to set if the component needs to be added to the page.
+    """
+    Boolean flag to set if the component needs to be added to the page.
 
     If set to False the component has to be managed manually in the page.
 
@@ -221,7 +234,8 @@ class Options(DataClass):
 
   @property
   def verbose(self):
-    """ Boolean flag to set if extra logs need to be displayed.
+    """
+    Boolean flag to set if extra logs need to be displayed.
 
     This could help in debugging, default is the page verbose flag (default is false).
 
@@ -240,7 +254,8 @@ class Options(DataClass):
 
   @property
   def profile(self):
-    """ Boolean flag to set if extra logs need to be displayed.
+    """
+    Boolean flag to set if extra logs need to be displayed.
 
     This could help in debugging, default is the page verbose flag (default is false).
 
@@ -259,7 +274,8 @@ class Options(DataClass):
 
   @property
   def builder(self):
-    """ Add a JavaScript Builder function to the options.
+    """
+    Add a JavaScript Builder function to the options.
 
     This will be used to automatically map the Python component to its corresponding JavaScript builder
     function used by the build method.
@@ -283,7 +299,8 @@ class Options(DataClass):
 
   @property
   def style(self):
-    """ Change some CSS attributes to the internal HTML component.
+    """
+    Change some CSS attributes to the internal HTML component.
 
     Related Pages:
 

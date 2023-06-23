@@ -1,11 +1,14 @@
-import re
+import json
 from pathlib import Path
-from typing import Optional, List, Tuple, Any
+from typing import Optional, List, Tuple, Any, Dict
 from epyk.core.py import primitives, types
 
+from epyk.core.html import html_template_loader, html_formatter
 from epyk.core.html.Html import Html
 from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.html.mixins import MixHtmlState
+
+from epyk.core.css import css_files_loader
 
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
@@ -137,7 +140,7 @@ class SdOptions(OptionsWithTemplates):
         :return: The underlying component for chaining
         """
         for k, v in values.items():
-            self.attr(v, k)
+            self.attr(k, v)
         return self.component
 
     def for_build(self, values: dict, js_keys: List[str] = None):
@@ -172,6 +175,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     selector: str
     requirements: Tuple[str]
+    used: Tuple[str] = None
     style_urls: List[str] = None
 
     component_url: str = None
@@ -183,7 +187,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     def __init__(self, page: primitives.PageModel, vals: Any = None, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
-                 css_attrs: Optional[dict] = None):
+                 css_attrs: Optional[dict] = None, **kwargs):
         if self.selector is None:
             raise ValueError("selector must be defined for a standalone component")
 
@@ -191,6 +195,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
         self.style.no_class()  # Clear all default CSS Classes.
         self.items, self.__metadata = [], {}
+        self.prepare(**kwargs)
 
     @property
     def options(self) -> SdOptions:
@@ -255,7 +260,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             js_data = "{%s}" % ",".join(tmp_data)
         else:
             js_data = JsUtils.dataFlows(data, dataflows, self.page)
-        if hasattr(data, "toStr"):
+        if hasattr(data, "toStr") and not hasattr(js_data, "toStr"):
             js_data = JsUtils.jsWrap(js_data)
         fnc_call = self.js.build(js_data, self.options.config_js(options))
         if stop_state:
@@ -296,9 +301,9 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         Prepare the data to be written to the html template.
 
         The below keys will be automatically added by the core framework:
-            {{ style }} - The CSS styles properties
-            {{ class }} - The CSS classes to be added to a DOM object
-            {{ selector }} - The JavaScript / Python classname
+            {{ cssStyle }} - The CSS styles properties
+            {{ cssClass }} - The CSS classes to be added to a DOM object
+            {{ selector }} - The JavaScript / Python class name
             {{ attrs }} - The entire tags style, class and id + others
             {{ attrsOnly }} - The entire tags style, class + others (without ID)
             {{ id }} - The DOM id of the component
@@ -317,61 +322,105 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     def __str__(self):
         if self.component_url is not None:
             if Path(self.component_url).exists():
-                self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
+                component_path = Path(self.component_url)
+                if component_path.is_absolute():
+                    self.page.js.customFile(
+                        component_path.name, path=component_path.parent.resolve(), absolute_path=True, authorize=True)
+                else:
+                    self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
                 self.page.properties.js.add_builders([
                     "%s = new %s(%s, initValue=%s, options=%s)" % (
                         self.js.objectId, self.__class__.__name__, self.dom.varId,
-                        JsUtils.jsConvertData(self._vals, None), self.options.config_js())])
+                        JsUtils.jsConvertData(self._vals, None), self.options.config_attrs())])
             else:
                 raise ValueError("Component file was not loaded correctly")
 
         if self.style_urls is not None:
-            regex = re.compile(r"([A-Za-z0-9\.,\-\=\"'\[\]]*) {([#A-Za-z0-9\ \:\;\-]*) }")
-            for css_file in self.style_urls:
-                if Path(css_file).exists():
-                    if css_file.endswith(".css"):
-                        with open(css_file) as fp:
-                            css_data = " ".join([line.strip() for line in fp])
-                            for k, v in self.page.theme.all().items():
-                                css_data = css_data.replace("$%s" % k, v)
-                            css_formatted = []
-                            for m  in regex.findall(css_data):
-                                css_formatted.append("div[name=%s] > %s { %s }" % (self.selector, m[0], m[1]))
-                            self.page.properties.css.add_text(" ".join(css_formatted))
-                    else:
-                        raise ValueError("CSS file format not supported only (.css and .scss)" % css_file)
+            css_content = css_files_loader(self.style_urls, self.selector, style_vars=self.page.theme.all())
+            if css_content:
+                print(self.selector)
+                self.page.properties.css.add_text(css_content, map_id=self.selector)
 
-                else:
-                    for k, v in self.page.theme.all().items():
-                        css_file = css_file.replace("$%s" % k, v)
-                    css_formatted = []
-                    for m  in regex.findall(css_data):
-                        css_formatted.append("div[name=%s] > %s { %s }" % (self.selector, m[0], m[1]))
-                    self.page.properties.css.add_text(" ".join(css_formatted))
         values = dict(self.__metadata)
         # Set all the templates attributes
-        values["style"] = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
-        values["class"] = " ".join(self.attr["class"])
+        values["cssStyle"] = ";".join(["%s:%s" % (key, val) for key, val in self.attr["css"].items()])
+        values["cssClass"] = " ".join(self.attr["class"])
         values["selector"] = self.__class__.__name__.lower()
         values["attrsOnly"] = self.get_attrs(css_class_names=self.style.get_classes(), with_id=False)
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
         values["htmlCode"] = self.htmlCode
         values["id"] = self.htmlCode
-        if self.template_url and self.template is None:
-            template_path = Path(self.template_url)
-            if Path(template_path).exists():
-                with open(self.template_url) as fp:
-                    self.template = fp.read()
-            else:
-                raise ValueError("template_url: %s does not exist" % self.template_url)
-
-        if self.template is None:
+        if self.template_url is not None:
+            html_def = html_template_loader(self.template_url, values, ref_expr='id="{{ id }}"')
+        elif self.template is not None:
+            html_def = html_formatter(self.template, values, ref_expr='id="{{ id }}"')
+        else:
             raise ValueError("Missing template definition")
 
-        template = self.template
-        regex_tplm = re.compile(r"{{([a-zA-Z_\.\ 0-9]*)}}")
-        for m in regex_tplm.findall(template):
-            template = template.replace("{{%s}}" % m, str(values[m.strip()]))
         return "<div name='%s' style='%s'>%s</div>" % (
             self.selector,
-            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]), template)
+            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]),
+            html_def["template"])
+
+    @staticmethod
+    def from_json(path: Path, is_parent: bool = False, raise_exception: bool = False) -> Dict[Any, dict]:
+        """
+        Load component definition from a json configuration file.
+        This can load a single component or all components within the folder using the parent flag.
+
+        It is recommended to have each component definition segregated in a dedicated folder,
+
+        :param path: Component(s) path
+        :param is_parent: Flag to specify if the process will load multiple components
+        :param raise_exception: Flag to raise an exception if component not loaded
+        """
+        components = {}
+        if is_parent:
+            for folder in Path(path).iterdir():
+                if folder.is_dir():
+                    component_path = Path(folder, "component.json")
+                    if not component_path.exists():
+                        if raise_exception:
+                            raise ValueError("Component file does not exist: %s" % path)
+
+                        continue
+
+                    with open(component_path) as fp:
+                        content = json.load(fp)
+                        for prop, f_type in [("component_url", "js"), ("style_urls", "css"), ("template_url", "html")]:
+                            if prop not in content:
+                                struct_name = "%s.%s" % (content["selector"], f_type)
+                                struct_file = Path(folder, struct_name)
+                                if struct_file.exists():
+                                    if prop.endswith("s"):
+                                        content[prop] = [str(struct_file)]
+                                    else:
+                                        content[prop] = str(struct_file)
+                            else:
+                                if prop.endswith("s"):
+                                    nf = []
+                                    for f in content[prop]:
+                                        fp = Path(f)
+                                        if not fp.exists():
+                                            nf.append(str(Path(folder, fp)))
+                                        else:
+                                            nf.append(f)
+                                    content[prop] = nf
+                                else:
+                                    fp = Path(content[prop])
+                                    if not fp.exists():
+                                        content[prop] = str(Path(folder, fp))
+                        class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
+                        cls = type(class_name, (Component,), content)
+                        components[cls] = content
+        else:
+            if not str(path).endswith(".json"):
+                path = Path(path, "component.json")
+            if not path.exists() and raise_exception:
+                raise ValueError("Component file does not exist: %s" % path)
+
+            with open(path) as fp:
+                content = json.load(fp)
+                class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
+                type(class_name, (Component,), content)
+        return components

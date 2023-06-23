@@ -131,10 +131,26 @@ class DataClass:
     self._attrs.setdefault(name, []).append(enum_data)
     return enum_data
 
-  def config_js(self, options: dict = None):
+  def config_js(self, options: dict = None) -> str:
     if options is not None:
       self._attrs.update(options)
     return self.__str__()
+
+  def config_attrs(self, options: dict = None) -> str:
+    """
+    Get the attributes in a string.
+
+    :param options: Dictionary with specific attributes to be set
+    """
+    if options is not None:
+      self._attrs.update(options)
+    result = ["%s: %s" % (s, str(self._attrs[s])) for s in self.__sub_levels]
+    for s in self.__sub__enum_levels:
+      result.append("%s: [%s]" % (s, ",".join([str(k) for k in self._attrs[s]])))
+    result.extend([
+      "%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in self._attrs.items() if
+      k not in self.__sub_levels and k not in self.__sub__enum_levels])
+    return "{%s}" % ", ".join(result)
 
   def __str__(self):
     result = ["%s: %s" % (s, str(self._attrs[s])) for s in self.__sub_levels]

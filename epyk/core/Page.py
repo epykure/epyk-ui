@@ -3,7 +3,7 @@ import json
 import collections
 import time
 import inspect
-from typing import Union, Optional, List, Any
+from typing import Union, Optional
 
 try:
     basestring
@@ -35,6 +35,7 @@ class JsProperties:
 
     def __init__(self, context):
         self._context = context
+        self.__map_css = set()
 
     @property
     def frgs(self):
@@ -51,7 +52,7 @@ class JsProperties:
         """ Get the list of needed javasScript functions """
         return self._context['functions'].keys()
 
-    def add_text(self, text: str):
+    def add_text(self, text: str, map_id: str = None):
         """
         Add JavaScript fragments from String.
 
@@ -62,8 +63,12 @@ class JsProperties:
           page.outs.html_file(name="test", print_paths=True)
 
         :param text: JavaScript fragments to be directly included to the page
+        :param map_id: Internal ID to avoid loading the same content multiple time
         """
-        self._context["text"].append(text)
+        if map_id is None or map_id not in self.__map_css:
+            self._context["text"].append(text)
+            if map_id is not None:
+                self.__map_css.add(map_id)
 
     def add_event(self, event: str, value):
         """
@@ -190,13 +195,14 @@ class CssProperties:
 
     def __init__(self, context):
         self._context = context
+        self.__map_css = set()
 
     @property
     def text(self) -> str:
         """ Return the extra CSS styles manually added. """
         return "\n".join(self._context['css']["text"])
 
-    def add_text(self, text: str):
+    def add_text(self, text: str, map_id: str = None):
         """
         Add CSS style from String.
 
@@ -209,8 +215,12 @@ class CssProperties:
           page.outs.html_file(name="test", print_paths=True)
 
         :param text: CSS Style to be directly included to the page
+        :param map_id: Internal ID to avoid loading the same content multiple time
         """
-        self._context['css']["text"].append(text)
+        if map_id is None or map_id not in self.__map_css:
+            self._context['css']["text"].append(text)
+            if map_id is not None:
+                self.__map_css.add(map_id)
 
     def add_builders(self, builder_def: str):
         """
@@ -251,6 +261,7 @@ class Properties:
 
     def __init__(self, context):
         self._context = context
+        self.__css, self.__js = None, None
 
     @property
     def context(self):
@@ -269,7 +280,9 @@ class Properties:
 
         This will keep track of all the global functions used by the components.
         """
-        return JsProperties(self._context['js'])
+        if self.__js is None:
+            self.__js = JsProperties(self._context['js'])
+        return self.__js
 
     @property
     def css(self) -> CssProperties:
@@ -279,7 +292,9 @@ class Properties:
         This will keep track of all the global functions used by the components.
         CSS Properties will work on both the CSS and JS section of the underlying prop dictionary.
         """
-        return CssProperties(self._context)
+        if self.__css is None:
+            self.__css = CssProperties(self._context)
+        return self.__css
 
     @property
     def data(self) -> data.DataProperties:
@@ -340,7 +355,7 @@ class Report:
         """
         self._css = {}
         self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
-        self._tags, self._header_obj, self.__import_manage, self.__icons = None, None, None, None
+        self._tags, self._header_obj, self.__import_manage, self.__icons, self.__properties = None, None, None, None, None
         if script is None:
             frame = inspect.stack()[1]
             if inspect.getmodule(frame[0]) is not None:
@@ -388,9 +403,11 @@ class Report:
         self.json_config_file = calling_module
 
     @property
-    def properties(self):
+    def properties(self) -> Properties:
         """ Property to the different Page properties JavaScript and CSS. """
-        return Properties(self._props)
+        if self.__properties is None:
+            self.__properties = Properties(self._props)
+        return self.__properties
 
     @property
     def root__script(self) -> str:
@@ -661,7 +678,7 @@ class Report:
         """
         return data.Data.DataSrc(self)
 
-    def register(self, ext_components: list):
+    def register(self, ext_components: Union[list, dict]):
         """
         This function allows you to register external Components (namely coming from Pyk Reports)
         by registering them you this will engrave the object within your report.
@@ -690,7 +707,7 @@ class Report:
 
         :param ext_components: The external components to be added
         """
-        if type(ext_components) != list:
+        if not isinstance(ext_components, (list, dict)):
             ext_components = [ext_components]
 
         for comp in ext_components:

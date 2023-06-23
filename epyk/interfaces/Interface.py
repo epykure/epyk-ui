@@ -1414,6 +1414,11 @@ class Components:
         """
         return self.page._props["schema"][alias](self.page, **kwargs)
 
+    @property
+    def selectors(self):
+        """ Get the list of bespoke selector aliases loaded as components """
+        return self.page._props["schema"].keys()
+
 
 class WebComponents:
 

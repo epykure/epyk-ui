@@ -12,6 +12,9 @@ from epyk.core import Page
 from epyk.core.js import Imports
 
 
+DEFAULT_PORT = 3000
+
+
 def check_install(modules_path: str, package_json_path: str) -> Dict[str, str]:
     """
     Check the status of the packages in the node setup,
@@ -78,7 +81,7 @@ def requirements(page: primitives.PageModel, app_path: str = None) -> List[dict]
     return npms
 
 
-def npm_packages(packages: list) -> List[dict]:
+def npm_packages(packages: List[str]) -> List[str]:
     """
     Return the NPM named to be used to import the various packages.
 
@@ -294,9 +297,9 @@ class Node:
         """
         Create a single launcher for the application.
 
-        :param app_name: String. The deno path (This should contain the deno.exe file)
-        :param target_path: String. The target path for the views
-        :param port:
+        :param app_name: The deno path (This should contain the deno.exe file)
+        :param target_path: The target path for the views
+        :param port: The application's port
         """
         out_path = os.path.join(self._app_path, "launchers")
         if not os.path.exists(out_path):
@@ -319,7 +322,7 @@ fs.readFile('./%s/%s.html', function (err, html) {
     }).listen(%s);
 }); ''' % (target_path, app_name, port))
 
-    def launch(self, app_name: str, target_folder: str = None, port: int = 3000):
+    def launch(self, app_name: str, target_folder: str = None, port: int = DEFAULT_PORT):
         """
 
         :param app_name:
@@ -333,7 +336,7 @@ fs.readFile('./%s/%s.html', function (err, html) {
             self.launcher(app_name, target_folder, port)
         self.run(name="./launchers/launcher_%s.js" % app_name)
 
-    def router(self, target_folder: str, port: int = 3000):
+    def router(self, target_folder: str, port: int = DEFAULT_PORT):
         """
         Create a simple router file for your different views on your server.
 
@@ -358,7 +361,7 @@ http.createServer(function(request, response) {
 }).listen(%s);
  ''' % (target_folder, port))
 
-    def run(self, name: str, port: int = 3000):
+    def run(self, name: str, port: int = DEFAULT_PORT):
         """
         The file you have just created must be initiated by Node.js before any action can take place.
 
@@ -392,7 +395,7 @@ http.createServer(function(request, response) {
         """
         subprocess.run('npm docs %s' % package, shell=True, cwd=self._app_path)
 
-    def update(self, packages: list):
+    def update(self, packages: List[str]):
         """
         Update all the packages listed to the latest version (specified by the tag config).
 
@@ -406,7 +409,7 @@ http.createServer(function(request, response) {
         subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self._app_path)
         print("%s packages updated" % len(packages))
 
-    def uninstall(self, packages: list):
+    def uninstall(self, packages: List[str]):
         """
         Uninstall a package, completely removing everything npm installed on its behalf.
 

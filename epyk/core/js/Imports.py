@@ -1269,7 +1269,11 @@ JS_IMPORTS = {
         'version': '3.9.1',  # 2.9.4
         'v_prefix': 'v',
         'repository': 'https://github.com/chartjs/Chart.js',
-        'register': {'alias': 'Chart', 'module': 'chart.umd', 'npm': 'chart.js', 'npm_path': 'dist'},
+        'register': {'alias': 'Chart', 'module': 'chart.umd', 'npm': 'chart.js', 'npm_path': 'dist',
+                     "npm_imports": [
+                         "import { Chart, registerables } from 'chart.js'",
+                         "Chart.register(...registerables)"
+                     ]},
         'modules': [
             {'script': 'chart.min.js', 'node_path': 'dist/', 'path': 'Chart.js/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
